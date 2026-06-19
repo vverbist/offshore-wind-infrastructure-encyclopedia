@@ -1,1 +1,14 @@
-/* css styles */
+/* Compact assumptions manual styling. */
+
+table {
+  font-size: 0.95rem;
+}
+
+thead {
+  border-bottom: 2px solid #4b5563;
+}
+
+.callout-note,
+.callout-important {
+  border-radius: 6px;
+}
