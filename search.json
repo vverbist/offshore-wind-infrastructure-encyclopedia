@@ -1,16 +1,120 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Offshore Wind Infrastructure Encyclopedia",
+    "objectID": "introduction.html",
+    "href": "introduction.html",
+    "title": "Introduction",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "The prevailing treatment of offshore hydrogen reflects the policy hierarchy in which it sits. The European Green Deal positions renewable electricity as the primary decarbonisation pathway, the EU’s RFNBO regulation defines hydrogen as a derived product of renewable electricity, and the Liebreich ladder places direct electrification above hydrogen conversion wherever the application permits. Within this framing, hydrogen is evaluated as a downstream use of offshore electricity, not as an alternative primary carrier. The thermodynamic basis for this ordering is sound: electrolysis incurs conversion losses of 25–35%, and every unit of energy lost to conversion raises the effective LCOE of the delivered hydrogen. Evaluated on conversion efficiency alone, electricity wins. But this comparison is made implicitly within the scope that excludes export infrastructure — the same scope that this study rejects. The conversion efficiency argument is evaluated at the offshore collection point, where the electricity pathway has already won by construction. What it does not account for is what happens between that point and the shore. An offshore hydrogen system replaces the HVDC converter platform and export cable — the most capital-intensive components in the conventional chain — with an electrolyser, compressor, and subsea pipeline. The platform and cable are substantially more expensive per MW of transport capacity than their hydrogen equivalents: the electrolyser costs less per kW than the HVDC converter it replaces, and a subsea pipeline carrying compressed gas at high volumetric energy density is structurally and materially simpler than an insulated high-voltage conductor. The electrolysis conversion loss is a real cost. But it must be weighed against the infrastructure capital it displaces — a trade-off that is structurally invisible within a generation-side scope. Whether the infrastructure saving exceeds the conversion penalty — and under what project conditions — is not resolvable by inspection. It depends on distance to shore, installed capacity, and the interaction between layout density and infrastructure cost structure. Resolving it requires a model.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "hydrogen_production/electrolyser_components/stack.html",
+    "href": "hydrogen_production/electrolyser_components/stack.html",
+    "title": "Stack",
+    "section": "",
+    "text": "stack",
+    "crumbs": [
+      "Hydrogen Production",
+      "Electrolyser Components",
+      "Stack"
+    ]
+  },
+  {
+    "objectID": "hydrogen_production/electrolyser_components/bop.html",
+    "href": "hydrogen_production/electrolyser_components/bop.html",
+    "title": "Balance of Plant",
+    "section": "",
+    "text": "bop",
+    "crumbs": [
+      "Hydrogen Production",
+      "Electrolyser Components",
+      "Balance of Plant"
+    ]
+  },
+  {
+    "objectID": "hydrogen_production/00_hydrogen_production.html",
+    "href": "hydrogen_production/00_hydrogen_production.html",
+    "title": "Hydrogen Production",
+    "section": "",
+    "text": "This section discusses hydrogen production offshore. It covers different integration topologies, cost and energy models for electrolyser components, and more.",
+    "crumbs": [
+      "Hydrogen Production",
+      "Hydrogen Production"
+    ]
+  },
+  {
+    "objectID": "electricity_infrastructure/converter_stations.html",
+    "href": "electricity_infrastructure/converter_stations.html",
+    "title": "Converter Stations",
+    "section": "",
+    "text": "conver stations",
+    "crumbs": [
+      "Electricity Infrastructure",
+      "Converter Stations"
+    ]
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "This site is meant to be an encyclopedia for modelling the technoeconomics of Offshore Wind, with a special focus on Hydrogen production and Infrastructure. This is part of a broader PhD research where the entire offshore value chain is explicitly modelled, in order to:\n\naccurately describe offshore infrastructure\noptimise design variables\ncompare electricity and hydrogen as energy carriers\ninvestigate different wind farm designs",
+    "crumbs": [
+      "About"
+    ]
+  },
+  {
+    "objectID": "electricity_infrastructure/cable_costs.html",
+    "href": "electricity_infrastructure/cable_costs.html",
+    "title": "Cable costs",
+    "section": "",
+    "text": "cable costs",
+    "crumbs": [
+      "Electricity Infrastructure",
+      "Cable costs"
+    ]
+  },
+  {
+    "objectID": "electricity_infrastructure/infield_layout.html",
+    "href": "electricity_infrastructure/infield_layout.html",
+    "title": "Infield Layout",
+    "section": "",
+    "text": "infield layout",
+    "crumbs": [
+      "Electricity Infrastructure",
+      "Infield Layout"
+    ]
+  },
+  {
+    "objectID": "hydrogen_production/direct_integration.html",
+    "href": "hydrogen_production/direct_integration.html",
+    "title": "Direct Integration",
+    "section": "",
+    "text": "direct integration",
+    "crumbs": [
+      "Hydrogen Production",
+      "Direct Integration"
+    ]
+  },
+  {
+    "objectID": "hydrogen_production/electrolyser_components/power_electronics.html",
+    "href": "hydrogen_production/electrolyser_components/power_electronics.html",
+    "title": "Power Electronics",
+    "section": "",
+    "text": "power Electronics",
+    "crumbs": [
+      "Hydrogen Production",
+      "Electrolyser Components",
+      "Power Electronics"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Offshore Wind Infrastructure Encyclopedia",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
   }
 ]

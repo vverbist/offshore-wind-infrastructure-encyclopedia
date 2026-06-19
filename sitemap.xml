@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/index.html</loc>
-    <lastmod>2026-06-19T11:50:44.123Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/introduction.html</loc>
+    <lastmod>2026-06-19T12:07:37.980Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/electrolyser_components/stack.html</loc>
+    <lastmod>2026-06-19T12:23:18.657Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/electrolyser_components/bop.html</loc>
+    <lastmod>2026-06-19T12:23:14.520Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/00_hydrogen_production.html</loc>
+    <lastmod>2026-06-19T12:23:23.146Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electricity_infrastructure/converter_stations.html</loc>
+    <lastmod>2026-06-19T12:22:51.173Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/about.html</loc>
-    <lastmod>2026-06-19T11:50:44.123Z</lastmod>
+    <lastmod>2026-06-19T12:28:11.626Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electricity_infrastructure/cable_costs.html</loc>
+    <lastmod>2026-06-19T12:22:47.252Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electricity_infrastructure/infield_layout.html</loc>
+    <lastmod>2026-06-19T12:22:37.771Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/direct_integration.html</loc>
+    <lastmod>2026-06-19T12:22:56.579Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/electrolyser_components/power_electronics.html</loc>
+    <lastmod>2026-06-19T12:23:11.662Z</lastmod>
+  </url>
+  <url>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/index.html</loc>
+    <lastmod>2026-06-19T11:57:35.586Z</lastmod>
   </url>
 </urlset>
