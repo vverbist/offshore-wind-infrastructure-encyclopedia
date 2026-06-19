@@ -1,0 +1,5 @@
+---
+title: "Hydrogen Production"
+---
+This section discusses hydrogen production offshore.
+It covers different integration topologies, cost and energy models for electrolyser components, and more.

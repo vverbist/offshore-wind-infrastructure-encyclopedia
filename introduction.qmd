@@ -1,0 +1,11 @@
+---
+title: "Introduction"
+subtitle: "The need for an explicit technoeconomic model"
+---
+
+
+
+The prevailing treatment of offshore hydrogen reflects the policy hierarchy in which it sits. The European Green Deal positions renewable electricity as the primary decarbonisation pathway, the EU’s RFNBO regulation defines hydrogen as a derived product of renewable electricity, and the Liebreich ladder places direct electrification above hydrogen conversion wherever the application permits. Within this framing, hydrogen is evaluated as a downstream use of offshore electricity, not as an alternative primary carrier. The thermodynamic basis for this ordering is sound: electrolysis incurs conversion losses of 25–35%, and every unit of energy lost to conversion raises the effective LCOE of the delivered hydrogen. Evaluated on conversion efficiency alone, electricity wins.
+But this comparison is made implicitly within the scope that excludes export infrastructure — the same scope that this study rejects. The conversion efficiency argument is evaluated at the offshore collection point, where the electricity pathway has already won by construction. What it does not account for is what happens between that point and the shore.
+An offshore hydrogen system replaces the HVDC converter platform and export cable — the most capital-intensive components in the conventional chain — with an electrolyser, compressor, and subsea pipeline. The platform and cable are substantially more expensive per MW of transport capacity than their hydrogen equivalents: the electrolyser costs less per kW than the HVDC converter it replaces, and a subsea pipeline carrying compressed gas at high volumetric energy density is structurally and materially simpler than an insulated high-voltage conductor. The electrolysis conversion loss is a real cost. But it must be weighed against the infrastructure capital it displaces — a trade-off that is structurally invisible within a generation-side scope.
+Whether the infrastructure saving exceeds the conversion penalty — and under what project conditions — is not resolvable by inspection. It depends on distance to shore, installed capacity, and the interaction between layout density and infrastructure cost structure. Resolving it requires a model.

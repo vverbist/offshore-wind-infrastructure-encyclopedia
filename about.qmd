@@ -2,4 +2,12 @@
 title: "About"
 ---
 
-About this site
+This site is meant to be an encyclopedia for modelling the technoeconomics of Offshore Wind, with a special focus on Hydrogen production and Infrastructure.
+This is part of a broader PhD research where the entire offshore value chain is explicitly modelled, in order to:
+
+- accurately describe offshore infrastructure
+- optimise design variables
+- compare electricity and hydrogen as energy carriers
+- investigate different wind farm designs
+
+
