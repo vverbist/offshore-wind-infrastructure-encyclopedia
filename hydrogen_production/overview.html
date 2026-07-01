@@ -343,6 +343,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/wind_pem_dc_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Direct DC Integration of Wind Turbines and PEM Electrolysers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../hydrogen_production/balance_of_plant.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Balance of Plant</span></a>
   </div>
@@ -561,7 +567,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Hydrogen production covers the PEM electrolyser stack, balance of plant, electrolyser power electronics, water treatment, cooling, and related conversion losses.</p>
+<p>Hydrogen production covers the entire electrolyser. In this work, always a PEM electrolyser is studied.</p>
+<p>The electrolyser is split up in the following components: * stack * power electronics * balance of plant (BOP) Note that in most contexts, the balance of plants includes the power electronics, but here they are explictly treated separately.</p>
+<p>The compressor is not included in this section, but is under <a href="../hydrogen_infra/compressor.html">Hydrogen Infrastructure: Compressor</a></p>
 <p>The hydrogen production model is dynamic: stack efficiency and auxiliary power consumption depend on operating point, which depends on the wind state and the installed stack capacity.</p>
 <section id="current-component-cost-basis" class="level2">
 <h2 class="anchored" data-anchor-id="current-component-cost-basis">Current Component Cost Basis</h2>

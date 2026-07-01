@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -538,6 +557,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#background-documents" id="toc-background-documents" class="nav-link active" data-scroll-target="#background-documents">Background Documents</a></li>
   <li><a href="#mentioned-source-types" id="toc-mentioned-source-types" class="nav-link" data-scroll-target="#mentioned-source-types">Mentioned Source Types</a></li>
   <li><a href="#to-do" id="toc-to-do" class="nav-link" data-scroll-target="#to-do">To Do</a></li>
+  <li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography">Bibliography</a></li>
   </ul>
 </nav>
     </div>
@@ -563,7 +583,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This page records the source basis used to seed the encyclopedia. It is not yet a final bibliography.</p>
+<p>This page records the source basis used to seed the encyclopedia. The bibliography below is generated from <code>references.bib</code>.</p>
 <section id="background-documents" class="level2">
 <h2 class="anchored" data-anchor-id="background-documents">Background Documents</h2>
 <ul>
@@ -593,6 +613,60 @@ ul.task-list li input[type="checkbox"] {
 <section id="to-do" class="level2">
 <h2 class="anchored" data-anchor-id="to-do">To Do</h2>
 <p>Each component page should eventually link to a formal source entry with version, year, currency basis, confidentiality status, and model-use notes.</p>
+<p>Entries marked <code>TODO</code> should be treated as source records that still need exact report titles, versions, URLs, access dates, or confidentiality notes before they are used as final evidence.</p>
+</section>
+<section id="bibliography" class="level2">
+<h2 class="anchored" data-anchor-id="bibliography">Bibliography</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-dutchOffshoreWindAtlas" class="csl-entry" role="listitem">
+Dutch Offshore Wind Atlas. n.d. <em>Dutch Offshore Wind Atlas</em>. Web resource.
+</div>
+<div id="ref-installerInfieldCableBenchmark" class="csl-entry" role="listitem">
+Installer Benchmark. n.d. <em>Offshore Infield Cable Installation Benchmark</em>. Installation benchmark.
+</div>
+<div id="ref-manufacturerGStackPolarisation" class="csl-entry" role="listitem">
+Manufacturer G. n.d. <em>Stack Polarisation Curve</em>. Confidential manufacturer data.
+</div>
+<div id="ref-manufacturerHBopConsumption" class="csl-entry" role="listitem">
+Manufacturer H. n.d. <em>Balance-of-Plant Power Consumption Data</em>. Confidential manufacturer data.
+</div>
+<div id="ref-nrelElectrolyserCostBasis" class="csl-entry" role="listitem">
+National Renewable Energy Laboratory. n.d. <em>Electrolyser Cost Basis Used in Model</em>. Cost basis.
+</div>
+<div id="ref-internalArticleDraftA032026" class="csl-entry" role="listitem">
+Project Team. 2026a. <em>Article Draft A03</em>. Internal manuscript draft.
+</div>
+<div id="ref-internalArticleDraftA052026" class="csl-entry" role="listitem">
+Project Team. 2026b. <em>Article Draft A05</em>. Internal manuscript draft.
+</div>
+<div id="ref-internalArticleDraftAJW2026" class="csl-entry" role="listitem">
+Project Team. 2026c. <em>Article Draft AJW</em>. Internal manuscript draft.
+</div>
+<div id="ref-internalModelDescription2026" class="csl-entry" role="listitem">
+Project Team. 2026d. <em>Offshore Hydrogen Model Description</em>. Internal background document.
+</div>
+<div id="ref-internalSystemReassessment" class="csl-entry" role="listitem">
+Project Team. n.d.-a. <em>H1 H2 System Reassessment Rewritten</em>. Internal background document.
+</div>
+<div id="ref-internalManuscriptCh1Ch4" class="csl-entry" role="listitem">
+Project Team. n.d.-b. <em>Manuscript Chapters 1–4 Export</em>. Internal manuscript draft.
+</div>
+<div id="ref-internalMethodologicalPositioning" class="csl-entry" role="listitem">
+Project Team. n.d.-c. <em>Methodological Positioning Note</em>. Internal methodology note.
+</div>
+<div id="ref-supplierSPipelineCost" class="csl-entry" role="listitem">
+Supplier S. n.d. <em>Pipeline Cost Data</em>. Confidential supplier data.
+</div>
+<div id="ref-tennet2gwProgrammeData" class="csl-entry" role="listitem">
+TenneT. n.d. <em>2 GW Offshore Grid Programme Data</em>. Programme data.
+</div>
+<div id="ref-tnoTurbineFoundationCost" class="csl-entry" role="listitem">
+TNO. n.d. <em>Wind Turbine and Foundation Cost Assumptions</em>. Cost basis.
+</div>
+<div id="ref-transitionAcceleratorCompressorCost" class="csl-entry" role="listitem">
+Transition Accelerator. n.d. <em>Compressor Cost Basis Used in Model</em>. Cost basis.
+</div>
+</div>
 
 
 </section>
@@ -671,7 +745,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

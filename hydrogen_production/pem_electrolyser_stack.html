@@ -536,12 +536,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
+  <li><a href="#stack-model" id="toc-stack-model" class="nav-link" data-scroll-target="#stack-model">Stack Model</a></li>
+  <li><a href="#polarisation-curve" id="toc-polarisation-curve" class="nav-link" data-scroll-target="#polarisation-curve">Polarisation Curve</a></li>
+  <li><a href="#modularity" id="toc-modularity" class="nav-link" data-scroll-target="#modularity">Modularity</a></li>
   <li><a href="#module-switching" id="toc-module-switching" class="nav-link" data-scroll-target="#module-switching">Module Switching</a></li>
+  <li><a href="#stack-overplanting" id="toc-stack-overplanting" class="nav-link" data-scroll-target="#stack-overplanting">Stack Overplanting</a></li>
+  <li><a href="#degradation" id="toc-degradation" class="nav-link" data-scroll-target="#degradation">Degradation</a></li>
+  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
   <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
   <li><a href="#installation-and-mass" id="toc-installation-and-mass" class="nav-link" data-scroll-target="#installation-and-mass">Installation and Mass</a></li>
-  <li><a href="#source-basis" id="toc-source-basis" class="nav-link" data-scroll-target="#source-basis">Source Basis</a></li>
   </ul>
 </nav>
     </div>
@@ -569,76 +572,143 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="role-in-the-value-chain" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The PEM stack converts electrical power to hydrogen. It is present in both centralised and decentralised hydrogen architectures.</p>
-<p>PEM is selected because it can follow fluctuating wind power and produces hydrogen at elevated outlet pressure, approximately 30 bar in the source material. This reduces the downstream compression ratio compared with low-pressure hydrogen production.</p>
+<p>The PEM electrolyser stack is the primary energy conversion component of the hydrogen production system. It converts electrical power and water into hydrogen and oxygen and therefore largely determines the overall efficiency of the electrolyser.</p>
+<p>Within this model, the stack is represented explicitly because its efficiency, degradation and sizing have a strong influence on the optimal design of the offshore energy system. Rather than optimising the stack in isolation, it is evaluated as one component of the complete offshore hydrogen production chain.</p>
+<p>PEM stacks are present in both centralised and decentralised hydrogen production architectures.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why PEM?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PEM electrolysis is selected because it is well suited to variable renewable electricity. The technology can rapidly follow fluctuations in wind power while maintaining high efficiency over a wide operating range.</p>
+<p>Another important advantage is that hydrogen is produced at an elevated outlet pressure (approximately 30 bar in the source material), reducing the required downstream compression ratio compared with low-pressure electrolysis technologies.</p>
+<p>See the <a href="../hydrogen_infra/compressor.html#sec-compressor-pem">Compressor page</a> for more discussion.</p>
+</div>
+</div>
 </section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Stack CAPEX</td>
-<td style="text-align: right;">100 EUR/kW</td>
-</tr>
-<tr class="even">
-<td>Scaling factor</td>
-<td style="text-align: right;">1.00</td>
-</tr>
-<tr class="odd">
-<td>Module size</td>
-<td style="text-align: right;">2.5 MW</td>
-</tr>
-<tr class="even">
-<td>Minimum operating load per module</td>
-<td style="text-align: right;">250 kW</td>
-</tr>
-<tr class="odd">
-<td>Rated current density</td>
-<td style="text-align: right;">3 A/cm2</td>
-</tr>
-</tbody>
-</table>
-<p>Stack costs are treated as modular and linear with installed capacity. The source material states that centralised facilities do not receive additional stack economies of scale because stacks are already MW-scale modules; larger facilities mainly number-up modules.</p>
+<section id="stack-model" class="level2">
+<h2 class="anchored" data-anchor-id="stack-model">Stack Model</h2>
+<p>The stack model consists of four interacting components:</p>
+<ul>
+<li>stack efficiency</li>
+<li>modular operation</li>
+<li>degradation</li>
+<li>cost</li>
+</ul>
+<p>Together these determine the optimal installed stack capacity and operating strategy.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>Stack efficiency is calculated from a manufacturer polarisation curve relating cell voltage to current density. The operating point is defined as a percentage of maximum stack power or maximum current density.</p>
-<p>Oversizing the stack lowers current density for a given power input and can improve efficiency, but increases CAPEX. The model therefore treats stack overplanting as an optimisation variable.</p>
+<section id="polarisation-curve" class="level2">
+<h2 class="anchored" data-anchor-id="polarisation-curve">Polarisation Curve</h2>
+<p><strong>Engineering principle</strong></p>
+<p>The electrical energy required to produce hydrogen depends on the cell voltage. As current density increases, the cell voltage rises because activation, ohmic and mass transport losses become larger. Consequently, stack efficiency decreases at higher current densities.</p>
+<p><strong>Model implementation</strong></p>
+<p>Stack efficiency is calculated from a manufacturer polarisation curve relating cell voltage to current density. The operating point is defined as a percentage of the maximum current density (equivalently the maximum stack power).</p>
+<div id="cell-fig-polarisation" class="cell" data-message="false" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div id="fig-polarisation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polarisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="pem_electrolyser_stack_files/figure-html/fig-polarisation-output-1.png" width="949" height="372" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polarisation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Manufacturer polarisation curve (top) and resulting stack efficiency (bottom) used in the model.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The optimisation therefore captures the trade-off between operating fewer stacks at high current density or more stacks at lower current density.</p>
+</section>
+<section id="modularity" class="level2">
+<h2 class="anchored" data-anchor-id="modularity">Modularity</h2>
+<p>Commercial PEM electrolysers are typically manufactured as modular units with capacities of approximately 1 MW. Larger electrolysers are constructed by combining many identical modules.</p>
+<p>The modular approach offers several practical advantages:</p>
+<ul>
+<li>repeatable manufacturing</li>
+<li>manageable electrical voltages and currents</li>
+<li>improved thermal management</li>
+<li>easier transport and installation</li>
+<li>simplified maintenance and replacement</li>
+</ul>
+<p>The model therefore represents an electrolyser as a collection of identical stack modules.</p>
 </section>
 <section id="module-switching" class="level2">
 <h2 class="anchored" data-anchor-id="module-switching">Module Switching</h2>
-<p>The model does not force all modules to operate simultaneously. At each wind state, it selects the number of active modules that maximises conversion efficiency while respecting minimum load. This allows hydrogen production at low turbine output without operating a stack below the minimum safe operating threshold.</p>
+<p>Because the electrolyser is modular, not every stack module has to operate simultaneously.</p>
+<p>For every operating point, the model selects the number of active modules that maximises the overall conversion efficiency. The available electrical power is then distributed across the active modules.</p>
+<p>This operational flexibility also alleviates the minimum-load limitation of PEM stacks, which is typically around 10% of the rated module capacity.</p>
+<p>For example, a 10 MW electrolyser consisting of ten 1 MW modules can operate at only one active module and 10% load. The minimum system load therefore becomes approximately 100 kW rather than 1 MW, allowing hydrogen production to continue during periods of low wind generation without operating individual stacks below their safe operating limit.</p>
+<p>Module switching is assumed to occur without efficiency or lifetime penalties.</p>
+</section>
+<section id="stack-overplanting" class="level2">
+<h2 class="anchored" data-anchor-id="stack-overplanting">Stack Overplanting</h2>
+<p>The modular architecture naturally allows installation of more stack capacity than the maximum available electrical input. This is referred to here as <strong>stack overplanting</strong>.</p>
+<p>Operating a larger installed stack capacity reduces the average current density of each active module. Lower current density increases conversion efficiency and slows stack degradation.</p>
+<p>These benefits come at the expense of additional stack CAPEX. The model therefore treats the installed stack capacity as an optimisation variable and determines the economically optimal degree of overplanting by minimising the overall LCOE.</p>
+<p>In this LCOE optimisation, the system scope greatly influences the outcome. As the scope expands, the optimum generally shifts towards larger stack capacities and higher efficiencies, as stack costs become a smaller fraction of the total system investment. See the box below for a worked example.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example: Why the optimisation scope matters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider first an electrolyser system consisting only of the power electronics, stacks and balance of plant.</p>
+<p>If the stack represents roughly 30% of the total electrolyser cost, increasing the installed stack capacity by 50% increases the overall system CAPEX by approximately 15%. Such an investment is only justified when the resulting efficiency improvement produces comparable lifetime savings.</p>
+<p>Now consider the complete offshore hydrogen production system, including wind turbines, electrical infrastructure, offshore installation and export systems.</p>
+<p>Within this larger system the stack may represent only 5% of the total investment A 50% increase in installed stack capacity therefore increases total project cost by only around 2.5%, making relatively small efficiency improvements economically worthwhile.</p>
+<p>This illustrates why component optimisation should always be performed within the context of the complete energy system rather than considering each component independently.</p>
+</div>
+</div>
+</section>
+<section id="degradation" class="level2">
+<h2 class="anchored" data-anchor-id="degradation">Degradation</h2>
+<p><strong>Efficiency loss</strong></p>
+<p>PEM stacks gradually degrade during operation. As degradation progresses, the cell voltage increases, reducing the electrical efficiency of hydrogen production. The model assumes linear degradation with accumulated full-load operating hours at a rate of 0.18% per 1000 full-load hours.</p>
+<p><strong>Stack replacement</strong></p>
+<p>Eventually the efficiency loss becomes sufficiently large that replacing the stack is economically preferable to continued operation. Rather than prescribing a fixed replacement criterion, the replacement moment is determined through the LCOH optimisation. In practice, approximately 10% performance degradation is commonly considered end-of-life.</p>
+<p><strong>Effect of partial-load operation</strong></p>
+<p>Operating more installed stack capacity reduces the average current density of each module, slowing degradation and extending stack lifetime. This creates an additional economic incentive for stack overplanting, alongside the efficiency improvements described previously.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example: Stack overplanting and degradation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume a stack is replaced after reaching 10% degradation. With a degradation rate of 0.18% per 1000 full-load hours, replacement occurs after approximately 58,500 full-load hours. Assuming an offshore wind capacity factor of 40%, this corresponds to roughly 16.7 calendar years. A 25-year project therefore requires at least one stack replacement. If this replacement is already unavoidable, installing additional stack capacity from the outset becomes an attractive alternative. The total stack material requirement over the project lifetime remains similar, while the system additionally benefits from:</p>
+<ol type="1">
+<li>Lower maintenance costs by avoiding mid-life replacement.</li>
+<li>Higher efficiency through operation at lower current density.</li>
+<li>Reduced degradation throughout the project lifetime.</li>
+</ol>
+<p>This conclusion depends strongly on the assumption that degradation scales linearly with accumulated full-load hours.</p>
+</div>
+</div>
+</section>
+<section id="cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<p>The stack cost consists primarily of materials and manufacturing. Unlike equipment such as turbines or compressors, larger PEM electrolysers are not constructed by scaling individual stacks. Instead, larger systems simply contain more identical stack modules. Consequently, stack cost scales approximately linearly with installed stack capacity. Cost reductions are therefore expected to arise mainly through manufacturing learning and production volume rather than economies of scale at the equipment level. The model adopts the stack cost projections from <include nrel="" reference="">.</include></p>
 </section>
 <section id="availability" class="level2">
 <h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Electrolyser</td>
-<td style="text-align: right;">98.5%</td>
-</tr>
-</tbody>
-</table>
+<p>The modular architecture provides inherent redundancy because individual stack modules can be isolated without shutting down the complete electrolyser. A stack availability of <strong>99.5%</strong> is assumed throughout this study.</p>
 </section>
 <section id="installation-and-mass" class="level2">
 <h2 class="anchored" data-anchor-id="installation-and-mass">Installation and Mass</h2>
-<p>Stack installation is included in the electrolyser facility or turbine-integrated hydrogen system. A separate stack mass model is not yet documented and should be added if stack mass affects tower, platform, or installation cost.</p>
-</section>
-<section id="source-basis" class="level2">
-<h2 class="anchored" data-anchor-id="source-basis">Source Basis</h2>
-<p>Stack cost assumptions are based on NREL-derived cost data and manufacturer efficiency data. The manufacturer polarisation curve is treated as confidential source data.</p>
+<p>Stack installation is included within the installation model of the complete electrolyser facility or turbine-integrated hydrogen production system.</p>
+<p>A dedicated stack mass model is not yet included. If future work identifies stack mass as a significant driver for tower sizing, platform design or installation costs, this section should be expanded accordingly.</p>
 
 
 </section>
@@ -717,7 +787,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
