@@ -1,0 +1,7 @@
+---
+title: "Offshore Installation"
+---
+
+Offshore installation covers installation costs and installation drivers for turbines, foundations, cables, pipelines, platforms, and substations.
+
+Installation costs are documented separately from component material CAPEX where the source material provides separate values. Component pages link here when installation method or vessel assumptions affect the total installed cost.

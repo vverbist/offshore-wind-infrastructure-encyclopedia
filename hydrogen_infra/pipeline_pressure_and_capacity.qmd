@@ -1,0 +1,35 @@
+---
+title: "Pipeline Pressure and Capacity"
+---
+
+## Role in the Model
+
+Pipeline pressure links compressor energy, compressor CAPEX, pipeline capacity, and number of parallel pipelines.
+
+## Optimisation Logic
+
+Higher inlet pressure increases the capacity of a given pipeline but increases compression work. Larger diameters reduce cost per unit capacity but are limited by installation and flexibility constraints.
+
+The source material notes that the cost optimum often prefers the largest feasible diameter because it has the lowest cost per capacity. However, because pipelines come in discrete units, they can be over-dimensioned. Reducing pressure can then lower compression cost while retaining enough capacity.
+
+## Capacity Equation Inputs
+
+The capacity calculation uses:
+
+- pipeline diameter
+- inlet pressure
+- outlet pressure
+- pipeline length
+- gas density and compressibility
+- surface roughness
+- friction relation
+
+## Model Outputs
+
+For each pipeline option, the model calculates:
+
+- maximum hydrogen mass flow
+- MW-equivalent transport capacity
+- required number of parallel export pipelines
+- compressor power needed to reach inlet pressure
+- annualised pipeline and compressor cost contribution

@@ -1,0 +1,31 @@
+---
+title: "Central Electrolyser Platform"
+---
+
+## Role in the Value Chain
+
+The central electrolyser platform hosts AC aggregation, power conditioning, PEM stacks, balance of plant, compression, and pipeline export interface equipment for the centralised hydrogen architecture.
+
+## Cost Model
+
+The current model reuses the offshore platform cost basis from the HVDC/substation package for the central electrolyser platform. Electrolyser, compressor, and pipeline costs are modelled separately.
+
+## Energy Balance
+
+Energy conversion on the platform includes:
+
+- transformer and rectifier losses before the stacks
+- stack conversion losses
+- BOP auxiliary consumption
+- purification losses
+- compression energy
+
+These are documented on the hydrogen production and compressor pages.
+
+## Availability
+
+Availability is currently applied through the electrolyser and compressor component factors, plus any retained electrical substation availability where applicable.
+
+## Mass and Scaling
+
+The current source material does not yet provide a dedicated central-electrolyser platform mass model. This is a priority gap because platform mass can govern topside cost and installation cost.

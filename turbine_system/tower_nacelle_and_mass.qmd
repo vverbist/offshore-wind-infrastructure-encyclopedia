@@ -1,0 +1,30 @@
+---
+title: "Tower, Nacelle, and Mass"
+---
+
+## Role in the Model
+
+Mass assumptions matter when component placement changes tower loading, nacelle design, foundation requirements, and installation cost.
+
+This page is reserved for mass descriptions that affect the techno-economic model. The most important future addition is the difference between conventional turbine electrical equipment and turbine-integrated electrolysis equipment in the decentralised hydrogen architecture.
+
+## Current Status
+
+The background documents identify mass as relevant, but do not yet provide a complete mass model for:
+
+- tower mass
+- nacelle mass
+- in-turbine electrolyser mass
+- compressor mass
+- transformer and converter mass
+- structural reinforcement
+
+## Modelling Treatment
+
+Until explicit mass functions are added, turbine CAPEX, foundation CAPEX, and installation cost are represented through fixed component assumptions. Any future mass-linked correction should state:
+
+- mass driver
+- affected component cost
+- scaling relation
+- source basis
+- architecture applicability

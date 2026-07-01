@@ -1,0 +1,343 @@
+---
+title: "Direct DC Integration of Wind Turbines and PEM Electrolysers"
+---
+
+## Purpose of this section
+
+The model assumes that, in a decentralised hydrogen architecture, the PEM electrolyser can be integrated directly on the wind turbine DC link. In other words, electrical power from the turbine is not exported as grid-quality AC and then rectified again for electrolysis. Instead, the turbine-side converter produces a controlled DC link, and the PEM stack or stack array is connected to that DC system.
+
+The purpose of this section is to explain why that assumption is reasonable. The argument is made in two steps:
+
+1. direct DC integration has a clear system-level benefit; and
+2. direct DC integration without a separate electrolyser-side DC/DC converter is technically plausible if the turbine converter, PEM stack, and balance of plant are designed as one system.
+
+The assumed electrical chain is:
+
+```text
+wind generator -> active front-end rectifier / turbine-side converter -> controlled DC link -> PEM stack or PEM stack array
+```
+
+The turbine-side rectifier is assumed to be an **active front end (AFE)**. It controls generator torque and DC-link voltage. The PEM stack or PEM stack array is connected directly to this controlled DC bus.
+
+The architecture considered here has:
+
+- no AC grid export from the turbine;
+- no grid-side inverter;
+- no separate electrolyser-side DC/DC converter;
+- no dedicated stack current regulator between the DC link and the PEM stack;
+- only protection and auxiliary devices such as DC-link capacitance, contactors, precharge circuits, dump load, brake chopper, crowbar, and emergency shutdown hardware.
+
+::: {.callout-note}
+## Model assumption
+
+The model assumes that direct DC integration is possible at system level. This does not imply that a PEM stack can simply be connected to an uncontrolled DC source. It assumes an integrated design in which the turbine AFE, DC-link control, PEM stack configuration, module switching, and balance-of-plant controls jointly keep the stack within its allowable operating envelope.
+:::
+
+## Why direct DC integration is beneficial
+
+The main benefit of direct DC integration is that it removes electrical conversion stages that are otherwise required only because the energy is temporarily handled as grid-quality AC.
+
+In a conventional AC-coupled architecture, the electrical chain is typically:
+
+```text
+wind generator -> machine-side converter -> DC link -> grid-side inverter -> transformer -> AC collection/export -> transformer/rectifier -> PEM stack
+```
+
+This architecture is logical when the product is electricity, or when many turbines feed a centralised electrolyser through an AC collection grid. However, if the only product is hydrogen and there is no AC export, several parts of the chain become avoidable from a system perspective.
+
+A PEM electrolyser is fundamentally a DC load. A modern full-converter wind turbine also already contains a DC link internally. Direct integration therefore tries to connect two parts of the system that are already naturally DC:
+
+```text
+wind turbine internal DC link -> PEM stack DC load
+```
+
+This creates four main benefits.
+
+### Fewer conversion stages
+
+Each electrical conversion stage adds cost, losses, cooling demand, protection equipment, and controls. Direct DC integration removes the need to convert the turbine DC link back to grid-quality AC and then convert that AC back to DC for the electrolyser.
+
+ITM Power's wind-turbine electrolyser concept makes this argument explicitly. It describes a system with:
+
+> "an electrolyser placed at the wind turbine ... directly electrically connected to the DC link in the wind turbine"
+
+and states that Type IV turbine generators and their DC links:
+
+> "have the potential to power the electrolyser directly"
+
+ITM describes the benefit as:
+
+> "fewer power conversion steps"
+
+Source: ITM Power, *Wind turbine electrolyser integration*: <https://itm-power.com/news/wind-turbine-electrolyser-integraion>
+
+This directly supports the modelling idea: if electricity is not the final export product, it is inefficient to force the system through the full AC-export chain before feeding a DC electrolyser.
+
+### Lower electrical infrastructure requirement
+
+If hydrogen is produced at the turbine, the infield system can shift from electrical collection to hydrogen collection. This can reduce or avoid equipment such as turbine grid-side inverters, step-up transformers, offshore AC collection strings, offshore electrical platforms, and centralised electrolyser rectifier infrastructure.
+
+The benefit is not only efficiency. It is also structural: the offshore wind farm no longer needs to be designed primarily as an electrical export asset. It can be designed as a distributed hydrogen-production asset.
+
+### Better fit with a decentralised hydrogen architecture
+
+Direct DC integration aligns the electrical design with the value-chain design. In a decentralised architecture, each turbine becomes a hydrogen-production unit. The infield network collects hydrogen rather than electricity.
+
+This avoids moving large amounts of electrical power through an infield AC grid only to convert it back to DC at a central electrolyser. It also reduces the relevance of AC string capacity limits and offshore electrical platform sizing in the model.
+
+### Potentially lower cost, mass, and losses
+
+Removing conversion stages can reduce:
+
+- converter equipment;
+- transformers;
+- filters;
+- switchgear;
+- cooling systems;
+- electrical platform weight;
+- conversion losses;
+- interface complexity between turbine and central electrolyser.
+
+These benefits are the reason direct DC integration is worth modelling, even if it requires a more integrated turbine-electrolyser control system.
+
+::: {.callout-tip}
+## Modelling implication
+
+The modelling assumption is not that power electronics disappear. The assumption is that the turbine-side AFE remains, while the downstream grid-side inverter and electrolyser-side rectification/DC conversion stages are not modelled as separate conversion steps for the decentralised case.
+:::
+
+## Why direct DC integration should be technically possible
+
+Direct DC integration should be technically possible because the two key electrical subsystems are compatible at a basic level:
+
+- a Type IV wind turbine already contains a controlled DC link; and
+- a PEM electrolyser stack is a DC electrochemical load.
+
+The question is therefore not whether PEM electrolysis can use DC power. It can. The real question is whether the PEM stack can be operated safely and efficiently from the turbine DC link **without adding a separate DC/DC converter between the DC link and the stack**.
+
+The answer is: yes, if the system is designed around voltage matching and active DC-link control.
+
+## Electrical operating principle
+
+A PEM electrolyser stack draws current according to its polarization curve. The stack voltage can be represented conceptually as:
+
+```text
+V_stack = N_cells * V_cell(j, temperature, pressure, hydration, ageing)
+```
+
+where `j` is current density.
+
+With a dedicated DC/DC converter, the converter normally regulates stack current. Without that converter, stack current is instead determined by the controlled DC-link voltage and the PEM polarization curve.
+
+The direct-coupled design therefore becomes a voltage-matched system:
+
+```text
+turbine DC-link operating range ~= PEM stack operating voltage range
+```
+
+If the PEM stack cell count and module configuration are selected so that the stack voltage range matches the turbine DC-link operating range, the stack can be supplied directly from the DC link. The AFE then acts as the main electrical actuator by regulating the DC-link voltage and controlling generator torque.
+
+This is why the assumption is credible: the turbine-side AFE can provide controlled DC power, and the PEM stack can accept controlled DC power.
+
+## What replaces the missing DC/DC converter
+
+Removing the electrolyser-side DC/DC converter does not remove the need for control. It relocates the control function.
+
+In a conventional system, the DC/DC converter or rectifier supply normally provides:
+
+- stack current control;
+- voltage matching;
+- current limiting;
+- current ripple reduction;
+- controlled start-up and shutdown;
+- some degree of electrical decoupling;
+- fault management and protection.
+
+In the direct DC architecture, these functions must be provided by the integrated system:
+
+- the AFE regulates DC-link voltage;
+- generator torque control limits the mechanical-to-electrical power conversion;
+- pitch control curtails aerodynamic power when required;
+- stack modules can be switched in and out to adjust the effective PEM load;
+- optional series/parallel reconfiguration can adjust stack voltage range;
+- a DC-link capacitor handles short electrical transients;
+- a brake chopper or dump load handles stack rejection and emergency overvoltage;
+- balance-of-plant interlocks ensure water, temperature, pressure, and gas-purity limits are respected.
+
+The most credible architecture is therefore:
+
+```text
+PMSG wind turbine -> AFE -> controlled DC link -> segmented PEM stack array
+```
+
+with module switching and emergency dump/brake protection.
+
+## Evidence supporting the assumption
+
+### Industrial concept: ITM Power and Ørsted
+
+ITM Power explicitly describes the direct DC-link integration concept. The proposed system places the electrolyser at the wind turbine and connects it directly to the turbine DC link:
+
+> "an electrolyser placed at the wind turbine ... directly electrically connected to the DC link in the wind turbine"
+
+ITM also states that Type IV turbine generators and their DC links:
+
+> "have the potential to power the electrolyser directly"
+
+and that the approach enables:
+
+> "fewer power conversion steps"
+
+Source: ITM Power, *Wind turbine electrolyser integration*: <https://itm-power.com/news/wind-turbine-electrolyser-integraion>
+
+This source is important because it confirms that direct turbine-DC-link coupling is not merely a theoretical modelling shortcut. It is an identified industrial concept for reducing conversion stages in offshore wind-to-hydrogen systems.
+
+However, ITM also states:
+
+> "Such a system has not been demonstrated in practice"
+
+Therefore, this reference supports the feasibility and relevance of the model assumption, but it does not prove a commercial MW-scale no-DC/DC implementation.
+
+### Academic control concept: Jing et al.
+
+Jing et al. describe a non-grid-connected wind-hydrogen architecture that:
+
+> "directly connects the Source wind turbines and the Load hydrogen production devices through a DC bus"
+
+The electrolyser load is described as:
+
+> "a modular proton exchange membrane (PEM) water electrolytic hydrogen production array"
+
+The control strategy regulates:
+
+> "the size of the PEM array ... and DC voltage collaboratively"
+
+Source: Jing et al., *Research on the Structure and Control Strategy of Energy Router for Non-grid-connected Source-Load Hydrogen Production System*: <https://link.springer.com/content/pdf/10.1007/s42835-021-00774-w.pdf>
+
+This is directly aligned with the model assumption. Instead of using a separate DC/DC converter to regulate the PEM stack, the system controls the DC bus and changes the effective PEM array size. This supports the idea that a segmented stack array can replace part of the function of an electrolyser-side converter.
+
+The limitation is that this is an academic control and simulation reference, not evidence of a commercial field system.
+
+### Small-scale experimental evidence: RMIT / Air 403
+
+The RMIT direct-coupling work explicitly investigated wind-to-PEM coupling:
+
+> "without the need for intervening voltage converters and maximum power point tracking electronics"
+
+Source: RMIT, *Direct coupling of a fixed-pitch variable speed aerogenerator to PEM electrolysers in a wind-hydrogen system for remote area power supply*: <https://research-repository.rmit.edu.au/articles/conference_contribution/Direct_coupling_of_a_fixed-pitch_variable_speed_aerogenerator_to_PEM_electrolysers_in_a_wind-hydrogen_system_for_remote_area_power_supply/27369558>
+
+This supports the physical feasibility of direct wind-to-PEM coupling without voltage conversion. It is not directly scalable evidence for a modern MW offshore turbine, but it demonstrates that matching generator and PEM stack electrical characteristics can produce a working direct-coupled system.
+
+### Counterpoint: mainstream DC wind concepts often retain DC/DC
+
+A recent paper on DC wind-turbine concepts notes that DC coupling is attractive because:
+
+> "wind turbine converters and electrolyzers operate internally with dc voltage"
+
+and that DC concepts can reduce equipment because:
+
+> "the number of conversion stages and filters is reduced"
+
+However, the same paper states:
+
+> "A key component for the application of dc technology in WTs is a high-power dc-dc converter"
+
+with functions including:
+
+> "stepping up/down dc voltages, galvanic isolation and fault ride-through capability"
+
+Source: *Evaluation of wind turbine concepts for coupling wind energy and electrolysis*: <https://link.springer.com/article/10.1007/s10010-025-00796-0>
+
+This is an important qualification. It shows that direct DC integration is attractive, but a separate DC/DC converter is still often used in mainstream DC architectures because it provides voltage adaptation, isolation, and protection. Therefore, the no-DC/DC assumption is technically defensible but should be treated as an integrated-design assumption rather than a standard off-the-shelf configuration.
+
+## Technical conditions for feasibility
+
+### Voltage matching
+
+The PEM stack voltage range must match the turbine DC-link voltage range. This can be done by selecting the number of cells in series and by arranging stack modules in suitable series/parallel strings.
+
+If the DC-link voltage is too low, the stack will produce little or no hydrogen. If it is too high, current density can exceed stack limits. The design therefore needs voltage matching at rated power and acceptable operation across the expected wind-power range.
+
+### Current-density control
+
+The PEM stack must remain within its allowable current-density range. A review of dynamic PEM operation notes:
+
+> "Dynamic operation of PEM electrolyzers via modulation of the operating current density brings with it several challenges - namely, heat management, gas crossover and associated safety concerns, and stack degradation."
+
+Source: <https://arxiv.org/html/2405.06766v1>
+
+In the direct DC architecture, current density is constrained by DC-link voltage control, wind curtailment, and stack-module switching rather than by a dedicated DC/DC converter.
+
+### Low-load and gas-crossover limits
+
+Low-load operation can create gas-purity and crossover concerns. A direct wind-coupled system will naturally encounter low-load operation unless it is curtailed, idled, or shut down below a defined threshold.
+
+A 2025 RSC paper on PEM operation at differential pressure states that understanding hydrogen permeation is:
+
+> "critical towards developing effective gas recombination strategies that enable safe operation"
+
+Source: <https://pubs.rsc.org/en/Content/ArticleLanding/2025/EE/D5EE00048C>
+
+The model assumption should therefore include a minimum safe operating region or shutdown logic. Direct DC connection should not be interpreted as uncontrolled low-current operation at arbitrary pressure.
+
+### Dynamic response
+
+PEM electrolysers are suitable for dynamic renewable operation, but dynamic operation still affects degradation, thermal control, pressure control, and gas management. A review of PEM dynamic operation states that renewable intermittency:
+
+> "poses several technological challenges and financial questions"
+
+Source: <https://www.mdpi.com/1996-1073/18/9/2154>
+
+This does not invalidate direct DC integration. It means the stack and balance of plant must be qualified for turbine-driven operation, including ramps, starts, stops, and curtailment events.
+
+### Thermal and water management
+
+At high current density, the stack generates more heat and requires adequate water supply and cooling. In a direct DC architecture, the AFE and the PEM balance of plant must coordinate closely so the stack is only energised when water flow, temperature, pressure, and conductivity are within safe limits.
+
+### Fault handling
+
+The most critical event is a PEM stack trip while the turbine is producing power. Without a DC/DC converter, there is less electrical decoupling between the turbine and the stack. The DC link can overvoltage quickly unless excess energy is removed or turbine power is reduced.
+
+A credible direct DC architecture therefore needs:
+
+- fast torque reduction by the AFE;
+- pitch or aerodynamic curtailment;
+- DC brake chopper or dump load;
+- high-speed stack isolation;
+- controlled DC-link discharge;
+- safe hydrogen shutdown sequence.
+
+## Implication for the model
+
+For modelling purposes, direct DC integration can be represented as an architecture that removes the grid-side inverter and the electrolyser-side rectifier/DC conversion stage from the hydrogen-production power path.
+
+The assumption is justified because:
+
+1. the PEM stack is a DC load;
+2. the turbine already has a controlled DC link;
+3. industrial concepts explicitly propose direct connection of the electrolyser to the turbine DC link;
+4. academic work supports direct DC bus connection with modular PEM stack arrays;
+5. small-scale experiments have shown direct wind-to-PEM coupling without voltage converters;
+6. the missing DC/DC functions can be replaced by AFE control, stack segmentation, and protection systems.
+
+The model should nevertheless treat this as an **integrated turbine-electrolyser configuration**, not as a conventional turbine plus conventional electrolyser package. The feasibility depends on co-design.
+
+## Final assessment
+
+Direct integration of a PEM stack or PEM stack array on the turbine DC link is a reasonable model assumption for a decentralised hydrogen architecture.
+
+The main reason to use it is that it avoids unnecessary AC conversion when the final product is hydrogen rather than electricity. It can reduce conversion stages, electrical infrastructure, equipment mass, and conversion losses. It also fits the system logic of a decentralised hydrogen wind farm, where the infield network collects hydrogen instead of electricity.
+
+Technically, the assumption is defensible because a PEM stack is a DC load and a Type IV wind turbine already has a controlled DC link. With an AFE controlling DC-link voltage and generator torque, and with a voltage-matched segmented PEM stack array, direct operation without a separate electrolyser-side DC/DC converter should be possible.
+
+The strongest practical formulation is:
+
+```text
+AFE-controlled turbine DC link + voltage-matched segmented PEM stack array + module switching + emergency dump/brake protection
+```
+
+::: {.callout-important}
+## Feasibility statement
+
+The model assumption is credible: **direct DC integration without a separate electrolyser-side DC/DC converter should be technically possible**, provided the turbine AFE, PEM stack array, protection system, and balance of plant are co-designed. It is not yet a widely proven MW-scale commercial standard, so it should be treated as an advanced integrated architecture rather than an off-the-shelf configuration.
+:::

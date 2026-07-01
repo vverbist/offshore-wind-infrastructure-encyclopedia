@@ -1,0 +1,29 @@
+---
+title: "Wake Modelling and Spacing"
+---
+
+## Role in the Model
+
+Wake modelling translates turbine layout into gross and wake-corrected energy yield. Turbine spacing is the main design variable connecting energy production to infrastructure economics.
+
+## Current Method
+
+The model uses PyWake to construct a wake-aware power lookup table indexed by wind speed and direction. Turbine positions are arranged on a rectangular grid scaled to the sea area and turbine count.
+
+## Yield-Capacity Factor Trade-off
+
+Tighter spacing increases installed capacity per km2 and can raise total areal yield. It also increases wake losses and lowers the capacity factor. Wider spacing reduces wake losses and improves capacity factor, but uses more area per MW.
+
+This trade-off is architecture-dependent because capacity-linked infrastructure costs differ across electricity and hydrogen configurations.
+
+## Cost Link
+
+Spacing affects:
+
+- number of turbines for a fixed area and density
+- wake losses and annual energy yield
+- capacity factor
+- infield cable or pipeline length
+- utilisation of peak-sized export infrastructure
+
+The model therefore treats spacing or wind farm power density as a design variable, not merely a site descriptor.

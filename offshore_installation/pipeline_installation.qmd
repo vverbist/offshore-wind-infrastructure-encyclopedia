@@ -1,0 +1,32 @@
+---
+title: "Pipeline Installation"
+---
+
+## Role in the Model
+
+Pipeline installation covers laying and connecting infield and export hydrogen pipelines.
+
+## Current Assumptions
+
+| Item | Assumption |
+|---|---:|
+| Infield pipeline installation | 635 EUR/m |
+| Export pipeline installation | 635 EUR/m |
+
+The model notes that a single vessel may be able to lay three pipelines simultaneously, while only one cable is laid at a time. This can lower installation cost per metre for pipelines relative to cables when scope is defined consistently.
+
+## Cost Drivers
+
+Pipeline installation depends on:
+
+- pipeline diameter
+- pipeline material
+- spooling feasibility
+- number of parallel pipelines
+- route length
+- burial or protection requirements
+- connection and termination count
+
+## Material Link
+
+Composite pipelines are preferred in the source material for relevant infield diameters because they are lighter, can be spooled, and can simplify installation compared with steel.

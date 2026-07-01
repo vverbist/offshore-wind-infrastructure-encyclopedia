@@ -1,0 +1,25 @@
+---
+title: "Onshore Grid Connection"
+---
+
+## Role in the Value Chain
+
+The onshore grid connection receives exported HVDC power and converts it to AC at the national high-voltage grid interface.
+
+## Cost Model
+
+The current source material includes onshore conversion in the electrical value chain, but does not yet separate a detailed onshore converter station CAPEX from the broader HVDC station package.
+
+## Energy Balance
+
+The onshore conversion stage is included in the electrical efficiency chain. The specific efficiency value is marked as to be confirmed in the current source table.
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| Onshore substation | 98.0% |
+
+## Source Status
+
+This page needs a final split between offshore converter, export cable, onshore converter, and grid interface costs once the HVDC source package is decomposed.

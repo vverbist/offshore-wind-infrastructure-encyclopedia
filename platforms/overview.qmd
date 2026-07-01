@@ -1,0 +1,7 @@
+---
+title: "Platforms"
+---
+
+Platforms host offshore aggregation, conversion, and hydrogen production equipment. They affect CAPEX, installation cost, structural mass, and architecture feasibility.
+
+The model currently uses a high-level platform cost basis from the HVDC/substation package and reuses the platform-cost assumption for centralised electrolysis where a separate platform model is not yet available.

@@ -1,0 +1,59 @@
+---
+title: "Hydrogen Pipelines"
+---
+
+## Role in the Value Chain
+
+Hydrogen pipelines transport compressed hydrogen through the infield grid and from the wind farm to shore.
+
+The model distinguishes between infield pipelines and export pipelines, but documents them together because the same capacity, pressure, material, and installation logic applies.
+
+## Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Infield pipeline installation | 635 EUR/m |
+| Infield pipeline OPEX | 0.5% of CAPEX per year |
+| Export pipelines installed in parallel | 3 |
+| Export pipeline installation | 635 EUR/m |
+| Export pipeline OPEX | 0.5% of CAPEX per year |
+
+Pipeline material CAPEX is based on confidential supplier data. The current model uses cost data for selected diameter and pressure combinations and fits a two-dimensional regression to interpolate or extrapolate.
+
+## Capacity Model
+
+Pipeline capacity depends on:
+
+- diameter
+- inlet pressure
+- outlet pressure
+- route length
+- roughness and friction parameters
+
+The current export-pipeline calculation uses the Colebrook equation from Perry's Chemical Engineers' Handbook, with Darcy-Weisbach roughness and Hazen-Williams friction factors from the manufacturer.
+
+## Current Sizing Assumptions
+
+| Parameter | Value |
+|---|---:|
+| Baseline export length | 80 km |
+| Export pipeline outlet pressure | 66 bar |
+| Maximum composite pipeline diameter | 8 inch |
+| Infield pipeline diameter | 6 inch |
+| Infield pipeline pressure | 150 bar |
+| Infield pipeline capacity | about 500 MW equivalent |
+
+The 66 bar outlet pressure is selected so hydrogen can be injected into the expected Dutch hydrogen backbone without an additional compressor.
+
+## Energy Balance
+
+The current model assumes no additional hydrogen losses in the pipelines after compression. Pipeline pressure drop affects required compression and capacity, not a direct hydrogen loss term.
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| Infield pipelines | 100% |
+| Export pipelines | 100% |
+
+This is a modelling convention and should be tested in sensitivity work if pipeline outages become material.

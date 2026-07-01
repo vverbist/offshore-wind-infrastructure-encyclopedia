@@ -1,0 +1,40 @@
+---
+title: "References and Source Basis"
+nocite: |
+  @*
+---
+
+This page records the source basis used to seed the encyclopedia. The bibliography below is generated from `references.bib`.
+
+## Background Documents
+
+- `260501_offshore_hydrogen_model_description.docx`
+- `260310_article_draft_A05.docx`
+- `260205_article_draft_A03.docx`
+- `260206 _article_draft_AJW.docx`
+- `2060306 H1 H2 System Reassessment Rewritten.docx`
+- `Manuscript_Ch1-Ch4_Export.docx`
+- `Methodological positioning note.docx`
+
+## Mentioned Source Types
+
+- TenneT programme data for 2 GW offshore HVDC station cost assumptions
+- NREL electrolyser cost basis, converted from 2020 USD to 2025 EUR and marked up to sales price
+- Transition Accelerator compressor cost basis
+- Manufacturer G stack polarisation curve
+- Manufacturer H balance-of-plant power consumption data
+- Supplier S pipeline cost data
+- Installer benchmark for offshore infield cable installation
+- TNO-related wind turbine and foundation cost assumptions
+- Dutch Offshore Wind Atlas wind resource data
+
+## To Do
+
+Each component page should eventually link to a formal source entry with version, year, currency basis, confidentiality status, and model-use notes.
+
+Entries marked `TODO` should be treated as source records that still need exact report titles, versions, URLs, access dates, or confidentiality notes before they are used as final evidence.
+
+## Bibliography
+
+::: {#refs}
+:::

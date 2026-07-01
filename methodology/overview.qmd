@@ -1,0 +1,23 @@
+---
+title: "Methodology"
+---
+
+This section defines the modelling logic used across all component pages. The model is a deterministic techno-economic optimisation framework for offshore wind systems with alternative energy carriers.
+
+The modelling object is the complete turbine-to-onshore-delivery value chain. The purpose is not to compare isolated component prices, but to represent how component cost, energy conversion, availability, and installation assumptions interact when the energy carrier changes from electricity to hydrogen.
+
+## Methodological Role
+
+The methodology pages define conventions that are shared across components:
+
+- the system boundary used for cost and yield accounting
+- the LCOE objective function
+- the modelling workflow from fixed inputs to derived parameters and outputs
+- the optimisation variables treated as model outcomes
+- the annualisation, energy-basis, and availability conventions used in component calculations
+
+Component-specific assumptions are not collected here. They are documented on the relevant component pages.
+
+## Core Principle
+
+Infrastructure is modelled as part of the offshore energy system, not as an external connection. This matters because export infrastructure is sized for peak capacity but paid back through delivered annual energy. The cost of capacity therefore changes the economically optimal layout and carrier choice.

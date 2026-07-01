@@ -1,0 +1,31 @@
+---
+title: "Platform Mass and Scaling"
+---
+
+## Role in the Model
+
+Platform mass can govern jacket cost, topside cost, installation method, and heavy-lift vessel requirements.
+
+## Current Status
+
+The current assumption set uses aggregate platform cost values rather than explicit mass-based scaling. This is acceptable for a first-pass techno-economic model but limits the ability to compare platform-heavy centralised hydrogen against HVDC platforms in detail.
+
+## Future Mass Model Requirements
+
+A platform mass model should document:
+
+- topside equipment mass by component
+- jacket or support-structure mass
+- installation lift weight
+- number of lifts
+- vessel class
+- mass-cost scaling exponent
+- availability or maintainability effects where relevant
+
+## Architecture Relevance
+
+| Architecture | Platform relevance |
+|---|---|
+| Electricity export | HVDC converter and substation platform |
+| Centralised hydrogen | Electrolyser, BOP, compression, and export interface platform |
+| Decentralised hydrogen | No central offshore platform in the current configuration |

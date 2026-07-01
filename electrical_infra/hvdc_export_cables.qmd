@@ -1,0 +1,40 @@
+---
+title: "HVDC Export Cables"
+---
+
+## Role in the Value Chain
+
+HVDC export cables transport electrical energy from the offshore converter station to the onshore converter station.
+
+## Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Export cable capacity | 2 GW |
+| Export cables installed in parallel | 1 |
+| Installed cost benchmark | 7 million EUR/km |
+| Installation cost | 635 EUR/m |
+| Implied cable CAPEX | 6,365 EUR/m |
+| OPEX | 2% of CAPEX per year |
+
+The material CAPEX is derived by subtracting the modelled installation cost from the installed-cost benchmark.
+
+## Energy Balance
+
+| Component | Efficiency |
+|---|---:|
+| HVDC export cable | 99.5% |
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| HVDC export cable | 99.0% |
+
+## Installation
+
+Cable installation is modelled separately from material CAPEX. See [Cable Installation](../offshore_installation/cable_installation.qmd).
+
+## Sizing Drivers
+
+Export cable sizing is driven by rated export capacity and distance to shore. The current baseline distance to shore is 80 km.

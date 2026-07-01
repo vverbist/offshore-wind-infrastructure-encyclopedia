@@ -1,0 +1,11 @@
+---
+title: "Turbine System"
+---
+
+The turbine system includes the wind turbine, generator, turbine-side power electronics, tower and nacelle mass, and foundation.
+
+The turbine system is common to all architectures at the level of aerodynamic energy capture, but the downstream electrical conversion chain changes between electricity, centralised hydrogen, and decentralised hydrogen.
+
+## Current Baseline
+
+The current model uses a 15 MW turbine as the baseline unit. Turbine and foundation assumptions are documented separately because foundations, tower mass, and installation costs can scale with mass and structural loading.

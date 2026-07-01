@@ -1,0 +1,51 @@
+---
+title: "Modelling Workflow"
+---
+
+The model workflow separates fixed assumptions, scenario parameters, derived parameters, optimisation variables, and outputs.
+
+## Fixed Inputs
+
+Fixed inputs remain constant across the compared architectures unless explicitly varied in a sensitivity case. Examples include:
+
+- wind resource and Weibull distributions
+- distance to shore
+- water depth
+- component cost assumptions
+- efficiency and availability assumptions
+- financing parameters
+- source-specific cost curves
+
+## Scenario Parameters
+
+Scenario parameters define the case being evaluated. Current scenario dimensions include:
+
+- sea area
+- number of turbines
+- export architecture: electricity, centralised hydrogen, or decentralised hydrogen
+- hydrogen stack overplanting
+- hydrogen pipeline pressure
+- hydrogen pipeline selection
+
+## Derived Parameters
+
+Derived parameters are calculated deterministically from fixed inputs and scenario parameters. Examples include:
+
+- turbine positions
+- infield cable or pipeline length
+- wake losses
+- production profile
+- stack operating point and efficiency
+- balance-of-plant losses
+- compressor power demand
+- peak export capacity requirement
+
+## Outputs
+
+The principal outputs are yield and LCOE. The encyclopedia does not document result values, but it documents the assumptions needed to reproduce them:
+
+- annual delivered energy in MWh/year
+- areal yield in MWh/km2/year
+- LCOE in EUR/MWh or EUR/kg-equivalent reporting where needed
+- component-level annualised cost contribution
+- optimised component sizing decisions

@@ -1,0 +1,230 @@
+---
+title: "PEM Electrolyser Stack"
+---
+
+## Role in the Value Chain
+
+The PEM electrolyser stack is the primary energy conversion component of the hydrogen production system.
+It converts electrical power and water into hydrogen and oxygen and therefore largely determines the overall efficiency of the electrolyser.
+
+Within this model, the stack is represented explicitly because its efficiency, degradation and sizing have a strong influence on the optimal design of the offshore energy system.
+Rather than optimising the stack in isolation, it is evaluated as one component of the complete offshore hydrogen production chain.
+
+PEM stacks are present in both centralised and decentralised hydrogen production architectures.
+
+::: {.callout-note}
+## Why PEM?
+
+PEM electrolysis is selected because it is well suited to variable renewable electricity.
+The technology can rapidly follow fluctuations in wind power while maintaining high efficiency over a wide operating range.
+
+Another important advantage is that hydrogen is produced at an elevated outlet pressure (approximately 30 bar in the source material), reducing the required downstream compression ratio compared with low-pressure electrolysis technologies.
+
+See the [Compressor page](../hydrogen_infra/compressor.qmd#sec-compressor-pem) for more discussion.
+:::
+
+## Stack Model
+
+The stack model consists of four interacting components:
+
+- stack efficiency
+- modular operation
+- degradation
+- cost
+
+Together these determine the optimal installed stack capacity and operating strategy.
+
+## Polarisation Curve
+
+**Engineering principle**
+
+The electrical energy required to produce hydrogen depends on the cell voltage.
+As current density increases, the cell voltage rises because activation, ohmic and mass transport losses become larger.
+Consequently, stack efficiency decreases at higher current densities.
+
+**Model implementation**
+
+Stack efficiency is calculated from a manufacturer polarisation curve relating cell voltage to current density.
+The operating point is defined as a percentage of the maximum current density (equivalently the maximum stack power).
+
+
+```{python}
+#| label: fig-polarisation
+#| fig-cap: |
+#|   Manufacturer polarisation curve (top) and resulting stack efficiency
+#|   (bottom) used in the model.
+#| echo: false
+#| warning: false
+#| message: false
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# ---------------------------------------------------------------------
+# Input data
+# ---------------------------------------------------------------------
+
+excel_path = "../numerical_inputs/pem_polarisation_curve.xlsx"
+sheet_name = "polarisation_curve"
+
+df = pd.read_excel(excel_path, sheet_name=sheet_name)
+
+# Expected columns
+j = df["current_density_A_cm2"]
+V = df["cell_voltage_V"]
+
+# ---------------------------------------------------------------------
+# Efficiency calculation
+# ---------------------------------------------------------------------
+
+# Reversible cell voltage (HHV basis)
+V_rev = 1.481  # V
+
+eta = V_rev / V * 100
+
+# ---------------------------------------------------------------------
+# Plot
+# ---------------------------------------------------------------------
+
+fig, (ax1, ax2) = plt.subplots(
+    1, 2,
+    figsize=(10, 4)
+)
+
+# Polarisation curve
+ax1.plot(j, V, linewidth=2)
+
+ax1.set_ylabel("Cell voltage [V]")
+ax1.set_title("Polarisation curve")
+ax1.grid(True)
+
+# Efficiency curve
+ax2.plot(j, eta, linewidth=2)
+
+ax2.set_xlabel("Current density [A/cm²]")
+ax2.set_ylabel("Stack efficiency [% HHV]")
+ax2.set_title("Efficiency")
+ax2.grid(True)
+
+plt.tight_layout()
+plt.show()
+```
+
+
+The optimisation therefore captures the trade-off between operating fewer stacks at high current density or more stacks at lower current density.
+
+## Modularity
+
+Commercial PEM electrolysers are typically manufactured as modular units with capacities of approximately 1 MW.
+Larger electrolysers are constructed by combining many identical modules.
+
+The modular approach offers several practical advantages:
+
+- repeatable manufacturing
+- manageable electrical voltages and currents
+- improved thermal management
+- easier transport and installation
+- simplified maintenance and replacement
+
+The model therefore represents an electrolyser as a collection of identical stack modules.
+
+## Module Switching
+
+Because the electrolyser is modular, not every stack module has to operate simultaneously.
+
+For every operating point, the model selects the number of active modules that maximises the overall conversion efficiency.
+The available electrical power is then distributed across the active modules.
+
+This operational flexibility also alleviates the minimum-load limitation of PEM stacks, which is typically around 10% of the rated module capacity.
+
+For example, a 10 MW electrolyser consisting of ten 1 MW modules can operate at only one active module and 10% load.
+The minimum system load therefore becomes approximately 100 kW rather than 1 MW, allowing hydrogen production to continue during periods of low wind generation without operating individual stacks below their safe operating limit.
+
+Module switching is assumed to occur without efficiency or lifetime penalties.
+
+## Stack Overplanting
+
+The modular architecture naturally allows installation of more stack capacity than the maximum available electrical input.
+This is referred to here as **stack overplanting**.
+
+Operating a larger installed stack capacity reduces the average current density of each active module.
+Lower current density increases conversion efficiency and slows stack degradation.
+
+These benefits come at the expense of additional stack CAPEX.
+The model therefore treats the installed stack capacity as an optimisation variable and determines the economically optimal degree of overplanting by minimising the overall LCOE.
+
+In this LCOE optimisation, the system scope greatly influences the outcome.
+As the scope expands, the optimum generally shifts towards larger stack capacities and higher efficiencies, as stack costs become a smaller fraction of the total system investment.
+See the box below for a worked example.
+
+::: {.callout-note}
+## Example: Why the optimisation scope matters
+
+Consider first an electrolyser system consisting only of the power electronics, stacks and balance of plant.
+
+If the stack represents roughly 30% of the total electrolyser cost, increasing the installed stack capacity by 50% increases the overall system CAPEX by approximately 15%.
+Such an investment is only justified when the resulting efficiency improvement produces comparable lifetime savings.
+
+Now consider the complete offshore hydrogen production system, including wind turbines, electrical infrastructure, offshore installation and export systems.
+
+Within this larger system the stack may represent only 5% of the total investment
+A 50% increase in installed stack capacity therefore increases total project cost by only around 2.5%, making relatively small efficiency improvements economically worthwhile.
+
+This illustrates why component optimisation should always be performed within the context of the complete energy system rather than considering each component independently.
+:::
+
+## Degradation
+
+**Efficiency loss**
+
+PEM stacks gradually degrade during operation.
+As degradation progresses, the cell voltage increases, reducing the electrical efficiency of hydrogen production.
+The model assumes linear degradation with accumulated full-load operating hours at a rate of 0.18% per 1000 full-load hours.
+
+**Stack replacement**
+
+Eventually the efficiency loss becomes sufficiently large that replacing the stack is economically preferable to continued operation.
+Rather than prescribing a fixed replacement criterion, the replacement moment is determined through the LCOH optimisation.
+In practice, approximately 10% performance degradation is commonly considered end-of-life.
+
+**Effect of partial-load operation**
+
+Operating more installed stack capacity reduces the average current density of each module, slowing degradation and extending stack lifetime.
+This creates an additional economic incentive for stack overplanting, alongside the efficiency improvements described previously.
+
+::: {.callout-note}
+## Example: Stack overplanting and degradation
+Assume a stack is replaced after reaching 10% degradation.
+With a degradation rate of 0.18% per 1000 full-load hours, replacement occurs after approximately 58,500 full-load hours.
+Assuming an offshore wind capacity factor of 40%, this corresponds to roughly 16.7 calendar years.
+A 25-year project therefore requires at least one stack replacement.
+If this replacement is already unavoidable, installing additional stack capacity from the outset becomes an attractive alternative.
+The total stack material requirement over the project lifetime remains similar, while the system additionally benefits from:
+
+1. Lower maintenance costs by avoiding mid-life replacement.
+2. Higher efficiency through operation at lower current density.
+3. Reduced degradation throughout the project lifetime.
+
+This conclusion depends strongly on the assumption that degradation scales linearly with accumulated full-load hours.
+:::
+
+## Cost Model
+
+The stack cost consists primarily of materials and manufacturing.
+Unlike equipment such as turbines or compressors, larger PEM electrolysers are not constructed by scaling individual stacks.
+Instead, larger systems simply contain more identical stack modules.
+Consequently, stack cost scales approximately linearly with installed stack capacity.
+Cost reductions are therefore expected to arise mainly through manufacturing learning and production volume rather than economies of scale at the equipment level.
+The model adopts the stack cost projections from <include NREL reference>.
+
+## Availability
+
+The modular architecture provides inherent redundancy because individual stack modules can be isolated without shutting down the complete electrolyser.
+A stack availability of **99.5%** is assumed throughout this study.
+
+## Installation and Mass
+
+Stack installation is included within the installation model of the complete electrolyser facility or turbine-integrated hydrogen production system.
+
+A dedicated stack mass model is not yet included.
+If future work identifies stack mass as a significant driver for tower sizing, platform design or installation costs, this section should be expanded accordingly.

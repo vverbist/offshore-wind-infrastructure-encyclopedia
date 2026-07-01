@@ -1,0 +1,891 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Direct DC Integration of Wind Turbines and PEM Electrolysers},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Direct DC Integration of Wind Turbines and PEM Electrolysers}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Why the model assumes direct turbine-DC-link coupling is
+technically possible}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+
+\section{Purpose of this section}\label{purpose-of-this-section}
+
+The model assumes that, in a decentralised hydrogen architecture, the
+PEM electrolyser can be integrated directly on the wind turbine DC link.
+In other words, electrical power from the turbine is not exported as
+grid-quality AC and then rectified again for electrolysis. Instead, the
+turbine-side converter produces a controlled DC link, and the PEM stack
+or stack array is connected to that DC system.
+
+The purpose of this section is to explain why that assumption is
+reasonable. The argument is made in two steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  direct DC integration has a clear system-level benefit; and
+\item
+  direct DC integration without a separate electrolyser-side DC/DC
+  converter is technically plausible if the turbine converter, PEM
+  stack, and balance of plant are designed as one system.
+\end{enumerate}
+
+The assumed electrical chain is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wind generator {-}\textgreater{} active front{-}end rectifier / turbine{-}side converter {-}\textgreater{} controlled DC link {-}\textgreater{} PEM stack or PEM stack array}
+\end{Highlighting}
+\end{Shaded}
+
+The turbine-side rectifier is assumed to be an \textbf{active front end
+(AFE)}. It controls generator torque and DC-link voltage. The PEM stack
+or PEM stack array is connected directly to this controlled DC bus.
+
+The architecture considered here has:
+
+\begin{itemize}
+\tightlist
+\item
+  no AC grid export from the turbine;
+\item
+  no grid-side inverter;
+\item
+  no separate electrolyser-side DC/DC converter;
+\item
+  no dedicated stack current regulator between the DC link and the PEM
+  stack;
+\item
+  only protection and auxiliary devices such as DC-link capacitance,
+  contactors, precharge circuits, dump load, brake chopper, crowbar, and
+  emergency shutdown hardware.
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, colframe=quarto-callout-note-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Model assumption}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+The model assumes that direct DC integration is possible at system
+level. This does not imply that a PEM stack can simply be connected to
+an uncontrolled DC source. It assumes an integrated design in which the
+turbine AFE, DC-link control, PEM stack configuration, module switching,
+and balance-of-plant controls jointly keep the stack within its
+allowable operating envelope.
+
+\end{tcolorbox}
+
+\section{Why direct DC integration is
+beneficial}\label{why-direct-dc-integration-is-beneficial}
+
+The main benefit of direct DC integration is that it removes electrical
+conversion stages that are otherwise required only because the energy is
+temporarily handled as grid-quality AC.
+
+In a conventional AC-coupled architecture, the electrical chain is
+typically:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wind generator {-}\textgreater{} machine{-}side converter {-}\textgreater{} DC link {-}\textgreater{} grid{-}side inverter {-}\textgreater{} transformer {-}\textgreater{} AC collection/export {-}\textgreater{} transformer/rectifier {-}\textgreater{} PEM stack}
+\end{Highlighting}
+\end{Shaded}
+
+This architecture is logical when the product is electricity, or when
+many turbines feed a centralised electrolyser through an AC collection
+grid. However, if the only product is hydrogen and there is no AC
+export, several parts of the chain become avoidable from a system
+perspective.
+
+A PEM electrolyser is fundamentally a DC load. A modern full-converter
+wind turbine also already contains a DC link internally. Direct
+integration therefore tries to connect two parts of the system that are
+already naturally DC:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{wind turbine internal DC link {-}\textgreater{} PEM stack DC load}
+\end{Highlighting}
+\end{Shaded}
+
+This creates four main benefits.
+
+\subsection{Fewer conversion stages}\label{fewer-conversion-stages}
+
+Each electrical conversion stage adds cost, losses, cooling demand,
+protection equipment, and controls. Direct DC integration removes the
+need to convert the turbine DC link back to grid-quality AC and then
+convert that AC back to DC for the electrolyser.
+
+ITM Power's wind-turbine electrolyser concept makes this argument
+explicitly. It describes a system with:
+
+\begin{quote}
+``an electrolyser placed at the wind turbine \ldots{} directly
+electrically connected to the DC link in the wind turbine''
+\end{quote}
+
+and states that Type IV turbine generators and their DC links:
+
+\begin{quote}
+``have the potential to power the electrolyser directly''
+\end{quote}
+
+ITM describes the benefit as:
+
+\begin{quote}
+``fewer power conversion steps''
+\end{quote}
+
+Source: ITM Power, \emph{Wind turbine electrolyser integration}:
+\url{https://itm-power.com/news/wind-turbine-electrolyser-integraion}
+
+This directly supports the modelling idea: if electricity is not the
+final export product, it is inefficient to force the system through the
+full AC-export chain before feeding a DC electrolyser.
+
+\subsection{Lower electrical infrastructure
+requirement}\label{lower-electrical-infrastructure-requirement}
+
+If hydrogen is produced at the turbine, the infield system can shift
+from electrical collection to hydrogen collection. This can reduce or
+avoid equipment such as turbine grid-side inverters, step-up
+transformers, offshore AC collection strings, offshore electrical
+platforms, and centralised electrolyser rectifier infrastructure.
+
+The benefit is not only efficiency. It is also structural: the offshore
+wind farm no longer needs to be designed primarily as an electrical
+export asset. It can be designed as a distributed hydrogen-production
+asset.
+
+\subsection{Better fit with a decentralised hydrogen
+architecture}\label{better-fit-with-a-decentralised-hydrogen-architecture}
+
+Direct DC integration aligns the electrical design with the value-chain
+design. In a decentralised architecture, each turbine becomes a
+hydrogen-production unit. The infield network collects hydrogen rather
+than electricity.
+
+This avoids moving large amounts of electrical power through an infield
+AC grid only to convert it back to DC at a central electrolyser. It also
+reduces the relevance of AC string capacity limits and offshore
+electrical platform sizing in the model.
+
+\subsection{Potentially lower cost, mass, and
+losses}\label{potentially-lower-cost-mass-and-losses}
+
+Removing conversion stages can reduce:
+
+\begin{itemize}
+\tightlist
+\item
+  converter equipment;
+\item
+  transformers;
+\item
+  filters;
+\item
+  switchgear;
+\item
+  cooling systems;
+\item
+  electrical platform weight;
+\item
+  conversion losses;
+\item
+  interface complexity between turbine and central electrolyser.
+\end{itemize}
+
+These benefits are the reason direct DC integration is worth modelling,
+even if it requires a more integrated turbine-electrolyser control
+system.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-tip-color!10!white, colframe=quarto-callout-tip-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Modelling implication}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+The modelling assumption is not that power electronics disappear. The
+assumption is that the turbine-side AFE remains, while the downstream
+grid-side inverter and electrolyser-side rectification/DC conversion
+stages are not modelled as separate conversion steps for the
+decentralised case.
+
+\end{tcolorbox}
+
+\section{Why direct DC integration should be technically
+possible}\label{why-direct-dc-integration-should-be-technically-possible}
+
+Direct DC integration should be technically possible because the two key
+electrical subsystems are compatible at a basic level:
+
+\begin{itemize}
+\tightlist
+\item
+  a Type IV wind turbine already contains a controlled DC link; and
+\item
+  a PEM electrolyser stack is a DC electrochemical load.
+\end{itemize}
+
+The question is therefore not whether PEM electrolysis can use DC power.
+It can. The real question is whether the PEM stack can be operated
+safely and efficiently from the turbine DC link \textbf{without adding a
+separate DC/DC converter between the DC link and the stack}.
+
+The answer is: yes, if the system is designed around voltage matching
+and active DC-link control.
+
+\section{Electrical operating
+principle}\label{electrical-operating-principle}
+
+A PEM electrolyser stack draws current according to its polarization
+curve. The stack voltage can be represented conceptually as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V\_stack = N\_cells * V\_cell(j, temperature, pressure, hydration, ageing)}
+\end{Highlighting}
+\end{Shaded}
+
+where \texttt{j} is current density.
+
+With a dedicated DC/DC converter, the converter normally regulates stack
+current. Without that converter, stack current is instead determined by
+the controlled DC-link voltage and the PEM polarization curve.
+
+The direct-coupled design therefore becomes a voltage-matched system:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{turbine DC{-}link operating range \textasciitilde{}= PEM stack operating voltage range}
+\end{Highlighting}
+\end{Shaded}
+
+If the PEM stack cell count and module configuration are selected so
+that the stack voltage range matches the turbine DC-link operating
+range, the stack can be supplied directly from the DC link. The AFE then
+acts as the main electrical actuator by regulating the DC-link voltage
+and controlling generator torque.
+
+This is why the assumption is credible: the turbine-side AFE can provide
+controlled DC power, and the PEM stack can accept controlled DC power.
+
+\section{What replaces the missing DC/DC
+converter}\label{what-replaces-the-missing-dcdc-converter}
+
+Removing the electrolyser-side DC/DC converter does not remove the need
+for control. It relocates the control function.
+
+In a conventional system, the DC/DC converter or rectifier supply
+normally provides:
+
+\begin{itemize}
+\tightlist
+\item
+  stack current control;
+\item
+  voltage matching;
+\item
+  current limiting;
+\item
+  current ripple reduction;
+\item
+  controlled start-up and shutdown;
+\item
+  some degree of electrical decoupling;
+\item
+  fault management and protection.
+\end{itemize}
+
+In the direct DC architecture, these functions must be provided by the
+integrated system:
+
+\begin{itemize}
+\tightlist
+\item
+  the AFE regulates DC-link voltage;
+\item
+  generator torque control limits the mechanical-to-electrical power
+  conversion;
+\item
+  pitch control curtails aerodynamic power when required;
+\item
+  stack modules can be switched in and out to adjust the effective PEM
+  load;
+\item
+  optional series/parallel reconfiguration can adjust stack voltage
+  range;
+\item
+  a DC-link capacitor handles short electrical transients;
+\item
+  a brake chopper or dump load handles stack rejection and emergency
+  overvoltage;
+\item
+  balance-of-plant interlocks ensure water, temperature, pressure, and
+  gas-purity limits are respected.
+\end{itemize}
+
+The most credible architecture is therefore:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PMSG wind turbine {-}\textgreater{} AFE {-}\textgreater{} controlled DC link {-}\textgreater{} segmented PEM stack array}
+\end{Highlighting}
+\end{Shaded}
+
+with module switching and emergency dump/brake protection.
+
+\section{Evidence supporting the
+assumption}\label{evidence-supporting-the-assumption}
+
+\subsection{Industrial concept: ITM Power and
+Ørsted}\label{industrial-concept-itm-power-and-uxf8rsted}
+
+ITM Power explicitly describes the direct DC-link integration concept.
+The proposed system places the electrolyser at the wind turbine and
+connects it directly to the turbine DC link:
+
+\begin{quote}
+``an electrolyser placed at the wind turbine \ldots{} directly
+electrically connected to the DC link in the wind turbine''
+\end{quote}
+
+ITM also states that Type IV turbine generators and their DC links:
+
+\begin{quote}
+``have the potential to power the electrolyser directly''
+\end{quote}
+
+and that the approach enables:
+
+\begin{quote}
+``fewer power conversion steps''
+\end{quote}
+
+Source: ITM Power, \emph{Wind turbine electrolyser integration}:
+\url{https://itm-power.com/news/wind-turbine-electrolyser-integraion}
+
+This source is important because it confirms that direct turbine-DC-link
+coupling is not merely a theoretical modelling shortcut. It is an
+identified industrial concept for reducing conversion stages in offshore
+wind-to-hydrogen systems.
+
+However, ITM also states:
+
+\begin{quote}
+``Such a system has not been demonstrated in practice''
+\end{quote}
+
+Therefore, this reference supports the feasibility and relevance of the
+model assumption, but it does not prove a commercial MW-scale no-DC/DC
+implementation.
+
+\subsection{Academic control concept: Jing et
+al.}\label{academic-control-concept-jing-et-al.}
+
+Jing et al.~describe a non-grid-connected wind-hydrogen architecture
+that:
+
+\begin{quote}
+``directly connects the Source wind turbines and the Load hydrogen
+production devices through a DC bus''
+\end{quote}
+
+The electrolyser load is described as:
+
+\begin{quote}
+``a modular proton exchange membrane (PEM) water electrolytic hydrogen
+production array''
+\end{quote}
+
+The control strategy regulates:
+
+\begin{quote}
+``the size of the PEM array \ldots{} and DC voltage collaboratively''
+\end{quote}
+
+Source: Jing et al., \emph{Research on the Structure and Control
+Strategy of Energy Router for Non-grid-connected Source-Load Hydrogen
+Production System}:
+\url{https://link.springer.com/content/pdf/10.1007/s42835-021-00774-w.pdf}
+
+This is directly aligned with the model assumption. Instead of using a
+separate DC/DC converter to regulate the PEM stack, the system controls
+the DC bus and changes the effective PEM array size. This supports the
+idea that a segmented stack array can replace part of the function of an
+electrolyser-side converter.
+
+The limitation is that this is an academic control and simulation
+reference, not evidence of a commercial field system.
+
+\subsection{Small-scale experimental evidence: RMIT / Air
+403}\label{small-scale-experimental-evidence-rmit-air-403}
+
+The RMIT direct-coupling work explicitly investigated wind-to-PEM
+coupling:
+
+\begin{quote}
+``without the need for intervening voltage converters and maximum power
+point tracking electronics''
+\end{quote}
+
+Source: RMIT, \emph{Direct coupling of a fixed-pitch variable speed
+aerogenerator to PEM electrolysers in a wind-hydrogen system for remote
+area power supply}:
+\url{https://research-repository.rmit.edu.au/articles/conference_contribution/Direct_coupling_of_a_fixed-pitch_variable_speed_aerogenerator_to_PEM_electrolysers_in_a_wind-hydrogen_system_for_remote_area_power_supply/27369558}
+
+This supports the physical feasibility of direct wind-to-PEM coupling
+without voltage conversion. It is not directly scalable evidence for a
+modern MW offshore turbine, but it demonstrates that matching generator
+and PEM stack electrical characteristics can produce a working
+direct-coupled system.
+
+\subsection{Counterpoint: mainstream DC wind concepts often retain
+DC/DC}\label{counterpoint-mainstream-dc-wind-concepts-often-retain-dcdc}
+
+A recent paper on DC wind-turbine concepts notes that DC coupling is
+attractive because:
+
+\begin{quote}
+``wind turbine converters and electrolyzers operate internally with dc
+voltage''
+\end{quote}
+
+and that DC concepts can reduce equipment because:
+
+\begin{quote}
+``the number of conversion stages and filters is reduced''
+\end{quote}
+
+However, the same paper states:
+
+\begin{quote}
+``A key component for the application of dc technology in WTs is a
+high-power dc-dc converter''
+\end{quote}
+
+with functions including:
+
+\begin{quote}
+``stepping up/down dc voltages, galvanic isolation and fault
+ride-through capability''
+\end{quote}
+
+Source: \emph{Evaluation of wind turbine concepts for coupling wind
+energy and electrolysis}:
+\url{https://link.springer.com/article/10.1007/s10010-025-00796-0}
+
+This is an important qualification. It shows that direct DC integration
+is attractive, but a separate DC/DC converter is still often used in
+mainstream DC architectures because it provides voltage adaptation,
+isolation, and protection. Therefore, the no-DC/DC assumption is
+technically defensible but should be treated as an integrated-design
+assumption rather than a standard off-the-shelf configuration.
+
+\section{Technical conditions for
+feasibility}\label{technical-conditions-for-feasibility}
+
+\subsection{Voltage matching}\label{voltage-matching}
+
+The PEM stack voltage range must match the turbine DC-link voltage
+range. This can be done by selecting the number of cells in series and
+by arranging stack modules in suitable series/parallel strings.
+
+If the DC-link voltage is too low, the stack will produce little or no
+hydrogen. If it is too high, current density can exceed stack limits.
+The design therefore needs voltage matching at rated power and
+acceptable operation across the expected wind-power range.
+
+\subsection{Current-density control}\label{current-density-control}
+
+The PEM stack must remain within its allowable current-density range. A
+review of dynamic PEM operation notes:
+
+\begin{quote}
+``Dynamic operation of PEM electrolyzers via modulation of the operating
+current density brings with it several challenges - namely, heat
+management, gas crossover and associated safety concerns, and stack
+degradation.''
+\end{quote}
+
+Source: \url{https://arxiv.org/html/2405.06766v1}
+
+In the direct DC architecture, current density is constrained by DC-link
+voltage control, wind curtailment, and stack-module switching rather
+than by a dedicated DC/DC converter.
+
+\subsection{Low-load and gas-crossover
+limits}\label{low-load-and-gas-crossover-limits}
+
+Low-load operation can create gas-purity and crossover concerns. A
+direct wind-coupled system will naturally encounter low-load operation
+unless it is curtailed, idled, or shut down below a defined threshold.
+
+A 2025 RSC paper on PEM operation at differential pressure states that
+understanding hydrogen permeation is:
+
+\begin{quote}
+``critical towards developing effective gas recombination strategies
+that enable safe operation''
+\end{quote}
+
+Source:
+\url{https://pubs.rsc.org/en/Content/ArticleLanding/2025/EE/D5EE00048C}
+
+The model assumption should therefore include a minimum safe operating
+region or shutdown logic. Direct DC connection should not be interpreted
+as uncontrolled low-current operation at arbitrary pressure.
+
+\subsection{Dynamic response}\label{dynamic-response}
+
+PEM electrolysers are suitable for dynamic renewable operation, but
+dynamic operation still affects degradation, thermal control, pressure
+control, and gas management. A review of PEM dynamic operation states
+that renewable intermittency:
+
+\begin{quote}
+``poses several technological challenges and financial questions''
+\end{quote}
+
+Source: \url{https://www.mdpi.com/1996-1073/18/9/2154}
+
+This does not invalidate direct DC integration. It means the stack and
+balance of plant must be qualified for turbine-driven operation,
+including ramps, starts, stops, and curtailment events.
+
+\subsection{Thermal and water
+management}\label{thermal-and-water-management}
+
+At high current density, the stack generates more heat and requires
+adequate water supply and cooling. In a direct DC architecture, the AFE
+and the PEM balance of plant must coordinate closely so the stack is
+only energised when water flow, temperature, pressure, and conductivity
+are within safe limits.
+
+\subsection{Fault handling}\label{fault-handling}
+
+The most critical event is a PEM stack trip while the turbine is
+producing power. Without a DC/DC converter, there is less electrical
+decoupling between the turbine and the stack. The DC link can
+overvoltage quickly unless excess energy is removed or turbine power is
+reduced.
+
+A credible direct DC architecture therefore needs:
+
+\begin{itemize}
+\tightlist
+\item
+  fast torque reduction by the AFE;
+\item
+  pitch or aerodynamic curtailment;
+\item
+  DC brake chopper or dump load;
+\item
+  high-speed stack isolation;
+\item
+  controlled DC-link discharge;
+\item
+  safe hydrogen shutdown sequence.
+\end{itemize}
+
+\section{Implication for the model}\label{implication-for-the-model}
+
+For modelling purposes, direct DC integration can be represented as an
+architecture that removes the grid-side inverter and the
+electrolyser-side rectifier/DC conversion stage from the
+hydrogen-production power path.
+
+The assumption is justified because:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  the PEM stack is a DC load;
+\item
+  the turbine already has a controlled DC link;
+\item
+  industrial concepts explicitly propose direct connection of the
+  electrolyser to the turbine DC link;
+\item
+  academic work supports direct DC bus connection with modular PEM stack
+  arrays;
+\item
+  small-scale experiments have shown direct wind-to-PEM coupling without
+  voltage converters;
+\item
+  the missing DC/DC functions can be replaced by AFE control, stack
+  segmentation, and protection systems.
+\end{enumerate}
+
+The model should nevertheless treat this as an \textbf{integrated
+turbine-electrolyser configuration}, not as a conventional turbine plus
+conventional electrolyser package. The feasibility depends on co-design.
+
+\section{Final assessment}\label{final-assessment}
+
+Direct integration of a PEM stack or PEM stack array on the turbine DC
+link is a reasonable model assumption for a decentralised hydrogen
+architecture.
+
+The main reason to use it is that it avoids unnecessary AC conversion
+when the final product is hydrogen rather than electricity. It can
+reduce conversion stages, electrical infrastructure, equipment mass, and
+conversion losses. It also fits the system logic of a decentralised
+hydrogen wind farm, where the infield network collects hydrogen instead
+of electricity.
+
+Technically, the assumption is defensible because a PEM stack is a DC
+load and a Type IV wind turbine already has a controlled DC link. With
+an AFE controlling DC-link voltage and generator torque, and with a
+voltage-matched segmented PEM stack array, direct operation without a
+separate electrolyser-side DC/DC converter should be possible.
+
+The strongest practical formulation is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AFE{-}controlled turbine DC link + voltage{-}matched segmented PEM stack array + module switching + emergency dump/brake protection}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, bottomrule=.15mm, bottomtitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-important-color!10!white, colframe=quarto-callout-important-color-frame, coltitle=black, left=2mm, leftrule=.75mm, opacityback=0, opacitybacktitle=0.6, rightrule=.15mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Feasibility statement}, titlerule=0mm, toprule=.15mm, toptitle=1mm]
+
+The model assumption is credible: \textbf{direct DC integration without
+a separate electrolyser-side DC/DC converter should be technically
+possible}, provided the turbine AFE, PEM stack array, protection system,
+and balance of plant are co-designed. It is not yet a widely proven
+MW-scale commercial standard, so it should be treated as an advanced
+integrated architecture rather than an off-the-shelf configuration.
+
+\end{tcolorbox}
+
+
+
+
+\end{document}

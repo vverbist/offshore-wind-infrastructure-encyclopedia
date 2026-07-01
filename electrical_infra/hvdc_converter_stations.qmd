@@ -1,0 +1,41 @@
+---
+title: "HVDC Converter Stations"
+---
+
+## Role in the Value Chain
+
+HVDC converter stations convert offshore AC power to HVDC for export and convert HVDC back to AC onshore. They are used in the electricity export architecture.
+
+## Cost Model
+
+The current assumption is based on TenneT programme data for a 2 GW station package.
+
+| Item | Assumption |
+|---|---:|
+| Standard station capacity | 2 GW |
+| Total offshore station package | 3.5 billion EUR |
+| Substation portion | 2.0 billion EUR |
+| Platform and installation portion | 1.5 billion EUR |
+| Linearised cost basis | 1,750 EUR/kW |
+
+All costs are currently assumed to scale linearly with capacity. This is a simplifying assumption and should be revisited if discrete 2 GW block behaviour is explicitly modelled.
+
+## Energy Balance
+
+The offshore conversion chain is included in the offshore substation efficiency assumption. The onshore station is included separately.
+
+| Component | Efficiency |
+|---|---:|
+| Offshore substation / conversion | 98.5% |
+| Onshore substation / conversion | To be confirmed |
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| Offshore substation | 98.0% |
+| Onshore substation | 98.0% |
+
+## Installation and Mass
+
+The platform and installation portion is currently included in the station package. See [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) and [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd).

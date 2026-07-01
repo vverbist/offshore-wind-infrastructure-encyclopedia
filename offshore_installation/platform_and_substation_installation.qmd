@@ -1,0 +1,34 @@
+---
+title: "Platform and Substation Installation"
+---
+
+## Role in the Model
+
+Platform and substation installation includes fabrication transport, heavy lifting, jacket installation, topside installation, commissioning, and offshore hookup.
+
+## Current Assumptions
+
+For the HVDC/substation package, the current source separates:
+
+| Item | Assumption |
+|---|---:|
+| Platform and installation portion of 2 GW package | 1.5 billion EUR |
+
+This value is currently bundled and not yet decomposed into platform material, fabrication, transport, and installation.
+
+## Cost Drivers
+
+Future decomposition should track:
+
+- topside mass
+- jacket mass
+- lift weight
+- installation vessel class
+- number of lifts
+- water depth
+- distance to shore or port
+- commissioning duration
+
+## Architecture Applicability
+
+This installation category is important for electricity export and centralised hydrogen. The decentralised hydrogen architecture removes the central offshore platform in the current model definition.

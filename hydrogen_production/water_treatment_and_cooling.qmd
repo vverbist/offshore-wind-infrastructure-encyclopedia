@@ -1,0 +1,35 @@
+---
+title: "Water Treatment and Cooling"
+---
+
+## Role in the Value Chain
+
+Water treatment and cooling are part of the electrolyser balance of plant. They are separated here because they can influence auxiliary power, platform footprint, water logistics, mass, and reliability.
+
+## Cost Model
+
+Current cost is bundled in the non-electrical BOP cost:
+
+| Parent component | Cost basis |
+|---|---:|
+| Non-electrical BOP | 380 EUR/kW |
+
+No separate water-treatment or cooling CAPEX curve is currently documented.
+
+## Energy Balance
+
+Water treatment, cooling, gas handling, and purification are included in the BOP auxiliary load curve. The source material describes BOP losses as load-dependent and approximately 2% at full-load operation when purification losses are included.
+
+## Availability
+
+Availability is currently bundled into electrolyser availability.
+
+## Future Refinement
+
+If the model begins comparing centralised and decentralised seawater treatment layouts, this page should split:
+
+- desalination and purification CAPEX
+- cooling-system CAPEX
+- auxiliary power by subsystem
+- water consumption per kg H2
+- platform or turbine mass implications

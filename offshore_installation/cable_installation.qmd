@@ -1,0 +1,34 @@
+---
+title: "Cable Installation"
+---
+
+## Role in the Model
+
+Cable installation covers laying, burial, pull-in, mobilisation, and other installation activities for infield and export electrical cables.
+
+## Current Assumptions
+
+| Item | Assumption |
+|---|---:|
+| Infield cable installation | 635 EUR/m |
+| Export cable installation | 635 EUR/m |
+
+The source material also cites an installer benchmark for Vanguard East and West: 192 turbines, about 3 GW total, 452 km of infield cabling, and 600 million EUR in cabling installation-related cost. This corresponds to roughly 1,300 EUR/m or about 200 EUR/kW of wind farm capacity.
+
+The current model value of 635 EUR/m should therefore be treated as a specific modelling assumption that may need reconciliation with the benchmark once scope is finalised.
+
+## Cost Drivers
+
+Installation cost depends on:
+
+- route length
+- number of cable strings
+- number of pull-ins
+- burial requirements
+- vessel day rate
+- laying speed
+- crossing and routing complexity
+
+## Architecture Applicability
+
+Cable installation applies to electricity export and centralised hydrogen architectures. It is largely removed from decentralised hydrogen except for any residual electrical systems.

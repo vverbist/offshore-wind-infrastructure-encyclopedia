@@ -1,0 +1,28 @@
+---
+title: "Hydrogen Production"
+---
+
+Hydrogen production covers the entire electrolyser.
+In this work, always a PEM electrolyser is studied.
+
+The electrolyser is split up in the following components: 
+* stack
+* power electronics 
+* balance of plant (BOP) 
+Note that in most contexts, the balance of plants includes the power electronics, but here they are explictly treated separately.
+
+The compressor is not included in this section, but is under [Hydrogen Infrastructure: Compressor](../hydrogen_infra/compressor.qmd)
+
+The hydrogen production model is dynamic: stack efficiency and auxiliary power consumption depend on operating point, which depends on the wind state and the installed stack capacity.
+
+
+
+## Current Component Cost Basis
+
+| Component | Cost at 15 MW | Scaling factor |
+|---|---:|---:|
+| Stack | 100 EUR/kW | 1.00 |
+| Non-electrical BOP | 380 EUR/kW | 0.60 |
+| Power electronics | 87 EUR/kW | 1.00 |
+
+The cost basis is derived from NREL assumptions, converted from 2020 USD to 2025 EUR, with a markup applied to represent sales price rather than production cost.

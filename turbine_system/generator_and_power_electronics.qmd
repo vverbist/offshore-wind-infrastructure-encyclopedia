@@ -1,0 +1,33 @@
+---
+title: "Generator and Power Electronics"
+---
+
+## Role in the Value Chain
+
+The generator produces variable-frequency AC power. Power electronics condition this output for either AC grid injection or electrolysis.
+
+## Electricity and Centralised Hydrogen Chain
+
+For conventional electrical operation, the turbine output is rectified to DC, inverted to grid-quality AC, and stepped up by a transformer to the infield grid voltage.
+
+Centralised hydrogen uses the same turbine-side chain up to the infield AC network. At the offshore platform, power is stepped down and rectified again before entering the electrolyser stacks.
+
+## Decentralised Hydrogen Chain
+
+In the decentralised architecture, electrolysers are placed inside or at the turbine and can connect to the turbine DC link. The inverter and step-up transformer on the turbine side are not required for the hydrogen pathway, and the platform-side step-down transformer and rectifier are absent.
+
+## Energy Balance
+
+Current explicit assumptions include:
+
+| Conversion step | Efficiency / loss |
+|---|---:|
+| Central electrolyser rectifier | 1.0% loss |
+| Central electrolyser transformer | 0.5% loss |
+| Turbine transformer in electrical chain | 99.5% efficiency |
+
+Other converter losses should be added once the model source table is finalised.
+
+## Cost Model
+
+Turbine-side power electronics are included in the turbine system cost where they are part of the standard turbine. Electrolyser power electronics are documented separately in [Electrolyser Power Electronics](../hydrogen_production/electrolyser_power_electronics.qmd).

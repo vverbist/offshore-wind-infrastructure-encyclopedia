@@ -1,0 +1,39 @@
+---
+title: "Electrolyser Power Electronics"
+---
+
+## Role in the Value Chain
+
+Electrolyser power electronics condition electrical power before it enters the PEM stack. The need for these components differs between centralised and decentralised hydrogen.
+
+## Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Power electronics CAPEX | 87 EUR/kW |
+| Scaling factor | 1.00 |
+
+Power electronics are treated as mature, modular components and do not receive central-facility economies of scale.
+
+## Energy Balance
+
+For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are:
+
+| Component | Loss |
+|---|---:|
+| Rectifier | 1.0% |
+| Transformer | 0.5% |
+
+For decentralised electrolysis, these platform-side components are absent because the stack connects to the turbine DC link.
+
+## Availability
+
+Availability is currently included in the electrolyser availability factor unless separated in a later version.
+
+## Architecture Applicability
+
+| Architecture | Treatment |
+|---|---|
+| Centralised hydrogen | Included |
+| Decentralised hydrogen | Excluded or strongly reduced due to DC-link integration |
+| Electricity export | Covered by turbine and HVDC electrical infrastructure pages |

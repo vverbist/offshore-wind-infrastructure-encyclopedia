@@ -1,0 +1,48 @@
+---
+title: "System Boundary and LCOE"
+---
+
+## System Boundary
+
+The model boundary runs from wind turbine generation to the onshore delivery point. It includes turbines, foundations, infield collection, offshore platforms or substations, conversion equipment, export infrastructure, and onshore conversion or delivery interface.
+
+This boundary is used because offshore electricity and offshore hydrogen differ mainly in the infrastructure required between the turbine and the shore. Excluding export infrastructure would make the comparison structurally biased toward electricity, because the electrical pathway would be evaluated before its largest carrier-specific cost items enter the calculation.
+
+## LCOE Definition
+
+The levelised cost of energy is calculated as annualised lifetime cost divided by annual delivered energy:
+
+```text
+LCOE = annualised_cost / annual_energy_delivered
+```
+
+For electricity configurations, delivered energy is electrical energy at the onshore grid connection point. For hydrogen configurations, hydrogen yield is converted to energy using the higher heating value.
+
+## Conceptual Cost Structure
+
+The model uses the following conceptual decomposition to explain why infrastructure affects optimal design:
+
+```text
+LCOE = C1 / Yield + C2 / Capacity Factor + C3
+```
+
+where:
+
+- `C1` represents fixed project costs that do not scale strongly with installed capacity or yield.
+- `C2` represents capacity-linked infrastructure costs, such as turbines, foundations, converters, platforms, cables, electrolysers, compressors, and pipelines.
+- `C3` represents energy-linked costs or losses, including conversion penalties and variable operating costs.
+
+This is a conceptual expression, not the full implementation. Its role is to show why a high cost per MW of infrastructure penalises low-capacity-factor designs: infrastructure is sized for peak power, while revenue and LCOE recovery depend on delivered annual energy.
+
+## Annualisation
+
+CAPEX is converted to an annual cost using a capital recovery factor. The current assumption set uses:
+
+| Parameter | Value |
+|---|---:|
+| Weighted average cost of capital | 6.6% |
+| Project lifetime | 25 years |
+| Capital recovery factor | 8.3% |
+| Equivalent annuity period | 12.09 years |
+
+OPEX is added as an annual cost, either as a fixed EUR/year value or as a percentage of component CAPEX.

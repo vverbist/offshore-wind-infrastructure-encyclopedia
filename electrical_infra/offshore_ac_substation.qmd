@@ -1,0 +1,29 @@
+---
+title: "Offshore AC Substation"
+---
+
+## Role in the Value Chain
+
+The offshore AC substation aggregates the infield AC network. In the electricity architecture, it forms part of the path toward HVDC conversion. In the centralised hydrogen architecture, it feeds the offshore electrolyser facility.
+
+## Cost Model
+
+The offshore substation cost is currently bundled with the HVDC station assumptions where the source refers to a 2 GW offshore station package. For centralised hydrogen, the same platform cost basis is used for the central electrolyser platform unless refined separately.
+
+## Energy Balance
+
+| Component | Efficiency |
+|---|---:|
+| Offshore substation | 98.5% |
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| Offshore substation | 98.0% |
+
+## Installation and Mass
+
+Substation installation is treated with platform and substation installation assumptions. See [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd).
+
+The source material does not yet provide a separate mass-scaling model for the AC substation.

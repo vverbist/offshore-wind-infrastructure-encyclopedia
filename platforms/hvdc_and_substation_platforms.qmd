@@ -1,0 +1,32 @@
+---
+title: "HVDC and Substation Platforms"
+---
+
+## Role in the Value Chain
+
+HVDC and substation platforms support offshore electrical conversion and aggregation equipment.
+
+## Cost Model
+
+The current source basis is a TenneT 2 GW station package:
+
+| Item | Assumption |
+|---|---:|
+| Total 2 GW offshore station package | 3.5 billion EUR |
+| Substation/converter component | 2.0 billion EUR |
+| Platform and installation component | 1.5 billion EUR |
+| Linearised total cost basis | 1,750 EUR/kW |
+
+The model currently assumes linear scaling with capacity.
+
+## Energy Balance
+
+The platform itself has no direct energy conversion efficiency. Electrical equipment hosted on the platform is covered in the electrical infrastructure pages.
+
+## Availability
+
+Platform-related availability is bundled into offshore substation availability unless separated later.
+
+## Mass and Installation
+
+Platform mass is not yet explicitly parameterised. The platform and installation cost component should eventually be split into jacket/topside mass, lifting requirements, vessel spread, and installation duration.

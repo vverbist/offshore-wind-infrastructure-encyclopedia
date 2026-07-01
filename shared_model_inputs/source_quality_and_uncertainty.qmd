@@ -1,0 +1,38 @@
+---
+title: "Source Quality and Uncertainty"
+---
+
+## Source Types
+
+Assumptions in this encyclopedia come from several source types:
+
+- public literature or reports
+- supplier or manufacturer data
+- internal engineering estimates
+- benchmark projects
+- model-derived fitted curves
+
+## Confidential Sources
+
+Some assumptions rely on confidential source data, including manufacturer stack and BOP data and supplier pipeline cost data. These should be documented by method and model representation without publishing raw confidential tables.
+
+## Uncertainty Treatment
+
+Where source uncertainty is material, the model should document:
+
+- base value
+- uncertainty range
+- sensitivity range
+- reason for uncertainty
+- affected model outputs
+
+The background model currently identifies pipeline material cost, electrolyser cost, and infrastructure cost assumptions as important candidates for sensitivity analysis.
+
+## Documentation Status Labels
+
+Recommended status labels:
+
+- `implemented`: assumption is used in the model and documented here
+- `to verify`: assumption is in the drafts but source needs final verification
+- `placeholder`: component exists in the value chain but quantitative assumption is incomplete
+- `confidential`: model uses data that should not be reproduced directly

@@ -1,0 +1,26 @@
+---
+title: "Electrical Infrastructure"
+---
+
+Electrical infrastructure covers the AC infield network, offshore AC substation, HVDC converter stations, export cable, and onshore grid connection.
+
+These components are central to the electricity export architecture and partially retained in the centralised hydrogen architecture. They are largely removed from the decentralised hydrogen architecture.
+
+## Current Efficiency Assumptions
+
+| Component | Efficiency |
+|---|---:|
+| Transformer | 99.5% |
+| Infield AC grid | 98.0% |
+| Offshore substation | 98.5% |
+| HVDC export cable | 99.5% |
+| Onshore substation | To be confirmed |
+
+## Current Availability Assumptions
+
+| Component | Availability |
+|---|---:|
+| Infield AC grid | 99.0% |
+| Offshore substation | 98.0% |
+| HVDC export cable | 99.0% |
+| Onshore substation | 98.0% |

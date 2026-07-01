@@ -1,0 +1,37 @@
+---
+title: "Scaling Laws"
+---
+
+## Linear Scaling
+
+Several components are treated as modular and therefore scale linearly with capacity. Current examples include:
+
+- PEM stack cost
+- electrolyser power electronics
+- turbine cost at the current 15 MW baseline
+- linearised HVDC station cost basis
+
+## Power-Law Scaling
+
+Some components use a power-law scaling relation:
+
+```text
+cost = reference_cost * (capacity / reference_capacity) ^ scaling_factor
+```
+
+Current examples:
+
+| Component | Scaling factor |
+|---|---:|
+| Non-electrical electrolyser BOP | 0.60 |
+| Compressor | 0.8335 |
+
+## Discrete Scaling
+
+Some infrastructure is discrete rather than continuously scalable:
+
+- HVDC export capacity follows 2 GW block logic in the current source framing.
+- Export pipelines are selected from discrete diameter and pressure options.
+- Stack modules are 2.5 MW units.
+
+Discrete scaling can create optima where slightly lower yield is accepted to avoid adding another large component.

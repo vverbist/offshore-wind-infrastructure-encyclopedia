@@ -1,0 +1,50 @@
+---
+title: "Compressor"
+---
+
+## Role in the Value Chain
+
+The compressor raises hydrogen from electrolyser outlet pressure to the required pipeline inlet pressure. It is present in centralised and decentralised hydrogen architectures.
+
+PEM stack outlet pressure is assumed to be about 30 bar. Pipeline inlet pressure is an optimisation variable, with examples up to 150 bar.
+
+## Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Compressor CAPEX at 15 MW, 30 to 150 bar | 56 EUR/kW |
+| Scaling factor | 0.8335 |
+| Source basis | Transition Accelerator |
+
+Compressor cost scales mainly with electrical compressor power, which depends on specific compression energy and hydrogen flow rate.
+
+## Energy Balance
+
+Compression work is modelled as a staged isothermal compression process. The maximum compression ratio per stage is assumed to be 3.3. Higher total ratios require multiple stages, and each stage is assumed to use the same compression ratio.
+
+Current assumptions:
+
+| Parameter | Value |
+|---|---:|
+| Hydrogen specific heat ratio | 1.41 |
+| Gas temperature | 298 K |
+| Isothermal efficiency | 80% |
+| Motor efficiency | 95% |
+
+The model uses the average compressibility factor between inlet and outlet conditions.
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| Compressor | 99.0% |
+
+## Installation and Mass
+
+Compressor installation is included in the associated turbine or central platform architecture. A component mass model should be added if compressor mass affects turbine tower, platform, or lifting assumptions.
+
+::: {.callout-note}
+## The Advantage of PEM {#sec-compressor-pem}
+Note that there are five types of callouts, including:
+`note`, `warning`, `important`, `tip`, and `caution`.
+:::

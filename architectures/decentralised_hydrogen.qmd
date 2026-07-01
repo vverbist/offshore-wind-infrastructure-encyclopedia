@@ -1,0 +1,26 @@
+---
+title: "Decentralised Hydrogen"
+---
+
+## Role in the Value Chain
+
+The decentralised architecture places electrolysis inside the turbine. Energy is converted to hydrogen as close as possible to generation, and the infield network becomes a hydrogen pipeline grid instead of an AC cable grid.
+
+## Component Chain
+
+1. turbine generator
+2. turbine-side rectification or DC link interface
+3. PEM stacks installed in or at the turbine
+4. local balance of plant
+5. turbine-level compression to infield pressure
+6. infield hydrogen pipeline grid
+7. export hydrogen pipeline
+8. onshore hydrogen backbone connection
+
+## Modelling Implications
+
+This architecture removes several electrical conversion steps. In the centralised and electricity configurations, turbine output is converted from variable-frequency AC to DC, then to grid-quality AC, then stepped up for infield collection. For central electrolysis, the power is later stepped down and rectified again before entering the stack.
+
+In the decentralised configuration, the stack connects more directly to the turbine DC link. The model therefore excludes the turbine inverter/step-up transformer and the platform-side step-down transformer/rectifier that would otherwise be needed for electrolysis.
+
+The infield grid is also structurally different. A 66 kV AC string is capacity-limited to roughly 60-70 MW, while a 6 inch hydrogen pipeline at 150 bar is assumed to carry roughly 500 MW equivalent. This removes the electrical string capacity constraint from the infield design.

@@ -1,0 +1,30 @@
+---
+title: "Financial Assumptions"
+---
+
+## Annualisation
+
+The model annualises capital costs using a capital recovery factor.
+
+| Parameter | Value |
+|---|---:|
+| Weighted average cost of capital | 6.6% |
+| Project lifetime | 25 years |
+| Capital recovery factor | 8.3% |
+| Equivalent annuity period | 12.09 years |
+
+## LCOE Treatment
+
+Annualised CAPEX, annual OPEX, and annual delivered energy are combined as:
+
+```text
+LCOE = (annualised_CAPEX + annual_OPEX) / annual_delivered_energy
+```
+
+Hydrogen may also be reported in EUR/kg, but the common comparison basis is EUR/MWh using HHV.
+
+## Inflation and Currency
+
+Some hydrogen component costs are derived from NREL values in 2020 USD, converted to 2025 EUR, and increased with a 50% markup to represent sales price instead of production cost.
+
+This conversion convention should be made explicit for every imported cost source.

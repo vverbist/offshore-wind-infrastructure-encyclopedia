@@ -1,0 +1,25 @@
+---
+title: "Wind Resource and Weibull Distribution"
+---
+
+## Role in the Model
+
+Wind resource modelling provides the probability distribution of wind states used to calculate annual production. The hydrogen configurations require more than mean wind speed, because stack efficiency and compressor operation depend on instantaneous power.
+
+## Current Method
+
+The background model describes fitting approximately ten years of offshore wind observations from the Dutch Offshore Wind Atlas to a Weibull distribution and wind rose.
+
+For each wind state, the model evaluates turbine output and wake losses. The annual yield is then obtained by weighting the power output of each state by its probability.
+
+## Energy Balance
+
+The wind resource page does not apply conversion losses directly. It supplies gross turbine power states to downstream components:
+
+- electricity components apply electrical efficiency and availability factors
+- hydrogen production evaluates stack efficiency and balance-of-plant losses at each operating point
+- compression power depends on hydrogen flow and pressure ratio
+
+## Source Status
+
+The document references Dutch Offshore Wind Atlas data and a fitted wind rose. The exact data file and fitted Weibull parameters should be linked here once the model input dataset is finalised.

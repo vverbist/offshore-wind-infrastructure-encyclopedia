@@ -1,0 +1,17 @@
+---
+title: "Architectures"
+---
+
+The model compares three offshore wind export architectures:
+
+1. electricity export using AC infield collection and HVDC export
+2. centralised offshore hydrogen production
+3. decentralised turbine-integrated hydrogen production
+
+The architectures differ in where energy conversion occurs and which infrastructure carries energy to shore.
+
+## Architecture Logic
+
+The electrical architecture transports electrons to shore. The hydrogen architectures convert wind power to hydrogen offshore and transport gas to shore. The centralised hydrogen architecture converts at an offshore platform. The decentralised hydrogen architecture converts inside each turbine and uses an infield hydrogen grid.
+
+The model treats these architectures as different feasible sets. Components are not swapped one-for-one; changing the carrier changes the cost, loss, availability, and installation structure of the whole value chain.

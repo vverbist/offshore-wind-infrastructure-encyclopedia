@@ -1,0 +1,39 @@
+---
+title: "Balance of Plant"
+---
+
+## Role in the Value Chain
+
+Balance of plant includes non-stack auxiliary systems for hydrogen production, such as water treatment, cooling, gas handling, and hydrogen purification. Power electronics and compression are treated separately.
+
+## Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Non-electrical BOP CAPEX | 380 EUR/kW |
+| Scaling factor | 0.60 |
+
+The scaling factor represents economies of scale for centralised facilities. The 6/10ths rule is used: total cost scales with capacity to the power 0.6 rather than linearly.
+
+## Energy Balance
+
+BOP power consumption has two parts:
+
+- a fixed component independent of hydrogen production rate
+- a variable component that scales with hydrogen output
+
+The BOP power demand is represented as a percentage of available electrical power as a function of operating point.
+
+The current source material states that purification and drying lose about 1% of produced hydrogen. Total BOP-related losses are approximately 2% at full load.
+
+## Availability
+
+BOP availability is currently bundled into the electrolyser availability factor:
+
+| Component | Availability |
+|---|---:|
+| Electrolyser | 98.5% |
+
+## Source Basis
+
+Power consumption data are based on Manufacturer H. The source data should be treated as confidential and represented in the model as a fitted or tabulated curve.

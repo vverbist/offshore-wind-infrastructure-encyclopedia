@@ -1,0 +1,30 @@
+---
+title: "Electricity Export with HVDC"
+---
+
+## Role in the Value Chain
+
+The electricity architecture is the reference case. Wind turbine output is conditioned for AC infield collection, aggregated offshore, converted to HVDC for export, and converted back to AC at shore.
+
+## Component Chain
+
+1. turbine generator
+2. turbine rectifier, inverter, and transformer
+3. 66 kV AC infield cable network
+4. offshore AC substation and HVDC converter platform
+5. HVDC export cable
+6. onshore converter station and grid connection
+
+## Modelling Implications
+
+The key modelling feature is that export infrastructure is sized for peak installed capacity. HVDC platforms and export cables therefore contribute strongly to the capacity-linked cost term.
+
+The current assumption set uses a 2 GW HVDC export basis. This creates discrete export capacity increments and makes under-utilisation of peak-sized infrastructure important in the LCOE calculation.
+
+## Related Components
+
+- [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd)
+- [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd)
+- [Offshore AC Substation](../electrical_infra/offshore_ac_substation.qmd)
+- [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd)
+- [HVDC Export Cables](../electrical_infra/hvdc_export_cables.qmd)

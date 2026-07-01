@@ -1,10 +1,87 @@
 project:
   type: website
 
+bibliography: references.bib
+
 website:
-  title: "Offshore Wind Infrastructure Encyclopedia"
+  title: "Offshore Wind Infrastructure Model Assumptions"
   sidebar:
-    contents: auto
+    style: docked
+    search: true
+    contents:
+      - href: index.qmd
+        text: Home
+      - section: "Methodology"
+        contents:
+          - methodology/overview.qmd
+          - methodology/system_boundary_and_lcoe.qmd
+          - methodology/modelling_workflow.qmd
+          - methodology/optimisation_variables.qmd
+          - methodology/energy_availability_and_annualisation.qmd
+      - section: "Architectures"
+        contents:
+          - architectures/overview.qmd
+          - architectures/electricity_export_hvdc.qmd
+          - architectures/centralised_hydrogen.qmd
+          - architectures/decentralised_hydrogen.qmd
+          - architectures/component_mapping.qmd
+      - section: "Wind Resource and Layout"
+        contents:
+          - wind_resource_and_layout/overview.qmd
+          - wind_resource_and_layout/wind_resource_and_weibull.qmd
+          - wind_resource_and_layout/wake_modelling_and_spacing.qmd
+          - wind_resource_and_layout/infield_layout.qmd
+      - section: "Turbine System"
+        contents:
+          - turbine_system/overview.qmd
+          - turbine_system/wind_turbine.qmd
+          - turbine_system/generator_and_power_electronics.qmd
+          - turbine_system/tower_nacelle_and_mass.qmd
+          - turbine_system/foundation.qmd
+      - section: "Electrical Infrastructure"
+        contents:
+          - electrical_infra/overview.qmd
+          - electrical_infra/infield_ac_cables.qmd
+          - electrical_infra/offshore_ac_substation.qmd
+          - electrical_infra/hvdc_converter_stations.qmd
+          - electrical_infra/hvdc_export_cables.qmd
+          - electrical_infra/onshore_grid_connection.qmd
+      - section: "Hydrogen Production"
+        contents:
+          - hydrogen_production/overview.qmd
+          - hydrogen_production/pem_electrolyser_stack.qmd
+          - hydrogen_production/wind_pem_dc_integration.qmd
+          - hydrogen_production/balance_of_plant.qmd
+          - hydrogen_production/electrolyser_power_electronics.qmd
+          - hydrogen_production/water_treatment_and_cooling.qmd
+      - section: "Hydrogen Infrastructure"
+        contents:
+          - hydrogen_infra/overview.qmd
+          - hydrogen_infra/compressor.qmd
+          - hydrogen_infra/hydrogen_pipelines.qmd
+          - hydrogen_infra/pipeline_pressure_and_capacity.qmd
+      - section: "Platforms"
+        contents:
+          - platforms/overview.qmd
+          - platforms/hvdc_and_substation_platforms.qmd
+          - platforms/central_electrolyser_platform.qmd
+          - platforms/platform_mass_and_scaling.qmd
+      - section: "Offshore Installation"
+        contents:
+          - offshore_installation/overview.qmd
+          - offshore_installation/turbine_and_foundation_installation.qmd
+          - offshore_installation/cable_installation.qmd
+          - offshore_installation/pipeline_installation.qmd
+          - offshore_installation/platform_and_substation_installation.qmd
+      - section: "Shared Model Inputs"
+        contents:
+          - shared_model_inputs/overview.qmd
+          - shared_model_inputs/financial_assumptions.qmd
+          - shared_model_inputs/capex_opex_conventions.qmd
+          - shared_model_inputs/scaling_laws.qmd
+          - shared_model_inputs/source_quality_and_uncertainty.qmd
+      - references.qmd
+      - about.qmd
 
 
 format:
@@ -15,5 +92,7 @@ format:
     css: styles.css
     toc: true
 
-
-
+execute:
+  echo: false
+  warning: false
+  message: false

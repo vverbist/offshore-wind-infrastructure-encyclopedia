@@ -1,0 +1,9 @@
+---
+title: "Hydrogen Infrastructure"
+---
+
+Hydrogen infrastructure includes compression, infield hydrogen pipelines, export pipelines, pressure selection, diameter selection, and pipeline capacity.
+
+Compression and pipeline assumptions are coupled: higher pipeline inlet pressure increases compression energy and compressor cost, but also increases pipeline capacity and can reduce the number of parallel export pipelines.
+
+The current hydrogen infrastructure model assumes no additional hydrogen losses in pipelines after compression.

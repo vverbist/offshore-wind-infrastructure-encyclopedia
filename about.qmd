@@ -2,12 +2,10 @@
 title: "About"
 ---
 
-This site is meant to be an encyclopedia for modelling the technoeconomics of Offshore Wind, with a special focus on Hydrogen production and Infrastructure.
-This is part of a broader PhD research where the entire offshore value chain is explicitly modelled, in order to:
+This site documents the assumptions behind a component-level techno-economic model for offshore wind infrastructure.
 
-- accurately describe offshore infrastructure
-- optimise design variables
-- compare electricity and hydrogen as energy carriers
-- investigate different wind farm designs
+The model compares electricity-based export, centralised offshore hydrogen production, and decentralised turbine-integrated hydrogen production. The documentation here is limited to methodology and assumptions: system boundaries, component cost models, energy balances, availability factors, installation assumptions, and shared financial conventions.
+
+The source material is a set of working Word documents in `background/`. Some assumptions rely on internal supplier or manufacturer data; those are documented at the level needed for model reproducibility without exposing confidential raw datasets.
 
 

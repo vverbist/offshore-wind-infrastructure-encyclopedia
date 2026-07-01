@@ -1,7 +1,28 @@
 ---
-title: "Offshore Wind Infrastructure Encyclopedia"
+title: "Offshore Wind Infrastructure Model Assumptions"
 ---
 
-This is a Quarto website.
+This encyclopedia documents the methodology and techno-economic assumptions used to model offshore wind infrastructure, electricity export, offshore hydrogen production, and hydrogen transport.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+The site is organised as an assumptions manual. Each component page bundles the modelling choices that matter for that component:
+
+- cost model, including CAPEX, installation cost, O&M, and scaling
+- energy balance, including conversion efficiency, auxiliary power, and losses
+- availability treatment on an annual energy basis
+- sizing, mass, geometry, and other drivers that affect costs elsewhere in the value chain
+- source basis, uncertainty, and architecture applicability
+
+The emphasis is deliberately methodological. Results, scenario outcomes, and interpretation of model output are out of scope for this encyclopedia.
+
+## Main Sections
+
+- [Methodology](methodology/overview.qmd)
+- [Architectures](architectures/overview.qmd)
+- [Wind Resource and Layout](wind_resource_and_layout/overview.qmd)
+- [Turbine System](turbine_system/overview.qmd)
+- [Electrical Infrastructure](electrical_infra/overview.qmd)
+- [Hydrogen Production](hydrogen_production/overview.qmd)
+- [Hydrogen Infrastructure](hydrogen_infra/overview.qmd)
+- [Platforms](platforms/overview.qmd)
+- [Offshore Installation](offshore_installation/overview.qmd)
+- [Shared Model Inputs](shared_model_inputs/overview.qmd)

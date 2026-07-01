@@ -1,0 +1,30 @@
+---
+title: "Foundation"
+---
+
+## Role in the Value Chain
+
+The foundation supports the offshore wind turbine and transfers turbine, tower, nacelle, and environmental loads to the seabed.
+
+## Current Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Foundation type | Monopile assumption |
+| Foundation CAPEX | 6 million EUR/turbine |
+| Foundation installation | 1 million EUR/turbine |
+| Foundation OPEX | 0.5% of CAPEX per year |
+
+The current values are based on a study with TNO, according to the background documents.
+
+## Energy Balance
+
+The foundation has no direct energy conversion role. Its effect enters through CAPEX, installation cost, OPEX, and potentially availability if future assumptions add foundation-related downtime.
+
+## Availability
+
+No separate foundation availability factor is currently applied. Foundation-related downtime is implicitly included in the turbine or farm-level availability assumptions unless modelled otherwise.
+
+## Mass and Scaling
+
+The current foundation cost is fixed per 15 MW turbine. A future refinement should connect foundation cost to turbine rating, water depth, soil condition, tower/nacelle mass, and hydrogen equipment mass where relevant.

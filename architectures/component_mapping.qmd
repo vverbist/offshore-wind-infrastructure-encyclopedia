@@ -1,0 +1,18 @@
+---
+title: "Component Mapping"
+---
+
+This page maps the main component groups to the three architectures.
+
+| Phase | Electricity Export | Centralised Hydrogen | Decentralised Hydrogen |
+|---|---|---|---|
+| Turbine generator | Generator | Generator | Generator |
+| In-turbine conversion | Generator to DC to AC | Generator to DC to AC | Generator to DC to H2 |
+| Infield transport preparation | Transform to 66 kV | Transform to 66 kV | Compress to about 150 bar |
+| Infield grid | 66 kV AC cables | 66 kV AC cables | 150 bar pipelines |
+| Offshore collection | Substation | Substation / electrolyser platform | None |
+| Offshore central conversion | AC to HVDC | AC to DC to H2 to compressed H2 | None |
+| Offshore export | HVDC cable | Hydrogen pipeline | Hydrogen pipeline |
+| Onshore conversion or delivery | HVDC to AC grid | Hydrogen backbone | Hydrogen backbone |
+
+The component pages document assumptions by physical component. Architecture pages document how those components are combined.

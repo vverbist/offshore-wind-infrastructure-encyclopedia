@@ -1,0 +1,35 @@
+---
+title: "Turbine and Foundation Installation"
+---
+
+## Role in the Model
+
+Turbine and foundation installation converts component supply cost into installed offshore asset cost.
+
+## Current Assumptions
+
+| Item | Assumption |
+|---|---:|
+| Foundation installation | 1 million EUR/turbine |
+| Turbine installation | Included in current turbine/foundation assumption set unless separated later |
+
+The current source material provides a separate foundation installation cost but does not yet provide a full vessel-based turbine installation model.
+
+## Cost Drivers
+
+Future installation modelling should account for:
+
+- turbine rating
+- turbine mass and hub height
+- foundation mass
+- water depth
+- distance to port
+- weather downtime
+- vessel day rate
+- installation duration
+
+## Related Components
+
+- [Wind Turbine](../turbine_system/wind_turbine.qmd)
+- [Foundation](../turbine_system/foundation.qmd)
+- [Tower, Nacelle, and Mass](../turbine_system/tower_nacelle_and_mass.qmd)

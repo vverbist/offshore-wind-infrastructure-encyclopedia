@@ -1,0 +1,32 @@
+---
+title: "Centralised Hydrogen"
+---
+
+## Role in the Value Chain
+
+The centralised hydrogen architecture keeps the conventional wind turbine and AC infield collection system up to the offshore aggregation point. At the offshore platform, electricity is converted to hydrogen using electrolysers, compressed, and exported through a subsea hydrogen pipeline.
+
+## Component Chain
+
+1. turbine generator
+2. turbine rectifier, inverter, and transformer
+3. 66 kV AC infield cable network
+4. offshore substation and central electrolyser platform
+5. electrolyser power electronics
+6. PEM stacks and balance of plant
+7. compressor
+8. export hydrogen pipeline
+9. onshore hydrogen backbone connection
+
+## Modelling Implications
+
+This architecture replaces the HVDC converter platform and HVDC export cable with a central electrolyser, compressor, and hydrogen pipeline. It retains many electrical infield assumptions, but changes the export infrastructure and introduces conversion losses.
+
+The central facility can benefit from economies of scale in the non-electrical balance of plant. Stack and power electronics costs are treated as modular and scale approximately linearly.
+
+## Related Components
+
+- [Balance of Plant](../hydrogen_production/balance_of_plant.qmd)
+- [PEM Electrolyser Stack](../hydrogen_production/pem_electrolyser_stack.qmd)
+- [Compressor](../hydrogen_infra/compressor.qmd)
+- [Hydrogen Pipelines](../hydrogen_infra/hydrogen_pipelines.qmd)

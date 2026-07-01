@@ -1,0 +1,40 @@
+---
+title: "Energy, Availability, and Annualisation"
+---
+
+## Energy Basis
+
+Electricity yield is evaluated as delivered electrical energy at the onshore grid connection point.
+
+Hydrogen yield is evaluated on an energy-equivalent basis using the higher heating value:
+
+| Parameter | Value |
+|---|---:|
+| Hydrogen HHV | 39.4 kWh/kg |
+
+This allows electricity and hydrogen configurations to be compared in EUR/MWh, while retaining the option to report hydrogen in EUR/kg.
+
+## Efficiency Treatment
+
+Efficiency losses are applied at the component level. For electricity, this includes transformer, infield AC grid, offshore substation, HVDC export cable, and onshore conversion losses. For hydrogen, losses include stack conversion, balance-of-plant auxiliary demand, purification losses, power electronics where present, and compression.
+
+## Availability Treatment
+
+Availability is applied as an annual energy multiplier, not as a time-domain repair simulation. Component unavailability is represented as a flat percentage reduction in annual yield.
+
+The current component availability assumptions include:
+
+| Component | Availability |
+|---|---:|
+| Turbine, electric configuration | 98.0% |
+| Infield AC grid | 99.0% |
+| Offshore substation | 98.0% |
+| HVDC export cable | 99.0% |
+| Onshore substation | 98.0% |
+| Turbine, hydrogen configuration | 98.5% |
+| Electrolyser | 98.5% |
+| Compressor | 99.0% |
+| Infield pipelines | 100.0% |
+| Export pipelines | 100.0% |
+
+Pipeline availability is currently assumed not to reduce annual yield. This should be treated as a modelling convention rather than a statement that pipeline failures are impossible.

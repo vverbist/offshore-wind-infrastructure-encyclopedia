@@ -1,0 +1,38 @@
+---
+title: "Wind Turbine"
+---
+
+## Role in the Value Chain
+
+The wind turbine converts wind energy to mechanical and then electrical power. In the model it defines rated power, turbine count, gross production, and the capacity basis for several downstream components.
+
+## Current Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Turbine rating | 15 MW |
+| Turbine CAPEX | 1,100 EUR/kW |
+| Turbine CAPEX per 15 MW turbine | 16.5 million EUR |
+| Turbine OPEX | 200,000 EUR/turbine/year |
+| Development cost | 72 million EUR/farm plus 70,000 EUR/turbine |
+
+The turbine cost is treated as linear in rated power for the current 15 MW baseline.
+
+## Energy Balance
+
+The turbine power curve and wake model determine gross turbine output. For the electricity configuration, the turbine output measurement is treated as being after the inverter and before the internal transformer. The transformer is included in total turbine cost but its efficiency is accounted for in the electrical chain.
+
+For decentralised hydrogen, the electrical conversion chain differs because the PEM stack can connect to the turbine DC link rather than using the full inverter-transformer path.
+
+## Availability
+
+| Configuration | Turbine availability |
+|---|---:|
+| Electric turbine chain | 98.0% |
+| Hydrogen turbine chain | 98.5% |
+
+The hydrogen turbine availability is higher in the current assumption set because fewer turbine-side electrical conversion components are present in the decentralised hydrogen chain.
+
+## Mass and Installation
+
+Turbine mass is not yet fully parameterised in the source material. Tower, nacelle, and component masses should be added where they affect tower cost, foundation loading, or installation vessel requirements.

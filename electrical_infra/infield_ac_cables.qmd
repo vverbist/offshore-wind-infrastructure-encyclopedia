@@ -1,0 +1,43 @@
+---
+title: "Infield AC Cables"
+---
+
+## Role in the Value Chain
+
+Infield AC cables collect power from turbines and deliver it to an offshore substation or centralised hydrogen platform. They are used in the electricity and centralised hydrogen architectures.
+
+## Cost Model
+
+| Item | Assumption |
+|---|---:|
+| Voltage level | 66 kV AC |
+| Cable capacity | 70 MW |
+| Cable CAPEX | 400 EUR/m |
+| Cable installation | 635 EUR/m |
+| Cable OPEX | 2% of CAPEX per year |
+
+The model estimates total cable length from farm geometry, turbine count, and string capacity. A 20% length addition is applied for diversions and routing constraints.
+
+## Energy Balance
+
+| Component | Efficiency |
+|---|---:|
+| Infield AC grid | 98.0% |
+
+Losses are applied to annual electricity yield in the electricity and centralised hydrogen chains.
+
+## Availability
+
+| Component | Availability |
+|---|---:|
+| Infield AC grid | 99.0% |
+
+Availability is applied as a flat annual yield multiplier.
+
+## Installation
+
+Installation is modelled per metre. See [Cable Installation](../offshore_installation/cable_installation.qmd) for vessel and benchmark assumptions.
+
+## Sizing Drivers
+
+The number of strings depends on turbine rating and cable capacity. For 15 MW turbines and 70 MW cable capacity, only a limited number of turbines can be placed on each string.

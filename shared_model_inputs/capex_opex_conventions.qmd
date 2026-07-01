@@ -1,0 +1,37 @@
+---
+title: "CAPEX and OPEX Conventions"
+---
+
+## CAPEX
+
+CAPEX is documented as either:
+
+- a unit cost, such as EUR/kW or EUR/m
+- a fixed cost per turbine or farm
+- a fitted cost curve
+- a capacity-scaling relation
+
+Where installation is separately available, component CAPEX and installation cost are documented separately.
+
+## OPEX
+
+OPEX is represented as either:
+
+- fixed EUR/year
+- EUR/unit/year
+- percentage of CAPEX per year
+
+Current examples:
+
+| Component | OPEX assumption |
+|---|---:|
+| Wind turbine | 200,000 EUR/turbine/year |
+| Foundation | 0.5% of CAPEX/year |
+| Infield AC cable | 2% of CAPEX/year |
+| Export cable | 2% of CAPEX/year |
+| Infield pipeline | 0.5% of CAPEX/year |
+| Export pipeline | 0.5% of CAPEX/year |
+
+## Installation Cost
+
+Installation cost is included with component CAPEX only where the source provides installed cost and no split is available. Otherwise, installation is documented separately.

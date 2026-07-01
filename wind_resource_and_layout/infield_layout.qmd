@@ -1,0 +1,28 @@
+---
+title: "Infield Layout"
+---
+
+## Role in the Model
+
+Infield layout determines the length and topology of the collection network between turbines and the offshore aggregation or export point. The model distinguishes between electrical cable strings and hydrogen pipeline ladders.
+
+## Electrical Infield Layout
+
+The electrical infield network is constrained by cable capacity. The current assumption set uses a 66 kV AC infield cable capacity of 70 MW. Large farms therefore require multiple strings, each connecting only a limited number of turbines.
+
+The model estimates average string length from farm geometry rather than solving a detailed cable-routing optimisation. The average string length is approximated from the distance between the farm centre and corner. An additional 20% is added to represent diversions and crossing constraints.
+
+## Hydrogen Infield Layout
+
+The hydrogen infield network is not constrained in the same way. The current assumption assumes 6 inch infield pipelines at 150 bar with about 500 MW equivalent capacity. This enables a ladder topology where each turbine has two possible routes to the export pipeline.
+
+For a square layout, the ladder length is estimated from the side length of the farm and the number of rungs, which scales with the square root of turbine count.
+
+## Cost and Installation Link
+
+Infield layout feeds directly into component cost pages:
+
+- [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd)
+- [Hydrogen Pipelines](../hydrogen_infra/hydrogen_pipelines.qmd)
+- [Cable Installation](../offshore_installation/cable_installation.qmd)
+- [Pipeline Installation](../offshore_installation/pipeline_installation.qmd)

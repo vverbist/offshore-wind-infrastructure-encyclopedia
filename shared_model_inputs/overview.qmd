@@ -1,0 +1,7 @@
+---
+title: "Shared Model Inputs"
+---
+
+Shared model inputs define conventions used by many component pages. They do not replace component-level documentation; they prevent repeated explanation of common modelling rules.
+
+Shared inputs include financial assumptions, CAPEX/OPEX conventions, scaling laws, source-quality labels, and uncertainty treatment.

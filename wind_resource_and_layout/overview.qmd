@@ -1,0 +1,16 @@
+---
+title: "Wind Resource and Layout"
+---
+
+This section documents the wind resource, wake modelling, spacing, and infield-layout assumptions that determine gross energy production and infrastructure length.
+
+The wind-resource and layout model connects the physical site to component sizing. Turbine positions determine wake losses and infield network geometry. Wake-aware production determines both annual yield and the operating points of hydrogen conversion equipment.
+
+## Main Dependencies
+
+- wind speed and wind direction distribution
+- turbine count and sea area
+- turbine spacing and farm power density
+- wake model
+- infield cable or pipeline topology
+- export distance

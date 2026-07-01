@@ -1,0 +1,34 @@
+---
+title: "Optimisation Variables"
+---
+
+The model treats several design choices as optimisation variables rather than fixed assumptions. Their values are outcomes of the system cost minimisation.
+
+## Layout Variables
+
+Turbine spacing and wind farm power density determine the trade-off between areal yield and capacity factor. Tighter spacing increases installed capacity per area but increases wake losses. Wider spacing improves capacity factor but lowers MWh/km2.
+
+## Hydrogen Variables
+
+For hydrogen configurations, the main optimisation variables are:
+
+- stack overplant factor: installed electrolyser capacity relative to turbine or farm rated power
+- pipeline operating pressure
+- pipeline diameter or selected pipeline class
+- number of export pipelines, where pipeline capacity is discrete
+
+The stack overplant factor affects both conversion efficiency and CAPEX. Oversizing the stack lowers current density and can improve efficiency, but increases stack CAPEX.
+
+Pipeline pressure and diameter affect both transport capacity and compression energy. Because pipelines are discrete assets, the cost optimum may occur by accepting a small energy-yield loss if it avoids an additional pipeline.
+
+## Electricity Variables
+
+For the electricity configuration, export capacity is constrained by HVDC platform and cable block sizing. The current model assumes a 2 GW export cable/platform basis, which creates discrete capacity increments rather than a continuously scalable export link.
+
+## Architecture-Specific Feasible Sets
+
+Each architecture has its own feasible set:
+
+- electricity export requires AC infield collection, offshore conversion, HVDC export, and onshore conversion
+- centralised hydrogen keeps the AC infield network but replaces HVDC export with offshore electrolysis, compression, and hydrogen pipeline export
+- decentralised hydrogen moves electrolysis into the turbine and replaces the infield AC network with a hydrogen pipeline grid
