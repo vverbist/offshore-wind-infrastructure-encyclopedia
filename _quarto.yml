@@ -3,6 +3,7 @@ project:
   pre-render:
     - powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-progress-sidebar.ps1
   resources:
+    - figures/
     - progress-sidebar.js
 
 bibliography: references.bib
@@ -53,11 +54,10 @@ website:
       - section: "Hydrogen Production"
         contents:
           - hydrogen_production/overview.qmd
-          - hydrogen_production/pem_electrolyser_stack.qmd
-          - hydrogen_production/wind_pem_dc_integration.qmd
+          - hydrogen_production/dc_integration.qmd
+          - hydrogen_production/stack.qmd
           - hydrogen_production/balance_of_plant.qmd
-          - hydrogen_production/electrolyser_power_electronics.qmd
-          - hydrogen_production/water_treatment_and_cooling.qmd
+          - hydrogen_production/elx_power_electronics.qmd
       - section: "Hydrogen Infrastructure"
         contents:
           - hydrogen_infra/overview.qmd

@@ -31,4 +31,4 @@ Other converter losses should be added once the model source table is finalised.
 
 ## Cost Model
 
-Turbine-side power electronics are included in the turbine system cost where they are part of the standard turbine. Electrolyser power electronics are documented separately in [Electrolyser Power Electronics](../hydrogen_production/electrolyser_power_electronics.qmd).
+Turbine-side power electronics are included in the turbine system cost where they are part of the standard turbine. Electrolyser power electronics are documented separately in [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd).

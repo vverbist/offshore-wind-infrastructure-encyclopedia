@@ -185,5 +185,14 @@
   "hydrogen_production/wind_pem_dc_integration.qmd": {
     "wind_pem_dc_integration.html": "f0a6b048",
     "wind_pem_dc_integration.tex": "a46c92cf"
+  },
+  "hydrogen_production/dc_integration.qmd": {
+    "dc_integration.html": "85e443f5"
+  },
+  "hydrogen_production/elx_power_electronics.qmd": {
+    "elx_power_electronics.html": "ea058946"
+  },
+  "hydrogen_production/stack.qmd": {
+    "stack.html": "73ccf579"
   }
 }

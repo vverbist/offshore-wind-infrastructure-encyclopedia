@@ -28,6 +28,6 @@ The central facility can benefit from economies of scale in the non-electrical b
 ## Related Components
 
 - [Balance of Plant](../hydrogen_production/balance_of_plant.qmd)
-- [PEM Electrolyser Stack](../hydrogen_production/pem_electrolyser_stack.qmd)
+- [PEM Electrolyser Stack](../hydrogen_production/stack.qmd)
 - [Compressor](../hydrogen_infra/compressor.qmd)
 - [Hydrogen Pipelines](../hydrogen_infra/hydrogen_pipelines.qmd)
