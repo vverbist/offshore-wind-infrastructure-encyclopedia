@@ -337,14 +337,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/pem_electrolyser_stack.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">PEM Electrolyser Stack</span></a>
+  <a href="../hydrogen_production/dc_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DC Integration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/wind_pem_dc_integration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Direct DC Integration of PEM Electrolysers inside Wind Turbine</span></a>
+  <a href="../hydrogen_production/stack.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stack (PEM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -355,14 +355,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/electrolyser_power_electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Electrolyser Power Electronics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/water_treatment_and_cooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Water Treatment and Cooling</span></a>
+  <a href="../hydrogen_production/elx_power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Electronics</span></a>
   </div>
 </li>
       </ul>
@@ -385,7 +379,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/compressor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Compressor</span></a>
+ <span class="menu-text">Hydrogen Compressor</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -536,14 +530,8 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#current-component-cost-basis" id="toc-current-component-cost-basis" class="nav-link active" data-scroll-target="#current-component-cost-basis">Current Component Cost Basis</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -568,41 +556,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Hydrogen production covers the entire electrolyser. In this work, always a PEM electrolyser is studied.</p>
-<p>The electrolyser is split up in the following components: * stack * power electronics * balance of plant (BOP) Note that in most contexts, the balance of plants includes the power electronics, but here they are explictly treated separately.</p>
-<p>The compressor is not included in this section, but is under <a href="../hydrogen_infra/compressor.html">Hydrogen Infrastructure: Compressor</a></p>
+<p>The electrolyser is split up in the following components:</p>
+<ul>
+<li><a href="../hydrogen_production/stack.html">Stack</a></li>
+<li><a href="../hydrogen_production/elx_power_electronics.html">Power Electronics</a></li>
+<li><a href="../hydrogen_production/balance_of_plant.html">Balance of Plant (BOP)</a></li>
+</ul>
+<p>Note that in most contexts, the balance of plants includes the power electronics, but here they are explictly treated separately.</p>
+<p>The compressor is also not included in this section, but is under <a href="../hydrogen_infra/compressor.html">Hydrogen Infrastructure: Compressor</a></p>
 <p>The hydrogen production model is dynamic: stack efficiency and auxiliary power consumption depend on operating point, which depends on the wind state and the installed stack capacity.</p>
-<section id="current-component-cost-basis" class="level2">
-<h2 class="anchored" data-anchor-id="current-component-cost-basis">Current Component Cost Basis</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Cost at 15 MW</th>
-<th style="text-align: right;">Scaling factor</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Stack</td>
-<td style="text-align: right;">100 EUR/kW</td>
-<td style="text-align: right;">1.00</td>
-</tr>
-<tr class="even">
-<td>Non-electrical BOP</td>
-<td style="text-align: right;">380 EUR/kW</td>
-<td style="text-align: right;">0.60</td>
-</tr>
-<tr class="odd">
-<td>Power electronics</td>
-<td style="text-align: right;">87 EUR/kW</td>
-<td style="text-align: right;">1.00</td>
-</tr>
-</tbody>
-</table>
-<p>The cost basis is derived from NREL assumptions, converted from 2020 USD to 2025 EUR, with a markup applied to represent sales price rather than production cost.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.ps1. -->

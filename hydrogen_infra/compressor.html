@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Compressor – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Hydrogen Compressor – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></li><li class="breadcrumb-item"><a href="../hydrogen_infra/compressor.html">Compressor</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></li><li class="breadcrumb-item"><a href="../hydrogen_infra/compressor.html">Hydrogen Compressor</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -337,14 +366,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/pem_electrolyser_stack.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">PEM Electrolyser Stack</span></a>
+  <a href="../hydrogen_production/dc_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DC Integration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/wind_pem_dc_integration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Direct DC Integration of PEM Electrolysers inside Wind Turbine</span></a>
+  <a href="../hydrogen_production/stack.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stack (PEM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -355,14 +384,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/electrolyser_power_electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Electrolyser Power Electronics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/water_treatment_and_cooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Water Treatment and Cooling</span></a>
+  <a href="../hydrogen_production/elx_power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Electronics</span></a>
   </div>
 </li>
       </ul>
@@ -385,7 +408,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/compressor.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Compressor</span></a>
+ <span class="menu-text">Hydrogen Compressor</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,20 +564,33 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#installation-and-mass" id="toc-installation-and-mass" class="nav-link" data-scroll-target="#installation-and-mass">Installation and Mass</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a>
+  <ul class="collapse">
+  <li><a href="#why-outlet-pressure-is-modelled-explicitly" id="toc-why-outlet-pressure-is-modelled-explicitly" class="nav-link" data-scroll-target="#why-outlet-pressure-is-modelled-explicitly">Why Outlet Pressure Is Modelled Explicitly</a></li>
+  </ul></li>
+  <li><a href="#key-assumptions" id="toc-key-assumptions" class="nav-link" data-scroll-target="#key-assumptions">Key Assumptions</a></li>
+  <li><a href="#compression-energy" id="toc-compression-energy" class="nav-link" data-scroll-target="#compression-energy">Compression Energy</a>
+  <ul class="collapse">
+  <li><a href="#sensitivity-to-outlet-pressure" id="toc-sensitivity-to-outlet-pressure" class="nav-link" data-scroll-target="#sensitivity-to-outlet-pressure">Sensitivity to Outlet Pressure</a></li>
+  </ul></li>
+  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a>
+  <ul class="collapse">
+  <li><a href="#cost-sensitivity-to-outlet-pressure" id="toc-cost-sensitivity-to-outlet-pressure" class="nav-link" data-scroll-target="#cost-sensitivity-to-outlet-pressure">Cost Sensitivity to Outlet Pressure</a></li>
+  <li><a href="#centralised-compression" id="toc-centralised-compression" class="nav-link" data-scroll-target="#centralised-compression">Centralised Compression</a></li>
+  <li><a href="#decentralised-compression" id="toc-decentralised-compression" class="nav-link" data-scroll-target="#decentralised-compression">Decentralised Compression</a></li>
+  <li><a href="#operating-cost-and-availability" id="toc-operating-cost-and-availability" class="nav-link" data-scroll-target="#operating-cost-and-availability">Operating Cost and Availability</a></li>
+  </ul></li>
+  <li><a href="#pressure-optimisation" id="toc-pressure-optimisation" class="nav-link" data-scroll-target="#pressure-optimisation">Pressure Optimisation</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></li><li class="breadcrumb-item"><a href="../hydrogen_infra/compressor.html">Compressor</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></li><li class="breadcrumb-item"><a href="../hydrogen_infra/compressor.html">Hydrogen Compressor</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Compressor</h1>
+<h1 class="title">Hydrogen Compressor</h1>
 </div>
 
 
@@ -571,42 +607,24 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The compressor raises hydrogen from electrolyser outlet pressure to the required pipeline inlet pressure. It is present in centralised and decentralised hydrogen architectures.</p>
-<p>PEM stack outlet pressure is assumed to be about 30 bar. Pipeline inlet pressure is an optimisation variable, with examples up to 150 bar.</p>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>The hydrogen compressor raises the pressure of produced hydrogen from the PEM electrolyser outlet pressure to the pressure required by the hydrogen pipeline system.</p>
+<p>The compressor is modelled explicitly because the pipeline injection pressure is a decision variable in this research. The model must therefore capture how compressor energy consumption and compressor cost change when the selected outlet pressure changes. This is necessary for the pressure-diameter optimisation of the hydrogen pipeline system.</p>
+<p>Compression is included only in the hydrogen architectures. In the centralised architecture, compression takes place on the offshore electrolysis platform before injection into the export pipeline. In the decentralised architecture, compression takes place at turbine level before injection into the infield hydrogen pipeline.</p>
+<p>The compressor model includes compressor electricity consumption, motor losses, CAPEX, OPEX and availability. It excludes electrolyser stack costs, electrolyser BOP, hydrogen drying, pipeline CAPEX, pipeline pressure drop and onshore recompression.</p>
+<section id="why-outlet-pressure-is-modelled-explicitly" class="level3">
+<h3 class="anchored" data-anchor-id="why-outlet-pressure-is-modelled-explicitly">Why Outlet Pressure Is Modelled Explicitly</h3>
+<p>The compressor outlet pressure is the pipeline injection pressure. It is one of the optimisation variables in this research.</p>
+<p>Higher outlet pressure increases pipeline transport capacity and may avoid the need for an additional pipeline. However, it also increases compressor electricity consumption and compressor CAPEX. Lower outlet pressure reduces the compressor penalty, but may require a larger pipeline diameter or more parallel pipelines.</p>
+<p>A fixed compressor energy value, for example in kWh/kg H₂, would hide this trade-off. The model therefore calculates compressor electricity consumption and cost explicitly as a function of inlet pressure, outlet pressure and hydrogen mass flow:</p>
 </section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Compressor CAPEX at 15 MW, 30 to 150 bar</td>
-<td style="text-align: right;">56 EUR/kW</td>
-</tr>
-<tr class="even">
-<td>Scaling factor</td>
-<td style="text-align: right;">0.8335</td>
-</tr>
-<tr class="odd">
-<td>Source basis</td>
-<td style="text-align: right;">Transition Accelerator</td>
-</tr>
-</tbody>
-</table>
-<p>Compressor cost scales mainly with electrical compressor power, which depends on specific compression energy and hydrogen flow rate.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>Compression work is modelled as a staged isothermal compression process. The maximum compression ratio per stage is assumed to be 3.3. Higher total ratios require multiple stages, and each stage is assumed to use the same compression ratio.</p>
-<p>Current assumptions:</p>
+<section id="key-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="key-assumptions">Key Assumptions</h2>
+<p>The base case assumes that PEM electrolysers deliver hydrogen at 30 bar. The compressor outlet pressure is not fixed. It is varied together with pipeline diameter and the number of parallel pipelines to minimise total LCOE.</p>
 <table class="caption-top table">
+<caption>Main compressor assumptions.</caption>
 <thead>
 <tr class="header">
 <th>Parameter</th>
@@ -615,63 +633,359 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Hydrogen specific heat ratio</td>
+<td>Electrolyser outlet pressure</td>
+<td style="text-align: right;">30 bar</td>
+</tr>
+<tr class="even">
+<td>Pipeline injection pressure</td>
+<td style="text-align: right;">Decision variable</td>
+</tr>
+<tr class="odd">
+<td>Typical pressure range</td>
+<td style="text-align: right;">50-150 bar</td>
+</tr>
+<tr class="even">
+<td>Maximum pressure ratio per stage</td>
+<td style="text-align: right;">3.3</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen specific heat ratio, <span class="math inline">\(\gamma\)</span></td>
 <td style="text-align: right;">1.41</td>
 </tr>
 <tr class="even">
-<td>Gas temperature</td>
+<td>Gas temperature, <span class="math inline">\(T\)</span></td>
 <td style="text-align: right;">298 K</td>
 </tr>
 <tr class="odd">
-<td>Isothermal efficiency</td>
-<td style="text-align: right;">80%</td>
+<td>Compressor efficiency, <span class="math inline">\(\eta_\mathrm{comp}\)</span></td>
+<td style="text-align: right;">0.80</td>
 </tr>
 <tr class="even">
-<td>Motor efficiency</td>
-<td style="text-align: right;">95%</td>
+<td>Motor efficiency, <span class="math inline">\(\eta_\mathrm{motor}\)</span></td>
+<td style="text-align: right;">0.95</td>
+</tr>
+<tr class="odd">
+<td>Compressor availability</td>
+<td style="text-align: right;">99%</td>
+</tr>
+<tr class="even">
+<td>Compressor OPEX</td>
+<td style="text-align: right;">3% of CAPEX per year</td>
+</tr>
+<tr class="odd">
+<td>Compressor cost scaling exponent</td>
+<td style="text-align: right;">0.8335</td>
 </tr>
 </tbody>
 </table>
-<p>The model uses the average compressibility factor between inlet and outlet conditions.</p>
+<p>The important driver is the <strong>pressure ratio</strong>, not the absolute pressure difference. Compressing hydrogen from 30 bar to 150 bar has a pressure ratio of 5. Compressing from 1 bar to 150 bar has a pressure ratio of 150. This is why the relatively high outlet pressure of PEM electrolysers is important for offshore hydrogen systems.</p>
+<p><span class="math display">\[
+e_\mathrm{comp}
+=
+f(p_\mathrm{in}, p_\mathrm{out})
+\]</span></p>
+<p><span class="math display">\[
+P_\mathrm{comp}
+=
+f(e_\mathrm{comp}, \dot{m}_\mathrm{H_2})
+\]</span></p>
+<p><span class="math display">\[
+C_\mathrm{comp}
+=
+f(P_\mathrm{comp})
+\]</span></p>
+<p>where <span class="math inline">\(p_\mathrm{in}\)</span> is the electrolyser outlet pressure, <span class="math inline">\(p_\mathrm{out}\)</span> is the selected pipeline injection pressure and <span class="math inline">\(\dot{m}_\mathrm{H_2}\)</span> is the hydrogen mass flow rate.</p>
 </section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
+<section id="compression-energy" class="level2">
+<h2 class="anchored" data-anchor-id="compression-energy">Compression Energy</h2>
+<p>The number of compression stages is determined from the maximum allowable pressure ratio per stage:</p>
+<p><span class="math display">\[
+N =
+\left\lceil
+\frac{\ln(p_\mathrm{out}/p_\mathrm{in})}
+{\ln(r_\mathrm{max})}
+\right\rceil
+\]</span></p>
+<p>where <span class="math inline">\(r_\mathrm{max}=3.3\)</span>.</p>
+<p>The actual pressure ratio per stage is:</p>
+<p><span class="math display">\[
+r_s =
+\left(
+\frac{p_\mathrm{out}}{p_\mathrm{in}}
+\right)^{1/N}
+\]</span></p>
+<p>For the reference case of compression from 30 bar to 150 bar:</p>
+<p><span class="math display">\[
+\frac{p_\mathrm{out}}{p_\mathrm{in}}
+=
+\frac{150}{30}
+=
+5
+\]</span></p>
+<p>This gives:</p>
+<p><span class="math display">\[
+N =
+\left\lceil
+\frac{\ln(5)}{\ln(3.3)}
+\right\rceil
+=
+2
+\]</span></p>
+<p>and:</p>
+<p><span class="math display">\[
+r_s = 5^{1/2} = 2.24
+\]</span></p>
+<p>The compressor shaft work per kg of hydrogen is calculated as:</p>
+<p><span class="math display">\[
+w_\mathrm{shaft} =
+\frac{
+N \gamma Z_\mathrm{avg} R T
+}{
+(\gamma - 1) M_\mathrm{H_2} \eta_\mathrm{comp}
+}
+\left[
+r_s^{(\gamma - 1)/\gamma} - 1
+\right]
+\]</span></p>
+<p>where <span class="math inline">\(Z_\mathrm{avg}\)</span> is the average hydrogen compressibility factor between inlet and outlet pressure.</p>
+<p>The electrical energy consumption of the compressor is:</p>
+<p><span class="math display">\[
+e_\mathrm{comp} =
+\frac{
+w_\mathrm{shaft}
+}{
+\eta_\mathrm{motor} \cdot 3.6 \cdot 10^6
+}
+\]</span></p>
+<p>where <span class="math inline">\(e_\mathrm{comp}\)</span> is expressed in kWh/kg H₂.</p>
+<p>The compressor power demand is then calculated from the hydrogen mass flow rate:</p>
+<p><span class="math display">\[
+P_\mathrm{comp}
+=
+e_\mathrm{comp}
+\cdot
+\dot{m}_\mathrm{H_2}
+\]</span></p>
+<p>where <span class="math inline">\(P_\mathrm{comp}\)</span> is in kW when <span class="math inline">\(e_\mathrm{comp}\)</span> is in kWh/kg H₂ and <span class="math inline">\(\dot{m}_\mathrm{H_2}\)</span> is in kg/h.</p>
+<p>For annual or time-step calculations, total compressor electricity use is:</p>
+<p><span class="math display">\[
+E_\mathrm{comp}
+=
+e_\mathrm{comp}
+\cdot
+m_\mathrm{H_2}
+\]</span></p>
+<p>This energy use is treated as a parasitic load in the hydrogen system.</p>
+<section id="sensitivity-to-outlet-pressure" class="level3">
+<h3 class="anchored" data-anchor-id="sensitivity-to-outlet-pressure">Sensitivity to Outlet Pressure</h3>
+<p>Compressor energy consumption increases with outlet pressure because the relevant quantity is the pressure ratio:</p>
+<p><span class="math display">\[
+\frac{p_\mathrm{out}}{p_\mathrm{in}}
+\]</span></p>
+<p>The same outlet pressure can therefore have very different compression penalties depending on electrolyser outlet pressure. Compression to 150 bar is a relatively modest duty when hydrogen leaves the PEM electrolyser at 30 bar, but a much larger duty if hydrogen is produced near atmospheric pressure.</p>
+<p>This effect is shown in Figure X.</p>
+<dl>
+<dt><img src="figures/compressor_energy_vs_outlet_pressure.png" class="img-fluid" alt="Compressor electricity consumption as a function of outlet pressure for different inlet pressures."></dt>
+<dd>
+<p>Compressor electricity consumption as a function of outlet pressure. The figure should show <span class="math inline">\(e_\mathrm{comp}\)</span> in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 50-150 bar.</p>
+</dd>
+</dl>
+<p>The purpose of this figure is to show why PEM outlet pressure matters. A higher electrolyser outlet pressure reduces the compression ratio and therefore lowers the compressor energy penalty for the same selected pipeline pressure.</p>
+</section>
+</section>
+<section id="cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<p>The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The model uses a power-law scaling relation:</p>
+<p><span class="math display">\[
+C_\mathrm{comp}
+=
+C_\mathrm{comp,ref}
+\left(
+\frac{P_\mathrm{comp}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+\]</span></p>
+<p>The exponent is below one, so larger compressors are cheaper per kW than smaller compressors. This matters because the centralised architecture uses a smaller number of large compressor trains, while the decentralised architecture uses many smaller turbine-level compressors.</p>
+<p>As a reference: compression from 30 to 150 bar, for a 15 MW scale system, result in roughly <span class="math inline">\(56 \text{€}/kW\)</span> compressor costs.</p>
+<section id="cost-sensitivity-to-outlet-pressure" class="level3">
+<h3 class="anchored" data-anchor-id="cost-sensitivity-to-outlet-pressure">Cost Sensitivity to Outlet Pressure</h3>
+<p>For a fixed hydrogen production rate, increasing the outlet pressure increases compressor energy consumption. This increases compressor power demand:</p>
+<p><span class="math display">\[
+P_\mathrm{comp}
+=
+e_\mathrm{comp}(p_\mathrm{in}, p_\mathrm{out})
+\cdot
+\dot{m}_\mathrm{H_2}
+\]</span></p>
+<p>Compressor CAPEX then follows from the cost scaling relation:</p>
+<p><span class="math display">\[
+C_\mathrm{comp}
+=
+C_\mathrm{comp,ref}
+\left(
+\frac{P_\mathrm{comp}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+\]</span></p>
+<p>The compressor cost per unit of electrolyser capacity can be expressed as:</p>
+<p><span class="math display">\[
+c_\mathrm{comp}
+=
+\frac{C_\mathrm{comp}}
+{P_\mathrm{ely}}
+\]</span></p>
+<p>where <span class="math inline">\(P_\mathrm{ely}\)</span> is the installed electrolyser capacity.</p>
+<p>This relationship is shown in Figure X.</p>
+<dl>
+<dt><img src="figures/compressor_cost_vs_outlet_pressure.png" class="img-fluid" alt="Compressor cost as a function of outlet pressure for different inlet pressures."></dt>
+<dd>
+<p>Compressor cost as a function of outlet pressure. The figure should show compressor CAPEX in €/kW electrolyser for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The reference case of 30 bar inlet pressure and 150 bar outlet pressure should reproduce the model reference value of approximately 56 €/kW electrolyser.</p>
+</dd>
+</dl>
+<p>The cost curve is flatter than the energy curve because compressor CAPEX scales with compressor power using an exponent below one. However, the same qualitative trade-off remains: higher outlet pressure increases compressor cost, while higher inlet pressure reduces it.</p>
+</section>
+<section id="centralised-compression" class="level3">
+<h3 class="anchored" data-anchor-id="centralised-compression">Centralised Compression</h3>
+<p>In the centralised hydrogen architecture, all hydrogen is produced on the offshore platform. The compressor is therefore sized for the full farm-level hydrogen flow:</p>
+<p><span class="math display">\[
+P_\mathrm{comp,central}
+=
+e_\mathrm{comp}
+\cdot
+\dot{m}_{\mathrm{H_2},\mathrm{farm}}
+\]</span></p>
+<p>The centralised compressor CAPEX is:</p>
+<p><span class="math display">\[
+C_\mathrm{comp,central}
+=
+C_\mathrm{comp,ref}
+\left(
+\frac{P_\mathrm{comp,central}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+\]</span></p>
+<p>This captures the economy of scale from centralising compression. In practice, the compressor would likely be split into multiple parallel trains for redundancy and maintenance, but the current model does not explicitly size those trains.</p>
+</section>
+<section id="decentralised-compression" class="level3">
+<h3 class="anchored" data-anchor-id="decentralised-compression">Decentralised Compression</h3>
+<p>In the decentralised hydrogen architecture, compression is represented at turbine level. For turbine <span class="math inline">\(j\)</span>:</p>
+<p><span class="math display">\[
+P_{\mathrm{comp},j}
+=
+e_{\mathrm{comp},j}
+\cdot
+\dot{m}_{\mathrm{H_2},j}
+\]</span></p>
+<p>The total decentralised compressor cost is calculated by summing over all turbines:</p>
+<p><span class="math display">\[
+C_\mathrm{comp,decentral}
+=
+\sum_j
+C_\mathrm{comp,ref}
+\left(
+\frac{P_{\mathrm{comp},j}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+\]</span></p>
+<p>This captures the cost penalty of distributing compression across many smaller units. The decentralised architecture may still be attractive because it removes the central offshore electrolysis platform and replaces the infield AC grid with hydrogen pipelines.</p>
+</section>
+<section id="operating-cost-and-availability" class="level3">
+<h3 class="anchored" data-anchor-id="operating-cost-and-availability">Operating Cost and Availability</h3>
+<p>Compressor OPEX is calculated as:</p>
+<p><span class="math display">\[
+OPEX_\mathrm{comp}
+=
+0.03
+\cdot
+C_\mathrm{comp}
+\]</span></p>
+<p>Compressor availability is assumed to be:</p>
+<p><span class="math display">\[
+A_\mathrm{comp} = 99\%
+\]</span></p>
+<p>The available hydrogen after compression is therefore:</p>
+<p><span class="math display">\[
+m_{\mathrm{H_2},\mathrm{after}}
+=
+A_\mathrm{comp}
+\cdot
+m_{\mathrm{H_2},\mathrm{before}}
+\]</span></p>
+<p>This is a simplified availability treatment. It does not explicitly model spare compressor trains, partial-load operation during failures or maintenance strategy.</p>
+</section>
+</section>
+<section id="pressure-optimisation" class="level2">
+<h2 class="anchored" data-anchor-id="pressure-optimisation">Pressure Optimisation</h2>
+<p>Pipeline injection pressure is optimised together with pipeline diameter and the number of parallel pipelines.</p>
+<p>Higher pressure increases pipeline capacity and may avoid an additional pipeline. However, it also increases compressor electricity consumption and compressor CAPEX. Lower pressure reduces the compressor penalty, but may require more pipeline capacity.</p>
+<p>The optimisation problem is therefore not:</p>
+<p><span class="math display">\[
+\min e_\mathrm{comp}
+\]</span></p>
+<p>and it is also not:</p>
+<p><span class="math display">\[
+\min C_\mathrm{pipeline}
+\]</span></p>
+<p>Instead, the model minimises the combined system cost:</p>
+<p><span class="math display">\[
+\min_{p_\mathrm{out}, D, n_\mathrm{pipe}}
+LCOE
+\]</span></p>
+<p>where <span class="math inline">\(p_\mathrm{out}\)</span> is compressor outlet pressure and pipeline injection pressure, <span class="math inline">\(D\)</span> is pipeline diameter and <span class="math inline">\(n_\mathrm{pipe}\)</span> is the number of parallel pipelines.</p>
+<p>The optimum can therefore occur at an intermediate pressure. A higher pressure may be justified if it avoids an extra pipeline. A lower pressure may be preferable if the pipeline is already oversized and additional compression provides little transport benefit.</p>
+</section>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<p>This compressor model is intended for early-stage techno-economic comparison. It is not a detailed compressor design.</p>
+<p>The main limitations are:</p>
 <table class="caption-top table">
+<caption>Main limitations of the compressor model.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
+<th>Limitation</th>
+<th>Implication</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Compressor</td>
-<td style="text-align: right;">99.0%</td>
+<td>Cost scales only with compressor power</td>
+<td>Compressor type, train count and offshore packaging are simplified</td>
+</tr>
+<tr class="even">
+<td>One cost exponent is used</td>
+<td>Technology-specific cost behaviour is not represented</td>
+</tr>
+<tr class="odd">
+<td>Compression uses a simplified multistage equation</td>
+<td>Intercooling, compressor maps and detailed thermal design are not modelled</td>
+</tr>
+<tr class="even">
+<td>Availability is a fixed percentage</td>
+<td>Redundancy and partial failure are not represented</td>
+</tr>
+<tr class="odd">
+<td>Offshore integration cost is excluded</td>
+<td>Platform or turbine layout impacts may be underestimated</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="installation-and-mass" class="level2">
-<h2 class="anchored" data-anchor-id="installation-and-mass">Installation and Mass</h2>
-<p>Compressor installation is included in the associated turbine or central platform architecture. A component mass model should be added if compressor mass affects turbine tower, platform, or lifting assumptions.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>The Advantage of PEM
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Note that there are five types of callouts, including: <code>note</code>, <code>warning</code>, <code>important</code>, <code>tip</code>, and <code>caution</code>.</p>
-</div>
-</div>
+<p>Future work should replace the generic cost curve with a compressor-train model that includes compressor type, number of stages, intercooling, redundancy, turndown, offshore packaging and maintenance philosophy.</p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Khan, M.A., Young, C., MacKinnon, C. and Layzell, D.B. (2021), <em>The Techno-Economics of Hydrogen Compression</em>, Transition Accelerator Technical Briefs, Vol. 1, Issue 1.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.ps1. -->
 <script>
 (() => {
