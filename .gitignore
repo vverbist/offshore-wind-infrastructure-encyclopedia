@@ -1,2 +1,5 @@
 /.quarto/
+/_site/
 **/*.quarto_ipynb
+__pycache__/
+*.py[cod]
