@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>PEM Electrolyser Stack – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Stack (PEM) – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_production/overview.html">Hydrogen Production</a></li><li class="breadcrumb-item"><a href="../hydrogen_production/pem_electrolyser_stack.html">PEM Electrolyser Stack</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_production/overview.html">Hydrogen Production</a></li><li class="breadcrumb-item"><a href="../hydrogen_production/pem_electrolyser_stack.html">Stack (PEM)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -337,8 +366,14 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/wind_pem_dc_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DC Integration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../hydrogen_production/pem_electrolyser_stack.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">PEM Electrolyser Stack</span></a>
+ <span class="menu-text">Stack (PEM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -350,13 +385,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_production/electrolyser_power_electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Electrolyser Power Electronics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/water_treatment_and_cooling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Water Treatment and Cooling</span></a>
+ <span class="menu-text">Power Electronics</span></a>
   </div>
 </li>
       </ul>
@@ -551,9 +580,9 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_production/overview.html">Hydrogen Production</a></li><li class="breadcrumb-item"><a href="../hydrogen_production/pem_electrolyser_stack.html">PEM Electrolyser Stack</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_production/overview.html">Hydrogen Production</a></li><li class="breadcrumb-item"><a href="../hydrogen_production/pem_electrolyser_stack.html">Stack (PEM)</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">PEM Electrolyser Stack</h1>
+<h1 class="title">Stack (PEM)</h1>
 </div>
 
 
@@ -699,7 +728,30 @@ Figure&nbsp;1: Manufacturer polarisation curve (top) and resulting stack efficie
 </section>
 <section id="cost-model" class="level2">
 <h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The stack cost consists primarily of materials and manufacturing. Unlike equipment such as turbines or compressors, larger PEM electrolysers are not constructed by scaling individual stacks. Instead, larger systems simply contain more identical stack modules. Consequently, stack cost scales approximately linearly with installed stack capacity. Cost reductions are therefore expected to arise mainly through manufacturing learning and production volume rather than economies of scale at the equipment level. The model adopts the stack cost projections from <include nrel="" reference="">.</include></p>
+<p><strong>Cost basis</strong></p>
+<p>The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM water electrolyser stacks. The NREL study evaluates a 1 MW PEM electrolyser stack and reports stack manufactured costs in 2020 US dollars per kW of stack capacity. The reported stack-only manufactured costs are:</p>
+<ul>
+<li>316 $/kW at 10 MW/year manufacturing volume</li>
+<li>183 $/kW at 100 MW/year manufacturing volume</li>
+<li>164 $/kW at 1,000 MW/year manufacturing volume</li>
+</ul>
+<p>These values exclude manufacturer markup, installation costs, soft costs and inflation. They are therefore used here as stack manufacturing cost inputs rather than complete installed electrolyser system costs.</p>
+<p>For the base case, the model uses the <strong>1,000 MW/year manufacturing-volume case</strong>, corresponding to a stack manufactured cost of <strong>164 $/kW</strong> in the NREL reference case. This case is selected because the offshore hydrogen system considered here represents industrial-scale deployment rather than early low-volume manufacturing. The 10 MW/year and 100 MW/year cases may be used in sensitivity analysis to represent less mature supply chains or slower manufacturing scale-up.</p>
+<p><strong>Reference-rated stack capacity</strong></p>
+<p>A complication is that the rated power of a PEM stack is not a purely physical property. For a given number of cells and active cell area, stack power depends on the current density at which the stack is rated. A higher rated current density gives more electrical power from the same physical stack and therefore reduces the apparent cost expressed in $/kW or €/MW, even if the stack itself has not become cheaper.</p>
+<p>This is important because current density is treated explicitly in this model. Operating at higher current density increases the power output of a given stack, but it also increases cell voltage, reduces efficiency and accelerates degradation. Conversely, installing more stack capacity allows operation at lower current density, improving efficiency and lifetime at the expense of higher CAPEX.</p>
+<p>The model therefore uses a <strong>reference-rated stack capacity</strong> as the cost-normalisation convention. This is the electrical capacity the installed stack would have if operated at a fixed reference current density of <strong>3 A/cm²</strong>. The reference-rated capacity is used only for cost accounting; it does not imply that the stack must operate continuously at this current density.</p>
+<p>NREL’s cost values are converted to this 3 A/cm² reference-rating convention where necessary. This avoids treating changes in rating current density as independent cost reductions. In the NREL cost-reduction waterfall, part of the reduction in $/kW arises from increased current density, because the same physical stack area is assigned a higher rated power. In this model, that mechanism is already captured explicitly through the polarisation curve: higher current density allows more power from the same installed stack, but with an efficiency and degradation penalty. Therefore, current-density-driven reductions in reported $/kW are not applied as a separate stack cost reduction.</p>
+<p><strong>Model implementation</strong></p>
+<p>The stack is modelled as a modular component whose cost scales linearly with installed reference-rated stack capacity. Linear scaling is used because larger PEM electrolyser systems are represented as multiple identical stack modules rather than as a single geometrically scaled stack. As a result, increasing installed stack capacity increases the number of modules, cells and active area approximately proportionally. No equipment-level scaling exponent is therefore applied to the stack itself.</p>
+<p>Actual stack operation is determined separately by the optimisation. At each time step, the model chooses the number of active modules and their operating current density. The corresponding electrical input, hydrogen production, efficiency and degradation are calculated from the polarisation curve. Reference-rated stack capacity is therefore a bookkeeping convention for cost only, while the physical and operational behaviour of the stack remains governed by current density.</p>
+<p><strong>Cost development</strong></p>
+<p>The main cost reductions for PEM stacks are assumed to come from manufacturing learning, higher production volumes and material reductions rather than from size-based economies of scale at the individual-stack level. In the NREL analysis, increasing manufacturing volume from 10 MW/year to 1,000 MW/year reduces the reported stack manufactured cost from 316 $/kW to 164 $/kW.</p>
+<p>However, cost reductions associated purely with higher rated current density are treated separately from manufacturing learning. A higher current density reduces the reported $/kW by increasing the rated power per unit active area, but it does not necessarily reduce the physical cost of the installed stack. However, in this research, the reference rated stack current density is 3 A/cm2, but NREL uses 2 A/cm2. So this cost reduction must be applied as well.</p>
+<p>Taking figure 27 as the reference, we apply the increased current density to 3 A/cm2 and economies of scale to 1000 MW/year to find <span class="math inline">\(316-57-132-15=112\)</span> $/kW. Consequently, a 50% manufacturers cost mark-up as well as conversion to 2024€ is applied to find: 100 €/kW (CHECK)</p>
+<p><strong>Scope distinction</strong></p>
+<p>Only the stack cost is included in this component model. Balance-of-plant equipment, power electronics, installation, offshore structures and other system-level costs are represented elsewhere in the model. This distinction is important because the NREL report also provides full electrolyser system costs, but those include balance-of-plant components that are outside the scope of this stack page.</p>
+<p>Stack replacement costs are calculated using the same specific stack cost assumption as the initial stack.</p>
 </section>
 <section id="availability" class="level2">
 <h2 class="anchored" data-anchor-id="availability">Availability</h2>
@@ -714,6 +766,27 @@ Figure&nbsp;1: Manufacturer polarisation curve (top) and resulting stack efficie
 </section>
 
 </main> <!-- /main -->
+<!-- Generated by tools/build-progress-sidebar.ps1. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-progress-sidebar]")) {
+    return;
+  }
+
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+
+  script.src = rootPath + "progress-sidebar.js";
+  script.defer = true;
+  script.dataset.progressSidebar = "true";
+
+  document.body.appendChild(script);
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1119,26 +1192,4 @@ Figure&nbsp;1: Manufacturer polarisation curve (top) and resulting stack efficie
 
 
 
-<!-- Generated by tools/build-progress-sidebar.ps1. -->
-<script>
-(() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
-  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
-    .map((link) => link.getAttribute("href"))
-    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
-  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
-  const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
-  script.defer = true;
-  script.dataset.progressSidebar = "true";
-
-  document.body.appendChild(script);
-})();
-</script>
-</body>
-</html>
+</body></html>

@@ -1,5 +1,5 @@
 ---
-title: "Electrolyser Power Electronics"
+title: "Power Electronics"
 completion: 20
 ---
 
@@ -18,7 +18,7 @@ Power electronics are treated as mature, modular components and do not receive c
 
 ## Energy Balance
 
-For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are:
+For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are: 
 
 | Component | Loss |
 |---|---:|

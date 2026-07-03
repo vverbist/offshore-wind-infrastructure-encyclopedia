@@ -1,40 +1,258 @@
 ---
 title: "Balance of Plant"
-completion: 20
+completion: 80
 ---
 
-## Role in the Value Chain
+## Role and Scope
 
-Balance of plant includes non-stack auxiliary systems for hydrogen production, such as water treatment, cooling, gas handling, and hydrogen purification. Power electronics and compression are treated separately.
+The balance of plant (BOP) includes the non-electrical auxiliary equipment required to operate the PEM electrolyser stack safely and continuously. In this model, the BOP manages feedwater supply, heat removal, gas-liquid separation, hydrogen drying, hydrogen-side piping, instrumentation and housing.
 
-## Cost Model
+Because the system is offshore, the feedwater system must also include seawater intake, desalination and final purification to electrolyser-grade water.
 
-| Item | Assumption |
-|---|---:|
-| Non-electrical BOP CAPEX | 380 EUR/kW |
-| Scaling factor | 0.60 |
+Power electronics are excluded completely because the required components depend on the electrical architecture. Transformers, rectifiers and other electrical conversion equipment are discussed on [Electrolyser Power Electronics](elx_power_electronics.qmd).
 
-The scaling factor represents economies of scale for centralised facilities. The 6/10ths rule is used: total cost scales with capacity to the power 0.6 rather than linearly.
+The stack, compressors, hydrogen export system, offshore installation, offshore structures and indirect project costs are also represented elsewhere in the model.
 
-## Energy Balance
+The scope used in this page is therefore:
 
-BOP power consumption has two parts:
+| Included in this BOP model          | Excluded from this BOP model        |
+| ----------------------------------- | ----------------------------------- |
+| Thermal management                  | PEM electrolyser stack              |
+| Feedwater handling                  | Power electronics                   |
+| Seawater intake                     | Transformers and rectifiers         |
+| Desalination and final purification | Hydrogen compression                |
+| Gas-liquid separation               | Hydrogen export system              |
+| Hydrogen drying                     | Offshore foundations and structures |
+| Hydrogen-side BOP piping            | Offshore installation               |
+| Instrumentation and housing         | Site preparation and indirect costs |
 
-- a fixed component independent of hydrogen production rate
-- a variable component that scales with hydrogen output
+: Scope boundary for the balance-of-plant model.
 
-The BOP power demand is represented as a percentage of available electrical power as a function of operating point.
+## Key Assumptions
 
-The current source material states that purification and drying lose about 1% of produced hydrogen. Total BOP-related losses are approximately 2% at full load.
+The main assumptions used in the base-case BOP model are:
 
-## Availability
+| Parameter                                   |      Base value | Comment                                              |
+| ------------------------------------------- | --------------: | ---------------------------------------------------- |
+| Non-water non-electrical BOP reference cost | 333 2020 USD/kW | NREL 1,000 MW/year case plus 50% manufacturer markup |
+| Offshore water treatment placeholder        |  63 2020 USD/kW | NREL water supply value plus 50% manufacturer markup |
+| Reference capacity                          |            1 MW | NREL reference system                                |
+| Scaling exponent                            |             0.6 | Six-tenths rule                                      |
+| BOP electricity consumption                 |   1.0 kWh/kg H₂ | Excludes compression and power electronics           |
 
-BOP availability is currently bundled into the electrolyser availability factor:
+: Main base-case assumptions for the BOP model.
 
-| Component | Availability |
-|---|---:|
-| Electrolyser | 98.5% |
+These assumptions should be interpreted as early-stage modelling values. The NREL reference system is a land-based 1 MW manufactured-cost estimate. Applying it to offshore multi-MW or GW-scale systems introduces uncertainty because offshore systems require different packaging, redundancy, corrosion protection, maintainability, water intake, cooling strategy and safety zoning. The scaling exponent captures generic economies of scale, but it does not represent a detailed offshore process design.
 
-## Source Basis
+## Cost Basis
 
-Power consumption data are based on Manufacturer H. The source data should be treated as confidential and represented in the model as a fitted or tabulated curve.
+### Scope of Cost Estimate
+
+The non-electrical BOP cost is based on the NREL PEM electrolyser manufactured cost analysis. NREL reports subsystem costs for a 1 MW PEM electrolyser system in 2020 USD per kW of electrolyser capacity.^[NREL, *Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers*, NREL/TP-6A20-87625, Table 10.]
+
+The base case uses the NREL 1,000 MW/year manufacturing-volume case because the offshore hydrogen system considered here represents industrial-scale deployment rather than early low-volume manufacturing.
+
+Electrical BOP is excluded from the NREL cost breakdown. The NREL water supply category is also separated from the generic BOP cost because offshore seawater treatment requires an explicit desalination and purification model.
+
+This page distinguishes between three cost levels:
+
+| Cost level              | Meaning                                                                                          | Treatment in this model                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| Manufactured cost       | Factory production cost reported by NREL                                                         | Used as the starting point              |
+| Equipment purchase cost | Manufactured cost plus manufacturer markup                                                       | Used for the BOP reference cost         |
+| Installed offshore cost | Equipment cost plus installation, structures, offshore logistics, contingency and indirect costs | Excluded here and represented elsewhere |
+
+: Cost levels used to interpret the BOP estimate.
+
+### NREL Reference Cost
+
+The remaining non-water, non-electrical BOP manufactured costs used in the base case are:
+
+| Subsystem                              | Manufactured cost [2020 USD/kW] |
+| -------------------------------------- | ------------------------------: |
+| Thermal management                     |                              61 |
+| Hydrogen processing                    |                              88 |
+| Hydrogen-side BOP                      |                               4 |
+| Piping, instrumentation and housing    |                              69 |
+| **Total non-water non-electrical BOP** |                         **222** |
+
+: Non-water non-electrical BOP manufactured costs from the NREL 1,000 MW/year manufacturing-volume case.
+
+A manufacturer markup of **50%** is applied to convert manufactured cost into an approximate equipment purchase cost. The resulting marked-up non-water BOP reference cost is:
+
+[
+c_\mathrm{BOP,ref} = 1.5 \cdot 222 = 333 \ \mathrm{2020\ USD/kW}
+]
+
+For the 1 MW NREL reference system, this corresponds to:
+
+[
+C_\mathrm{BOP,ref} = 333{,}000 \ \mathrm{2020\ USD}
+]
+
+This value excludes power electronics, stack costs, offshore water treatment, installation, offshore structures, site preparation, indirect costs, inflation and offshore-specific cost adders.
+
+### Offshore Water Treatment
+
+The offshore water treatment system converts seawater into the high-purity water required by the PEM electrolyser. This system includes seawater intake, coarse filtration, desalination, polishing and deionisation.
+
+The cost is represented separately because the NREL water supply category is not assumed to fully capture offshore seawater desalination and purification.
+
+The offshore water treatment reference cost is defined as:
+
+[
+C_\mathrm{water,ref}
+]
+
+where (C_\mathrm{water,ref}) is the marked-up cost of the water treatment system for a 1 MW electrolyser reference unit.
+
+If no dedicated offshore desalination cost estimate is available, the NREL water supply value may be used only as a placeholder and should be clearly labelled as incomplete. In the NREL 1,000 MW/year case, the water supply manufactured cost is 42 2020 USD/kW. Applying the same 50% manufacturer markup gives a placeholder value of:
+
+[
+c_\mathrm{water,placeholder} = 1.5 \cdot 42 = 63 \ \mathrm{2020\ USD/kW}
+]
+
+For the 1 MW reference system, this corresponds to:
+
+[
+C_\mathrm{water,ref} = 63{,}000 \ \mathrm{2020\ USD}
+]
+
+when the placeholder value is used.
+
+This placeholder should be replaced by a desalination and ultrapure-water treatment cost estimate when available. The water treatment cost is kept separate so that offshore-specific assumptions can be tested independently from the rest of the BOP.
+
+### Scaling Method
+
+The BOP is not assumed to scale linearly with installed capacity. Water treatment, cooling, gas-liquid separation, drying, piping and instrumentation can be shared across multiple stacks. A centralised or semi-centralised BOP system is therefore expected to be cheaper than many small independent BOP systems with the same total capacity.
+
+Because the exact scaling exponent is not known, the model uses the six-tenths rule as a first-order process-equipment scaling approximation.^[The six-tenths rule is a standard preliminary process-equipment cost-scaling method in which cost scales with capacity using an exponent close to 0.6; see Engineering LibreTexts, “Purchased Equipment Cost”, and Peters, Timmerhaus and West, *Plant Design and Economics for Chemical Engineers*.]
+
+For a BOP unit with capacity (P_i), the non-water BOP cost is calculated as:
+
+[
+C_{\mathrm{BOP},i} =
+C_\mathrm{BOP,ref}
+\left(
+\frac{P_i}{P_\mathrm{ref}}
+\right)^{0.6}
+]
+
+where (P_\mathrm{ref}=1 \ \mathrm{MW}) is the NREL reference capacity.
+
+The offshore water treatment cost is scaled separately:
+
+[
+C_{\mathrm{water},i} =
+C_\mathrm{water,ref}
+\left(
+\frac{P_i}{P_\mathrm{ref}}
+\right)^{0.6}
+]
+
+The total BOP cost is calculated by summing the non-water BOP and offshore water treatment costs over all independent BOP units:
+
+[
+C_\mathrm{BOP,total} =
+\sum_i
+\left[
+C_\mathrm{BOP,ref}
+\left(
+\frac{P_i}{P_\mathrm{ref}}
+\right)^{0.6}
++
+C_\mathrm{water,ref}
+\left(
+\frac{P_i}{P_\mathrm{ref}}
+\right)^{0.6}
+\right]
+]
+
+This formulation allows the model to distinguish between decentralised and centralised electrolyser architectures.
+
+Under this scaling assumption, a more centralised BOP architecture is cheaper than a highly decentralised architecture with the same total electrolyser capacity. In practice, the optimum is likely to involve several shared BOP trains rather than one fully centralised unit, because redundancy, maintainability and safety constraints limit the practical size of individual BOP systems.
+
+The scaling rule should therefore be interpreted as an early-stage approximation rather than a detailed equipment design. Future work may replace this rule with a process-level BOP model for seawater intake, desalination, deionisation, cooling, gas-liquid separation, drying and hydrogen-side piping.
+
+### Manufacturing Volume Sensitivity
+
+The base case uses the 1,000 MW/year NREL manufacturing-volume case. The 10 MW/year and 100 MW/year NREL cases may be used in sensitivity analysis to represent less mature supply chains or slower industrial scale-up.
+
+After excluding electrical BOP and separating water supply, the non-water BOP sensitivity values are:
+
+| Manufacturing volume | Non-water non-electrical BOP manufactured cost [2020 USD/kW] | With 50% markup [2020 USD/kW] |
+| -------------------: | -----------------------------------------------------------: | ----------------------------: |
+|           10 MW/year |                                                          296 |                           444 |
+|          100 MW/year |                                                          265 |                           398 |
+|        1,000 MW/year |                                                          222 |                           333 |
+
+: Manufacturing-volume sensitivity for the non-water non-electrical BOP cost.
+
+The selected manufacturing-volume case changes (C_\mathrm{BOP,ref}), while the six-tenths rule determines how this reference cost scales with the size of each shared BOP unit.
+
+The offshore water treatment cost is controlled separately through (C_\mathrm{water,ref}), because desalination and ultrapure-water polishing depend on offshore water quality, redundancy requirements and the selected treatment process.
+
+## BOP Power Consumption
+
+The BOP also consumes electricity during electrolyser operation. This consumption is treated separately from stack electricity consumption.
+
+The BOP power consumption represents parasitic loads from auxiliary systems such as pumps, fans, chillers, recirculation blowers, thermal management and hydrogen drying.
+
+Compression is excluded from this value because compression is represented elsewhere in the model. Electrical conversion losses are also explicitly excluded because power electronics are represented separately.
+
+The NREL report cites a generic BOP electricity consumption of 4.2 kWh/kg H₂, but this value includes electrical losses and is therefore not directly applicable to the non-electrical BOP scope used here.^[NREL, *Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers*, NREL/TP-6A20-87625, Table 1.]
+
+The underlying Ruth and Ahluwalia source separates BOP losses into electrical, mechanical and hydrogen-related losses. After excluding electrical losses, the remaining BOP consumption is:
+
+| Operating point         | Mechanical [kWh/kg H₂] | Hydrogen [kWh/kg H₂] | Total [kWh/kg H₂] |
+| ----------------------- | ---------------------: | -------------------: | ----------------: |
+| Rated power, BOL        |                    1.3 |                  0.2 |               1.5 |
+| Rated power, EOL        |                    2.3 |                  0.2 |               2.5 |
+| Minimum-loss point, BOL |                    0.4 |                  0.1 |               0.5 |
+| Minimum-loss point, EOL |                    0.6 |                  0.1 |               0.7 |
+
+: Non-electrical BOP electricity consumption after excluding electrical losses.
+
+A simple lifetime average gives approximately 2.0 kWh/kg H₂ at rated power and 0.6 kWh/kg H₂ at the minimum-loss operating point. The difference is mainly caused by thermal management. At the minimum-loss operating point, the stack operates more efficiently and therefore produces less waste heat. Lower waste heat reduces the cooling duty and associated mechanical power consumption.
+
+In this study, the stack is deliberately oversized so that the electrolyser usually operates closer to the minimum-loss point than to rated stack operation. The model therefore assumes an average non-electrical BOP power consumption of:
+
+[
+e_\mathrm{BOP} = 1.0 \ \mathrm{kWh/kg_{H_2}}
+]
+
+This value includes mechanical BOP loads and hydrogen drying losses. It is selected as a conservative average. It is higher than the minimum-loss values reported by Ruth and Ahluwalia to allow for offshore cooling, water handling, drying, control systems, part-load operation and uncertainty in auxiliary loads.
+
+### Desalination
+
+Offshore desalination and water polishing are small compared with the main BOP parasitic loads. A worst-case reverse-osmosis electricity use of 5.0 kWh/m³ corresponds to approximately 0.05 kWh/kg H₂ when 10 L of water is required per kg H₂. This is small relative to the assumed 1.0 kWh/kg H₂ BOP consumption.
+
+Desalination power is therefore included within the BOP power allowance unless a separate water-treatment model is used.
+
+The total BOP electricity consumption is calculated as:
+
+[
+E_\mathrm{BOP} = e_\mathrm{BOP} \cdot m_\mathrm{H_2}
+]
+
+where (E_\mathrm{BOP}) is the BOP electricity consumption and (m_\mathrm{H_2}) is the hydrogen production.
+
+The assumed value of (e_\mathrm{BOP}) should be interpreted as an average value for an oversized offshore PEM electrolyser operating predominantly away from rated stack power.
+
+## Model Limitations
+
+This BOP model is intended for early-stage techno-economic assessment. It should not be interpreted as a detailed offshore BOP design.
+
+The main limitations are:
+
+| Limitation                                                                                | Implication                                                                                        |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Land-based NREL cost data are used as the cost basis                                      | Offshore packaging, redundancy, corrosion protection and maintainability are not explicitly costed |
+| A generic 0.6 scaling exponent is used                                                    | The model captures broad economies of scale but not detailed equipment train sizing                |
+| Offshore water treatment uses a placeholder value when no dedicated estimate is available | Desalination and ultrapure-water costs should be updated when project-specific data are available  |
+| BOP electricity consumption is represented by a single average value                      | Dynamic behaviour, thermal transients and detailed part-load operation are not modelled            |
+| Compression is excluded                                                                   | Any compression energy and cost must be added elsewhere in the model                               |
+
+: Main limitations of the current BOP model.
+
+Future work should replace the generic scaling approach with a process-level BOP model that separately estimates seawater intake, desalination, deionisation, cooling, gas-liquid separation, drying, hydrogen-side piping, redundancy and offshore packaging.

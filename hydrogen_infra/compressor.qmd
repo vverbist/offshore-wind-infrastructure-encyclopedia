@@ -1,51 +1,380 @@
 ---
-title: "Compressor"
-completion: 30
+title: "Hydrogen Compressor"
+completion: 70
 ---
 
-## Role in the Value Chain
+## Role and Scope
 
-The compressor raises hydrogen from electrolyser outlet pressure to the required pipeline inlet pressure. It is present in centralised and decentralised hydrogen architectures.
+The hydrogen compressor raises the pressure of produced hydrogen from the PEM electrolyser outlet pressure to the pressure required by the hydrogen pipeline system.
 
-PEM stack outlet pressure is assumed to be about 30 bar. Pipeline inlet pressure is an optimisation variable, with examples up to 150 bar.
+The compressor is modelled explicitly because the pipeline injection pressure is a decision variable in this research. The model must therefore capture how compressor energy consumption and compressor cost change when the selected outlet pressure changes. This is necessary for the pressure-diameter optimisation of the hydrogen pipeline system.
 
-## Cost Model
+Compression is included only in the hydrogen architectures. In the centralised architecture, compression takes place on the offshore electrolysis platform before injection into the export pipeline. In the decentralised architecture, compression takes place at turbine level before injection into the infield hydrogen pipeline.
 
-| Item | Assumption |
-|---|---:|
-| Compressor CAPEX at 15 MW, 30 to 150 bar | 56 EUR/kW |
-| Scaling factor | 0.8335 |
-| Source basis | Transition Accelerator |
+The compressor model includes compressor electricity consumption, motor losses, CAPEX, OPEX and availability. It excludes electrolyser stack costs, electrolyser BOP, hydrogen drying, pipeline CAPEX, pipeline pressure drop and onshore recompression.
 
-Compressor cost scales mainly with electrical compressor power, which depends on specific compression energy and hydrogen flow rate.
+### Why Outlet Pressure Is Modelled Explicitly
 
-## Energy Balance
+The compressor outlet pressure is the pipeline injection pressure. It is one of the optimisation variables in this research.
 
-Compression work is modelled as a staged isothermal compression process. The maximum compression ratio per stage is assumed to be 3.3. Higher total ratios require multiple stages, and each stage is assumed to use the same compression ratio.
+Higher outlet pressure increases pipeline transport capacity and may avoid the need for an additional pipeline. However, it also increases compressor electricity consumption and compressor CAPEX. Lower outlet pressure reduces the compressor penalty, but may require a larger pipeline diameter or more parallel pipelines.
 
-Current assumptions:
+A fixed compressor energy value, for example in kWh/kg H₂, would hide this trade-off. The model therefore calculates compressor electricity consumption and cost explicitly as a function of inlet pressure, outlet pressure and hydrogen mass flow:
+
+
+## Key Assumptions
+
+The base case assumes that PEM electrolysers deliver hydrogen at 30 bar. The compressor outlet pressure is not fixed. It is varied together with pipeline diameter and the number of parallel pipelines to minimise total LCOE.
 
 | Parameter | Value |
 |---|---:|
-| Hydrogen specific heat ratio | 1.41 |
-| Gas temperature | 298 K |
-| Isothermal efficiency | 80% |
-| Motor efficiency | 95% |
+| Electrolyser outlet pressure | 30 bar |
+| Pipeline injection pressure | Decision variable |
+| Typical pressure range | 50-150 bar |
+| Maximum pressure ratio per stage | 3.3 |
+| Hydrogen specific heat ratio, $\gamma$ | 1.41 |
+| Gas temperature, $T$ | 298 K |
+| Compressor efficiency, $\eta_\mathrm{comp}$ | 0.80 |
+| Motor efficiency, $\eta_\mathrm{motor}$ | 0.95 |
+| Compressor availability | 99% |
+| Compressor OPEX | 3% of CAPEX per year |
+| Compressor cost scaling exponent | 0.8335 |
 
-The model uses the average compressibility factor between inlet and outlet conditions.
+: Main compressor assumptions.
 
-## Availability
+The important driver is the **pressure ratio**, not the absolute pressure difference. Compressing hydrogen from 30 bar to 150 bar has a pressure ratio of 5. Compressing from 1 bar to 150 bar has a pressure ratio of 150. This is why the relatively high outlet pressure of PEM electrolysers is important for offshore hydrogen systems.
 
-| Component | Availability |
-|---|---:|
-| Compressor | 99.0% |
 
-## Installation and Mass
+$$
+e_\mathrm{comp}
+=
+f(p_\mathrm{in}, p_\mathrm{out})
+$$
 
-Compressor installation is included in the associated turbine or central platform architecture. A component mass model should be added if compressor mass affects turbine tower, platform, or lifting assumptions.
+$$
+P_\mathrm{comp}
+=
+f(e_\mathrm{comp}, \dot{m}_\mathrm{H_2})
+$$
 
-::: {.callout-note}
-## The Advantage of PEM {#sec-compressor-pem}
-Note that there are five types of callouts, including:
-`note`, `warning`, `important`, `tip`, and `caution`.
-:::
+$$
+C_\mathrm{comp}
+=
+f(P_\mathrm{comp})
+$$
+
+where $p_\mathrm{in}$ is the electrolyser outlet pressure, $p_\mathrm{out}$ is the selected pipeline injection pressure and $\dot{m}_\mathrm{H_2}$ is the hydrogen mass flow rate.
+
+## Compression Energy
+
+The number of compression stages is determined from the maximum allowable pressure ratio per stage:
+
+$$
+N =
+\left\lceil
+\frac{\ln(p_\mathrm{out}/p_\mathrm{in})}
+{\ln(r_\mathrm{max})}
+\right\rceil
+$$
+
+where $r_\mathrm{max}=3.3$.
+
+The actual pressure ratio per stage is:
+
+$$
+r_s =
+\left(
+\frac{p_\mathrm{out}}{p_\mathrm{in}}
+\right)^{1/N}
+$$
+
+For the reference case of compression from 30 bar to 150 bar:
+
+$$
+\frac{p_\mathrm{out}}{p_\mathrm{in}}
+=
+\frac{150}{30}
+=
+5
+$$
+
+This gives:
+
+$$
+N =
+\left\lceil
+\frac{\ln(5)}{\ln(3.3)}
+\right\rceil
+=
+2
+$$
+
+and:
+
+$$
+r_s = 5^{1/2} = 2.24
+$$
+
+The compressor shaft work per kg of hydrogen is calculated as:
+
+$$
+w_\mathrm{shaft} =
+\frac{
+N \gamma Z_\mathrm{avg} R T
+}{
+(\gamma - 1) M_\mathrm{H_2} \eta_\mathrm{comp}
+}
+\left[
+r_s^{(\gamma - 1)/\gamma} - 1
+\right]
+$$
+
+where $Z_\mathrm{avg}$ is the average hydrogen compressibility factor between inlet and outlet pressure.
+
+The electrical energy consumption of the compressor is:
+
+$$
+e_\mathrm{comp} =
+\frac{
+w_\mathrm{shaft}
+}{
+\eta_\mathrm{motor} \cdot 3.6 \cdot 10^6
+}
+$$
+
+where $e_\mathrm{comp}$ is expressed in kWh/kg H₂.
+
+The compressor power demand is then calculated from the hydrogen mass flow rate:
+
+$$
+P_\mathrm{comp}
+=
+e_\mathrm{comp}
+\cdot
+\dot{m}_\mathrm{H_2}
+$$
+
+where $P_\mathrm{comp}$ is in kW when $e_\mathrm{comp}$ is in kWh/kg H₂ and $\dot{m}_\mathrm{H_2}$ is in kg/h.
+
+For annual or time-step calculations, total compressor electricity use is:
+
+$$
+E_\mathrm{comp}
+=
+e_\mathrm{comp}
+\cdot
+m_\mathrm{H_2}
+$$
+
+This energy use is treated as a parasitic load in the hydrogen system.
+
+### Sensitivity to Outlet Pressure
+
+Compressor energy consumption increases with outlet pressure because the relevant quantity is the pressure ratio:
+
+$$
+\frac{p_\mathrm{out}}{p_\mathrm{in}}
+$$
+
+The same outlet pressure can therefore have very different compression penalties depending on electrolyser outlet pressure. Compression to 150 bar is a relatively modest duty when hydrogen leaves the PEM electrolyser at 30 bar, but a much larger duty if hydrogen is produced near atmospheric pressure.
+
+This effect is shown in Figure X.
+
+![Compressor electricity consumption as a function of outlet pressure for different inlet pressures.](figures/compressor_energy_vs_outlet_pressure.png)
+
+: Compressor electricity consumption as a function of outlet pressure. The figure should show $e_\mathrm{comp}$ in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 50-150 bar.
+
+The purpose of this figure is to show why PEM outlet pressure matters. A higher electrolyser outlet pressure reduces the compression ratio and therefore lowers the compressor energy penalty for the same selected pipeline pressure.
+
+## Cost Model
+
+The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression.^[Khan, M.A., Young, C., MacKinnon, C. and Layzell, D.B. (2021), *The Techno-Economics of Hydrogen Compression*, Transition Accelerator Technical Briefs, Vol. 1, Issue 1.]
+
+The model uses a power-law scaling relation:
+
+$$
+C_\mathrm{comp}
+=
+C_\mathrm{comp,ref}
+\left(
+\frac{P_\mathrm{comp}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+$$
+
+The exponent is below one, so larger compressors are cheaper per kW than smaller compressors. This matters because the centralised architecture uses a smaller number of large compressor trains, while the decentralised architecture uses many smaller turbine-level compressors.
+
+As a reference: compression from 30 to 150 bar, for a 15 MW scale system, result in roughly $56 \text{€}/kW$ compressor costs. 
+
+### Cost Sensitivity to Outlet Pressure
+
+For a fixed hydrogen production rate, increasing the outlet pressure increases compressor energy consumption. This increases compressor power demand:
+
+$$
+P_\mathrm{comp}
+=
+e_\mathrm{comp}(p_\mathrm{in}, p_\mathrm{out})
+\cdot
+\dot{m}_\mathrm{H_2}
+$$
+
+Compressor CAPEX then follows from the cost scaling relation:
+
+$$
+C_\mathrm{comp}
+=
+C_\mathrm{comp,ref}
+\left(
+\frac{P_\mathrm{comp}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+$$
+
+The compressor cost per unit of electrolyser capacity can be expressed as:
+
+$$
+c_\mathrm{comp}
+=
+\frac{C_\mathrm{comp}}
+{P_\mathrm{ely}}
+$$
+
+where $P_\mathrm{ely}$ is the installed electrolyser capacity.
+
+This relationship is shown in Figure X.
+
+![Compressor cost as a function of outlet pressure for different inlet pressures.](figures/compressor_cost_vs_outlet_pressure.png)
+
+: Compressor cost as a function of outlet pressure. The figure should show compressor CAPEX in €/kW electrolyser for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The reference case of 30 bar inlet pressure and 150 bar outlet pressure should reproduce the model reference value of approximately 56 €/kW electrolyser.
+
+The cost curve is flatter than the energy curve because compressor CAPEX scales with compressor power using an exponent below one. However, the same qualitative trade-off remains: higher outlet pressure increases compressor cost, while higher inlet pressure reduces it.
+
+### Centralised Compression
+
+In the centralised hydrogen architecture, all hydrogen is produced on the offshore platform. The compressor is therefore sized for the full farm-level hydrogen flow:
+
+$$
+P_\mathrm{comp,central}
+=
+e_\mathrm{comp}
+\cdot
+\dot{m}_{\mathrm{H_2},\mathrm{farm}}
+$$
+
+The centralised compressor CAPEX is:
+
+$$
+C_\mathrm{comp,central}
+=
+C_\mathrm{comp,ref}
+\left(
+\frac{P_\mathrm{comp,central}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+$$
+
+This captures the economy of scale from centralising compression. In practice, the compressor would likely be split into multiple parallel trains for redundancy and maintenance, but the current model does not explicitly size those trains.
+
+### Decentralised Compression
+
+In the decentralised hydrogen architecture, compression is represented at turbine level. For turbine $j$:
+
+$$
+P_{\mathrm{comp},j}
+=
+e_{\mathrm{comp},j}
+\cdot
+\dot{m}_{\mathrm{H_2},j}
+$$
+
+The total decentralised compressor cost is calculated by summing over all turbines:
+
+$$
+C_\mathrm{comp,decentral}
+=
+\sum_j
+C_\mathrm{comp,ref}
+\left(
+\frac{P_{\mathrm{comp},j}}
+{P_\mathrm{comp,ref}}
+\right)^{0.8335}
+$$
+
+This captures the cost penalty of distributing compression across many smaller units. The decentralised architecture may still be attractive because it removes the central offshore electrolysis platform and replaces the infield AC grid with hydrogen pipelines.
+
+### Operating Cost and Availability
+
+Compressor OPEX is calculated as:
+
+$$
+OPEX_\mathrm{comp}
+=
+0.03
+\cdot
+C_\mathrm{comp}
+$$
+
+Compressor availability is assumed to be:
+
+$$
+A_\mathrm{comp} = 99\%
+$$
+
+The available hydrogen after compression is therefore:
+
+$$
+m_{\mathrm{H_2},\mathrm{after}}
+=
+A_\mathrm{comp}
+\cdot
+m_{\mathrm{H_2},\mathrm{before}}
+$$
+
+This is a simplified availability treatment. It does not explicitly model spare compressor trains, partial-load operation during failures or maintenance strategy.
+
+## Pressure Optimisation
+
+Pipeline injection pressure is optimised together with pipeline diameter and the number of parallel pipelines.
+
+Higher pressure increases pipeline capacity and may avoid an additional pipeline. However, it also increases compressor electricity consumption and compressor CAPEX. Lower pressure reduces the compressor penalty, but may require more pipeline capacity.
+
+The optimisation problem is therefore not:
+
+$$
+\min e_\mathrm{comp}
+$$
+
+and it is also not:
+
+$$
+\min C_\mathrm{pipeline}
+$$
+
+Instead, the model minimises the combined system cost:
+
+$$
+\min_{p_\mathrm{out}, D, n_\mathrm{pipe}}
+LCOE
+$$
+
+where $p_\mathrm{out}$ is compressor outlet pressure and pipeline injection pressure, $D$ is pipeline diameter and $n_\mathrm{pipe}$ is the number of parallel pipelines.
+
+The optimum can therefore occur at an intermediate pressure. A higher pressure may be justified if it avoids an extra pipeline. A lower pressure may be preferable if the pipeline is already oversized and additional compression provides little transport benefit.
+
+## Model Limitations
+
+This compressor model is intended for early-stage techno-economic comparison. It is not a detailed compressor design.
+
+The main limitations are:
+
+| Limitation | Implication |
+|---|---|
+| Cost scales only with compressor power | Compressor type, train count and offshore packaging are simplified |
+| One cost exponent is used | Technology-specific cost behaviour is not represented |
+| Compression uses a simplified multistage equation | Intercooling, compressor maps and detailed thermal design are not modelled |
+| Availability is a fixed percentage | Redundancy and partial failure are not represented |
+| Offshore integration cost is excluded | Platform or turbine layout impacts may be underestimated |
+
+: Main limitations of the compressor model.
+
+Future work should replace the generic cost curve with a compressor-train model that includes compressor type, number of stages, intercooling, redundancy, turndown, offshore packaging and maintenance philosophy.

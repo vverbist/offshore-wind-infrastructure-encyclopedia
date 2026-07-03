@@ -1,5 +1,5 @@
 ---
-title: "PEM Electrolyser Stack"
+title: "Stack (PEM)"
 completion: 80
 ---
 
@@ -49,67 +49,7 @@ Stack efficiency is calculated from a manufacturer polarisation curve relating c
 The operating point is defined as a percentage of the maximum current density (equivalently the maximum stack power).
 
 
-```{python}
-#| label: fig-polarisation
-#| fig-cap: |
-#|   Manufacturer polarisation curve (top) and resulting stack efficiency
-#|   (bottom) used in the model.
-#| echo: false
-#| warning: false
-#| message: false
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# ---------------------------------------------------------------------
-# Input data
-# ---------------------------------------------------------------------
-
-excel_path = "../numerical_inputs/pem_polarisation_curve.xlsx"
-sheet_name = "polarisation_curve"
-
-df = pd.read_excel(excel_path, sheet_name=sheet_name)
-
-# Expected columns
-j = df["current_density_A_cm2"]
-V = df["cell_voltage_V"]
-
-# ---------------------------------------------------------------------
-# Efficiency calculation
-# ---------------------------------------------------------------------
-
-# Reversible cell voltage (HHV basis)
-V_rev = 1.481  # V
-
-eta = V_rev / V * 100
-
-# ---------------------------------------------------------------------
-# Plot
-# ---------------------------------------------------------------------
-
-fig, (ax1, ax2) = plt.subplots(
-    1, 2,
-    figsize=(10, 4)
-)
-
-# Polarisation curve
-ax1.plot(j, V, linewidth=2)
-
-ax1.set_ylabel("Cell voltage [V]")
-ax1.set_title("Polarisation curve")
-ax1.grid(True)
-
-# Efficiency curve
-ax2.plot(j, eta, linewidth=2)
-
-ax2.set_xlabel("Current density [A/cm²]")
-ax2.set_ylabel("Stack efficiency [% HHV]")
-ax2.set_title("Efficiency")
-ax2.grid(True)
-
-plt.tight_layout()
-plt.show()
-```
+![Manufacturer polarisation curve (left) and resulting stack efficiency (right) used in the model.](../figures/pem-polarisation.svg){#fig-polarisation}
 
 
 The optimisation therefore captures the trade-off between operating fewer stacks at high current density or more stacks at lower current density.
@@ -211,12 +151,57 @@ This conclusion depends strongly on the assumption that degradation scales linea
 
 ## Cost Model
 
-The stack cost consists primarily of materials and manufacturing.
-Unlike equipment such as turbines or compressors, larger PEM electrolysers are not constructed by scaling individual stacks.
-Instead, larger systems simply contain more identical stack modules.
-Consequently, stack cost scales approximately linearly with installed stack capacity.
-Cost reductions are therefore expected to arise mainly through manufacturing learning and production volume rather than economies of scale at the equipment level.
-The model adopts the stack cost projections from <include NREL reference>.
+**Cost basis**
+
+The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM water electrolyser stacks. The NREL study evaluates a 1 MW PEM electrolyser stack and reports stack manufactured costs in 2020 US dollars per kW of stack capacity. The reported stack-only manufactured costs are:
+
+* 316 $/kW at 10 MW/year manufacturing volume
+* 183 $/kW at 100 MW/year manufacturing volume
+* 164 $/kW at 1,000 MW/year manufacturing volume
+
+These values exclude manufacturer markup, installation costs, soft costs and inflation. They are therefore used here as stack manufacturing cost inputs rather than complete installed electrolyser system costs.
+
+For the base case, the model uses the **1,000 MW/year manufacturing-volume case**, corresponding to a stack manufactured cost of **164 $/kW** in the NREL reference case. This case is selected because the offshore hydrogen system considered here represents industrial-scale deployment rather than early low-volume manufacturing. The 10 MW/year and 100 MW/year cases may be used in sensitivity analysis to represent less mature supply chains or slower manufacturing scale-up.
+
+**Reference-rated stack capacity**
+
+A complication is that the rated power of a PEM stack is not a purely physical property. For a given number of cells and active cell area, stack power depends on the current density at which the stack is rated. A higher rated current density gives more electrical power from the same physical stack and therefore reduces the apparent cost expressed in $/kW or €/MW, even if the stack itself has not become cheaper.
+
+This is important because current density is treated explicitly in this model. Operating at higher current density increases the power output of a given stack, but it also increases cell voltage, reduces efficiency and accelerates degradation. Conversely, installing more stack capacity allows operation at lower current density, improving efficiency and lifetime at the expense of higher CAPEX.
+
+The model therefore uses a **reference-rated stack capacity** as the cost-normalisation convention. This is the electrical capacity the installed stack would have if operated at a fixed reference current density of **3 A/cm²**. The reference-rated capacity is used only for cost accounting; it does not imply that the stack must operate continuously at this current density.
+
+NREL’s cost values are converted to this 3 A/cm² reference-rating convention where necessary. This avoids treating changes in rating current density as independent cost reductions. In the NREL cost-reduction waterfall, part of the reduction in $/kW arises from increased current density, because the same physical stack area is assigned a higher rated power. In this model, that mechanism is already captured explicitly through the polarisation curve: higher current density allows more power from the same installed stack, but with an efficiency and degradation penalty. Therefore, current-density-driven reductions in reported $/kW are not applied as a separate stack cost reduction.
+
+**Model implementation**
+
+The stack is modelled as a modular component whose cost scales linearly with installed reference-rated stack capacity.
+Linear scaling is used because larger PEM electrolyser systems are represented as multiple identical stack modules rather than as a single geometrically scaled stack. As a result, increasing installed stack capacity increases the number of modules, cells and active area approximately proportionally. 
+No equipment-level scaling exponent is therefore applied to the stack itself.
+
+Actual stack operation is determined separately by the optimisation. 
+At each time step, the model chooses the number of active modules and their operating current density. 
+The corresponding electrical input, hydrogen production, efficiency and degradation are calculated from the polarisation curve. Reference-rated stack capacity is therefore a bookkeeping convention for cost only, while the physical and operational behaviour of the stack remains governed by current density.
+
+**Cost development**
+
+The main cost reductions for PEM stacks are assumed to come from manufacturing learning, higher production volumes and material reductions rather than from size-based economies of scale at the individual-stack level. 
+In the NREL analysis, increasing manufacturing volume from 10 MW/year to 1,000 MW/year reduces the reported stack manufactured cost from 316 $/kW to 164 $/kW.
+
+However, cost reductions associated purely with higher rated current density are treated separately from manufacturing learning. A higher current density reduces the reported $/kW by increasing the rated power per unit active area, but it does not necessarily reduce the physical cost of the installed stack. 
+However, in this research, the reference rated stack current density is 3 A/cm2, but NREL uses 2 A/cm2. 
+So this cost reduction must be applied as well.
+
+Taking figure 27 as the reference, we apply the increased current density to 3 A/cm2 and economies of scale to 1000 MW/year to find $316-57-132-15=112$ $/kW. 
+Consequently, a 50% manufacturers cost mark-up as well as conversion to 2024€ is applied to find: 100 €/kW (CHECK)
+
+**Scope distinction**
+
+Only the stack cost is included in this component model. 
+Balance-of-plant equipment, power electronics, installation, offshore structures and other system-level costs are represented elsewhere in the model. 
+This distinction is important because the NREL report also provides full electrolyser system costs, but those include balance-of-plant components that are outside the scope of this stack page.
+
+Stack replacement costs are calculated using the same specific stack cost assumption as the initial stack.
 
 ## Availability
 
