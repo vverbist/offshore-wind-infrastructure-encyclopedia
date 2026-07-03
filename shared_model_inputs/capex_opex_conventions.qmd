@@ -1,5 +1,6 @@
 ---
 title: "CAPEX and OPEX Conventions"
+completion: 10
 ---
 
 ## CAPEX

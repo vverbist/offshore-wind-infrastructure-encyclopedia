@@ -1,5 +1,6 @@
 ---
 title: "Direct DC Integration of PEM Electrolysers inside Wind Turbine"
+completion: 90
 ---
 
 ## Purpose of this section

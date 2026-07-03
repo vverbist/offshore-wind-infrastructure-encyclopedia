@@ -1,5 +1,6 @@
 ---
 title: "Balance of Plant"
+completion: 20
 ---
 
 ## Role in the Value Chain

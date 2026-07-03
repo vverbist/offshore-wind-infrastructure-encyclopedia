@@ -1,5 +1,6 @@
 ---
 title: "Wind Resource and Layout"
+completion: 0
 ---
 
 This section documents the wind resource, wake modelling, spacing, and infield-layout assumptions that determine gross energy production and infrastructure length.

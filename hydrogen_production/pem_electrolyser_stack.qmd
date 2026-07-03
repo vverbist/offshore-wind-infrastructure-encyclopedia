@@ -1,5 +1,6 @@
 ---
 title: "PEM Electrolyser Stack"
+completion: 80
 ---
 
 ## Role in the Value Chain

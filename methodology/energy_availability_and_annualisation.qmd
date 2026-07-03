@@ -1,5 +1,6 @@
 ---
 title: "Energy, Availability, and Annualisation"
+completion: 30
 ---
 
 ## Energy Basis

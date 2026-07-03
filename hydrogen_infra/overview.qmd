@@ -1,5 +1,6 @@
 ---
 title: "Hydrogen Infrastructure"
+completion: 0
 ---
 
 Hydrogen infrastructure includes compression, infield hydrogen pipelines, export pipelines, pressure selection, diameter selection, and pipeline capacity.

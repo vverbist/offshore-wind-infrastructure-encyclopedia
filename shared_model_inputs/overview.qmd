@@ -1,5 +1,6 @@
 ---
 title: "Shared Model Inputs"
+completion: 0
 ---
 
 Shared model inputs define conventions used by many component pages. They do not replace component-level documentation; they prevent repeated explanation of common modelling rules.

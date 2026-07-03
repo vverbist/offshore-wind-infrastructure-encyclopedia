@@ -1,5 +1,6 @@
 ---
 title: "Platform and Substation Installation"
+completion: 10
 ---
 
 ## Role in the Model

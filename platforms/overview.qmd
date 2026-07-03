@@ -1,5 +1,6 @@
 ---
 title: "Platforms"
+completion: 0
 ---
 
 Platforms host offshore aggregation, conversion, and hydrogen production equipment. They affect CAPEX, installation cost, structural mass, and architecture feasibility.

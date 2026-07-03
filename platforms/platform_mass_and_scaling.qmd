@@ -1,5 +1,6 @@
 ---
 title: "Platform Mass and Scaling"
+completion: 10
 ---
 
 ## Role in the Model

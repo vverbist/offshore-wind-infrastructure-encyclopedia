@@ -1,5 +1,6 @@
 ---
 title: "Cable Installation"
+completion: 20
 ---
 
 ## Role in the Model

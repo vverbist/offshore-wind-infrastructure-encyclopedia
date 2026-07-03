@@ -1,5 +1,6 @@
 ---
 title: "Electrolyser Power Electronics"
+completion: 20
 ---
 
 ## Role in the Value Chain

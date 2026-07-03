@@ -1,5 +1,6 @@
 ---
 title: "Offshore AC Substation"
+completion: 10
 ---
 
 ## Role in the Value Chain

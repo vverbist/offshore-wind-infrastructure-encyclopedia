@@ -1,5 +1,9 @@
 project:
   type: website
+  pre-render:
+    - powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-progress-sidebar.ps1
+  resources:
+    - progress-sidebar.js
 
 bibliography: references.bib
 
@@ -90,6 +94,7 @@ format:
       - cosmo
       - brand
     css: styles.css
+    include-after-body: progress-sidebar.html
     toc: true
 
 execute:

@@ -1,5 +1,6 @@
 ---
 title: "Turbine and Foundation Installation"
+completion: 10
 ---
 
 ## Role in the Model

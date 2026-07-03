@@ -1,5 +1,6 @@
 ---
 title: "Component Mapping"
+completion: 10
 ---
 
 This page maps the main component groups to the three architectures.

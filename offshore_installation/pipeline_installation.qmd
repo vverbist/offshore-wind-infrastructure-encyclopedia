@@ -1,5 +1,6 @@
 ---
 title: "Pipeline Installation"
+completion: 10
 ---
 
 ## Role in the Model

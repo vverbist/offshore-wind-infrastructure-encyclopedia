@@ -1,5 +1,6 @@
 ---
 title: "Electrical Infrastructure"
+completion: 10
 ---
 
 Electrical infrastructure covers the AC infield network, offshore AC substation, HVDC converter stations, export cable, and onshore grid connection.

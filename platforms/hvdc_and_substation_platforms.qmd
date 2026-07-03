@@ -1,5 +1,6 @@
 ---
 title: "HVDC and Substation Platforms"
+completion: 10
 ---
 
 ## Role in the Value Chain

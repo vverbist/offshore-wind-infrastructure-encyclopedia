@@ -1,5 +1,6 @@
 ---
 title: "Modelling Workflow"
+completion: 30
 ---
 
 The model workflow separates fixed assumptions, scenario parameters, derived parameters, optimisation variables, and outputs.

@@ -1,5 +1,6 @@
 ---
 title: "Wind Resource and Weibull Distribution"
+completion: 20
 ---
 
 ## Role in the Model

@@ -1,5 +1,6 @@
 ---
 title: "Turbine System"
+completion: 0
 ---
 
 The turbine system includes the wind turbine, generator, turbine-side power electronics, tower and nacelle mass, and foundation.

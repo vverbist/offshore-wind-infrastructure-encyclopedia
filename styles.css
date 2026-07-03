@@ -12,3 +12,17 @@ thead {
 .callout-important {
   border-radius: 6px;
 }
+
+#quarto-sidebar .sidebar-link[data-progress] {
+  color: rgba(17, 24, 39, var(--progress-alpha, 1)) !important;
+  transition: color 120ms ease;
+}
+
+#quarto-sidebar .sidebar-link[data-progress]:hover,
+#quarto-sidebar .sidebar-link[data-progress]:focus {
+  color: rgba(0, 0, 0, var(--progress-alpha, 1)) !important;
+}
+
+#quarto-sidebar .sidebar-item-section > .sidebar-item-container > .sidebar-link[data-progress] {
+  font-weight: 650;
+}

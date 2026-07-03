@@ -1,5 +1,6 @@
 ---
 title: "Tower, Nacelle, and Mass"
+completion: 10
 ---
 
 ## Role in the Model

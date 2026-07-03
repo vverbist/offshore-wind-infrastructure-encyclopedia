@@ -1,5 +1,6 @@
 ---
 title: "Hydrogen Production"
+completion: 10
 ---
 
 Hydrogen production covers the entire electrolyser.

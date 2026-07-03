@@ -1,5 +1,6 @@
 ---
 title: "System Boundary and LCOE"
+completion: 40
 ---
 
 ## System Boundary

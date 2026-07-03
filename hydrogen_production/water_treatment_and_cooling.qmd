@@ -1,5 +1,6 @@
 ---
 title: "Water Treatment and Cooling"
+completion: 10
 ---
 
 ## Role in the Value Chain

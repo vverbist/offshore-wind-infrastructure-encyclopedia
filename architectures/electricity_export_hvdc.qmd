@@ -1,5 +1,6 @@
 ---
 title: "Electricity Export with HVDC"
+completion: 20
 ---
 
 ## Role in the Value Chain

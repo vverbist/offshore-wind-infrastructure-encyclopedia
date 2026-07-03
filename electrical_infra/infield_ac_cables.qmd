@@ -1,5 +1,6 @@
 ---
 title: "Infield AC Cables"
+completion: 20
 ---
 
 ## Role in the Value Chain

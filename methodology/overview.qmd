@@ -1,5 +1,6 @@
 ---
 title: "Methodology"
+completion: 20
 ---
 
 This section defines the modelling logic used across all component pages. The model is a deterministic techno-economic optimisation framework for offshore wind systems with alternative energy carriers.

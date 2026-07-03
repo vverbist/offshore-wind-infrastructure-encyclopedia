@@ -1,5 +1,6 @@
 ---
 title: "Architectures"
+completion: 10
 ---
 
 The model compares three offshore wind export architectures:

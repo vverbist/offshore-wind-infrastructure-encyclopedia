@@ -1,5 +1,6 @@
 ---
 title: "Onshore Grid Connection"
+completion: 10
 ---
 
 ## Role in the Value Chain
