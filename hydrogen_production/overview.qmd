@@ -1,6 +1,6 @@
 ---
 title: "Hydrogen Production"
-completion: 70
+completion: 90
 ---
 
 Hydrogen production covers the entire electrolyser.
@@ -18,4 +18,4 @@ The compressor is also not included in this section, but is under [Hydrogen Infr
 
 The hydrogen production model is dynamic: stack efficiency and auxiliary power consumption depend on operating point, which depends on the wind state and the installed stack capacity.
 
-
+Finally, note that the exact electrolyser composition depends on the system architecture, with the main difference between central and decentral hydrogen production being the power electronics.
