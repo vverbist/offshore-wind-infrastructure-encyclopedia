@@ -52,7 +52,7 @@ The operating point is defined as a percentage of the maximum current density (e
 ![Manufacturer polarisation curve (left) and resulting stack efficiency (right) used in the model.](../figures/pem-polarisation.svg){#fig-polarisation}
 
 
-The optimisation therefore captures the trade-off between operating fewer stacks at high current density or more stacks at lower current density.
+As shown in @fig-polarisation, the optimisation therefore captures the trade-off between operating fewer stacks at high current density or more stacks at lower current density.
 
 ## Modularity
 

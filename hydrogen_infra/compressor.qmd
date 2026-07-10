@@ -178,11 +178,11 @@ $$
 
 The same outlet pressure can therefore have very different compression penalties depending on electrolyser outlet pressure. Compression to 150 bar is a relatively modest duty when hydrogen leaves the PEM electrolyser at 30 bar, but a much larger duty if hydrogen is produced near atmospheric pressure.
 
-This effect is shown in Figure X.
+This effect is shown in @fig-compressor-energy.
 
-![Compressor electricity consumption as a function of outlet pressure for different inlet pressures.](figures/compressor_energy_vs_outlet_pressure.png)
+![Compressor electricity consumption as a function of outlet pressure for different inlet pressures.](figures/compressor_energy_vs_outlet_pressure.png){#fig-compressor-energy}
 
-: Compressor electricity consumption as a function of outlet pressure. The figure should show $e_\mathrm{comp}$ in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 50-150 bar.
+The figure should show $e_\mathrm{comp}$ in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 50-150 bar.
 
 The purpose of this figure is to show why PEM outlet pressure matters. A higher electrolyser outlet pressure reduces the compression ratio and therefore lowers the compressor energy penalty for the same selected pipeline pressure.
 
@@ -241,11 +241,11 @@ $$
 
 where $P_\mathrm{ely}$ is the installed electrolyser capacity.
 
-This relationship is shown in Figure X.
+This relationship is shown in @fig-compressor-cost.
 
-![Compressor cost as a function of outlet pressure for different inlet pressures.](figures/compressor_cost_vs_outlet_pressure.png)
+![Compressor cost as a function of outlet pressure for different inlet pressures.](figures/compressor_cost_vs_outlet_pressure.png){#fig-compressor-cost}
 
-: Compressor cost as a function of outlet pressure. The figure should show compressor CAPEX in €/kW electrolyser for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The reference case of 30 bar inlet pressure and 150 bar outlet pressure should reproduce the model reference value of approximately 56 €/kW electrolyser.
+The figure should show compressor CAPEX in €/kW electrolyser for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The reference case of 30 bar inlet pressure and 150 bar outlet pressure should reproduce the model reference value of approximately 56 €/kW electrolyser.
 
 The cost curve is flatter than the energy curve because compressor CAPEX scales with compressor power using an exponent below one. However, the same qualitative trade-off remains: higher outlet pressure increases compressor cost, while higher inlet pressure reduces it.
 
