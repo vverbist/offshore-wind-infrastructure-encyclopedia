@@ -45,7 +45,7 @@ Consequently, stack efficiency decreases at higher current densities.
 
 **Model implementation**
 
-Stack efficiency is calculated from a manufacturer polarisation curve relating cell voltage to current density.
+Stack efficiency is calculated from a manufacturer polarisation curve [@manufacturerGStackPolarisation] relating cell voltage to current density.
 The operating point is defined as a percentage of the maximum current density (equivalently the maximum stack power).
 
 
@@ -153,7 +153,7 @@ This conclusion depends strongly on the assumption that degradation scales linea
 
 **Cost basis**
 
-The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM water electrolyser stacks. The NREL study evaluates a 1 MW PEM electrolyser stack and reports stack manufactured costs in 2020 US dollars per kW of stack capacity. The reported stack-only manufactured costs are:
+The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM water electrolyser stacks [@nrelElectrolyserCostBasis]. The NREL study evaluates a 1 MW PEM electrolyser stack and reports stack manufactured costs in 2020 US dollars per kW of stack capacity. The reported stack-only manufactured costs are:
 
 * 316 $/kW at 10 MW/year manufacturing volume
 * 183 $/kW at 100 MW/year manufacturing volume

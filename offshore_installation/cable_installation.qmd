@@ -14,7 +14,7 @@ Cable installation covers laying, burial, pull-in, mobilisation, and other insta
 | Infield cable installation | 635 EUR/m |
 | Export cable installation | 635 EUR/m |
 
-The source material also cites an installer benchmark for Vanguard East and West: 192 turbines, about 3 GW total, 452 km of infield cabling, and 600 million EUR in cabling installation-related cost. This corresponds to roughly 1,300 EUR/m or about 200 EUR/kW of wind farm capacity.
+The source material also cites an installer benchmark for Vanguard East and West [@installerInfieldCableBenchmark]: 192 turbines, about 3 GW total, 452 km of infield cabling, and 600 million EUR in cabling installation-related cost. This corresponds to roughly 1,300 EUR/m or about 200 EUR/kW of wind farm capacity.
 
 The current model value of 635 EUR/m should therefore be treated as a specific modelling assumption that may need reconciliation with the benchmark once scope is finalised.
 

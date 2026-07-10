@@ -9,7 +9,7 @@ HVDC and substation platforms support offshore electrical conversion and aggrega
 
 ## Cost Model
 
-The current source basis is a TenneT 2 GW station package:
+The current source basis is a TenneT 2 GW station package [@tennet2gwProgrammeData]:
 
 | Item | Assumption |
 |---|---:|

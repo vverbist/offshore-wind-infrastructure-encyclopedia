@@ -16,7 +16,7 @@ The foundation supports the offshore wind turbine and transfers turbine, tower, 
 | Foundation installation | 1 million EUR/turbine |
 | Foundation OPEX | 0.5% of CAPEX per year |
 
-The current values are based on a study with TNO, according to the background documents.
+The current values are based on a study with TNO, according to the background documents [@tnoTurbineFoundationCost].
 
 ## Energy Balance
 

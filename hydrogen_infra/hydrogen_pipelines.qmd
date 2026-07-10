@@ -19,7 +19,7 @@ The model distinguishes between infield pipelines and export pipelines, but docu
 | Export pipeline installation | 635 EUR/m |
 | Export pipeline OPEX | 0.5% of CAPEX per year |
 
-Pipeline material CAPEX is based on confidential supplier data. The current model uses cost data for selected diameter and pressure combinations and fits a two-dimensional regression to interpolate or extrapolate.
+Pipeline material CAPEX is based on confidential supplier data [@supplierSPipelineCost]. The current model uses cost data for selected diameter and pressure combinations and fits a two-dimensional regression to interpolate or extrapolate.
 
 ## Capacity Model
 
@@ -31,7 +31,7 @@ Pipeline capacity depends on:
 - route length
 - roughness and friction parameters
 
-The current export-pipeline calculation uses the Colebrook equation from Perry's Chemical Engineers' Handbook, with Darcy-Weisbach roughness and Hazen-Williams friction factors from the manufacturer.
+The current export-pipeline calculation uses the Colebrook equation from Perry's Chemical Engineers' Handbook [@perrysChemicalEngineersHandbook], with Darcy-Weisbach roughness and Hazen-Williams friction factors from the manufacturer.
 
 ## Current Sizing Assumptions
 

@@ -9,7 +9,7 @@ Wind resource modelling provides the probability distribution of wind states use
 
 ## Current Method
 
-The background model describes fitting approximately ten years of offshore wind observations from the Dutch Offshore Wind Atlas to a Weibull distribution and wind rose.
+The background model describes fitting approximately ten years of offshore wind observations from the Dutch Offshore Wind Atlas [@dutchOffshoreWindAtlas] to a Weibull distribution and wind rose.
 
 For each wind state, the model evaluates turbine output and wake losses. The annual yield is then obtained by weighting the power output of each state by its probability.
 

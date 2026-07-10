@@ -58,18 +58,41 @@
   note = {TODO: replace with exact public report, dataset, or internal source record used for HVDC station cost assumptions.}
 }
 
-@misc{nrelElectrolyserCostBasis,
+@techreport{nrelElectrolyserCostBasis,
   author = {{National Renewable Energy Laboratory}},
-  title = {Electrolyser Cost Basis Used in Model},
-  type = {Cost basis},
-  note = {TODO: replace with exact NREL report/version and document currency conversion from 2020 USD to 2025 EUR.}
+  title = {Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers},
+  number = {NREL/TP-6A20-87625},
+  institution = {National Renewable Energy Laboratory},
+  note = {Stack and balance-of-plant manufactured costs reported in 2020 USD/kW; used here converted to 2025 EUR and marked up to approximate sales price (see shared_model_inputs/financial_assumptions.qmd). Exact report date/version still to be confirmed.}
 }
 
-@misc{transitionAcceleratorCompressorCost,
-  author = {{Transition Accelerator}},
-  title = {Compressor Cost Basis Used in Model},
-  type = {Cost basis},
-  note = {TODO: replace with exact report, article, or dataset used for compressor cost assumptions.}
+@techreport{transitionAcceleratorCompressorCost,
+  author = {Khan, M. A. and Young, C. and MacKinnon, C. and Layzell, D. B.},
+  title = {The Techno-Economics of Hydrogen Compression},
+  institution = {Transition Accelerator},
+  date = {2021},
+  type = {Technical Brief},
+  series = {Transition Accelerator Technical Briefs},
+  volume = {1},
+  number = {1}
+}
+
+@book{perrysChemicalEngineersHandbook,
+  author = {{Perry's Chemical Engineers' Handbook}},
+  title = {Perry's Chemical Engineers' Handbook},
+  note = {Cited for the Colebrook equation and pipe friction-factor methodology used in the pipeline capacity model. Exact edition to be confirmed.}
+}
+
+@book{petersTimmerhausWestPlantDesign,
+  author = {Peters, Max S. and Timmerhaus, Klaus D. and West, Ronald E.},
+  title = {Plant Design and Economics for Chemical Engineers},
+  note = {Source for the six-tenths-rule process-equipment cost-scaling approximation. Exact edition to be confirmed.}
+}
+
+@online{engineeringLibretextsPurchasedEquipmentCost,
+  author = {{Engineering LibreTexts}},
+  title = {Purchased Equipment Cost},
+  note = {TODO: add exact access URL and access date after source verification.}
 }
 
 @misc{manufacturerGStackPolarisation,

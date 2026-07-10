@@ -9,7 +9,7 @@ HVDC converter stations convert offshore AC power to HVDC for export and convert
 
 ## Cost Model
 
-The current assumption is based on TenneT programme data for a 2 GW station package.
+The current assumption is based on TenneT programme data for a 2 GW station package [@tennet2gwProgrammeData].
 
 | Item | Assumption |
 |---|---:|

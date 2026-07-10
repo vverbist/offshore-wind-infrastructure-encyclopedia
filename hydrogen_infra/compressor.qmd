@@ -188,7 +188,7 @@ The purpose of this figure is to show why PEM outlet pressure matters. A higher 
 
 ## Cost Model
 
-The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression.^[Khan, M.A., Young, C., MacKinnon, C. and Layzell, D.B. (2021), *The Techno-Economics of Hydrogen Compression*, Transition Accelerator Technical Briefs, Vol. 1, Issue 1.]
+The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression [@transitionAcceleratorCompressorCost].
 
 The model uses a power-law scaling relation:
 
