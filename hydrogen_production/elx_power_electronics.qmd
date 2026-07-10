@@ -1,74 +1,135 @@
 ---
 title: "Power Electronics"
-completion: 20
+completion: 90
 ---
 
 ## Role in the Value Chain
 
-Electrolyser power electronics condition electrical power before it enters the PEM stack. The need for these components differs between centralised and decentralised hydrogen.
+Electrolyser power electronics convert the 66 kV infield AC supply to the controlled low-voltage DC required by the PEM stacks.
 
-This page covers only the electrolyser-side conversion equipment on the offshore electrolysis platform (rectifier and step-down transformer). Turbine-side power electronics are covered in [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd). The PEM stack itself and its polarisation behaviour are covered in [Stack](stack.qmd). Hydrogen compression is covered separately in [Compressor](../hydrogen_infra/compressor.qmd).
+This page represents the complete conversion chain between the 66 kV platform input and the stack DC terminals as one aggregated subsystem. It includes the plant step-down transformer, rectifier transformers, rectifier cabinets, converter controls, and dedicated conversion-system cooling. Turbine-side conversion equipment is covered in [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd). The PEM stack and its polarisation behaviour are covered in [Stack](stack.qmd). Hydrogen compression is covered separately in [Compressor](../hydrogen_infra/compressor.qmd).
 
 ## Scope
 
-| Included in this model                          | Excluded from this model                                  |
-| ------------------------------------------------ | ----------------------------------------------------------- |
-| Electrolysis-platform rectifier                  | Turbine-side generator converter and inverter               |
-| Electrolysis-platform step-down transformer       | Turbine step-up transformer and infield/export AC equipment |
-| —                                                  | PEM stack and stack-level current control                   |
-| —                                                  | Hydrogen compressor and its drive electronics                |
+| Included in this model | Excluded from this model |
+|---|---|
+| 66 kV plant step-down transformer | Turbine-side generator converter and inverter |
+| Rectifier transformers | Turbine step-up transformer |
+| Multi-pulse thyristor rectifiers | Infield and export cables |
+| Converter controls and protection | Upstream 66 kV switchgear |
+| Dedicated transformer and rectifier cooling | General platform auxiliaries |
+| Normal harmonic-mitigation provisions within the conversion package | PEM stack and stack-level electrochemical losses |
+| — | Hydrogen compressor and its drive electronics |
+| — | Installation labour, offshore construction, financing, and owner’s costs |
 
-: Scope boundary for the electrolyser power electronics model.
+: Scope boundary for the centralised-electrolysis power-electronics model.
+
+The main 66 kV transformer is included on this page and should not be costed again in another electrical-infrastructure component. Harmonic filtering, phase shifting, reactive-power management, and converter cooling are not represented as separate systems; their normal provision is included within the aggregated package cost and net efficiency.
+
+## Reference Architecture
+
+The reference configuration is a water-cooled, 24-pulse thyristor rectifier supplied through a phase-shifting rectifier transformer. Multi-pulse thyristor conversion remains a common industrial solution at multi-megawatt scale because it combines high efficiency, low semiconductor cost, high current capability, and established reliability. Contemporary commercial systems are offered in 6-, 12-, 18-, and 24-pulse arrangements, with harmonic distortion decreasing as pulse number increases [@abb2025UNIRECH2]. Reviews of large-scale electrolyser converters likewise identify thyristor rectifiers as the established high-power option, while active-front-end and chopper-based systems trade higher cost and conversion complexity for improved power quality and controllability [@yodwong2020ACDCConverters; @chen2022LargeScaleConverters].
+
+The 66 kV input is represented as an aggregated two-stage voltage reduction:
+
+$$
+66\ \mathrm{kV\ AC}
+\rightarrow
+\mathrm{medium\mbox{-}voltage\ AC}
+\rightarrow
+\mathrm{controlled\ stack\ DC}.
+$$
+
+The intermediate voltage and detailed transformer winding arrangement are not modelled. Large-plant studies use comparable high-voltage-to-medium-voltage distribution followed by repeated transformer--rectifier modules, including PEM layouts based on approximately 40 MW power blocks [@ispt2020GigawattElectrolyser].
 
 ## Cost Basis
 
-The 87 EUR/kW power electronics CAPEX uses the same source basis and conversion convention as the stack and balance-of-plant costs: NREL's PEM electrolyser manufactured cost analysis [@nrelElectrolyserCostBasis], with values converted from 2020 USD to 2025 EUR and marked up to approximate sales price (see [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd)).
+Published power-electronics costs are not fully like-for-like. The literature includes manufactured cost, purchased-equipment cost, and installed system cost, with different transformer and auxiliary-equipment boundaries. Where a source explicitly reports manufactured cost before markup, the same 50% manufacturer markup used for the stack and balance-of-plant costs is applied here before comparison (see [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd)), rather than treating any single source as a directly transferable quotation.
 
-Unlike the balance-of-plant model, no six-tenths-rule scaling is applied here. Power electronics are treated as mature, modular equipment assembled largely from standard components, so the model assumes cost scales linearly with capacity (scaling factor 1.00) rather than benefiting from the shared-infrastructure economies of scale that apply to thermal management, water treatment, and other centralised BOP systems.
+NREL adopts a cost of 199 USD\textsubscript{2020}/kW for the transformer and rectifier of a 1 MW PEM electrolyser, based on historical supplier quotations and explicitly excluding manufacturer markup, installation, soft costs, and inflation [@badgett2024PEMCost]. Applying the standard 50% markup gives an equipment purchase cost of:
+
+$$
+1.5 \times 199 \approx 300 \ \mathrm{USD_{2020}/kW}
+$$
+
+Fraunhofer ISE estimates PEM power-electronics costs of approximately 160 EUR/kW in its 2020 cases and approximately 101--102 EUR/kW in its 2030 cases, reported at the system/investment level rather than as a bare manufactured cost. Its 100 MW cases add a separate high-voltage transformer of approximately 25--26 EUR/kW, giving a combined large-system estimate of approximately 185--186 EUR/kW. The specific cost of the power electronics changes only marginally between the 5 MW and 100 MW cases [@holst2021ElectrolysisCost]. A recent industrial comparison reports substantially lower Chinese-market investment costs for 5 MW packages: approximately CNY 270/kW for a thyristor rectifier including its phase-shifting transformer, compared with CNY 320/kW for a diode-plus-chopper system and CNY 400/kW for an IGBT system [@gao2025AdvancedRectifiers]. No CNY-to-EUR conversion is applied here: the comparison is used only to confirm that thyristor rectifiers are the lower-cost topology, not as a quantitative anchor, because the geography, project scope, installation boundary, and procurement conditions differ too much for a direct rate conversion to be meaningful.
+
+No public vendor source was found that provides a binding price for a complete offshore 66 kV-to-DC package with a consistent scope. Vendor literature is therefore used to confirm topology, modularity, and efficiency, but not as the primary cost basis.
+
+The central model value is **185 EUR/kW** for the complete purchased 66 kV-to-stack-DC conversion package, taken directly from Fraunhofer's combined large-system transformer-plus-power-electronics estimate. This sits well below the marked-up NREL benchmark of approximately 300 USD\textsubscript{2020}/kW for a small 1 MW reference unit — compared here at face value, pending a documented USD-to-EUR conversion factor (see [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd)) — and above the lowest reported regional equipment prices.
+
+## Cost Scaling
+
+No six-tenths-rule scaling is applied. The subsystem is treated as repeated transformer--rectifier power blocks, giving a scaling exponent of 1.00.
+
+This assumption is based on practical unit limits rather than an assumption that electrical equipment has no economies of scale. Industrial rectifiers operate at very high current and are built from parallel semiconductor devices and repeated bridges because a single device cannot supply the complete plant current [@gao2025AdvancedRectifiers]. Commercial high-power converter units are typically limited to the multi-megawatt range, after which plant capacity is increased mainly by adding modules [@chen2022LargeScaleConverters]. Large electrolyser designs similarly number up repeated stack and transformer--rectifier blocks rather than enlarging one converter indefinitely [@ispt2020GigawattElectrolyser].
+
+Fraunhofer's bottom-up results support this approximation: specific power-electronics cost is nearly constant between 5 MW and 100 MW, unlike centralised process equipment that benefits more strongly from shared capacity [@holst2021ElectrolysisCost]. Some plant-level economies can still arise from shared engineering, controls, switchgear, buildings, and procurement. The exponent of 1.00 should therefore be interpreted as a conservative purchased-equipment assumption, not proof that total installed electrical-system cost is perfectly linear.
 
 ## Cost Model
 
-| Item | Assumption |
-|---|---:|
-| Power electronics CAPEX | 87 EUR/kW |
-| Scaling factor | 1.00 |
+| Item | Central assumption | Sensitivity range |
+|---|---:|---:|
+| Complete 66 kV-to-DC power-electronics CAPEX | 185 EUR/kW | 100--300 EUR/kW |
+| Capacity-scaling exponent | 1.00 | — |
 
-Power electronics are treated as mature, modular components and do not receive central-facility economies of scale.
+: Cost assumptions for the centralised-electrolysis conversion system.
+
+The sensitivity range covers differences in procurement region, converter topology, transformer scope, redundancy, offshore adaptation, and whether normal power-quality equipment is included in the supplier package. The upper end reflects the marked-up NREL benchmark for a small 1 MW reference unit; the lower end reflects the more favourable regional and topology comparisons.
 
 ## Energy Balance
 
-For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are:
+For centralised electrolysis, the model applies one net conversion loss between the 66 kV AC input and the stack DC terminals:
 
-| Component | Loss |
-|---|---:|
-| Rectifier | 1.0% |
-| Transformer | 0.5% |
+$$
+P_{\mathrm{stack,DC}}
+=
+P_{\mathrm{in,66kV}}
+\left(1-L_{\mathrm{conversion}}\right).
+$$
 
-For decentralised electrolysis, these platform-side components are absent because the stack connects to the turbine DC link. See [DC Integration](dc_integration.qmd) for why this direct-coupled architecture is modelled without an electrolyser-side rectifier or DC/DC converter.
+| Parameter | Central assumption | Sensitivity range |
+|---|---:|---:|
+| Net 66 kV AC-to-stack-DC efficiency | 97.5% | 96.0--98.5% |
+| Net conversion loss | 2.5% | 1.5--4.0% |
+
+: Net power-conversion assumption for centralised electrolysis.
+
+The 2.5% loss includes the plant step-down transformer, rectifier transformers, rectifier semiconductor losses, and dedicated conversion-system cooling. It does not include infield cable losses, general platform auxiliaries, or stack electrochemical losses.
+
+The value represents a modern, high-efficiency thyristor package rather than a generic historical fleet average. ABB reports rectifier-only efficiency of up to 99.6% for its current water-cooled thyristor product [@abb2025UNIRECH2]. An industrial comparison reports thyristor rectifier efficiency above approximately 98.5% and complete transformer-plus-rectifier efficiency above 97.5% [@gao2025AdvancedRectifiers]. Fraunhofer assumes rectifier efficiencies of 96% for its 2020 design and 98% for its 2030 design, with a separate high-voltage transformer efficiency of 99% [@holst2021ElectrolysisCost]. The selected 97.5% net value is therefore representative of an efficient contemporary package while retaining losses for the full 66 kV-to-DC chain.
+
+A constant net loss is used at all plant loads. In practice, efficiency depends on loading, transformer no-load losses, firing angle, cooling demand, and current ripple. Multi-pulse conversion and modular dispatch reduce, but do not eliminate, these effects. The loss sensitivity should be used where the annual operating profile contains substantial low-load operation.
 
 ## Availability
 
-Availability is currently included in the electrolyser availability factor unless separated in a later version.
+Transformer and rectifier outages are included in the overall electrolyser availability factor and are not applied as an additional derating on this page.
+
+The physical system is expected to consist of multiple conversion blocks, so failure of one block may cause partial rather than complete plant unavailability. Explicit block redundancy, spare strategy, failure rates, and offshore repair logistics are outside the current model resolution.
 
 ## Architecture Applicability
 
 | Architecture | Treatment |
 |---|---|
-| Centralised hydrogen | Included |
-| Decentralised hydrogen | Excluded — see [DC Integration](dc_integration.qmd) for the direct DC-link coupling assumption that removes this equipment |
-| Electricity export | Covered by turbine and HVDC electrical infrastructure pages |
+| Centralised hydrogen | Included: complete 66 kV AC-to-stack-DC conversion chain |
+| Decentralised hydrogen | Excluded; see [DC Integration](dc_integration.qmd) |
+| Electricity export | Covered by turbine and HVDC electrical-infrastructure pages |
 
 ## Model Limitations
 
-This power electronics model is intended for early-stage techno-economic assessment.
-
-The main limitations are:
+This model is intended for early-stage techno-economic assessment. Several previous limitations are resolved by defining a complete 66 kV-to-DC boundary, selecting a reference converter topology, and using a net conversion efficiency. The remaining limitations are:
 
 | Limitation | Implication |
 |---|---|
-| Cost basis reuses the same NREL manufactured-cost report as the stack and BOP, rather than a dedicated power-electronics subsystem estimate | The 87 EUR/kW figure should be cross-checked against a specific NREL line item once the report is reviewed in detail |
-| Linear cost scaling (scaling factor 1.00) is assumed regardless of unit size | Very small or very large rectifier/transformer packages may not scale linearly in practice |
-| Offshore-specific factors (marinisation, redundancy, corrosion protection) are not costed separately | Offshore platform conditions may increase costs relative to the land-based cost basis |
-| Availability is bundled into the overall electrolyser availability factor | Component-level failure modes and redundancy are not modelled explicitly |
+| The 185 EUR/kW value is triangulated from literature rather than obtained from a project-specific vendor quotation | The value should be replaced by an RFQ when the stack voltage range, block rating, redundancy, offshore environmental class, and delivery scope are known |
+| Source costs use different years, markets, and commercial boundaries; the marked-up NREL and Fraunhofer figures are compared at face value across currencies without a documented USD-to-EUR conversion factor | The central value is less precise than a like-for-like competitive tender and should be tested over the stated 100--300 EUR/kW range |
+| Linear scaling represents numbering up of modular power blocks | Shared plant engineering and high-voltage infrastructure may produce some installed-cost economies that are not captured |
+| A 24-pulse thyristor rectifier is used as the reference topology | Projects selecting an IGBT active-front-end or diode-plus-chopper topology may have different CAPEX, efficiency, controllability, and power-quality performance |
+| A fixed 2.5% net loss is used for every operating point | Load-dependent transformer, rectifier, cooling, and ripple losses are not resolved; the 1.5--4.0% sensitivity should be used for uncertain operating profiles |
+| Offshore adaptation and redundancy are included only through the cost range | Marinisation, corrosion protection, enclosed cooling, fire protection, and N+1 requirements are not separately designed or costed |
+| Availability is bundled into the overall electrolyser factor | Component-level outages, partial block availability, and offshore repair time are not represented explicitly |
+| The main 66 kV transformer is assigned to this subsystem | Model integration must ensure that the same transformer is not also included in platform or infield electrical CAPEX |
 
-: Main limitations of the current power electronics model.
+: Remaining limitations of the power-electronics model.
+
+ 

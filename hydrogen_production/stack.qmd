@@ -153,7 +153,7 @@ This conclusion depends strongly on the assumption that degradation scales linea
 
 **Cost basis**
 
-The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM water electrolyser stacks [@nrelElectrolyserCostBasis]. The NREL study evaluates a 1 MW PEM electrolyser stack and reports stack manufactured costs in 2020 US dollars per kW of stack capacity. The reported stack-only manufactured costs are:
+The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM water electrolyser stacks [@badgett2024PEMCost]. The NREL study evaluates a 1 MW PEM electrolyser stack and reports stack manufactured costs in 2020 US dollars per kW of stack capacity. The reported stack-only manufactured costs are:
 
 * 316 $/kW at 10 MW/year manufacturing volume
 * 183 $/kW at 100 MW/year manufacturing volume

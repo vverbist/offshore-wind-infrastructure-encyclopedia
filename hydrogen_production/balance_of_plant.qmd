@@ -48,7 +48,7 @@ These assumptions should be interpreted as early-stage modelling values. The NRE
 
 ### Scope of Cost Estimate
 
-The non-electrical BOP cost is based on the NREL PEM electrolyser manufactured cost analysis [@nrelElectrolyserCostBasis]. NREL reports subsystem costs for a 1 MW PEM electrolyser system in 2020 USD per kW of electrolyser capacity (Table 10).
+The non-electrical BOP cost is based on the NREL PEM electrolyser manufactured cost analysis [@badgett2024PEMCost]. NREL reports subsystem costs for a 1 MW PEM electrolyser system in 2020 USD per kW of electrolyser capacity (Table 10).
 
 The base case uses the NREL 1,000 MW/year manufacturing-volume case because the offshore hydrogen system considered here represents industrial-scale deployment rather than early low-volume manufacturing.
 
@@ -200,9 +200,9 @@ The BOP power consumption represents parasitic loads from auxiliary systems such
 
 Compression is excluded from this value because compression is represented elsewhere in the model. Electrical conversion losses are also explicitly excluded because power electronics are represented separately.
 
-The NREL report cites a generic BOP electricity consumption of 4.2 kWh/kg H₂ (Table 1), but this value includes electrical losses and is therefore not directly applicable to the non-electrical BOP scope used here [@nrelElectrolyserCostBasis].
+The NREL report cites a generic BOP electricity consumption of 4.2 kWh/kg H₂ (Table 1), but this value includes electrical losses and is therefore not directly applicable to the non-electrical BOP scope used here [@badgett2024PEMCost].
 
-The underlying Ruth and Ahluwalia source [@nrelElectrolyserCostBasis] separates BOP losses into electrical, mechanical and hydrogen-related losses. After excluding electrical losses, the remaining BOP consumption is:
+The underlying Ruth and Ahluwalia source [@badgett2024PEMCost] separates BOP losses into electrical, mechanical and hydrogen-related losses. After excluding electrical losses, the remaining BOP consumption is:
 
 | Operating point         | Mechanical [kWh/kg H₂] | Hydrogen [kWh/kg H₂] | Total [kWh/kg H₂] |
 | ----------------------- | ---------------------: | -------------------: | ----------------: |

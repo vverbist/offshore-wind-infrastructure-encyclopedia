@@ -58,14 +58,6 @@
   note = {TODO: replace with exact public report, dataset, or internal source record used for HVDC station cost assumptions.}
 }
 
-@techreport{nrelElectrolyserCostBasis,
-  author = {{National Renewable Energy Laboratory}},
-  title = {Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers},
-  number = {NREL/TP-6A20-87625},
-  institution = {National Renewable Energy Laboratory},
-  note = {Stack and balance-of-plant manufactured costs reported in 2020 USD/kW; used here converted to 2025 EUR and marked up to approximate sales price (see shared_model_inputs/financial_assumptions.qmd). Exact report date/version still to be confirmed.}
-}
-
 @techreport{transitionAcceleratorCompressorCost,
   author = {Khan, M. A. and Young, C. and MacKinnon, C. and Layzell, D. B.},
   title = {The Techno-Economics of Hydrogen Compression},
@@ -75,6 +67,14 @@
   series = {Transition Accelerator Technical Briefs},
   volume = {1},
   number = {1}
+}
+
+@techreport{transitionAcceleratorHydrogenPipelines,
+  author = {{Transition Accelerator}},
+  title = {The Techno-Economics of Hydrogen Pipelines},
+  institution = {Transition Accelerator},
+  date = {2023},
+  url = {https://transitionaccelerator.ca/wp-content/uploads/2023/06/The-Techno-Economics-of-Hydrogen-Pipelines-v2.pdf}
 }
 
 @book{perrysChemicalEngineersHandbook,
@@ -135,4 +135,74 @@
   title = {Dutch Offshore Wind Atlas},
   type = {Web resource},
   note = {TODO: add exact access URL and access date after source verification.}
+}
+
+@techreport{badgett2024PEMCost,
+  author      = {Badgett, Alex and Brauch, Joe and Thatte, Amogh and Rubin, Rachel and Skangos, Christopher and Wang, Xiaohua and Ahluwalia, Rajesh and Pivovar, Bryan and Ruth, Mark},
+  title       = {Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers},
+  institution = {National Renewable Energy Laboratory},
+  number      = {NREL/TP-6A20-87625},
+  year        = {2024},
+  month       = feb,
+  doi         = {10.2172/2311140},
+  url         = {https://www.osti.gov/biblio/2311140}
+}
+
+@techreport{holst2021ElectrolysisCost,
+  author      = {Holst, Marius and Aschbrenner, Stefan and Smolinka, Tom and Voglst{\"a}tter, Christopher and Grimm, Gunter},
+  title       = {Cost Forecast for Low-Temperature Electrolysis: Technology-Driven Bottom-Up Prognosis for PEM and Alkaline Water Electrolysis Systems},
+  institution = {Fraunhofer Institute for Solar Energy Systems ISE},
+  year        = {2021},
+  url         = {https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/cost-forecast-for-low-temperature-electrolysis.pdf}
+}
+
+@article{gao2025AdvancedRectifiers,
+  author  = {Gao, Yan and Wang, Xiongzheng and Meng, Xin},
+  title   = {Advanced Rectifier Technologies for Electrolysis-Based Hydrogen Production: A Comparative Study and Real-World Applications},
+  journal = {Energies},
+  year    = {2025},
+  volume  = {18},
+  number  = {1},
+  pages   = {48},
+  doi     = {10.3390/en18010048}
+}
+
+@techreport{abb2025UNIRECH2,
+  author      = {{ABB}},
+  title       = {{UNIREC H2}: Air- or Water-Cooled Power Rectifier for Hydrogen Electrolyzers},
+  institution = {ABB},
+  number      = {9AKK108471A8889},
+  year        = {2025},
+  url         = {https://search.abb.com/library/Download.aspx?DocumentID=9AKK108471A8889}
+}
+
+@techreport{ispt2020GigawattElectrolyser,
+  author      = {van 't Noordende, Hans and Ripson, Peter},
+  title       = {Baseline Design and Total Installed Costs of a GW Green Hydrogen Plant},
+  institution = {Institute for Sustainable Process Technology},
+  year        = {2020},
+  month       = oct,
+  url         = {https://ispt.eu/media/ISPT-public-report-gigawatt-green-hydrogen-plant.pdf}
+}
+
+@article{yodwong2020ACDCConverters,
+  author  = {Yodwong, Burin and Guilbert, Damien and Phattanasak, Matheepot and Kaewmanee, Wattana and Hinaje, Melika and Vitale, Gianpaolo},
+  title   = {{AC--DC} Converters for Electrolyzer Applications: State of the Art and Future Challenges},
+  journal = {Electronics},
+  year    = {2020},
+  volume  = {9},
+  number  = {6},
+  pages   = {912},
+  doi     = {10.3390/electronics9060912}
+}
+
+@article{chen2022LargeScaleConverters,
+  author  = {Chen, Mengxing and Chou, Shih-Feng and Blaabjerg, Frede and Davari, Pooya},
+  title   = {Overview of Power Electronic Converter Topologies Enabling Large-Scale Hydrogen Production via Water Electrolysis},
+  journal = {Applied Sciences},
+  year    = {2022},
+  volume  = {12},
+  number  = {4},
+  pages   = {1906},
+  doi     = {10.3390/app12041906}
 }
