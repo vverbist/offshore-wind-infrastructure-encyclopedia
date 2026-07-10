@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -536,10 +584,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
+  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope">Scope</a></li>
+  <li><a href="#reference-architecture" id="toc-reference-architecture" class="nav-link" data-scroll-target="#reference-architecture">Reference Architecture</a></li>
+  <li><a href="#cost-basis" id="toc-cost-basis" class="nav-link" data-scroll-target="#cost-basis">Cost Basis</a></li>
+  <li><a href="#cost-scaling" id="toc-cost-scaling" class="nav-link" data-scroll-target="#cost-scaling">Cost Scaling</a></li>
   <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
   <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
   <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
   <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -567,64 +620,164 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="role-in-the-value-chain" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>Electrolyser power electronics condition electrical power before it enters the PEM stack. The need for these components differs between centralised and decentralised hydrogen.</p>
+<p>Electrolyser power electronics convert the 66 kV infield AC supply to the controlled low-voltage DC required by the PEM stacks.</p>
+<p>This page represents the complete conversion chain between the 66 kV platform input and the stack DC terminals as one aggregated subsystem. It includes the plant step-down transformer, rectifier transformers, rectifier cabinets, converter controls, and dedicated conversion-system cooling. Turbine-side conversion equipment is covered in <a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a>. The PEM stack and its polarisation behaviour are covered in <a href="../hydrogen_production/stack.html">Stack</a>. Hydrogen compression is covered separately in <a href="../hydrogen_infra/compressor.html">Compressor</a>.</p>
 </section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<section id="scope" class="level2">
+<h2 class="anchored" data-anchor-id="scope">Scope</h2>
 <table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Power electronics CAPEX</td>
-<td style="text-align: right;">87 EUR/kW</td>
-</tr>
-<tr class="even">
-<td>Scaling factor</td>
-<td style="text-align: right;">1.00</td>
-</tr>
-</tbody>
-</table>
-<p>Power electronics are treated as mature, modular components and do not receive central-facility economies of scale.</p>
-</section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Loss</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Rectifier</td>
-<td style="text-align: right;">1.0%</td>
-</tr>
-<tr class="even">
-<td>Transformer</td>
-<td style="text-align: right;">0.5%</td>
-</tr>
-</tbody>
-</table>
-<p>For decentralised electrolysis, these platform-side components are absent because the stack connects to the turbine DC link.</p>
-</section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<p>Availability is currently included in the electrolyser availability factor unless separated in a later version.</p>
-</section>
-<section id="architecture-applicability" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
-<table class="caption-top table">
+<caption>Scope boundary for the centralised-electrolysis power-electronics model.</caption>
 <colgroup>
 <col style="width: 50%">
 <col style="width: 50%">
 </colgroup>
+<thead>
+<tr class="header">
+<th>Included in this model</th>
+<th>Excluded from this model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>66 kV plant step-down transformer</td>
+<td>Turbine-side generator converter and inverter</td>
+</tr>
+<tr class="even">
+<td>Rectifier transformers</td>
+<td>Turbine step-up transformer</td>
+</tr>
+<tr class="odd">
+<td>Multi-pulse thyristor rectifiers</td>
+<td>Infield and export cables</td>
+</tr>
+<tr class="even">
+<td>Converter controls and protection</td>
+<td>Upstream 66 kV switchgear</td>
+</tr>
+<tr class="odd">
+<td>Dedicated transformer and rectifier cooling</td>
+<td>General platform auxiliaries</td>
+</tr>
+<tr class="even">
+<td>Normal harmonic-mitigation provisions within the conversion package</td>
+<td>PEM stack and stack-level electrochemical losses</td>
+</tr>
+<tr class="odd">
+<td>—</td>
+<td>Hydrogen compressor and its drive electronics</td>
+</tr>
+<tr class="even">
+<td>—</td>
+<td>Installation labour, offshore construction, financing, and owner’s costs</td>
+</tr>
+</tbody>
+</table>
+<p>The main 66 kV transformer is included on this page and should not be costed again in another electrical-infrastructure component. Harmonic filtering, phase shifting, reactive-power management, and converter cooling are not represented as separate systems; their normal provision is included within the aggregated package cost and net efficiency.</p>
+</section>
+<section id="reference-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="reference-architecture">Reference Architecture</h2>
+<p>The reference configuration is a water-cooled, 24-pulse thyristor rectifier supplied through a phase-shifting rectifier transformer. Multi-pulse thyristor conversion remains a common industrial solution at multi-megawatt scale because it combines high efficiency, low semiconductor cost, high current capability, and established reliability. Contemporary commercial systems are offered in 6-, 12-, 18-, and 24-pulse arrangements, with harmonic distortion decreasing as pulse number increases <span class="citation" data-cites="abb2025UNIRECH2">(<a href="#ref-abb2025UNIRECH2" role="doc-biblioref">ABB 2025</a>)</span>. Reviews of large-scale electrolyser converters likewise identify thyristor rectifiers as the established high-power option, while active-front-end and chopper-based systems trade higher cost and conversion complexity for improved power quality and controllability <span class="citation" data-cites="yodwong2020ACDCConverters chen2022LargeScaleConverters">(<a href="#ref-yodwong2020ACDCConverters" role="doc-biblioref">Yodwong et al. 2020</a>; <a href="#ref-chen2022LargeScaleConverters" role="doc-biblioref">Chen et al. 2022</a>)</span>.</p>
+<p>The 66 kV input is represented as an aggregated two-stage voltage reduction:</p>
+<p><span class="math display">\[
+66\ \mathrm{kV\ AC}
+\rightarrow
+\mathrm{medium\mbox{-}voltage\ AC}
+\rightarrow
+\mathrm{controlled\ stack\ DC}.
+\]</span></p>
+<p>The intermediate voltage and detailed transformer winding arrangement are not modelled. Large-plant studies use comparable high-voltage-to-medium-voltage distribution followed by repeated transformer–rectifier modules, including PEM layouts based on approximately 40 MW power blocks <span class="citation" data-cites="ispt2020GigawattElectrolyser">(<a href="#ref-ispt2020GigawattElectrolyser" role="doc-biblioref">Noordende and Ripson 2020</a>)</span>.</p>
+</section>
+<section id="cost-basis" class="level2">
+<h2 class="anchored" data-anchor-id="cost-basis">Cost Basis</h2>
+<p>Published power-electronics costs are not fully like-for-like. The literature includes manufactured cost, purchased-equipment cost, and installed system cost, with different transformer and auxiliary-equipment boundaries. Where a source explicitly reports manufactured cost before markup, the same 50% manufacturer markup used for the stack and balance-of-plant costs is applied here before comparison (see <a href="../shared_model_inputs/financial_assumptions.html">Financial Assumptions</a>), rather than treating any single source as a directly transferable quotation.</p>
+<p>NREL adopts a cost of 199 USD/kW for the transformer and rectifier of a 1 MW PEM electrolyser, based on historical supplier quotations and explicitly excluding manufacturer markup, installation, soft costs, and inflation <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>. Applying the standard 50% markup gives an equipment purchase cost of:</p>
+<p><span class="math display">\[
+1.5 \times 199 \approx 300 \ \mathrm{USD_{2020}/kW}
+\]</span></p>
+<p>Fraunhofer ISE estimates PEM power-electronics costs of approximately 160 EUR/kW in its 2020 cases and approximately 101–102 EUR/kW in its 2030 cases, reported at the system/investment level rather than as a bare manufactured cost. Its 100 MW cases add a separate high-voltage transformer of approximately 25–26 EUR/kW, giving a combined large-system estimate of approximately 185–186 EUR/kW. The specific cost of the power electronics changes only marginally between the 5 MW and 100 MW cases <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>. A recent industrial comparison reports substantially lower Chinese-market investment costs for 5 MW packages: approximately CNY 270/kW for a thyristor rectifier including its phase-shifting transformer, compared with CNY 320/kW for a diode-plus-chopper system and CNY 400/kW for an IGBT system <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span>. No CNY-to-EUR conversion is applied here: the comparison is used only to confirm that thyristor rectifiers are the lower-cost topology, not as a quantitative anchor, because the geography, project scope, installation boundary, and procurement conditions differ too much for a direct rate conversion to be meaningful.</p>
+<p>No public vendor source was found that provides a binding price for a complete offshore 66 kV-to-DC package with a consistent scope. Vendor literature is therefore used to confirm topology, modularity, and efficiency, but not as the primary cost basis.</p>
+<p>The central model value is <strong>185 EUR/kW</strong> for the complete purchased 66 kV-to-stack-DC conversion package, taken directly from Fraunhofer’s combined large-system transformer-plus-power-electronics estimate. This sits well below the marked-up NREL benchmark of approximately 300 USD/kW for a small 1 MW reference unit — compared here at face value, pending a documented USD-to-EUR conversion factor (see <a href="../shared_model_inputs/financial_assumptions.html">Financial Assumptions</a>) — and above the lowest reported regional equipment prices.</p>
+</section>
+<section id="cost-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="cost-scaling">Cost Scaling</h2>
+<p>No six-tenths-rule scaling is applied. The subsystem is treated as repeated transformer–rectifier power blocks, giving a scaling exponent of 1.00.</p>
+<p>This assumption is based on practical unit limits rather than an assumption that electrical equipment has no economies of scale. Industrial rectifiers operate at very high current and are built from parallel semiconductor devices and repeated bridges because a single device cannot supply the complete plant current <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span>. Commercial high-power converter units are typically limited to the multi-megawatt range, after which plant capacity is increased mainly by adding modules <span class="citation" data-cites="chen2022LargeScaleConverters">(<a href="#ref-chen2022LargeScaleConverters" role="doc-biblioref">Chen et al. 2022</a>)</span>. Large electrolyser designs similarly number up repeated stack and transformer–rectifier blocks rather than enlarging one converter indefinitely <span class="citation" data-cites="ispt2020GigawattElectrolyser">(<a href="#ref-ispt2020GigawattElectrolyser" role="doc-biblioref">Noordende and Ripson 2020</a>)</span>.</p>
+<p>Fraunhofer’s bottom-up results support this approximation: specific power-electronics cost is nearly constant between 5 MW and 100 MW, unlike centralised process equipment that benefits more strongly from shared capacity <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>. Some plant-level economies can still arise from shared engineering, controls, switchgear, buildings, and procurement. The exponent of 1.00 should therefore be interpreted as a conservative purchased-equipment assumption, not proof that total installed electrical-system cost is perfectly linear.</p>
+</section>
+<section id="cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<table class="caption-top table">
+<caption>Cost assumptions for the centralised-electrolysis conversion system.</caption>
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th style="text-align: right;">Central assumption</th>
+<th style="text-align: right;">Sensitivity range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Complete 66 kV-to-DC power-electronics CAPEX</td>
+<td style="text-align: right;">185 EUR/kW</td>
+<td style="text-align: right;">100–300 EUR/kW</td>
+</tr>
+<tr class="even">
+<td>Capacity-scaling exponent</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>The sensitivity range covers differences in procurement region, converter topology, transformer scope, redundancy, offshore adaptation, and whether normal power-quality equipment is included in the supplier package. The upper end reflects the marked-up NREL benchmark for a small 1 MW reference unit; the lower end reflects the more favourable regional and topology comparisons.</p>
+</section>
+<section id="energy-balance" class="level2">
+<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
+<p>For centralised electrolysis, the model applies one net conversion loss between the 66 kV AC input and the stack DC terminals:</p>
+<p><span class="math display">\[
+P_{\mathrm{stack,DC}}
+=
+P_{\mathrm{in,66kV}}
+\left(1-L_{\mathrm{conversion}}\right).
+\]</span></p>
+<table class="caption-top table">
+<caption>Net power-conversion assumption for centralised electrolysis.</caption>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Central assumption</th>
+<th style="text-align: right;">Sensitivity range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Net 66 kV AC-to-stack-DC efficiency</td>
+<td style="text-align: right;">97.5%</td>
+<td style="text-align: right;">96.0–98.5%</td>
+</tr>
+<tr class="even">
+<td>Net conversion loss</td>
+<td style="text-align: right;">2.5%</td>
+<td style="text-align: right;">1.5–4.0%</td>
+</tr>
+</tbody>
+</table>
+<p>The 2.5% loss includes the plant step-down transformer, rectifier transformers, rectifier semiconductor losses, and dedicated conversion-system cooling. It does not include infield cable losses, general platform auxiliaries, or stack electrochemical losses.</p>
+<p>The value represents a modern, high-efficiency thyristor package rather than a generic historical fleet average. ABB reports rectifier-only efficiency of up to 99.6% for its current water-cooled thyristor product <span class="citation" data-cites="abb2025UNIRECH2">(<a href="#ref-abb2025UNIRECH2" role="doc-biblioref">ABB 2025</a>)</span>. An industrial comparison reports thyristor rectifier efficiency above approximately 98.5% and complete transformer-plus-rectifier efficiency above 97.5% <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span>. Fraunhofer assumes rectifier efficiencies of 96% for its 2020 design and 98% for its 2030 design, with a separate high-voltage transformer efficiency of 99% <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>. The selected 97.5% net value is therefore representative of an efficient contemporary package while retaining losses for the full 66 kV-to-DC chain.</p>
+<p>A constant net loss is used at all plant loads. In practice, efficiency depends on loading, transformer no-load losses, firing angle, cooling demand, and current ripple. Multi-pulse conversion and modular dispatch reduce, but do not eliminate, these effects. The loss sensitivity should be used where the annual operating profile contains substantial low-load operation.</p>
+</section>
+<section id="availability" class="level2">
+<h2 class="anchored" data-anchor-id="availability">Availability</h2>
+<p>Transformer and rectifier outages are included in the overall electrolyser availability factor and are not applied as an additional derating on this page.</p>
+<p>The physical system is expected to consist of multiple conversion blocks, so failure of one block may cause partial rather than complete plant unavailability. Explicit block redundancy, spare strategy, failure rates, and offshore repair logistics are outside the current model resolution.</p>
+</section>
+<section id="architecture-applicability" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Architecture</th>
@@ -634,24 +787,98 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Centralised hydrogen</td>
-<td>Included</td>
+<td>Included: complete 66 kV AC-to-stack-DC conversion chain</td>
 </tr>
 <tr class="even">
 <td>Decentralised hydrogen</td>
-<td>Excluded or strongly reduced due to DC-link integration</td>
+<td>Excluded; see <a href="../hydrogen_production/dc_integration.html">DC Integration</a></td>
 </tr>
 <tr class="odd">
 <td>Electricity export</td>
-<td>Covered by turbine and HVDC electrical infrastructure pages</td>
+<td>Covered by turbine and HVDC electrical-infrastructure pages</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<p>This model is intended for early-stage techno-economic assessment. Several previous limitations are resolved by defining a complete 66 kV-to-DC boundary, selecting a reference converter topology, and using a net conversion efficiency. The remaining limitations are:</p>
+<table class="caption-top table">
+<caption>Remaining limitations of the power-electronics model.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The 185 EUR/kW value is triangulated from literature rather than obtained from a project-specific vendor quotation</td>
+<td>The value should be replaced by an RFQ when the stack voltage range, block rating, redundancy, offshore environmental class, and delivery scope are known</td>
+</tr>
+<tr class="even">
+<td>Source costs use different years, markets, and commercial boundaries; the marked-up NREL and Fraunhofer figures are compared at face value across currencies without a documented USD-to-EUR conversion factor</td>
+<td>The central value is less precise than a like-for-like competitive tender and should be tested over the stated 100–300 EUR/kW range</td>
+</tr>
+<tr class="odd">
+<td>Linear scaling represents numbering up of modular power blocks</td>
+<td>Shared plant engineering and high-voltage infrastructure may produce some installed-cost economies that are not captured</td>
+</tr>
+<tr class="even">
+<td>A 24-pulse thyristor rectifier is used as the reference topology</td>
+<td>Projects selecting an IGBT active-front-end or diode-plus-chopper topology may have different CAPEX, efficiency, controllability, and power-quality performance</td>
+</tr>
+<tr class="odd">
+<td>A fixed 2.5% net loss is used for every operating point</td>
+<td>Load-dependent transformer, rectifier, cooling, and ripple losses are not resolved; the 1.5–4.0% sensitivity should be used for uncertain operating profiles</td>
+</tr>
+<tr class="even">
+<td>Offshore adaptation and redundancy are included only through the cost range</td>
+<td>Marinisation, corrosion protection, enclosed cooling, fire protection, and N+1 requirements are not separately designed or costed</td>
+</tr>
+<tr class="odd">
+<td>Availability is bundled into the overall electrolyser factor</td>
+<td>Component-level outages, partial block availability, and offshore repair time are not represented explicitly</td>
+</tr>
+<tr class="even">
+<td>The main 66 kV transformer is assigned to this subsystem</td>
+<td>Model integration must ensure that the same transformer is not also included in platform or infield electrical CAPEX</td>
 </tr>
 </tbody>
 </table>
 
 
+
 </section>
 
-</main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.ps1. -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abb2025UNIRECH2" class="csl-entry" role="listitem">
+ABB. 2025. <em><span>UNIREC H2</span>: Air- or Water-Cooled Power Rectifier for Hydrogen Electrolyzers</em>. 9AKK108471A8889. ABB. <a href="https://search.abb.com/library/Download.aspx?DocumentID=9AKK108471A8889">https://search.abb.com/library/Download.aspx?DocumentID=9AKK108471A8889</a>.
+</div>
+<div id="ref-badgett2024PEMCost" class="csl-entry" role="listitem">
+Badgett, Alex, Joe Brauch, Amogh Thatte, et al. 2024. <em>Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers</em>. NREL/TP-6A20-87625. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2311140">https://doi.org/10.2172/2311140</a>.
+</div>
+<div id="ref-chen2022LargeScaleConverters" class="csl-entry" role="listitem">
+Chen, Mengxing, Shih-Feng Chou, Frede Blaabjerg, and Pooya Davari. 2022. <span>“Overview of Power Electronic Converter Topologies Enabling Large-Scale Hydrogen Production via Water Electrolysis.”</span> <em>Applied Sciences</em> 12 (4): 1906. <a href="https://doi.org/10.3390/app12041906">https://doi.org/10.3390/app12041906</a>.
+</div>
+<div id="ref-gao2025AdvancedRectifiers" class="csl-entry" role="listitem">
+Gao, Yan, Xiongzheng Wang, and Xin Meng. 2025. <span>“Advanced Rectifier Technologies for Electrolysis-Based Hydrogen Production: A Comparative Study and Real-World Applications.”</span> <em>Energies</em> 18 (1): 48. <a href="https://doi.org/10.3390/en18010048">https://doi.org/10.3390/en18010048</a>.
+</div>
+<div id="ref-holst2021ElectrolysisCost" class="csl-entry" role="listitem">
+Holst, Marius, Stefan Aschbrenner, Tom Smolinka, Christopher Voglstätter, and Gunter Grimm. 2021. <em>Cost Forecast for Low-Temperature Electrolysis: Technology-Driven Bottom-up Prognosis for PEM and Alkaline Water Electrolysis Systems</em>. Fraunhofer Institute for Solar Energy Systems ISE. <a href="https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/cost-forecast-for-low-temperature-electrolysis.pdf">https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/cost-forecast-for-low-temperature-electrolysis.pdf</a>.
+</div>
+<div id="ref-ispt2020GigawattElectrolyser" class="csl-entry" role="listitem">
+Noordende, Hans van ’t, and Peter Ripson. 2020. <em>Baseline Design and Total Installed Costs of a GW Green Hydrogen Plant</em>. Institute for Sustainable Process Technology. <a href="https://ispt.eu/media/ISPT-public-report-gigawatt-green-hydrogen-plant.pdf">https://ispt.eu/media/ISPT-public-report-gigawatt-green-hydrogen-plant.pdf</a>.
+</div>
+<div id="ref-yodwong2020ACDCConverters" class="csl-entry" role="listitem">
+Yodwong, Burin, Damien Guilbert, Matheepot Phattanasak, Wattana Kaewmanee, Melika Hinaje, and Gianpaolo Vitale. 2020. <span>“<span>AC–DC</span> Converters for Electrolyzer Applications: State of the Art and Future Challenges.”</span> <em>Electronics</em> 9 (6): 912. <a href="https://doi.org/10.3390/electronics9060912">https://doi.org/10.3390/electronics9060912</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {
   if (document.querySelector("script[data-progress-sidebar]")) {

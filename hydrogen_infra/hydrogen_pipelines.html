@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -535,12 +583,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
+  <li><a href="#composite-flexible-pipelines" id="toc-composite-flexible-pipelines" class="nav-link" data-scroll-target="#composite-flexible-pipelines">Composite Flexible Pipelines</a></li>
+  <li><a href="#sizing-variables" id="toc-sizing-variables" class="nav-link" data-scroll-target="#sizing-variables">Sizing Variables</a></li>
   <li><a href="#capacity-model" id="toc-capacity-model" class="nav-link" data-scroll-target="#capacity-model">Capacity Model</a></li>
-  <li><a href="#current-sizing-assumptions" id="toc-current-sizing-assumptions" class="nav-link" data-scroll-target="#current-sizing-assumptions">Current Sizing Assumptions</a></li>
+  <li><a href="#dependence-on-pressure-and-diameter" id="toc-dependence-on-pressure-and-diameter" class="nav-link" data-scroll-target="#dependence-on-pressure-and-diameter">Dependence on Pressure and Diameter</a></li>
+  <li><a href="#material-cost-model" id="toc-material-cost-model" class="nav-link" data-scroll-target="#material-cost-model">Material Cost Model</a>
+  <ul class="collapse">
+  <li><a href="#confidentiality-handling" id="toc-confidentiality-handling" class="nav-link" data-scroll-target="#confidentiality-handling">Confidentiality Handling</a></li>
+  </ul></li>
+  <li><a href="#current-reference-assumptions" id="toc-current-reference-assumptions" class="nav-link" data-scroll-target="#current-reference-assumptions">Current Reference Assumptions</a></li>
   <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
   <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -566,60 +621,270 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>Hydrogen pipelines transport compressed hydrogen through the infield grid and from the wind farm to shore.</p>
-<p>The model distinguishes between infield pipelines and export pipelines, but documents them together because the same capacity, pressure, material, and installation logic applies.</p>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>Hydrogen pipelines transport compressed hydrogen through the infield collection network and from the wind farm to the onshore hydrogen interface.</p>
+<p>The model distinguishes between infield pipelines and export pipelines, but documents them together because the same diameter, pressure, capacity, and material-cost logic applies. Installation is excluded from this page and is documented separately in <a href="../offshore_installation/pipeline_installation.html">pipeline installation</a>.</p>
+<p>The pipeline model covers:</p>
+<ul>
+<li>material CAPEX for composite flexible hydrogen pipelines</li>
+<li>transport capacity as a function of diameter, pressure, and route length</li>
+<li>the number of parallel export pipelines required for a wind-farm hydrogen flow</li>
+<li>the coupling between pipeline pressure, compressor duty, and total LCOE</li>
+</ul>
 </section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<section id="composite-flexible-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="composite-flexible-pipelines">Composite Flexible Pipelines</h2>
+<p>Composite flexible pipelines are used as the reference hydrogen pipeline technology in this model. A flexible composite pipe typically combines a hydrogen-compatible liner, load-bearing composite reinforcement, and a protective outer layer. Compared with a rigid steel pipeline, the relevant system-level advantage is not only material substitution. The important offshore feature is that the pipe can be manufactured and transported in long continuous lengths, spooled on a reel, and laid with fewer welded field joints.</p>
+<p>This matters for offshore hydrogen infrastructure because the model is concerned with many repeated infield connections and, in the decentralised architecture, a pipeline grid that replaces the AC infield cable network. Flexible composite lines are lighter than steel lines at the diameters considered here, are less exposed to corrosion-related design issues, and can simplify installation logistics. These advantages are especially relevant for infield pipelines and for export pipelines up to the diameter range that remains compatible with reel-lay handling.</p>
+<p>The flexibility benefit is not unlimited. Larger diameters and higher pressure classes require more reinforcement and increase minimum bend radius. The source material therefore caps the composite export-pipeline diameter at 8 inch: above this range, the pipeline is assumed to lose the reel-lay flexibility that motivates the technology choice <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</p>
+</section>
+<section id="sizing-variables" class="level2">
+<h2 class="anchored" data-anchor-id="sizing-variables">Sizing Variables</h2>
+<p>Pipeline sizing is governed by the variables in <a href="#tbl-pipeline-sizing-variables" class="quarto-xref">Table&nbsp;1</a>.</p>
+<div id="tbl-pipeline-sizing-variables" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pipeline-sizing-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Main pipeline sizing variables.
+</figcaption>
+<div aria-describedby="tbl-pipeline-sizing-variables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Variable</th>
+<th>Role in the model</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Infield pipeline installation</td>
-<td style="text-align: right;">635 EUR/m</td>
+<td>Internal diameter, <span class="math inline">\(D\)</span></td>
+<td>Determines cross-sectional area and strongly affects capacity.</td>
 </tr>
 <tr class="even">
-<td>Infield pipeline OPEX</td>
-<td style="text-align: right;">0.5% of CAPEX per year</td>
+<td>Inlet pressure, <span class="math inline">\(p_\mathrm{in}\)</span></td>
+<td>Equal to compressor outlet pressure; an optimisation variable.</td>
 </tr>
 <tr class="odd">
-<td>Export pipelines installed in parallel</td>
-<td style="text-align: right;">3</td>
+<td>Outlet pressure, <span class="math inline">\(p_\mathrm{out}\)</span></td>
+<td>Fixed by the required downstream interface pressure.</td>
 </tr>
 <tr class="even">
-<td>Export pipeline installation</td>
-<td style="text-align: right;">635 EUR/m</td>
+<td>Route length, <span class="math inline">\(L\)</span></td>
+<td>Sets frictional pressure loss for a given flow.</td>
 </tr>
 <tr class="odd">
-<td>Export pipeline OPEX</td>
-<td style="text-align: right;">0.5% of CAPEX per year</td>
+<td>Roughness and friction data</td>
+<td>Determine the Fanning friction factor used in the capacity equation.</td>
+</tr>
+<tr class="even">
+<td>Number of parallel pipelines, <span class="math inline">\(n_\mathrm{pipe}\)</span></td>
+<td>Discrete result needed when one pipeline cannot carry the selected peak flow.</td>
 </tr>
 </tbody>
 </table>
-<p>Pipeline material CAPEX is based on confidential supplier data. The current model uses cost data for selected diameter and pressure combinations and fits a two-dimensional regression to interpolate or extrapolate.</p>
+</div>
+</figure>
+</div>
+<p>For the export pipeline, the current reference case uses an 80 km route length and a 66 bar outlet pressure. The 66 bar value is used because it represents the expected maximum pressure of the Dutch hydrogen backbone, allowing injection without an additional onshore compressor in the base case <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</p>
 </section>
 <section id="capacity-model" class="level2">
 <h2 class="anchored" data-anchor-id="capacity-model">Capacity Model</h2>
-<p>Pipeline capacity depends on:</p>
-<ul>
-<li>diameter</li>
-<li>inlet pressure</li>
-<li>outlet pressure</li>
-<li>route length</li>
-<li>roughness and friction parameters</li>
-</ul>
-<p>The current export-pipeline calculation uses the Colebrook equation from Perry’s Chemical Engineers’ Handbook, with Darcy-Weisbach roughness and Hazen-Williams friction factors from the manufacturer.</p>
+<p>Pipeline capacity is calculated explicitly from the pressure drop available between the pipeline inlet and outlet. The implemented calculation follows the gas-flow method used in the Transition Accelerator hydrogen pipeline brief <span class="citation" data-cites="transitionAcceleratorHydrogenPipelines">(<a href="#ref-transitionAcceleratorHydrogenPipelines" role="doc-biblioref">Transition Accelerator 2023</a>)</span> and the Colebrook friction-factor treatment in Perry’s Chemical Engineers’ Handbook <span class="citation" data-cites="perrysChemicalEngineersHandbook">(<a href="#ref-perrysChemicalEngineersHandbook" role="doc-biblioref">Perry’s Chemical Engineers’ Handbook, n.d.</a>)</span>. The implementation uses the Fanning-friction convention from Perry’s equations rather than the Darcy-Weisbach convention.</p>
+<p>The cross-sectional area is:</p>
+<p><span class="math display">\[
+A = \frac{\pi D^2}{4}
+\]</span></p>
+<p>The available pressure drop is:</p>
+<p><span class="math display">\[
+\Delta p
+=
+p_\mathrm{in}
+-
+p_\mathrm{out}
+\]</span></p>
+<p>The code evaluates hydrogen density and viscosity at an average pipeline pressure:</p>
+<p><span class="math display">\[
+p_\mathrm{avg}
+=
+\frac{2}{3}
+\frac{
+p_\mathrm{in}^3 - p_\mathrm{out}^3
+}{
+p_\mathrm{in}^2 - p_\mathrm{out}^2
+}
+\]</span></p>
+<p>The average density and viscosity are then obtained from CoolProp:</p>
+<p><span class="math display">\[
+\rho_\mathrm{avg}
+=
+\rho(T,p_\mathrm{avg})
+,
+\qquad
+\mu_\mathrm{avg}
+=
+\mu(T,p_\mathrm{avg})
+\]</span></p>
+<p>where <span class="math inline">\(T=293 \ \mathrm{K}\)</span> in the current figure builder.</p>
+<p>The implementation then evaluates the combined term <span class="math inline">\(\mathrm{Re}\sqrt{f_F}\)</span>:</p>
+<p><span class="math display">\[
+\mathrm{Re}\sqrt{f_F}
+=
+\frac{D^{3/2}}{\mu_\mathrm{avg}}
+\sqrt{
+\frac{
+\Delta p \rho_\mathrm{avg}
+}{
+2L
+}
+}
+\]</span></p>
+<p>where <span class="math inline">\(f_F\)</span> is the Fanning friction factor. The Colebrook relation is applied as:</p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{f_F}}
+=
+-4
+\log_{10}
+\left(
+\frac{\epsilon}{3.7D}
++
+\frac{1.256}{\mathrm{Re}\sqrt{f_F}}
+\right)
+\]</span></p>
+<p>where <span class="math inline">\(\epsilon=1.5 \cdot 10^{-7} \ \mathrm{m}\)</span> in the current implementation.</p>
+<p>The resulting gas velocity is:</p>
+<p><span class="math display">\[
+v
+=
+\sqrt{
+\frac{
+D \Delta p
+}{
+2 \rho_\mathrm{avg} L
+}
+}
+\frac{1}{\sqrt{f_F}}
+\]</span></p>
+<p>The mass-flow capacity is:</p>
+<p><span class="math display">\[
+\dot{m}_\mathrm{max}
+=
+\rho_\mathrm{avg}
+A
+v
+\cdot
+3600
+\]</span></p>
+<p>where <span class="math inline">\(\dot{m}_\mathrm{max}\)</span> is expressed in kg/h.</p>
+<p>The transport capacity is expressed as an HHV-equivalent power:</p>
+<p><span class="math display">\[
+P_{\mathrm{H_2},\mathrm{HHV}}
+=
+\dot{m}_\mathrm{max}
+\cdot
+\frac{
+\mathrm{HHV}_\mathrm{H_2}
+}{
+1000
+}
+\]</span></p>
+<p>where <span class="math inline">\(\mathrm{HHV}_\mathrm{H_2}=39.4 \ \mathrm{kWh/kg}\)</span> and <span class="math inline">\(P_{\mathrm{H_2},\mathrm{HHV}}\)</span> is in MW when <span class="math inline">\(\dot{m}_\mathrm{max}\)</span> is in kg/h.</p>
+<p><a href="#fig-pipeline-capacity" class="quarto-xref">Figure&nbsp;1</a> shows the resulting capacity curves for the current diameter and pressure range, assuming an 80 km route length and 66 bar outlet pressure.</p>
+<div id="fig-pipeline-capacity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipeline-capacity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/pipeline-capacity-vs-pressure.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipeline-capacity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Hydrogen export-pipeline capacity as a function of inlet pressure and diameter.
+</figcaption>
+</figure>
+</div>
 </section>
-<section id="current-sizing-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="current-sizing-assumptions">Current Sizing Assumptions</h2>
+<section id="dependence-on-pressure-and-diameter" class="level2">
+<h2 class="anchored" data-anchor-id="dependence-on-pressure-and-diameter">Dependence on Pressure and Diameter</h2>
+<p>Pressure enters the calculation through both the pressure drop, <span class="math inline">\(\Delta p\)</span>, and the pressure-dependent hydrogen properties evaluated at <span class="math inline">\(p_\mathrm{avg}\)</span>:</p>
+<p><span class="math display">\[
+\Delta p = p_\mathrm{in} - p_\mathrm{out}
+\]</span></p>
+<p>This means that increasing inlet pressure raises capacity nonlinearly, but with diminishing benefit when expressed against the compressor penalty. Higher pressure can allow one pipeline to carry more hydrogen, but the same pressure increase also raises compressor electricity consumption and compressor CAPEX. Pipeline pressure is therefore optimised jointly with the compressor model rather than selected independently.</p>
+<p>Diameter has an even stronger effect on capacity. Area scales with <span class="math inline">\(D^2\)</span>, while the velocity equation adds a further <span class="math inline">\(\sqrt{D}\)</span> term before friction effects. Ignoring the secondary effect of friction factor, capacity therefore scales approximately as:</p>
+<p><span class="math display">\[
+\dot{m}_\mathrm{max}
+\propto
+D^{2.5}
+\sqrt{
+\Delta p \rho_\mathrm{avg}
+}
+\]</span></p>
+<p>This explains why larger diameters tend to have lower cost per unit of transport capacity. The economic optimum often prefers the largest feasible composite diameter. However, export pipelines are discrete assets. If one large pipeline is oversized for the required peak flow, reducing pressure may lower compressor cost while retaining enough capacity. Conversely, a higher pressure can be justified if it avoids an additional parallel pipeline.</p>
+<p>The export pipeline count is:</p>
+<p><span class="math display">\[
+n_\mathrm{pipe}
+=
+\left\lceil
+\frac{
+\dot{m}_{\mathrm{H_2},\mathrm{peak}}
+}{
+\dot{m}_\mathrm{max}(D,p_\mathrm{in},p_\mathrm{out},L)
+}
+\right\rceil
+\]</span></p>
+<p>where <span class="math inline">\(\dot{m}_{\mathrm{H_2},\mathrm{peak}}\)</span> is the peak hydrogen flow that must be exported. This discrete ceiling is important: small changes in pressure, diameter, stack sizing, or wind-farm peak production can change the required number of pipelines.</p>
+</section>
+<section id="material-cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="material-cost-model">Material Cost Model</h2>
+<p>Pipeline material CAPEX is based on confidential supplier quotes for selected combinations of diameter and pressure class <span class="citation" data-cites="supplierSPipelineCost">(<a href="#ref-supplierSPipelineCost" role="doc-biblioref">Supplier S, n.d.</a>)</span>. The model constructs a two-dimensional interpolation surface over diameter and pressure:</p>
+<p><span class="math display">\[
+c_\mathrm{mat}
+=
+I(D,p)
+\]</span></p>
+<p>where <span class="math inline">\(I(D,p)\)</span> is the interpolated material cost per unit length. Total material cost for a pipeline route is:</p>
+<p><span class="math display">\[
+C_\mathrm{mat}
+=
+L
+\cdot
+c_\mathrm{mat}(D,p)
+\]</span></p>
+<p>For multiple parallel export pipelines:</p>
+<p><span class="math display">\[
+C_{\mathrm{mat},\mathrm{export}}
+=
+n_\mathrm{pipe}
+\cdot
+L_\mathrm{export}
+\cdot
+c_\mathrm{mat}(D,p)
+\]</span></p>
+<p>The current cost model covers material cost only. Installation, burial, connection, vessel time, simultaneous lay of parallel pipelines, and termination work are excluded here and treated in the installation section.</p>
+<section id="confidentiality-handling" class="level3">
+<h3 class="anchored" data-anchor-id="confidentiality-handling">Confidentiality Handling</h3>
+<p>The raw supplier quotes and numerical material-cost surface are confidential. They are used only to parameterise the model and are not reproduced in this encyclopedia page.</p>
+<p>Any figure based on supplier prices is redacted before publication. <a href="#fig-pipeline-specific-cost-redacted" class="quarto-xref">Figure&nbsp;2</a> shows only the qualitative shape of the relative material cost per unit transport capacity. It omits axes, tick labels, colour-bar values, absolute prices, and supplier quote points.</p>
+<div id="fig-pipeline-specific-cost-redacted" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipeline-specific-cost-redacted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/pipeline-specific-cost-redacted.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipeline-specific-cost-redacted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Redacted relative material-cost surface for the pipeline options.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="current-reference-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="current-reference-assumptions">Current Reference Assumptions</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
@@ -636,6 +901,14 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: right;">66 bar</td>
 </tr>
 <tr class="odd">
+<td>Export pipeline inlet pressure</td>
+<td style="text-align: right;">Optimisation variable</td>
+</tr>
+<tr class="even">
+<td>Typical inlet-pressure range</td>
+<td style="text-align: right;">80-150 bar</td>
+</tr>
+<tr class="odd">
 <td>Maximum composite pipeline diameter</td>
 <td style="text-align: right;">8 inch</td>
 </tr>
@@ -649,15 +922,19 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>Infield pipeline capacity</td>
-<td style="text-align: right;">about 500 MW equivalent</td>
+<td style="text-align: right;">about 500 MW equivalent (outlet pressure assumption not yet documented; see Model Limitations)</td>
+</tr>
+<tr class="odd">
+<td>Pipeline OPEX</td>
+<td style="text-align: right;">0.5% of material CAPEX per year</td>
 </tr>
 </tbody>
 </table>
-<p>The 66 bar outlet pressure is selected so hydrogen can be injected into the expected Dutch hydrogen backbone without an additional compressor.</p>
+<p>The infield capacity assumption means that a 6 inch composite pipeline at 150 bar can serve a full row of turbines in the decentralised architecture without the string-capacity constraint that applies to 66 kV AC cables <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</p>
 </section>
 <section id="energy-balance" class="level2">
 <h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>The current model assumes no additional hydrogen losses in the pipelines after compression. Pipeline pressure drop affects required compression and capacity, not a direct hydrogen loss term.</p>
+<p>The current model assumes no additional hydrogen losses in the pipelines after compression. Pipeline pressure drop affects required compression pressure and transport capacity, but it is not represented as a direct hydrogen loss term.</p>
 </section>
 <section id="availability" class="level2">
 <h2 class="anchored" data-anchor-id="availability">Availability</h2>
@@ -680,12 +957,69 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>This is a modelling convention and should be tested in sensitivity work if pipeline outages become material.</p>
+</section>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<p>The pipeline model is intended for early-stage techno-economic comparison, not detailed pipeline design. The main limitations are:</p>
+<table class="caption-top table">
+<caption>Main limitations of the hydrogen pipeline model.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cost interpolation is based on confidential quote points</td>
+<td>The public documentation can describe the method, but not the numerical surface.</td>
+</tr>
+<tr class="even">
+<td>Material and installation are separated</td>
+<td>This page should not be used as a total installed pipeline cost model.</td>
+</tr>
+<tr class="odd">
+<td>Diameter classes are simplified</td>
+<td>Detailed product availability and qualification limits are not represented.</td>
+</tr>
+<tr class="even">
+<td>Gas properties are simplified</td>
+<td>Detailed thermal behaviour, elevation effects, transient operation, and linepack are excluded.</td>
+</tr>
+<tr class="odd">
+<td>Availability is fixed at 100%</td>
+<td>Repair strategy, redundancy, and partial-flow operation are not modelled.</td>
+</tr>
+<tr class="even">
+<td>The outlet-pressure assumption behind the infield capacity figure is not documented</td>
+<td>The 500 MW-equivalent figure should be re-derived once the infield collection-point pressure is defined, rather than assumed equal to the 66 bar export outlet pressure.</td>
+</tr>
+</tbody>
+</table>
+
 
 
 </section>
 
-</main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.ps1. -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-perrysChemicalEngineersHandbook" class="csl-entry" role="listitem">
+Perry’s Chemical Engineers’ Handbook. n.d. <em>Perry’s Chemical Engineers’ Handbook</em>.
+</div>
+<div id="ref-internalModelDescription2026" class="csl-entry" role="listitem">
+Project Team. 2026. <em>Offshore Hydrogen Model Description</em>. Internal background document.
+</div>
+<div id="ref-supplierSPipelineCost" class="csl-entry" role="listitem">
+Supplier S. n.d. <em>Pipeline Cost Data</em>. Confidential supplier data.
+</div>
+<div id="ref-transitionAcceleratorHydrogenPipelines" class="csl-entry" role="listitem">
+Transition Accelerator. 2023. <em>The Techno-Economics of Hydrogen Pipelines</em>. Transition Accelerator. <a href="https://transitionaccelerator.ca/wp-content/uploads/2023/06/The-Techno-Economics-of-Hydrogen-Pipelines-v2.pdf">https://transitionaccelerator.ca/wp-content/uploads/2023/06/The-Techno-Economics-of-Hydrogen-Pipelines-v2.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {
   if (document.querySelector("script[data-progress-sidebar]")) {

@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -642,7 +661,7 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>Typical pressure range</td>
-<td style="text-align: right;">50-150 bar</td>
+<td style="text-align: right;">80-150 bar</td>
 </tr>
 <tr class="even">
 <td>Maximum pressure ratio per stage</td>
@@ -783,19 +802,24 @@ m_\mathrm{H_2}
 \frac{p_\mathrm{out}}{p_\mathrm{in}}
 \]</span></p>
 <p>The same outlet pressure can therefore have very different compression penalties depending on electrolyser outlet pressure. Compression to 150 bar is a relatively modest duty when hydrogen leaves the PEM electrolyser at 30 bar, but a much larger duty if hydrogen is produced near atmospheric pressure.</p>
-<p>This effect is shown in Figure X.</p>
-<dl>
-<dt><img src="figures/compressor_energy_vs_outlet_pressure.png" class="img-fluid" alt="Compressor electricity consumption as a function of outlet pressure for different inlet pressures."></dt>
-<dd>
-<p>Compressor electricity consumption as a function of outlet pressure. The figure should show <span class="math inline">\(e_\mathrm{comp}\)</span> in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 50-150 bar.</p>
-</dd>
-</dl>
+<p>This effect is shown in <a href="#fig-compressor-energy" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div id="fig-compressor-energy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-compressor-energy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/compressor_energy_vs_outlet_pressure.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-compressor-energy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Compressor electricity consumption as a function of outlet pressure for different inlet pressures.
+</figcaption>
+</figure>
+</div>
+<p>The figure should show <span class="math inline">\(e_\mathrm{comp}\)</span> in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 80-150 bar.</p>
 <p>The purpose of this figure is to show why PEM outlet pressure matters. A higher electrolyser outlet pressure reduces the compression ratio and therefore lowers the compressor energy penalty for the same selected pipeline pressure.</p>
 </section>
 </section>
 <section id="cost-model" class="level2">
 <h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>)</span>.</p>
 <p>The model uses a power-law scaling relation:</p>
 <p><span class="math display">\[
 C_\mathrm{comp}
@@ -836,13 +860,18 @@ c_\mathrm{comp}
 {P_\mathrm{ely}}
 \]</span></p>
 <p>where <span class="math inline">\(P_\mathrm{ely}\)</span> is the installed electrolyser capacity.</p>
-<p>This relationship is shown in Figure X.</p>
-<dl>
-<dt><img src="figures/compressor_cost_vs_outlet_pressure.png" class="img-fluid" alt="Compressor cost as a function of outlet pressure for different inlet pressures."></dt>
-<dd>
-<p>Compressor cost as a function of outlet pressure. The figure should show compressor CAPEX in €/kW electrolyser for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The reference case of 30 bar inlet pressure and 150 bar outlet pressure should reproduce the model reference value of approximately 56 €/kW electrolyser.</p>
-</dd>
-</dl>
+<p>This relationship is shown in <a href="#fig-compressor-cost" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-compressor-cost" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-compressor-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/compressor_cost_vs_outlet_pressure.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-compressor-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Compressor cost as a function of outlet pressure for different inlet pressures.
+</figcaption>
+</figure>
+</div>
+<p>The figure should show compressor CAPEX in €/kW electrolyser for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The reference case of 30 bar inlet pressure and 150 bar outlet pressure should reproduce the model reference value of approximately 56 €/kW electrolyser.</p>
 <p>The cost curve is flatter than the energy curve because compressor CAPEX scales with compressor power using an exponent below one. However, the same qualitative trade-off remains: higher outlet pressure increases compressor cost, while higher inlet pressure reduces it.</p>
 </section>
 <section id="centralised-compression" class="level3">
@@ -977,16 +1006,15 @@ LCOE
 <p>Future work should replace the generic cost curve with a compressor-train model that includes compressor type, number of stages, intercooling, redundancy, turndown, offshore packaging and maintenance philosophy.</p>
 
 
+
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Khan, M.A., Young, C., MacKinnon, C. and Layzell, D.B. (2021), <em>The Techno-Economics of Hydrogen Compression</em>, Transition Accelerator Technical Briefs, Vol. 1, Issue 1.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.ps1. -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-transitionAcceleratorCompressorCost" class="csl-entry" role="listitem">
+Khan, M. A., C. Young, C. MacKinnon, and D. B. Layzell. 2021. <em>The Techno-Economics of Hydrogen Compression</em>. Technical Brief No. 1. Vol. 1. Transition Accelerator Technical Briefs. Transition Accelerator.
+</div>
+</div></section></div></main> <!-- /main -->
+<!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {
   if (document.querySelector("script[data-progress-sidebar]")) {
