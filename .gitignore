@@ -3,3 +3,10 @@
 **/*.quarto_ipynb
 __pycache__/
 *.py[cod]
+
+# Working drafts kept locally, not version-controlled (large binaries)
+background/*.docx
+
+# Quarto PDF/LaTeX render byproducts
+*.tex
+*.log
