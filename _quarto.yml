@@ -1,7 +1,7 @@
 project:
   type: website
   pre-render:
-    - powershell -NoProfile -ExecutionPolicy Bypass -File tools/build-progress-sidebar.ps1
+    - tools/build-progress-sidebar.js
   resources:
     - figures/
     - progress-sidebar.js
