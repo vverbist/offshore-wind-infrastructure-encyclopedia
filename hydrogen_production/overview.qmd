@@ -4,7 +4,7 @@ completion: 70
 ---
 
 Hydrogen production covers the entire electrolyser.
-In this work, always a PEM electrolyser is studied.
+A PEM electrolyser is always assumed in this work.
 
 The electrolyser is split up in the following components: 
 
@@ -12,7 +12,7 @@ The electrolyser is split up in the following components:
 * [Power Electronics](elx_power_electronics.qmd) 
 * [Balance of Plant (BOP)](balance_of_plant.qmd) 
 
-Note that in most contexts, the balance of plants includes the power electronics, but here they are explictly treated separately.
+Note that in most contexts, the balance of plant includes the power electronics, but here they are explicitly treated separately.
 
 The compressor is also not included in this section, but is under [Hydrogen Infrastructure: Compressor](../hydrogen_infra/compressor.qmd)
 
