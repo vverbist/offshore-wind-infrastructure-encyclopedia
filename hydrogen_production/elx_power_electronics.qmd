@@ -7,6 +7,25 @@ completion: 20
 
 Electrolyser power electronics condition electrical power before it enters the PEM stack. The need for these components differs between centralised and decentralised hydrogen.
 
+This page covers only the electrolyser-side conversion equipment on the offshore electrolysis platform (rectifier and step-down transformer). Turbine-side power electronics are covered in [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd). The PEM stack itself and its polarisation behaviour are covered in [Stack](stack.qmd). Hydrogen compression is covered separately in [Compressor](../hydrogen_infra/compressor.qmd).
+
+## Scope
+
+| Included in this model                          | Excluded from this model                                  |
+| ------------------------------------------------ | ----------------------------------------------------------- |
+| Electrolysis-platform rectifier                  | Turbine-side generator converter and inverter               |
+| Electrolysis-platform step-down transformer       | Turbine step-up transformer and infield/export AC equipment |
+| —                                                  | PEM stack and stack-level current control                   |
+| —                                                  | Hydrogen compressor and its drive electronics                |
+
+: Scope boundary for the electrolyser power electronics model.
+
+## Cost Basis
+
+The 87 EUR/kW power electronics CAPEX uses the same source basis and conversion convention as the stack and balance-of-plant costs: NREL's PEM electrolyser manufactured cost analysis [@nrelElectrolyserCostBasis], with values converted from 2020 USD to 2025 EUR and marked up to approximate sales price (see [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd)).
+
+Unlike the balance-of-plant model, no six-tenths-rule scaling is applied here. Power electronics are treated as mature, modular equipment assembled largely from standard components, so the model assumes cost scales linearly with capacity (scaling factor 1.00) rather than benefiting from the shared-infrastructure economies of scale that apply to thermal management, water treatment, and other centralised BOP systems.
+
 ## Cost Model
 
 | Item | Assumption |
@@ -18,14 +37,14 @@ Power electronics are treated as mature, modular components and do not receive c
 
 ## Energy Balance
 
-For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are: 
+For centralised electrolysis, the infield AC power is stepped down and rectified to DC before entering the stack. Current explicit losses are:
 
 | Component | Loss |
 |---|---:|
 | Rectifier | 1.0% |
 | Transformer | 0.5% |
 
-For decentralised electrolysis, these platform-side components are absent because the stack connects to the turbine DC link.
+For decentralised electrolysis, these platform-side components are absent because the stack connects to the turbine DC link. See [DC Integration](dc_integration.qmd) for why this direct-coupled architecture is modelled without an electrolyser-side rectifier or DC/DC converter.
 
 ## Availability
 
@@ -36,5 +55,20 @@ Availability is currently included in the electrolyser availability factor unles
 | Architecture | Treatment |
 |---|---|
 | Centralised hydrogen | Included |
-| Decentralised hydrogen | Excluded or strongly reduced due to DC-link integration |
+| Decentralised hydrogen | Excluded — see [DC Integration](dc_integration.qmd) for the direct DC-link coupling assumption that removes this equipment |
 | Electricity export | Covered by turbine and HVDC electrical infrastructure pages |
+
+## Model Limitations
+
+This power electronics model is intended for early-stage techno-economic assessment.
+
+The main limitations are:
+
+| Limitation | Implication |
+|---|---|
+| Cost basis reuses the same NREL manufactured-cost report as the stack and BOP, rather than a dedicated power-electronics subsystem estimate | The 87 EUR/kW figure should be cross-checked against a specific NREL line item once the report is reviewed in detail |
+| Linear cost scaling (scaling factor 1.00) is assumed regardless of unit size | Very small or very large rectifier/transformer packages may not scale linearly in practice |
+| Offshore-specific factors (marinisation, redundancy, corrosion protection) are not costed separately | Offshore platform conditions may increase costs relative to the land-based cost basis |
+| Availability is bundled into the overall electrolyser availability factor | Component-level failure modes and redundancy are not modelled explicitly |
+
+: Main limitations of the current power electronics model.
