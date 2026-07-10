@@ -30,7 +30,7 @@ The base case assumes that PEM electrolysers deliver hydrogen at 30 bar. The com
 |---|---:|
 | Electrolyser outlet pressure | 30 bar |
 | Pipeline injection pressure | Decision variable |
-| Typical pressure range | 50-150 bar |
+| Typical pressure range | 80-150 bar |
 | Maximum pressure ratio per stage | 3.3 |
 | Hydrogen specific heat ratio, $\gamma$ | 1.41 |
 | Gas temperature, $T$ | 298 K |
@@ -182,7 +182,7 @@ This effect is shown in @fig-compressor-energy.
 
 ![Compressor electricity consumption as a function of outlet pressure for different inlet pressures.](figures/compressor_energy_vs_outlet_pressure.png){#fig-compressor-energy}
 
-The figure should show $e_\mathrm{comp}$ in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 50-150 bar.
+The figure should show $e_\mathrm{comp}$ in kWh/kg H₂ for several inlet pressures, for example 1 bar, 10 bar, 20 bar and 30 bar. The outlet pressure should cover the optimisation range used in the model, for example 80-150 bar.
 
 The purpose of this figure is to show why PEM outlet pressure matters. A higher electrolyser outlet pressure reduces the compression ratio and therefore lowers the compressor energy penalty for the same selected pipeline pressure.
 

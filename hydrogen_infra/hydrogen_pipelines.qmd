@@ -1,54 +1,274 @@
 ---
 title: "Hydrogen Pipelines"
-completion: 40
+completion: 80
 ---
 
-## Role in the Value Chain
+## Role and Scope
 
-Hydrogen pipelines transport compressed hydrogen through the infield grid and from the wind farm to shore.
+Hydrogen pipelines transport compressed hydrogen through the infield collection network and from the wind farm to the onshore hydrogen interface.
 
-The model distinguishes between infield pipelines and export pipelines, but documents them together because the same capacity, pressure, material, and installation logic applies.
+The model distinguishes between infield pipelines and export pipelines, but documents them together because the same diameter, pressure, capacity, and material-cost logic applies. Installation is excluded from this page and is documented separately in [pipeline installation](../offshore_installation/pipeline_installation.qmd).
 
-## Cost Model
+The pipeline model covers:
 
-| Item | Assumption |
-|---|---:|
-| Infield pipeline installation | 635 EUR/m |
-| Infield pipeline OPEX | 0.5% of CAPEX per year |
-| Export pipelines installed in parallel | 3 |
-| Export pipeline installation | 635 EUR/m |
-| Export pipeline OPEX | 0.5% of CAPEX per year |
+- material CAPEX for composite flexible hydrogen pipelines
+- transport capacity as a function of diameter, pressure, and route length
+- the number of parallel export pipelines required for a wind-farm hydrogen flow
+- the coupling between pipeline pressure, compressor duty, and total LCOE
 
-Pipeline material CAPEX is based on confidential supplier data [@supplierSPipelineCost]. The current model uses cost data for selected diameter and pressure combinations and fits a two-dimensional regression to interpolate or extrapolate.
+## Composite Flexible Pipelines
+
+Composite flexible pipelines are used as the reference hydrogen pipeline technology in this model. A flexible composite pipe typically combines a hydrogen-compatible liner, load-bearing composite reinforcement, and a protective outer layer. Compared with a rigid steel pipeline, the relevant system-level advantage is not only material substitution. The important offshore feature is that the pipe can be manufactured and transported in long continuous lengths, spooled on a reel, and laid with fewer welded field joints.
+
+This matters for offshore hydrogen infrastructure because the model is concerned with many repeated infield connections and, in the decentralised architecture, a pipeline grid that replaces the AC infield cable network. Flexible composite lines are lighter than steel lines at the diameters considered here, are less exposed to corrosion-related design issues, and can simplify installation logistics. These advantages are especially relevant for infield pipelines and for export pipelines up to the diameter range that remains compatible with reel-lay handling.
+
+The flexibility benefit is not unlimited. Larger diameters and higher pressure classes require more reinforcement and increase minimum bend radius. The source material therefore caps the composite export-pipeline diameter at 8 inch: above this range, the pipeline is assumed to lose the reel-lay flexibility that motivates the technology choice [@internalModelDescription2026].
+
+## Sizing Variables
+
+Pipeline sizing is governed by the variables in @tbl-pipeline-sizing-variables.
+
+| Variable | Role in the model |
+|---|---|
+| Internal diameter, $D$ | Determines cross-sectional area and strongly affects capacity. |
+| Inlet pressure, $p_\mathrm{in}$ | Equal to compressor outlet pressure; an optimisation variable. |
+| Outlet pressure, $p_\mathrm{out}$ | Fixed by the required downstream interface pressure. |
+| Route length, $L$ | Sets frictional pressure loss for a given flow. |
+| Roughness and friction data | Determine the Fanning friction factor used in the capacity equation. |
+| Number of parallel pipelines, $n_\mathrm{pipe}$ | Discrete result needed when one pipeline cannot carry the selected peak flow. |
+
+: Main pipeline sizing variables. {#tbl-pipeline-sizing-variables}
+
+For the export pipeline, the current reference case uses an 80 km route length and a 66 bar outlet pressure. The 66 bar value is used because it represents the expected maximum pressure of the Dutch hydrogen backbone, allowing injection without an additional onshore compressor in the base case [@internalModelDescription2026].
 
 ## Capacity Model
 
-Pipeline capacity depends on:
+Pipeline capacity is calculated explicitly from the pressure drop available between the pipeline inlet and outlet. The implemented calculation follows the gas-flow method used in the Transition Accelerator hydrogen pipeline brief [@transitionAcceleratorHydrogenPipelines] and the Colebrook friction-factor treatment in Perry's Chemical Engineers' Handbook [@perrysChemicalEngineersHandbook]. The implementation uses the Fanning-friction convention from Perry's equations rather than the Darcy-Weisbach convention.
 
-- diameter
-- inlet pressure
-- outlet pressure
-- route length
-- roughness and friction parameters
+The cross-sectional area is:
 
-The current export-pipeline calculation uses the Colebrook equation from Perry's Chemical Engineers' Handbook [@perrysChemicalEngineersHandbook], with Darcy-Weisbach roughness and Hazen-Williams friction factors from the manufacturer.
+$$
+A = \frac{\pi D^2}{4}
+$$
 
-## Current Sizing Assumptions
+The available pressure drop is:
+
+$$
+\Delta p
+=
+p_\mathrm{in}
+-
+p_\mathrm{out}
+$$
+
+The code evaluates hydrogen density and viscosity at an average pipeline pressure:
+
+$$
+p_\mathrm{avg}
+=
+\frac{2}{3}
+\frac{
+p_\mathrm{in}^3 - p_\mathrm{out}^3
+}{
+p_\mathrm{in}^2 - p_\mathrm{out}^2
+}
+$$
+
+The average density and viscosity are then obtained from CoolProp:
+
+$$
+\rho_\mathrm{avg}
+=
+\rho(T,p_\mathrm{avg})
+,
+\qquad
+\mu_\mathrm{avg}
+=
+\mu(T,p_\mathrm{avg})
+$$
+
+where $T=293 \ \mathrm{K}$ in the current figure builder.
+
+The implementation then evaluates the combined term $\mathrm{Re}\sqrt{f_F}$:
+
+$$
+\mathrm{Re}\sqrt{f_F}
+=
+\frac{D^{3/2}}{\mu_\mathrm{avg}}
+\sqrt{
+\frac{
+\Delta p \rho_\mathrm{avg}
+}{
+2L
+}
+}
+$$
+
+where $f_F$ is the Fanning friction factor. The Colebrook relation is applied as:
+
+$$
+\frac{1}{\sqrt{f_F}}
+=
+-4
+\log_{10}
+\left(
+\frac{\epsilon}{3.7D}
++
+\frac{1.256}{\mathrm{Re}\sqrt{f_F}}
+\right)
+$$
+
+where $\epsilon=1.5 \cdot 10^{-7} \ \mathrm{m}$ in the current implementation.
+
+The resulting gas velocity is:
+
+$$
+v
+=
+\sqrt{
+\frac{
+ D \Delta p
+}{
+2 \rho_\mathrm{avg} L
+}
+}
+\frac{1}{\sqrt{f_F}}
+$$
+
+The mass-flow capacity is:
+
+$$
+\dot{m}_\mathrm{max}
+=
+\rho_\mathrm{avg}
+A
+v
+\cdot
+3600
+$$
+
+where $\dot{m}_\mathrm{max}$ is expressed in kg/h.
+
+The transport capacity is expressed as an HHV-equivalent power:
+
+$$
+P_{\mathrm{H_2},\mathrm{HHV}}
+=
+\dot{m}_\mathrm{max}
+\cdot
+\frac{
+\mathrm{HHV}_\mathrm{H_2}
+}{
+1000
+}
+$$
+
+where $\mathrm{HHV}_\mathrm{H_2}=39.4 \ \mathrm{kWh/kg}$ and $P_{\mathrm{H_2},\mathrm{HHV}}$ is in MW when $\dot{m}_\mathrm{max}$ is in kg/h.
+
+@fig-pipeline-capacity shows the resulting capacity curves for the current diameter and pressure range, assuming an 80 km route length and 66 bar outlet pressure.
+
+![Hydrogen export-pipeline capacity as a function of inlet pressure and diameter.](../figures/pipeline-capacity-vs-pressure.svg){#fig-pipeline-capacity}
+
+## Dependence on Pressure and Diameter
+
+Pressure enters the calculation through both the pressure drop, $\Delta p$, and the pressure-dependent hydrogen properties evaluated at $p_\mathrm{avg}$:
+
+$$
+\Delta p = p_\mathrm{in} - p_\mathrm{out}
+$$
+
+This means that increasing inlet pressure raises capacity nonlinearly, but with diminishing benefit when expressed against the compressor penalty. Higher pressure can allow one pipeline to carry more hydrogen, but the same pressure increase also raises compressor electricity consumption and compressor CAPEX. Pipeline pressure is therefore optimised jointly with the compressor model rather than selected independently.
+
+Diameter has an even stronger effect on capacity. Area scales with $D^2$, while the velocity equation adds a further $\sqrt{D}$ term before friction effects. Ignoring the secondary effect of friction factor, capacity therefore scales approximately as:
+
+$$
+\dot{m}_\mathrm{max}
+\propto
+D^{2.5}
+\sqrt{
+\Delta p \rho_\mathrm{avg}
+}
+$$
+
+This explains why larger diameters tend to have lower cost per unit of transport capacity. The economic optimum often prefers the largest feasible composite diameter. However, export pipelines are discrete assets. If one large pipeline is oversized for the required peak flow, reducing pressure may lower compressor cost while retaining enough capacity. Conversely, a higher pressure can be justified if it avoids an additional parallel pipeline.
+
+The export pipeline count is:
+
+$$
+n_\mathrm{pipe}
+=
+\left\lceil
+\frac{
+\dot{m}_{\mathrm{H_2},\mathrm{peak}}
+}{
+\dot{m}_\mathrm{max}(D,p_\mathrm{in},p_\mathrm{out},L)
+}
+\right\rceil
+$$
+
+where $\dot{m}_{\mathrm{H_2},\mathrm{peak}}$ is the peak hydrogen flow that must be exported. This discrete ceiling is important: small changes in pressure, diameter, stack sizing, or wind-farm peak production can change the required number of pipelines.
+
+## Material Cost Model
+
+Pipeline material CAPEX is based on confidential supplier quotes for selected combinations of diameter and pressure class [@supplierSPipelineCost]. The model constructs a two-dimensional interpolation surface over diameter and pressure:
+
+$$
+c_\mathrm{mat}
+=
+I(D,p)
+$$
+
+where $I(D,p)$ is the interpolated material cost per unit length. Total material cost for a pipeline route is:
+
+$$
+C_\mathrm{mat}
+=
+L
+\cdot
+c_\mathrm{mat}(D,p)
+$$
+
+For multiple parallel export pipelines:
+
+$$
+C_{\mathrm{mat},\mathrm{export}}
+=
+n_\mathrm{pipe}
+\cdot
+L_\mathrm{export}
+\cdot
+c_\mathrm{mat}(D,p)
+$$
+
+The current cost model covers material cost only. Installation, burial, connection, vessel time, simultaneous lay of parallel pipelines, and termination work are excluded here and treated in the installation section.
+
+### Confidentiality Handling
+
+The raw supplier quotes and numerical material-cost surface are confidential. They are used only to parameterise the model and are not reproduced in this encyclopedia page.
+
+Any figure based on supplier prices is redacted before publication. @fig-pipeline-specific-cost-redacted shows only the qualitative shape of the relative material cost per unit transport capacity. It omits axes, tick labels, colour-bar values, absolute prices, and supplier quote points.
+
+![Redacted relative material-cost surface for the pipeline options.](../figures/pipeline-specific-cost-redacted.svg){#fig-pipeline-specific-cost-redacted}
+
+## Current Reference Assumptions
 
 | Parameter | Value |
 |---|---:|
 | Baseline export length | 80 km |
 | Export pipeline outlet pressure | 66 bar |
+| Export pipeline inlet pressure | Optimisation variable |
+| Typical inlet-pressure range | 80-150 bar |
 | Maximum composite pipeline diameter | 8 inch |
 | Infield pipeline diameter | 6 inch |
 | Infield pipeline pressure | 150 bar |
-| Infield pipeline capacity | about 500 MW equivalent |
+| Infield pipeline capacity | about 500 MW equivalent (outlet pressure assumption not yet documented; see Model Limitations) |
+| Pipeline OPEX | 0.5% of material CAPEX per year |
 
-The 66 bar outlet pressure is selected so hydrogen can be injected into the expected Dutch hydrogen backbone without an additional compressor.
+The infield capacity assumption means that a 6 inch composite pipeline at 150 bar can serve a full row of turbines in the decentralised architecture without the string-capacity constraint that applies to 66 kV AC cables [@internalModelDescription2026].
 
 ## Energy Balance
 
-The current model assumes no additional hydrogen losses in the pipelines after compression. Pipeline pressure drop affects required compression and capacity, not a direct hydrogen loss term.
+The current model assumes no additional hydrogen losses in the pipelines after compression. Pipeline pressure drop affects required compression pressure and transport capacity, but it is not represented as a direct hydrogen loss term.
 
 ## Availability
 
@@ -58,3 +278,18 @@ The current model assumes no additional hydrogen losses in the pipelines after c
 | Export pipelines | 100% |
 
 This is a modelling convention and should be tested in sensitivity work if pipeline outages become material.
+
+## Model Limitations
+
+The pipeline model is intended for early-stage techno-economic comparison, not detailed pipeline design. The main limitations are:
+
+| Limitation | Implication |
+|---|---|
+| Cost interpolation is based on confidential quote points | The public documentation can describe the method, but not the numerical surface. |
+| Material and installation are separated | This page should not be used as a total installed pipeline cost model. |
+| Diameter classes are simplified | Detailed product availability and qualification limits are not represented. |
+| Gas properties are simplified | Detailed thermal behaviour, elevation effects, transient operation, and linepack are excluded. |
+| Availability is fixed at 100% | Repair strategy, redundancy, and partial-flow operation are not modelled. |
+| The outlet-pressure assumption behind the infield capacity figure is not documented | The 500 MW-equivalent figure should be re-derived once the infield collection-point pressure is defined, rather than assumed equal to the 66 bar export outlet pressure. |
+
+: Main limitations of the hydrogen pipeline model.
