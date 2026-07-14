@@ -6,6 +6,7 @@ dependencies = [
     "coolprop",
     "matplotlib",
     "numpy",
+    "openpyxl>=3.1.5",
     "pandas",
 ]
 
