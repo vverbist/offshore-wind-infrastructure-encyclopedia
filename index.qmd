@@ -14,6 +14,8 @@ The site is organised as an assumptions manual. Each component page bundles the 
 
 The emphasis is deliberately methodological. Results, scenario outcomes, and interpretation of model output are out of scope for this encyclopedia.
 
+For why this comparison is being made and what question it is designed to answer, see [Positioning](positioning.qmd).
+
 ## Main Sections
 
 - [Methodology](methodology/overview.qmd)

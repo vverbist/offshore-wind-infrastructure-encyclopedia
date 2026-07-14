@@ -16,6 +16,8 @@ website:
     contents:
       - href: index.qmd
         text: Home
+      - href: positioning.qmd
+        text: Positioning
       - section: "Methodology"
         contents:
           - methodology/overview.qmd
