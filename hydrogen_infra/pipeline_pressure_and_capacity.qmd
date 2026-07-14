@@ -1,36 +1,33 @@
 ---
 title: "Pipeline Pressure and Capacity"
-completion: 20
+completion: 90
 ---
 
 ## Role in the Model
 
-Pipeline pressure links compressor energy, compressor CAPEX, pipeline capacity, and number of parallel pipelines.
+Pipeline diameter, inlet pressure, and the number of parallel pipelines are not independent choices. They are three different ways of buying the same thing — hydrogen transport capacity — and each buys it through a different cost centre: pipe material, compressor equipment and energy, or installation. This page sets out how those three costs interact and why the resulting optimum is not smooth.
 
-## Optimisation Logic
+## Two Ways to Add Capacity
 
-Higher inlet pressure increases the capacity of a given pipeline but increases compression work. Larger diameters reduce cost per unit capacity but are limited by installation and flexibility constraints.
+For a fixed pipeline, transport capacity increases with both diameter and pressure drop, but not at the same rate. Diameter enters the capacity relation through the cross-sectional area and the flow velocity together, so capacity scales approximately as $D^{2.5}$. Pressure enters only through the pressure drop under a square root, so its effect is far weaker and subject to diminishing returns (full derivation in [Hydrogen Pipelines](hydrogen_pipelines.qmd)).
 
-The source material notes that the cost optimum often prefers the largest feasible diameter because it has the lowest cost per capacity. However, because pipelines come in discrete units, they can be over-dimensioned. Reducing pressure can then lower compression cost while retaining enough capacity.
+This asymmetry means diameter and pressure are not equally good levers for the same job, and it is why the two behave so differently in the cost model, not just in the capacity model:
 
-## Capacity Equation Inputs
+- Increasing diameter is the more capacity-effective lever, but it is a step change in material commitment. A larger composite pipeline costs more per metre, and above roughly 8 inch the pipe is assumed to lose the reel-lay flexibility that keeps composite installation cheap in the first place ([Hydrogen Pipelines](hydrogen_pipelines.qmd)). Past that point, diameter is no longer a lever that can be pulled without also changing the installation method and the cost basis that goes with it.
+- Increasing pressure adds capacity without any new material or route, but it is equipment- and energy-expensive at the compressor: every bar of additional pressure raises compressor CAPEX and adds a recurring electricity cost for the life of the asset ([Hydrogen Compressor](compressor.qmd)).
 
-The capacity calculation uses:
+The same capacity requirement can therefore be met by a fatter pipe running at modest pressure, or a narrower pipe pushed harder by a larger compressor. Which is cheaper is not a property of the pipeline alone; it depends on how the pipe's material-cost curve compares with the compressor's cost-and-energy curve over the feasible pressure range.
 
-- pipeline diameter
-- inlet pressure
-- outlet pressure
-- pipeline length
-- gas density and compressibility
-- surface roughness
-- friction relation
+## Where Installation Cost Enters
 
-## Model Outputs
+Material and compression are not the whole story, because pipeline capacity is delivered in discrete units. A given diameter-pressure combination yields a fixed maximum flow; if peak hydrogen production exceeds it, the model does not fractionally upsize the pipe — it adds another parallel pipeline. That step is where installation cost stops being a footnote and starts shaping the trade-off directly, for two reasons specific to pipelines.
 
-For each pipeline option, the model calculates:
+First, installation cost does not scale cleanly with pipeline count. A single lay vessel can install several pipelines in one pass, so mobilisation, weather-window, and lay-spread costs are shared across parallel lines in a way they are not for cables, which are laid one at a time. Adding a second or third parallel pipeline is therefore cheaper, per pipeline, than the first — the opposite of what a naive "cost per pipeline" view would suggest ([Pipeline Installation](../offshore_installation/pipeline_installation.qmd)).
 
-- maximum hydrogen mass flow
-- MW-equivalent transport capacity
-- required number of parallel export pipelines
-- compressor power needed to reach inlet pressure
-- annualised pipeline and compressor cost contribution
+Second, that sharing has limits tied back to the diameter decision. It holds for composite pipelines within the diameter range that supports reel-lay handling; it does not necessarily hold once diameter grows past the point where the pipe must instead be laid as a rigid line with field-welded joints. The installation-cost assumption is therefore not independent of the diameter choice — it is conditional on staying inside the size range that keeps the cheaper installation method available. Pushing diameter up to avoid a parallel pipeline can, past that threshold, trade one discrete cost jump for another.
+
+## The Resulting Trade-off Is Not Smooth
+
+Because pipeline count is a ceiling function of required capacity, a small change in peak flow, diameter, or pressure can push a design across the threshold where an extra parallel pipeline becomes necessary — or unnecessary. Near that threshold, the marginal cost of "one more unit of capacity" jumps discontinuously: it can mean a small increase in compressor duty on the existing pipelines, or it can mean an entire additional pipeline's worth of material and installation cost, discounted by whatever sharing the lay vessel allows.
+
+This is why pressure, diameter, and pipeline count cannot be optimised one at a time. Raising pressure to avoid an extra pipeline only pays off if the resulting compressor cost and energy penalty are smaller than the (partially shared) installation and material cost of that pipeline. Conversely, adding a pipeline only pays off if the installation-cost sharing from laying it alongside the others beats the compressor cost of reaching the same capacity through pressure alone. The three variables have to be searched jointly, over a cost landscape with discrete steps in it rather than solved as a single continuous minimum.

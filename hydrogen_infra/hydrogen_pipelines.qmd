@@ -1,6 +1,6 @@
 ---
 title: "Hydrogen Pipelines"
-completion: 80
+completion: 90
 ---
 
 ## Role and Scope
@@ -244,11 +244,21 @@ The current cost model covers material cost only. Installation, burial, connecti
 
 ### Confidentiality Handling
 
-The raw supplier quotes and numerical material-cost surface are confidential. They are used only to parameterise the model and are not reproduced in this encyclopedia page.
+The raw supplier quotes and fitted material-cost surface are confidential. They are used only to parameterise the model and are not reproduced in this encyclopedia page. Figures derived from them show pressure and diameter on their true scale, since those are model inputs, not supplier data. The cost axis is left without tick labels so that only the shape of the cost curves, not the underlying price level, is disclosed.
 
-Any figure based on supplier prices is redacted before publication. @fig-pipeline-specific-cost-redacted shows only the qualitative shape of the relative material cost per unit transport capacity. It omits axes, tick labels, colour-bar values, absolute prices, and supplier quote points.
+### Material Cost vs. Pressure
 
-![Redacted relative material-cost surface for the pipeline options.](../figures/pipeline-specific-cost-redacted.svg){#fig-pipeline-specific-cost-redacted}
+@fig-pipeline-cost-vs-pressure shows pipeline material cost as a function of inlet pressure, for the same diameters used in @fig-pipeline-capacity. Cost increases sharply from one diameter class to the next, which is expected for a larger pipe, but at fixed diameter the increase with pressure is comparatively small. Material cost, in other words, is mainly a diameter decision. It is capacity, not material cost, that responds strongly to pressure, which is why pressure and diameter play such different roles in the trade-off described in [Pipeline Pressure and Capacity](pipeline_pressure_and_capacity.qmd): raising pressure is cheap on the pipe itself, and its real cost shows up at the compressor instead ([Hydrogen Compressor](compressor.qmd)).
+
+![Hydrogen export-pipeline material cost as a function of inlet pressure and diameter.](../figures/pipeline-cost-vs-pressure.svg){#fig-pipeline-cost-vs-pressure}
+
+### Cost per Unit of Transport Capacity
+
+@fig-pipeline-cost-per-capacity divides the cost curves in @fig-pipeline-cost-vs-pressure by the capacity curves in @fig-pipeline-capacity, giving material cost per unit of transport capacity at each diameter and pressure.
+
+Because capacity scales much more strongly with diameter than material cost does, cost per unit capacity falls as diameter increases. This is the basis for the earlier claim that the economic optimum tends toward the largest feasible composite diameter. The same ratio also falls with pressure, at diminishing rate, for the same reason: on the pipe alone, more pressure buys more capacity for very little extra material cost. This curve reflects material cost only. It does not include the compressor cost and energy penalty that pressure also brings, which is why a pure cost-per-capacity view of the pipeline cannot be used to pick a pressure on its own — see [Pipeline Pressure and Capacity](pipeline_pressure_and_capacity.qmd) for how the compressor side of that trade-off is brought back in.
+
+![Hydrogen export-pipeline material cost per unit of transport capacity, as a function of inlet pressure and diameter.](../figures/pipeline-cost-per-capacity-vs-pressure.svg){#fig-pipeline-cost-per-capacity}
 
 ## Current Reference Assumptions
 

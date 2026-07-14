@@ -1,10 +1,16 @@
 ---
 title: "Hydrogen Infrastructure"
-completion: 0
+completion: 90
 ---
 
-Hydrogen infrastructure includes compression, infield hydrogen pipelines, export pipelines, pressure selection, diameter selection, and pipeline capacity.
+Hydrogen infrastructure covers everything that moves hydrogen from the electrolyser outlet to the onshore interface: compression, and the pipeline network that carries the gas offshore and to shore.
 
-Compression and pipeline assumptions are coupled: higher pipeline inlet pressure increases compression energy and compressor cost, but also increases pipeline capacity and can reduce the number of parallel export pipelines.
+The section is split into:
+
+* [Hydrogen Compressor](compressor.qmd) — raises hydrogen from electrolyser outlet pressure to the pipeline injection pressure, with the associated electricity consumption, CAPEX, and OPEX.
+* [Hydrogen Pipelines](hydrogen_pipelines.qmd) — composite flexible pipeline technology, diameter and pressure sizing, transport capacity, and material cost, for both the infield network and the export route.
+* [Pipeline Pressure and Capacity](pipeline_pressure_and_capacity.qmd) — how pipeline diameter, inlet pressure, and installation cost trade off against each other in sizing the pipeline system.
+
+Compressor and pipeline assumptions are coupled rather than independent: higher inlet pressure increases compressor energy consumption and cost but also increases pipeline capacity, which can reduce the number of parallel pipelines required. Pipeline count in turn interacts with installation cost, because a single lay vessel can install multiple pipelines together. Pressure, diameter, and pipeline count are therefore optimised jointly rather than one at a time.
 
 The current hydrogen infrastructure model assumes no additional hydrogen losses in pipelines after compression.
