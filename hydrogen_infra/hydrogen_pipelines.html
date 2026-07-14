@@ -163,6 +163,12 @@ window.Quarto = {
  <span class="menu-text">Home</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../positioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Positioning</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -591,6 +597,8 @@ window.Quarto = {
   <li><a href="#material-cost-model" id="toc-material-cost-model" class="nav-link" data-scroll-target="#material-cost-model">Material Cost Model</a>
   <ul class="collapse">
   <li><a href="#confidentiality-handling" id="toc-confidentiality-handling" class="nav-link" data-scroll-target="#confidentiality-handling">Confidentiality Handling</a></li>
+  <li><a href="#material-cost-vs.-pressure" id="toc-material-cost-vs.-pressure" class="nav-link" data-scroll-target="#material-cost-vs.-pressure">Material Cost vs.&nbsp;Pressure</a></li>
+  <li><a href="#cost-per-unit-of-transport-capacity" id="toc-cost-per-unit-of-transport-capacity" class="nav-link" data-scroll-target="#cost-per-unit-of-transport-capacity">Cost per Unit of Transport Capacity</a></li>
   </ul></li>
   <li><a href="#current-reference-assumptions" id="toc-current-reference-assumptions" class="nav-link" data-scroll-target="#current-reference-assumptions">Current Reference Assumptions</a></li>
   <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
@@ -864,15 +872,33 @@ c_\mathrm{mat}(D,p)
 <p>The current cost model covers material cost only. Installation, burial, connection, vessel time, simultaneous lay of parallel pipelines, and termination work are excluded here and treated in the installation section.</p>
 <section id="confidentiality-handling" class="level3">
 <h3 class="anchored" data-anchor-id="confidentiality-handling">Confidentiality Handling</h3>
-<p>The raw supplier quotes and numerical material-cost surface are confidential. They are used only to parameterise the model and are not reproduced in this encyclopedia page.</p>
-<p>Any figure based on supplier prices is redacted before publication. <a href="#fig-pipeline-specific-cost-redacted" class="quarto-xref">Figure&nbsp;2</a> shows only the qualitative shape of the relative material cost per unit transport capacity. It omits axes, tick labels, colour-bar values, absolute prices, and supplier quote points.</p>
-<div id="fig-pipeline-specific-cost-redacted" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>The raw supplier quotes and fitted material-cost surface are confidential. They are used only to parameterise the model and are not reproduced in this encyclopedia page. Figures derived from them show pressure and diameter on their true scale, since those are model inputs, not supplier data. The cost axis is left without tick labels so that only the shape of the cost curves, not the underlying price level, is disclosed.</p>
+</section>
+<section id="material-cost-vs.-pressure" class="level3">
+<h3 class="anchored" data-anchor-id="material-cost-vs.-pressure">Material Cost vs.&nbsp;Pressure</h3>
+<p><a href="#fig-pipeline-cost-vs-pressure" class="quarto-xref">Figure&nbsp;2</a> shows pipeline material cost as a function of inlet pressure, for the same diameters used in <a href="#fig-pipeline-capacity" class="quarto-xref">Figure&nbsp;1</a>. Cost increases sharply from one diameter class to the next, which is expected for a larger pipe, but at fixed diameter the increase with pressure is comparatively small. Material cost, in other words, is mainly a diameter decision. It is capacity, not material cost, that responds strongly to pressure, which is why pressure and diameter play such different roles in the trade-off described in <a href="../hydrogen_infra/pipeline_pressure_and_capacity.html">Pipeline Pressure and Capacity</a>: raising pressure is cheap on the pipe itself, and its real cost shows up at the compressor instead (<a href="../hydrogen_infra/compressor.html">Hydrogen Compressor</a>).</p>
+<div id="fig-pipeline-cost-vs-pressure" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pipeline-specific-cost-redacted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figures/pipeline-specific-cost-redacted.svg" class="img-fluid figure-img">
+<div aria-describedby="fig-pipeline-cost-vs-pressure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/pipeline-cost-vs-pressure.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipeline-specific-cost-redacted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Redacted relative material-cost surface for the pipeline options.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipeline-cost-vs-pressure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Hydrogen export-pipeline material cost as a function of inlet pressure and diameter.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="cost-per-unit-of-transport-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="cost-per-unit-of-transport-capacity">Cost per Unit of Transport Capacity</h3>
+<p><a href="#fig-pipeline-cost-per-capacity" class="quarto-xref">Figure&nbsp;3</a> divides the cost curves in <a href="#fig-pipeline-cost-vs-pressure" class="quarto-xref">Figure&nbsp;2</a> by the capacity curves in <a href="#fig-pipeline-capacity" class="quarto-xref">Figure&nbsp;1</a>, giving material cost per unit of transport capacity at each diameter and pressure.</p>
+<p>Because capacity scales much more strongly with diameter than material cost does, cost per unit capacity falls as diameter increases. This is the basis for the earlier claim that the economic optimum tends toward the largest feasible composite diameter. The same ratio also falls with pressure, at diminishing rate, for the same reason: on the pipe alone, more pressure buys more capacity for very little extra material cost. This curve reflects material cost only. It does not include the compressor cost and energy penalty that pressure also brings, which is why a pure cost-per-capacity view of the pipeline cannot be used to pick a pressure on its own — see <a href="../hydrogen_infra/pipeline_pressure_and_capacity.html">Pipeline Pressure and Capacity</a> for how the compressor side of that trade-off is brought back in.</p>
+<div id="fig-pipeline-cost-per-capacity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pipeline-cost-per-capacity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/pipeline-cost-per-capacity-vs-pressure.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipeline-cost-per-capacity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capacity, as a function of inlet pressure and diameter.
 </figcaption>
 </figure>
 </div>
