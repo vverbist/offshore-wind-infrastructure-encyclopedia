@@ -1,26 +1,237 @@
 ---
 title: "Onshore Grid Connection"
-completion: 10
+completion: 75
 ---
 
-## Role in the Value Chain
+## Role and Scope
 
-The onshore grid connection receives exported HVDC power and converts it to AC at the national high-voltage grid interface.
+The onshore grid connection transfers power from the HVDC cable system into the national AC transmission network. It is not one item of equipment. It is an interface chain comprising the shore crossing, underground DC cable, onshore converter station, converter transformers, high-voltage switchgear, protection and control, and the connection to an existing or new transmission substation.
 
-## Cost Model
+For TenneT's 2 GW reference, the chain is:
 
-The current source material includes onshore conversion in the electrical value chain, but does not yet separate a detailed onshore converter station CAPEX from the broader HVDC station package.
+```{mermaid}
+%%| fig-height: 0.5
+flowchart LR
+  A["Submarine +/-525 kV cable"] --> B["Landfall and transition joints"]
+  B --> C["Underground DC cable"]
+  C --> D["Onshore VSC converter"]
+  D --> E["Converter transformers"]
+  E --> F["380 kV switchgear"]
+  F --> G["National transmission grid"]
+```
 
-## Energy Balance
+The converter station itself is technically described and costed as part of the complete link on [HVDC Converter Stations](hvdc_converter_stations.qmd). This page owns the physical grid interface and makes clear which onshore costs remain unresolved.
 
-The onshore conversion stage is included in the electrical efficiency chain. The specific efficiency value is marked as to be confirmed in the current source table.
+The **point of common coupling (PCC)** is the electrical and contractual boundary where the offshore connection meets the transmission system. Physically, the onshore converter lies in the chain on this page. Commercially, its equipment and civil works may belong to the same converter-station package as the offshore station. Physical location and cost ownership are therefore deliberately shown as separate boundaries.
 
-## Availability
+| Included in this interface | Accounting treatment |
+|---|---|
+| Ordinary shore crossing and transition-joint bay | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Underground DC cable supply | [HVDC Export Cables](hvdc_export_cables.qmd); dedicated underground material coefficient TBD |
+| Underground cable installation | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Onshore converter, transformers and auxiliaries | Included in the converter pair on [HVDC Converter Stations](hvdc_converter_stations.qmd) |
+| 380 kV switchgear and station connection | Confirm against converter-package boundary |
+| Reinforcement beyond the connection point | Separate, site-specific grid cost |
+| Dispatch curtailment caused by grid congestion | Energy-system constraint, not equipment availability |
 
-| Component | Availability |
-|---|---:|
-| Onshore substation | 98.0% |
+## Physical Layout
 
-## Source Status
+At landfall, the submarine cable is brought ashore through an open trench or, more commonly at sensitive coastlines, ducts installed by horizontal directional drilling. Submarine and land cable designs are connected in accessible transition-joint bays. The separate pole, metallic-return and communication cables then continue underground to the converter site.
 
-This page needs a final split between offshore converter, export cable, onshore converter, and grid interface costs once the HVDC source package is decomposed.
+The onshore converter changes DC power back to three-phase AC. Converter transformers provide voltage transformation and electrical separation, while reactors, filters and controls manage current, harmonics, voltage and reactive power. High-voltage switchgear connects the station to the transmission grid and isolates equipment for faults and maintenance.
+
+TenneT describes the Dutch 2 GW interface as 525 kV DC conversion to 380 kV AC. Its standard onshore arrangement has six single-phase converter transformers plus one spare [@tennet2024TwoGWProgram]. For the Doordewind connection, TenneT reports an onshore converter-station footprint of roughly 5.5 ha before the underground connection to the 380 kV substation [@tennetDoordewind]. The land requirement reflects electrical clearances, converter halls, cooling, transformers, roads, drainage, security and construction space; it is not just the building footprint.
+
+## Electrical Rating
+
+AC equipment must carry more than active MW alone:
+
+- **active power $P$**, measured in MW, transfers net energy and is what the wind farm is primarily selling;
+- **reactive power $Q$**, measured in MVAr, oscillates between electric and magnetic fields and is used to control AC voltage; and
+- **apparent power $S$**, measured in MVA, combines both and determines much of the current and thermal loading of transformers, converters and switchgear.
+
+Power factor is $P/S$. A value below one means some equipment current is being used for reactive rather than active power.
+
+At unity power factor, the AC line current associated with 2 GW at 380 kV is:
+
+$$
+I_\mathrm{AC}
+=
+\frac{P}{\sqrt{3}V_\mathrm{LL}\cos\phi}
+=
+\frac{2{,}000\times10^6}
+{\sqrt{3}(380\times10^3)}
+=3.04\ \mathrm{kA}.
+$$
+
+The station is not designed as one 3 kA conductor. Power is divided among converter transformer windings, bus sections and grid circuits so equipment ratings, fault levels and maintenance criteria can be satisfied.
+
+Reactive-power operation increases apparent power:
+
+$$
+S=\frac{P}{\cos\phi},
+\qquad
+Q=\sqrt{S^2-P^2}.
+$$
+
+If 2 GW were delivered at a power factor of 0.95, the terminal duty would be about 2.105 GVA and 657 MVAr. This is an illustration, not a selected grid-code operating point. Actual reactive capability is specified as a voltage-dependent envelope and can require converter-current headroom, reactors or additional compensation.
+
+The grid-connection study must check at least:
+
+- rated and temporary voltage ranges;
+- active-power ramping and frequency response;
+- reactive-power and voltage-control capability;
+- fault ride-through and post-fault active-power recovery;
+- harmonic emission and resonance;
+- short-circuit level and protection coordination;
+- maximum permissible loss of infeed.
+
+Several of these terms describe different questions. **Fault level** is the current the surrounding grid can supply into a short circuit; it affects switchgear duty and converter-control behaviour, not how often faults occur. **Fault ride-through** asks whether the link remains connected during a temporary voltage depression. **Harmonics** are unwanted waveform components that can cause heating, resonance or interference. A **strong grid node** is one whose voltage and stability remain acceptable when 2 GW changes or trips--not merely one with high annual energy demand.
+
+Commission Regulation (EU) 2016/1447 sets the European HVDC framework for these active-power, reactive-power, voltage, fault-ride-through, control, protection and monitoring capabilities [@europeanCommission2016HVDC]. Project-specific requirements are then agreed with the relevant transmission-system operator.
+
+The current Dutch system code adds useful numerical context at the point of connection [@dutchSystemCode2026]:
+
+| Requirement | Published Dutch value | 2 GW interpretation |
+|---|---:|---:|
+| Rate-of-change-of-frequency withstand | -2.5 to +2.5 Hz/s, averaged over 1 s | Control and protection must ride through the specified event |
+| Maximum active-power instruction delay | 100 ms | Fast set-point path is required |
+| Minimum active-power instruction step | 1 MW | 0.05% of a 2 GW link |
+| Reactive capability ratio | 0.35 delivering; 0.40 absorbing relative to $P_\mathrm{max}$ | Up to about +700/-800 MVAr, subject to the voltage envelope |
+
+These are compliance limits, not normal operating set points. They should be verified against the code version and connection agreement used for the project; converter MVA, transformer duty and compensation cannot be sized from a single nominal power factor alone.
+
+## Capacity and Connection Architecture
+
+The HVDC link is sized in discrete 2 GW blocks in the reference model:
+
+$$
+n_\mathrm{link}
+=
+\left\lceil
+\frac{P_\mathrm{export}}{2{,}000\ \mathrm{MW}}
+\right\rceil.
+$$
+
+This does not prove that the receiving grid can accept $2n_\mathrm{link}$ GW at the selected PCC. A grid study determines whether existing 380 kV circuits have sufficient thermal, voltage and stability margin and whether a new substation, busbar extension, underground cable or overhead-line reinforcement is required.
+
+The connection point can therefore drive project economics independently of offshore distance. A shorter sea route to a weak grid node may require more onshore reinforcement than a longer route to a strong node. The model should treat:
+
+1. **dedicated connection assets** from landfall to the agreed grid point; and
+2. **wider network reinforcement** triggered beyond that point
+
+as separate cost categories. Their payer and regulatory treatment may also differ.
+
+## Cost Boundary
+
+The model books the onshore converter as part of the 808 EUR/kW two-terminal electrical-equipment coefficient on [HVDC Converter Stations](hvdc_converter_stations.qmd). The offshore platform and both cable supply and installation are separate. This page therefore assigns **no additional generic onshore-converter CAPEX**.
+
+| Cost element | Reference | Evidence gap | Cost owner |
+|---|---|---|---|
+| Onshore VSC equipment, transformers and cooling | <span class="cost-reference">Part of 808 EUR/kW converter pair</span> | No project equipment ledger | [HVDC Converter Stations](hvdc_converter_stations.qmd) |
+| Underground DC cable supply | <span class="cost-reference">TBD</span> | No matched underground material-only coefficient | [HVDC Export Cables](hvdc_export_cables.qmd) |
+| Underground cable and landfall installation | <span class="cost-reference">TBD</span> | Route and civil design required | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| 380 kV station bay/extension | <span class="cost-owned">TBD</span> | Connection agreement required | **This page** |
+| Wider grid reinforcement | <span class="cost-owned">TBD</span> | Highly location-specific | **This page** |
+| Land acquisition and planning mitigation | <span class="cost-owned">TBD</span> | Site and jurisdiction specific | **This page** |
+
+NREL's Atlantic transmission study provides a lower-scope comparator for a 2 GW onshore bipole: approximately 155 EUR/kW for the converter and 44 EUR/kW for construction, or 199 EUR/kW together [@brinkman2024AtlanticTransmission]. These values use the ECB 2025 annual-average exchange rate of 1 EUR = 1.1300 USD [@ecb2025USDEUR]. This is a currency conversion rather than a price-year restatement; the estimate comes from a different market and excludes much of the offshore scope contained in North Sea programme awards. It should be used to interrogate the package allocation, not added to it.
+
+A future bottom-up model can use:
+
+$$
+C_\mathrm{onshore}
+=
+C_\mathrm{landfall}
++c_\mathrm{land\ cable}L_\mathrm{land}
++C_\mathrm{converter}
++C_\mathrm{380kV\ bay}
++C_\mathrm{reinforcement}
++C_\mathrm{site},
+$$
+
+with every term tagged to its canonical page. The converter term is already owned by the converter page. Cable material and installation remain separate and must not be replaced by the former all-in underground-route coefficient.
+
+## Conversion and Transformer Losses
+
+The current model fills the previously blank onshore efficiency with a provisional aggregate **98.5%**. This covers the onshore converter, converter transformers and station auxiliaries once. Hitachi Energy reports conversion losses below 1% per station for the 900 MW DolWin2 VSC system [@hitachiDolWin2], supporting the order of magnitude but not establishing a 2 GW guarantee.
+
+Large-transformer efficiency regulation provides another useful check. For liquid-immersed large transformers, the European Tier 2 minimum peak-efficiency index is 99.770% at 100 MVA, rises with rating and reaches 99.797% at 200 MVA and above [@europeanCommission2014Transformers]. Applicability and exclusions must be checked for the selected equipment. PEI is measured at the loading point of maximum efficiency, so it must not be interpreted as constant full-load or annual efficiency.
+
+The project does not yet have the OEM loss curves and auxiliary-load specifications needed for a load-dependent calculation. Until those data are available:
+
+| Boundary | Working value | Do not also apply |
+|---|---:|---|
+| Onshore VSC, transformation and auxiliaries | 98.5% | A second generic onshore-converter factor |
+| HVDC cable | Calculated separately | Cable loss inside the 98.5% station value |
+| Offshore conversion | Calculated separately | Offshore loss again at the onshore interface |
+
+## Availability, Curtailment and Resilience
+
+The internal model assigns **98.0% availability** to the onshore station. This is the same onshore-terminal factor documented on the converter-station page and shown in the section overview; it is applied once, not multiplied by a second 98% grid-interface factor. As with the offshore station, a single scalar hides equipment redundancy and degraded states. The standard bipole can retain about 1 GW after a pole-path outage, while a common auxiliary, control, busbar or grid event may remove the complete 2 GW.
+
+Energy-equivalent availability is:
+
+$$
+A_E
+=
+1-
+\frac{\sum_i\Delta P_i\Delta t_i}
+{P_\mathrm{rated}T}.
+$$
+
+A practical state model distinguishes:
+
+| State | Export capability | Example |
+|---|---:|---|
+| Both poles and grid circuits healthy | 2 GW | Normal operation |
+| One pole path unavailable | About 1 GW | Converter transformer, valve or pole maintenance |
+| Onshore common-mode outage | 0 GW | Shared auxiliaries, busbar or protection event |
+| Receiving grid constrains dispatch | 0--2 GW | Congestion, system security or market curtailment |
+
+The last state is not equipment unavailability. Grid curtailment should be an energy-system or dispatch constraint so it can be valued and mitigated separately. Planned maintenance, spare single-phase transformers, sectionalised buses, redundant cooling and black-start arrangements can all affect outage duration and residual capacity.
+
+## Land Use, Planning and Environment
+
+Onshore conversion moves impacts from sea to land. The main siting considerations are:
+
+- proximity to a sufficiently strong high-voltage node;
+- space for the permanent station and temporary construction compound;
+- cable corridors, joint bays and road access for heavy transformers;
+- audible noise from transformers, reactors and cooling;
+- visual effects and building height;
+- electromagnetic-field and safety clearances;
+- flood, drainage and soil conditions;
+- ecology, archaeology and community acceptance; and
+- heat rejection and auxiliary electricity supply.
+
+Long underground routes can dominate civil works even when the converter site is close to the coast. Conversely, placing the converter near landfall may require a separate 380 kV AC route to the grid. Route and station location should therefore be optimised together.
+
+## Current Assumptions and Sensitivities
+
+| Parameter | Base case | Suggested sensitivity | Evidence status |
+|---|---:|---:|---|
+| Link rating | 2 GW | Discrete 2 GW blocks | TenneT standard |
+| DC voltage | +/-525 kV | Fixed for standard case | TenneT standard |
+| Grid voltage | 380 kV | Project-specific transmission voltage | Dutch reference |
+| Onshore converter CAPEX | Included in 808 EUR/kW converter pair | 632--1,061 EUR/kW pair range | DEA coefficient; platform excluded |
+| Underground DC cable material | TBD | Obtain material-only benchmark | Separate cable owner |
+| Underground cable installation | TBD | Route-specific model | Separate installation owner |
+| Residual grid-interface CAPEX | TBC, not zero by evidence | Site-specific study | Source gap |
+| Onshore aggregate efficiency | 98.5% | 98.5--99.2% | Provisional aggregate |
+| Flat station availability | 98.0% | Replace with 100/50/0% states | Internal convention |
+| Onshore footprint | About 5.5 ha | Site and layout specific | Doordewind reference |
+| Wider grid reinforcement | Excluded/TBC | Scenario by connection point | Requires power-system study |
+
+## Model Limitations
+
+| Limitation | Implication |
+|---|---|
+| No package cost ledger | Onshore equipment and ordinary civil cost cannot yet be isolated reliably |
+| The 80 km base case ends at shore | Underground route cost remains zero unless $L_u$ is entered explicitly |
+| No grid-node model | Connection capacity, congestion and reinforcement are unknown |
+| Constant 98.5% efficiency | No-load, part-load and ambient-temperature effects are hidden |
+| Constant 98% availability | Pole redundancy, spare transformers and common-mode events are hidden |
+| 380 kV is treated as universal | Other countries and connection points use different grid voltages |
+| Reactive duty is not co-optimised | Converter MVA and compensation equipment may be understated |
+| Planning and land costs are TBC | A feasible electrical design may still lack a consentable site |

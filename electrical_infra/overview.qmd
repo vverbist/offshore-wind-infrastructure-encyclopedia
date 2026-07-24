@@ -1,27 +1,82 @@
 ---
 title: "Electrical Infrastructure"
-completion: 10
+completion: 75
 ---
 
-Electrical infrastructure covers the AC infield network, offshore AC substation, HVDC converter stations, export cable, and onshore grid connection.
+## Purpose and System Boundary
 
-These components are central to the electricity export architecture and partially retained in the centralised hydrogen architecture. They are largely removed from the decentralised hydrogen architecture.
+This page shows how the electrical-infrastructure pages fit together and where each assumption is maintained. It does not introduce separate component assumptions.
 
-## Current Efficiency Assumptions
+The electrical chain begins after the turbine inverter and before the turbine step-up transformer. For electricity export, it ends at the onshore grid connection point. The reference architecture uses 66 kV AC array collection and a 525 kV HVDC export system based on TenneT's 2 GW standard [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard].
 
-| Component | Efficiency |
-|---|---:|
-| Transformer | 99.5% |
-| Infield AC grid | 98.0% |
-| Offshore substation | 98.5% |
-| HVDC export cable | 99.5% |
-| Onshore substation | To be confirmed |
+```{mermaid}
+%%| fig-height: 0.5
+flowchart LR
+  A["Turbine inverter"] --> B["Turbine transformer"]
+  B --> C["66 kV array network"]
+  C --> D["Offshore AC collection"]
+  D --> E["Offshore VSC converter"]
+  E --> F["±525 kV HVDC cable system"]
+  F --> G["Onshore VSC converter"]
+  G --> H["Onshore grid interface"]
+```
 
-## Current Availability Assumptions
+## Where to Find Information
 
-| Component | Availability |
-|---|---:|
-| Infield AC grid | 99.0% |
-| Offshore substation | 98.0% |
-| HVDC export cable | 99.0% |
-| Onshore substation | 98.0% |
+| Information required | Canonical page | Coverage |
+|---|---|---|
+| Array topology and string count | [Infield AC Cables](infield_ac_cables.qmd) | 66 kV layout, cable sizing, feeder-interface checks and routing length |
+| Array-cable material cost and electrical performance | [Infield AC Cables](infield_ac_cables.qmd) | Material CAPEX, losses, reliability and availability |
+| Offshore and onshore converter stations | [HVDC Converter Stations](hvdc_converter_stations.qmd) | Reference configuration, converter CAPEX, conversion efficiency and station availability |
+| HVDC export-cable system | [HVDC Export Cables](hvdc_export_cables.qmd) | Cable topology, material CAPEX, resistance losses, reliability and availability |
+| Onshore connection | [Onshore Grid Connection](onshore_grid_connection.qmd) | Converter-site interface, grid connection, grid-code requirements and wider reinforcement boundary |
+| Array and export-cable installation | [Cable Installation](../offshore_installation/cable_installation.qmd) | Route preparation, laying, burial, landfall, pull-ins and testing |
+| Offshore support structure | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) | Topside structure, support structure and foundation |
+| Platform offshore installation | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Transport, foundation installation, topside installation, hookup and commissioning |
+| Turbine transformer | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) | Turbine electrical equipment before the array-network boundary |
+
+## Architecture Applicability
+
+| Component | Electricity export | Centralised hydrogen | Decentralised hydrogen |
+|---|:---:|:---:|:---:|
+| Turbine step-up transformer | Used | Used | Removed from the main conversion path |
+| 66 kV array network | Used | Used | Replaced by hydrogen collection |
+| Offshore AC aggregation | Used | Used, without HVDC export equipment | No central station |
+| Offshore and onshore HVDC converters | Used | Not used | Not used |
+| HVDC export-cable system | Used | Not used | Not used |
+| Onshore electrical grid connection | Used | Not used | Not used |
+
+The centralised-hydrogen architecture diverges from electricity export at the offshore collection point. Its transformer and rectifier assumptions are maintained on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd).
+
+## Ownership Across Pages
+
+| Asset or function | Equipment or material owner | Installation owner | Loss and availability owner |
+|---|---|---|---|
+| Turbine transformer | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) | Turbine installation scope | Generator and power-electronics page |
+| Array cables, joints and terminations | [Infield AC Cables](infield_ac_cables.qmd) | [Cable Installation](../offshore_installation/cable_installation.qmd) | Infield AC Cables |
+| Offshore collection switchgear, converter transformers and VSC equipment | [HVDC Converter Stations](hvdc_converter_stations.qmd) | Converter package and [Platform Installation](../offshore_installation/platform_and_substation_installation.qmd), as applicable | HVDC Converter Stations |
+| Offshore support structure and foundation | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Common-mode station states on HVDC Converter Stations |
+| HVDC pole, return and communication cables | [HVDC Export Cables](hvdc_export_cables.qmd) | [Cable Installation](../offshore_installation/cable_installation.qmd) | HVDC Export Cables |
+| Landfall and underground cable route | [HVDC Export Cables](hvdc_export_cables.qmd) | [Cable Installation](../offshore_installation/cable_installation.qmd) | HVDC Export Cables |
+| Onshore grid interface and wider reinforcement | [Onshore Grid Connection](onshore_grid_connection.qmd) | Onshore project scope | Onshore Grid Connection |
+
+::: {.callout-important}
+## Book each cost and performance effect once
+
+Component pages may repeat linked values to put their own scope in perspective. The owner columns determine where a value is booked. Grey cost labels are references to another page; green labels identify costs owned by the page on which they appear.
+
+The same rule applies to performance: a detailed loss or outage calculation replaces the corresponding flat efficiency or availability factor rather than being added to it.
+:::
+
+## Cross-Cutting Conventions
+
+| Question | Where it is handled |
+|---|---|
+| Electricity-export architecture and the 2 GW link basis | [Electricity Export with HVDC](../architectures/electricity_export_hvdc.qmd) |
+| Discrete infrastructure choices in the optimisation | [Optimisation Variables](../methodology/optimisation_variables.qmd) |
+| Delivered-energy boundary and component availability | [Energy, Availability, and Annualisation](../methodology/energy_availability_and_annualisation.qmd) |
+| LCOE system boundary | [System Boundary and LCOE](../methodology/system_boundary_and_lcoe.qmd) |
+| Currency, inflation and annualisation | [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd) |
+| CAPEX, OPEX and cost-booking conventions | [CAPEX and OPEX Conventions](../shared_model_inputs/capex_opex_conventions.qmd) |
+
+Use the component pages for values, evidence and limitations; use this page only to identify the correct component and accounting owner.

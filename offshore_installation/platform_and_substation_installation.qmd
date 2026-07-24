@@ -1,35 +1,75 @@
 ---
 title: "Platform and Substation Installation"
-completion: 10
+completion: 30
 ---
 
-## Role in the Model
+## Role and Cost Boundary
 
-Platform and substation installation includes fabrication transport, heavy lifting, jacket installation, topside installation, commissioning, and offshore hookup.
+This page owns transport from the fabrication yard, foundation installation, topside installation, offshore hookup and offshore commissioning. Platform fabrication and converter electrical equipment are costed elsewhere.
 
-## Current Assumptions
+| Physical scope | Treatment | Cost owner |
+|---|---|---|
+| Load-out and transport | Included here | **This page** |
+| Jacket or foundation installation | Included here | **This page** |
+| Topside lift or float-over | Included here | **This page** |
+| Offshore hookup and commissioning | Included here | **This page** |
+| Platform fabrication | Excluded | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Converter equipment and onshore station | Excluded | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
 
-For the HVDC/substation package, the current source separates:
+<span class="cost-owned">Green = booked on this page</span>
+<span class="cost-reference">Grey = reference only; not booked on this page</span>
 
-| Item | Assumption |
-|---|---:|
-| Platform and installation portion of 2 GW package | 1.5 billion EUR |
+## Available Cost Evidence
 
-This value is currently bundled and not yet decomposed into platform material, fabrication, transport, and installation.
+The internal model description uses 750 EUR/kW for “platform and installation” [@internalModelDescription2026]. That value combines platform fabrication, transport and installation, so it cannot be adopted as installation cost alone.
 
-## Cost Drivers
+The DEA offshore-station coefficient also includes the platform and station installation within a broader offshore-station value [@danishEnergyAgency2025Transport]. It does not publish a separate heavy-lift or hookup share.
 
-Future decomposition should track:
+| Cost-stack element | Reference value | Status | Cost owner |
+|---|---:|---|---|
+| Legacy platform + installation allocation | <span class="cost-reference">750 EUR/kW</span> | Combined scope; context only | This page and [Platform](../platforms/hvdc_and_substation_platforms.qmd) |
+| Platform fabrication | <span class="cost-reference">TBD</span> | Costed separately | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Adopted platform-installation CAPEX | <span class="cost-owned">TBD</span> | Requires vessel and schedule basis | **This page** |
 
-- topside mass
-- jacket mass
-- lift weight
-- installation vessel class
-- number of lifts
-- water depth
-- distance to shore or port
-- commissioning duration
+No portion of the 750 EUR/kW combined allocation is booked until a defensible split is available.
+
+## Bottom-Up Cost Model
+
+A future installation estimate should use:
+
+$$
+C_\mathrm{platform\ installation}
+=
+C_\mathrm{mobilisation}
++\sum_v r_v t_v
++C_\mathrm{port}
++C_\mathrm{hookup}
++C_\mathrm{commissioning},
+$$
+
+where $r_v$ and $t_v$ are the rate and required duration for each vessel or marine spread.
+
+The schedule should distinguish:
+
+- foundation transport and installation;
+- topside load-out and transport;
+- heavy-lift or float-over operations;
+- weather contingency;
+- cable and auxiliary-system pull-ins;
+- offshore hookup; and
+- testing and commissioning.
+
+## Principal Cost Drivers
+
+| Driver | Why it matters |
+|---|---|
+| Topside and foundation mass | Determines vessel class, transport method and lift feasibility |
+| Water depth and soil | Governs foundation and piling scope |
+| Distance to fabrication yard and port | Drives transport and support-vessel time |
+| Lift strategy | A single heavy lift and modular lifts require different fleets and schedules |
+| Weather window | Controls waiting time and schedule risk |
+| Offshore commissioning duration | Determines accommodation and support-vessel requirements |
 
 ## Architecture Applicability
 
-This installation category is important for electricity export and centralised hydrogen. The decentralised hydrogen architecture removes the central offshore platform in the current model definition.
+This category applies to the offshore electricity-export platform and any centralised-hydrogen platform. The required vessel spread must be recalculated for each architecture rather than transferring the HVDC allocation unchanged.

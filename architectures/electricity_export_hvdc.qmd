@@ -12,7 +12,7 @@ The electricity architecture is the reference case. Wind turbine output is condi
 1. turbine generator
 2. turbine rectifier, inverter, and transformer
 3. 66 kV AC infield cable network
-4. offshore AC substation and HVDC converter platform
+4. integrated offshore AC collection and HVDC converter platform
 5. HVDC export cable
 6. onshore converter station and grid connection
 
@@ -26,6 +26,5 @@ The current assumption set uses a 2 GW HVDC export basis. This creates discrete 
 
 - [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd)
 - [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd)
-- [Offshore AC Substation](../electrical_infra/offshore_ac_substation.qmd)
 - [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd)
 - [HVDC Export Cables](../electrical_infra/hvdc_export_cables.qmd)

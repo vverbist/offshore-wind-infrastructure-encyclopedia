@@ -1,42 +1,143 @@
 ---
 title: "HVDC Converter Stations"
-completion: 20
+completion: 85
 ---
 
-## Role in the Value Chain
+## Role and Cost Boundary
 
-HVDC converter stations convert offshore AC power to HVDC for export and convert HVDC back to AC onshore. They are used in the electricity export architecture.
+An offshore HVDC converter station changes the wind farm's collected AC power to DC for export. A second station onshore changes it back to grid-compatible AC. This page owns the converter electrical equipment at both terminals, but not the offshore support structure or its installation.
 
-## Cost Model
+| Physical scope | Treatment | Cost owner |
+|---|---|---|
+| Offshore and onshore converter valves | Included | **This page** |
+| Converter transformers, reactors, cooling and auxiliaries | Included | **This page** |
+| Immediate AC/DC switchgear, control and protection | Included | **This page** |
+| Offshore platform and foundation | Reference only | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Platform transport and offshore installation | Reference only | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
+| HVDC cable supply and installation | Excluded | [HVDC Export Cables](hvdc_export_cables.qmd) and [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Wider onshore grid reinforcement | Excluded | [Onshore Grid Connection](onshore_grid_connection.qmd) |
 
-The current assumption is based on TenneT programme data for a 2 GW station package [@tennet2gwProgrammeData].
+<span class="cost-owned">Green = booked on this page</span>
+<span class="cost-reference">Grey = reference only; not booked on this page</span>
 
-| Item | Assumption |
+## Reference Configuration
+
+The electrical design reference is TenneT's 2 GW North Sea standard [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard]:
+
+| Parameter | Reference value |
 |---|---:|
-| Standard station capacity | 2 GW |
-| Total offshore station package | 3.5 billion EUR |
-| Substation portion | 2.0 billion EUR |
-| Platform and installation portion | 1.5 billion EUR |
-| Linearised cost basis | 1,750 EUR/kW |
+| Rated active-power transfer | 2 GW |
+| Offshore collection voltage | 66 kV AC |
+| Converter technology | VSC using modular multilevel converters |
+| HVDC configuration | Bipole with dedicated metallic return |
+| Pole voltage | +/-525 kV |
+| Offshore generation blocks | 4 x 500 MW |
+| Offshore HVDC transformers | Four |
+| Onshore grid voltage | 380 kV AC |
+| Normal full-load pole current | 1.905 kA |
+| Healthy-pole degraded transfer | Approximately 1 GW |
 
-All costs are currently assumed to scale linearly with capacity. This is a simplifying assumption and should be revisited if discrete 2 GW block behaviour is explicitly modelled.
+For balanced bipolar operation:
 
-## Energy Balance
+$$
+P_\mathrm{dc}=2V_\mathrm{pole}I_\mathrm{pole}.
+$$
 
-The offshore conversion chain is included in the offshore substation efficiency assumption. The onshore station is included separately.
+At 2 GW and 525 kV per pole, $I_\mathrm{pole}=1.905$ kA. The converter MVA rating must additionally cover reactive-power duty, voltage range, harmonics, overloads and grid-code margins.
 
-| Component | Efficiency |
-|---|---:|
-| Offshore substation / conversion | 98.5% |
-| Onshore substation / conversion | To be confirmed |
+## Converter Cost Model
 
-## Availability
+### DEA Basis
 
-| Component | Availability |
-|---|---:|
-| Offshore substation | 98.0% |
-| Onshore substation | 98.0% |
+The Danish Energy Agency gives a 2025 central planning value of 320 EUR/kW for an onshore 525 kV DC converter station, with 250--420 EUR/kW as its low and high cases. These values are stated at the 2020 price level [@danishEnergyAgency2025Transport].
 
-## Installation and Mass
+The 2020 values are restated to constant 2026 euros using the report's factor of 1.263. That factor uses euro-area annual-average HICP through 2025 and the European Commission's 3.0% euro-area inflation forecast for 2026 [@eurostat2026HICP; @europeanCommission2026Forecast].
 
-The platform and installation portion is currently included in the station package. See [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) and [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd).
+Because the DEA offshore-station value explicitly includes its platform, it is not used as converter equipment CAPEX here. The model provisionally applies the onshore-station coefficient to both electrical terminals:
+
+| Converter electrical equipment | Low | Central | High | Cost owner |
+|---|---:|---:|---:|---|
+| One converter station | <span class="cost-owned">316 EUR/kW</span> | <span class="cost-owned">404 EUR/kW</span> | <span class="cost-owned">530 EUR/kW</span> | **This page** |
+| Offshore + onshore converter pair | <span class="cost-owned">632 EUR/kW</span> | <span class="cost-owned">808 EUR/kW</span> | <span class="cost-owned">1,061 EUR/kW</span> | **This page** |
+
+The adopted central coefficient is 808 EUR/kW for the two-terminal converter pair. No residual project factor is added. Owner development, financing, wider grid works and decommissioning remain outside this coefficient.
+
+The offshore terminal may require more costly marinised electrical equipment than the onshore terminal. A public offshore-equipment premium separated from platform and installation cost is not currently available, so this is a stated modelling limitation.
+
+## Complete Station-Cost Perspective
+
+The physical offshore station also needs a platform, foundation, transport and installation. Those costs are useful context but are not booked on this page.
+
+| Cost-stack element | Reference value | Status | Cost owner |
+|---|---:|---|---|
+| Offshore + onshore converter equipment | <span class="cost-owned">808 EUR/kW</span> | Model central value | **This page** |
+| Offshore platform and offshore premium proxy | <span class="cost-reference">544 EUR/kW</span> | DEA offshore-minus-onshore difference; not an adopted standalone platform cost | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Platform offshore installation | <span class="cost-reference">TBD</span> | Must be separated from fabrication and equipment | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
+| DEA offshore + onshore station pair, platform included | <span class="cost-reference">1,352 EUR/kW</span> | Scope comparator, not added to the rows above | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+
+::: {.callout-note}
+## Reference costs are not additional costs
+
+The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. Only the green converter coefficient is booked here.
+:::
+
+Public TenneT programme announcements correspond to roughly EUR 1,000--1,170/kW when divided by announced system count and rating [@tennet2gwProgrammeData; @hitachiPetrofac2023TenneT; @geVernova2023TenneT; @siemensEnergy2023TenneT]. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with the 808 EUR/kW converter-only coefficient.
+
+## Conversion Losses
+
+Converter-station losses include semiconductor conduction and switching, transformer copper and core loss, reactors, cooling and station auxiliaries. Supplier loss curves are not yet available, so the model uses aggregate working efficiencies:
+
+| Boundary | Working efficiency | Interpretation |
+|---|---:|---|
+| Offshore conversion, transformation and auxiliaries | 98.5% | Applied once offshore |
+| Onshore conversion, transformation and auxiliaries | 98.5% | Applied once onshore |
+
+Hitachi Energy reports electrical losses below 1% per converter station for DolWin2 [@hitachiDolWin2]. This is an OEM statement for a 900 MW, +/-320 kV symmetrical-monopole system commissioned in 2016; it supports the order of magnitude but is not a guarantee for a 2 GW, +/-525 kV station.
+
+Together, the two 98.5% terminal values give a working station-pair efficiency of 97.0%. The values include transformers and auxiliaries; no separate substation or transformer factor is applied to the same equipment.
+
+## Availability and Degraded Operation
+
+The legacy model applies 98% availability to each terminal. These are internal energy-equivalent factors, not supplier guarantees. A more physical model distinguishes:
+
+| State | Available export capacity | Example cause |
+|---|---:|---|
+| Both poles and terminals healthy | 2 GW | Normal operation |
+| One pole path unavailable | Approximately 1 GW | Pole converter, transformer or cable outage |
+| Both poles unavailable | 0 GW | Common control, auxiliary or platform event |
+
+Capacity-weighted availability is:
+
+$$
+A_E
+=
+1-
+\frac{\sum_i\Delta P_i\Delta t_i}
+{P_\mathrm{rated}T}.
+$$
+
+Once these states are simulated, the corresponding flat availability factors must be removed.
+
+## Current Assumptions
+
+| Parameter | Base case | Sensitivity or next step | Evidence status |
+|---|---:|---:|---|
+| Link rating | 2 GW reference | Test discrete link count | Public TenneT standard |
+| Pole voltage | +/-525 kV | Fixed for reference design | Public TenneT standard |
+| Converter pair CAPEX, platform excluded | 808 EUR/kW | 632--1,061 EUR/kW | DEA onshore-station range applied twice |
+| Scaling | Linear up to 2 GW | Use complete links above 2 GW | Screening assumption |
+| Offshore aggregate efficiency | 98.5% | Replace with supplier loss curve | Conservative working value |
+| Onshore aggregate efficiency | 98.5% | Replace with supplier loss curve | Conservative working value |
+| Flat station availability | 98% per terminal | Replace with capacity states | Internal convention |
+| Converter OPEX | TBD | Obtain equipment-specific basis | Not supplied by CAPEX source |
+
+## Model Limitations
+
+| Limitation | Implication |
+|---|---|
+| Offshore converter uses the onshore cost coefficient | Offshore marinisation and logistics premium are not represented in converter CAPEX |
+| Platform and installation costs remain incompletely separated | The complete offshore-station cost is not yet a fully additive bottom-up estimate |
+| HICP is a general price index | HVDC equipment escalation may differ from consumer inflation |
+| Linear EUR/kW scaling | Discrete equipment and platform thresholds are hidden |
+| Constant station efficiencies | Part-load, no-load and temperature effects are hidden |
+| Flat terminal availabilities | Pole redundancy and common-mode failures are simplified |

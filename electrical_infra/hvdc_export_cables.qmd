@@ -1,41 +1,149 @@
 ---
 title: "HVDC Export Cables"
-completion: 10
+completion: 85
 ---
 
-## Role in the Value Chain
+## Role and Cost Boundary
 
-HVDC export cables transport electrical energy from the offshore converter station to the onshore converter station.
+The HVDC export-cable system carries power between the offshore and onshore converter stations. This page owns cable supply and cable electrical performance. Marine and terrestrial installation are costed separately.
 
-## Cost Model
+| Physical scope | Treatment | Cost owner |
+|---|---|---|
+| Positive- and negative-pole cable supply | Included here | **This page** |
+| Metallic-return and communication cable supply | Included here when required by the selected topology | **This page** |
+| Cable accessories supplied with the system | Included here when included in the material benchmark | **This page** |
+| Marine laying, burial, protection and pull-in | Excluded | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Underground trenching, ducts and reinstatement | Excluded | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Exceptional crossings, tunnels and rock placement | Excluded | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Converter stations | Excluded | [HVDC Converter Stations](hvdc_converter_stations.qmd) |
 
-| Item | Assumption |
+<span class="cost-owned">Green = booked on this page</span>
+<span class="cost-reference">Grey = reference only; not booked on this page</span>
+
+A **route-kilometre** measures one kilometre of corridor. A **cable-kilometre** measures one kilometre of one manufactured cable. Complete-system route benchmarks must not be multiplied again by the number of pole and return cables.
+
+## Reference Cable System
+
+The TenneT 2 GW reference system uses a positive-pole cable, negative-pole cable, dedicated metallic-return cable and fibre-optic cable [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard].
+
+| Parameter | Reference value |
 |---|---:|
-| Export cable capacity | 2 GW |
-| Export cables installed in parallel | 1 |
-| Installed cost benchmark | 7 million EUR/km |
-| Installation cost | 635 EUR/m |
-| Implied cable CAPEX | 6,365 EUR/m |
-| OPEX | 2% of CAPEX per year |
+| HVDC topology | Bipole with dedicated metallic return |
+| Pole voltage | +/-525 kV |
+| Full-load pole current | 1.905 kA |
+| TenneT programme route range | 150--300 km |
+| Procurement conductor options | 2,300 or 2,500 mm2 Cu; 3,100 mm2 Al |
+| Indicative copper resistance | 0.0072 ohm/km at 20 degrees C |
+| Indicative 2,500 mm2 cable diameter | About 160 mm |
+| Indicative mass | About 65 kg/m per cable |
 
-The material CAPEX is derived by subtracting the modelled installation cost from the installed-cost benchmark.
+The conductor options and programme route range come from TenneT [@tennet2024TwoGWProgram]. The resistance, diameter and mass are indicative Prysmian data [@prysmian525KVSubmarine], not a selected project design.
 
-## Energy Balance
+## Electrical-Loss Model
 
-| Component | Efficiency |
-|---|---:|
-| HVDC export cable | 99.5% |
+For two pole conductors of equal resistance:
 
-## Availability
+$$
+P_\mathrm{cable,loss}
+=
+2I_\mathrm{pole}^{2}R'L,
+$$
 
-| Component | Availability |
-|---|---:|
-| HVDC export cable | 99.0% |
+and:
 
-## Installation
+$$
+\frac{P_\mathrm{cable,loss}}{P_\mathrm{dc}}
+=
+\frac{I_\mathrm{pole}R'L}{V_\mathrm{pole}}.
+$$
 
-Cable installation is modelled separately from material CAPEX. See [Cable Installation](../offshore_installation/cable_installation.qmd).
+Using 0.0072 ohm/km at 20 degrees C and 1.905 kA gives:
 
-## Sizing Drivers
+| Route length | Conductor loss | Share of 2 GW |
+|---:|---:|---:|
+| 80 km | 4.18 MW | 0.209% |
+| 150 km | 7.84 MW | 0.392% |
+| 250 km | 13.06 MW | 0.653% |
+| 300 km | 15.67 MW | 0.784% |
 
-Export cable sizing is driven by rated export capacity and distance to shore. The current baseline distance to shore is 80 km.
+![Calculated full-load conductor loss for a 2 GW, +/-525 kV bipole using an indicative 2,500 mm2 copper resistance.](../figures/hvdc-cable-loss-vs-distance.svg){#fig-hvdc-loss-distance}
+
+The calculation excludes joints, terminations, operating-temperature effects, return-current imbalance and converter losses. Annual cable loss should be calculated from the time series:
+
+$$
+E_\mathrm{cable,loss}
+=
+\sum_t2I(t)^2R'(T_t)L\,\Delta t.
+$$
+
+The current fixed 99.5% efficiency is only a legacy near-shore approximation. With the illustrative resistance, conductor loss alone reaches 0.5% at about 191 km at 20 degrees C. Distance studies should therefore use the load-dependent calculation and remove the fixed deduction.
+
+## Cable-Supply Cost
+
+### Separated Public Reference
+
+The NREL Atlantic Offshore Wind Transmission Study gives a separated material cost for a 525 kV, 2 GW HVDC bipole and states that installation is added separately [@brinkman2024AtlanticTransmission]. Converted with the ECB 2025 annual-average exchange rate, the material reference is EUR 2.51 million/km, or 1.26 EUR/kW/km at 2 GW [@ecb2025USDEUR].
+
+| Cable-supply element | Unit value | Status | Cost owner |
+|---|---:|---|---|
+| 525 kV, 2 GW bipole material reference | <span class="cost-owned">1.26 EUR/kW/km</span> | NREL material cost converted with the 2025 ECB average exchange rate | **This page** |
+| Marine/terrestrial installation | <span class="cost-reference">EUR 1.48 million/km</span> | NREL installation reference; not booked here | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| NREL material + installation | <span class="cost-reference">EUR 4.00 million/km</span> | Combined 2 GW route perspective only | This page and [Cable Installation](../offshore_installation/cable_installation.qmd) |
+
+This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value is combined with constant-2026-EUR inputs.
+
+## Installed-Cost Perspective
+
+The background report's Adriatic Link and DEA values cover installed or EPC cable systems. They are useful checks on the combined supply-plus-installation result but cannot be assigned wholly to cable material.
+
+| Installed-system benchmark | Reference value | Interpretation | Cost owner |
+|---|---:|---|---|
+| NREL material + installation | <span class="cost-reference">EUR 4.00 million/km</span> | Separated study estimate for a 2 GW bipole; currency conversion only | This page and [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Adriatic-derived subsea rate | <span class="cost-reference">EUR 2.60 million/km</span> | 2026-euro installed-system inference from a 1 GW project | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| DEA subsea EPC reference | <span class="cost-reference">EUR 8.14 million/km</span> | DEA 2025 value restated to 2026 euros and evaluated at 2 GW | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Existing internal export-installation assumption | <span class="cost-reference">Scope unresolved</span> | Must not be added until reconciled | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+
+::: {.callout-note}
+## Installation is shown for perspective only
+
+The installed-system comparisons and the installation component are maintained on [Cable Installation](../offshore_installation/cable_installation.qmd). They are shown here so the reader can see the complete route-cost context. Only the green material reference belongs to this page.
+:::
+
+The Adriatic anchor is not topology-identical to the TenneT reference: Prysmian describes two submarine and two underground power cables, whereas TenneT adds a dedicated metallic return and fibre [@prysmian2023AdriaticLink]. The comparison is therefore indicative rather than a matched 2 GW quotation.
+
+## Reliability and Repair
+
+The legacy model assigns 99% cable availability. Actual energy unavailability depends on route exposure, fault frequency, repair duration and whether a fault removes one pole or the complete corridor.
+
+ENTSO-E and Europacable report an indicative historical cable-system failure rate of about 0.07 faults per 100 km-year and average submarine repair duration of about 60 days [@entsoeEuropacable2019Reliability]. These historical values are not guarantees for a new 525 kV system.
+
+| Cable state | Available transfer | Treatment |
+|---|---:|---|
+| Both poles healthy | 2 GW | Normal operation |
+| One pole unavailable, return healthy | Approximately 1 GW | Count half-capacity exposure |
+| Common corridor or both poles unavailable | 0 GW | Count full-capacity exposure |
+
+Spare cable, compatible joints, repair-vessel access, permits and trained jointing teams affect outage duration. Their costs belong to the installation/OPEX boundary; the resulting energy loss belongs to the availability model.
+
+## Current Assumptions
+
+| Parameter | Base case | Sensitivity or next step | Evidence status |
+|---|---:|---:|---|
+| Link rating | 2 GW reference | Test multiple links | Public TenneT standard |
+| Pole voltage | +/-525 kV | Fixed for reference design | Public TenneT standard |
+| Cable material CAPEX | 1.26 EUR/kW/km | Confirm source price year and escalate consistently | NREL reference converted at 2025 ECB average |
+| Installation CAPEX | Excluded from this page | Use linked installation model | Separate cost owner |
+| Cable loss | Hourly $I^2R(T)L$ preferred | 99.5% only for legacy compatibility | Engineering model |
+| Flat cable availability | 99% | Replace with capacity states | Internal convention |
+| Cable OPEX | TBD | Define inspection, spares and repair scope | Separate evidence required |
+
+## Model Limitations
+
+| Limitation | Implication |
+|---|---|
+| NREL source price year is unresolved | The euro conversion is not yet a constant-2026-euro input |
+| NREL and TenneT topologies may differ | Metallic-return and accessory scope must be checked |
+| Adriatic and DEA values include installation | They validate only the combined route cost |
+| No matched underground material coefficient | Subsea and underground supply costs cannot yet be separated cleanly |
+| One indicative copper resistance is used | Aluminium and operating-temperature alternatives are absent |
+| Fixed 99.5% efficiency is retained only for compatibility | It is not valid across the full route range |

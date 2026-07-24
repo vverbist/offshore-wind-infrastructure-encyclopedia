@@ -1,33 +1,68 @@
 ---
 title: "HVDC and Substation Platforms"
-completion: 10
+completion: 35
 ---
 
-## Role in the Value Chain
+## Role and Cost Boundary
 
-HVDC and substation platforms support offshore electrical conversion and aggregation equipment.
+The offshore platform supports the AC collection equipment, HVDC converter equipment, auxiliaries and accommodation required at sea. This page owns the support structure and foundation cost. Converter electrical equipment and offshore installation are costed separately.
 
-## Cost Model
+| Physical scope | Treatment | Cost owner |
+|---|---|---|
+| Topside structural steel and outfitting | Included here | **This page** |
+| Jacket or other support structure and foundation | Included here | **This page** |
+| Converter valves, transformers and electrical auxiliaries | Excluded | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+| Transport, heavy lifts, hookup and offshore commissioning | Excluded | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
 
-The current source basis is a TenneT 2 GW station package [@tennet2gwProgrammeData]:
+<span class="cost-owned">Green = booked on this page</span>
+<span class="cost-reference">Grey = reference only; not booked on this page</span>
 
-| Item | Assumption |
-|---|---:|
-| Total 2 GW offshore station package | 3.5 billion EUR |
-| Substation/converter component | 2.0 billion EUR |
-| Platform and installation component | 1.5 billion EUR |
-| Linearised total cost basis | 1,750 EUR/kW |
+## Reference 2 GW Facility
 
-The model currently assumes linear scaling with capacity.
+TenneT's indicative 2 GW offshore facility has a topside of roughly 106 m x 77 m x 41 m and about 28,000 t, supported by an approximately 8,000--11,000 t jacket [@tennet2024TwoGWProgram]. These quantities drive fabrication capacity, load-out, transport, foundation design and offshore lifting.
 
-## Energy Balance
+## Available Cost Evidence
 
-The platform itself has no direct energy conversion efficiency. Electrical equipment hosted on the platform is covered in the electrical infrastructure pages.
+The Danish Energy Agency reports the following 2025 station values at the 2020 price level [@danishEnergyAgency2025Transport]:
 
-## Availability
+| DEA station scope | Low | Central | High |
+|---|---:|---:|---:|
+| Onshore DC converter station | 250 EUR/kW | 320 EUR/kW | 420 EUR/kW |
+| Offshore DC converter station, platform included | 580 EUR/kW | 750 EUR/kW | 980 EUR/kW |
 
-Platform-related availability is bundled into offshore substation availability unless separated later.
+Restated to constant 2026 euros with the common 1.263 factor, the central values are 404 EUR/kW for the onshore station and 948 EUR/kW for the offshore station including its platform. The difference is 544 EUR/kW.
 
-## Mass and Installation
+This is useful as an **offshore platform and offshore-premium proxy**, but it is not a clean platform quotation. It may contain platform steel, foundation, offshore buildings, marinisation, different electrical scope and other offshore cost.
 
-Platform mass is not yet explicitly parameterised. The platform and installation cost component should eventually be split into jacket/topside mass, lifting requirements, vessel spread, and installation duration.
+The internal model description uses 750 EUR/kW for “platform and installation” [@internalModelDescription2026]. It does not separate platform fabrication from transport and installation.
+
+## Cost Model and Context
+
+| Cost-stack element | Reference value | Status | Cost owner |
+|---|---:|---|---|
+| Converter pair, platform excluded | <span class="cost-reference">808 EUR/kW</span> | Adopted on linked page | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+| Offshore platform and offshore premium proxy | <span class="cost-reference">544 EUR/kW</span> | DEA difference; context only | **This page** |
+| Legacy platform + installation allocation | <span class="cost-reference">750 EUR/kW</span> | Combined scope; context only | This page and [Platform Installation](../offshore_installation/platform_and_substation_installation.qmd) |
+| Adopted standalone platform CAPEX | <span class="cost-owned">TBD</span> | Requires platform-only evidence or mass-based model | **This page** |
+| Offshore platform installation | <span class="cost-reference">TBD</span> | Costed separately | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
+
+::: {.callout-warning}
+## Do not add the proxy and the legacy allocation
+
+The 544 EUR/kW DEA difference and the 750 EUR/kW internal allocation are alternative scope indicators. Neither is currently an adopted standalone platform cost, and they must not be added together.
+:::
+
+The next defensible improvement is a mass-based platform model calibrated against a platform-only fabrication benchmark. Until then, the page exposes the available evidence without assigning false precision to the split.
+
+## Energy and Availability
+
+The support structure has no direct conversion loss. Platform common-mode events may remove some or all converter capacity; these effects belong in the station availability-state model rather than a separate flat platform factor.
+
+## Model Limitations
+
+| Limitation | Implication |
+|---|---|
+| DEA offshore value includes converter equipment | Its difference from an onshore station is only a platform proxy |
+| Internal value combines platform and installation | Fabrication and marine installation cannot be booked independently |
+| No mass-based cost function | Changes in topside or jacket mass are not represented |
+| Foundation type and water depth are not parameterised | Site-specific structural cost is absent |
