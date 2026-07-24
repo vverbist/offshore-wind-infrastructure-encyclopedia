@@ -7,6 +7,7 @@ Hydrogen infrastructure covers everything that moves hydrogen from the electroly
 
 The section is split into:
 
+* [Hydrogen Infield Infrastructure](infield_infrastructure.qmd) — ladder topology for the decentralised architecture and the calculation of total infield pipeline length.
 * [Hydrogen Compressor](compressor.qmd) — raises hydrogen from electrolyser outlet pressure to the pipeline injection pressure, with the associated electricity consumption, CAPEX, and OPEX.
 * [Hydrogen Pipelines](hydrogen_pipelines.qmd) — composite flexible pipeline technology, diameter and pressure sizing, transport capacity, and material cost, for both the infield network and the export route.
 * [Pipeline Pressure and Capacity](pipeline_pressure_and_capacity.qmd) — how pipeline diameter, inlet pressure, and installation cost trade off against each other in sizing the pipeline system.

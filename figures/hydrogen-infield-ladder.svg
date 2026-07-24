@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="540" viewBox="0 0 760 540" role="img" aria-labelledby="title desc">
+  <title id="title">Hydrogen infield ladder layout</title>
+  <desc id="desc">A square wind farm with two vertical header pipelines, five horizontal rung pipelines, turbines connected along each rung, and both headers connected to a common export pipeline interface.</desc>
+  <defs>
+    <style>
+      .label { font: 15px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 13px Arial, sans-serif; fill: #4b5563; }
+      .farm { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 8 7; }
+      .header { fill: none; stroke: #163a5f; stroke-width: 8; stroke-linecap: round; }
+      .rung { fill: none; stroke: #2f80a7; stroke-width: 5; stroke-linecap: round; }
+      .tie { fill: none; stroke: #d97706; stroke-width: 5; stroke-linecap: round; }
+      .export { fill: none; stroke: #d97706; stroke-width: 8; stroke-linecap: round; }
+      .turbine { fill: #ffffff; stroke: #2f80a7; stroke-width: 3; }
+      .hub { fill: #d97706; stroke: #92400e; stroke-width: 2; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L8,3 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <rect x="105" y="48" width="550" height="385" rx="4" class="farm"/>
+  <text x="105" y="30" class="label">Square wind-farm boundary</text>
+
+  <path d="M155 82 L155 399" class="header"/>
+  <path d="M605 82 L605 399" class="header"/>
+
+  <path d="M155 100 L605 100" class="rung"/>
+  <path d="M155 169 L605 169" class="rung"/>
+  <path d="M155 238 L605 238" class="rung"/>
+  <path d="M155 307 L605 307" class="rung"/>
+  <path d="M155 376 L605 376" class="rung"/>
+
+  <g>
+    <circle cx="245" cy="100" r="10" class="turbine"/><circle cx="335" cy="100" r="10" class="turbine"/><circle cx="425" cy="100" r="10" class="turbine"/><circle cx="515" cy="100" r="10" class="turbine"/>
+    <circle cx="245" cy="169" r="10" class="turbine"/><circle cx="335" cy="169" r="10" class="turbine"/><circle cx="425" cy="169" r="10" class="turbine"/><circle cx="515" cy="169" r="10" class="turbine"/>
+    <circle cx="245" cy="238" r="10" class="turbine"/><circle cx="335" cy="238" r="10" class="turbine"/><circle cx="425" cy="238" r="10" class="turbine"/><circle cx="515" cy="238" r="10" class="turbine"/>
+    <circle cx="245" cy="307" r="10" class="turbine"/><circle cx="335" cy="307" r="10" class="turbine"/><circle cx="425" cy="307" r="10" class="turbine"/><circle cx="515" cy="307" r="10" class="turbine"/>
+    <circle cx="245" cy="376" r="10" class="turbine"/><circle cx="335" cy="376" r="10" class="turbine"/><circle cx="425" cy="376" r="10" class="turbine"/><circle cx="515" cy="376" r="10" class="turbine"/>
+  </g>
+
+  <path d="M155 399 L338 456" class="tie"/>
+  <path d="M605 399 L422 456" class="tie"/>
+  <circle cx="380" cy="469" r="13" class="hub"/>
+  <path d="M380 482 L380 525" class="export" marker-end="url(#arrow)"/>
+
+  <text x="118" y="464" class="small">Header-to-export tie-ins</text>
+  <text x="398" y="474" class="label">Export interface</text>
+  <text x="395" y="521" class="label">Export pipeline</text>
+
+  <g transform="translate(665 90)">
+    <path d="M0 0 L35 0" class="header"/><text x="45" y="5" class="small">Header</text>
+    <path d="M0 32 L35 32" class="rung"/><text x="45" y="37" class="small">Rung</text>
+    <circle cx="18" cy="65" r="9" class="turbine"/><text x="45" y="70" class="small">Turbine</text>
+  </g>
+</svg>
