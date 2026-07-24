@@ -90,6 +90,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -321,12 +350,6 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -399,6 +422,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -560,11 +589,17 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#installation-and-mass" id="toc-installation-and-mass" class="nav-link" data-scroll-target="#installation-and-mass">Installation and Mass</a></li>
+  <li><a href="#role-and-cost-boundary" id="toc-role-and-cost-boundary" class="nav-link active" data-scroll-target="#role-and-cost-boundary">Role and Cost Boundary</a></li>
+  <li><a href="#reference-configuration" id="toc-reference-configuration" class="nav-link" data-scroll-target="#reference-configuration">Reference Configuration</a></li>
+  <li><a href="#converter-cost-model" id="toc-converter-cost-model" class="nav-link" data-scroll-target="#converter-cost-model">Converter Cost Model</a>
+  <ul class="collapse">
+  <li><a href="#dea-basis" id="toc-dea-basis" class="nav-link" data-scroll-target="#dea-basis">DEA Basis</a></li>
+  </ul></li>
+  <li><a href="#complete-station-cost-perspective" id="toc-complete-station-cost-perspective" class="nav-link" data-scroll-target="#complete-station-cost-perspective">Complete Station-Cost Perspective</a></li>
+  <li><a href="#conversion-losses" id="toc-conversion-losses" class="nav-link" data-scroll-target="#conversion-losses">Conversion Losses</a></li>
+  <li><a href="#availability-and-degraded-operation" id="toc-availability-and-degraded-operation" class="nav-link" data-scroll-target="#availability-and-degraded-operation">Availability and Degraded Operation</a></li>
+  <li><a href="#current-assumptions" id="toc-current-assumptions" class="nav-link" data-scroll-target="#current-assumptions">Current Assumptions</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -590,99 +625,435 @@ div.csl-indent {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>HVDC converter stations convert offshore AC power to HVDC for export and convert HVDC back to AC onshore. They are used in the electricity export architecture.</p>
-</section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The current assumption is based on TenneT programme data for a 2 GW station package <span class="citation" data-cites="tennet2gwProgrammeData">(<a href="#ref-tennet2gwProgrammeData" role="doc-biblioref">TenneT, n.d.</a>)</span>.</p>
+<section id="role-and-cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-cost-boundary">Role and Cost Boundary</h2>
+<p>An offshore HVDC converter station changes the wind farm’s collected AC power to DC for export. A second station onshore changes it back to grid-compatible AC. This page owns the converter electrical equipment at both terminals, but not the offshore support structure or its installation.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Physical scope</th>
+<th>Treatment</th>
+<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Standard station capacity</td>
+<td>Offshore and onshore converter valves</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Converter transformers, reactors, cooling and auxiliaries</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Immediate AC/DC switchgear, control and protection</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Offshore platform and foundation</td>
+<td>Reference only</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+</tr>
+<tr class="odd">
+<td>Platform transport and offshore installation</td>
+<td>Reference only</td>
+<td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
+</tr>
+<tr class="even">
+<td>HVDC cable supply and installation</td>
+<td>Excluded</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a> and <a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="odd">
+<td>Wider onshore grid reinforcement</td>
+<td>Excluded</td>
+<td><a href="../electrical_infra/onshore_grid_connection.html">Onshore Grid Connection</a></td>
+</tr>
+</tbody>
+</table>
+<p><span class="cost-owned">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
+</section>
+<section id="reference-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="reference-configuration">Reference Configuration</h2>
+<p>The electrical design reference is TenneT’s 2 GW North Sea standard <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Reference value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rated active-power transfer</td>
 <td style="text-align: right;">2 GW</td>
 </tr>
 <tr class="even">
-<td>Total offshore station package</td>
-<td style="text-align: right;">3.5 billion EUR</td>
+<td>Offshore collection voltage</td>
+<td style="text-align: right;">66 kV AC</td>
 </tr>
 <tr class="odd">
-<td>Substation portion</td>
-<td style="text-align: right;">2.0 billion EUR</td>
+<td>Converter technology</td>
+<td style="text-align: right;">VSC using modular multilevel converters</td>
 </tr>
 <tr class="even">
-<td>Platform and installation portion</td>
-<td style="text-align: right;">1.5 billion EUR</td>
+<td>HVDC configuration</td>
+<td style="text-align: right;">Bipole with dedicated metallic return</td>
 </tr>
 <tr class="odd">
-<td>Linearised cost basis</td>
-<td style="text-align: right;">1,750 EUR/kW</td>
+<td>Pole voltage</td>
+<td style="text-align: right;">+/-525 kV</td>
+</tr>
+<tr class="even">
+<td>Offshore generation blocks</td>
+<td style="text-align: right;">4 x 500 MW</td>
+</tr>
+<tr class="odd">
+<td>Offshore HVDC transformers</td>
+<td style="text-align: right;">Four</td>
+</tr>
+<tr class="even">
+<td>Onshore grid voltage</td>
+<td style="text-align: right;">380 kV AC</td>
+</tr>
+<tr class="odd">
+<td>Normal full-load pole current</td>
+<td style="text-align: right;">1.905 kA</td>
+</tr>
+<tr class="even">
+<td>Healthy-pole degraded transfer</td>
+<td style="text-align: right;">Approximately 1 GW</td>
 </tr>
 </tbody>
 </table>
-<p>All costs are currently assumed to scale linearly with capacity. This is a simplifying assumption and should be revisited if discrete 2 GW block behaviour is explicitly modelled.</p>
+<p>For balanced bipolar operation:</p>
+<p><span class="math display">\[
+P_\mathrm{dc}=2V_\mathrm{pole}I_\mathrm{pole}.
+\]</span></p>
+<p>At 2 GW and 525 kV per pole, <span class="math inline">\(I_\mathrm{pole}=1.905\)</span> kA. The converter MVA rating must additionally cover reactive-power duty, voltage range, harmonics, overloads and grid-code margins.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>The offshore conversion chain is included in the offshore substation efficiency assumption. The onshore station is included separately.</p>
+<section id="converter-cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="converter-cost-model">Converter Cost Model</h2>
+<section id="dea-basis" class="level3">
+<h3 class="anchored" data-anchor-id="dea-basis">DEA Basis</h3>
+<p>The Danish Energy Agency gives a 2025 central planning value of 320 EUR/kW for an onshore 525 kV DC converter station, with 250–420 EUR/kW as its low and high cases. These values are stated at the 2020 price level <span class="citation" data-cites="danishEnergyAgency2025Transport">(<a href="#ref-danishEnergyAgency2025Transport" role="doc-biblioref">Danish Energy Agency 2025</a>)</span>.</p>
+<p>The 2020 values are restated to constant 2026 euros using the report’s factor of 1.263. That factor uses euro-area annual-average HICP through 2025 and the European Commission’s 3.0% euro-area inflation forecast for 2026 <span class="citation" data-cites="eurostat2026HICP europeanCommission2026Forecast">(<a href="#ref-eurostat2026HICP" role="doc-biblioref">Eurostat 2026</a>; <a href="#ref-europeanCommission2026Forecast" role="doc-biblioref">European Commission 2026</a>)</span>.</p>
+<p>Because the DEA offshore-station value explicitly includes its platform, it is not used as converter equipment CAPEX here. The model provisionally applies the onshore-station coefficient to both electrical terminals:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Efficiency</th>
+<th>Converter electrical equipment</th>
+<th style="text-align: right;">Low</th>
+<th style="text-align: right;">Central</th>
+<th style="text-align: right;">High</th>
+<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Offshore substation / conversion</td>
+<td>One converter station</td>
+<td style="text-align: right;"><span class="cost-owned">316 EUR/kW</span></td>
+<td style="text-align: right;"><span class="cost-owned">404 EUR/kW</span></td>
+<td style="text-align: right;"><span class="cost-owned">530 EUR/kW</span></td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Offshore + onshore converter pair</td>
+<td style="text-align: right;"><span class="cost-owned">632 EUR/kW</span></td>
+<td style="text-align: right;"><span class="cost-owned">808 EUR/kW</span></td>
+<td style="text-align: right;"><span class="cost-owned">1,061 EUR/kW</span></td>
+<td><strong>This page</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The adopted central coefficient is 808 EUR/kW for the two-terminal converter pair. No residual project factor is added. Owner development, financing, wider grid works and decommissioning remain outside this coefficient.</p>
+<p>The offshore terminal may require more costly marinised electrical equipment than the onshore terminal. A public offshore-equipment premium separated from platform and installation cost is not currently available, so this is a stated modelling limitation.</p>
+</section>
+</section>
+<section id="complete-station-cost-perspective" class="level2">
+<h2 class="anchored" data-anchor-id="complete-station-cost-perspective">Complete Station-Cost Perspective</h2>
+<p>The physical offshore station also needs a platform, foundation, transport and installation. Those costs are useful context but are not booked on this page.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cost-stack element</th>
+<th style="text-align: right;">Reference value</th>
+<th>Status</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Offshore + onshore converter equipment</td>
+<td style="text-align: right;"><span class="cost-owned">808 EUR/kW</span></td>
+<td>Model central value</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Offshore platform and offshore premium proxy</td>
+<td style="text-align: right;"><span class="cost-reference">544 EUR/kW</span></td>
+<td>DEA offshore-minus-onshore difference; not an adopted standalone platform cost</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+</tr>
+<tr class="odd">
+<td>Platform offshore installation</td>
+<td style="text-align: right;"><span class="cost-reference">TBD</span></td>
+<td>Must be separated from fabrication and equipment</td>
+<td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
+</tr>
+<tr class="even">
+<td>DEA offshore + onshore station pair, platform included</td>
+<td style="text-align: right;"><span class="cost-reference">1,352 EUR/kW</span></td>
+<td>Scope comparator, not added to the rows above</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reference costs are not additional costs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. Only the green converter coefficient is booked here.</p>
+</div>
+</div>
+<p>Public TenneT programme announcements correspond to roughly EUR 1,000–1,170/kW when divided by announced system count and rating <span class="citation" data-cites="tennet2gwProgrammeData hitachiPetrofac2023TenneT geVernova2023TenneT siemensEnergy2023TenneT">(<a href="#ref-tennet2gwProgrammeData" role="doc-biblioref">TenneT 2023</a>; <a href="#ref-hitachiPetrofac2023TenneT" role="doc-biblioref">Hitachi Energy and Petrofac 2023</a>; <a href="#ref-geVernova2023TenneT" role="doc-biblioref">GE Vernova 2023</a>; <a href="#ref-siemensEnergy2023TenneT" role="doc-biblioref">Siemens Energy 2023</a>)</span>. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with the 808 EUR/kW converter-only coefficient.</p>
+</section>
+<section id="conversion-losses" class="level2">
+<h2 class="anchored" data-anchor-id="conversion-losses">Conversion Losses</h2>
+<p>Converter-station losses include semiconductor conduction and switching, transformer copper and core loss, reactors, cooling and station auxiliaries. Supplier loss curves are not yet available, so the model uses aggregate working efficiencies:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Boundary</th>
+<th style="text-align: right;">Working efficiency</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Offshore conversion, transformation and auxiliaries</td>
 <td style="text-align: right;">98.5%</td>
+<td>Applied once offshore</td>
 </tr>
 <tr class="even">
-<td>Onshore substation / conversion</td>
-<td style="text-align: right;">To be confirmed</td>
+<td>Onshore conversion, transformation and auxiliaries</td>
+<td style="text-align: right;">98.5%</td>
+<td>Applied once onshore</td>
 </tr>
 </tbody>
 </table>
+<p>Hitachi Energy reports electrical losses below 1% per converter station for DolWin2 <span class="citation" data-cites="hitachiDolWin2">(<a href="#ref-hitachiDolWin2" role="doc-biblioref">Hitachi Energy, n.d.</a>)</span>. This is an OEM statement for a 900 MW, +/-320 kV symmetrical-monopole system commissioned in 2016; it supports the order of magnitude but is not a guarantee for a 2 GW, +/-525 kV station.</p>
+<p>Together, the two 98.5% terminal values give a working station-pair efficiency of 97.0%. The values include transformers and auxiliaries; no separate substation or transformer factor is applied to the same equipment.</p>
 </section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
+<section id="availability-and-degraded-operation" class="level2">
+<h2 class="anchored" data-anchor-id="availability-and-degraded-operation">Availability and Degraded Operation</h2>
+<p>The legacy model applies 98% availability to each terminal. These are internal energy-equivalent factors, not supplier guarantees. A more physical model distinguishes:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
+<th>State</th>
+<th style="text-align: right;">Available export capacity</th>
+<th>Example cause</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Offshore substation</td>
-<td style="text-align: right;">98.0%</td>
+<td>Both poles and terminals healthy</td>
+<td style="text-align: right;">2 GW</td>
+<td>Normal operation</td>
 </tr>
 <tr class="even">
-<td>Onshore substation</td>
-<td style="text-align: right;">98.0%</td>
+<td>One pole path unavailable</td>
+<td style="text-align: right;">Approximately 1 GW</td>
+<td>Pole converter, transformer or cable outage</td>
+</tr>
+<tr class="odd">
+<td>Both poles unavailable</td>
+<td style="text-align: right;">0 GW</td>
+<td>Common control, auxiliary or platform event</td>
+</tr>
+</tbody>
+</table>
+<p>Capacity-weighted availability is:</p>
+<p><span class="math display">\[
+A_E
+=
+1-
+\frac{\sum_i\Delta P_i\Delta t_i}
+{P_\mathrm{rated}T}.
+\]</span></p>
+<p>Once these states are simulated, the corresponding flat availability factors must be removed.</p>
+</section>
+<section id="current-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="current-assumptions">Current Assumptions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Base case</th>
+<th style="text-align: right;">Sensitivity or next step</th>
+<th>Evidence status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Link rating</td>
+<td style="text-align: right;">2 GW reference</td>
+<td style="text-align: right;">Test discrete link count</td>
+<td>Public TenneT standard</td>
+</tr>
+<tr class="even">
+<td>Pole voltage</td>
+<td style="text-align: right;">+/-525 kV</td>
+<td style="text-align: right;">Fixed for reference design</td>
+<td>Public TenneT standard</td>
+</tr>
+<tr class="odd">
+<td>Converter pair CAPEX, platform excluded</td>
+<td style="text-align: right;">808 EUR/kW</td>
+<td style="text-align: right;">632–1,061 EUR/kW</td>
+<td>DEA onshore-station range applied twice</td>
+</tr>
+<tr class="even">
+<td>Scaling</td>
+<td style="text-align: right;">Linear up to 2 GW</td>
+<td style="text-align: right;">Use complete links above 2 GW</td>
+<td>Screening assumption</td>
+</tr>
+<tr class="odd">
+<td>Offshore aggregate efficiency</td>
+<td style="text-align: right;">98.5%</td>
+<td style="text-align: right;">Replace with supplier loss curve</td>
+<td>Conservative working value</td>
+</tr>
+<tr class="even">
+<td>Onshore aggregate efficiency</td>
+<td style="text-align: right;">98.5%</td>
+<td style="text-align: right;">Replace with supplier loss curve</td>
+<td>Conservative working value</td>
+</tr>
+<tr class="odd">
+<td>Flat station availability</td>
+<td style="text-align: right;">98% per terminal</td>
+<td style="text-align: right;">Replace with capacity states</td>
+<td>Internal convention</td>
+</tr>
+<tr class="even">
+<td>Converter OPEX</td>
+<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">Obtain equipment-specific basis</td>
+<td>Not supplied by CAPEX source</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="installation-and-mass" class="level2">
-<h2 class="anchored" data-anchor-id="installation-and-mass">Installation and Mass</h2>
-<p>The platform and installation portion is currently included in the station package. See <a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a> and <a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a>.</p>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Offshore converter uses the onshore cost coefficient</td>
+<td>Offshore marinisation and logistics premium are not represented in converter CAPEX</td>
+</tr>
+<tr class="even">
+<td>Platform and installation costs remain incompletely separated</td>
+<td>The complete offshore-station cost is not yet a fully additive bottom-up estimate</td>
+</tr>
+<tr class="odd">
+<td>HICP is a general price index</td>
+<td>HVDC equipment escalation may differ from consumer inflation</td>
+</tr>
+<tr class="even">
+<td>Linear EUR/kW scaling</td>
+<td>Discrete equipment and platform thresholds are hidden</td>
+</tr>
+<tr class="odd">
+<td>Constant station efficiencies</td>
+<td>Part-load, no-load and temperature effects are hidden</td>
+</tr>
+<tr class="even">
+<td>Flat terminal availabilities</td>
+<td>Pole redundancy and common-mode failures are simplified</td>
+</tr>
+</tbody>
+</table>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-danishEnergyAgency2025Transport" class="csl-entry" role="listitem">
+Danish Energy Agency. 2025. <em>Technology Data for Energy Transport</em>. Danish Energy Agency. <a href="https://ens.dk/media/7680/download">https://ens.dk/media/7680/download</a>.
+</div>
+<div id="ref-europeanCommission2026Forecast" class="csl-entry" role="listitem">
+European Commission. 2026. <span>“Spring 2026 Economic Forecast: Slowdown in Growth as Energy Shock Drives up Inflation.”</span> May 21. <a href="https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/economic-forecasts/spring-2026-economic-forecast-slowdown-growth-energy-shock-drives-inflation_en">https://economy-finance.ec.europa.eu/economic-forecast-and-surveys/economic-forecasts/spring-2026-economic-forecast-slowdown-growth-energy-shock-drives-inflation_en</a>.
+</div>
+<div id="ref-eurostat2026HICP" class="csl-entry" role="listitem">
+Eurostat. 2026. <span>“<span>HICP</span> – All Items – Annual Average Indices.”</span> No. tec00027. <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00027/default/table">https://ec.europa.eu/eurostat/databrowser/view/tec00027/default/table</a>.
+</div>
+<div id="ref-geVernova2023TenneT" class="csl-entry" role="listitem">
+GE Vernova. 2023. <span>“Two GE Vernova-Led Consortiums in Agreement with TenneT for Contracts Totalling Approximately 10 Billion Euros.”</span> March 30. <a href="https://www.gevernova.com/grid-solutions/news-press/two-ge-vernova-led-consortiums-agreement-tennet-award-contracts-totaling-approx-10-bln">https://www.gevernova.com/grid-solutions/news-press/two-ge-vernova-led-consortiums-agreement-tennet-award-contracts-totaling-approx-10-bln</a>.
+</div>
+<div id="ref-hitachiDolWin2" class="csl-entry" role="listitem">
+Hitachi Energy. n.d. <span>“DolWin2.”</span> Accessed July 14, 2026. <a href="https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2">https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2</a>.
+</div>
+<div id="ref-hitachiPetrofac2023TenneT" class="csl-entry" role="listitem">
+Hitachi Energy, and Petrofac. 2023. <span>“Hitachi Energy and Petrofac Secure Landmark Offshore Wind Agreement Worth Approximately 13 Billion Euros.”</span> March 30. <a href="https://www.hitachienergy.com/us/en/news-and-events/press-releases/2023/03/hitachi-energy-and-petrofac-secure-landmark-offshore-wind-agreement-worth-approximately-13-billion-euros">https://www.hitachienergy.com/us/en/news-and-events/press-releases/2023/03/hitachi-energy-and-petrofac-secure-landmark-offshore-wind-agreement-worth-approximately-13-billion-euros</a>.
+</div>
+<div id="ref-siemensEnergy2023TenneT" class="csl-entry" role="listitem">
+Siemens Energy. 2023. <span>“Siemens Energy to Supply Technology for Three Offshore Grid Connections in the North Sea in Billion-Euro Contract.”</span> April 20. <a href="https://www.siemens-energy.com/global/en/home/press-releases/siemens-energy-supply-technology-three-offshore-grid-connections-north-sea-billion.html">https://www.siemens-energy.com/global/en/home/press-releases/siemens-energy-supply-technology-three-offshore-grid-connections-north-sea-billion.html</a>.
+</div>
 <div id="ref-tennet2gwProgrammeData" class="csl-entry" role="listitem">
-TenneT. n.d. <em>2 GW Offshore Grid Programme Data</em>. Programme data.
+TenneT. 2023. <em>Around <span>EUR</span> 30 Billion: Europe’s Largest-Ever Contracting Package for Security of Supply, the Energy Transition and Climate Protection Launched</em>. Press release. <a href="https://tennet-drupal.s3.eu-central-1.amazonaws.com/default/2023-04/20230420_Press%20release_TenneT_Offshore_english_final_1.pdf">https://tennet-drupal.s3.eu-central-1.amazonaws.com/default/2023-04/20230420_Press%20release_TenneT_Offshore_english_final_1.pdf</a>.
+</div>
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+<div id="ref-tennet2025TwoGWStandard" class="csl-entry" role="listitem">
+TenneT. 2025. <span>“Aansluiten van een windpark met onze 2 gigawatt-standaard.”</span> April. <a href="https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard">https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->

@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -70,6 +89,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid-postprocess-shim.js"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -302,12 +322,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -380,6 +394,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,8 +561,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#current-efficiency-assumptions" id="toc-current-efficiency-assumptions" class="nav-link active" data-scroll-target="#current-efficiency-assumptions">Current Efficiency Assumptions</a></li>
-  <li><a href="#current-availability-assumptions" id="toc-current-availability-assumptions" class="nav-link" data-scroll-target="#current-availability-assumptions">Current Availability Assumptions</a></li>
+  <li><a href="#purpose-and-system-boundary" id="toc-purpose-and-system-boundary" class="nav-link active" data-scroll-target="#purpose-and-system-boundary">Purpose and System Boundary</a></li>
+  <li><a href="#where-to-find-information" id="toc-where-to-find-information" class="nav-link" data-scroll-target="#where-to-find-information">Where to Find Information</a></li>
+  <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
+  <li><a href="#ownership-across-pages" id="toc-ownership-across-pages" class="nav-link" data-scroll-target="#ownership-across-pages">Ownership Across Pages</a></li>
+  <li><a href="#cross-cutting-conventions" id="toc-cross-cutting-conventions" class="nav-link" data-scroll-target="#cross-cutting-conventions">Cross-Cutting Conventions</a></li>
   </ul>
 </nav>
     </div>
@@ -568,74 +591,355 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Electrical infrastructure covers the AC infield network, offshore AC substation, HVDC converter stations, export cable, and onshore grid connection.</p>
-<p>These components are central to the electricity export architecture and partially retained in the centralised hydrogen architecture. They are largely removed from the decentralised hydrogen architecture.</p>
-<section id="current-efficiency-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="current-efficiency-assumptions">Current Efficiency Assumptions</h2>
+<section id="purpose-and-system-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-and-system-boundary">Purpose and System Boundary</h2>
+<p>This page shows how the electrical-infrastructure pages fit together and where each assumption is maintained. It does not introduce separate component assumptions.</p>
+<p>The electrical chain begins after the turbine inverter and before the turbine step-up transformer. For electricity export, it ends at the onshore grid connection point. The reference architecture uses 66 kV AC array collection and a 525 kV HVDC export system based on TenneT’s 2 GW standard <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span>.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg id="mermaid-figure-1" width="672" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="flowchart" viewbox="0 0 2098.359375 70" role="graphics-document document" aria-roledescription="flowchart-v2" height="48">
+<style>#mermaid-figure-1{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-figure-1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .error-icon{fill:#552222;}#mermaid-figure-1 .error-text{fill:#552222;stroke:#552222;}#mermaid-figure-1 .edge-thickness-normal{stroke-width:1px;}#mermaid-figure-1 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-figure-1 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-figure-1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-figure-1 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-figure-1 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-figure-1 .marker{fill:#333333;stroke:#333333;}#mermaid-figure-1 .marker.cross{stroke:#333333;}#mermaid-figure-1 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-figure-1 p{margin:0;}#mermaid-figure-1 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-figure-1 .cluster-label text{fill:#333;}#mermaid-figure-1 .cluster-label span{color:#333;}#mermaid-figure-1 .cluster-label span p{background-color:transparent;}#mermaid-figure-1 .label text,#mermaid-figure-1 span{fill:#333;color:#333;}#mermaid-figure-1 .node rect,#mermaid-figure-1 .node circle,#mermaid-figure-1 .node ellipse,#mermaid-figure-1 .node polygon,#mermaid-figure-1 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-figure-1 .rough-node .label text,#mermaid-figure-1 .node .label text,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-anchor:middle;}#mermaid-figure-1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-figure-1 .rough-node .label,#mermaid-figure-1 .node .label,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-align:center;}#mermaid-figure-1 .node.clickable{cursor:pointer;}#mermaid-figure-1 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-figure-1 .arrowheadPath{fill:#333333;}#mermaid-figure-1 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-figure-1 .flowchart-link{stroke:#333333;fill:none;}#mermaid-figure-1 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-figure-1 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-figure-1 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-figure-1 .cluster text{fill:#333;}#mermaid-figure-1 .cluster span{color:#333;}#mermaid-figure-1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-figure-1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-figure-1 rect.text{fill:none;stroke-width:0;}#mermaid-figure-1 .icon-shape,#mermaid-figure-1 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .icon-shape p,#mermaid-figure-1 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-figure-1 .icon-shape rect,#mermaid-figure-1 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-figure-1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-figure-1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g><marker id="mermaid-1784896514916_flowchart-v2-pointEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1784896514916_flowchart-v2-pointStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="4.5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1784896514916_flowchart-v2-circleEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="11" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1784896514916_flowchart-v2-circleStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="-1" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1784896514916_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="12" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1784896514916_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="-1" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M183.328,35L187.495,35C191.661,35,199.995,35,207.661,35C215.328,35,222.328,35,225.828,35L229.328,35" id="L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTgzLjMyODEyNSwieSI6MzV9LHsieCI6MjA4LjMyODEyNSwieSI6MzV9LHsieCI6MjMzLjMyODEyNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path><path d="M436.406,35L440.573,35C444.74,35,453.073,35,460.74,35C468.406,35,475.406,35,478.906,35L482.406,35" id="L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6NDM2LjQwNjI1LCJ5IjozNX0seyJ4Ijo0NjEuNDA2MjUsInkiOjM1fSx7IngiOjQ4Ni40MDYyNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path><path d="M690.859,35L695.026,35C699.193,35,707.526,35,715.193,35C722.859,35,729.859,35,733.359,35L736.859,35" id="L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6NjkwLjg1OTM3NSwieSI6MzV9LHsieCI6NzE1Ljg1OTM3NSwieSI6MzV9LHsieCI6NzQwLjg1OTM3NSwieSI6MzV9XQ==" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path><path d="M960.813,35L964.979,35C969.146,35,977.479,35,985.146,35C992.813,35,999.813,35,1003.313,35L1006.813,35" id="L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6OTYwLjgxMjUsInkiOjM1fSx7IngiOjk4NS44MTI1LCJ5IjozNX0seyJ4IjoxMDEwLjgxMjUsInkiOjM1fV0=" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path><path d="M1237.797,35L1241.964,35C1246.13,35,1254.464,35,1262.13,35C1269.797,35,1276.797,35,1280.297,35L1283.797,35" id="L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6MTIzNy43OTY4NzUsInkiOjM1fSx7IngiOjEyNjIuNzk2ODc1LCJ5IjozNX0seyJ4IjoxMjg3Ljc5Njg3NSwieSI6MzV9XQ==" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path><path d="M1545.25,35L1549.417,35C1553.583,35,1561.917,35,1569.583,35C1577.25,35,1584.25,35,1587.75,35L1591.25,35" id="L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MTU0NS4yNSwieSI6MzV9LHsieCI6MTU3MC4yNSwieSI6MzV9LHsieCI6MTU5NS4yNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path><path d="M1819.156,35L1823.323,35C1827.49,35,1835.823,35,1843.49,35C1851.156,35,1858.156,35,1861.656,35L1865.156,35" id="L_G_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6MTgxOS4xNTYyNSwieSI6MzV9LHsieCI6MTg0NC4xNTYyNSwieSI6MzV9LHsieCI6MTg2OS4xNTYyNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1784896514916_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_F_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_G_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_H_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-0" transform="translate(95.6640625, 35)"><rect class="basic label-container" style="" x="-87.6640625" y="-27" width="175.328125" height="54"></rect><g class="label" style="" transform="translate(-57.6640625, -12)"><rect></rect><foreignobject width="115.328125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Turbine inverter
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-B-1" transform="translate(334.8671875, 35)"><rect class="basic label-container" style="" x="-101.5390625" y="-27" width="203.078125" height="54"></rect><g class="label" style="" transform="translate(-71.5390625, -12)"><rect></rect><foreignobject width="143.078125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Turbine transformer
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-C-3" transform="translate(588.6328125, 35)"><rect class="basic label-container" style="" x="-102.2265625" y="-27" width="204.453125" height="54"></rect><g class="label" style="" transform="translate(-72.2265625, -12)"><rect></rect><foreignobject width="144.453125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+66 kV array network
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-D-5" transform="translate(850.8359375, 35)"><rect class="basic label-container" style="" x="-109.9765625" y="-27" width="219.953125" height="54"></rect><g class="label" style="" transform="translate(-79.9765625, -12)"><rect></rect><foreignobject width="159.953125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Offshore AC collection
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-E-7" transform="translate(1124.3046875, 35)"><rect class="basic label-container" style="" x="-113.4921875" y="-27" width="226.984375" height="54"></rect><g class="label" style="" transform="translate(-83.4921875, -12)"><rect></rect><foreignobject width="166.984375" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Offshore VSC converter
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-F-9" transform="translate(1416.5234375, 35)"><rect class="basic label-container" style="" x="-128.7265625" y="-27" width="257.453125" height="54"></rect><g class="label" style="" transform="translate(-98.7265625, -12)"><rect></rect><foreignobject width="197.453125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+±525 kV HVDC cable system
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-G-11" transform="translate(1707.203125, 35)"><rect class="basic label-container" style="" x="-111.953125" y="-27" width="223.90625" height="54"></rect><g class="label" style="" transform="translate(-81.953125, -12)"><rect></rect><foreignobject width="163.90625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Onshore VSC converter
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-H-13" transform="translate(1979.7578125, 35)"><rect class="basic label-container" style="" x="-110.6015625" y="-27" width="221.203125" height="54"></rect><g class="label" style="" transform="translate(-80.6015625, -12)"><rect></rect><foreignobject width="161.203125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Onshore grid interface
+</p>
+</span>
+</div>
+</foreignobject></g></g></g></g></g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="where-to-find-information" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-find-information">Where to Find Information</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Efficiency</th>
+<th>Information required</th>
+<th>Canonical page</th>
+<th>Coverage</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Transformer</td>
-<td style="text-align: right;">99.5%</td>
+<td>Array topology and string count</td>
+<td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a></td>
+<td>66 kV layout, cable sizing, feeder-interface checks and routing length</td>
 </tr>
 <tr class="even">
-<td>Infield AC grid</td>
-<td style="text-align: right;">98.0%</td>
+<td>Array-cable material cost and electrical performance</td>
+<td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a></td>
+<td>Material CAPEX, losses, reliability and availability</td>
 </tr>
 <tr class="odd">
-<td>Offshore substation</td>
-<td style="text-align: right;">98.5%</td>
+<td>Offshore and onshore converter stations</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+<td>Reference configuration, converter CAPEX, conversion efficiency and station availability</td>
 </tr>
 <tr class="even">
-<td>HVDC export cable</td>
-<td style="text-align: right;">99.5%</td>
+<td>HVDC export-cable system</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+<td>Cable topology, material CAPEX, resistance losses, reliability and availability</td>
 </tr>
 <tr class="odd">
-<td>Onshore substation</td>
-<td style="text-align: right;">To be confirmed</td>
+<td>Onshore connection</td>
+<td><a href="../electrical_infra/onshore_grid_connection.html">Onshore Grid Connection</a></td>
+<td>Converter-site interface, grid connection, grid-code requirements and wider reinforcement boundary</td>
+</tr>
+<tr class="even">
+<td>Array and export-cable installation</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+<td>Route preparation, laying, burial, landfall, pull-ins and testing</td>
+</tr>
+<tr class="odd">
+<td>Offshore support structure</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+<td>Topside structure, support structure and foundation</td>
+</tr>
+<tr class="even">
+<td>Platform offshore installation</td>
+<td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
+<td>Transport, foundation installation, topside installation, hookup and commissioning</td>
+</tr>
+<tr class="odd">
+<td>Turbine transformer</td>
+<td><a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a></td>
+<td>Turbine electrical equipment before the array-network boundary</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="current-availability-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="current-availability-assumptions">Current Availability Assumptions</h2>
+<section id="architecture-applicability" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Component</th>
-<th style="text-align: right;">Availability</th>
+<th style="text-align: center;">Electricity export</th>
+<th style="text-align: center;">Centralised hydrogen</th>
+<th style="text-align: center;">Decentralised hydrogen</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Infield AC grid</td>
-<td style="text-align: right;">99.0%</td>
+<td>Turbine step-up transformer</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Removed from the main conversion path</td>
 </tr>
 <tr class="even">
-<td>Offshore substation</td>
-<td style="text-align: right;">98.0%</td>
+<td>66 kV array network</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Replaced by hydrogen collection</td>
 </tr>
 <tr class="odd">
-<td>HVDC export cable</td>
-<td style="text-align: right;">99.0%</td>
+<td>Offshore AC aggregation</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Used, without HVDC export equipment</td>
+<td style="text-align: center;">No central station</td>
 </tr>
 <tr class="even">
-<td>Onshore substation</td>
-<td style="text-align: right;">98.0%</td>
+<td>Offshore and onshore HVDC converters</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
+</tr>
+<tr class="odd">
+<td>HVDC export-cable system</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
+</tr>
+<tr class="even">
+<td>Onshore electrical grid connection</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
 </tr>
 </tbody>
 </table>
+<p>The centralised-hydrogen architecture diverges from electricity export at the offshore collection point. Its transformer and rectifier assumptions are maintained on <a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a>.</p>
+</section>
+<section id="ownership-across-pages" class="level2">
+<h2 class="anchored" data-anchor-id="ownership-across-pages">Ownership Across Pages</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Asset or function</th>
+<th>Equipment or material owner</th>
+<th>Installation owner</th>
+<th>Loss and availability owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turbine transformer</td>
+<td><a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a></td>
+<td>Turbine installation scope</td>
+<td>Generator and power-electronics page</td>
+</tr>
+<tr class="even">
+<td>Array cables, joints and terminations</td>
+<td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a></td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+<td>Infield AC Cables</td>
+</tr>
+<tr class="odd">
+<td>Offshore collection switchgear, converter transformers and VSC equipment</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+<td>Converter package and <a href="../offshore_installation/platform_and_substation_installation.html">Platform Installation</a>, as applicable</td>
+<td>HVDC Converter Stations</td>
+</tr>
+<tr class="even">
+<td>Offshore support structure and foundation</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+<td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
+<td>Common-mode station states on HVDC Converter Stations</td>
+</tr>
+<tr class="odd">
+<td>HVDC pole, return and communication cables</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+<td>HVDC Export Cables</td>
+</tr>
+<tr class="even">
+<td>Landfall and underground cable route</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+<td>HVDC Export Cables</td>
+</tr>
+<tr class="odd">
+<td>Onshore grid interface and wider reinforcement</td>
+<td><a href="../electrical_infra/onshore_grid_connection.html">Onshore Grid Connection</a></td>
+<td>Onshore project scope</td>
+<td>Onshore Grid Connection</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Book each cost and performance effect once
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Component pages may repeat linked values to put their own scope in perspective. The owner columns determine where a value is booked. Grey cost labels are references to another page; green labels identify costs owned by the page on which they appear.</p>
+<p>The same rule applies to performance: a detailed loss or outage calculation replaces the corresponding flat efficiency or availability factor rather than being added to it.</p>
+</div>
+</div>
+</section>
+<section id="cross-cutting-conventions" class="level2">
+<h2 class="anchored" data-anchor-id="cross-cutting-conventions">Cross-Cutting Conventions</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Question</th>
+<th>Where it is handled</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electricity-export architecture and the 2 GW link basis</td>
+<td><a href="../architectures/electricity_export_hvdc.html">Electricity Export with HVDC</a></td>
+</tr>
+<tr class="even">
+<td>Discrete infrastructure choices in the optimisation</td>
+<td><a href="../methodology/optimisation_variables.html">Optimisation Variables</a></td>
+</tr>
+<tr class="odd">
+<td>Delivered-energy boundary and component availability</td>
+<td><a href="../methodology/energy_availability_and_annualisation.html">Energy, Availability, and Annualisation</a></td>
+</tr>
+<tr class="even">
+<td>LCOE system boundary</td>
+<td><a href="../methodology/system_boundary_and_lcoe.html">System Boundary and LCOE</a></td>
+</tr>
+<tr class="odd">
+<td>Currency, inflation and annualisation</td>
+<td><a href="../shared_model_inputs/financial_assumptions.html">Financial Assumptions</a></td>
+</tr>
+<tr class="even">
+<td>CAPEX, OPEX and cost-booking conventions</td>
+<td><a href="../shared_model_inputs/capex_opex_conventions.html">CAPEX and OPEX Conventions</a></td>
+</tr>
+</tbody>
+</table>
+<p>Use the component pages for values, evidence and limitations; use this page only to identify the correct component and accounting owner.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+<div id="ref-tennet2025TwoGWStandard" class="csl-entry" role="listitem">
+TenneT. 2025. <span>“Aansluiten van een windpark met onze 2 gigawatt-standaard.”</span> April. <a href="https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard">https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

@@ -90,6 +90,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -321,12 +350,6 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -399,6 +422,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -560,10 +589,18 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#current-assumptions" id="toc-current-assumptions" class="nav-link" data-scroll-target="#current-assumptions">Current Assumptions</a></li>
-  <li><a href="#cost-drivers" id="toc-cost-drivers" class="nav-link" data-scroll-target="#cost-drivers">Cost Drivers</a></li>
-  <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
+  <li><a href="#role-and-cost-boundary" id="toc-role-and-cost-boundary" class="nav-link active" data-scroll-target="#role-and-cost-boundary">Role and Cost Boundary</a></li>
+  <li><a href="#export-cable-installation-reference" id="toc-export-cable-installation-reference" class="nav-link" data-scroll-target="#export-cable-installation-reference">Export-Cable Installation Reference</a></li>
+  <li><a href="#installed-system-cross-checks" id="toc-installed-system-cross-checks" class="nav-link" data-scroll-target="#installed-system-cross-checks">Installed-System Cross-Checks</a>
+  <ul class="collapse">
+  <li><a href="#adriatic-link" id="toc-adriatic-link" class="nav-link" data-scroll-target="#adriatic-link">Adriatic Link</a></li>
+  <li><a href="#danish-energy-agency" id="toc-danish-energy-agency" class="nav-link" data-scroll-target="#danish-energy-agency">Danish Energy Agency</a></li>
+  </ul></li>
+  <li><a href="#existing-internal-assumptions" id="toc-existing-internal-assumptions" class="nav-link" data-scroll-target="#existing-internal-assumptions">Existing Internal Assumptions</a></li>
+  <li><a href="#installation-sequence" id="toc-installation-sequence" class="nav-link" data-scroll-target="#installation-sequence">Installation Sequence</a></li>
+  <li><a href="#bottom-up-cost-model" id="toc-bottom-up-cost-model" class="nav-link" data-scroll-target="#bottom-up-cost-model">Bottom-Up Cost Model</a></li>
+  <li><a href="#principal-cost-drivers" id="toc-principal-cost-drivers" class="nav-link" data-scroll-target="#principal-cost-drivers">Principal Cost Drivers</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -589,57 +626,304 @@ div.csl-indent {
 </header>
 
 
-<section id="role-in-the-model" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>Cable installation covers laying, burial, pull-in, mobilisation, and other installation activities for infield and export electrical cables.</p>
-</section>
-<section id="current-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="current-assumptions">Current Assumptions</h2>
+<section id="role-and-cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-cost-boundary">Role and Cost Boundary</h2>
+<p>This page owns marine and terrestrial installation of infield and export cables: mobilisation, route preparation, laying, burial or trenching, protection, pull-ins, installation jointing, testing and reinstatement. Cable manufacture is costed on the relevant cable page.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Physical scope</th>
+<th>Treatment</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cable manufacture and supply accessories</td>
+<td>Excluded</td>
+<td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a> or <a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+</tr>
+<tr class="even">
+<td>Route preparation and clearance</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Marine laying and burial</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Landfall, trenching, ducts and reinstatement</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Pull-ins, installation joints and testing</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Major crossings, tunnels and exceptional protection</td>
+<td>Included here when specified separately</td>
+<td><strong>This page</strong></td>
+</tr>
+</tbody>
+</table>
+<p><span class="cost-owned">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
+</section>
+<section id="export-cable-installation-reference" class="level2">
+<h2 class="anchored" data-anchor-id="export-cable-installation-reference">Export-Cable Installation Reference</h2>
+<p>The NREL Atlantic Offshore Wind Transmission Study separates material and installation for a 525 kV, 2 GW HVDC bipole <span class="citation" data-cites="brinkman2024AtlanticTransmission">(<a href="#ref-brinkman2024AtlanticTransmission" role="doc-biblioref"><span class="nocase">Brinkman et al.</span> 2024</a>)</span>. The values below use the ECB 2025 annual-average exchange rate of 1 EUR = 1.1300 USD <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>NREL component</th>
+<th style="text-align: right;">Converted route cost</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cable material</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 2.51 million/km</span></td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+</tr>
+<tr class="even">
+<td>Cable installation</td>
+<td style="text-align: right;"><span class="cost-owned">EUR 1.48 million/km</span></td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Material + installation</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 4.00 million/km</span></td>
+<td>Shared perspective only</td>
+</tr>
+</tbody>
+</table>
+<p>The conversion changes currency only. The NREL price year, route conditions, landfall scope and compatibility with TenneT’s dedicated metallic-return design must still be confirmed before using it as a constant-2026-euro model input.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Significant installation cost favours higher-capacity assets
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the NREL reference, installation is about EUR 1.48 million/km compared with EUR 2.51 million/km for cable material. Much of the installation cost is driven by the route, mobilisation, vessel campaign, burial, crossings and pull-ins rather than increasing directly with transmitted capacity. This creates an economic tendency to use higher-capacity cables—and similarly higher-capacity <a href="../offshore_installation/pipeline_installation.html">pipelines</a>—because the route-installation cost is spread over more transported power or product.</p>
+<p>That tendency is not unlimited. Cable mass, handling limits, manufacturing availability, electrical losses, redundancy requirements and the consequence of losing one large asset can favour multiple smaller systems.</p>
+</div>
+</div>
+</section>
+<section id="installed-system-cross-checks" class="level2">
+<h2 class="anchored" data-anchor-id="installed-system-cross-checks">Installed-System Cross-Checks</h2>
+<section id="adriatic-link" class="level3">
+<h3 class="anchored" data-anchor-id="adriatic-link">Adriatic Link</h3>
+<p>Prysmian’s 2023 Adriatic Link award is approximately EUR 630 million for design, supply, installation and commissioning of a 1 GW bipolar link with about 210 km subsea and 40 km underground route <span class="citation" data-cites="prysmian2023AdriaticLink">(<a href="#ref-prysmian2023AdriaticLink" role="doc-biblioref">Prysmian Group 2023</a>)</span>. This is EUR 2.52 million/km across the mixed route.</p>
+<p>Applying the DEA underground-to-subsea cost ratio and the report’s 2023-to-2026 restatement factor gives an inferred 2026 subsea rate of EUR 2.60 million/km.</p>
+<p>This remains a <strong>complete installed-system</strong> inference. The contract does not disclose its material/installation split.</p>
+</section>
+<section id="danish-energy-agency" class="level3">
+<h3 class="anchored" data-anchor-id="danish-energy-agency">Danish Energy Agency</h3>
+<p>The DEA gives 2025 planning values at the 2020 price level for a 1.5–2 GW DC cable system <span class="citation" data-cites="danishEnergyAgency2025Transport">(<a href="#ref-danishEnergyAgency2025Transport" role="doc-biblioref">Danish Energy Agency 2025</a>)</span>. At 2 GW and restated to 2026 euros, they give:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>DEA EPC route</th>
+<th style="text-align: right;">2026-euro reference</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Subsea DC cable system</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 8.14 million/km</span></td>
+<td>Equipment plus installation/EPC context at 2 GW</td>
+</tr>
+<tr class="even">
+<td>Underground DC cable system</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 10.28 million/km</span></td>
+<td>Equipment plus installation/EPC context at 2 GW</td>
+</tr>
+</tbody>
+</table>
+<p>These are not installation-only values.</p>
+</section>
+</section>
+<section id="existing-internal-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="existing-internal-assumptions">Existing Internal Assumptions</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Installation item</th>
+<th style="text-align: right;">Route cost</th>
+<th style="text-align: right;">Interpretation</th>
+<th>Status</th>
+<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Infield cable installation</td>
-<td style="text-align: right;">635 EUR/m</td>
+<td style="text-align: right;"><span class="cost-owned">EUR 635,000 per laid cable-km</span></td>
+<td style="text-align: right;">Individual array-cable route</td>
+<td>Current internal assumption</td>
+<td><strong>This page</strong></td>
 </tr>
 <tr class="even">
 <td>Export cable installation</td>
-<td style="text-align: right;">635 EUR/m</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 635,000 per system route-km</span></td>
+<td style="text-align: right;">Complete-system scope is unresolved</td>
+<td>Not adopted</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>NREL export installation</td>
+<td style="text-align: right;"><span class="cost-owned">EUR 1.48 million per system route-km</span></td>
+<td style="text-align: right;">Complete 525 kV, 2 GW bipole reference</td>
+<td>Provisional replacement reference</td>
+<td><strong>This page</strong></td>
 </tr>
 </tbody>
 </table>
-<p>The source material also cites an installer benchmark for Vanguard East and West <span class="citation" data-cites="installerInfieldCableBenchmark">(<a href="#ref-installerInfieldCableBenchmark" role="doc-biblioref">Installer Benchmark, n.d.</a>)</span>: 192 turbines, about 3 GW total, 452 km of infield cabling, and 600 million EUR in cabling installation-related cost. This corresponds to roughly 1,300 EUR/m or about 200 EUR/kW of wind farm capacity.</p>
-<p>The current model value of 635 EUR/m should therefore be treated as a specific modelling assumption that may need reconciliation with the benchmark once scope is finalised.</p>
+<p>The identical EUR 635,000/km assumptions for an individual infield cable and a complete HVDC system do not demonstrate equal physical installation cost. The export value remains excluded from the model until its scope is reconciled.</p>
+<p>The installer benchmark for Vanguard East and West records about EUR 600 million of installation-related cost for 452 km of infield cabling, approximately EUR 1.3 million/km <span class="citation" data-cites="installerInfieldCableBenchmark">(<a href="#ref-installerInfieldCableBenchmark" role="doc-biblioref">Installer Benchmark, n.d.</a>)</span>. It is an upper contextual comparison because its package scope may include mobilisation, pull-ins, jointing and project overheads.</p>
 </section>
-<section id="cost-drivers" class="level2">
-<h2 class="anchored" data-anchor-id="cost-drivers">Cost Drivers</h2>
-<p>Installation cost depends on:</p>
-<ul>
-<li>route length</li>
-<li>number of cable strings</li>
-<li>number of pull-ins</li>
-<li>burial requirements</li>
-<li>vessel day rate</li>
-<li>laying speed</li>
-<li>crossing and routing complexity</li>
-</ul>
+<section id="installation-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="installation-sequence">Installation Sequence</h2>
+<p>The route-specific model should cover:</p>
+<ol type="1">
+<li>surveys, clearance and pre-lay grapnel runs;</li>
+<li>cable load-out and transport;</li>
+<li>marine laying and simultaneous or post-lay burial;</li>
+<li>crossings and external protection;</li>
+<li>offshore pull-in and termination support;</li>
+<li>landfall, trenching or directional drilling;</li>
+<li>terrestrial installation and reinstatement; and</li>
+<li>testing and as-laid/as-buried survey.</li>
+</ol>
 </section>
-<section id="architecture-applicability" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
-<p>Cable installation applies to electricity export and centralised hydrogen architectures. It is largely removed from decentralised hydrogen except for any residual electrical systems.</p>
+<section id="bottom-up-cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="bottom-up-cost-model">Bottom-Up Cost Model</h2>
+<p><span class="math display">\[
+C_\mathrm{cable\ installation}
+=
+C_\mathrm{mobilisation}
++\sum_v r_vt_v
++C_\mathrm{landfall}
++C_\mathrm{crossings}
++C_\mathrm{civil}
++C_\mathrm{testing}.
+\]</span></p>
+<p>The model must distinguish individual cable-kilometres from system route-kilometres and account for separate pole, return and communication cables where applicable.</p>
+</section>
+<section id="principal-cost-drivers" class="level2">
+<h2 class="anchored" data-anchor-id="principal-cost-drivers">Principal Cost Drivers</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Driver</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Number and mass of physical cables</td>
+<td>Controls campaigns, load-outs and vessel capacity</td>
+</tr>
+<tr class="even">
+<td>Burial depth and soil</td>
+<td>Controls tool selection and production rate</td>
+</tr>
+<tr class="odd">
+<td>Crossings and rock placement</td>
+<td>Add materials, vessels and schedule</td>
+</tr>
+<tr class="even">
+<td>Landfall method</td>
+<td>Open cut, trenching and directional drilling have different cost structures</td>
+</tr>
+<tr class="odd">
+<td>Weather and vessel availability</td>
+<td>Affect waiting time and mobilisation risk</td>
+</tr>
+<tr class="even">
+<td>Jointing strategy</td>
+<td>Controls offshore or onshore jointing time and repair compatibility</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NREL source price year is unresolved</td>
+<td>The euro conversion is not yet a constant-2026-euro input</td>
+</tr>
+<tr class="even">
+<td>Installed benchmarks bundle material and installation</td>
+<td>They are validation points, not installation coefficients</td>
+</tr>
+<tr class="odd">
+<td>Existing export EUR 635,000/km scope is unresolved</td>
+<td>It is not used as the adopted HVDC installation cost</td>
+</tr>
+<tr class="even">
+<td>Route and vessel schedule are not yet parameterised</td>
+<td>Site-specific installation cost remains unavailable</td>
+</tr>
+</tbody>
+</table>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-brinkman2024AtlanticTransmission" class="csl-entry" role="listitem">
+<span class="nocase">Brinkman, Gregory, Mike Bannister, Sophie Bredenkamp, Lanaia Carveth, Dave Corbus, et al.</span> 2024. <em>Atlantic Offshore Wind Transmission Study</em>. NREL/TP-5000-88003. National Renewable Energy Laboratory; Pacific Northwest National Laboratory. <a href="https://doi.org/10.2172/2327027">https://doi.org/10.2172/2327027</a>.
+</div>
+<div id="ref-danishEnergyAgency2025Transport" class="csl-entry" role="listitem">
+Danish Energy Agency. 2025. <em>Technology Data for Energy Transport</em>. Danish Energy Agency. <a href="https://ens.dk/media/7680/download">https://ens.dk/media/7680/download</a>.
+</div>
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
 <div id="ref-installerInfieldCableBenchmark" class="csl-entry" role="listitem">
 Installer Benchmark. n.d. <em>Offshore Infield Cable Installation Benchmark</em>. Installation benchmark.
+</div>
+<div id="ref-prysmian2023AdriaticLink" class="csl-entry" role="listitem">
+Prysmian Group. 2023. <span>“Prysmian Secures the EUR 630m Adriatic Link Submarine Cable Project from Terna.”</span> September 7. <a href="https://www.prysmian.com/en/media/press-releases/prysmian-secures-the-euro-630m-adriatic-link-submarine-able-project-from-terna">https://www.prysmian.com/en/media/press-releases/prysmian-secures-the-euro-630m-adriatic-link-submarine-able-project-from-terna</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Offshore AC Substation – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Hydrogen Infield Infrastructure – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../electrical_infra/overview.html">Electrical Infrastructure</a></li><li class="breadcrumb-item"><a href="../electrical_infra/offshore_ac_substation.html">Offshore AC Substation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></li><li class="breadcrumb-item"><a href="../hydrogen_infra/infield_infrastructure.html">Hydrogen Infield Infrastructure</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -302,12 +350,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -380,6 +422,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,20 +589,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#installation-and-mass" id="toc-installation-and-mass" class="nav-link" data-scroll-target="#installation-and-mass">Installation and Mass</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
+  <li><a href="#proposed-ladder-layout" id="toc-proposed-ladder-layout" class="nav-link" data-scroll-target="#proposed-ladder-layout">Proposed Ladder Layout</a></li>
+  <li><a href="#pipeline-length-model" id="toc-pipeline-length-model" class="nav-link" data-scroll-target="#pipeline-length-model">Pipeline-Length Model</a></li>
+  <li><a href="#reference-calculation" id="toc-reference-calculation" class="nav-link" data-scroll-target="#reference-calculation">Reference Calculation</a></li>
+  <li><a href="#scope-of-the-length-result" id="toc-scope-of-the-length-result" class="nav-link" data-scroll-target="#scope-of-the-length-result">Scope of the Length Result</a></li>
+  <li><a href="#capacity-and-redundancy-checks" id="toc-capacity-and-redundancy-checks" class="nav-link" data-scroll-target="#capacity-and-redundancy-checks">Capacity and Redundancy Checks</a></li>
+  <li><a href="#current-model-inputs" id="toc-current-model-inputs" class="nav-link" data-scroll-target="#current-model-inputs">Current Model Inputs</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../electrical_infra/overview.html">Electrical Infrastructure</a></li><li class="breadcrumb-item"><a href="../electrical_infra/offshore_ac_substation.html">Offshore AC Substation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></li><li class="breadcrumb-item"><a href="../hydrogen_infra/infield_infrastructure.html">Hydrogen Infield Infrastructure</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Offshore AC Substation</h1>
+<h1 class="title">Hydrogen Infield Infrastructure</h1>
 </div>
 
 
@@ -571,57 +621,219 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The offshore AC substation aggregates the infield AC network. In the electricity architecture, it forms part of the path toward HVDC conversion. In the centralised hydrogen architecture, it feeds the offshore electrolyser facility.</p>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>Hydrogen infield infrastructure collects compressed hydrogen from turbine-integrated electrolysers and delivers it to the export-pipeline connection. It applies only to the decentralised hydrogen architecture. The electricity-export and centralised-hydrogen architectures use 66 kV AC infield cables.</p>
+<p>This page defines the proposed network topology and the analytical pipeline-length model. Pipeline material, pressure and capacity are covered on <a href="../hydrogen_infra/hydrogen_pipelines.html">Hydrogen Pipelines</a>. Installation is covered on <a href="../offshore_installation/pipeline_installation.html">Pipeline Installation</a>.</p>
 </section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The offshore substation cost is currently bundled with the HVDC station assumptions where the source refers to a 2 GW offshore station package. For centralised hydrogen, the same platform cost basis is used for the central electrolyser platform unless refined separately.</p>
+<section id="proposed-ladder-layout" class="level2">
+<h2 class="anchored" data-anchor-id="proposed-ladder-layout">Proposed Ladder Layout</h2>
+<p>The proposed network is a ladder. Two longitudinal header pipelines run along opposite sides of the turbine field. Cross-farm pipelines form the rungs. Turbines connect directly to the rung that passes through their row.</p>
+<div id="fig-hydrogen-infield-ladder" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hydrogen-infield-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/hydrogen-infield-ladder.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hydrogen-infield-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Proposed hydrogen infield ladder. The number of rungs and turbines shown is schematic.
+</figcaption>
+</figure>
+</div>
+<p>The layout is used for four reasons:</p>
+<ul>
+<li>A 6 inch composite pipeline at 150 bar is assumed to carry about 500 MW of hydrogen on an HHV-equivalent basis. One rung can therefore collect a complete turbine row without the 60–70 MW string limit of a 66 kV AC cable <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</li>
+<li>Each turbine can send hydrogen to either header. Isolation of one local rung or header segment does not automatically isolate every turbine behind that segment.</li>
+<li>The regular grid follows the turbine rows and avoids a separate radial route from every turbine to a central platform.</li>
+<li>Flexible composite pipe can be supplied in long reeled lengths. This suits repeated infield runs and reduces the number of offshore field joints relative to rigid steel pipe <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</li>
+</ul>
+<p>The topology provides two <strong>infield</strong> paths, not two independent export systems. Both paths ultimately reach the same export-pipeline interface. Valves, isolation philosophy and the capacity of the remaining path determine whether the redundancy can be used after a fault.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
+<section id="pipeline-length-model" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline-length-model">Pipeline-Length Model</h2>
+<p>The screening model assumes:</p>
+<ul>
+<li>a square wind-farm area;</li>
+<li>evenly spaced turbines arranged in approximately square rows;</li>
+<li>two headers, each equal to one farm side;</li>
+<li>each rung spans one farm side; and</li>
+<li>the number of rungs is approximated by the square root of turbine count.</li>
+</ul>
+<p>For farm area <span class="math inline">\(A_\mathrm{farm}\)</span> in km<span class="math inline">\(^2\)</span>, the side length is:</p>
+<p><span class="math display">\[
+s=\sqrt{A_\mathrm{farm}}.
+\]</span></p>
+<p>For <span class="math inline">\(N_\mathrm{turb}\)</span> turbines, the continuous estimate of rung count is:</p>
+<p><span class="math display">\[
+n_\mathrm{rung}=\sqrt{N_\mathrm{turb}}.
+\]</span></p>
+<p>Rung length and header length are:</p>
+<p><span class="math display">\[
+L_\mathrm{rungs}
+=
+n_\mathrm{rung}s,
+\qquad
+L_\mathrm{headers}
+=
+2s.
+\]</span></p>
+<p>The total horizontal infield pipeline length is therefore:</p>
+<p><span class="math display">\[
+\boxed{
+L_\mathrm{infield}
+=
+\sqrt{A_\mathrm{farm}}
+\left(
+\sqrt{N_\mathrm{turb}}+2
+\right)
+}
+\]</span></p>
+<p>with <span class="math inline">\(L_\mathrm{infield}\)</span> in km when <span class="math inline">\(A_\mathrm{farm}\)</span> is in km<span class="math inline">\(^2\)</span> <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</p>
+<p>This continuous form is suitable for optimisation. A physical layout requires an integer number of rows. For a conservative square-grid representation, use:</p>
+<p><span class="math display">\[
+n_\mathrm{rung,int}
+=
+\left\lceil
+\sqrt{N_\mathrm{turb}}
+\right\rceil,
+\qquad
+L_\mathrm{infield,int}
+=
+\sqrt{A_\mathrm{farm}}
+\left(
+n_\mathrm{rung,int}+2
+\right).
+\]</span></p>
+</section>
+<section id="reference-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="reference-calculation">Reference Calculation</h2>
+<p>The reference farm has an area of 200 km<span class="math inline">\(^2\)</span> and a nominal capacity of 2 GW. With 15 MW turbines, the required turbine count is:</p>
+<p><span class="math display">\[
+N_\mathrm{turb}
+=
+\left\lceil
+\frac{2{,}000}{15}
+\right\rceil
+=
+134.
+\]</span></p>
+<p>The farm side length and continuous rung estimate are:</p>
+<p><span class="math display">\[
+s=\sqrt{200}=14.142\ \mathrm{km},
+\qquad
+n_\mathrm{rung}=\sqrt{134}=11.576.
+\]</span></p>
+<p>The modelled pipeline length is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+L_\mathrm{infield}
+&amp;=
+14.142(11.576+2) \\
+&amp;=
+\boxed{192.0\ \mathrm{km}}.
+\end{aligned}
+\]</span></p>
+<p>If the layout is represented with 12 complete rungs:</p>
+<p><span class="math display">\[
+L_\mathrm{infield,int}
+=
+14.142(12+2)
+=
+\boxed{198.0\ \mathrm{km}}.
+\]</span></p>
+<p>The optimisation model should use 192.0 km if it retains the continuous approximation. A routed design with 12 physical rows should start from 198.0 km before project-specific adjustments.</p>
+</section>
+<section id="scope-of-the-length-result" class="level2">
+<h2 class="anchored" data-anchor-id="scope-of-the-length-result">Scope of the Length Result</h2>
+<p>The calculated length includes the horizontal rungs and the two horizontal headers. It excludes:</p>
+<ul>
+<li>the export pipeline from the farm boundary to shore;</li>
+<li>turbine risers, local tie-ins and short spool pieces;</li>
+<li>the export manifold and header-to-export connections;</li>
+<li>route deviations around seabed constraints, crossings and exclusion zones;</li>
+<li>installation slack and contingency; and</li>
+<li>parallel pipe added where segment capacity is insufficient.</li>
+</ul>
+<p>No 20% routing allowance is included in the current hydrogen base case. The source applies that allowance to the analytical AC-cable layout, not to the hydrogen ladder. A separate routing factor may be applied before detailed routing:</p>
+<p><span class="math display">\[
+L_\mathrm{routed}
+=
+L_\mathrm{infield}
+\left(1+f_\mathrm{route}\right).
+\]</span></p>
+<p>Do not apply this factor to a GIS-derived route that already includes deviations and slack.</p>
+</section>
+<section id="capacity-and-redundancy-checks" class="level2">
+<h2 class="anchored" data-anchor-id="capacity-and-redundancy-checks">Capacity and Redundancy Checks</h2>
+<p>The length equation defines geometry only. It does not prove that every segment can carry the required flow.</p>
+<p>The 500 MW-equivalent assumption supports the claim that one 6 inch rung can serve a turbine row. Header flow is higher because successive rungs add hydrogen. Header diameter, pressure drop and fault-state capacity must therefore be checked segment by segment. The current model does not yet perform this check and should not assume that every header segment can remain 6 inch.</p>
+<p>The same limitation applies to redundancy. An alternative route is useful only if isolation valves can separate the failed section and the remaining pipeline path has enough capacity. The present assumption of 100% infield-pipeline availability is a modelling convention, not a reliability result.</p>
+</section>
+<section id="current-model-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="current-model-inputs">Current Model Inputs</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Efficiency</th>
+<th>Parameter</th>
+<th style="text-align: right;">Base case</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Offshore substation</td>
-<td style="text-align: right;">98.5%</td>
+<td>Architecture</td>
+<td style="text-align: right;">Decentralised hydrogen</td>
 </tr>
-</tbody>
-</table>
-</section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
+<tr class="even">
+<td>Topology</td>
+<td style="text-align: right;">Two-header ladder</td>
 </tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td>Offshore substation</td>
-<td style="text-align: right;">98.0%</td>
+<td>Infield pipeline diameter</td>
+<td style="text-align: right;">6 inch screening assumption</td>
+</tr>
+<tr class="even">
+<td>Infield pressure</td>
+<td style="text-align: right;">150 bar</td>
+</tr>
+<tr class="odd">
+<td>Assumed rung capacity</td>
+<td style="text-align: right;">About 500 MW HHV-equivalent</td>
+</tr>
+<tr class="even">
+<td>Farm area</td>
+<td style="text-align: right;">200 km<span class="math inline">\(^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Turbine rating</td>
+<td style="text-align: right;">15 MW</td>
+</tr>
+<tr class="even">
+<td>Turbine count for nominal 2 GW</td>
+<td style="text-align: right;">134</td>
+</tr>
+<tr class="odd">
+<td>Continuous model length</td>
+<td style="text-align: right;">192.0 km</td>
+</tr>
+<tr class="even">
+<td>Twelve-rung physical representation</td>
+<td style="text-align: right;">198.0 km</td>
+</tr>
+<tr class="odd">
+<td>Routing allowance</td>
+<td style="text-align: right;">0% in the current base case</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="installation-and-mass" class="level2">
-<h2 class="anchored" data-anchor-id="installation-and-mass">Installation and Mass</h2>
-<p>Substation installation is treated with platform and substation installation assumptions. See <a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a>.</p>
-<p>The source material does not yet provide a separate mass-scaling model for the AC substation.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-internalModelDescription2026" class="csl-entry" role="listitem">
+Project Team. 2026. <em>Offshore Hydrogen Model Description</em>. Internal background document.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

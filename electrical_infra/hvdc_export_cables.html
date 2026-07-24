@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -302,12 +350,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -380,6 +422,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,12 +589,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#sizing-drivers" id="toc-sizing-drivers" class="nav-link" data-scroll-target="#sizing-drivers">Sizing Drivers</a></li>
+  <li><a href="#role-and-cost-boundary" id="toc-role-and-cost-boundary" class="nav-link active" data-scroll-target="#role-and-cost-boundary">Role and Cost Boundary</a></li>
+  <li><a href="#reference-cable-system" id="toc-reference-cable-system" class="nav-link" data-scroll-target="#reference-cable-system">Reference Cable System</a></li>
+  <li><a href="#electrical-loss-model" id="toc-electrical-loss-model" class="nav-link" data-scroll-target="#electrical-loss-model">Electrical-Loss Model</a></li>
+  <li><a href="#cable-supply-cost" id="toc-cable-supply-cost" class="nav-link" data-scroll-target="#cable-supply-cost">Cable-Supply Cost</a>
+  <ul class="collapse">
+  <li><a href="#separated-public-reference" id="toc-separated-public-reference" class="nav-link" data-scroll-target="#separated-public-reference">Separated Public Reference</a></li>
+  </ul></li>
+  <li><a href="#installed-cost-perspective" id="toc-installed-cost-perspective" class="nav-link" data-scroll-target="#installed-cost-perspective">Installed-Cost Perspective</a></li>
+  <li><a href="#reliability-and-repair" id="toc-reliability-and-repair" class="nav-link" data-scroll-target="#reliability-and-repair">Reliability and Repair</a></li>
+  <li><a href="#current-assumptions" id="toc-current-assumptions" class="nav-link" data-scroll-target="#current-assumptions">Current Assumptions</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -572,94 +625,429 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>HVDC export cables transport electrical energy from the offshore converter station to the onshore converter station.</p>
-</section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<section id="role-and-cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-cost-boundary">Role and Cost Boundary</h2>
+<p>The HVDC export-cable system carries power between the offshore and onshore converter stations. This page owns cable supply and cable electrical performance. Marine and terrestrial installation are costed separately.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Physical scope</th>
+<th>Treatment</th>
+<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Export cable capacity</td>
+<td>Positive- and negative-pole cable supply</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Metallic-return and communication cable supply</td>
+<td>Included here when required by the selected topology</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Cable accessories supplied with the system</td>
+<td>Included here when included in the material benchmark</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Marine laying, burial, protection and pull-in</td>
+<td>Excluded</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="odd">
+<td>Underground trenching, ducts and reinstatement</td>
+<td>Excluded</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="even">
+<td>Exceptional crossings, tunnels and rock placement</td>
+<td>Excluded</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="odd">
+<td>Converter stations</td>
+<td>Excluded</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+</tr>
+</tbody>
+</table>
+<p><span class="cost-owned">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
+<p>A <strong>route-kilometre</strong> measures one kilometre of corridor. A <strong>cable-kilometre</strong> measures one kilometre of one manufactured cable. Complete-system route benchmarks must not be multiplied again by the number of pole and return cables.</p>
+</section>
+<section id="reference-cable-system" class="level2">
+<h2 class="anchored" data-anchor-id="reference-cable-system">Reference Cable System</h2>
+<p>The TenneT 2 GW reference system uses a positive-pole cable, negative-pole cable, dedicated metallic-return cable and fibre-optic cable <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Reference value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HVDC topology</td>
+<td style="text-align: right;">Bipole with dedicated metallic return</td>
+</tr>
+<tr class="even">
+<td>Pole voltage</td>
+<td style="text-align: right;">+/-525 kV</td>
+</tr>
+<tr class="odd">
+<td>Full-load pole current</td>
+<td style="text-align: right;">1.905 kA</td>
+</tr>
+<tr class="even">
+<td>TenneT programme route range</td>
+<td style="text-align: right;">150–300 km</td>
+</tr>
+<tr class="odd">
+<td>Procurement conductor options</td>
+<td style="text-align: right;">2,300 or 2,500 mm2 Cu; 3,100 mm2 Al</td>
+</tr>
+<tr class="even">
+<td>Indicative copper resistance</td>
+<td style="text-align: right;">0.0072 ohm/km at 20 degrees C</td>
+</tr>
+<tr class="odd">
+<td>Indicative 2,500 mm2 cable diameter</td>
+<td style="text-align: right;">About 160 mm</td>
+</tr>
+<tr class="even">
+<td>Indicative mass</td>
+<td style="text-align: right;">About 65 kg/m per cable</td>
+</tr>
+</tbody>
+</table>
+<p>The conductor options and programme route range come from TenneT <span class="citation" data-cites="tennet2024TwoGWProgram">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>)</span>. The resistance, diameter and mass are indicative Prysmian data <span class="citation" data-cites="prysmian525KVSubmarine">(<a href="#ref-prysmian525KVSubmarine" role="doc-biblioref">Prysmian Group, n.d.</a>)</span>, not a selected project design.</p>
+</section>
+<section id="electrical-loss-model" class="level2">
+<h2 class="anchored" data-anchor-id="electrical-loss-model">Electrical-Loss Model</h2>
+<p>For two pole conductors of equal resistance:</p>
+<p><span class="math display">\[
+P_\mathrm{cable,loss}
+=
+2I_\mathrm{pole}^{2}R'L,
+\]</span></p>
+<p>and:</p>
+<p><span class="math display">\[
+\frac{P_\mathrm{cable,loss}}{P_\mathrm{dc}}
+=
+\frac{I_\mathrm{pole}R'L}{V_\mathrm{pole}}.
+\]</span></p>
+<p>Using 0.0072 ohm/km at 20 degrees C and 1.905 kA gives:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Route length</th>
+<th style="text-align: right;">Conductor loss</th>
+<th style="text-align: right;">Share of 2 GW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">80 km</td>
+<td style="text-align: right;">4.18 MW</td>
+<td style="text-align: right;">0.209%</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">150 km</td>
+<td style="text-align: right;">7.84 MW</td>
+<td style="text-align: right;">0.392%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">250 km</td>
+<td style="text-align: right;">13.06 MW</td>
+<td style="text-align: right;">0.653%</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">300 km</td>
+<td style="text-align: right;">15.67 MW</td>
+<td style="text-align: right;">0.784%</td>
+</tr>
+</tbody>
+</table>
+<div id="fig-hvdc-loss-distance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hvdc-loss-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/hvdc-cable-loss-vs-distance.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hvdc-loss-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Calculated full-load conductor loss for a 2 GW, +/-525 kV bipole using an indicative 2,500 mm2 copper resistance.
+</figcaption>
+</figure>
+</div>
+<p>The calculation excludes joints, terminations, operating-temperature effects, return-current imbalance and converter losses. Annual cable loss should be calculated from the time series:</p>
+<p><span class="math display">\[
+E_\mathrm{cable,loss}
+=
+\sum_t2I(t)^2R'(T_t)L\,\Delta t.
+\]</span></p>
+<p>The current fixed 99.5% efficiency is only a legacy near-shore approximation. With the illustrative resistance, conductor loss alone reaches 0.5% at about 191 km at 20 degrees C. Distance studies should therefore use the load-dependent calculation and remove the fixed deduction.</p>
+</section>
+<section id="cable-supply-cost" class="level2">
+<h2 class="anchored" data-anchor-id="cable-supply-cost">Cable-Supply Cost</h2>
+<section id="separated-public-reference" class="level3">
+<h3 class="anchored" data-anchor-id="separated-public-reference">Separated Public Reference</h3>
+<p>The NREL Atlantic Offshore Wind Transmission Study gives a separated material cost for a 525 kV, 2 GW HVDC bipole and states that installation is added separately <span class="citation" data-cites="brinkman2024AtlanticTransmission">(<a href="#ref-brinkman2024AtlanticTransmission" role="doc-biblioref"><span class="nocase">Brinkman et al.</span> 2024</a>)</span>. Converted with the ECB 2025 annual-average exchange rate, the material reference is EUR 2.51 million/km, or 1.26 EUR/kW/km at 2 GW <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cable-supply element</th>
+<th style="text-align: right;">Unit value</th>
+<th>Status</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>525 kV, 2 GW bipole material reference</td>
+<td style="text-align: right;"><span class="cost-owned">1.26 EUR/kW/km</span></td>
+<td>NREL material cost converted with the 2025 ECB average exchange rate</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Marine/terrestrial installation</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 1.48 million/km</span></td>
+<td>NREL installation reference; not booked here</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="odd">
+<td>NREL material + installation</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 4.00 million/km</span></td>
+<td>Combined 2 GW route perspective only</td>
+<td>This page and <a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+</tbody>
+</table>
+<p>This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value is combined with constant-2026-EUR inputs.</p>
+</section>
+</section>
+<section id="installed-cost-perspective" class="level2">
+<h2 class="anchored" data-anchor-id="installed-cost-perspective">Installed-Cost Perspective</h2>
+<p>The background report’s Adriatic Link and DEA values cover installed or EPC cable systems. They are useful checks on the combined supply-plus-installation result but cannot be assigned wholly to cable material.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Installed-system benchmark</th>
+<th style="text-align: right;">Reference value</th>
+<th>Interpretation</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NREL material + installation</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 4.00 million/km</span></td>
+<td>Separated study estimate for a 2 GW bipole; currency conversion only</td>
+<td>This page and <a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="even">
+<td>Adriatic-derived subsea rate</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 2.60 million/km</span></td>
+<td>2026-euro installed-system inference from a 1 GW project</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="odd">
+<td>DEA subsea EPC reference</td>
+<td style="text-align: right;"><span class="cost-reference">EUR 8.14 million/km</span></td>
+<td>DEA 2025 value restated to 2026 euros and evaluated at 2 GW</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="even">
+<td>Existing internal export-installation assumption</td>
+<td style="text-align: right;"><span class="cost-reference">Scope unresolved</span></td>
+<td>Must not be added until reconciled</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Installation is shown for perspective only
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The installed-system comparisons and the installation component are maintained on <a href="../offshore_installation/cable_installation.html">Cable Installation</a>. They are shown here so the reader can see the complete route-cost context. Only the green material reference belongs to this page.</p>
+</div>
+</div>
+<p>The Adriatic anchor is not topology-identical to the TenneT reference: Prysmian describes two submarine and two underground power cables, whereas TenneT adds a dedicated metallic return and fibre <span class="citation" data-cites="prysmian2023AdriaticLink">(<a href="#ref-prysmian2023AdriaticLink" role="doc-biblioref">Prysmian Group 2023</a>)</span>. The comparison is therefore indicative rather than a matched 2 GW quotation.</p>
+</section>
+<section id="reliability-and-repair" class="level2">
+<h2 class="anchored" data-anchor-id="reliability-and-repair">Reliability and Repair</h2>
+<p>The legacy model assigns 99% cable availability. Actual energy unavailability depends on route exposure, fault frequency, repair duration and whether a fault removes one pole or the complete corridor.</p>
+<p>ENTSO-E and Europacable report an indicative historical cable-system failure rate of about 0.07 faults per 100 km-year and average submarine repair duration of about 60 days <span class="citation" data-cites="entsoeEuropacable2019Reliability">(<a href="#ref-entsoeEuropacable2019Reliability" role="doc-biblioref">ENTSO-E and Europacable 2019</a>)</span>. These historical values are not guarantees for a new 525 kV system.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cable state</th>
+<th style="text-align: right;">Available transfer</th>
+<th>Treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Both poles healthy</td>
 <td style="text-align: right;">2 GW</td>
+<td>Normal operation</td>
 </tr>
 <tr class="even">
-<td>Export cables installed in parallel</td>
-<td style="text-align: right;">1</td>
+<td>One pole unavailable, return healthy</td>
+<td style="text-align: right;">Approximately 1 GW</td>
+<td>Count half-capacity exposure</td>
 </tr>
 <tr class="odd">
-<td>Installed cost benchmark</td>
-<td style="text-align: right;">7 million EUR/km</td>
-</tr>
-<tr class="even">
-<td>Installation cost</td>
-<td style="text-align: right;">635 EUR/m</td>
-</tr>
-<tr class="odd">
-<td>Implied cable CAPEX</td>
-<td style="text-align: right;">6,365 EUR/m</td>
-</tr>
-<tr class="even">
-<td>OPEX</td>
-<td style="text-align: right;">2% of CAPEX per year</td>
+<td>Common corridor or both poles unavailable</td>
+<td style="text-align: right;">0 GW</td>
+<td>Count full-capacity exposure</td>
 </tr>
 </tbody>
 </table>
-<p>The material CAPEX is derived by subtracting the modelled installation cost from the installed-cost benchmark.</p>
+<p>Spare cable, compatible joints, repair-vessel access, permits and trained jointing teams affect outage duration. Their costs belong to the installation/OPEX boundary; the resulting energy loss belongs to the availability model.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
+<section id="current-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="current-assumptions">Current Assumptions</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Efficiency</th>
+<th>Parameter</th>
+<th style="text-align: right;">Base case</th>
+<th style="text-align: right;">Sensitivity or next step</th>
+<th>Evidence status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>HVDC export cable</td>
-<td style="text-align: right;">99.5%</td>
+<td>Link rating</td>
+<td style="text-align: right;">2 GW reference</td>
+<td style="text-align: right;">Test multiple links</td>
+<td>Public TenneT standard</td>
+</tr>
+<tr class="even">
+<td>Pole voltage</td>
+<td style="text-align: right;">+/-525 kV</td>
+<td style="text-align: right;">Fixed for reference design</td>
+<td>Public TenneT standard</td>
+</tr>
+<tr class="odd">
+<td>Cable material CAPEX</td>
+<td style="text-align: right;">1.26 EUR/kW/km</td>
+<td style="text-align: right;">Confirm source price year and escalate consistently</td>
+<td>NREL reference converted at 2025 ECB average</td>
+</tr>
+<tr class="even">
+<td>Installation CAPEX</td>
+<td style="text-align: right;">Excluded from this page</td>
+<td style="text-align: right;">Use linked installation model</td>
+<td>Separate cost owner</td>
+</tr>
+<tr class="odd">
+<td>Cable loss</td>
+<td style="text-align: right;">Hourly <span class="math inline">\(I^2R(T)L\)</span> preferred</td>
+<td style="text-align: right;">99.5% only for legacy compatibility</td>
+<td>Engineering model</td>
+</tr>
+<tr class="even">
+<td>Flat cable availability</td>
+<td style="text-align: right;">99%</td>
+<td style="text-align: right;">Replace with capacity states</td>
+<td>Internal convention</td>
+</tr>
+<tr class="odd">
+<td>Cable OPEX</td>
+<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">Define inspection, spares and repair scope</td>
+<td>Separate evidence required</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
+<th>Limitation</th>
+<th>Implication</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>HVDC export cable</td>
-<td style="text-align: right;">99.0%</td>
+<td>NREL source price year is unresolved</td>
+<td>The euro conversion is not yet a constant-2026-euro input</td>
+</tr>
+<tr class="even">
+<td>NREL and TenneT topologies may differ</td>
+<td>Metallic-return and accessory scope must be checked</td>
+</tr>
+<tr class="odd">
+<td>Adriatic and DEA values include installation</td>
+<td>They validate only the combined route cost</td>
+</tr>
+<tr class="even">
+<td>No matched underground material coefficient</td>
+<td>Subsea and underground supply costs cannot yet be separated cleanly</td>
+</tr>
+<tr class="odd">
+<td>One indicative copper resistance is used</td>
+<td>Aluminium and operating-temperature alternatives are absent</td>
+</tr>
+<tr class="even">
+<td>Fixed 99.5% efficiency is retained only for compatibility</td>
+<td>It is not valid across the full route range</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>Cable installation is modelled separately from material CAPEX. See <a href="../offshore_installation/cable_installation.html">Cable Installation</a>.</p>
-</section>
-<section id="sizing-drivers" class="level2">
-<h2 class="anchored" data-anchor-id="sizing-drivers">Sizing Drivers</h2>
-<p>Export cable sizing is driven by rated export capacity and distance to shore. The current baseline distance to shore is 80 km.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-brinkman2024AtlanticTransmission" class="csl-entry" role="listitem">
+<span class="nocase">Brinkman, Gregory, Mike Bannister, Sophie Bredenkamp, Lanaia Carveth, Dave Corbus, et al.</span> 2024. <em>Atlantic Offshore Wind Transmission Study</em>. NREL/TP-5000-88003. National Renewable Energy Laboratory; Pacific Northwest National Laboratory. <a href="https://doi.org/10.2172/2327027">https://doi.org/10.2172/2327027</a>.
+</div>
+<div id="ref-entsoeEuropacable2019Reliability" class="csl-entry" role="listitem">
+ENTSO-E, and Europacable. 2019. <em>Recommendations to Improve <span>HVDC</span> Cable Systems Reliability</em>. ENTSO-E; Europacable. <a href="https://eepublicdownloads.entsoe.eu/clean-documents/Publications/Position%20papers%20and%20reports/Joint%20paper%20HVDC%20Cable%20Reliability%20ENTSO-E%20Europacable.pdf">https://eepublicdownloads.entsoe.eu/clean-documents/Publications/Position%20papers%20and%20reports/Joint%20paper%20HVDC%20Cable%20Reliability%20ENTSO-E%20Europacable.pdf</a>.
+</div>
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
+<div id="ref-prysmian2023AdriaticLink" class="csl-entry" role="listitem">
+Prysmian Group. 2023. <span>“Prysmian Secures the EUR 630m Adriatic Link Submarine Cable Project from Terna.”</span> September 7. <a href="https://www.prysmian.com/en/media/press-releases/prysmian-secures-the-euro-630m-adriatic-link-submarine-able-project-from-terna">https://www.prysmian.com/en/media/press-releases/prysmian-secures-the-euro-630m-adriatic-link-submarine-able-project-from-terna</a>.
+</div>
+<div id="ref-prysmian525KVSubmarine" class="csl-entry" role="listitem">
+Prysmian Group. n.d. <em>525 kV <span>HVDC</span>: <span>XLPE</span> Datasheet – Submarine</em>. Prysmian Group. Accessed July 14, 2026. <a href="https://www.prysmian.com/staticres/525-kv-hvdc-new-cable-systems/documents/XLPE-DATASHEET---Submarine.pdf">https://www.prysmian.com/staticres/525-kv-hvdc-new-cable-systems/documents/XLPE-DATASHEET---Submarine.pdf</a>.
+</div>
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+<div id="ref-tennet2025TwoGWStandard" class="csl-entry" role="listitem">
+TenneT. 2025. <span>“Aansluiten van een windpark met onze 2 gigawatt-standaard.”</span> April. <a href="https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard">https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

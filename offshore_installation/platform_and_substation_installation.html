@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -302,12 +350,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -380,6 +422,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,9 +589,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#current-assumptions" id="toc-current-assumptions" class="nav-link" data-scroll-target="#current-assumptions">Current Assumptions</a></li>
-  <li><a href="#cost-drivers" id="toc-cost-drivers" class="nav-link" data-scroll-target="#cost-drivers">Cost Drivers</a></li>
+  <li><a href="#role-and-cost-boundary" id="toc-role-and-cost-boundary" class="nav-link active" data-scroll-target="#role-and-cost-boundary">Role and Cost Boundary</a></li>
+  <li><a href="#available-cost-evidence" id="toc-available-cost-evidence" class="nav-link" data-scroll-target="#available-cost-evidence">Available Cost Evidence</a></li>
+  <li><a href="#bottom-up-cost-model" id="toc-bottom-up-cost-model" class="nav-link" data-scroll-target="#bottom-up-cost-model">Bottom-Up Cost Model</a></li>
+  <li><a href="#principal-cost-drivers" id="toc-principal-cost-drivers" class="nav-link" data-scroll-target="#principal-cost-drivers">Principal Cost Drivers</a></li>
   <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
   </ul>
 </nav>
@@ -570,51 +619,169 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-model" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>Platform and substation installation includes fabrication transport, heavy lifting, jacket installation, topside installation, commissioning, and offshore hookup.</p>
-</section>
-<section id="current-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="current-assumptions">Current Assumptions</h2>
-<p>For the HVDC/substation package, the current source separates:</p>
+<section id="role-and-cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-cost-boundary">Role and Cost Boundary</h2>
+<p>This page owns transport from the fabrication yard, foundation installation, topside installation, offshore hookup and offshore commissioning. Platform fabrication and converter electrical equipment are costed elsewhere.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Physical scope</th>
+<th>Treatment</th>
+<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Platform and installation portion of 2 GW package</td>
-<td style="text-align: right;">1.5 billion EUR</td>
+<td>Load-out and transport</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Jacket or foundation installation</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Topside lift or float-over</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Offshore hookup and commissioning</td>
+<td>Included here</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Platform fabrication</td>
+<td>Excluded</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+</tr>
+<tr class="even">
+<td>Converter equipment and onshore station</td>
+<td>Excluded</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
 </tr>
 </tbody>
 </table>
-<p>This value is currently bundled and not yet decomposed into platform material, fabrication, transport, and installation.</p>
+<p><span class="cost-owned">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
 </section>
-<section id="cost-drivers" class="level2">
-<h2 class="anchored" data-anchor-id="cost-drivers">Cost Drivers</h2>
-<p>Future decomposition should track:</p>
+<section id="available-cost-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="available-cost-evidence">Available Cost Evidence</h2>
+<p>The internal model description uses 750 EUR/kW for “platform and installation” <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>. That value combines platform fabrication, transport and installation, so it cannot be adopted as installation cost alone.</p>
+<p>The DEA offshore-station coefficient also includes the platform and station installation within a broader offshore-station value <span class="citation" data-cites="danishEnergyAgency2025Transport">(<a href="#ref-danishEnergyAgency2025Transport" role="doc-biblioref">Danish Energy Agency 2025</a>)</span>. It does not publish a separate heavy-lift or hookup share.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cost-stack element</th>
+<th style="text-align: right;">Reference value</th>
+<th>Status</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Legacy platform + installation allocation</td>
+<td style="text-align: right;"><span class="cost-reference">750 EUR/kW</span></td>
+<td>Combined scope; context only</td>
+<td>This page and <a href="../platforms/hvdc_and_substation_platforms.html">Platform</a></td>
+</tr>
+<tr class="even">
+<td>Platform fabrication</td>
+<td style="text-align: right;"><span class="cost-reference">TBD</span></td>
+<td>Costed separately</td>
+<td><a href="../platforms/hvdc_and_substation_platforms.html">HVDC and Substation Platforms</a></td>
+</tr>
+<tr class="odd">
+<td>Adopted platform-installation CAPEX</td>
+<td style="text-align: right;"><span class="cost-owned">TBD</span></td>
+<td>Requires vessel and schedule basis</td>
+<td><strong>This page</strong></td>
+</tr>
+</tbody>
+</table>
+<p>No portion of the 750 EUR/kW combined allocation is booked until a defensible split is available.</p>
+</section>
+<section id="bottom-up-cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="bottom-up-cost-model">Bottom-Up Cost Model</h2>
+<p>A future installation estimate should use:</p>
+<p><span class="math display">\[
+C_\mathrm{platform\ installation}
+=
+C_\mathrm{mobilisation}
++\sum_v r_v t_v
++C_\mathrm{port}
++C_\mathrm{hookup}
++C_\mathrm{commissioning},
+\]</span></p>
+<p>where <span class="math inline">\(r_v\)</span> and <span class="math inline">\(t_v\)</span> are the rate and required duration for each vessel or marine spread.</p>
+<p>The schedule should distinguish:</p>
 <ul>
-<li>topside mass</li>
-<li>jacket mass</li>
-<li>lift weight</li>
-<li>installation vessel class</li>
-<li>number of lifts</li>
-<li>water depth</li>
-<li>distance to shore or port</li>
-<li>commissioning duration</li>
+<li>foundation transport and installation;</li>
+<li>topside load-out and transport;</li>
+<li>heavy-lift or float-over operations;</li>
+<li>weather contingency;</li>
+<li>cable and auxiliary-system pull-ins;</li>
+<li>offshore hookup; and</li>
+<li>testing and commissioning.</li>
 </ul>
+</section>
+<section id="principal-cost-drivers" class="level2">
+<h2 class="anchored" data-anchor-id="principal-cost-drivers">Principal Cost Drivers</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Driver</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topside and foundation mass</td>
+<td>Determines vessel class, transport method and lift feasibility</td>
+</tr>
+<tr class="even">
+<td>Water depth and soil</td>
+<td>Governs foundation and piling scope</td>
+</tr>
+<tr class="odd">
+<td>Distance to fabrication yard and port</td>
+<td>Drives transport and support-vessel time</td>
+</tr>
+<tr class="even">
+<td>Lift strategy</td>
+<td>A single heavy lift and modular lifts require different fleets and schedules</td>
+</tr>
+<tr class="odd">
+<td>Weather window</td>
+<td>Controls waiting time and schedule risk</td>
+</tr>
+<tr class="even">
+<td>Offshore commissioning duration</td>
+<td>Determines accommodation and support-vessel requirements</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="architecture-applicability" class="level2">
 <h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
-<p>This installation category is important for electricity export and centralised hydrogen. The decentralised hydrogen architecture removes the central offshore platform in the current model definition.</p>
+<p>This category applies to the offshore electricity-export platform and any centralised-hydrogen platform. The required vessel spread must be recalculated for each architecture rather than transferring the HVDC allocation unchanged.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-danishEnergyAgency2025Transport" class="csl-entry" role="listitem">
+Danish Energy Agency. 2025. <em>Technology Data for Energy Transport</em>. Danish Energy Agency. <a href="https://ens.dk/media/7680/download">https://ens.dk/media/7680/download</a>.
+</div>
+<div id="ref-internalModelDescription2026" class="csl-entry" role="listitem">
+Project Team. 2026. <em>Offshore Hydrogen Model Description</em>. Internal background document.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -70,7 +89,37 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid-postprocess-shim.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -302,12 +351,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -380,6 +423,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,11 +590,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#source-status" id="toc-source-status" class="nav-link" data-scroll-target="#source-status">Source Status</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
+  <li><a href="#physical-layout" id="toc-physical-layout" class="nav-link" data-scroll-target="#physical-layout">Physical Layout</a></li>
+  <li><a href="#electrical-rating" id="toc-electrical-rating" class="nav-link" data-scroll-target="#electrical-rating">Electrical Rating</a></li>
+  <li><a href="#capacity-and-connection-architecture" id="toc-capacity-and-connection-architecture" class="nav-link" data-scroll-target="#capacity-and-connection-architecture">Capacity and Connection Architecture</a></li>
+  <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
+  <li><a href="#conversion-and-transformer-losses" id="toc-conversion-and-transformer-losses" class="nav-link" data-scroll-target="#conversion-and-transformer-losses">Conversion and Transformer Losses</a></li>
+  <li><a href="#availability-curtailment-and-resilience" id="toc-availability-curtailment-and-resilience" class="nav-link" data-scroll-target="#availability-curtailment-and-resilience">Availability, Curtailment and Resilience</a></li>
+  <li><a href="#land-use-planning-and-environment" id="toc-land-use-planning-and-environment" class="nav-link" data-scroll-target="#land-use-planning-and-environment">Land Use, Planning and Environment</a></li>
+  <li><a href="#current-assumptions-and-sensitivities" id="toc-current-assumptions-and-sensitivities" class="nav-link" data-scroll-target="#current-assumptions-and-sensitivities">Current Assumptions and Sensitivities</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -571,43 +625,581 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The onshore grid connection receives exported HVDC power and converts it to AC at the national high-voltage grid interface.</p>
-</section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The current source material includes onshore conversion in the electrical value chain, but does not yet separate a detailed onshore converter station CAPEX from the broader HVDC station package.</p>
-</section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>The onshore conversion stage is included in the electrical efficiency chain. The specific efficiency value is marked as to be confirmed in the current source table.</p>
-</section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>The onshore grid connection transfers power from the HVDC cable system into the national AC transmission network. It is not one item of equipment. It is an interface chain comprising the shore crossing, underground DC cable, onshore converter station, converter transformers, high-voltage switchgear, protection and control, and the connection to an existing or new transmission substation.</p>
+<p>For TenneT’s 2 GW reference, the chain is:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg id="mermaid-figure-1" width="672" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="flowchart" viewbox="0 0 1936.8125 94" role="graphics-document document" aria-roledescription="flowchart-v2" height="48">
+<style>#mermaid-figure-1{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-figure-1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .error-icon{fill:#552222;}#mermaid-figure-1 .error-text{fill:#552222;stroke:#552222;}#mermaid-figure-1 .edge-thickness-normal{stroke-width:1px;}#mermaid-figure-1 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-figure-1 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-figure-1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-figure-1 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-figure-1 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-figure-1 .marker{fill:#333333;stroke:#333333;}#mermaid-figure-1 .marker.cross{stroke:#333333;}#mermaid-figure-1 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-figure-1 p{margin:0;}#mermaid-figure-1 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-figure-1 .cluster-label text{fill:#333;}#mermaid-figure-1 .cluster-label span{color:#333;}#mermaid-figure-1 .cluster-label span p{background-color:transparent;}#mermaid-figure-1 .label text,#mermaid-figure-1 span{fill:#333;color:#333;}#mermaid-figure-1 .node rect,#mermaid-figure-1 .node circle,#mermaid-figure-1 .node ellipse,#mermaid-figure-1 .node polygon,#mermaid-figure-1 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-figure-1 .rough-node .label text,#mermaid-figure-1 .node .label text,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-anchor:middle;}#mermaid-figure-1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-figure-1 .rough-node .label,#mermaid-figure-1 .node .label,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-align:center;}#mermaid-figure-1 .node.clickable{cursor:pointer;}#mermaid-figure-1 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-figure-1 .arrowheadPath{fill:#333333;}#mermaid-figure-1 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-figure-1 .flowchart-link{stroke:#333333;fill:none;}#mermaid-figure-1 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-figure-1 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-figure-1 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-figure-1 .cluster text{fill:#333;}#mermaid-figure-1 .cluster span{color:#333;}#mermaid-figure-1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-figure-1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-figure-1 rect.text{fill:none;stroke-width:0;}#mermaid-figure-1 .icon-shape,#mermaid-figure-1 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .icon-shape p,#mermaid-figure-1 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-figure-1 .icon-shape rect,#mermaid-figure-1 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-figure-1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-figure-1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g><marker id="mermaid-1784896510223_flowchart-v2-pointEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1784896510223_flowchart-v2-pointStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="4.5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1784896510223_flowchart-v2-circleEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="11" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1784896510223_flowchart-v2-circleStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="-1" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1784896510223_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="12" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1784896510223_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="-1" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M261.734,47L265.901,47C270.068,47,278.401,47,286.068,47C293.734,47,300.734,47,304.234,47L307.734,47" id="L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MjYxLjczNDM3NSwieSI6NDd9LHsieCI6Mjg2LjczNDM3NSwieSI6NDd9LHsieCI6MzExLjczNDM3NSwieSI6NDd9XQ==" marker-end="url(#mermaid-1784896510223_flowchart-v2-pointEnd)"></path><path d="M571.734,47L575.901,47C580.068,47,588.401,47,596.068,47C603.734,47,610.734,47,614.234,47L617.734,47" id="L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6NTcxLjczNDM3NSwieSI6NDd9LHsieCI6NTk2LjczNDM3NSwieSI6NDd9LHsieCI6NjIxLjczNDM3NSwieSI6NDd9XQ==" marker-end="url(#mermaid-1784896510223_flowchart-v2-pointEnd)"></path><path d="M841.656,47L845.823,47C849.99,47,858.323,47,865.99,47C873.656,47,880.656,47,884.156,47L887.656,47" id="L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6ODQxLjY1NjI1LCJ5Ijo0N30seyJ4Ijo4NjYuNjU2MjUsInkiOjQ3fSx7IngiOjg5MS42NTYyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1784896510223_flowchart-v2-pointEnd)"></path><path d="M1115.563,47L1119.729,47C1123.896,47,1132.229,47,1139.896,47C1147.563,47,1154.563,47,1158.063,47L1161.563,47" id="L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6MTExNS41NjI1LCJ5Ijo0N30seyJ4IjoxMTQwLjU2MjUsInkiOjQ3fSx7IngiOjExNjUuNTYyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1784896510223_flowchart-v2-pointEnd)"></path><path d="M1392.969,47L1397.135,47C1401.302,47,1409.635,47,1417.302,47C1424.969,47,1431.969,47,1435.469,47L1438.969,47" id="L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6MTM5Mi45Njg3NSwieSI6NDd9LHsieCI6MTQxNy45Njg3NSwieSI6NDd9LHsieCI6MTQ0Mi45Njg3NSwieSI6NDd9XQ==" marker-end="url(#mermaid-1784896510223_flowchart-v2-pointEnd)"></path><path d="M1632.594,47L1636.76,47C1640.927,47,1649.26,47,1656.927,47C1664.594,47,1671.594,47,1675.094,47L1678.594,47" id="L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MTYzMi41OTM3NSwieSI6NDd9LHsieCI6MTY1Ny41OTM3NSwieSI6NDd9LHsieCI6MTY4Mi41OTM3NSwieSI6NDd9XQ==" marker-end="url(#mermaid-1784896510223_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_F_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_G_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-0" transform="translate(134.8671875, 47)"><rect class="basic label-container" style="" x="-126.8671875" y="-27" width="253.734375" height="54"></rect><g class="label" style="" transform="translate(-96.8671875, -12)"><rect></rect><foreignobject width="193.734375" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Submarine +/-525 kV cable
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-B-1" transform="translate(441.734375, 47)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignobject width="200" height="48">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;">
+<span class="nodeLabel">
+<p>
+Landfall and transition joints
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-C-3" transform="translate(731.6953125, 47)"><rect class="basic label-container" style="" x="-109.9609375" y="-27" width="219.921875" height="54"></rect><g class="label" style="" transform="translate(-79.9609375, -12)"><rect></rect><foreignobject width="159.921875" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Underground DC cable
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-D-5" transform="translate(1003.609375, 47)"><rect class="basic label-container" style="" x="-111.953125" y="-27" width="223.90625" height="54"></rect><g class="label" style="" transform="translate(-81.953125, -12)"><rect></rect><foreignobject width="163.90625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Onshore VSC converter
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-E-7" transform="translate(1279.265625, 47)"><rect class="basic label-container" style="" x="-113.703125" y="-27" width="227.40625" height="54"></rect><g class="label" style="" transform="translate(-83.703125, -12)"><rect></rect><foreignobject width="167.40625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Converter transformers
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-F-9" transform="translate(1537.78125, 47)"><rect class="basic label-container" style="" x="-94.8125" y="-27" width="189.625" height="54"></rect><g class="label" style="" transform="translate(-64.8125, -12)"><rect></rect><foreignobject width="129.625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+380 kV switchgear
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-G-11" transform="translate(1805.703125, 47)"><rect class="basic label-container" style="" x="-123.109375" y="-27" width="246.21875" height="54"></rect><g class="label" style="" transform="translate(-93.109375, -12)"><rect></rect><foreignobject width="186.21875" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+National transmission grid
+</p>
+</span>
+</div>
+</foreignobject></g></g></g></g></g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The converter station itself is technically described and costed as part of the complete link on <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a>. This page owns the physical grid interface and makes clear which onshore costs remain unresolved.</p>
+<p>The <strong>point of common coupling (PCC)</strong> is the electrical and contractual boundary where the offshore connection meets the transmission system. Physically, the onshore converter lies in the chain on this page. Commercially, its equipment and civil works may belong to the same converter-station package as the offshore station. Physical location and cost ownership are therefore deliberately shown as separate boundaries.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
+<th>Included in this interface</th>
+<th>Accounting treatment</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Onshore substation</td>
-<td style="text-align: right;">98.0%</td>
+<td>Ordinary shore crossing and transition-joint bay</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="even">
+<td>Underground DC cable supply</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a>; dedicated underground material coefficient TBD</td>
+</tr>
+<tr class="odd">
+<td>Underground cable installation</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="even">
+<td>Onshore converter, transformers and auxiliaries</td>
+<td>Included in the converter pair on <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+</tr>
+<tr class="odd">
+<td>380 kV switchgear and station connection</td>
+<td>Confirm against converter-package boundary</td>
+</tr>
+<tr class="even">
+<td>Reinforcement beyond the connection point</td>
+<td>Separate, site-specific grid cost</td>
+</tr>
+<tr class="odd">
+<td>Dispatch curtailment caused by grid congestion</td>
+<td>Energy-system constraint, not equipment availability</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="source-status" class="level2">
-<h2 class="anchored" data-anchor-id="source-status">Source Status</h2>
-<p>This page needs a final split between offshore converter, export cable, onshore converter, and grid interface costs once the HVDC source package is decomposed.</p>
+<section id="physical-layout" class="level2">
+<h2 class="anchored" data-anchor-id="physical-layout">Physical Layout</h2>
+<p>At landfall, the submarine cable is brought ashore through an open trench or, more commonly at sensitive coastlines, ducts installed by horizontal directional drilling. Submarine and land cable designs are connected in accessible transition-joint bays. The separate pole, metallic-return and communication cables then continue underground to the converter site.</p>
+<p>The onshore converter changes DC power back to three-phase AC. Converter transformers provide voltage transformation and electrical separation, while reactors, filters and controls manage current, harmonics, voltage and reactive power. High-voltage switchgear connects the station to the transmission grid and isolates equipment for faults and maintenance.</p>
+<p>TenneT describes the Dutch 2 GW interface as 525 kV DC conversion to 380 kV AC. Its standard onshore arrangement has six single-phase converter transformers plus one spare <span class="citation" data-cites="tennet2024TwoGWProgram">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>)</span>. For the Doordewind connection, TenneT reports an onshore converter-station footprint of roughly 5.5 ha before the underground connection to the 380 kV substation <span class="citation" data-cites="tennetDoordewind">(<a href="#ref-tennetDoordewind" role="doc-biblioref">TenneT, n.d.</a>)</span>. The land requirement reflects electrical clearances, converter halls, cooling, transformers, roads, drainage, security and construction space; it is not just the building footprint.</p>
+</section>
+<section id="electrical-rating" class="level2">
+<h2 class="anchored" data-anchor-id="electrical-rating">Electrical Rating</h2>
+<p>AC equipment must carry more than active MW alone:</p>
+<ul>
+<li><strong>active power <span class="math inline">\(P\)</span></strong>, measured in MW, transfers net energy and is what the wind farm is primarily selling;</li>
+<li><strong>reactive power <span class="math inline">\(Q\)</span></strong>, measured in MVAr, oscillates between electric and magnetic fields and is used to control AC voltage; and</li>
+<li><strong>apparent power <span class="math inline">\(S\)</span></strong>, measured in MVA, combines both and determines much of the current and thermal loading of transformers, converters and switchgear.</li>
+</ul>
+<p>Power factor is <span class="math inline">\(P/S\)</span>. A value below one means some equipment current is being used for reactive rather than active power.</p>
+<p>At unity power factor, the AC line current associated with 2 GW at 380 kV is:</p>
+<p><span class="math display">\[
+I_\mathrm{AC}
+=
+\frac{P}{\sqrt{3}V_\mathrm{LL}\cos\phi}
+=
+\frac{2{,}000\times10^6}
+{\sqrt{3}(380\times10^3)}
+=3.04\ \mathrm{kA}.
+\]</span></p>
+<p>The station is not designed as one 3 kA conductor. Power is divided among converter transformer windings, bus sections and grid circuits so equipment ratings, fault levels and maintenance criteria can be satisfied.</p>
+<p>Reactive-power operation increases apparent power:</p>
+<p><span class="math display">\[
+S=\frac{P}{\cos\phi},
+\qquad
+Q=\sqrt{S^2-P^2}.
+\]</span></p>
+<p>If 2 GW were delivered at a power factor of 0.95, the terminal duty would be about 2.105 GVA and 657 MVAr. This is an illustration, not a selected grid-code operating point. Actual reactive capability is specified as a voltage-dependent envelope and can require converter-current headroom, reactors or additional compensation.</p>
+<p>The grid-connection study must check at least:</p>
+<ul>
+<li>rated and temporary voltage ranges;</li>
+<li>active-power ramping and frequency response;</li>
+<li>reactive-power and voltage-control capability;</li>
+<li>fault ride-through and post-fault active-power recovery;</li>
+<li>harmonic emission and resonance;</li>
+<li>short-circuit level and protection coordination;</li>
+<li>maximum permissible loss of infeed.</li>
+</ul>
+<p>Several of these terms describe different questions. <strong>Fault level</strong> is the current the surrounding grid can supply into a short circuit; it affects switchgear duty and converter-control behaviour, not how often faults occur. <strong>Fault ride-through</strong> asks whether the link remains connected during a temporary voltage depression. <strong>Harmonics</strong> are unwanted waveform components that can cause heating, resonance or interference. A <strong>strong grid node</strong> is one whose voltage and stability remain acceptable when 2 GW changes or trips–not merely one with high annual energy demand.</p>
+<p>Commission Regulation (EU) 2016/1447 sets the European HVDC framework for these active-power, reactive-power, voltage, fault-ride-through, control, protection and monitoring capabilities <span class="citation" data-cites="europeanCommission2016HVDC">(<a href="#ref-europeanCommission2016HVDC" role="doc-biblioref">European Commission 2016</a>)</span>. Project-specific requirements are then agreed with the relevant transmission-system operator.</p>
+<p>The current Dutch system code adds useful numerical context at the point of connection <span class="citation" data-cites="dutchSystemCode2026">(<a href="#ref-dutchSystemCode2026" role="doc-biblioref">Government of the Netherlands 2026</a>)</span>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Requirement</th>
+<th style="text-align: right;">Published Dutch value</th>
+<th style="text-align: right;">2 GW interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rate-of-change-of-frequency withstand</td>
+<td style="text-align: right;">-2.5 to +2.5 Hz/s, averaged over 1 s</td>
+<td style="text-align: right;">Control and protection must ride through the specified event</td>
+</tr>
+<tr class="even">
+<td>Maximum active-power instruction delay</td>
+<td style="text-align: right;">100 ms</td>
+<td style="text-align: right;">Fast set-point path is required</td>
+</tr>
+<tr class="odd">
+<td>Minimum active-power instruction step</td>
+<td style="text-align: right;">1 MW</td>
+<td style="text-align: right;">0.05% of a 2 GW link</td>
+</tr>
+<tr class="even">
+<td>Reactive capability ratio</td>
+<td style="text-align: right;">0.35 delivering; 0.40 absorbing relative to <span class="math inline">\(P_\mathrm{max}\)</span></td>
+<td style="text-align: right;">Up to about +700/-800 MVAr, subject to the voltage envelope</td>
+</tr>
+</tbody>
+</table>
+<p>These are compliance limits, not normal operating set points. They should be verified against the code version and connection agreement used for the project; converter MVA, transformer duty and compensation cannot be sized from a single nominal power factor alone.</p>
+</section>
+<section id="capacity-and-connection-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="capacity-and-connection-architecture">Capacity and Connection Architecture</h2>
+<p>The HVDC link is sized in discrete 2 GW blocks in the reference model:</p>
+<p><span class="math display">\[
+n_\mathrm{link}
+=
+\left\lceil
+\frac{P_\mathrm{export}}{2{,}000\ \mathrm{MW}}
+\right\rceil.
+\]</span></p>
+<p>This does not prove that the receiving grid can accept <span class="math inline">\(2n_\mathrm{link}\)</span> GW at the selected PCC. A grid study determines whether existing 380 kV circuits have sufficient thermal, voltage and stability margin and whether a new substation, busbar extension, underground cable or overhead-line reinforcement is required.</p>
+<p>The connection point can therefore drive project economics independently of offshore distance. A shorter sea route to a weak grid node may require more onshore reinforcement than a longer route to a strong node. The model should treat:</p>
+<ol type="1">
+<li><strong>dedicated connection assets</strong> from landfall to the agreed grid point; and</li>
+<li><strong>wider network reinforcement</strong> triggered beyond that point</li>
+</ol>
+<p>as separate cost categories. Their payer and regulatory treatment may also differ.</p>
+</section>
+<section id="cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
+<p>The model books the onshore converter as part of the 808 EUR/kW two-terminal electrical-equipment coefficient on <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a>. The offshore platform and both cable supply and installation are separate. This page therefore assigns <strong>no additional generic onshore-converter CAPEX</strong>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cost element</th>
+<th>Reference</th>
+<th>Evidence gap</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Onshore VSC equipment, transformers and cooling</td>
+<td><span class="cost-reference">Part of 808 EUR/kW converter pair</span></td>
+<td>No project equipment ledger</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+</tr>
+<tr class="even">
+<td>Underground DC cable supply</td>
+<td><span class="cost-reference">TBD</span></td>
+<td>No matched underground material-only coefficient</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+</tr>
+<tr class="odd">
+<td>Underground cable and landfall installation</td>
+<td><span class="cost-reference">TBD</span></td>
+<td>Route and civil design required</td>
+<td><a href="../offshore_installation/cable_installation.html">Cable Installation</a></td>
+</tr>
+<tr class="even">
+<td>380 kV station bay/extension</td>
+<td><span class="cost-owned">TBD</span></td>
+<td>Connection agreement required</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Wider grid reinforcement</td>
+<td><span class="cost-owned">TBD</span></td>
+<td>Highly location-specific</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Land acquisition and planning mitigation</td>
+<td><span class="cost-owned">TBD</span></td>
+<td>Site and jurisdiction specific</td>
+<td><strong>This page</strong></td>
+</tr>
+</tbody>
+</table>
+<p>NREL’s Atlantic transmission study provides a lower-scope comparator for a 2 GW onshore bipole: approximately 155 EUR/kW for the converter and 44 EUR/kW for construction, or 199 EUR/kW together <span class="citation" data-cites="brinkman2024AtlanticTransmission">(<a href="#ref-brinkman2024AtlanticTransmission" role="doc-biblioref"><span class="nocase">Brinkman et al.</span> 2024</a>)</span>. These values use the ECB 2025 annual-average exchange rate of 1 EUR = 1.1300 USD <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. This is a currency conversion rather than a price-year restatement; the estimate comes from a different market and excludes much of the offshore scope contained in North Sea programme awards. It should be used to interrogate the package allocation, not added to it.</p>
+<p>A future bottom-up model can use:</p>
+<p><span class="math display">\[
+C_\mathrm{onshore}
+=
+C_\mathrm{landfall}
++c_\mathrm{land\ cable}L_\mathrm{land}
++C_\mathrm{converter}
++C_\mathrm{380kV\ bay}
++C_\mathrm{reinforcement}
++C_\mathrm{site},
+\]</span></p>
+<p>with every term tagged to its canonical page. The converter term is already owned by the converter page. Cable material and installation remain separate and must not be replaced by the former all-in underground-route coefficient.</p>
+</section>
+<section id="conversion-and-transformer-losses" class="level2">
+<h2 class="anchored" data-anchor-id="conversion-and-transformer-losses">Conversion and Transformer Losses</h2>
+<p>The current model fills the previously blank onshore efficiency with a provisional aggregate <strong>98.5%</strong>. This covers the onshore converter, converter transformers and station auxiliaries once. Hitachi Energy reports conversion losses below 1% per station for the 900 MW DolWin2 VSC system <span class="citation" data-cites="hitachiDolWin2">(<a href="#ref-hitachiDolWin2" role="doc-biblioref">Hitachi Energy, n.d.</a>)</span>, supporting the order of magnitude but not establishing a 2 GW guarantee.</p>
+<p>Large-transformer efficiency regulation provides another useful check. For liquid-immersed large transformers, the European Tier 2 minimum peak-efficiency index is 99.770% at 100 MVA, rises with rating and reaches 99.797% at 200 MVA and above <span class="citation" data-cites="europeanCommission2014Transformers">(<a href="#ref-europeanCommission2014Transformers" role="doc-biblioref">European Commission 2014</a>)</span>. Applicability and exclusions must be checked for the selected equipment. PEI is measured at the loading point of maximum efficiency, so it must not be interpreted as constant full-load or annual efficiency.</p>
+<p>The project does not yet have the OEM loss curves and auxiliary-load specifications needed for a load-dependent calculation. Until those data are available:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Boundary</th>
+<th style="text-align: right;">Working value</th>
+<th>Do not also apply</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Onshore VSC, transformation and auxiliaries</td>
+<td style="text-align: right;">98.5%</td>
+<td>A second generic onshore-converter factor</td>
+</tr>
+<tr class="even">
+<td>HVDC cable</td>
+<td style="text-align: right;">Calculated separately</td>
+<td>Cable loss inside the 98.5% station value</td>
+</tr>
+<tr class="odd">
+<td>Offshore conversion</td>
+<td style="text-align: right;">Calculated separately</td>
+<td>Offshore loss again at the onshore interface</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="availability-curtailment-and-resilience" class="level2">
+<h2 class="anchored" data-anchor-id="availability-curtailment-and-resilience">Availability, Curtailment and Resilience</h2>
+<p>The internal model assigns <strong>98.0% availability</strong> to the onshore station. This is the same onshore-terminal factor documented on the converter-station page and shown in the section overview; it is applied once, not multiplied by a second 98% grid-interface factor. As with the offshore station, a single scalar hides equipment redundancy and degraded states. The standard bipole can retain about 1 GW after a pole-path outage, while a common auxiliary, control, busbar or grid event may remove the complete 2 GW.</p>
+<p>Energy-equivalent availability is:</p>
+<p><span class="math display">\[
+A_E
+=
+1-
+\frac{\sum_i\Delta P_i\Delta t_i}
+{P_\mathrm{rated}T}.
+\]</span></p>
+<p>A practical state model distinguishes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>State</th>
+<th style="text-align: right;">Export capability</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Both poles and grid circuits healthy</td>
+<td style="text-align: right;">2 GW</td>
+<td>Normal operation</td>
+</tr>
+<tr class="even">
+<td>One pole path unavailable</td>
+<td style="text-align: right;">About 1 GW</td>
+<td>Converter transformer, valve or pole maintenance</td>
+</tr>
+<tr class="odd">
+<td>Onshore common-mode outage</td>
+<td style="text-align: right;">0 GW</td>
+<td>Shared auxiliaries, busbar or protection event</td>
+</tr>
+<tr class="even">
+<td>Receiving grid constrains dispatch</td>
+<td style="text-align: right;">0–2 GW</td>
+<td>Congestion, system security or market curtailment</td>
+</tr>
+</tbody>
+</table>
+<p>The last state is not equipment unavailability. Grid curtailment should be an energy-system or dispatch constraint so it can be valued and mitigated separately. Planned maintenance, spare single-phase transformers, sectionalised buses, redundant cooling and black-start arrangements can all affect outage duration and residual capacity.</p>
+</section>
+<section id="land-use-planning-and-environment" class="level2">
+<h2 class="anchored" data-anchor-id="land-use-planning-and-environment">Land Use, Planning and Environment</h2>
+<p>Onshore conversion moves impacts from sea to land. The main siting considerations are:</p>
+<ul>
+<li>proximity to a sufficiently strong high-voltage node;</li>
+<li>space for the permanent station and temporary construction compound;</li>
+<li>cable corridors, joint bays and road access for heavy transformers;</li>
+<li>audible noise from transformers, reactors and cooling;</li>
+<li>visual effects and building height;</li>
+<li>electromagnetic-field and safety clearances;</li>
+<li>flood, drainage and soil conditions;</li>
+<li>ecology, archaeology and community acceptance; and</li>
+<li>heat rejection and auxiliary electricity supply.</li>
+</ul>
+<p>Long underground routes can dominate civil works even when the converter site is close to the coast. Conversely, placing the converter near landfall may require a separate 380 kV AC route to the grid. Route and station location should therefore be optimised together.</p>
+</section>
+<section id="current-assumptions-and-sensitivities" class="level2">
+<h2 class="anchored" data-anchor-id="current-assumptions-and-sensitivities">Current Assumptions and Sensitivities</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Base case</th>
+<th style="text-align: right;">Suggested sensitivity</th>
+<th>Evidence status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Link rating</td>
+<td style="text-align: right;">2 GW</td>
+<td style="text-align: right;">Discrete 2 GW blocks</td>
+<td>TenneT standard</td>
+</tr>
+<tr class="even">
+<td>DC voltage</td>
+<td style="text-align: right;">+/-525 kV</td>
+<td style="text-align: right;">Fixed for standard case</td>
+<td>TenneT standard</td>
+</tr>
+<tr class="odd">
+<td>Grid voltage</td>
+<td style="text-align: right;">380 kV</td>
+<td style="text-align: right;">Project-specific transmission voltage</td>
+<td>Dutch reference</td>
+</tr>
+<tr class="even">
+<td>Onshore converter CAPEX</td>
+<td style="text-align: right;">Included in 808 EUR/kW converter pair</td>
+<td style="text-align: right;">632–1,061 EUR/kW pair range</td>
+<td>DEA coefficient; platform excluded</td>
+</tr>
+<tr class="odd">
+<td>Underground DC cable material</td>
+<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">Obtain material-only benchmark</td>
+<td>Separate cable owner</td>
+</tr>
+<tr class="even">
+<td>Underground cable installation</td>
+<td style="text-align: right;">TBD</td>
+<td style="text-align: right;">Route-specific model</td>
+<td>Separate installation owner</td>
+</tr>
+<tr class="odd">
+<td>Residual grid-interface CAPEX</td>
+<td style="text-align: right;">TBC, not zero by evidence</td>
+<td style="text-align: right;">Site-specific study</td>
+<td>Source gap</td>
+</tr>
+<tr class="even">
+<td>Onshore aggregate efficiency</td>
+<td style="text-align: right;">98.5%</td>
+<td style="text-align: right;">98.5–99.2%</td>
+<td>Provisional aggregate</td>
+</tr>
+<tr class="odd">
+<td>Flat station availability</td>
+<td style="text-align: right;">98.0%</td>
+<td style="text-align: right;">Replace with 100/50/0% states</td>
+<td>Internal convention</td>
+</tr>
+<tr class="even">
+<td>Onshore footprint</td>
+<td style="text-align: right;">About 5.5 ha</td>
+<td style="text-align: right;">Site and layout specific</td>
+<td>Doordewind reference</td>
+</tr>
+<tr class="odd">
+<td>Wider grid reinforcement</td>
+<td style="text-align: right;">Excluded/TBC</td>
+<td style="text-align: right;">Scenario by connection point</td>
+<td>Requires power-system study</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No package cost ledger</td>
+<td>Onshore equipment and ordinary civil cost cannot yet be isolated reliably</td>
+</tr>
+<tr class="even">
+<td>The 80 km base case ends at shore</td>
+<td>Underground route cost remains zero unless <span class="math inline">\(L_u\)</span> is entered explicitly</td>
+</tr>
+<tr class="odd">
+<td>No grid-node model</td>
+<td>Connection capacity, congestion and reinforcement are unknown</td>
+</tr>
+<tr class="even">
+<td>Constant 98.5% efficiency</td>
+<td>No-load, part-load and ambient-temperature effects are hidden</td>
+</tr>
+<tr class="odd">
+<td>Constant 98% availability</td>
+<td>Pole redundancy, spare transformers and common-mode events are hidden</td>
+</tr>
+<tr class="even">
+<td>380 kV is treated as universal</td>
+<td>Other countries and connection points use different grid voltages</td>
+</tr>
+<tr class="odd">
+<td>Reactive duty is not co-optimised</td>
+<td>Converter MVA and compensation equipment may be understated</td>
+</tr>
+<tr class="even">
+<td>Planning and land costs are TBC</td>
+<td>A feasible electrical design may still lack a consentable site</td>
+</tr>
+</tbody>
+</table>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-brinkman2024AtlanticTransmission" class="csl-entry" role="listitem">
+<span class="nocase">Brinkman, Gregory, Mike Bannister, Sophie Bredenkamp, Lanaia Carveth, Dave Corbus, et al.</span> 2024. <em>Atlantic Offshore Wind Transmission Study</em>. NREL/TP-5000-88003. National Renewable Energy Laboratory; Pacific Northwest National Laboratory. <a href="https://doi.org/10.2172/2327027">https://doi.org/10.2172/2327027</a>.
+</div>
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
+<div id="ref-europeanCommission2014Transformers" class="csl-entry" role="listitem">
+European Commission. 2014. <em>Commission Regulation (<span>EU</span>) No 548/2014 on Implementing Directive 2009/125/EC with Regard to Small, Medium and Large Power Transformers</em>. European Union regulation. <a href="https://eur-lex.europa.eu/eli/reg/2014/548/2019-11-14/eng">https://eur-lex.europa.eu/eli/reg/2014/548/2019-11-14/eng</a>.
+</div>
+<div id="ref-europeanCommission2016HVDC" class="csl-entry" role="listitem">
+European Commission. 2016. <em>Commission Regulation (<span>EU</span>) 2016/1447 Establishing a Network Code on Requirements for Grid Connection of High Voltage Direct Current Systems and Direct Current-Connected Power Park Modules</em>. European Union regulation. <a href="https://eur-lex.europa.eu/eli/reg/2016/1447/oj">https://eur-lex.europa.eu/eli/reg/2016/1447/oj</a>.
+</div>
+<div id="ref-dutchSystemCode2026" class="csl-entry" role="listitem">
+Government of the Netherlands. 2026. <em>Systeemcode elektriciteit</em>. Dutch electricity system code. <a href="https://wetten.overheid.nl/BWBR0052336/">https://wetten.overheid.nl/BWBR0052336/</a>.
+</div>
+<div id="ref-hitachiDolWin2" class="csl-entry" role="listitem">
+Hitachi Energy. n.d. <span>“DolWin2.”</span> Accessed July 14, 2026. <a href="https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2">https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2</a>.
+</div>
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+<div id="ref-tennetDoordewind" class="csl-entry" role="listitem">
+TenneT. n.d. <span>“Over het project – Net op zee Doordewind.”</span> Accessed July 14, 2026. <a href="https://magazines.tennet.eu/doordewind/over-het-project">https://magazines.tennet.eu/doordewind/over-het-project</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

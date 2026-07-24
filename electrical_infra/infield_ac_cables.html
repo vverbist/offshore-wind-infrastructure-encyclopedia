@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -302,12 +350,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/offshore_ac_substation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Offshore AC Substation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
@@ -380,6 +422,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,12 +589,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
+  <li><a href="#why-66-kv-is-the-reference-voltage" id="toc-why-66-kv-is-the-reference-voltage" class="nav-link" data-scroll-target="#why-66-kv-is-the-reference-voltage">Why 66 kV Is the Reference Voltage</a></li>
+  <li><a href="#cable-construction" id="toc-cable-construction" class="nav-link" data-scroll-target="#cable-construction">Cable Construction</a></li>
+  <li><a href="#public-reference-cable-data" id="toc-public-reference-cable-data" class="nav-link" data-scroll-target="#public-reference-cable-data">Public Reference Cable Data</a></li>
+  <li><a href="#string-capacity-model" id="toc-string-capacity-model" class="nav-link" data-scroll-target="#string-capacity-model">String Capacity Model</a></li>
+  <li><a href="#cable-length-model" id="toc-cable-length-model" class="nav-link" data-scroll-target="#cable-length-model">Cable-Length Model</a>
+  <ul class="collapse">
+  <li><a href="#validation-against-public-projects" id="toc-validation-against-public-projects" class="nav-link" data-scroll-target="#validation-against-public-projects">Validation against public projects</a></li>
+  </ul></li>
   <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#sizing-drivers" id="toc-sizing-drivers" class="nav-link" data-scroll-target="#sizing-drivers">Sizing Drivers</a></li>
+  <li><a href="#opex-allowance" id="toc-opex-allowance" class="nav-link" data-scroll-target="#opex-allowance">OPEX Allowance</a></li>
+  <li><a href="#reliability-and-availability" id="toc-reliability-and-availability" class="nav-link" data-scroll-target="#reliability-and-availability">Reliability and Availability</a></li>
+  <li><a href="#current-assumptions-and-sensitivities" id="toc-current-assumptions-and-sensitivities" class="nav-link" data-scroll-target="#current-assumptions-and-sensitivities">Current Assumptions and Sensitivities</a></li>
+  <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
+  <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -572,92 +629,578 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>Infield AC cables collect power from turbines and deliver it to an offshore substation or centralised hydrogen platform. They are used in the electricity and centralised hydrogen architectures.</p>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>Infield, inter-array or array cables form the medium-voltage collection network inside the wind farm. Each radial string carries the output of several turbines to an offshore AC bus. The cables are used by both the electricity-export and centralised-hydrogen architectures; decentralised hydrogen replaces the main array network with hydrogen pipelines.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Included on this page</th>
+<th>Accounted elsewhere</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Static three-core 66 kV submarine cable</td>
+<td>Turbine step-up transformer and switchgear</td>
+</tr>
+<tr class="even">
+<td>Cable conductor sizing and string capacity</td>
+<td>66 kV offshore switchgear bays</td>
+</tr>
+<tr class="odd">
+<td>Joints, terminations and cable accessories in the cable supply scope</td>
+<td>Offshore platform and J-tubes</td>
+</tr>
+<tr class="even">
+<td>Horizontal and vertical cable length</td>
+<td>Cable-lay vessel and installation campaign</td>
+</tr>
+<tr class="odd">
+<td>String-level outage effect</td>
+<td>Export cable and onshore connection</td>
+</tr>
+</tbody>
+</table>
+<p>This page covers cable supply only. Cable-lay vessels, route preparation, burial, pull-ins and other installation activities are costed separately on <a href="../offshore_installation/cable_installation.html">Cable Installation</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Physical picture: a radial electrical tree
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An array string is comparable to a daisy chain. The first cable segment carries one turbine’s output; each following segment carries that turbine plus every turbine farther from the substation. The final segment into the offshore bus therefore carries the greatest current and usually needs the largest conductor.</p>
+<p>The reference design is <strong>radial</strong>: there is one normal path from each turbine to the substation. This is simple and economical, but a fault near the root of a string can disconnect all turbines downstream of it. A ring or meshed network could provide another path, at the cost of more cable and switchgear.</p>
+</div>
+</div>
+</section>
+<section id="why-66-kv-is-the-reference-voltage" class="level2">
+<h2 class="anchored" data-anchor-id="why-66-kv-is-the-reference-voltage">Why 66 kV Is the Reference Voltage</h2>
+<p>Moving from 33 kV to 66 kV approximately doubles the transferable power at the same current. That allows more turbine capacity per string, fewer strings and fewer offshore-platform entries. Carbon Trust estimated that the transition could reduce offshore-wind LCOE by about 1.5%, and DNV GL’s TenneT study found a material reduction in cable length for the Dutch Borssele concept <span class="citation" data-cites="carbonTrust2014SixtySixKV dnvgl2015SixtySixKV">(<a href="#ref-carbonTrust2014SixtySixKV" role="doc-biblioref">Carbon Trust 2014</a>; <a href="#ref-dnvgl2015SixtySixKV" role="doc-biblioref">DNV GL 2015</a>)</span>.</p>
+<p>The technology is now demonstrated at commercial scale. Borssele 1 and 2 used three-phase 66 kV copper array cables in two cross-sections over roughly 170–190 km <span class="citation" data-cites="nexans2018Borssele66KV">(<a href="#ref-nexans2018Borssele66KV" role="doc-biblioref">Nexans 2018</a>)</span>. Fixed 66 kV-class submarine cables fall within the scope of IEC 63026, while project design must also address offshore-specific interfaces, installation and mechanical loading <span class="citation" data-cites="iec63026 dnvST0359">(<a href="#ref-iec63026" role="doc-biblioref">International Electrotechnical Commission 2019</a>; <a href="#ref-dnvST0359" role="doc-biblioref">DNV, n.d.</a>)</span>.</p>
+<p>66 kV should nevertheless be treated as the <strong>current reference</strong>, not a permanent optimum. Carbon Trust’s later high-voltage-array work considers 132 kV as turbine and plant ratings grow; it reported modelled savings of GBP 32–50 million for a 1,200 MW future plant relative to an equivalent 66 kV system <span class="citation" data-cites="carbonTrust2022HighVoltageArrays">(<a href="#ref-carbonTrust2022HighVoltageArrays" role="doc-biblioref">Carbon Trust 2022</a>)</span>.</p>
+</section>
+<section id="cable-construction" class="level2">
+<h2 class="anchored" data-anchor-id="cable-construction">Cable Construction</h2>
+<p>A typical fixed-bottom array cable contains:</p>
+<ul>
+<li>three copper or aluminium phase conductors;</li>
+<li>conductor screens and cross-linked polyethylene (XLPE) insulation;</li>
+<li>metallic screens and water-blocking layers;</li>
+<li>fibre-optic elements for communication and monitoring;</li>
+<li>fillers, bedding and one or more armour layers; and</li>
+<li>an outer serving that protects the cable during handling and installation.</li>
+</ul>
+<p>Cable cross-section normally increases toward the offshore substation because each successive segment carries the power of more downstream turbines. A screening model can use one usable string rating, but an optimised design uses at least two or three conductor sizes.</p>
+</section>
+<section id="public-reference-cable-data" class="level2">
+<h2 class="anchored" data-anchor-id="public-reference-cable-data">Public Reference Cable Data</h2>
+<p>The current NREL ORBIT input set provides two transparent 66 kV screening anchors at 2 m burial:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Conductor cross-section</th>
+<th style="text-align: right;">Rated current</th>
+<th style="text-align: right;">Approximate three-phase capacity at unity power factor</th>
+<th style="text-align: right;">Cable mass</th>
+<th style="text-align: right;">ORBIT cable unit cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">185 mm²</td>
+<td style="text-align: right;">445 A</td>
+<td style="text-align: right;">50.9 MVA</td>
+<td style="text-align: right;">26.1 t/km</td>
+<td style="text-align: right;">214 EUR/m</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">630 mm²</td>
+<td style="text-align: right;">775 A</td>
+<td style="text-align: right;">88.6 MVA</td>
+<td style="text-align: right;">42.5 t/km</td>
+<td style="text-align: right;">575 EUR/m</td>
+</tr>
+</tbody>
+</table>
+<p>The source values are USD 241,542/km and USD 650,000/km in 2024 dollars <span class="citation" data-cites="orbit2026Cable185 orbit2026Cable630">(<a href="#ref-orbit2026Cable185" role="doc-biblioref">National Laboratory of the Rockies 2026a</a>, <a href="#ref-orbit2026Cable630" role="doc-biblioref">2026b</a>)</span>. They are converted here using the ECB 2025 annual-average rate of USD 1.1300/EUR <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. ORBIT states that its updated cost rates use industry outreach together with commodity-price, inflation and labour-index adjustments <span class="citation" data-cites="orbit2026Changelog">(<a href="#ref-orbit2026Changelog" role="doc-biblioref">National Laboratory of the Rockies 2026c</a>)</span>. They remain model inputs rather than a 2026 quotation. No additional manufacturer markup is applied because the ORBIT values already represent cable procurement unit costs. Installation is excluded.</p>
+<p>TenneT’s Dutch interface study used a nominal maximum of 630 A, equivalent to about 72 MVA at 66 kV. With reactive-power duty and a 0.9 power factor, it treated approximately 64–66 MW as usable active power per connection <span class="citation" data-cites="tennet2015JTubes">(<a href="#ref-tennet2015JTubes" role="doc-biblioref">TenneT 2015</a>)</span>. This range is used as the screening string rating on this page.</p>
+<p>Three ratings should not be confused:</p>
+<ul>
+<li><strong>ampacity</strong> is the maximum continuous current the installed cable can carry without exceeding its allowable conductor temperature;</li>
+<li><strong>MVA capacity</strong> follows mainly from voltage and current; and</li>
+<li><strong>MW capacity</strong> is the active-power share after power factor, reactive duty and engineering derating are allowed for.</li>
+</ul>
+<p>A 72 MVA cable does not automatically provide 72 MW of usable wind-power transfer.</p>
+</section>
+<section id="string-capacity-model" class="level2">
+<h2 class="anchored" data-anchor-id="string-capacity-model">String Capacity Model</h2>
+<p>For target farm capacity <span class="math inline">\(P_\mathrm{target}\)</span> and turbine rating <span class="math inline">\(P_\mathrm{turb}\)</span>, the installed turbine count and capacity are:</p>
+<p><span class="math display">\[
+N_\mathrm{turb}
+=
+\left\lceil
+\frac{P_\mathrm{target}}{P_\mathrm{turb}}
+\right\rceil,
+\qquad
+P_\mathrm{farm}
+=
+N_\mathrm{turb}P_\mathrm{turb}.
+\]</span></p>
+<p>For a selected usable string rating, the number of full turbines that fit on one radial string is:</p>
+<p><span class="math display">\[
+n_\mathrm{turb/string}
+=
+\left\lfloor
+\frac{P_\mathrm{string}}{P_\mathrm{turb}}
+\right\rfloor,
+\]</span></p>
+<p>and the minimum number of strings is:</p>
+<p><span class="math display">\[
+n_\mathrm{string}
+=
+\left\lceil
+\frac{N_\mathrm{turb}}{n_\mathrm{turb/string}}
+\right\rceil.
+\]</span></p>
+<p>The floor operator in the first equation prevents a fraction of a turbine being assigned to a string. The ceiling operator in the second ensures that a partly filled final string still receives a complete cable, switchgear bay and platform termination. These discrete jumps are why a small change in turbine or string rating can create a noticeable CAPEX step.</p>
+<p>This is the same basic capacity logic used by NREL’s ORBIT model <span class="citation" data-cites="nunemaker2020ORBIT">(<a href="#ref-nunemaker2020ORBIT" role="doc-biblioref">Nunemaker et al. 2020</a>)</span>. Final cable selection must also check voltage drop, short-circuit duty, charging current, burial depth, seabed thermal resistivity, conductor temperature, armour losses and post-installation protection.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Worked example: 15 MW turbines
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Four 15 MW turbines place 60 MW on a string. Five place 75 MW on it and exceed the 64–66 MW screening range. A nominal 2 GW target therefore requires 134 turbines, giving 2.01 GW installed and:</p>
+<p><span class="math display">\[
+n_\mathrm{string}=\left\lceil\frac{134}{4}\right\rceil=34.
+\]</span></p>
+</div>
+</div>
+<p><a href="#fig-array-string-count" class="quarto-xref">Figure&nbsp;1</a> shows the resulting discrete string count. A small increase in plant capacity can require a complete additional feeder, switchgear bay, J-tube, pull-in and cable route.</p>
+<div id="fig-array-string-count" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-array-string-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../figures/array-string-count.svg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-array-string-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Required 66 kV radial strings for 15 MW turbines and a 64–66 MW usable string rating.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The worked array does not fit the reference platform unchanged
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>TenneT’s 2 GW reference arrangement shows 24 dedicated wind-farm bays plus four universal bays <span class="citation" data-cites="tennet2024TwoGWProgram">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>)</span>. The 34-string worked case therefore needs at least six more terminations than the maximum 28 shown, even if every universal bay is assigned to a feeder. A consistent design must do one or more of the following:</p>
+<ul>
+<li>adopt a cable and platform interface rated for at least 75 MW per string, so five 15 MW turbines fit and only 27 strings are required;</li>
+<li>add offshore feeder aggregation or another switchgear interface;</li>
+<li>move to a higher collection voltage; or</li>
+<li>use a project-specific platform layout with more bays.</li>
+</ul>
+<p>This interface constraint must be solved before the 34-string cable count and standard 2 GW platform are combined in one cost case.</p>
+</div>
+</div>
+</section>
+<section id="cable-length-model" class="level2">
+<h2 class="anchored" data-anchor-id="cable-length-model">Cable-Length Model</h2>
+<p>Cable length is calculated from the modelled turbine layout and radial-string topology. Capacity determines the number of turbines and strings; rotor diameter and spacing determine their separation; farm area, aspect ratio and substation position constrain the coordinates. This keeps cable length responsive when any of those design inputs change.</p>
+<p>For rotor diameter <span class="math inline">\(D\)</span> in metres and along-string and cross-string spacings <span class="math inline">\(s_x\)</span> and <span class="math inline">\(s_y\)</span> in rotor diameters, the physical spacings are:</p>
+<p><span class="math display">\[
+d_x=\frac{s_xD}{1000},
+\qquad
+d_y=\frac{s_yD}{1000},
+\]</span></p>
+<p>where <span class="math inline">\(d_x\)</span> and <span class="math inline">\(d_y\)</span> are in kilometres. The wind-layout model places <span class="math inline">\(N_\mathrm{turb}\)</span> turbines inside the farm boundary using these spacings and returns turbine coordinates <span class="math inline">\((x_j,y_j)\)</span>. The gross farm area <span class="math inline">\(A_\mathrm{farm}\)</span>, spacing and turbine count are not independent: the selected coordinates must satisfy both the minimum-spacing rules and the site boundary. The model must flag an infeasible combination rather than silently rescale the spacing.</p>
+<p>For an ideal rectangular grid with <span class="math inline">\(n_x\)</span> turbine positions along the wind direction and <span class="math inline">\(n_y\)</span> across it, where <span class="math inline">\(n_xn_y\geq N_\mathrm{turb}\)</span>, the occupied grid spans are:</p>
+<p><span class="math display">\[
+W_\mathrm{grid}=(n_x-1)d_x,
+\qquad
+H_\mathrm{grid}=(n_y-1)d_y.
+\]</span></p>
+<p>These spans, together with boundary margins and exclusions, must fit inside <span class="math inline">\(A_\mathrm{farm}\)</span>. Farm area is therefore a geometric constraint, not an additional cable-length multiplier. A larger boundary changes cable length only when the layout actually spreads the turbine coordinates farther apart.</p>
+<p>The string-capacity calculation above partitions the turbines into radial strings with no more than <span class="math inline">\(n_\mathrm{turb/string}\)</span> turbines. Let <span class="math inline">\(\mathcal{E}\)</span> be the resulting set of cable connections: one connection from the offshore substation to the first turbine on each string, followed by turbine-to-turbine connections. The horizontal distance of connection <span class="math inline">\((u,v)\)</span> is:</p>
+<p><span class="math display">\[
+d_{uv}
+=
+\sqrt{(x_u-x_v)^2+(y_u-y_v)^2}.
+\]</span></p>
+<p>Total pre-route horizontal cable length is therefore:</p>
+<p><span class="math display">\[
+L_\mathrm{horizontal}
+=
+\sum_{(u,v)\in\mathcal{E}}d_{uv},
+\]</span></p>
+<p>and the screening supply length is:</p>
+<p><span class="math display">\[
+L_\mathrm{array}
+=
+(1+r)L_\mathrm{horizontal}
++
+L_\mathrm{pull\text{-}in},
+\]</span></p>
+<p>where <span class="math inline">\(r\)</span> is the route allowance and <span class="math inline">\(L_\mathrm{pull\text{-}in}\)</span> is the separately calculated total cable length between seabed touchdown points and turbine or platform terminations. No default pull-in length is inserted until the water-depth and interface assumptions are defined.</p>
+<p>This is the same calculation structure used by ORBIT’s grid-array model: turbine and row spacing define coordinates, cable capacity limits turbines per string, and the model sums the Euclidean distance between successive connection points <span class="citation" data-cites="nunemaker2020ORBIT">(<a href="#ref-nunemaker2020ORBIT" role="doc-biblioref">Nunemaker et al. 2020</a>)</span>.</p>
+<section id="validation-against-public-projects" class="level3">
+<h3 class="anchored" data-anchor-id="validation-against-public-projects">Validation against public projects</h3>
+<p>Published project quantities are used to test the model output, not to replace the physical calculation:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Project</th>
+<th style="text-align: right;">Turbines</th>
+<th style="text-align: right;">Reported array cable</th>
+<th style="text-align: right;">Derived length per turbine</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Borssele 1 &amp; 2</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">170–190 km</td>
+<td style="text-align: right;">1.81–2.02 km/turbine</td>
+</tr>
+<tr class="even">
+<td>Moray East</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">200 km</td>
+<td style="text-align: right;">2.00 km/turbine</td>
+</tr>
+<tr class="odd">
+<td>Hornsea 2</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">373 km</td>
+<td style="text-align: right;">2.26 km/turbine</td>
+</tr>
+<tr class="even">
+<td>Dogger Bank A</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">More than 328 km</td>
+<td style="text-align: right;">More than 3.45 km/turbine</td>
+</tr>
+</tbody>
+</table>
+<p>The inputs come from cable suppliers and project owners <span class="citation" data-cites="nexans2018Borssele66KV jdr2020MorayEast orsted2021Hornsea2 equinorDoggerBankAArray">(<a href="#ref-nexans2018Borssele66KV" role="doc-biblioref">Nexans 2018</a>; <a href="#ref-jdr2020MorayEast" role="doc-biblioref">JDR Cable Systems 2020</a>; <a href="#ref-orsted2021Hornsea2" role="doc-biblioref">Orsted 2021</a>; <a href="#ref-equinorDoggerBankAArray" role="doc-biblioref">Equinor, n.d.</a>)</span>. BOEM’s review of submitted US construction and operations plans gives an additional portfolio average of 1.48 miles, or approximately 2.4 km, of inter-array cable per wind-turbine foundation <span class="citation" data-cites="boem2022MaximumCase">(<a href="#ref-boem2022MaximumCase" role="doc-biblioref">Bureau of Ocean Energy Management 2022</a>)</span>.</p>
+<p>These ratios span different turbine ratings, site shapes, substation positions and reporting scopes. Supplied quantities can also contain project allowances or spare cable. They therefore define a validation range rather than a universal coefficient. For each modelled case, report <span class="math inline">\(L_\mathrm{array}/N_\mathrm{turb}\)</span> beside these benchmarks and investigate an out-of-range result before using its cost.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Routing allowance is not universal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The current 20% addition comes from the internal model description <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>. It should not be added on top of coordinates or route lengths that already include bends, exclusions and slack. Use 5–20% only as a pre-route sensitivity.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="cost-model" class="level2">
 <h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
+<p>The screening cost on this page covers cable material and normal supply accessories. Installation is excluded and belongs to <a href="../offshore_installation/cable_installation.html">Cable Installation</a>.</p>
+<p>For supply length <span class="math inline">\(L_\mathrm{array}\)</span> in kilometres and blended cable unit cost <span class="math inline">\(c_\mathrm{cable}\)</span> in EUR/m:</p>
+<p><span class="math display">\[
+C_\mathrm{supply}
+=
+1000L_\mathrm{array}c_\mathrm{cable}.
+\]</span></p>
+<p>The following evidence brackets the screening unit cost:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Benchmark</th>
+<th>Scope and price basis</th>
+<th style="text-align: right;">Derived unit cost</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Voltage level</td>
-<td style="text-align: right;">66 kV AC</td>
+<td>ORBIT 185 mm², 66 kV</td>
+<td>Cable procurement input, 2024 USD converted at the ECB 2025 annual-average exchange rate</td>
+<td style="text-align: right;">214 EUR/m</td>
 </tr>
 <tr class="even">
-<td>Cable capacity</td>
-<td style="text-align: right;">70 MW</td>
+<td>ORBIT 630 mm², 66 kV</td>
+<td>Cable procurement input, 2024 USD converted at the ECB 2025 annual-average exchange rate</td>
+<td style="text-align: right;">575 EUR/m</td>
 </tr>
 <tr class="odd">
-<td>Cable CAPEX</td>
+<td>Hollandse Kust Zuid III &amp; IV</td>
+<td>Approximately EUR 30 million for design, testing and supply of 172 km of 66 kV cable and accessories, 2019 nominal</td>
+<td style="text-align: right;">Approximately 174 EUR/m</td>
+</tr>
+</tbody>
+</table>
+<p>Prysmian reports the 172 km supply scope and its annual report gives the approximately EUR 30 million contract value <span class="citation" data-cites="prysmian2019HollandseKustZuid prysmian2019AnnualReport">(<a href="#ref-prysmian2019HollandseKustZuid" role="doc-biblioref">Prysmian Group 2019b</a>, <a href="#ref-prysmian2019AnnualReport" role="doc-biblioref">2019a</a>)</span>. The project average combines cable sizes and is not a direct quotation for the largest conductor.</p>
+<p>The base case remains <strong>400 EUR/m</strong>, with <strong>200–600 EUR/m</strong> used as an engineering sensitivity. This is a blended screening assumption between a historical mixed-cable contract and the current ORBIT conductor-specific inputs; it is not a statistical mean or a 2026 market quotation. No manufacturer markup is added. A conductor-by-conductor cost calculation should replace the blended rate only when the routed string design identifies the length of each cable size.</p>
+</section>
+<section id="opex-allowance" class="level2">
+<h2 class="anchored" data-anchor-id="opex-allowance">OPEX Allowance</h2>
+<p>Public evidence describes large but infrequent cable failures more clearly than it reports expected annual cable-only expenditure. ORE Catapult’s SPARTA portfolio found cable outages in 7.46% of wind-farm months and in 61% of reporting wind farms, with outage days split approximately equally between array and export cables <span class="citation" data-cites="oreCatapult2022SPARTA">(<a href="#ref-oreCatapult2022SPARTA" role="doc-biblioref">ORE Catapult 2022</a>)</span>. Its ELECTRODE programme reports an average repair duration of about two months and consequences often above GBP 10 million, but that amount combines repair expenditure and lost generation <span class="citation" data-cites="oreCatapult2023ELECTRODE">(<a href="#ref-oreCatapult2023ELECTRODE" role="doc-biblioref">ORE Catapult 2023</a>)</span>.</p>
+<p>These data do not provide an array-only annual failure frequency or a clean split between physical repair cost and lost revenue. An event-based OPEX model is therefore not used. The current relationship is retained as a top-down risk allowance:</p>
+<p><span class="math display">\[
+C_\mathrm{OPEX}
+=
+f_\mathrm{OPEX}C_\mathrm{supply},
+\]</span></p>
+<p>with <span class="math inline">\(f_\mathrm{OPEX}=2\%\)</span>/year and a 1–3% sensitivity. At the base cable price, each 100 km of supplied cable has EUR 40 million supply CAPEX and therefore a EUR 0.8 million annual allowance. The allowance represents inspection and physical repair provision only. Lost generation remains in the availability calculation and must not also be included in OPEX.</p>
+</section>
+<section id="reliability-and-availability" class="level2">
+<h2 class="anchored" data-anchor-id="reliability-and-availability">Reliability and Availability</h2>
+<p>The current model applies <strong>99.0% array-network availability</strong> as a flat annual yield multiplier. A radial string fault normally disconnects the turbines downstream of the fault rather than the complete wind farm, so the flat multiplier does not represent topology explicitly.</p>
+<p>No more detailed failure model is introduced until consistent array-specific failure frequency, repair duration and affected-capacity data are available. When those inputs exist, the radial connections <span class="math inline">\(\mathcal{E}\)</span> defined by the cable-length model can also define the turbines isolated by each fault. Until then, 99.0% remains a transparent aggregate assumption rather than a calculated reliability result.</p>
+</section>
+<section id="current-assumptions-and-sensitivities" class="level2">
+<h2 class="anchored" data-anchor-id="current-assumptions-and-sensitivities">Current Assumptions and Sensitivities</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Base case</th>
+<th style="text-align: right;">Suggested sensitivity</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Array voltage</td>
+<td style="text-align: right;">66 kV</td>
+<td style="text-align: right;">66 or 132 kV</td>
+<td>132 kV is an emerging future-plant option</td>
+</tr>
+<tr class="even">
+<td>Usable string rating</td>
+<td style="text-align: right;">64–66 MW</td>
+<td style="text-align: right;">Project-specific</td>
+<td>TenneT screening range; final rating requires cable and interface checks</td>
+</tr>
+<tr class="odd">
+<td>Turbine rating</td>
+<td style="text-align: right;">15 MW</td>
+<td style="text-align: right;">Model variable</td>
+<td>Four turbines per base-case string</td>
+</tr>
+<tr class="even">
+<td>Rotor diameter and turbine spacing</td>
+<td style="text-align: right;">Wind-layout inputs</td>
+<td style="text-align: right;">Layout scenarios</td>
+<td>Converted into explicit turbine coordinates</td>
+</tr>
+<tr class="odd">
+<td>Farm area and aspect ratio</td>
+<td style="text-align: right;">Wind-layout inputs</td>
+<td style="text-align: right;">Site scenarios</td>
+<td>Constrain the feasible coordinate layout</td>
+</tr>
+<tr class="even">
+<td>Cable material cost</td>
 <td style="text-align: right;">400 EUR/m</td>
+<td style="text-align: right;">200–600 EUR/m</td>
+<td>Blended engineering range, not a statistical confidence interval</td>
+</tr>
+<tr class="odd">
+<td>Route addition</td>
+<td style="text-align: right;">20%</td>
+<td style="text-align: right;">5–20%</td>
+<td>Apply only before a routed design exists</td>
 </tr>
 <tr class="even">
-<td>Cable installation</td>
-<td style="text-align: right;">635 EUR/m</td>
-</tr>
-<tr class="odd">
-<td>Cable OPEX</td>
-<td style="text-align: right;">2% of CAPEX per year</td>
-</tr>
-</tbody>
-</table>
-<p>The model estimates total cable length from farm geometry, turbine count, and string capacity. A 20% length addition is applied for diversions and routing constraints.</p>
-</section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Efficiency</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Infield AC grid</td>
-<td style="text-align: right;">98.0%</td>
-</tr>
-</tbody>
-</table>
-<p>Losses are applied to annual electricity yield in the electricity and centralised hydrogen chains.</p>
-</section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Infield AC grid</td>
+<td>Flat availability</td>
 <td style="text-align: right;">99.0%</td>
+<td style="text-align: right;">Replace with string outage states</td>
+<td>A fault normally removes partial capacity</td>
+</tr>
+<tr class="odd">
+<td>OPEX risk allowance</td>
+<td style="text-align: right;">2% of supply CAPEX/year</td>
+<td style="text-align: right;">1–3%</td>
+<td>Physical inspection and repair provision; excludes lost generation</td>
 </tr>
 </tbody>
 </table>
-<p>Availability is applied as a flat annual yield multiplier.</p>
 </section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>Installation is modelled per metre. See <a href="../offshore_installation/cable_installation.html">Cable Installation</a> for vessel and benchmark assumptions.</p>
+<section id="architecture-applicability" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
+<p>For electricity export, the strings terminate on the integrated offshore AC/HVDC platform. For centralised hydrogen, the same array network terminates at the central electrolyser facility, but the downstream transformer and rectifier belong to the electrolyser power-electronics scope. Decentralised hydrogen removes the main 66 kV collection network from the energy path.</p>
 </section>
-<section id="sizing-drivers" class="level2">
-<h2 class="anchored" data-anchor-id="sizing-drivers">Sizing Drivers</h2>
-<p>The number of strings depends on turbine rating and cable capacity. For 15 MW turbines and 70 MW cable capacity, only a limited number of turbines can be placed on each string.</p>
+<section id="model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One usable MW rating represents several conductor sizes</td>
+<td>Procurement does not yet benefit from tapered strings</td>
+</tr>
+<tr class="even">
+<td>The 34-string base case exceeds the reference platform bay count</td>
+<td>Cable and platform designs are not yet a physically closed system</td>
+</tr>
+<tr class="odd">
+<td>Idealised coordinates and string assignment replace a routed design</td>
+<td>Exclusions, crossings and detailed approach routes remain approximate</td>
+</tr>
+<tr class="even">
+<td>Pull-in length has no default input</td>
+<td>Supply length remains incomplete until water depth and interface geometry are defined</td>
+</tr>
+<tr class="odd">
+<td>Public project cable quantities have inconsistent reporting scopes</td>
+<td>Length per turbine is a validation range, not a calibration coefficient</td>
+</tr>
+<tr class="even">
+<td>Electrical losses are unresolved</td>
+<td>No flat loss deduction is applied until a defensible load-dependent model is available</td>
+</tr>
+<tr class="odd">
+<td>Flat 99% availability</td>
+<td>String-level and common-mode outage states are hidden</td>
+</tr>
+<tr class="even">
+<td>Supply benchmarks mix 2019 nominal EUR and 2024 USD inputs</td>
+<td>The apparent precision of the blended EUR/m assumption exceeds source quality</td>
+</tr>
+<tr class="odd">
+<td>OPEX is a top-down percentage</td>
+<td>Public evidence does not yet support an array-only event-frequency and cash-repair model</td>
+</tr>
+<tr class="even">
+<td>Fixed-bottom static cable is assumed</td>
+<td>Floating-wind dynamic sections and fatigue design are outside scope</td>
+</tr>
+<tr class="odd">
+<td>66 kV is fixed in the base model</td>
+<td>The potential value of 132 kV for 20 MW-class turbines is not optimised</td>
+</tr>
+</tbody>
+</table>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-boem2022MaximumCase" class="csl-entry" role="listitem">
+Bureau of Ocean Energy Management. 2022. <em>Maximum-Case Scenario Estimates for Offshore Wind Projects</em>. Appendix E3 to the Revolution Wind Farm and Revolution Export Cable Project Draft Environmental Impact Statement. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/sites/default/files/documents/renewable-energy/Revolution_Wind_DEIS_App_E3_Maximum-Case_Scenario_Offshore.pdf">https://www.boem.gov/sites/default/files/documents/renewable-energy/Revolution_Wind_DEIS_App_E3_Maximum-Case_Scenario_Offshore.pdf</a>.
+</div>
+<div id="ref-carbonTrust2014SixtySixKV" class="csl-entry" role="listitem">
+Carbon Trust. 2014. <span>“Carbon Trust Awards Funding to Cut Offshore Wind Costs by up to GBP 100m Per Year.”</span> July 15. <a href="https://www.carbontrust.com/news-and-insights/news/carbon-trust-awards-funding-to-cut-offshore-wind-costs-by-up-to-ps100m-per-year">https://www.carbontrust.com/news-and-insights/news/carbon-trust-awards-funding-to-cut-offshore-wind-costs-by-up-to-ps100m-per-year</a>.
+</div>
+<div id="ref-carbonTrust2022HighVoltageArrays" class="csl-entry" role="listitem">
+Carbon Trust. 2022. <span>“Global Offshore Wind Industry to Increase Array Voltage.”</span> June 22. <a href="https://www.carbontrust.com/en-eu/news-and-insights/news/global-offshore-wind-industry-to-increase-voltage">https://www.carbontrust.com/en-eu/news-and-insights/news/global-offshore-wind-industry-to-increase-voltage</a>.
+</div>
+<div id="ref-dnvST0359" class="csl-entry" role="listitem">
+DNV. n.d. <span>“<span>DNV-ST-0359</span>: Subsea Power Cables for Wind Power Plants.”</span> Accessed July 14, 2026. <a href="https://www.dnv.com/energy/standards-guidelines/dnv-st-0359-subsea-power-cables-for-wind-power-plants/">https://www.dnv.com/energy/standards-guidelines/dnv-st-0359-subsea-power-cables-for-wind-power-plants/</a>.
+</div>
+<div id="ref-dnvgl2015SixtySixKV" class="csl-entry" role="listitem">
+DNV GL. 2015. <em>66 kV Systems for Offshore Wind Farms</em>. 113799-UKBR-R02, Rev. 2. TenneT. <a href="https://netztransparenz.tennet.eu/fileadmin/user_upload/Our_Grid/Offshore_Netherlands/Consultatie_proces_net_op_zee/Technical_Topics/4_T1._Enclosure_nr_1b_-_66_kV_systems_for_Offshore_Wind_Farms_by_DNV_GL.pdf">https://netztransparenz.tennet.eu/fileadmin/user_upload/Our_Grid/Offshore_Netherlands/Consultatie_proces_net_op_zee/Technical_Topics/4_T1._Enclosure_nr_1b_-_66_kV_systems_for_Offshore_Wind_Farms_by_DNV_GL.pdf</a>.
+</div>
+<div id="ref-equinorDoggerBankAArray" class="csl-entry" role="listitem">
+Equinor. n.d. <span>“Inter-Array Cable Works Completed on Dogger Bank a.”</span> Accessed July 24, 2026. <a href="https://www.equinor.com/news/uk/inter-array-cable-works-completed-on-dogger-bank-a">https://www.equinor.com/news/uk/inter-array-cable-works-completed-on-dogger-bank-a</a>.
+</div>
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
+<div id="ref-iec63026" class="csl-entry" role="listitem">
+International Electrotechnical Commission. 2019. <span>“<span>IEC</span> 63026:2019: Submarine Power Cables with Extruded Insulation and Their Accessories for Rated Voltages from 6 kV to 60 kV.”</span> <a href="https://webstore.iec.ch/en/publication/33417">https://webstore.iec.ch/en/publication/33417</a>.
+</div>
+<div id="ref-jdr2020MorayEast" class="csl-entry" role="listitem">
+JDR Cable Systems. 2020. <span>“<span>JDR</span> to Conduct Array Cable Termination and Testing on Moray East Offshore Wind Farm.”</span> August 25. <a href="https://www.jdrcables.com/media-centre/press-releases/jdr-to-conduct-array-cable-termination-and-testing-on-moray-east-offshore-wind-farm%2C1754">https://www.jdrcables.com/media-centre/press-releases/jdr-to-conduct-array-cable-termination-and-testing-on-moray-east-offshore-wind-farm%2C1754</a>.
+</div>
+<div id="ref-orbit2026Cable185" class="csl-entry" role="listitem">
+National Laboratory of the Rockies. 2026a. <span>“<span>ORBIT</span> Cable Input: <span>XLPE</span> 185 Mm2, 66 kV.”</span> <a href="https://github.com/NLRWindSystems/ORBIT/blob/dev/library/cables/XLPE_185mm_66kV.yaml">https://github.com/NLRWindSystems/ORBIT/blob/dev/library/cables/XLPE_185mm_66kV.yaml</a>.
+</div>
+<div id="ref-orbit2026Cable630" class="csl-entry" role="listitem">
+National Laboratory of the Rockies. 2026b. <span>“<span>ORBIT</span> Cable Input: <span>XLPE</span> 630 Mm2, 66 kV.”</span> <a href="https://github.com/NLRWindSystems/ORBIT/blob/dev/library/cables/XLPE_630mm_66kV.yaml">https://github.com/NLRWindSystems/ORBIT/blob/dev/library/cables/XLPE_630mm_66kV.yaml</a>.
+</div>
+<div id="ref-orbit2026Changelog" class="csl-entry" role="listitem">
+National Laboratory of the Rockies. 2026c. <span>“<span>ORBIT</span> Changelog.”</span> <a href="https://nlrwindsystems.github.io/ORBIT/about/changelog.html">https://nlrwindsystems.github.io/ORBIT/about/changelog.html</a>.
+</div>
+<div id="ref-nexans2018Borssele66KV" class="csl-entry" role="listitem">
+Nexans. 2018. <span>“Nexans Is Awarded a Multimillion-Euro Contract for Orsted’s Borssele 1 and 2 Wind Farms Off the Netherlands Coast.”</span> November 7. <a href="https://www.nexans.com/press-releases/nexans-is-awarded-a-multimillion-euro-contract-for-orsteds-borssele-1-and-2-wind-farms-off-the-netherlands-coast/">https://www.nexans.com/press-releases/nexans-is-awarded-a-multimillion-euro-contract-for-orsteds-borssele-1-and-2-wind-farms-off-the-netherlands-coast/</a>.
+</div>
+<div id="ref-nunemaker2020ORBIT" class="csl-entry" role="listitem">
+Nunemaker, Jacob, Matthew Shields, Rob Hammond, and Patrick Duffy. 2020. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. NREL/TP-5000-77081. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1660132">https://doi.org/10.2172/1660132</a>.
+</div>
+<div id="ref-oreCatapult2022SPARTA" class="csl-entry" role="listitem">
+ORE Catapult. 2022. <em>System Performance, Availability and Reliability Trend Analysis: <span>SPARTA</span> 2020/21 Portfolio Review</em>. ORE Catapult. <a href="https://cms.ore.catapult.org.uk/wp-content/uploads/2022/06/SPARTA-Review-2021-Final.pdf">https://cms.ore.catapult.org.uk/wp-content/uploads/2022/06/SPARTA-Review-2021-Final.pdf</a>.
+</div>
+<div id="ref-oreCatapult2023ELECTRODE" class="csl-entry" role="listitem">
+ORE Catapult. 2023. <span>“<span>ELECTRODE</span>: Electrical Cable Failure Trending and Reliability Analysis for Operational Developments.”</span> May 4. <a href="https://ore.catapult.org.uk/resource-hub/projects/electrode/">https://ore.catapult.org.uk/resource-hub/projects/electrode/</a>.
+</div>
+<div id="ref-orsted2021Hornsea2" class="csl-entry" role="listitem">
+Orsted. 2021. <span>“The World’s Biggest Offshore Wind Farm, Hornsea 2, Generates First Power.”</span> December 20. <a href="https://orsted.com/en/media/news/2021/12/20211220460511">https://orsted.com/en/media/news/2021/12/20211220460511</a>.
+</div>
+<div id="ref-internalModelDescription2026" class="csl-entry" role="listitem">
+Project Team. 2026. <em>Offshore Hydrogen Model Description</em>. Internal background document.
+</div>
+<div id="ref-prysmian2019AnnualReport" class="csl-entry" role="listitem">
+Prysmian Group. 2019a. <em>Annual Report 2019</em>. Prysmian Group. <a href="https://www.prysmian.com/sites/default/files/Prysmian_Annual_Report_2019_WITHDRAWN.pdf">https://www.prysmian.com/sites/default/files/Prysmian_Annual_Report_2019_WITHDRAWN.pdf</a>.
+</div>
+<div id="ref-prysmian2019HollandseKustZuid" class="csl-entry" role="listitem">
+Prysmian Group. 2019b. <span>“Prysmian Secures New Offshore Wind Project in the Netherlands.”</span> July 29. <a href="https://www.prysmian.com/en/press-releases/prysmian-secures-new-offshore-wind-project-netherlands">https://www.prysmian.com/en/press-releases/prysmian-secures-new-offshore-wind-project-netherlands</a>.
+</div>
+<div id="ref-tennet2015JTubes" class="csl-entry" role="listitem">
+TenneT. 2015. <em>T.2 Number of j-Tubes</em>. ONL 15-060-T2, version 1. TenneT. <a href="https://netztransparenz.tennet.eu/fileadmin/user_upload/Our_Grid/Offshore_Netherlands/Consultatie_proces_net_op_zee/Technical_Topics/11_T2._Enclosure_nr._2_-_ONL_15-060__-_Number_of_J_tubes.pdf">https://netztransparenz.tennet.eu/fileadmin/user_upload/Our_Grid/Offshore_Netherlands/Consultatie_proces_net_op_zee/Technical_Topics/11_T2._Enclosure_nr._2_-_ONL_15-060__-_Number_of_J_tubes.pdf</a>.
+</div>
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {
