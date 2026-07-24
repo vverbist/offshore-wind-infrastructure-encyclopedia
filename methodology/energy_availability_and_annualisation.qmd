@@ -17,7 +17,7 @@ This allows electricity and hydrogen configurations to be compared in EUR/MWh, w
 
 ## Efficiency Treatment
 
-Efficiency losses are applied at the component level. For electricity, this includes transformer, infield AC grid, offshore substation, HVDC export cable, and onshore conversion losses. For hydrogen, losses include stack conversion, balance-of-plant auxiliary demand, purification losses, power electronics where present, and compression.
+Efficiency losses are applied at the component level. For electricity, this includes the turbine transformer, infield AC grid, integrated offshore conversion, HVDC export cable, and onshore conversion losses. For hydrogen, losses include stack conversion, balance-of-plant auxiliary demand, purification losses, power electronics where present, and compression.
 
 ## Availability Treatment
 
@@ -29,9 +29,9 @@ The current component availability assumptions include:
 |---|---:|
 | Turbine, electric configuration | 98.0% |
 | Infield AC grid | 99.0% |
-| Offshore substation | 98.0% |
+| Integrated offshore station | 98.0% |
 | HVDC export cable | 99.0% |
-| Onshore substation | 98.0% |
+| Onshore converter station | 98.0% |
 | Turbine, hydrogen configuration | 98.5% |
 | Electrolyser | 98.5% |
 | Compressor | 99.0% |

@@ -1,5 +1,8 @@
 project:
   type: website
+  render:
+    - "*.qmd"
+    - "**/*.qmd"
   pre-render:
     - tools/build-progress-sidebar.js
   resources:
@@ -49,7 +52,6 @@ website:
         contents:
           - electrical_infra/overview.qmd
           - electrical_infra/infield_ac_cables.qmd
-          - electrical_infra/offshore_ac_substation.qmd
           - electrical_infra/hvdc_converter_stations.qmd
           - electrical_infra/hvdc_export_cables.qmd
           - electrical_infra/onshore_grid_connection.qmd
@@ -63,6 +65,7 @@ website:
       - section: "Hydrogen Infrastructure"
         contents:
           - hydrogen_infra/overview.qmd
+          - hydrogen_infra/infield_infrastructure.qmd
           - hydrogen_infra/compressor.qmd
           - hydrogen_infra/hydrogen_pipelines.qmd
           - hydrogen_infra/pipeline_pressure_and_capacity.qmd
@@ -95,6 +98,7 @@ format:
     theme:
       - cosmo
       - brand
+    mermaid-format: svg
     css: styles.css
     include-after-body: progress-sidebar.html
     toc: true

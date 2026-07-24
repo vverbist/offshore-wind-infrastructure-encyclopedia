@@ -13,6 +13,27 @@ thead {
   border-radius: 6px;
 }
 
+/* Cost ownership labels used in component cost tables. */
+.cost-owned,
+.cost-reference {
+  display: inline-block;
+  padding: 0.08rem 0.35rem;
+  border-radius: 0.25rem;
+  line-height: 1.35;
+}
+
+.cost-owned {
+  color: #166534;
+  background: #dcfce7;
+  font-weight: 650;
+}
+
+.cost-reference {
+  color: #4b5563;
+  background: #f3f4f6;
+  font-style: italic;
+}
+
 #quarto-sidebar .sidebar-link[data-progress] {
   color: rgba(17, 24, 39, var(--progress-alpha, 1)) !important;
   transition: color 120ms ease;
