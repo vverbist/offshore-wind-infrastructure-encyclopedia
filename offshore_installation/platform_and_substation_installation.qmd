@@ -13,7 +13,7 @@ This page owns transport from the fabrication yard, foundation installation, top
 | Jacket or foundation installation | Included here | **This page** |
 | Topside lift or float-over | Included here | **This page** |
 | Offshore hookup and commissioning | Included here | **This page** |
-| Platform fabrication | Excluded | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Platform fabrication | Excluded | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Converter equipment and onshore station | Excluded | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
 
 <span class="cost-owned">Green = booked on this page</span>
@@ -27,8 +27,8 @@ The DEA offshore-station coefficient also includes the platform and station inst
 
 | Cost-stack element | Reference value | Status | Cost owner |
 |---|---:|---|---|
-| Legacy platform + installation allocation | <span class="cost-reference">750 EUR/kW</span> | Combined scope; context only | This page and [Platform](../platforms/hvdc_and_substation_platforms.qmd) |
-| Platform fabrication | <span class="cost-reference">TBD</span> | Costed separately | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Legacy platform + installation allocation | <span class="cost-reference">750 EUR/kW</span> | Combined scope; context only | This page and [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
+| Platform fabrication | <span class="cost-reference">TBD</span> | Costed separately | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Adopted platform-installation CAPEX | <span class="cost-owned">TBD</span> | Requires vessel and schedule basis | **This page** |
 
 No portion of the 750 EUR/kW combined allocation is booked until a defensible split is available.

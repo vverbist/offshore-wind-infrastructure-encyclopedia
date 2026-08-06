@@ -71,10 +71,7 @@ website:
           - hydrogen_infra/pipeline_pressure_and_capacity.qmd
       - section: "Platforms"
         contents:
-          - platforms/overview.qmd
-          - platforms/hvdc_and_substation_platforms.qmd
-          - platforms/central_electrolyser_platform.qmd
-          - platforms/platform_mass_and_scaling.qmd
+          - platforms/platform_material_capex.qmd
       - section: "Offshore Installation"
         contents:
           - offshore_installation/overview.qmd

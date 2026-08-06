@@ -1,0 +1,69 @@
+---
+title: "Platform Material CAPEX"
+completion: 20
+---
+
+## Role in the Model
+
+This page owns the material and fabrication CAPEX of a central offshore platform. The calculation is common to the electricity-export and centralised-hydrogen architectures: architecture-specific equipment determines the required topside mass, while this page converts that physical requirement into the cost of the platform structure.
+
+The hosted electrical, electrolysis and compression equipment is costed by its component owner. Transport, offshore installation, hook-up and commissioning are also calculated separately.
+
+## Cost Boundary
+
+| Physical scope | Treatment | Cost owner |
+|---|---|---|
+| Topside structural steel and structural outfitting | Included | **This page** |
+| Jacket or other support structure | Included | **This page** |
+| Foundation piles or equivalent structural foundation | Included | **This page** |
+| HVDC converter equipment | Excluded | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+| Electrolyser transformers and rectifiers | Excluded | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) |
+| PEM stacks and non-electrical balance of plant | Excluded | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) and [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) |
+| Hydrogen compression equipment | Excluded | [Compressor](../hydrogen_infra/compressor.qmd) |
+| Transport, offshore installation, hook-up and commissioning | Excluded | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
+
+Equipment cost and equipment mass have different owners. The component pages book the equipment CAPEX and provide the equipment mass required for platform sizing. This page must not add the equipment CAPEX again.
+
+## Architecture Inputs
+
+| Architecture | Platform requirement | Upstream mass basis |
+|---|---|---|
+| Electricity export | Central AC-collection and HVDC-converter platform | Offshore converter and collection equipment |
+| Centralised hydrogen | One integrated AC-collection and electrolysis platform | Power electronics, stacks, balance of plant, compression and shared platform equipment |
+| Decentralised hydrogen | No central offshore platform in the current architecture | Not applicable |
+
+The architecture pages determine whether a central platform is present. The relevant component pages determine the hosted-equipment inventory and mass. This page receives those results; it does not recreate architecture-specific equipment models.
+
+## Required Inputs
+
+The material-CAPEX calculation will require, at minimum:
+
+- number of platforms;
+- total topside equipment mass, with its component breakdown and source trail;
+- any structural, outfitting or integration mass added to the equipment mass;
+- support-structure and foundation quantities required by the selected cost relationship; and
+- the scope, price basis and applicability of the material or fabrication cost evidence.
+
+Every input must be identified as a sourced value, an explicit modelling assumption or a derived result. Masses from different component pages must use compatible boundaries so that shared auxiliaries, buildings, structural steel and equipment are neither omitted nor counted twice.
+
+::: {.callout-warning}
+## Calculation logic not yet selected
+
+The repository does not yet adopt a relationship between topside mass and platform material CAPEX. The model still requires evidence for the functional form, its cost scope, and any separate treatment of the support structure and foundation. No platform material CAPEX is reported until those choices are documented.
+:::
+
+## Interface with Installation
+
+This page will provide the physical platform definition needed by the installation model, including the jacket, piles, topside lift modules and their masses. The installation page independently checks transport and lift feasibility and calculates vessel occupation and offshore installation CAPEX.
+
+A material-CAPEX relationship cannot be used as an installation-cost proxy. Likewise, installation vessel selection or duration must not be embedded in the material cost calculated here.
+
+## Unresolved Evidence
+
+| Required evidence or decision | Consequence while unresolved |
+|---|---|
+| Architecture-specific hosted-equipment mass inventories | Topside mass cannot be closed |
+| Definition of structural and outfitting mass added around the equipment | The cost-driving mass boundary remains incomplete |
+| Material or fabrication cost relationship and price basis | Platform material CAPEX cannot be calculated |
+| Treatment of jacket and foundation cost | The complete structural cost boundary remains open |
+| Relationship between calculated mass and installation lift modules | The installation handoff remains project-specific |
