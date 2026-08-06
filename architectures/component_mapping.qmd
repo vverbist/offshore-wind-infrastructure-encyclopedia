@@ -1,19 +1,62 @@
 ---
 title: "Component Mapping"
-completion: 10
+completion: 100
 ---
 
-This page maps the main component groups to the three architectures.
+This page is the scope-control matrix for the three architectures. It identifies
+whether each physical function is present and links to the page that owns its
+assumptions, costs, losses, availability, and limitations.
 
-| Phase | Electricity Export | Centralised Hydrogen | Decentralised Hydrogen |
-|---|---|---|---|
-| Turbine generator | Generator | Generator | Generator |
-| In-turbine conversion | Generator to DC to AC | Generator to DC to AC | Generator to DC to H2 |
-| Infield transport preparation | Transform to 66 kV | Transform to 66 kV | Compress to about 150 bar |
-| Infield grid | 66 kV AC cables | 66 kV AC cables | 150 bar pipelines |
-| Offshore collection | Substation | Substation / electrolyser platform | None |
-| Offshore central conversion | AC to HVDC | AC to DC to H2 to compressed H2 | None |
-| Offshore export | HVDC cable | Hydrogen pipeline | Hydrogen pipeline |
-| Onshore conversion or delivery | HVDC to AC grid | Hydrogen backbone | Hydrogen backbone |
+## Physical Component Mapping
 
-The component pages document assumptions by physical component. Architecture pages document how those components are combined.
+| Component or function | Electricity export | Centralised hydrogen | Decentralised hydrogen | Canonical owner |
+|---|---|---|---|---|
+| Wind turbine and generator | Included | Included | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
+| Foundation | Included | Included | Included | [Foundation](../turbine_system/foundation.qmd) |
+| Turbine active front end and DC link | Included | Included | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Turbine grid-side inverter | Included | Included | Not used in the hydrogen path | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Turbine step-up transformer | Included | Included | Not used in the hydrogen path | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| AC infield collection | Included | Included | Replaced by hydrogen collection | [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) |
+| Central offshore platform | AC aggregation and HVDC conversion | One integrated AC aggregation and electrolysis platform | Not used | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
+| Central electrolyser transformer and rectifier | Not used | Included on the integrated platform | Not used | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) |
+| Separate electrolyser-side DC/DC converter | Not used | Not applicable to the AC-fed central chain | Not used by assumption | [DC Integration](../hydrogen_production/dc_integration.qmd) |
+| PEM stacks | Not used | Included on the integrated platform | Included at each turbine | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) |
+| Water treatment and non-electrical electrolyser BOP | Not used | Included in the platform electrolyser facility | Included in each turbine-level electrolyser facility | [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) |
+| Hydrogen compression | Not used | Separate subsystem on the integrated platform | Separate subsystem at each turbine | [Compressor](../hydrogen_infra/compressor.qmd) |
+| Hydrogen infield collection | Not used | Not required after central conversion | Included | [Hydrogen Infield Infrastructure](../hydrogen_infra/infield_infrastructure.qmd) |
+| Offshore HVDC conversion | Included | Not used | Not used | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+| HVDC export cable | Included | Not used | Not used | [HVDC Export Cables](../electrical_infra/hvdc_export_cables.qmd) |
+| Hydrogen export pipeline | Not used | Included | Included | [Hydrogen Pipelines](../hydrogen_infra/hydrogen_pipelines.qmd) |
+| Onshore HVDC conversion and grid interface | Included | Not used | Not used | [Onshore Grid Connection](../electrical_infra/onshore_grid_connection.qmd) |
+| Onshore hydrogen-backbone connection | Not used | Included as the delivery interface | Included as the delivery interface | [Hydrogen Infrastructure](../hydrogen_infra/overview.qmd) |
+
+## Delivery Boundaries
+
+| Architecture | Project delivery point | Infrastructure beyond the boundary |
+|---|---|---|
+| Electricity export | Onshore electricity-grid connection | Wider electricity transmission, distribution, storage, and end use |
+| Centralised hydrogen | Connection to the onshore hydrogen backbone | Hydrogen backbone, storage, distribution, reconversion, and end use |
+| Decentralised hydrogen | Connection to the onshore hydrogen backbone | Hydrogen backbone, storage, distribution, reconversion, and end use |
+
+## Installation and Common Project Scope
+
+Installation is not a physical energy-flow component, but it remains within the
+economic boundary for every included asset. The
+[Offshore Installation](../offshore_installation/overview.qmd) section owns the
+installation methods and assumptions for turbines, foundations, cables,
+pipelines, and platforms.
+
+Common project costs are retained where they are required to construct and
+operate all three architectures. These include the shared wind-turbine,
+foundation, development, and financing scopes represented elsewhere in the
+model. They are common components, not out-of-boundary components.
+
+Wider onshore network reinforcement is excluded unless a scenario explicitly
+assigns it to the offshore project.
+
+## Accounting Rule
+
+Architecture pages determine whether a component or function is included.
+Component and methodology pages determine how it is represented. A cost, loss,
+availability factor, installation activity, or replacement is booked by its
+canonical owner and must not be added again on an architecture page.

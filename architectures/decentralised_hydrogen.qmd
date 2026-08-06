@@ -1,27 +1,101 @@
 ---
 title: "Decentralised Hydrogen"
-completion: 30
+completion: 100
 ---
 
-## Role in the Value Chain
+## Architecture Definition
 
-The decentralised architecture places electrolysis inside the turbine. Energy is converted to hydrogen as close as possible to generation, and the infield network becomes a hydrogen pipeline grid instead of an AC cable grid.
+The decentralised-hydrogen architecture converts electrical energy to hydrogen
+at each wind turbine. Hydrogen rather than electricity is collected within the
+wind farm, exported through a subsea pipeline, and handed over at the
+connection to the onshore hydrogen backbone.
 
-## Component Chain
+The physical boundary includes the wind turbines and support structures,
+turbine-integrated hydrogen-production equipment, turbine-level compression,
+the infield hydrogen network, export pipeline, and onshore
+backbone-connection interface. It contains no central offshore conversion
+platform.
 
-1. turbine generator
-2. turbine-side rectification or DC link interface
-3. PEM stacks installed in or at the turbine
-4. local balance of plant
-5. turbine-level compression to infield pressure
-6. infield hydrogen pipeline grid
-7. export hydrogen pipeline
-8. onshore hydrogen backbone connection
+```{mermaid}
+%%| fig-height: 1.1
+flowchart LR
+  A["Wind-turbine generator"] --> B["Turbine DC link"]
+  B --> C["Turbine-integrated electrolysis"]
+  C --> D["Turbine-level compression"]
+  D --> E["Hydrogen infield collection"]
+  E --> F["Hydrogen pipeline export"]
+  F --> G["Onshore hydrogen-backbone connection"]
+```
 
-## Modelling Implications
+## Turbine-Integrated Conversion Boundary
 
-This architecture removes several electrical conversion steps. In the centralised and electricity configurations, turbine output is converted from variable-frequency AC to DC, then to grid-quality AC, then stepped up for infield collection. For central electrolysis, the power is later stepped down and rectified again before entering the stack.
+The turbine-side active front end and DC link remain part of the conversion
+chain. The PEM stack connects to that DC link without a separate
+electrolyser-side DC/DC converter.
 
-In the decentralised configuration, the stack connects more directly to the turbine DC link. The model therefore excludes the turbine inverter/step-up transformer and the platform-side step-down transformer/rectifier that would otherwise be needed for electrolysis.
+The turbine-level electrolyser facility includes:
 
-The infield grid is also structurally different. A 66 kV AC string is capacity-limited to roughly 60-70 MW, while a 6 inch hydrogen pipeline at 150 bar is assumed to carry roughly 500 MW equivalent. This removes the electrical string capacity constraint from the infield design.
+- PEM stack modules
+- non-electrical electrolyser balance of plant
+- local seawater intake, desalination, and electrolyser-grade water treatment
+
+The turbine-level compressor is physically associated with the same turbine
+unit but remains a separate downstream functional and accounting subsystem. It
+is not included in the electrolyser or balance-of-plant boundary.
+
+## Included Physical Functions
+
+| Function | Treatment | Canonical owner |
+|---|---|---|
+| Wind-energy capture and generation | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
+| Turbine support structure | Included | [Foundation](../turbine_system/foundation.qmd) |
+| Turbine rectification and DC-link interface | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Direct stack connection to the turbine DC link | Included without a separate DC/DC converter | [DC Integration](../hydrogen_production/dc_integration.qmd) |
+| PEM stacks | Included at each turbine | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) |
+| Water treatment and non-electrical BOP | Included within each turbine-level electrolyser facility | [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) |
+| Hydrogen compression | Included as a separate turbine-level subsystem | [Compressor](../hydrogen_infra/compressor.qmd) |
+| Hydrogen infield collection | Included | [Hydrogen Infield Infrastructure](../hydrogen_infra/infield_infrastructure.qmd) |
+| Hydrogen export pipeline | Included | [Hydrogen Pipelines](../hydrogen_infra/hydrogen_pipelines.qmd) |
+| Onshore backbone-connection interface | Included | [Hydrogen Infrastructure](../hydrogen_infra/overview.qmd) |
+
+Installation of the turbines, foundations, turbine-integrated hydrogen
+equipment, and pipelines remains inside the economic boundary. Installation
+assumptions are maintained in the
+[Offshore Installation](../offshore_installation/overview.qmd) section.
+
+## Removed or Excluded Functions
+
+The following functions are not part of the decentralised architecture:
+
+- the turbine grid-side inverter and step-up transformer in the hydrogen path
+- a separate electrolyser-side DC/DC converter
+- the AC infield collection network
+- a central offshore substation or electrolysis platform
+- central electrolyser transformer and rectifier equipment
+- offshore and onshore HVDC conversion
+- HVDC cable export
+- the onshore hydrogen backbone beyond the project connection
+- downstream hydrogen storage, distribution, reconversion, and end use
+
+## Architecture Interfaces
+
+| Interface | Boundary definition |
+|---|---|
+| Generator to electrolysis | The turbine-side active front end supplies the DC link; the PEM stack is connected without a separate DC/DC stage. |
+| Electrolyser facility to compression | Produced and conditioned hydrogen leaves the turbine-level electrolyser boundary and enters the separately accounted compressor. |
+| Turbine unit to infield network | Compressed hydrogen enters the infield pipeline network. |
+| Infield network to export system | Collected hydrogen enters the export pipeline system. |
+| Export to backbone | The project ends at the onshore hydrogen-backbone connection. |
+
+## Economic Boundary
+
+The architecture cost includes the common offshore wind project and all
+turbine-level hydrogen-production, compression, collection, export, and
+installation activities required to reach the backbone connection. Removing
+the AC collection and central platform functions changes which components are
+booked; it does not remove the common turbine, foundation, development, or
+financing boundary.
+
+The hydrogen backbone and any downstream reinforcement or conditioning are
+outside the base architecture boundary unless a scenario explicitly assigns
+them to the offshore project.

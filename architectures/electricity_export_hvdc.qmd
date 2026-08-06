@@ -1,30 +1,77 @@
 ---
 title: "Electricity Export with HVDC"
-completion: 20
+completion: 100
 ---
 
-## Role in the Value Chain
+## Architecture Definition
 
-The electricity architecture is the reference case. Wind turbine output is conditioned for AC infield collection, aggregated offshore, converted to HVDC for export, and converted back to AC at shore.
+The electricity-export architecture carries electrical energy from each wind
+turbine to the onshore electricity grid. Turbine output is conditioned for AC
+infield collection, aggregated and converted to HVDC on an offshore platform,
+exported to shore, and converted back to AC at the onshore grid connection.
 
-## Component Chain
+The physical boundary includes the wind turbines, their support structures,
+the complete offshore and onshore electrical chain, and the grid-connection
+interface. It ends where the project hands electrical energy to the onshore
+grid.
 
-1. turbine generator
-2. turbine rectifier, inverter, and transformer
-3. 66 kV AC infield cable network
-4. integrated offshore AC collection and HVDC converter platform
-5. HVDC export cable
-6. onshore converter station and grid connection
+```{mermaid}
+%%| fig-height: 1.0
+flowchart LR
+  A["Wind turbine"] --> B["Turbine electrical conversion"]
+  B --> C["AC infield collection"]
+  C --> D["Offshore AC aggregation and HVDC conversion"]
+  D --> E["HVDC export"]
+  E --> F["Onshore conversion"]
+  F --> G["Electricity-grid connection"]
+```
 
-## Modelling Implications
+## Included Physical Functions
 
-The key modelling feature is that export infrastructure is sized for peak installed capacity. HVDC platforms and export cables therefore contribute strongly to the capacity-linked cost term.
+| Function | Treatment | Canonical owner |
+|---|---|---|
+| Wind-energy capture and generation | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
+| Turbine support structure | Included | [Foundation](../turbine_system/foundation.qmd) |
+| Turbine rectification, inversion, and transformation | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| AC infield collection | Included | [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) |
+| Offshore AC aggregation and HVDC conversion | Included on the electricity-export platform function | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+| Offshore platform structure | Included | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
+| HVDC export to shore | Included | [HVDC Export Cables](../electrical_infra/hvdc_export_cables.qmd) |
+| Onshore conversion and project connection interface | Included | [Onshore Grid Connection](../electrical_infra/onshore_grid_connection.qmd) |
 
-The current assumption set uses a 2 GW HVDC export basis. This creates discrete export capacity increments and makes under-utilisation of peak-sized infrastructure important in the LCOE calculation.
+Cable, platform, turbine, and foundation installation are within the economic
+boundary. Their methods and assumptions are maintained in the
+[Offshore Installation](../offshore_installation/overview.qmd) section rather
+than repeated here.
 
-## Related Components
+## Excluded Functions
 
-- [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd)
-- [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd)
-- [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd)
-- [HVDC Export Cables](../electrical_infra/hvdc_export_cables.qmd)
+The following functions are outside this architecture:
+
+- offshore hydrogen production and water treatment
+- hydrogen compression
+- hydrogen infield and export pipelines
+- electricity-network infrastructure beyond the defined onshore connection
+- downstream electricity storage, distribution, and end use
+
+## Architecture Interfaces
+
+| Interface | Boundary definition |
+|---|---|
+| Turbine to infield network | Electrical output passes through the turbine conversion chain into the AC collection network. |
+| Infield network to offshore platform | AC feeders terminate at the offshore collection and conversion platform. |
+| Offshore platform to export system | Converted DC power enters the HVDC cable system. |
+| Export system to onshore connection | The onshore converter returns the exported power to AC for handover at the grid connection. |
+
+## Economic Boundary
+
+The architecture cost includes the common offshore wind project and all
+electricity-specific assets and lifecycle activities needed to reach the
+onshore grid connection. Common turbine, foundation, development, and financing
+costs remain part of the comparison even though they also apply to the hydrogen
+architectures.
+
+Wider onshore grid reinforcement is outside the base architecture boundary
+unless it is explicitly assigned to the project by the scenario. Costs,
+losses, availability, sizing, and unresolved evidence remain owned by the
+linked component and methodology pages.

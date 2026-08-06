@@ -1,18 +1,104 @@
 ---
 title: "Architectures"
-completion: 10
+completion: 100
 ---
 
-The model compares three offshore wind export architectures:
+This section defines the scope and boundary of the three offshore wind
+architectures compared by the model:
 
 1. electricity export using AC infield collection and HVDC export
-2. centralised offshore hydrogen production
+2. centralised offshore hydrogen production with one integrated offshore
+   platform
 3. decentralised turbine-integrated hydrogen production
 
-The architectures differ in where energy conversion occurs and which infrastructure carries energy to shore.
+The architecture pages identify which physical functions are present, where
+energy conversion occurs, and how the offshore system connects to the onshore
+delivery point. Component pages remain the owners of sizing methods,
+assumptions, costs, losses, availability, and technical limitations.
 
-## Architecture Logic
+## Comparison Boundary
 
-The electrical architecture transports electrons to shore. The hydrogen architectures convert wind power to hydrogen offshore and transport gas to shore. The centralised hydrogen architecture converts at an offshore platform. The decentralised hydrogen architecture converts inside each turbine and uses an infield hydrogen grid.
+The common offshore-project boundary starts with the wind turbine and its
+support structure. It ends at:
 
-The model treats these architectures as different feasible sets. Components are not swapped one-for-one; changing the carrier changes the cost, loss, availability, and installation structure of the whole value chain.
+- the onshore electricity-grid connection for electricity export; or
+- the connection to the onshore hydrogen backbone for hydrogen export.
+
+Infrastructure beyond those connection points is outside the model boundary.
+This excludes the wider electricity network, the hydrogen backbone itself,
+downstream storage, distribution, reconversion, and end use.
+
+```{mermaid}
+%%| fig-height: 2.8
+flowchart LR
+  E1["Wind turbines"] --> E2["AC infield collection"]
+  E2 --> E3["Offshore HVDC conversion"]
+  E3 --> E4["HVDC export"]
+  E4 --> E5["Onshore grid connection"]
+
+  C1["Wind turbines"] --> C2["AC infield collection"]
+  C2 --> C3["Central offshore electrolysis"]
+  C3 --> C4["Compression and pipeline export"]
+  C4 --> C5["Onshore hydrogen-backbone connection"]
+
+  D1["Wind turbines"] --> D2["Turbine-integrated electrolysis"]
+  D2 --> D3["Hydrogen infield collection"]
+  D3 --> D4["Pipeline export"]
+  D4 --> D5["Onshore hydrogen-backbone connection"]
+```
+
+## Architecture Distinctions
+
+| Question | Electricity export | Centralised hydrogen | Decentralised hydrogen |
+|---|---|---|---|
+| Carrier in the infield network | Electricity | Electricity | Hydrogen |
+| Offshore conversion location | Central HVDC platform | One central electrolysis platform | At each turbine |
+| Carrier exported to shore | Electricity | Hydrogen | Hydrogen |
+| Central offshore platform | AC aggregation and HVDC conversion | AC aggregation and electrolysis | None |
+| Onshore delivery point | Electricity-grid connection | Hydrogen-backbone connection | Hydrogen-backbone connection |
+
+The centralised-hydrogen architecture has one physical offshore platform. AC
+aggregation, electrolyser power electronics, PEM stacks, water treatment, and
+the non-electrical electrolyser balance of plant are integrated on that
+platform. Compression is a separate functional and accounting subsystem, even
+when it is physically hosted on the same platform.
+
+In the decentralised-hydrogen architecture, the PEM stack connects to the
+turbine DC link without a separate electrolyser-side DC/DC converter. Water
+treatment belongs to the turbine-level electrolyser facility. Turbine-level
+compression remains a separate downstream subsystem.
+
+## Physical and Economic Scope
+
+The physical energy chain contains only equipment that captures, converts,
+collects, transports, or delivers energy. Installation and project-development
+activities are therefore not shown as energy-flow steps.
+
+The economic boundary nevertheless includes the lifecycle activities required
+for every asset within the physical boundary:
+
+- procurement and fabrication
+- transport and installation
+- commissioning
+- operation, maintenance, and repair
+- component replacement where represented by the model
+- decommissioning where represented by the model
+
+Common project costs remain inside the comparison when they are required by all
+architectures. They are labelled as common rather than removed from the system
+boundary. Wider network reinforcement beyond the defined connection point is
+excluded unless a scenario explicitly assigns it to the offshore project.
+
+## Scope of This Section
+
+Use the individual pages for the detailed boundary of each architecture:
+
+- [Electricity Export with HVDC](electricity_export_hvdc.qmd)
+- [Centralised Hydrogen](centralised_hydrogen.qmd)
+- [Decentralised Hydrogen](decentralised_hydrogen.qmd)
+- [Component Mapping](component_mapping.qmd)
+
+The [System Boundary and LCOE](../methodology/system_boundary_and_lcoe.qmd)
+page defines the common economic comparison. The component mapping identifies
+the canonical owner of each physical function so that costs and performance
+effects are booked once.
