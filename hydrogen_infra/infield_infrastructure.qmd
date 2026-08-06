@@ -7,7 +7,7 @@ completion: 90
 
 Hydrogen infield infrastructure collects compressed hydrogen from turbine-integrated electrolysers and delivers it to the export-pipeline connection. It applies only to the decentralised hydrogen architecture. The electricity-export and centralised-hydrogen architectures use 66 kV AC infield cables.
 
-This page defines the proposed network topology and the analytical pipeline-length model. Pipeline material, pressure and capacity are covered on [Hydrogen Pipelines](hydrogen_pipelines.qmd). Installation is covered on [Pipeline Installation](../offshore_installation/pipeline_installation.qmd).
+This page defines the proposed network topology and the analytical pipeline-length model. Pipeline material, pressure and capacity are covered on [Hydrogen Pipelines](hydrogen_pipelines.qmd). Installation is covered on [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd).
 
 ## Proposed Ladder Layout
 

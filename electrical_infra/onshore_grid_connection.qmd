@@ -26,9 +26,9 @@ The **point of common coupling (PCC)** is the electrical and contractual boundar
 
 | Included in this interface | Accounting treatment |
 |---|---|
-| Ordinary shore crossing and transition-joint bay | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Ordinary shore crossing and transition-joint bay | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | Underground DC cable supply | [HVDC Export Cables](hvdc_export_cables.qmd); dedicated underground material coefficient TBD |
-| Underground cable installation | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Underground cable installation | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | Onshore converter, transformers and auxiliaries | Included in the converter pair on [HVDC Converter Stations](hvdc_converter_stations.qmd) |
 | 380 kV switchgear and station connection | Confirm against converter-package boundary |
 | Reinforcement beyond the connection point | Separate, site-specific grid cost |
@@ -130,7 +130,7 @@ The model books the onshore converter as part of the 808 EUR/kW two-terminal ele
 |---|---|---|---|
 | Onshore VSC equipment, transformers and cooling | <span class="cost-reference">Part of 808 EUR/kW converter pair</span> | No project equipment ledger | [HVDC Converter Stations](hvdc_converter_stations.qmd) |
 | Underground DC cable supply | <span class="cost-reference">TBD</span> | No matched underground material-only coefficient | [HVDC Export Cables](hvdc_export_cables.qmd) |
-| Underground cable and landfall installation | <span class="cost-reference">TBD</span> | Route and civil design required | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Underground cable and landfall installation | <span class="cost-reference">TBD</span> | Route and civil design required | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | 380 kV station bay/extension | <span class="cost-owned">TBD</span> | Connection agreement required | **This page** |
 | Wider grid reinforcement | <span class="cost-owned">TBD</span> | Highly location-specific | **This page** |
 | Land acquisition and planning mitigation | <span class="cost-owned">TBD</span> | Site and jurisdiction specific | **This page** |

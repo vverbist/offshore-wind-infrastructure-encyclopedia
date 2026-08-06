@@ -7,7 +7,7 @@ completion: 90
 
 Hydrogen pipelines transport compressed hydrogen through the infield collection network and from the wind farm to the onshore hydrogen interface.
 
-The model distinguishes between infield pipelines and export pipelines, but documents them together because the same diameter, pressure, capacity, and material-cost logic applies. The infield topology and length calculation are documented on [Hydrogen Infield Infrastructure](infield_infrastructure.qmd). Installation is excluded from this page and is documented separately in [pipeline installation](../offshore_installation/pipeline_installation.qmd).
+The model distinguishes between infield pipelines and export pipelines, but documents them together because the same diameter, pressure, capacity, and material-cost logic applies. The infield topology and length calculation are documented on [Hydrogen Infield Infrastructure](infield_infrastructure.qmd). Installation is excluded from this page and is documented separately in [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd).
 
 The pipeline model covers:
 
@@ -240,7 +240,7 @@ L_\mathrm{export}
 c_\mathrm{mat}(D,p)
 $$
 
-The current cost model covers material cost only. Installation, burial, connection, vessel time, simultaneous lay of parallel pipelines, and termination work are excluded here and treated in the installation section.
+The current cost model covers material cost only. Installation, burial, connection, vessel time, lay-pass grouping and termination work are excluded here and treated in the shared installation section. More than one TCP pipeline per lay pass is not assumed without project-specific evidence.
 
 ### Confidentiality Handling
 

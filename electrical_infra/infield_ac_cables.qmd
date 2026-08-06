@@ -15,7 +15,7 @@ Infield, inter-array or array cables form the medium-voltage collection network 
 | Horizontal and vertical cable length | Cable-lay vessel and installation campaign |
 | String-level outage effect | Export cable and onshore connection |
 
-This page covers cable supply only. Cable-lay vessels, route preparation, burial, pull-ins and other installation activities are costed separately on [Cable Installation](../offshore_installation/cable_installation.qmd).
+This page covers cable supply only. Cable-lay vessels, route preparation, burial, pull-ins and other installation activities are costed separately on [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd).
 
 ::: {.callout-note}
 ## Physical picture: a radial electrical tree
@@ -211,7 +211,7 @@ The current 20% addition comes from the internal model description [@internalMod
 
 ## Cost Model
 
-The screening cost on this page covers cable material and normal supply accessories. Installation is excluded and belongs to [Cable Installation](../offshore_installation/cable_installation.qmd).
+The screening cost on this page covers cable material and normal supply accessories. Installation is excluded and belongs to [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd).
 
 For supply length $L_\mathrm{array}$ in kilometres and blended cable unit cost $c_\mathrm{cable}$ in EUR/m:
 

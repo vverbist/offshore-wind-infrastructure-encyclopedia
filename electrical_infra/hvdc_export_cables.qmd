@@ -12,9 +12,9 @@ The HVDC export-cable system carries power between the offshore and onshore conv
 | Positive- and negative-pole cable supply | Included here | **This page** |
 | Metallic-return and communication cable supply | Included here when required by the selected topology | **This page** |
 | Cable accessories supplied with the system | Included here when included in the material benchmark | **This page** |
-| Marine laying, burial, protection and pull-in | Excluded | [Cable Installation](../offshore_installation/cable_installation.qmd) |
-| Underground trenching, ducts and reinstatement | Excluded | [Cable Installation](../offshore_installation/cable_installation.qmd) |
-| Exceptional crossings, tunnels and rock placement | Excluded | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Marine laying, burial, protection and pull-in | Excluded | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
+| Underground trenching, ducts and reinstatement | Excluded | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
+| Exceptional crossings, tunnels and rock placement | Excluded | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | Converter stations | Excluded | [HVDC Converter Stations](hvdc_converter_stations.qmd) |
 
 <span class="cost-owned">Green = booked on this page</span>
@@ -87,8 +87,7 @@ The NREL Atlantic Offshore Wind Transmission Study gives a separated material co
 | Cable-supply element | Unit value | Status | Cost owner |
 |---|---:|---|---|
 | 525 kV, 2 GW bipole material reference | <span class="cost-owned">1.26 EUR/kW/km</span> | NREL material cost converted with the 2025 ECB average exchange rate | **This page** |
-| Marine/terrestrial installation | <span class="cost-reference">EUR 1.48 million/km</span> | NREL installation reference; not booked here | [Cable Installation](../offshore_installation/cable_installation.qmd) |
-| NREL material + installation | <span class="cost-reference">EUR 4.00 million/km</span> | Combined 2 GW route perspective only | This page and [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| Marine/terrestrial installation | <span class="cost-reference">Calculated separately</span> | Shared campaign model; no fixed EUR/km coefficient is adopted | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 
 This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value is combined with constant-2026-EUR inputs.
 
@@ -98,15 +97,14 @@ The background report's Adriatic Link and DEA values cover installed or EPC cabl
 
 | Installed-system benchmark | Reference value | Interpretation | Cost owner |
 |---|---:|---|---|
-| NREL material + installation | <span class="cost-reference">EUR 4.00 million/km</span> | Separated study estimate for a 2 GW bipole; currency conversion only | This page and [Cable Installation](../offshore_installation/cable_installation.qmd) |
-| Adriatic-derived subsea rate | <span class="cost-reference">EUR 2.60 million/km</span> | 2026-euro installed-system inference from a 1 GW project | [Cable Installation](../offshore_installation/cable_installation.qmd) |
-| DEA subsea EPC reference | <span class="cost-reference">EUR 8.14 million/km</span> | DEA 2025 value restated to 2026 euros and evaluated at 2 GW | [Cable Installation](../offshore_installation/cable_installation.qmd) |
-| Existing internal export-installation assumption | <span class="cost-reference">Scope unresolved</span> | Must not be added until reconciled | [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| NREL material + installation | <span class="cost-reference">EUR 4.00 million/km</span> | Historical 2 GW installed-route comparison; not an adopted installation coefficient | This page and [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
+| Adriatic-derived subsea rate | <span class="cost-reference">EUR 2.60 million/km</span> | 2026-euro installed-system inference from a 1 GW project | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
+| DEA subsea EPC reference | <span class="cost-reference">EUR 8.14 million/km</span> | DEA 2025 value restated to 2026 euros and evaluated at 2 GW | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 
 ::: {.callout-note}
 ## Installation is shown for perspective only
 
-The installed-system comparisons and the installation component are maintained on [Cable Installation](../offshore_installation/cable_installation.qmd). They are shown here so the reader can see the complete route-cost context. Only the green material reference belongs to this page.
+Installed-system comparisons are shown here only to give the cable-supply result a complete-route context. Installation is calculated through the physical inventory and campaign model on [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd). Only the green material reference belongs to this page.
 :::
 
 The Adriatic anchor is not topology-identical to the TenneT reference: Prysmian describes two submarine and two underground power cables, whereas TenneT adds a dedicated metallic return and fibre [@prysmian2023AdriaticLink]. The comparison is therefore indicative rather than a matched 2 GW quotation.

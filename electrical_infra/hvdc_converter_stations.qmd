@@ -12,9 +12,9 @@ An offshore HVDC converter station changes the wind farm's collected AC power to
 | Offshore and onshore converter valves | Included | **This page** |
 | Converter transformers, reactors, cooling and auxiliaries | Included | **This page** |
 | Immediate AC/DC switchgear, control and protection | Included | **This page** |
-| Offshore platform and foundation | Reference only | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Offshore platform and foundation | Reference only | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Platform transport and offshore installation | Reference only | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
-| HVDC cable supply and installation | Excluded | [HVDC Export Cables](hvdc_export_cables.qmd) and [Cable Installation](../offshore_installation/cable_installation.qmd) |
+| HVDC cable supply and installation | Excluded | [HVDC Export Cables](hvdc_export_cables.qmd) and [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | Wider onshore grid reinforcement | Excluded | [Onshore Grid Connection](onshore_grid_connection.qmd) |
 
 <span class="cost-owned">Green = booked on this page</span>
@@ -71,9 +71,9 @@ The physical offshore station also needs a platform, foundation, transport and i
 | Cost-stack element | Reference value | Status | Cost owner |
 |---|---:|---|---|
 | Offshore + onshore converter equipment | <span class="cost-owned">808 EUR/kW</span> | Model central value | **This page** |
-| Offshore platform and offshore premium proxy | <span class="cost-reference">544 EUR/kW</span> | DEA offshore-minus-onshore difference; not an adopted standalone platform cost | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| Offshore platform and offshore premium proxy | <span class="cost-reference">544 EUR/kW</span> | DEA offshore-minus-onshore difference; not an adopted standalone platform cost | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Platform offshore installation | <span class="cost-reference">TBD</span> | Must be separated from fabrication and equipment | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
-| DEA offshore + onshore station pair, platform included | <span class="cost-reference">1,352 EUR/kW</span> | Scope comparator, not added to the rows above | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) |
+| DEA offshore + onshore station pair, platform included | <span class="cost-reference">1,352 EUR/kW</span> | Scope comparator, not added to the rows above | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 
 ::: {.callout-note}
 ## Reference costs are not additional costs

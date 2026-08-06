@@ -30,8 +30,8 @@ flowchart LR
 | Offshore and onshore converter stations | [HVDC Converter Stations](hvdc_converter_stations.qmd) | Reference configuration, converter CAPEX, conversion efficiency and station availability |
 | HVDC export-cable system | [HVDC Export Cables](hvdc_export_cables.qmd) | Cable topology, material CAPEX, resistance losses, reliability and availability |
 | Onshore connection | [Onshore Grid Connection](onshore_grid_connection.qmd) | Converter-site interface, grid connection, grid-code requirements and wider reinforcement boundary |
-| Array and export-cable installation | [Cable Installation](../offshore_installation/cable_installation.qmd) | Route preparation, laying, burial, landfall, pull-ins and testing |
-| Offshore support structure | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) | Topside structure, support structure and foundation |
+| Array and export-cable installation | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) | Shared campaign model with cable-subclass methods for route preparation, laying, burial, landfall, pull-ins and testing |
+| Offshore support structure | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) | Topside structure, support structure and foundation |
 | Platform offshore installation | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Transport, foundation installation, topside installation, hookup and commissioning |
 | Turbine transformer | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) | Turbine electrical equipment before the array-network boundary |
 
@@ -53,11 +53,11 @@ The centralised-hydrogen architecture diverges from electricity export at the of
 | Asset or function | Equipment or material owner | Installation owner | Loss and availability owner |
 |---|---|---|---|
 | Turbine transformer | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) | Turbine installation scope | Generator and power-electronics page |
-| Array cables, joints and terminations | [Infield AC Cables](infield_ac_cables.qmd) | [Cable Installation](../offshore_installation/cable_installation.qmd) | Infield AC Cables |
+| Array cables, joints and terminations | [Infield AC Cables](infield_ac_cables.qmd) | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) | Infield AC Cables |
 | Offshore collection switchgear, converter transformers and VSC equipment | [HVDC Converter Stations](hvdc_converter_stations.qmd) | Converter package and [Platform Installation](../offshore_installation/platform_and_substation_installation.qmd), as applicable | HVDC Converter Stations |
-| Offshore support structure and foundation | [HVDC and Substation Platforms](../platforms/hvdc_and_substation_platforms.qmd) | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Common-mode station states on HVDC Converter Stations |
-| HVDC pole, return and communication cables | [HVDC Export Cables](hvdc_export_cables.qmd) | [Cable Installation](../offshore_installation/cable_installation.qmd) | HVDC Export Cables |
-| Landfall and underground cable route | [HVDC Export Cables](hvdc_export_cables.qmd) | [Cable Installation](../offshore_installation/cable_installation.qmd) | HVDC Export Cables |
+| Offshore support structure and foundation | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Common-mode station states on HVDC Converter Stations |
+| HVDC pole, return and communication cables | [HVDC Export Cables](hvdc_export_cables.qmd) | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) | HVDC Export Cables |
+| Landfall and underground cable route | [HVDC Export Cables](hvdc_export_cables.qmd) | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) | HVDC Export Cables |
 | Onshore grid interface and wider reinforcement | [Onshore Grid Connection](onshore_grid_connection.qmd) | Onshore project scope | Onshore Grid Connection |
 
 ::: {.callout-important}
