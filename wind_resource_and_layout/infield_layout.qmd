@@ -26,5 +26,4 @@ Infield layout feeds directly into component cost pages:
 - [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd)
 - [Hydrogen Infield Infrastructure](../hydrogen_infra/infield_infrastructure.qmd)
 - [Hydrogen Pipelines](../hydrogen_infra/hydrogen_pipelines.qmd)
-- [Cable Installation](../offshore_installation/cable_installation.qmd)
-- [Pipeline Installation](../offshore_installation/pipeline_installation.qmd)
+- [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd)
