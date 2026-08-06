@@ -413,26 +413,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/hvdc_and_substation_platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">HVDC and Substation Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/central_electrolyser_platform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Central Electrolyser Platform</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_mass_and_scaling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Mass and Scaling</span></a>
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -460,14 +442,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cable Installation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/pipeline_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline Installation</span></a>
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -536,8 +512,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#physical-component-mapping" id="toc-physical-component-mapping" class="nav-link active" data-scroll-target="#physical-component-mapping">Physical Component Mapping</a></li>
+  <li><a href="#delivery-boundaries" id="toc-delivery-boundaries" class="nav-link" data-scroll-target="#delivery-boundaries">Delivery Boundaries</a></li>
+  <li><a href="#installation-and-common-project-scope" id="toc-installation-and-common-project-scope" class="nav-link" data-scroll-target="#installation-and-common-project-scope">Installation and Common Project Scope</a></li>
+  <li><a href="#accounting-rule" id="toc-accounting-rule" class="nav-link" data-scroll-target="#accounting-rule">Accounting Rule</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -561,76 +546,195 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This page maps the main component groups to the three architectures.</p>
+<p>This page is the scope-control matrix for the three architectures. It identifies whether each physical function is present and links to the page that owns its assumptions, costs, losses, availability, and limitations.</p>
+<section id="physical-component-mapping" class="level2">
+<h2 class="anchored" data-anchor-id="physical-component-mapping">Physical Component Mapping</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Phase</th>
-<th>Electricity Export</th>
-<th>Centralised Hydrogen</th>
-<th>Decentralised Hydrogen</th>
+<th>Component or function</th>
+<th>Electricity export</th>
+<th>Centralised hydrogen</th>
+<th>Decentralised hydrogen</th>
+<th>Canonical owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Turbine generator</td>
-<td>Generator</td>
-<td>Generator</td>
-<td>Generator</td>
+<td>Wind turbine and generator</td>
+<td>Included</td>
+<td>Included</td>
+<td>Included</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine</a></td>
 </tr>
 <tr class="even">
-<td>In-turbine conversion</td>
-<td>Generator to DC to AC</td>
-<td>Generator to DC to AC</td>
-<td>Generator to DC to H2</td>
+<td>Foundation</td>
+<td>Included</td>
+<td>Included</td>
+<td>Included</td>
+<td><a href="../turbine_system/foundation.html">Foundation</a></td>
 </tr>
 <tr class="odd">
-<td>Infield transport preparation</td>
-<td>Transform to 66 kV</td>
-<td>Transform to 66 kV</td>
-<td>Compress to about 150 bar</td>
+<td>Turbine active front end and DC link</td>
+<td>Included</td>
+<td>Included</td>
+<td>Included</td>
+<td><a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a></td>
 </tr>
 <tr class="even">
-<td>Infield grid</td>
-<td>66 kV AC cables</td>
-<td>66 kV AC cables</td>
-<td>150 bar pipelines</td>
+<td>Turbine grid-side inverter</td>
+<td>Included</td>
+<td>Included</td>
+<td>Not used in the hydrogen path</td>
+<td><a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a></td>
 </tr>
 <tr class="odd">
-<td>Offshore collection</td>
-<td>Substation</td>
-<td>Substation / electrolyser platform</td>
-<td>None</td>
+<td>Turbine step-up transformer</td>
+<td>Included</td>
+<td>Included</td>
+<td>Not used in the hydrogen path</td>
+<td><a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a></td>
 </tr>
 <tr class="even">
-<td>Offshore central conversion</td>
-<td>AC to HVDC</td>
-<td>AC to DC to H2 to compressed H2</td>
-<td>None</td>
+<td>AC infield collection</td>
+<td>Included</td>
+<td>Included</td>
+<td>Replaced by hydrogen collection</td>
+<td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a></td>
 </tr>
 <tr class="odd">
-<td>Offshore export</td>
-<td>HVDC cable</td>
-<td>Hydrogen pipeline</td>
-<td>Hydrogen pipeline</td>
+<td>Central offshore platform</td>
+<td>AC aggregation and HVDC conversion</td>
+<td>One integrated AC aggregation and electrolysis platform</td>
+<td>Not used</td>
+<td><a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
 </tr>
 <tr class="even">
-<td>Onshore conversion or delivery</td>
-<td>HVDC to AC grid</td>
-<td>Hydrogen backbone</td>
-<td>Hydrogen backbone</td>
+<td>Central electrolyser transformer and rectifier</td>
+<td>Not used</td>
+<td>Included on the integrated platform</td>
+<td>Not used</td>
+<td><a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a></td>
+</tr>
+<tr class="odd">
+<td>Separate electrolyser-side DC/DC converter</td>
+<td>Not used</td>
+<td>Not applicable to the AC-fed central chain</td>
+<td>Not used by assumption</td>
+<td><a href="../hydrogen_production/dc_integration.html">DC Integration</a></td>
+</tr>
+<tr class="even">
+<td>PEM stacks</td>
+<td>Not used</td>
+<td>Included on the integrated platform</td>
+<td>Included at each turbine</td>
+<td><a href="../hydrogen_production/stack.html">PEM Electrolyser Stack</a></td>
+</tr>
+<tr class="odd">
+<td>Water treatment and non-electrical electrolyser BOP</td>
+<td>Not used</td>
+<td>Included in the platform electrolyser facility</td>
+<td>Included in each turbine-level electrolyser facility</td>
+<td><a href="../hydrogen_production/balance_of_plant.html">Balance of Plant</a></td>
+</tr>
+<tr class="even">
+<td>Hydrogen compression</td>
+<td>Not used</td>
+<td>Separate subsystem on the integrated platform</td>
+<td>Separate subsystem at each turbine</td>
+<td><a href="../hydrogen_infra/compressor.html">Compressor</a></td>
+</tr>
+<tr class="odd">
+<td>Hydrogen infield collection</td>
+<td>Not used</td>
+<td>Not required after central conversion</td>
+<td>Included</td>
+<td><a href="../hydrogen_infra/infield_infrastructure.html">Hydrogen Infield Infrastructure</a></td>
+</tr>
+<tr class="even">
+<td>Offshore HVDC conversion</td>
+<td>Included</td>
+<td>Not used</td>
+<td>Not used</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+</tr>
+<tr class="odd">
+<td>HVDC export cable</td>
+<td>Included</td>
+<td>Not used</td>
+<td>Not used</td>
+<td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
+</tr>
+<tr class="even">
+<td>Hydrogen export pipeline</td>
+<td>Not used</td>
+<td>Included</td>
+<td>Included</td>
+<td><a href="../hydrogen_infra/hydrogen_pipelines.html">Hydrogen Pipelines</a></td>
+</tr>
+<tr class="odd">
+<td>Onshore HVDC conversion and grid interface</td>
+<td>Included</td>
+<td>Not used</td>
+<td>Not used</td>
+<td><a href="../electrical_infra/onshore_grid_connection.html">Onshore Grid Connection</a></td>
+</tr>
+<tr class="even">
+<td>Onshore hydrogen-backbone connection</td>
+<td>Not used</td>
+<td>Included as the delivery interface</td>
+<td>Included as the delivery interface</td>
+<td><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></td>
 </tr>
 </tbody>
 </table>
-<p>The component pages document assumptions by physical component. Architecture pages document how those components are combined.</p>
+</section>
+<section id="delivery-boundaries" class="level2">
+<h2 class="anchored" data-anchor-id="delivery-boundaries">Delivery Boundaries</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Architecture</th>
+<th>Project delivery point</th>
+<th>Infrastructure beyond the boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electricity export</td>
+<td>Onshore electricity-grid connection</td>
+<td>Wider electricity transmission, distribution, storage, and end use</td>
+</tr>
+<tr class="even">
+<td>Centralised hydrogen</td>
+<td>Connection to the onshore hydrogen backbone</td>
+<td>Hydrogen backbone, storage, distribution, reconversion, and end use</td>
+</tr>
+<tr class="odd">
+<td>Decentralised hydrogen</td>
+<td>Connection to the onshore hydrogen backbone</td>
+<td>Hydrogen backbone, storage, distribution, reconversion, and end use</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="installation-and-common-project-scope" class="level2">
+<h2 class="anchored" data-anchor-id="installation-and-common-project-scope">Installation and Common Project Scope</h2>
+<p>Installation is not a physical energy-flow component, but it remains within the economic boundary for every included asset. The <a href="../offshore_installation/overview.html">Offshore Installation</a> section owns the installation methods and assumptions for turbines, foundations, cables, pipelines, and platforms.</p>
+<p>Common project costs are retained where they are required to construct and operate all three architectures. These include the shared wind-turbine, foundation, development, and financing scopes represented elsewhere in the model. They are common components, not out-of-boundary components.</p>
+<p>Wider onshore network reinforcement is excluded unless a scenario explicitly assigns it to the offshore project.</p>
+</section>
+<section id="accounting-rule" class="level2">
+<h2 class="anchored" data-anchor-id="accounting-rule">Accounting Rule</h2>
+<p>Architecture pages determine whether a component or function is included. Component and methodology pages determine how it is represented. A cost, loss, availability factor, installation activity, or replacement is booked by its canonical owner and must not be added again on an architecture page.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->

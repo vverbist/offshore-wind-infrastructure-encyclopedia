@@ -442,26 +442,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/hvdc_and_substation_platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">HVDC and Substation Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/central_electrolyser_platform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Central Electrolyser Platform</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_mass_and_scaling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Mass and Scaling</span></a>
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -489,14 +471,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cable Installation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/pipeline_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline Installation</span></a>
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -615,14 +591,14 @@ window.Quarto = {
 </section>
 <section id="where-installation-cost-enters" class="level2">
 <h2 class="anchored" data-anchor-id="where-installation-cost-enters">Where Installation Cost Enters</h2>
-<p>Material and compression are not the whole story, because pipeline capacity is delivered in discrete units. A given diameter-pressure combination yields a fixed maximum flow; if peak hydrogen production exceeds it, the model does not fractionally upsize the pipe — it adds another parallel pipeline. That step is where installation cost stops being a footnote and starts shaping the trade-off directly, for two reasons specific to pipelines.</p>
-<p>First, installation cost does not scale cleanly with pipeline count. A single lay vessel can install several pipelines in one pass, so mobilisation, weather-window, and lay-spread costs are shared across parallel lines in a way they are not for cables, which are laid one at a time. Adding a second or third parallel pipeline is therefore cheaper, per pipeline, than the first — the opposite of what a naive “cost per pipeline” view would suggest (<a href="../offshore_installation/pipeline_installation.html">Pipeline Installation</a>).</p>
-<p>Second, that sharing has limits tied back to the diameter decision. It holds for composite pipelines within the diameter range that supports reel-lay handling; it does not necessarily hold once diameter grows past the point where the pipe must instead be laid as a rigid line with field-welded joints. The installation-cost assumption is therefore not independent of the diameter choice — it is conditional on staying inside the size range that keeps the cheaper installation method available. Pushing diameter up to avoid a parallel pipeline can, past that threshold, trade one discrete cost jump for another.</p>
+<p>Material and compression are not the whole story, because pipeline capacity is delivered in discrete units. A given diameter-pressure combination yields a fixed maximum flow; if peak hydrogen production exceeds it, the model does not fractionally upsize the pipe — it adds another parallel pipeline. That step adds physical pipe length, interfaces, vessel loads and installation passes.</p>
+<p>Installation cost still does not scale as a simple EUR/m coefficient. Parallel lines may share engineering, mobilisation and one broader contractor programme, but each additional line increases the physical installation inventory. The current evidence supports one TCP pipeline per actual lay pass; simultaneous installation of several pipelines must not be assumed without supplier and contractor proof (<a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a>).</p>
+<p>The installation subclass is also tied to the diameter decision. It applies only while the selected pipe remains hydrogen-qualified and compatible with its reel, bend, tension, stability and pull-through limits. Crossing one of those limits can change the vessel, connection concept or pipe technology. Pushing diameter up to avoid another parallel line can therefore trade the discrete cost of an additional pass for a different installation subclass.</p>
 </section>
 <section id="the-resulting-trade-off-is-not-smooth" class="level2">
 <h2 class="anchored" data-anchor-id="the-resulting-trade-off-is-not-smooth">The Resulting Trade-off Is Not Smooth</h2>
-<p>Because pipeline count is a ceiling function of required capacity, a small change in peak flow, diameter, or pressure can push a design across the threshold where an extra parallel pipeline becomes necessary — or unnecessary. Near that threshold, the marginal cost of “one more unit of capacity” jumps discontinuously: it can mean a small increase in compressor duty on the existing pipelines, or it can mean an entire additional pipeline’s worth of material and installation cost, discounted by whatever sharing the lay vessel allows.</p>
-<p>This is why pressure, diameter, and pipeline count cannot be optimised one at a time. Raising pressure to avoid an extra pipeline only pays off if the resulting compressor cost and energy penalty are smaller than the (partially shared) installation and material cost of that pipeline. Conversely, adding a pipeline only pays off if the installation-cost sharing from laying it alongside the others beats the compressor cost of reaching the same capacity through pressure alone. The three variables have to be searched jointly, over a cost landscape with discrete steps in it rather than solved as a single continuous minimum.</p>
+<p>Because pipeline count is a ceiling function of required capacity, a small change in peak flow, diameter, or pressure can push a design across the threshold where an extra parallel pipeline becomes necessary — or unnecessary. Near that threshold, the marginal cost of “one more unit of capacity” jumps discontinuously: it can mean a small increase in compressor duty on the existing pipelines, or an entire additional pipeline’s material, interfaces, loads and installation passes.</p>
+<p>This is why pressure, diameter, and pipeline count cannot be optimised one at a time. Raising pressure to avoid an extra pipeline only pays off if the resulting compressor cost and energy penalty are smaller than that pipeline’s material and subclass-specific installation cost. Conversely, adding a pipeline only pays off if its complete incremental cost is lower than the compressor cost of reaching the same capacity through pressure alone. The three variables have to be searched jointly over a cost landscape with discrete steps rather than solved as a single continuous minimum.</p>
 
 
 </section>

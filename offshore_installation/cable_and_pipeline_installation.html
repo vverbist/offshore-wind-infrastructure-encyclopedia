@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Cable and Pipeline Installation – Offshore Wind Infrastructure Model Assumptions</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-787e033c7b6f65c9dfccb6078e5d2d34.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../offshore_installation/overview.html">Offshore Installation</a></li><li class="breadcrumb-item"><a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Offshore Wind Infrastructure Model Assumptions</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../positioning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Positioning</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Methodology</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methodology/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Methodology</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">System Boundary and LCOE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelling Workflow</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optimisation Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Architectures</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../architectures/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Architectures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../architectures/electricity_export_hvdc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Electricity Export with HVDC</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../architectures/centralised_hydrogen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Centralised Hydrogen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../architectures/decentralised_hydrogen.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decentralised Hydrogen</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../architectures/component_mapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Component Mapping</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Wind Resource and Layout</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wind_resource_and_layout/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wind Resource and Layout</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wind_resource_and_layout/wind_resource_and_weibull.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wind Resource and Weibull Distribution</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wind_resource_and_layout/wake_modelling_and_spacing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wake Modelling and Spacing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wind_resource_and_layout/infield_layout.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Infield Layout</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Turbine System</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../turbine_system/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine System</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../turbine_system/wind_turbine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wind Turbine</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../turbine_system/generator_and_power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generator and Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../turbine_system/tower_nacelle_and_mass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tower, Nacelle, and Mass</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Foundation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Electrical Infrastructure</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/infield_ac_cables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Infield AC Cables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HVDC Converter Stations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/hvdc_export_cables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HVDC Export Cables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/onshore_grid_connection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Onshore Grid Connection</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hydrogen Production</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Production</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/dc_integration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">DC Integration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/stack.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stack (PEM)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/balance_of_plant.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Balance of Plant</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_production/elx_power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Electronics</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Hydrogen Infrastructure</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/compressor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Compressor</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/hydrogen_pipelines.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hydrogen Pipelines</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hydrogen_infra/pipeline_pressure_and_capacity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipeline Pressure and Capacity</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Platforms</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Material CAPEX</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Offshore Installation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../offshore_installation/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Offshore Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../offshore_installation/turbine_and_foundation_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine and Foundation Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform and Substation Installation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text">Shared Model Inputs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shared Model Inputs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CAPEX and OPEX Conventions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scaling Laws</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Source Quality and Uncertainty</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References and Source Basis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-an-installation-campaign-works" id="toc-how-an-installation-campaign-works" class="nav-link active" data-scroll-target="#how-an-installation-campaign-works">1. How an Installation Campaign Works</a></li>
+  <li><a href="#three-spread-installation-cost-model" id="toc-three-spread-installation-cost-model" class="nav-link" data-scroll-target="#three-spread-installation-cost-model">2. Three-Spread Installation Cost Model</a></li>
+  <li><a href="#physical-quantities-and-installation-configuration" id="toc-physical-quantities-and-installation-configuration" class="nav-link" data-scroll-target="#physical-quantities-and-installation-configuration">3. Physical Quantities and Installation Configuration</a></li>
+  <li><a href="#lay-spread-time" id="toc-lay-spread-time" class="nav-link" data-scroll-target="#lay-spread-time">4. Lay-Spread Time</a></li>
+  <li><a href="#burial-spread-time" id="toc-burial-spread-time" class="nav-link" data-scroll-target="#burial-spread-time">5. Burial-Spread Time</a></li>
+  <li><a href="#rov-and-survey-spread-time" id="toc-rov-and-survey-spread-time" class="nav-link" data-scroll-target="#rov-and-survey-spread-time">6. ROV and Survey-Spread Time</a></li>
+  <li><a href="#weather-and-total-installation-capex" id="toc-weather-and-total-installation-capex" class="nav-link" data-scroll-target="#weather-and-total-installation-capex">7. Weather and Total Installation CAPEX</a>
+  <ul class="collapse">
+  <li><a href="#worked-example-2-gw-all-electric-wind-farm" id="toc-worked-example-2-gw-all-electric-wind-farm" class="nav-link" data-scroll-target="#worked-example-2-gw-all-electric-wind-farm">Worked example: 2 GW all-electric wind farm</a></li>
+  </ul></li>
+  <li><a href="#installation-subclass-differences" id="toc-installation-subclass-differences" class="nav-link" data-scroll-target="#installation-subclass-differences">8. Installation-Subclass Differences</a></li>
+  <li><a href="#evidence-outputs-and-model-limitations" id="toc-evidence-outputs-and-model-limitations" class="nav-link" data-scroll-target="#evidence-outputs-and-model-limitations">9. Evidence, Outputs and Model Limitations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../offshore_installation/overview.html">Offshore Installation</a></li><li class="breadcrumb-item"><a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Cable and Pipeline Installation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Provisional cost warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The worked example currently calculates <strong>70.54 million EUR (35.27 EUR/kW)</strong> of infield installation CAPEX for 134 turbines and 400 km of cable. Applying the same calculation to the Norfolk Vanguard quantities of 190 turbines and 452 km gives approximately <strong>91.7 million EUR</strong>. This is substantially below the user-provided Van Oord installation quote of approximately <strong>600 million EUR</strong>, or roughly <strong>200 EUR/kW</strong>, excluding cable supply.</p>
+<p>The contract boundary and price basis of this benchmark have not yet been fully reconciled with the bottom-up calculation. I am working on consolidating the two estimates. Until that work is complete, the current calculation should be treated as provisional; I believe it underestimates commercial installation costs. The Van Oord value is not yet independently evidenced in this repository and is not used as a model input.</p>
+</div>
+</div>
+<section id="how-an-installation-campaign-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-an-installation-campaign-works">1. How an Installation Campaign Works</h2>
+<p>Offshore installation converts supplied cable or pipe into a connected, protected and tested offshore asset. A typical cable campaign proceeds as follows:</p>
+<p><strong>mobilise the installation spread → load product at port → transit to site → survey or prepare the route → pull in the first end → lay the product → return to port and splice when required → pull in the second end → bury the route → inspect and survey the installation → test and complete the asset → demobilise</strong></p>
+<p>The activities are not always strictly sequential. Pull-ins occur around individual lay sections, not only after the complete route has been laid. An export-cable splice can interrupt laying when another product length is loaded. Burial and post-burial survey normally follow as separate campaigns in the reference method.</p>
+<p>This page uses one time-and-rate framework for four installation subclasses:</p>
+<ol type="1">
+<li>66–132 kV inter-array cables;</li>
+<li>320–525 kV HVDC export systems;</li>
+<li>spoolable thermoplastic-composite-pipe (TCP) hydrogen infield pipelines; and</li>
+<li>spoolable TCP hydrogen export pipelines.</li>
+</ol>
+<p>The accounting framework is shared. Product configuration, task times, installation rates and feasibility limits remain subclass-specific.</p>
+<p><strong>Cost boundary</strong></p>
+<p>The installation boundary begins when the contracted spreads mobilise and ends after the offshore testing included in their installation scope.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scope</th>
+<th>Treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cable or pipe manufacture and supply accessories</td>
+<td>Excluded; owned by the relevant cable or pipeline page</td>
+</tr>
+<tr class="even">
+<td>Lay-spread mobilisation, loading, transit, laying, pull-ins, offshore splices, lay-spread testing and demobilisation</td>
+<td>Included through lay-spread time</td>
+</tr>
+<tr class="odd">
+<td>Burial-spread mobilisation, transit, trenching or burial, positioning and demobilisation</td>
+<td>Included through burial-spread time</td>
+</tr>
+<tr class="even">
+<td>Independent ROV and survey campaigns or support</td>
+<td>Included through ROV/survey-spread time</td>
+</tr>
+<tr class="odd">
+<td>Crew, fuel, routine workboats and tugs, and contractor overhead</td>
+<td>Included in the applicable spread day rate</td>
+</tr>
+<tr class="even">
+<td>Crossings, landfall, protection materials and exceptional civil work</td>
+<td>Added separately when outside the spread scope</td>
+</tr>
+<tr class="odd">
+<td>Converter stations, substations, hydrogen compression, development, finance, contingency, OPEX and decommissioning</td>
+<td>Excluded; owned elsewhere in the model</td>
+</tr>
+</tbody>
+</table>
+<p>Every vessel, activity and material is charged once. If an ROV is onboard the lay vessel and included in the lay rate, it is not also assigned a separate ROV spread. If burial is performed by an integrated lay-and-bury spread, the separate burial term is zero and an integrated rate replaces the reference split.</p>
+</section>
+<section id="three-spread-installation-cost-model" class="level2">
+<h2 class="anchored" data-anchor-id="three-spread-installation-cost-model">2. Three-Spread Installation Cost Model</h2>
+<p>The reference calculation separates installation into laying, burial and ROV/survey spreads. Each spread produces an explicit number of chargeable days, which is later multiplied by its matching all-in day rate.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Spread</th>
+<th>Time output</th>
+<th>Rate input</th>
+<th>Cost contribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Laying</td>
+<td><span class="math inline">\(T_{\mathrm{lay}}\)</span></td>
+<td><span class="math inline">\(r_{\mathrm{lay}}\)</span></td>
+<td>Lay-spread days multiplied by lay-spread rate</td>
+</tr>
+<tr class="even">
+<td>Burial</td>
+<td><span class="math inline">\(T_{\mathrm{bury}}\)</span></td>
+<td><span class="math inline">\(r_{\mathrm{bury}}\)</span></td>
+<td>Burial-spread days multiplied by burial-spread rate</td>
+</tr>
+<tr class="odd">
+<td>ROV/survey</td>
+<td><span class="math inline">\(T_{\mathrm{ROV}}\)</span></td>
+<td><span class="math inline">\(r_{\mathrm{ROV}}\)</span></td>
+<td>ROV/survey-spread days multiplied by ROV/survey-spread rate</td>
+</tr>
+</tbody>
+</table>
+<p>The three times are <strong>spread-days</strong>, not sequential project days. A lay vessel and an ROV/survey vessel working on the same calendar day each incur one chargeable day. Their costs therefore add even though their activities are concurrent.</p>
+<p>For cable subclasses, ORBIT is the preferred source of task durations. The equations on this page define the required ORBIT configuration, map its task outputs to the three spreads and provide a transparent fallback when only the published task inputs are available. The same task is not estimated independently in ORBIT and again on this page.</p>
+<p><strong>Day-rate boundary</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rate</th>
+<th>Required inclusions</th>
+<th>Exclusions retained elsewhere</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(r_{\mathrm{lay}}\)</span></td>
+<td>Lay vessel, cable or pipe handling and lay equipment, crew, fuel, routine workboats and tugs, and contractor overhead</td>
+<td>Product supply, landfall civil work, crossings and protection materials</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(r_{\mathrm{bury}}\)</span></td>
+<td>Burial vessel, selected trenching or burial tool, crew, fuel, routine workboats and tugs, and contractor overhead</td>
+<td>Rock, mattresses, crossing structures and other protection materials</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(r_{\mathrm{ROV}}\)</span></td>
+<td>ROV/survey vessel, ROV and survey equipment, crew, fuel, routine workboats and tugs, and contractor overhead</td>
+<td>Specialist investigation or exceptional intervention packages</td>
+</tr>
+</tbody>
+</table>
+<p>Mobilisation and demobilisation are represented as chargeable spread days. A quotation that prices them as lump sums must first be converted into an equivalent time-and-rate treatment or recorded as a separate fixed cost with a clearly non-overlapping boundary.</p>
+<p>The model assumes full day-rate charging during weather standby. If a contract uses reduced standby rates, the weather-cost treatment must be changed rather than represented only by a time uplift.</p>
+<p><strong>ORBIT cable reference set</strong></p>
+<p>The cable calculation uses the executable defaults in ORBIT version 1.3, pinned to the reviewed source revision <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. They are screening inputs rather than observed project performance.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th style="text-align: right;">ORBIT value</th>
+<th style="text-align: right;">Value used by this page</th>
+<th>Classification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cable-carousel capacity</td>
+<td style="text-align: right;">13,000 t</td>
+<td style="text-align: right;">13,000 t before product-specific limits</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Cable-vessel transit speed</td>
+<td style="text-align: right;">11.5 km/h</td>
+<td style="text-align: right;">11.5 km/h</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Cable loading</td>
+<td style="text-align: right;">6 h/load</td>
+<td style="text-align: right;">6 h/load</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Onsite positioning</td>
+<td style="text-align: right;">2 h/location</td>
+<td style="text-align: right;">2 h/location</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Cable preparation</td>
+<td style="text-align: right;">1 h/event</td>
+<td style="text-align: right;">1 h/event</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Cable lowering</td>
+<td style="text-align: right;">1 h/event</td>
+<td style="text-align: right;">1 h/event</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Cable pull-in</td>
+<td style="text-align: right;">5.5 h/end</td>
+<td style="text-align: right;">5.5 h/end</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Termination and test</td>
+<td style="text-align: right;">5.5 h/end</td>
+<td style="text-align: right;">5.5 h/end</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Cable recovery before splice</td>
+<td style="text-align: right;">0.5 h/event</td>
+<td style="text-align: right;">0.5 h/event</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Offshore splice</td>
+<td style="text-align: right;">48 h/splice</td>
+<td style="text-align: right;">48 h/splice</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Separate cable laying</td>
+<td style="text-align: right;">0.4 km/h</td>
+<td style="text-align: right;">9.6 km/day/pass</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Separate cable burial</td>
+<td style="text-align: right;">0.4 km/h</td>
+<td style="text-align: right;">9.6 km/day/pass</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Pre-trenching</td>
+<td style="text-align: right;">0.1 km/h</td>
+<td style="text-align: right;">2.4 km/day/pass when selected</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Landfall tow-plow speed</td>
+<td style="text-align: right;">5 km/h</td>
+<td style="text-align: right;">5 km/h when this ORBIT landfall method is selected</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Landfall pull-winch speed</td>
+<td style="text-align: right;">5 km/h</td>
+<td style="text-align: right;">5 km/h when this ORBIT landfall method is selected</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="even">
+<td>Cable-vessel operating limits</td>
+<td style="text-align: right;">2 m wave height; 25 m/s wind</td>
+<td style="text-align: right;">Context for weather modelling; not converted into a percentage uplift</td>
+<td>Sourced ORBIT input</td>
+</tr>
+<tr class="odd">
+<td>Cable-vessel mobilisation</td>
+<td style="text-align: right;">3 days at 50% of day rate</td>
+<td style="text-align: right;">1.5 full-rate-equivalent spread-days</td>
+<td>Derived ORBIT cost input</td>
+</tr>
+<tr class="even">
+<td>Cable-vessel day rate</td>
+<td style="text-align: right;">241,171 USD/day</td>
+<td style="text-align: right;">223,727 EUR/day for laying and burial</td>
+<td>Provisional screening spread-rate assumption</td>
+</tr>
+<tr class="odd">
+<td>Generic support-vessel transit speed</td>
+<td style="text-align: right;">10 km/h</td>
+<td style="text-align: right;">10 km/h if selected for independent ROV/survey work</td>
+<td>ORBIT proxy</td>
+</tr>
+<tr class="even">
+<td>Generic support-vessel operating limits</td>
+<td style="text-align: right;">3 m wave height; 20 m/s wind</td>
+<td style="text-align: right;">Context for weather modelling; not converted into a percentage uplift</td>
+<td>ORBIT proxy</td>
+</tr>
+<tr class="odd">
+<td>Generic support-vessel mobilisation</td>
+<td style="text-align: right;">7 days at full rate</td>
+<td style="text-align: right;">7 full-rate-equivalent spread-days</td>
+<td>ORBIT proxy</td>
+</tr>
+<tr class="even">
+<td>Generic support-vessel day rate</td>
+<td style="text-align: right;">122,699 USD/day</td>
+<td style="text-align: right;">113,824 EUR/day for ROV/survey</td>
+<td>Provisional screening spread-rate assumption</td>
+</tr>
+<tr class="odd">
+<td>Demobilisation</td>
+<td style="text-align: right;">Not represented by a general ORBIT task</td>
+<td style="text-align: right;">Unresolved</td>
+<td>Supplier or contractor input required</td>
+</tr>
+<tr class="even">
+<td>Survey production rate and survey-pass count</td>
+<td style="text-align: right;">Not supplied by the cable module</td>
+<td style="text-align: right;">Unresolved</td>
+<td>Site-specific or contractor input required</td>
+</tr>
+<tr class="odd">
+<td>Percentage weather uplift</td>
+<td style="text-align: right;">ORBIT instead uses time-series weather and operating limits</td>
+<td style="text-align: right;">Unresolved</td>
+<td>Project metocean input or explicit modelling assumption required</td>
+</tr>
+</tbody>
+</table>
+<p>The ORBIT cable-vessel file describes an operating-vessel rate with crew, but does not demonstrate the complete commercial boundary required above. For screening only, this page follows the modelling decision that the normalized vessel proxies stand in for complete spread rates including crew, fuel, routine workboats and tugs, and contractor overhead. They must be replaced together with their stated boundary for a commercial estimate. The ROV/survey rate is a generic support-vessel proxy; ORBIT does not assign that vessel to a cable-survey campaign.</p>
+<p>ORBIT’s published methodology tables show 1.0 km/h for separate laying and 0.5 km/h for separate burial, while the reviewed version 1.3 executable defaults are 0.4 km/h for both <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. The calculation uses the executable values so that it can be reproduced from the pinned code revision.</p>
+</section>
+<section id="physical-quantities-and-installation-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="physical-quantities-and-installation-configuration">3. Physical Quantities and Installation Configuration</h2>
+<p>ORBIT can estimate installation time only after the physical system and installation method have been configured correctly. Three length measures remain distinct.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Definition</th>
+<th>Model use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Route-kilometre</td>
+<td>Horizontal centreline distance between route endpoints</td>
+<td>Defines the corridor</td>
+</tr>
+<tr class="even">
+<td>Physical cable- or pipeline-kilometre</td>
+<td>Total product installed across every distinct asset</td>
+<td>Controls product mass, loading and supplied length</td>
+</tr>
+<tr class="odd">
+<td>Pass-kilometre</td>
+<td>Distance travelled while one physical cable or pipeline is installed</td>
+<td>Controls lay and burial time; survey passes are counted separately</td>
+</tr>
+</tbody>
+</table>
+<p>For asset type <span class="math inline">\(a\)</span>, physical length is:</p>
+<p><span class="math display">\[
+L_{\mathrm{physical},a}
+=
+N_{\mathrm{parallel},a}L_{\mathrm{route},a}(1+s_a)
++L_{\mathrm{vert},a}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(N_{\mathrm{parallel},a}\)</span></td>
+<td>Number of distinct physical cables or pipes</td>
+<td>count</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(L_{\mathrm{route},a}\)</span></td>
+<td>Horizontal route length</td>
+<td>route-km</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(s_a\)</span></td>
+<td>Installation slack fraction</td>
+<td>dimensionless</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(L_{\mathrm{vert},a}\)</span></td>
+<td>Total separately calculated vertical and structure allowance</td>
+<td>km</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L_{\mathrm{physical},a}\)</span></td>
+<td>Total installed product length</td>
+<td>physical km</td>
+</tr>
+</tbody>
+</table>
+<p>Slack is not added when project section lengths already include it.</p>
+<p>ORBIT installs every array-cable section and export cable individually. The reference model therefore permits only one physical cable or pipeline in each lay or burial pass. For spread type <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+N_{\mathrm{pass},x,a}
+=
+N_{\mathrm{parallel},a},
+\qquad
+L_{\mathrm{pass},x,a}
+=
+N_{\mathrm{pass},x,a}L_{\mathrm{route},a}.
+\]</span></p>
+<p>For non-identical sections or routes, actual traversed lengths are summed:</p>
+<p><span class="math display">\[
+L_{\mathrm{pass},x}
+=
+\sum_m L_m.
+\]</span></p>
+<p>Here <span class="math inline">\(x\)</span> identifies the lay or burial spread, <span class="math inline">\(N_{\mathrm{pass},x,a}\)</span> is its pass count and <span class="math inline">\(L_{\mathrm{pass},x,a}\)</span> is pass-km. Survey length is calculated from its own required route passes because a survey can cover a corridor rather than every individual product.</p>
+<p>TenneT calls its 2 GW export connection one cable system, but defines that system as four individual cables: positive pole, negative pole, metallic return and fibre-optic cable <span class="citation" data-cites="tennet2026TwoGWProgramWeb">(<a href="#ref-tennet2026TwoGWProgramWeb" role="doc-biblioref">TenneT, n.d.</a>)</span>. Under the one-cable-per-pass ORBIT convention, one TenneT reference system therefore contains four physical lay units and four lay passes. Product length, mass and loading are calculated separately for each cable type; the indicative power-cable mass is not applied to the metallic return or fibre cable. This is a transparent screening convention, not evidence that TenneT’s contractor necessarily installs the four-cable bundle in four separate operations.</p>
+</section>
+<section id="lay-spread-time" class="level2">
+<h2 class="anchored" data-anchor-id="lay-spread-time">4. Lay-Spread Time</h2>
+<p>The lay-spread calculation follows ORBIT’s cable-installation task logic. ORBIT explicitly represents mobilisation, product loading, vessel storage, port returns, route laying, positioning, pull-ins, offshore splicing, termination/testing and transit <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. Demobilisation remains a separate unresolved input because the reviewed cable module does not contain a general demobilisation task.</p>
+<p>Chargeable lay time is divided into port or other non-weather-uplifted time and offshore weather-exposed time:</p>
+<p><span class="math display">\[
+T_{\mathrm{lay,base}}
+=
+T_{\mathrm{lay,nonweather}}
++T_{\mathrm{lay,offshore,base}}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{lay,base}}\)</span></td>
+<td>Lay time before weather uplift</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{lay,nonweather}}\)</span></td>
+<td>Port and other defined lay time not exposed to the offshore weather uplift</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{lay,offshore,base}}\)</span></td>
+<td>Offshore-exposed lay time before weather uplift</td>
+<td>day</td>
+</tr>
+</tbody>
+</table>
+<p>Weather is applied later, after all base tasks have been counted.</p>
+<p><strong>Product per load</strong></p>
+<p>The mass-limited product length is usable vessel capacity divided by product linear mass:</p>
+<p><span class="math display">\[
+L_{\mathrm{load,mass}}
+=
+\frac{M_{\mathrm{usable}}}{\lambda_{\mathrm{product}}}.
+\]</span></p>
+<p>Actual product per load is the lowest applicable limit:</p>
+<p><span class="math display">\[
+L_{\mathrm{load}}
+=
+\min\left(
+L_{\mathrm{load,mass}},
+L_{\mathrm{reel/partition}},
+L_{\mathrm{manufacturing}},
+L_{\mathrm{handling}}
+\right).
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(M_{\mathrm{usable}}\)</span></td>
+<td>Usable product mass on the lay vessel</td>
+<td>t</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_{\mathrm{product}}\)</span></td>
+<td>Product linear mass</td>
+<td>t/physical km</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L_{\mathrm{reel/partition}}\)</span></td>
+<td>Reel, carousel or partition limit</td>
+<td>physical km/load</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(L_{\mathrm{manufacturing}}\)</span></td>
+<td>Available continuous manufactured length</td>
+<td>physical km/load</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L_{\mathrm{handling}}\)</span></td>
+<td>Handling or installation-analysis limit</td>
+<td>physical km/load</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(L_{\mathrm{load}}\)</span></td>
+<td>Effective product length per load</td>
+<td>physical km/load</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L_{\mathrm{physical},m}\)</span></td>
+<td>Physical product length of lay unit <span class="math inline">\(m\)</span></td>
+<td>physical km</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(N_{\mathrm{load},m}\)</span></td>
+<td>Loads for lay unit <span class="math inline">\(m\)</span>, including its initial load</td>
+<td>count</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(N_{\mathrm{reload},m}\)</span></td>
+<td>Loads after the initial load for lay unit <span class="math inline">\(m\)</span></td>
+<td>count</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(N_{\mathrm{load}}\)</span>, <span class="math inline">\(N_{\mathrm{reload}}\)</span></td>
+<td>Campaign totals summed over physical lay units</td>
+<td>count</td>
+</tr>
+</tbody>
+</table>
+<p>If products with different linear masses share a load, loaded mass is calculated product by product rather than by applying one average linear mass.</p>
+<p>The ORBIT reference carousel has a 13,000 t maximum mass. The screening calculation uses <span class="math inline">\(M_{\mathrm{usable}}=13{,}000\)</span> t, while retaining the reel, manufacturing and handling limits in the minimum above. For example, an indicative 65 t/km HVDC pole cable would be mass-limited to 200 physical km/load. That result is not transferred to the metallic-return or fibre-optic cables.</p>
+<p>Loads are calculated separately for every physical lay unit <span class="math inline">\(m\)</span>, so that each cable or pipeline receives one initial load and uses its own mass and handling limits:</p>
+<p><span class="math display">\[
+N_{\mathrm{load},m}
+=
+\left\lceil
+\frac{L_{\mathrm{physical},m}}{L_{\mathrm{load},m}}
+\right\rceil,
+\qquad
+N_{\mathrm{reload},m}
+=
+\max(0,N_{\mathrm{load},m}-1).
+\]</span></p>
+<p>Campaign totals are:</p>
+<p><span class="math display">\[
+N_{\mathrm{load}}=\sum_m N_{\mathrm{load},m},
+\qquad
+N_{\mathrm{reload}}=\sum_m N_{\mathrm{reload},m}.
+\]</span></p>
+<p>Port loading time is therefore:</p>
+<p><span class="math display">\[
+T_{\mathrm{port\ load}}
+=
+\sum_m
+\left(
+t_{\mathrm{initial\ load},m}
++N_{\mathrm{reload},m}t_{\mathrm{reload\ load},m}
+\right).
+\]</span></p>
+<p>Here <span class="math inline">\(t_{\mathrm{initial\ load},m}\)</span> and <span class="math inline">\(t_{\mathrm{reload\ load},m}\)</span> are chargeable port-loading times in days. Under the ORBIT screening values both equal 6/24 day. A TenneT system with four physical cable passes therefore has four initial loads even when every cable fits on one vessel load.</p>
+<p>ORBIT uses six hours for both the initial load and each reload <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. This is product-loading time only. It does not include the return transit and repositioning needed for a reload.</p>
+<p><strong>Port returns</strong></p>
+<p>For one-way distance <span class="math inline">\(D_{\mathrm{port}}\)</span> between the work site and loading port, vessel transit speed <span class="math inline">\(v_{\mathrm{transit}}\)</span> in km/h and repositioning time <span class="math inline">\(t_{\mathrm{reposition}}\)</span> in days:</p>
+<p><span class="math display">\[
+T_{\mathrm{port\ return}}
+=
+\sum_m N_{\mathrm{reload},m}
+\left(
+\frac{2D_{\mathrm{port}}}{24v_{\mathrm{transit}}}
++t_{\mathrm{reposition}}
+\right).
+\]</span></p>
+<p>The port loading itself remains in <span class="math inline">\(T_{\mathrm{port\ load}}\)</span>, so it is not included again in this expression.</p>
+<p>The ORBIT reference cable vessel uses <span class="math inline">\(v_{\mathrm{transit}}=11.5\)</span> km/h. Its reload sequence includes the outbound and return transits; onsite positioning associated with an offshore splice is counted in the splice task below and is not added as <span class="math inline">\(t_{\mathrm{reposition}}\)</span>.</p>
+<p><strong>Route laying</strong></p>
+<p>Lay production time is lay pass-km divided by the selected operating lay rate:</p>
+<p><span class="math display">\[
+T_{\mathrm{route\ lay}}
+=
+\sum_j
+\frac{L_{\mathrm{pass,lay},j}}{q_{\mathrm{lay},j}}.
+\]</span></p>
+<p>The reviewed ORBIT version 1.3 implementation uses <span class="math inline">\(q_{\mathrm{lay}}=0.4\)</span> km/h, equivalent to 9.6 km/day of continuous operation <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. This is an operating rate, not an achieved weather-inclusive campaign rate. Product handling, stops, interfaces and weather are represented separately.</p>
+<p><strong>Pull-ins, splicing and testing</strong></p>
+<p>ORBIT divides cable interfaces into positioning, preparation, pull-in, termination/testing, lowering and, when required, cable recovery and splicing. The time for any repeated interface task <span class="math inline">\(u\)</span> is:</p>
+<p><span class="math display">\[
+T_u
+=
+\frac{N_u t_u}{24}.
+\]</span></p>
+<p>The sourced task values are:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task <span class="math inline">\(u\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(t_u\)</span></th>
+<th>Counting rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Position onsite</td>
+<td style="text-align: right;">2 h/location</td>
+<td>Once at the start of each array section and at the offshore end of an export cable; also included in each splice sequence</td>
+</tr>
+<tr class="even">
+<td>Prepare cable</td>
+<td style="text-align: right;">1 h/event</td>
+<td>At each array-cable end and at export landfall</td>
+</tr>
+<tr class="odd">
+<td>Pull in cable</td>
+<td style="text-align: right;">5.5 h/end</td>
+<td>At every modeled pull-in or pull-up</td>
+</tr>
+<tr class="even">
+<td>Terminate and test</td>
+<td style="text-align: right;">5.5 h/end</td>
+<td>At every end while the lay spread remains occupied</td>
+</tr>
+<tr class="odd">
+<td>Lower cable</td>
+<td style="text-align: right;">1 h/event</td>
+<td>After the first-end sequence and after a splice</td>
+</tr>
+<tr class="even">
+<td>Raise cable</td>
+<td style="text-align: right;">0.5 h/splice</td>
+<td>Before an offshore splice</td>
+</tr>
+<tr class="odd">
+<td>Splice cable</td>
+<td style="text-align: right;">48 h/splice</td>
+<td>Between continuous export-cable loads</td>
+</tr>
+</tbody>
+</table>
+<p>Using those task counts, the complete interface term is:</p>
+<p><span class="math display">\[
+T_{\mathrm{interface}}
+=
+\frac{
+2N_{\mathrm{position}}
++N_{\mathrm{prepare}}
++5.5N_{\mathrm{pull}}
++5.5N_{\mathrm{termination}}
++N_{\mathrm{lower}}
+}{24}.
+\]</span></p>
+<p>Each offshore splice additionally occupies the lay spread for positioning, cable recovery, splicing and lowering:</p>
+<p><span class="math display">\[
+T_{\mathrm{splice}}
+=
+N_{\mathrm{splice}}
+\frac{2+0.5+48+1}{24}
+=
+N_{\mathrm{splice}}\frac{51.5}{24}.
+\]</span></p>
+<p>These values are executable ORBIT defaults <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. They apply only when the lay spread remains occupied. An array-cable section uses two pull-ins and two termination/test tasks; an export cable uses a landfall sequence and an offshore-end sequence. The exact event counts remain derived from the physical installation inventory rather than embedded in a kilometre rate.</p>
+<p>For array cables, a reload normally supplies additional discrete cable sections and does not automatically create an offshore splice. For a continuous export route, exceeding the available continuous product length can require both a reload and an inline splice.</p>
+<p><strong>Lay-time aggregation</strong></p>
+<p>Non-weather-uplifted lay time is:</p>
+<p><span class="math display">\[
+T_{\mathrm{lay,nonweather}}
+=
+T_{\mathrm{mob,lay}}
++T_{\mathrm{port\ load}}
++T_{\mathrm{demob,lay}}.
+\]</span></p>
+<p>Base offshore-exposed lay time is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+T_{\mathrm{lay,offshore,base}}
+={}&amp;
+T_{\mathrm{site\ transit}}
++T_{\mathrm{route\ lay}}
++T_{\mathrm{port\ return}}\\
+&amp;+T_{\mathrm{position}}
++T_{\mathrm{interface}}
++T_{\mathrm{splice}}
+\end{aligned}
+\]</span></p>
+<p>All terms in the two aggregation equations are chargeable days. <span class="math inline">\(T_{\mathrm{mob,lay}}\)</span> is 1.5 full-rate-equivalent days in the cable screening case, representing ORBIT’s three calendar days at 50% of the day rate. <span class="math inline">\(T_{\mathrm{demob,lay}}\)</span> remains unresolved. <span class="math inline">\(T_{\mathrm{site\ transit}}\)</span> is initial offshore transit, and <span class="math inline">\(T_{\mathrm{position}}\)</span> contains only positioning not already included in <span class="math inline">\(T_{\mathrm{interface}}\)</span> or <span class="math inline">\(T_{\mathrm{splice}}\)</span>. Every task is assigned once.</p>
+</section>
+<section id="burial-spread-time" class="level2">
+<h2 class="anchored" data-anchor-id="burial-spread-time">5. Burial-Spread Time</h2>
+<p>The reference method uses a separate burial spread. Its task sequence is mobilisation, transit, tool deployment and setup, burial or pre-trenching passes, repositioning, tool recovery and demobilisation.</p>
+<p>Non-weather-uplifted burial time is mobilisation and demobilisation:</p>
+<p><span class="math display">\[
+T_{\mathrm{bury,nonweather}}
+=
+T_{\mathrm{mob,bury}}
++T_{\mathrm{demob,bury}}.
+\]</span></p>
+<p>Base offshore-exposed burial time is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+T_{\mathrm{bury,offshore,base}}
+={}&amp;
+T_{\mathrm{transit,bury}}
++T_{\mathrm{setup,bury}}\\
+&amp;+\sum_j
+\frac{L_{\mathrm{pass,bury},j}}{q_{\mathrm{bury},j}}
++T_{\mathrm{reposition,bury}}\\
+&amp;+T_{\mathrm{recovery,bury}}.
+\end{aligned}
+\]</span></p>
+<p>Therefore:</p>
+<p><span class="math display">\[
+T_{\mathrm{bury,base}}
+=
+T_{\mathrm{bury,nonweather}}
++T_{\mathrm{bury,offshore,base}}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{bury,base}}\)</span></td>
+<td>Total burial time before weather uplift</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{bury,nonweather}}\)</span></td>
+<td>Fixed burial-spread time outside the offshore weather uplift</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{bury,offshore,base}}\)</span></td>
+<td>Offshore-exposed burial time before weather uplift</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{mob,bury}}\)</span>, <span class="math inline">\(T_{\mathrm{demob,bury}}\)</span></td>
+<td>Burial-spread mobilisation and demobilisation</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{transit,bury}}\)</span></td>
+<td>Burial-spread offshore transit</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(L_{\mathrm{pass,bury},j}\)</span></td>
+<td>Burial or trenching pass length for pass <span class="math inline">\(j\)</span></td>
+<td>pass-km</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_{\mathrm{bury},j}\)</span></td>
+<td>Operating burial or pre-trenching rate</td>
+<td>km/day/pass</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{setup,bury}}\)</span></td>
+<td>Tool deployment and setup time</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{reposition,bury}}\)</span></td>
+<td>Positioning between burial passes or sections</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{recovery,bury}}\)</span></td>
+<td>Tool recovery time</td>
+<td>day</td>
+</tr>
+</tbody>
+</table>
+<p>The reviewed ORBIT version 1.3 implementation uses <span class="math inline">\(q_{\mathrm{bury}}=0.4\)</span> km/h, equivalent to 9.6 km/day of continuous operation, and 0.1 km/h or 2.4 km/day for pre-trenching <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. Array-cable burial also includes two hours of positioning per section. These are operating defaults rather than achieved campaign rates and must be replaced when route-specific soil and tool evidence are available.</p>
+<p>The cable screening case uses 1.5 full-rate-equivalent mobilisation days for the burial vessel, matching the ORBIT cable-vessel proxy. ORBIT does not provide general burial transit, deployment, recovery or demobilisation values; those inputs remain unresolved rather than being silently set to zero.</p>
+<p>Burial pass length is not assumed equal to lay pass length. Sections near structures, landfall or designed protection zones may have different burial lengths, but only one physical cable or pipeline is buried in each modeled pass.</p>
+<p>Rock, mattresses and crossing structures are excluded from burial-spread time unless the selected burial rate explicitly includes the corresponding installation method and materials. Their material and specialist-package costs normally remain exceptional.</p>
+<p>If laying and burial are physically integrated, this separate calculation is not used. The project instead requires one integrated duration and one integrated spread rate.</p>
+</section>
+<section id="rov-and-survey-spread-time" class="level2">
+<h2 class="anchored" data-anchor-id="rov-and-survey-spread-time">6. ROV and Survey-Spread Time</h2>
+<p>The ROV/survey spread can perform independent pre-lay, as-laid, post-burial or inspection campaigns and can support laying, burial or interfaces. Independent survey time is calculated from surveyed pass length and survey rate:</p>
+<p><span class="math display">\[
+T_{\mathrm{survey,independent,base}}
+=
+\sum_k
+\frac{L_{\mathrm{survey},k}}{q_{\mathrm{survey},k}}
++T_{\mathrm{ROV,interface}}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{survey,independent,base}}\)</span></td>
+<td>Independent survey and interface time before weather uplift</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(L_{\mathrm{survey},k}\)</span></td>
+<td>Route or pass length surveyed in activity <span class="math inline">\(k\)</span></td>
+<td>km</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_{\mathrm{survey},k}\)</span></td>
+<td>Operating survey rate for activity <span class="math inline">\(k\)</span></td>
+<td>km/day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{ROV,interface}}\)</span></td>
+<td>Independent ROV time at pull-ins, joints, crossings or other interfaces</td>
+<td>day</td>
+</tr>
+</tbody>
+</table>
+<p>ORBIT’s cable module supplies no independent survey-pass count or survey production rate. These remain site-specific or contractor inputs. For cable screening only, this page uses ORBIT’s generic support vessel as the ROV/survey spread proxy: 10 km/h transit speed, seven full-rate mobilisation days and 113,824 EUR/day <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. This supplies a provisional cost rate, not the missing survey productivity or proof of a complete commercial survey spread.</p>
+<p>ROV support that accompanies another spread is based on that spread’s actual weather-adjusted offshore time:</p>
+<p><span class="math display">\[
+T_{\mathrm{ROV,support}}
+=
+\alpha_{\mathrm{lay}}T_{\mathrm{lay,offshore}}
++\alpha_{\mathrm{bury}}T_{\mathrm{bury,offshore}},
+\]</span></p>
+<p>where <span class="math inline">\(\alpha_{\mathrm{lay}}\)</span> and <span class="math inline">\(\alpha_{\mathrm{bury}}\)</span> are the fractions of lay- and burial-spread offshore time requiring a separately charged ROV/survey spread. They lie between 0 and 1 and must be defined from the installation method.</p>
+<p>The reference lay and burial campaigns do not overlap. If support windows do overlap, <span class="math inline">\(T_{\mathrm{ROV,support}}\)</span> is the duration of their union rather than the arithmetic sum of overlapping days.</p>
+<p>Total ROV/survey-spread time is:</p>
+<p><span class="math display">\[
+T_{\mathrm{ROV}}
+=
+T_{\mathrm{mob,ROV}}
++T_{\mathrm{demob,ROV}}
++T_{\mathrm{survey,independent}}
++T_{\mathrm{ROV,support}}.
+\]</span></p>
+<p>Here <span class="math inline">\(T_{\mathrm{mob,ROV}}=7\)</span> chargeable days in the cable screening case and <span class="math inline">\(T_{\mathrm{demob,ROV}}\)</span> remains unresolved. <span class="math inline">\(T_{\mathrm{survey,independent}}\)</span> is weather-adjusted independent survey time; <span class="math inline">\(T_{\mathrm{ROV,support}}\)</span> is concurrent support time; and <span class="math inline">\(T_{\mathrm{ROV}}\)</span> is total chargeable ROV/survey spread-days.</p>
+<p>Concurrent support is a separate spread cost, not additional project elapsed time. If ROV and survey equipment are onboard and included in the lay or burial day rate, the corresponding <span class="math inline">\(\alpha\)</span> is zero and those days are not charged again.</p>
+</section>
+<section id="weather-and-total-installation-capex" class="level2">
+<h2 class="anchored" data-anchor-id="weather-and-total-installation-capex">7. Weather and Total Installation CAPEX</h2>
+<p>Weather is represented by a transparent time uplift rather than an ORBIT discrete-event weather simulation. Port loading and other defined non-weather tasks are not uplifted.</p>
+<p>The ORBIT duration used here must therefore exclude simulated weather delay. If a weather-inclusive ORBIT result is used instead, the corresponding uplift <span class="math inline">\(w\)</span> is set to zero.</p>
+<p>For laying:</p>
+<p><span class="math display">\[
+T_{\mathrm{lay}}
+=
+T_{\mathrm{lay,nonweather}}
++(1+w_{\mathrm{lay}})
+T_{\mathrm{lay,offshore,base}}.
+\]</span></p>
+<p>The weather-adjusted lay offshore time used by ROV support is:</p>
+<p><span class="math display">\[
+T_{\mathrm{lay,offshore}}
+=
+(1+w_{\mathrm{lay}})
+T_{\mathrm{lay,offshore,base}}.
+\]</span></p>
+<p>For burial, the model separates any fixed non-weather time from offshore-exposed work:</p>
+<p><span class="math display">\[
+T_{\mathrm{bury}}
+=
+T_{\mathrm{bury,nonweather}}
++(1+w_{\mathrm{bury}})
+T_{\mathrm{bury,offshore,base}}.
+\]</span></p>
+<p>The weather-adjusted burial offshore time used by ROV support is:</p>
+<p><span class="math display">\[
+T_{\mathrm{bury,offshore}}
+=
+(1+w_{\mathrm{bury}})
+T_{\mathrm{bury,offshore,base}}.
+\]</span></p>
+<p>For independent survey:</p>
+<p><span class="math display">\[
+T_{\mathrm{survey,independent}}
+=
+(1+w_{\mathrm{ROV}})
+T_{\mathrm{survey,independent,base}}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{lay}}\)</span></td>
+<td>Total weather-adjusted chargeable lay-spread time</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{bury}}\)</span></td>
+<td>Total weather-adjusted chargeable burial-spread time</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{lay,offshore}}\)</span></td>
+<td>Weather-adjusted lay offshore time</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{bury,offshore}}\)</span></td>
+<td>Weather-adjusted burial offshore time</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{survey,independent}}\)</span></td>
+<td>Weather-adjusted independent ROV/survey time</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(w_{\mathrm{lay}}\)</span></td>
+<td>Lay offshore-time uplift for weather</td>
+<td>fraction</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(w_{\mathrm{bury}}\)</span></td>
+<td>Burial offshore-time uplift for weather</td>
+<td>fraction</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(w_{\mathrm{ROV}}\)</span></td>
+<td>Independent ROV/survey-time uplift for weather</td>
+<td>fraction</td>
+</tr>
+</tbody>
+</table>
+<p>An uplift of 20% would be represented as <span class="math inline">\(w=0.20\)</span> and multiply exposed time by 1.20. This is not the same as defining 20% downtime, which would require division by 0.80. No numerical weather uplift is adopted until an evidence basis or modelling decision is provided.</p>
+<p>Different spreads should use different weather uplifts where evidence permits because their operational limits differ. A common uplift can be used as a transparent screening assumption when better inputs are unavailable.</p>
+<p>Once the three chargeable spread times are known, installation CAPEX is:</p>
+<p><span class="math display">\[
+C_{\mathrm{installation}}
+=
+r_{\mathrm{lay}}T_{\mathrm{lay}}
++r_{\mathrm{bury}}T_{\mathrm{bury}}
++r_{\mathrm{ROV}}T_{\mathrm{ROV}}
++C_{\mathrm{exceptional}}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(C_{\mathrm{installation}}\)</span></td>
+<td>Total installation CAPEX</td>
+<td>2026 EUR</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{lay}}\)</span></td>
+<td>Weather-adjusted chargeable lay-spread time</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{\mathrm{bury}}\)</span></td>
+<td>Weather-adjusted chargeable burial-spread time</td>
+<td>day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(T_{\mathrm{ROV}}\)</span></td>
+<td>Chargeable independent and supporting ROV/survey-spread time</td>
+<td>day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(r_{\mathrm{lay}}\)</span></td>
+<td>All-in lay-spread rate</td>
+<td>2026 EUR/day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(r_{\mathrm{bury}}\)</span></td>
+<td>All-in burial-spread rate</td>
+<td>2026 EUR/day</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(r_{\mathrm{ROV}}\)</span></td>
+<td>All-in ROV/survey-spread rate</td>
+<td>2026 EUR/day</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
+<td>Work and materials outside the three time-based spreads</td>
+<td>2026 EUR</td>
+</tr>
+</tbody>
+</table>
+<p>Exceptional cost is:</p>
+<p><span class="math display">\[
+C_{\mathrm{exceptional}}
+=
+N_{\mathrm{cross}}C_{\mathrm{cross}}
++L_{\mathrm{protection}}c_{\mathrm{protection}}
++N_{\mathrm{landfall}}C_{\mathrm{landfall}}
++C_{\mathrm{other}}.
+\]</span></p>
+<p>Here <span class="math inline">\(N_{\mathrm{cross}}\)</span> and <span class="math inline">\(N_{\mathrm{landfall}}\)</span> are counts; <span class="math inline">\(C_{\mathrm{cross}}\)</span> and <span class="math inline">\(C_{\mathrm{landfall}}\)</span> are 2026 EUR per item; <span class="math inline">\(L_{\mathrm{protection}}\)</span> is protected route length in km; <span class="math inline">\(c_{\mathrm{protection}}\)</span> is 2026 EUR/km; and <span class="math inline">\(C_{\mathrm{other}}\)</span> is any other explicitly scoped exceptional cost in 2026 EUR.</p>
+<p>Crossings, landfall, protection materials and exceptional civil work remain site-specific. A term is set to zero only when the matching spread quotation explicitly includes the same scope.</p>
+<p><strong>Constant-2026-EUR normalization</strong></p>
+<p>Each spread rate and exceptional cost is escalated in its original currency before conversion to euros:</p>
+<p><span class="math display">\[
+C_{2026,\mathrm{EUR}}
+=
+C_{y,s}
+\frac{I_{s,k}(2026^*)}{I_{s,k}(y)}
+FX_{\mathrm{EUR}/s}(2026^*)
+G_{\mathrm{market}}.
+\]</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(C_{y,s}\)</span></td>
+<td>Source cost in currency <span class="math inline">\(s\)</span> and price year <span class="math inline">\(y\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(I_{s,k}\)</span></td>
+<td>Selected index for cost type <span class="math inline">\(k\)</span> in the source market</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(FX_{\mathrm{EUR}/s}\)</span></td>
+<td>Euros per unit of source currency</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(G_{\mathrm{market}}\)</span></td>
+<td>Separately stated geographic-market factor</td>
+</tr>
+</tbody>
+</table>
+<p>ORBIT version 1.3 states its vessel-library costs in 2024 USD <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. The screening conversion uses 2024 annual-average U.S. CPI-U of 313.689, June 2026 CPI-U of 333.952 and the 30 July 2026 ECB reference rate of USD 1.1476 per EUR <span class="citation" data-cites="bls2024CPI bls2026CPI ecb2026ExchangeRates">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2026CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2026ExchangeRates" role="doc-biblioref">European Central Bank 2026</a>)</span>:</p>
+<p><span class="math display">\[
+F
+=
+\frac{333.952}{313.689}\frac{1}{1.1476}
+=
+0.9276715\ \mathrm{EUR}_{2026}/\mathrm{USD}_{2024}.
+\]</span></p>
+<p>The factor gives 223,727 EUR/day for ORBIT’s 241,171 USD/day cable vessel and 113,824 EUR/day for its 122,699 USD/day generic support vessel. The cable screening case adopts the first value for both the lay and burial spreads and the second for the ROV/survey spread. This promotes primary-vessel proxies to complete-spread screening assumptions under the explicit inclusion boundary in Section 2; it does not turn them into contractor quotations.</p>
+<section id="worked-example-2-gw-all-electric-wind-farm" class="level3">
+<h3 class="anchored" data-anchor-id="worked-example-2-gw-all-electric-wind-farm">Worked example: 2 GW all-electric wind farm</h3>
+<p>This example applies the three-spread method to a 2 GW wind farm with 134 turbines, approximately 400 physical km of inter-array cable and a 100 km export corridor. It calculates <strong>installation CAPEX only</strong>. Cable supply, substations, crossing structures, protection materials, landfall civil works and contingency remain outside the result.</p>
+<p>The installed-capacity basis used for the specific cost is 2,000,000 kW. The turbine count is used to determine installation interfaces; the requested 2 GW rating, rather than the product of a separate assumed turbine rating and turbine count, is used as the cost denominator.</p>
+<p><strong>Example inputs</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th style="text-align: right;">Infield case</th>
+<th style="text-align: right;">Export case</th>
+<th>Classification and basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wind-farm capacity</td>
+<td style="text-align: right;">2,000 MW</td>
+<td style="text-align: right;">2,000 MW</td>
+<td>User-specified design input</td>
+</tr>
+<tr class="even">
+<td>Turbines</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">–</td>
+<td>User-specified design input</td>
+</tr>
+<tr class="odd">
+<td>Cable length</td>
+<td style="text-align: right;">400 physical km</td>
+<td style="text-align: right;">100 route-km; four cables and therefore 400 physical km</td>
+<td>User-specified design input and TenneT four-cable system definition <span class="citation" data-cites="tennet2026TwoGWProgramWeb">(<a href="#ref-tennet2026TwoGWProgramWeb" role="doc-biblioref">TenneT, n.d.</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Cable sections or lay units</td>
+<td style="text-align: right;">134 radial sections</td>
+<td style="text-align: right;">Four physical export cables</td>
+<td>Infield radial-layout assumption; sourced TenneT system definition for export</td>
+</tr>
+<tr class="odd">
+<td>Linear cable mass</td>
+<td style="text-align: right;">42.5 t/km for all infield cable</td>
+<td style="text-align: right;">74 t/km for each HVDC pole cable</td>
+<td>ORBIT 630 mm² 66 kV and 2,500 mm² 525 kV cable-library inputs <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Usable carousel mass</td>
+<td style="text-align: right;">5,000 t</td>
+<td style="text-align: right;">5,000 t</td>
+<td>User-specified screening assumption; overrides the 13,000 t ORBIT reference carousel in this example only</td>
+</tr>
+<tr class="odd">
+<td>Metallic-return and fibre loading</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">Each cable fits in one 5,000 t load</td>
+<td>Provisional screening assumption; product-specific supplier masses remain required</td>
+</tr>
+<tr class="even">
+<td>Port-to-worksite distance</td>
+<td style="text-align: right;">100 km</td>
+<td style="text-align: right;">100 km</td>
+<td>Provisional screening assumption</td>
+</tr>
+<tr class="odd">
+<td>Survey scope</td>
+<td style="text-align: right;">Pre-lay and post-burial surveys over 400 km</td>
+<td style="text-align: right;">Pre-lay and post-burial surveys over the 100 km corridor</td>
+<td>Provisional screening assumption; surveys follow the corridor rather than every export cable</td>
+</tr>
+<tr class="even">
+<td>Survey production rate</td>
+<td style="text-align: right;">10 km/h</td>
+<td style="text-align: right;">10 km/h</td>
+<td>Provisional proxy equal to the ORBIT support-vessel transit speed; ORBIT does not provide a survey production rate</td>
+</tr>
+<tr class="odd">
+<td>Lay and burial production</td>
+<td style="text-align: right;">9.6 km/day/pass</td>
+<td style="text-align: right;">9.6 km/day/pass</td>
+<td>ORBIT version 1.3 executable defaults <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Lay and burial spread rate</td>
+<td style="text-align: right;">223,727 EUR/day</td>
+<td style="text-align: right;">223,727 EUR/day</td>
+<td>Provisional complete-spread screening rate derived above</td>
+</tr>
+<tr class="odd">
+<td>ROV/survey spread rate</td>
+<td style="text-align: right;">113,824 EUR/day</td>
+<td style="text-align: right;">113,824 EUR/day</td>
+<td>Provisional complete-spread screening rate derived above</td>
+</tr>
+<tr class="even">
+<td>Mobilisation and demobilisation</td>
+<td style="text-align: right;">1.5 days each for lay and burial; 7 days each for ROV/survey</td>
+<td style="text-align: right;">Same</td>
+<td>Mobilisation is derived from ORBIT; equal demobilisation is an explicit screening assumption</td>
+</tr>
+<tr class="odd">
+<td>Weather uplift</td>
+<td style="text-align: right;">20% of offshore-exposed time</td>
+<td style="text-align: right;">20% of offshore-exposed time</td>
+<td>Provisional common screening assumption, not a project metocean result</td>
+</tr>
+<tr class="even">
+<td>Exceptional cost</td>
+<td style="text-align: right;">Zero within this worked result</td>
+<td style="text-align: right;">Zero within this worked result</td>
+<td>Excluded rather than assumed unnecessary; no site-specific quantities or rates are available</td>
+</tr>
+</tbody>
+</table>
+<p>Using one 42.5 t/km cable throughout the infield network gives 17,000 t of cable. This is a deliberately simple loading assumption, not a conductor-optimized array design. The 5,000 t carousel therefore requires:</p>
+<p><span class="math display">\[
+N_{\mathrm{load,infield}}
+=
+\left\lceil\frac{400\times42.5}{5{,}000}\right\rceil
+=4,
+\qquad
+N_{\mathrm{reload,infield}}=3.
+\]</span></p>
+<p>The 134 discrete infield sections do not require inline splices when the vessel reloads between sections. For export, each 100 km HVDC pole cable has a modeled mass of 7,400 t and therefore requires two loads. The metallic-return and fibre-optic cables are provisionally assigned one load each because their product-specific masses are unresolved. The complete export system therefore uses six loads, two reloads and two offshore pole-cable splices:</p>
+<p><span class="math display">\[
+N_{\mathrm{load,export}}
+=2+2+1+1=6,
+\qquad
+N_{\mathrm{reload,export}}=2,
+\qquad
+N_{\mathrm{splice,export}}=2.
+\]</span></p>
+<p>The resulting installation inventory is:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th style="text-align: right;">Infield</th>
+<th style="text-align: right;">Export</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Route or network length used for survey</td>
+<td style="text-align: right;">400 km</td>
+<td style="text-align: right;">100 km</td>
+</tr>
+<tr class="even">
+<td>Physical cable length</td>
+<td style="text-align: right;">400 km</td>
+<td style="text-align: right;">400 km</td>
+</tr>
+<tr class="odd">
+<td>Lay pass-km</td>
+<td style="text-align: right;">400 km</td>
+<td style="text-align: right;">400 km</td>
+</tr>
+<tr class="even">
+<td>Burial pass-km</td>
+<td style="text-align: right;">400 km</td>
+<td style="text-align: right;">400 km</td>
+</tr>
+<tr class="odd">
+<td>Cable sections or lay units</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>Initial loads plus reloads</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td>Reloads</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td>Offshore inline splices</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<p>For the infield network, each of the 134 sections receives the complete 27-hour ORBIT array-interface sequence. For export, each of the four cables receives a 26-hour landfall and offshore-end interface sequence, excluding landfall civil works. Each of the two pole-cable load breaks adds the 51.5-hour offshore splice sequence. These event times are added to production and transit time before the common weather uplift is applied to offshore-exposed work.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Chargeable spread time</th>
+<th style="text-align: right;">Infield</th>
+<th style="text-align: right;">Export</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lay spread</td>
+<td style="text-align: right;">238.38 days</td>
+<td style="text-align: right;">68.33 days</td>
+</tr>
+<tr class="even">
+<td>Burial spread</td>
+<td style="text-align: right;">67.27 days</td>
+<td style="text-align: right;">53.87 days</td>
+</tr>
+<tr class="odd">
+<td>ROV/survey spread</td>
+<td style="text-align: right;">19.00 days</td>
+<td style="text-align: right;">16.00 days</td>
+</tr>
+</tbody>
+</table>
+<p>These are chargeable spread-days, not additive project elapsed days. The cost of each scope follows directly from the three matching spread times and rates:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Installation CAPEX</th>
+<th style="text-align: right;">Infield</th>
+<th style="text-align: right;">Export</th>
+<th style="text-align: right;">Combined</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Laying</td>
+<td style="text-align: right;">53.33 million EUR</td>
+<td style="text-align: right;">15.29 million EUR</td>
+<td style="text-align: right;">68.62 million EUR</td>
+</tr>
+<tr class="even">
+<td>Burial</td>
+<td style="text-align: right;">15.05 million EUR</td>
+<td style="text-align: right;">12.05 million EUR</td>
+<td style="text-align: right;">27.10 million EUR</td>
+</tr>
+<tr class="odd">
+<td>ROV/survey</td>
+<td style="text-align: right;">2.16 million EUR</td>
+<td style="text-align: right;">1.82 million EUR</td>
+<td style="text-align: right;">3.98 million EUR</td>
+</tr>
+<tr class="even">
+<td><strong>Total installation CAPEX</strong></td>
+<td style="text-align: right;"><strong>70.54 million EUR</strong></td>
+<td style="text-align: right;"><strong>29.16 million EUR</strong></td>
+<td style="text-align: right;"><strong>99.70 million EUR</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Installation CAPEX per kW</strong></td>
+<td style="text-align: right;"><strong>35.27 EUR/kW</strong></td>
+<td style="text-align: right;"><strong>14.58 EUR/kW</strong></td>
+<td style="text-align: right;"><strong>49.85 EUR/kW</strong></td>
+</tr>
+</tbody>
+</table>
+<p>For example, the combined specific installation cost is:</p>
+<p><span class="math display">\[
+c_{\mathrm{installation}}
+=
+\frac{70.544+29.160}{2{,}000{,}000}
+\times10^6
+=49.85\ \mathrm{EUR/kW}.
+\]</span></p>
+<p>The example does not remove the unresolved-input rules. In particular, the metallic-return and fibre load counts, demobilisation, survey rate, weather uplift and complete commercial spread boundaries require project or contractor evidence before this result can be promoted beyond screening. The assumed radial infield inventory also produces approximately 34 strings if no string contains more than four turbines; this exceeds the 28 wind-farm cable bays in the standard TenneT 2 GW platform arrangement. The installation result is therefore conditional on a collector and platform interface that can accommodate the selected 134-turbine layout.</p>
+</section>
+</section>
+<section id="installation-subclass-differences" class="level2">
+<h2 class="anchored" data-anchor-id="installation-subclass-differences">8. Installation-Subclass Differences</h2>
+<p>The ORBIT task structure is directly applicable only to cable installation. The shared equations can describe TCP work, but cable operating rates and task times are not transferred to TCP.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Subclass</th>
+<th>Lay configuration</th>
+<th>Loading, pull-in and splice treatment</th>
+<th>Burial and ROV treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>66–132 kV inter-array cable</td>
+<td>One static three-core section per lay pass</td>
+<td>Vessel loads multiple discrete sections; two pull-ins per section; a reload does not normally create an inline splice</td>
+<td>Burial pass count follows individual cable routes; survey and ROV scope follows the selected cable method</td>
+</tr>
+<tr class="even">
+<td>320–525 kV HVDC export</td>
+<td>One physical cable per pass. The TenneT 2 GW reference has four physical cables and therefore four modeled lay passes <span class="citation" data-cites="tennet2026TwoGWProgramWeb">(<a href="#ref-tennet2026TwoGWProgramWeb" role="doc-biblioref">TenneT, n.d.</a>)</span></td>
+<td>Product-specific capacity controls reloads; continuous-route load breaks may create inline splices; pull-ins occur at landfall and offshore interfaces</td>
+<td>Each physical cable is buried separately in the screening model; landfall and protection remain separate</td>
+</tr>
+<tr class="odd">
+<td>Spoolable TCP hydrogen infield</td>
+<td>One qualified TCP length per lay pass</td>
+<td>Reel exchange, J-tube pull-through, field end fitting, tie-in and testing require TCP-specific inputs</td>
+<td>Burial, stability and ROV requirements depend on qualified product and route design</td>
+</tr>
+<tr class="even">
+<td>Spoolable TCP hydrogen export</td>
+<td>Same physical accounting, subject to long-route feasibility</td>
+<td>Repeated reels and intermediate connectors can dominate time; no cable splice or pull-in defaults are used</td>
+<td>All production, burial, survey and support inputs require supplier and contractor evidence</td>
+</tr>
+</tbody>
+</table>
+<p>Public 66 kV examples span approximately 20–50 t/km, so loading must use the selected cable rather than voltage alone <span class="citation" data-cites="eibThorCableData">(<a href="#ref-eibThorCableData" role="doc-biblioref"><em>Thor Offshore Wind Farm Environmental Material</em>, n.d.</a>)</span>.</p>
+<p>An indicative 2,500 mm² copper 525 kV submarine cable has a linear mass of approximately 65 t/km, but this is not a universal HVDC mass assumption and applies neither to TenneT’s metallic return nor to its fibre-optic cable <span class="citation" data-cites="prysmian525KVSubmarine tennet2026TwoGWProgramWeb">(<a href="#ref-prysmian525KVSubmarine" role="doc-biblioref">Prysmian Group, n.d.</a>; <a href="#ref-tennet2026TwoGWProgramWeb" role="doc-biblioref">TenneT, n.d.</a>)</span>.</p>
+<p>Manufacturer information supports horizontal TCP lay from a small multipurpose vessel and continuous lengths of approximately 3–6 km, depending on diameter and pressure <span class="citation" data-cites="strohmTCPFlowlines">(<a href="#ref-strohmTCPFlowlines" role="doc-biblioref">Strohm, n.d.-b</a>)</span>. These are generic product-family capabilities, not a qualified hydrogen design point. DNV-ST-F119 supplies the offshore TCP standard basis, while DNV’s hydrogen work identifies hydrogen-specific qualification gaps <span class="citation" data-cites="dnvSTF119 dnvHydrogenCompositeJIP">(<a href="#ref-dnvSTF119" role="doc-biblioref"><span>DNV-ST-F119</span> 2019</a>; <a href="#ref-dnvHydrogenCompositeJIP" role="doc-biblioref">DNV, n.d.</a>)</span>.</p>
+<p>An offshore TCP export calculation requires:</p>
+<ol type="1">
+<li>a named hydrogen-qualified product and operating envelope;</li>
+<li>route-specific pressure, stability and installation design;</li>
+<li>continuous-length, reel and field-connection information;</li>
+<li>a qualified vessel and overboarding configuration;</li>
+<li>bend, tension, collapse and pull-through verification;</li>
+<li>laying, burial and survey production rates;</li>
+<li>interface and connector task times; and</li>
+<li>all-in lay, burial and ROV/survey day rates.</li>
+</ol>
+<p>An 80–100 km export route is far longer than the public 3–6 km continuous-length range. Until these inputs are available, TCP installation remains <strong>not parameterized</strong>. ORBIT cable rates, steel-pipeline rates and conventional flexible-pipeline rates are not substituted.</p>
+</section>
+<section id="evidence-outputs-and-model-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="evidence-outputs-and-model-limitations">9. Evidence, Outputs and Model Limitations</h2>
+<p><strong>Input status</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Cable status</th>
+<th>TCP status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Physical routes, sections and asset counts</td>
+<td>Project design input</td>
+<td>Project design input</td>
+</tr>
+<tr class="even">
+<td>Physical cables per pass</td>
+<td>Fixed at one under the ORBIT screening convention</td>
+<td>Fixed at one as a provisional conservative assumption</td>
+</tr>
+<tr class="odd">
+<td>Cable storage, transit, load, interface, splice, lay and burial defaults</td>
+<td>Sourced ORBIT version 1.3 screening inputs <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+<td>Not applicable</td>
+</tr>
+<tr class="even">
+<td>Lay-spread rate</td>
+<td>223,727 EUR/day; provisional complete-spread screening assumption</td>
+<td>Supplier or contractor input required</td>
+</tr>
+<tr class="odd">
+<td>Burial-spread rate</td>
+<td>223,727 EUR/day; provisional complete-spread screening assumption</td>
+<td>Supplier or contractor input required</td>
+</tr>
+<tr class="even">
+<td>ROV/survey-spread rate</td>
+<td>113,824 EUR/day; provisional generic support-vessel screening assumption</td>
+<td>Supplier or contractor input required</td>
+</tr>
+<tr class="odd">
+<td>Demobilisation</td>
+<td>Supplier or contractor input required; not generally represented by ORBIT</td>
+<td>Supplier or contractor input required</td>
+</tr>
+<tr class="even">
+<td>Weather uplifts</td>
+<td>Explicit modelling assumption or project metocean input required</td>
+<td>Explicit modelling assumption or project metocean input required</td>
+</tr>
+<tr class="odd">
+<td>Survey rates and ROV support fractions</td>
+<td>Site-specific or contractor input required</td>
+<td>Site-specific or contractor input required</td>
+</tr>
+<tr class="even">
+<td>Exceptional costs</td>
+<td>Site-specific input required</td>
+<td>Site-specific input required</td>
+</tr>
+</tbody>
+</table>
+<p>The model can calculate the parameterized portion of cable installation time and produce screening spread costs from the proxy rates. A complete base-case result remains blocked until demobilisation, survey productivity and weather uplift are resolved. A commercial result additionally requires contractor rates with verified inclusions.</p>
+<p><strong>Required intermediate outputs</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result group</th>
+<th>Required outputs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Physical inventory</td>
+<td>Route-km, physical km, lay pass-km and burial pass-km</td>
+</tr>
+<tr class="even">
+<td>Loading</td>
+<td>Product per load, load count, reload count, port loading days and return-transit days</td>
+</tr>
+<tr class="odd">
+<td>Lay tasks</td>
+<td>Route-lay, positioning, pull-in, splice, testing, transit, mobilisation and demobilisation days</td>
+</tr>
+<tr class="even">
+<td>Burial tasks</td>
+<td>Burial or pre-trench, setup, repositioning, recovery, transit, mobilisation and demobilisation days</td>
+</tr>
+<tr class="odd">
+<td>ROV/survey tasks</td>
+<td>Independent survey days, interface days and concurrent support days</td>
+</tr>
+<tr class="even">
+<td>Weather</td>
+<td>Base exposed time, uplift and weather-adjusted time for each spread</td>
+</tr>
+<tr class="odd">
+<td>Cost</td>
+<td>Day rate, chargeable days and CAPEX for each spread, plus exceptional cost</td>
+</tr>
+<tr class="even">
+<td>Evidence</td>
+<td>Source, price year, rate boundary and input classification</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Validation cases</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Validation case</th>
+<th>Model feature tested</th>
+<th>Scope limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ORBIT worked installation output <span class="citation" data-cites="nunemaker2020ORBIT">(<a href="#ref-nunemaker2020ORBIT" role="doc-biblioref">Nunemaker et al. 2020</a>)</span></td>
+<td>Loading, port returns, lay/bury task sequencing, interfaces, weather and vessel-time calculation</td>
+<td>ORBIT library assumptions rather than a commercial quotation</td>
+</tr>
+<tr class="even">
+<td>Shetland HVDC: 253 km offshore route, 506 physical cable-km and three lay campaigns <span class="citation" data-cites="nktShetlandHVDC">(<a href="#ref-nktShetlandHVDC" role="doc-biblioref">NKT, n.d.</a>)</span></td>
+<td>Route versus physical length, load and campaign counting</td>
+<td>Turnkey order includes supply and protection</td>
+</tr>
+<tr class="odd">
+<td>Strohm SASBU: 4 km TCP, two transport-and-installation reels and two J-tubes <span class="citation" data-cites="strohmSASBU">(<a href="#ref-strohmSASBU" role="doc-biblioref">Strohm, n.d.-a</a>)</span></td>
+<td>TCP reel, section and interface inventory</td>
+<td>Oil-and-gas analogue without public installation time or cost</td>
+</tr>
+<tr class="even">
+<td>HOPE offshore-hydrogen demonstrator <span class="citation" data-cites="cordisHOPE">(<a href="#ref-cordisHOPE" role="doc-biblioref">European Commission 2023</a>)</span></td>
+<td>Hydrogen-TCP readiness gate</td>
+<td>Demonstrator programme rather than a commercial benchmark</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Required assertions</strong></p>
+<ul>
+<li>Physical product length increases with every parallel asset.</li>
+<li>Every modeled lay and burial pass contains exactly one physical cable or pipeline.</li>
+<li>One TenneT 2 GW reference system produces four physical cable passes; the system count is not substituted for the cable count.</li>
+<li>The initial product load is counted once and every later load creates one reload.</li>
+<li>An array-cable reload does not automatically create an inline splice.</li>
+<li>A continuous export-cable load break creates a splice only when required by the product and installation plan.</li>
+<li>Port loading is not weather-uplifted.</li>
+<li>Weather is applied once to each exposed spread time.</li>
+<li>Concurrent ROV support is charged as ROV spread-days without extending project elapsed time.</li>
+<li>Overlapping ROV support windows are counted once for the ROV spread.</li>
+<li>ROV or survey equipment included in another spread rate is not charged separately.</li>
+<li>Crew, fuel, routine workboats and tugs, and contractor overhead are not added outside the spread rates.</li>
+<li>Exceptional scope included in a spread quotation is not added again.</li>
+<li>Missing TCP task times or rates return <strong>not parameterized</strong>, not zero.</li>
+</ul>
+<p><strong>Current limitations</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ORBIT values are task and example-vessel defaults rather than achieved project performance</td>
+<td>Cable-time and spread-cost results remain screening estimates</td>
+</tr>
+<tr class="even">
+<td>ORBIT documentation and version 1.3 code disagree on lay and burial speeds</td>
+<td>The pinned executable defaults are used and the discrepancy is disclosed</td>
+</tr>
+<tr class="odd">
+<td>ORBIT installs individual cables and does not demonstrate TenneT’s actual bundled-installation method</td>
+<td>Four separate passes are a screening convention that may overstate HVDC time</td>
+</tr>
+<tr class="even">
+<td>Weather is represented by a percentage uplift rather than a discrete metocean simulation</td>
+<td>Timing and seasonal operability are simplified</td>
+</tr>
+<tr class="odd">
+<td>ORBIT vessel proxies are treated as complete spread rates by modelling assumption</td>
+<td>Commercial cable-installation CAPEX remains unresolved</td>
+</tr>
+<tr class="even">
+<td>Demobilisation is not generally represented by ORBIT</td>
+<td>Complete screening duration remains unresolved until a value is supplied</td>
+</tr>
+<tr class="odd">
+<td>Survey rates and ROV-support fractions are unresolved</td>
+<td>ROV/survey time cannot yet be calculated for a base case</td>
+</tr>
+<tr class="even">
+<td>Crossing, protection and landfall unit costs are not transferable</td>
+<td>Exceptional costs remain site-specific</td>
+</tr>
+<tr class="odd">
+<td>TCP product, task-time and spread-rate inputs are incomplete</td>
+<td>TCP installation CAPEX remains blocked</td>
+</tr>
+</tbody>
+</table>
+<p>This level of detail is intended to expose the cost-driving physical tasks without creating precision unsupported by the available inputs. ORBIT supplies the cable task structure; project design, weather uplifts and matching spread rates determine the model result.</p>
+<p><strong>Evidence review date:</strong> 5 August 2026.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-dnvHydrogenCompositeJIP" class="csl-entry" role="listitem">
+DNV. n.d. <span>“Non-Metallic Composite Pipes for Transportation of Hydrogen.”</span> Accessed July 31, 2026. <a href="https://www.dnv.com/group/joint-industry-projects/non-metallic-composite-pipes-for-transportation-of-h2/">https://www.dnv.com/group/joint-industry-projects/non-metallic-composite-pipes-for-transportation-of-h2/</a>.
+</div>
+<div id="ref-dnvSTF119" class="csl-entry" role="listitem">
+<span>DNV-ST-F119</span>: Thermoplastic Composite Pipes (2019). <a href="https://www.dnv.com/energy/standards-guidelines/dnv-st-f119-thermoplastic-composite-pipes/">https://www.dnv.com/energy/standards-guidelines/dnv-st-f119-thermoplastic-composite-pipes/</a>.
+</div>
+<div id="ref-ecb2026ExchangeRates" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“Euro Foreign Exchange Reference Rates.”</span> July 30. <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html</a>.
+</div>
+<div id="ref-cordisHOPE" class="csl-entry" role="listitem">
+European Commission. 2023. <span>“<span>HOPE</span>: Hydrogen Offshore Production for Europe.”</span> <a href="https://cordis.europa.eu/project/id/101111899">https://cordis.europa.eu/project/id/101111899</a>.
+</div>
+<div id="ref-orbit2026V13CableDefaults" class="csl-entry" role="listitem">
+National Laboratory of the Rockies. n.d. <span>“<span>ORBIT</span> Version 1.3 Cable-Installation Defaults and Vessel Library.”</span> Version 1.3. Accessed August 5, 2026. <a href="https://github.com/NLRWindSystems/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8">https://github.com/NLRWindSystems/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8</a>.
+</div>
+<div id="ref-nktShetlandHVDC" class="csl-entry" role="listitem">
+NKT. n.d. <span>“Shetland <span>HVDC</span> Link, United Kingdom.”</span> Accessed July 31, 2026. <a href="https://www.nkt.com/references/shetland-hvdc-link-uk">https://www.nkt.com/references/shetland-hvdc-link-uk</a>.
+</div>
+<div id="ref-nunemaker2020ORBIT" class="csl-entry" role="listitem">
+Nunemaker, Jacob, Matthew Shields, Rob Hammond, and Patrick Duffy. 2020. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. NREL/TP-5000-77081. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1660132">https://doi.org/10.2172/1660132</a>.
+</div>
+<div id="ref-prysmian525KVSubmarine" class="csl-entry" role="listitem">
+Prysmian Group. n.d. <em>525 kV <span>HVDC</span>: <span>XLPE</span> Datasheet – Submarine</em>. Prysmian Group. Accessed July 14, 2026. <a href="https://www.prysmian.com/staticres/525-kv-hvdc-new-cable-systems/documents/XLPE-DATASHEET---Submarine.pdf">https://www.prysmian.com/staticres/525-kv-hvdc-new-cable-systems/documents/XLPE-DATASHEET---Submarine.pdf</a>.
+</div>
+<div id="ref-strohmSASBU" class="csl-entry" role="listitem">
+Strohm. n.d.-a. <span>“<span>SASBU TCP</span> Flowline Project Case.”</span> Accessed July 31, 2026. <a href="https://strohm.eu/project-case-sasbu-tcp-flowline">https://strohm.eu/project-case-sasbu-tcp-flowline</a>.
+</div>
+<div id="ref-strohmTCPFlowlines" class="csl-entry" role="listitem">
+Strohm. n.d.-b. <span>“<span>TCP</span> Flowlines.”</span> Accessed July 31, 2026. <a href="https://strohm.eu/tcp-flowlines">https://strohm.eu/tcp-flowlines</a>.
+</div>
+<div id="ref-tennet2026TwoGWProgramWeb" class="csl-entry" role="listitem">
+TenneT. n.d. <span>“The 2GW Program.”</span> Accessed August 5, 2026. <a href="https://www.tennet.eu/2gw-program">https://www.tennet.eu/2gw-program</a>.
+</div>
+<div id="ref-eibThorCableData" class="csl-entry" role="listitem">
+<em>Thor Offshore Wind Farm Environmental Material</em>. n.d. Accessed July 31, 2026. <a href="https://www.eib.org/attachments/registers/213994748.pdf">https://www.eib.org/attachments/registers/213994748.pdf</a>.
+</div>
+<div id="ref-bls2026CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Index, June 2026.”</span> July 14. <a href="https://www.bls.gov/news.release/archives/cpi_07142026.htm">https://www.bls.gov/news.release/archives/cpi_07142026.htm</a>.
+</div>
+<div id="ref-bls2024CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<!-- Generated by tools/build-progress-sidebar.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-progress-sidebar]")) {
+    return;
+  }
+
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+
+  script.src = rootPath + "progress-sidebar.js";
+  script.defer = true;
+  script.dataset.progressSidebar = "true";
+
+  document.body.appendChild(script);
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

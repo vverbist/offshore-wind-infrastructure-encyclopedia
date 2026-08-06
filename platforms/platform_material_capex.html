@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Central Electrolyser Platform – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Platform Material CAPEX – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -84,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/overview.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/central_electrolyser_platform.html">Central Electrolyser Platform</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -413,26 +413,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/hvdc_and_substation_platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">HVDC and Substation Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/central_electrolyser_platform.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Central Electrolyser Platform</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_mass_and_scaling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Mass and Scaling</span></a>
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -460,14 +442,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cable Installation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/pipeline_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline Installation</span></a>
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,20 +517,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#mass-and-scaling" id="toc-mass-and-scaling" class="nav-link" data-scroll-target="#mass-and-scaling">Mass and Scaling</a></li>
+  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
+  <li><a href="#architecture-inputs" id="toc-architecture-inputs" class="nav-link" data-scroll-target="#architecture-inputs">Architecture Inputs</a></li>
+  <li><a href="#required-inputs" id="toc-required-inputs" class="nav-link" data-scroll-target="#required-inputs">Required Inputs</a></li>
+  <li><a href="#interface-with-installation" id="toc-interface-with-installation" class="nav-link" data-scroll-target="#interface-with-installation">Interface with Installation</a></li>
+  <li><a href="#unresolved-evidence" id="toc-unresolved-evidence" class="nav-link" data-scroll-target="#unresolved-evidence">Unresolved Evidence</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/overview.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/central_electrolyser_platform.html">Central Electrolyser Platform</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Central Electrolyser Platform</h1>
+<h1 class="title">Platform Material CAPEX</h1>
 </div>
 
 
@@ -571,33 +548,167 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The central electrolyser platform hosts AC aggregation, power conditioning, PEM stacks, balance of plant, compression, and pipeline export interface equipment for the centralised hydrogen architecture.</p>
+<section id="role-in-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
+<p>This page owns the material and fabrication CAPEX of a central offshore platform. The calculation is common to the electricity-export and centralised-hydrogen architectures: architecture-specific equipment determines the required topside mass, while this page converts that physical requirement into the cost of the platform structure.</p>
+<p>The hosted electrical, electrolysis and compression equipment is costed by its component owner. Transport, offshore installation, hook-up and commissioning are also calculated separately.</p>
 </section>
-<section id="cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The current model reuses the offshore platform cost basis from the HVDC/substation package for the central electrolyser platform. Electrolyser, compressor, and pipeline costs are modelled separately.</p>
+<section id="cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Physical scope</th>
+<th>Treatment</th>
+<th>Cost owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topside structural steel and structural outfitting</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Jacket or other support structure</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Foundation piles or equivalent structural foundation</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>HVDC converter equipment</td>
+<td>Excluded</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+</tr>
+<tr class="odd">
+<td>Electrolyser transformers and rectifiers</td>
+<td>Excluded</td>
+<td><a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a></td>
+</tr>
+<tr class="even">
+<td>PEM stacks and non-electrical balance of plant</td>
+<td>Excluded</td>
+<td><a href="../hydrogen_production/stack.html">PEM Electrolyser Stack</a> and <a href="../hydrogen_production/balance_of_plant.html">Balance of Plant</a></td>
+</tr>
+<tr class="odd">
+<td>Hydrogen compression equipment</td>
+<td>Excluded</td>
+<td><a href="../hydrogen_infra/compressor.html">Compressor</a></td>
+</tr>
+<tr class="even">
+<td>Transport, offshore installation, hook-up and commissioning</td>
+<td>Excluded</td>
+<td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
+</tr>
+</tbody>
+</table>
+<p>Equipment cost and equipment mass have different owners. The component pages book the equipment CAPEX and provide the equipment mass required for platform sizing. This page must not add the equipment CAPEX again.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>Energy conversion on the platform includes:</p>
+<section id="architecture-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-inputs">Architecture Inputs</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Architecture</th>
+<th>Platform requirement</th>
+<th>Upstream mass basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electricity export</td>
+<td>Central AC-collection and HVDC-converter platform</td>
+<td>Offshore converter and collection equipment</td>
+</tr>
+<tr class="even">
+<td>Centralised hydrogen</td>
+<td>One integrated AC-collection and electrolysis platform</td>
+<td>Power electronics, stacks, balance of plant, compression and shared platform equipment</td>
+</tr>
+<tr class="odd">
+<td>Decentralised hydrogen</td>
+<td>No central offshore platform in the current architecture</td>
+<td>Not applicable</td>
+</tr>
+</tbody>
+</table>
+<p>The architecture pages determine whether a central platform is present. The relevant component pages determine the hosted-equipment inventory and mass. This page receives those results; it does not recreate architecture-specific equipment models.</p>
+</section>
+<section id="required-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="required-inputs">Required Inputs</h2>
+<p>The material-CAPEX calculation will require, at minimum:</p>
 <ul>
-<li>transformer and rectifier losses before the stacks</li>
-<li>stack conversion losses</li>
-<li>BOP auxiliary consumption</li>
-<li>purification losses</li>
-<li>compression energy</li>
+<li>number of platforms;</li>
+<li>total topside equipment mass, with its component breakdown and source trail;</li>
+<li>any structural, outfitting or integration mass added to the equipment mass;</li>
+<li>support-structure and foundation quantities required by the selected cost relationship; and</li>
+<li>the scope, price basis and applicability of the material or fabrication cost evidence.</li>
 </ul>
-<p>These are documented on the hydrogen production and compressor pages.</p>
+<p>Every input must be identified as a sourced value, an explicit modelling assumption or a derived result. Masses from different component pages must use compatible boundaries so that shared auxiliaries, buildings, structural steel and equipment are neither omitted nor counted twice.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Calculation logic not yet selected
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The repository does not yet adopt a relationship between topside mass and platform material CAPEX. The model still requires evidence for the functional form, its cost scope, and any separate treatment of the support structure and foundation. No platform material CAPEX is reported until those choices are documented.</p>
+</div>
+</div>
 </section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<p>Availability is currently applied through the electrolyser and compressor component factors, plus any retained electrical substation availability where applicable.</p>
+<section id="interface-with-installation" class="level2">
+<h2 class="anchored" data-anchor-id="interface-with-installation">Interface with Installation</h2>
+<p>This page will provide the physical platform definition needed by the installation model, including the jacket, piles, topside lift modules and their masses. The installation page independently checks transport and lift feasibility and calculates vessel occupation and offshore installation CAPEX.</p>
+<p>A material-CAPEX relationship cannot be used as an installation-cost proxy. Likewise, installation vessel selection or duration must not be embedded in the material cost calculated here.</p>
 </section>
-<section id="mass-and-scaling" class="level2">
-<h2 class="anchored" data-anchor-id="mass-and-scaling">Mass and Scaling</h2>
-<p>The current source material does not yet provide a dedicated central-electrolyser platform mass model. This is a priority gap because platform mass can govern topside cost and installation cost.</p>
+<section id="unresolved-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="unresolved-evidence">Unresolved Evidence</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Required evidence or decision</th>
+<th>Consequence while unresolved</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Architecture-specific hosted-equipment mass inventories</td>
+<td>Topside mass cannot be closed</td>
+</tr>
+<tr class="even">
+<td>Definition of structural and outfitting mass added around the equipment</td>
+<td>The cost-driving mass boundary remains incomplete</td>
+</tr>
+<tr class="odd">
+<td>Material or fabrication cost relationship and price basis</td>
+<td>Platform material CAPEX cannot be calculated</td>
+</tr>
+<tr class="even">
+<td>Treatment of jacket and foundation cost</td>
+<td>The complete structural cost boundary remains open</td>
+</tr>
+<tr class="odd">
+<td>Relationship between calculated mass and installation lift modules</td>
+<td>The installation handoff remains project-specific</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

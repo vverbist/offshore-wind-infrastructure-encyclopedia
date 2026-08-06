@@ -70,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid-postprocess-shim.js"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -413,26 +414,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/hvdc_and_substation_platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">HVDC and Substation Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/central_electrolyser_platform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Central Electrolyser Platform</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_mass_and_scaling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Mass and Scaling</span></a>
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -460,14 +443,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cable Installation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/pipeline_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline Installation</span></a>
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,9 +518,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#component-chain" id="toc-component-chain" class="nav-link" data-scroll-target="#component-chain">Component Chain</a></li>
-  <li><a href="#modelling-implications" id="toc-modelling-implications" class="nav-link" data-scroll-target="#modelling-implications">Modelling Implications</a></li>
+  <li><a href="#architecture-definition" id="toc-architecture-definition" class="nav-link active" data-scroll-target="#architecture-definition">Architecture Definition</a></li>
+  <li><a href="#turbine-integrated-conversion-boundary" id="toc-turbine-integrated-conversion-boundary" class="nav-link" data-scroll-target="#turbine-integrated-conversion-boundary">Turbine-Integrated Conversion Boundary</a></li>
+  <li><a href="#included-physical-functions" id="toc-included-physical-functions" class="nav-link" data-scroll-target="#included-physical-functions">Included Physical Functions</a></li>
+  <li><a href="#removed-or-excluded-functions" id="toc-removed-or-excluded-functions" class="nav-link" data-scroll-target="#removed-or-excluded-functions">Removed or Excluded Functions</a></li>
+  <li><a href="#architecture-interfaces" id="toc-architecture-interfaces" class="nav-link" data-scroll-target="#architecture-interfaces">Architecture Interfaces</a></li>
+  <li><a href="#economic-boundary" id="toc-economic-boundary" class="nav-link" data-scroll-target="#economic-boundary">Economic Boundary</a></li>
   </ul>
 </nav>
     </div>
@@ -569,28 +549,237 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The decentralised architecture places electrolysis inside the turbine. Energy is converted to hydrogen as close as possible to generation, and the infield network becomes a hydrogen pipeline grid instead of an AC cable grid.</p>
+<section id="architecture-definition" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-definition">Architecture Definition</h2>
+<p>The decentralised-hydrogen architecture converts electrical energy to hydrogen at each wind turbine. Hydrogen rather than electricity is collected within the wind farm, exported through a subsea pipeline, and handed over at the connection to the onshore hydrogen backbone.</p>
+<p>The physical boundary includes the wind turbines and support structures, turbine-integrated hydrogen-production equipment, turbine-level compression, the infield hydrogen network, export pipeline, and onshore backbone-connection interface. It contains no central offshore conversion platform.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg id="mermaid-figure-1" width="672" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="flowchart" viewbox="0 0 1975.953125 94" role="graphics-document document" aria-roledescription="flowchart-v2" height="106">
+<style>#mermaid-figure-1{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-figure-1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .error-icon{fill:#552222;}#mermaid-figure-1 .error-text{fill:#552222;stroke:#552222;}#mermaid-figure-1 .edge-thickness-normal{stroke-width:1px;}#mermaid-figure-1 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-figure-1 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-figure-1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-figure-1 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-figure-1 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-figure-1 .marker{fill:#333333;stroke:#333333;}#mermaid-figure-1 .marker.cross{stroke:#333333;}#mermaid-figure-1 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-figure-1 p{margin:0;}#mermaid-figure-1 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-figure-1 .cluster-label text{fill:#333;}#mermaid-figure-1 .cluster-label span{color:#333;}#mermaid-figure-1 .cluster-label span p{background-color:transparent;}#mermaid-figure-1 .label text,#mermaid-figure-1 span{fill:#333;color:#333;}#mermaid-figure-1 .node rect,#mermaid-figure-1 .node circle,#mermaid-figure-1 .node ellipse,#mermaid-figure-1 .node polygon,#mermaid-figure-1 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-figure-1 .rough-node .label text,#mermaid-figure-1 .node .label text,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-anchor:middle;}#mermaid-figure-1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-figure-1 .rough-node .label,#mermaid-figure-1 .node .label,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-align:center;}#mermaid-figure-1 .node.clickable{cursor:pointer;}#mermaid-figure-1 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-figure-1 .arrowheadPath{fill:#333333;}#mermaid-figure-1 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-figure-1 .flowchart-link{stroke:#333333;fill:none;}#mermaid-figure-1 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-figure-1 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-figure-1 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-figure-1 .cluster text{fill:#333;}#mermaid-figure-1 .cluster span{color:#333;}#mermaid-figure-1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-figure-1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-figure-1 rect.text{fill:none;stroke-width:0;}#mermaid-figure-1 .icon-shape,#mermaid-figure-1 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .icon-shape p,#mermaid-figure-1 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-figure-1 .icon-shape rect,#mermaid-figure-1 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-figure-1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-figure-1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g><marker id="mermaid-1786010437587_flowchart-v2-pointEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786010437587_flowchart-v2-pointStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="4.5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786010437587_flowchart-v2-circleEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="11" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1786010437587_flowchart-v2-circleStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="-1" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1786010437587_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="12" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786010437587_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="-1" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M236.578,47L240.745,47C244.911,47,253.245,47,260.911,47C268.578,47,275.578,47,279.078,47L282.578,47" id="L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MjM2LjU3ODEyNSwieSI6NDd9LHsieCI6MjYxLjU3ODEyNSwieSI6NDd9LHsieCI6Mjg2LjU3ODEyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1786010437587_flowchart-v2-pointEnd)"></path><path d="M454.828,47L458.995,47C463.161,47,471.495,47,479.161,47C486.828,47,493.828,47,497.328,47L500.828,47" id="L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6NDU0LjgyODEyNSwieSI6NDd9LHsieCI6NDc5LjgyODEyNSwieSI6NDd9LHsieCI6NTA0LjgyODEyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1786010437587_flowchart-v2-pointEnd)"></path><path d="M764.828,47L768.995,47C773.161,47,781.495,47,789.161,47C796.828,47,803.828,47,807.328,47L810.828,47" id="L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6NzY0LjgyODEyNSwieSI6NDd9LHsieCI6Nzg5LjgyODEyNSwieSI6NDd9LHsieCI6ODE0LjgyODEyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1786010437587_flowchart-v2-pointEnd)"></path><path d="M1061.875,47L1066.042,47C1070.208,47,1078.542,47,1086.208,47C1093.875,47,1100.875,47,1104.375,47L1107.875,47" id="L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6MTA2MS44NzUsInkiOjQ3fSx7IngiOjEwODYuODc1LCJ5Ijo0N30seyJ4IjoxMTExLjg3NSwieSI6NDd9XQ==" marker-end="url(#mermaid-1786010437587_flowchart-v2-pointEnd)"></path><path d="M1366.063,47L1370.229,47C1374.396,47,1382.729,47,1390.396,47C1398.063,47,1405.063,47,1408.563,47L1412.063,47" id="L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6MTM2Ni4wNjI1LCJ5Ijo0N30seyJ4IjoxMzkxLjA2MjUsInkiOjQ3fSx7IngiOjE0MTYuMDYyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1786010437587_flowchart-v2-pointEnd)"></path><path d="M1657.953,47L1662.12,47C1666.286,47,1674.62,47,1682.286,47C1689.953,47,1696.953,47,1700.453,47L1703.953,47" id="L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MTY1Ny45NTMxMjUsInkiOjQ3fSx7IngiOjE2ODIuOTUzMTI1LCJ5Ijo0N30seyJ4IjoxNzA3Ljk1MzEyNSwieSI6NDd9XQ==" marker-end="url(#mermaid-1786010437587_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_F_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_G_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-0" transform="translate(122.2890625, 47)"><rect class="basic label-container" style="" x="-114.2890625" y="-27" width="228.578125" height="54"></rect><g class="label" style="" transform="translate(-84.2890625, -12)"><rect></rect><foreignobject width="168.578125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Wind-turbine generator
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-B-1" transform="translate(370.703125, 47)"><rect class="basic label-container" style="" x="-84.125" y="-27" width="168.25" height="54"></rect><g class="label" style="" transform="translate(-54.125, -12)"><rect></rect><foreignobject width="108.25" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Turbine DC link
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-C-3" transform="translate(634.828125, 47)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignobject width="200" height="48">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;">
+<span class="nodeLabel">
+<p>
+Turbine-integrated electrolysis
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-D-5" transform="translate(938.3515625, 47)"><rect class="basic label-container" style="" x="-123.5234375" y="-27" width="247.046875" height="54"></rect><g class="label" style="" transform="translate(-93.5234375, -12)"><rect></rect><foreignobject width="187.046875" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Turbine-level compression
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-E-7" transform="translate(1238.96875, 47)"><rect class="basic label-container" style="" x="-127.09375" y="-27" width="254.1875" height="54"></rect><g class="label" style="" transform="translate(-97.09375, -12)"><rect></rect><foreignobject width="194.1875" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Hydrogen infield collection
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-F-9" transform="translate(1537.0078125, 47)"><rect class="basic label-container" style="" x="-120.9453125" y="-27" width="241.890625" height="54"></rect><g class="label" style="" transform="translate(-90.9453125, -12)"><rect></rect><foreignobject width="181.890625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Hydrogen pipeline export
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-G-11" transform="translate(1837.953125, 47)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignobject width="200" height="48">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;">
+<span class="nodeLabel">
+<p>
+Onshore hydrogen-backbone connection
+</p>
+</span>
+</div>
+</foreignobject></g></g></g></g></g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="component-chain" class="level2">
-<h2 class="anchored" data-anchor-id="component-chain">Component Chain</h2>
-<ol type="1">
-<li>turbine generator</li>
-<li>turbine-side rectification or DC link interface</li>
-<li>PEM stacks installed in or at the turbine</li>
-<li>local balance of plant</li>
-<li>turbine-level compression to infield pressure</li>
-<li>infield hydrogen pipeline grid</li>
-<li>export hydrogen pipeline</li>
-<li>onshore hydrogen backbone connection</li>
-</ol>
+<section id="turbine-integrated-conversion-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="turbine-integrated-conversion-boundary">Turbine-Integrated Conversion Boundary</h2>
+<p>The turbine-side active front end and DC link remain part of the conversion chain. The PEM stack connects to that DC link without a separate electrolyser-side DC/DC converter.</p>
+<p>The turbine-level electrolyser facility includes:</p>
+<ul>
+<li>PEM stack modules</li>
+<li>non-electrical electrolyser balance of plant</li>
+<li>local seawater intake, desalination, and electrolyser-grade water treatment</li>
+</ul>
+<p>The turbine-level compressor is physically associated with the same turbine unit but remains a separate downstream functional and accounting subsystem. It is not included in the electrolyser or balance-of-plant boundary.</p>
 </section>
-<section id="modelling-implications" class="level2">
-<h2 class="anchored" data-anchor-id="modelling-implications">Modelling Implications</h2>
-<p>This architecture removes several electrical conversion steps. In the centralised and electricity configurations, turbine output is converted from variable-frequency AC to DC, then to grid-quality AC, then stepped up for infield collection. For central electrolysis, the power is later stepped down and rectified again before entering the stack.</p>
-<p>In the decentralised configuration, the stack connects more directly to the turbine DC link. The model therefore excludes the turbine inverter/step-up transformer and the platform-side step-down transformer/rectifier that would otherwise be needed for electrolysis.</p>
-<p>The infield grid is also structurally different. A 66 kV AC string is capacity-limited to roughly 60-70 MW, while a 6 inch hydrogen pipeline at 150 bar is assumed to carry roughly 500 MW equivalent. This removes the electrical string capacity constraint from the infield design.</p>
+<section id="included-physical-functions" class="level2">
+<h2 class="anchored" data-anchor-id="included-physical-functions">Included Physical Functions</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Treatment</th>
+<th>Canonical owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wind-energy capture and generation</td>
+<td>Included</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine</a></td>
+</tr>
+<tr class="even">
+<td>Turbine support structure</td>
+<td>Included</td>
+<td><a href="../turbine_system/foundation.html">Foundation</a></td>
+</tr>
+<tr class="odd">
+<td>Turbine rectification and DC-link interface</td>
+<td>Included</td>
+<td><a href="../turbine_system/generator_and_power_electronics.html">Generator and Power Electronics</a></td>
+</tr>
+<tr class="even">
+<td>Direct stack connection to the turbine DC link</td>
+<td>Included without a separate DC/DC converter</td>
+<td><a href="../hydrogen_production/dc_integration.html">DC Integration</a></td>
+</tr>
+<tr class="odd">
+<td>PEM stacks</td>
+<td>Included at each turbine</td>
+<td><a href="../hydrogen_production/stack.html">PEM Electrolyser Stack</a></td>
+</tr>
+<tr class="even">
+<td>Water treatment and non-electrical BOP</td>
+<td>Included within each turbine-level electrolyser facility</td>
+<td><a href="../hydrogen_production/balance_of_plant.html">Balance of Plant</a></td>
+</tr>
+<tr class="odd">
+<td>Hydrogen compression</td>
+<td>Included as a separate turbine-level subsystem</td>
+<td><a href="../hydrogen_infra/compressor.html">Compressor</a></td>
+</tr>
+<tr class="even">
+<td>Hydrogen infield collection</td>
+<td>Included</td>
+<td><a href="../hydrogen_infra/infield_infrastructure.html">Hydrogen Infield Infrastructure</a></td>
+</tr>
+<tr class="odd">
+<td>Hydrogen export pipeline</td>
+<td>Included</td>
+<td><a href="../hydrogen_infra/hydrogen_pipelines.html">Hydrogen Pipelines</a></td>
+</tr>
+<tr class="even">
+<td>Onshore backbone-connection interface</td>
+<td>Included</td>
+<td><a href="../hydrogen_infra/overview.html">Hydrogen Infrastructure</a></td>
+</tr>
+</tbody>
+</table>
+<p>Installation of the turbines, foundations, turbine-integrated hydrogen equipment, and pipelines remains inside the economic boundary. Installation assumptions are maintained in the <a href="../offshore_installation/overview.html">Offshore Installation</a> section.</p>
+</section>
+<section id="removed-or-excluded-functions" class="level2">
+<h2 class="anchored" data-anchor-id="removed-or-excluded-functions">Removed or Excluded Functions</h2>
+<p>The following functions are not part of the decentralised architecture:</p>
+<ul>
+<li>the turbine grid-side inverter and step-up transformer in the hydrogen path</li>
+<li>a separate electrolyser-side DC/DC converter</li>
+<li>the AC infield collection network</li>
+<li>a central offshore substation or electrolysis platform</li>
+<li>central electrolyser transformer and rectifier equipment</li>
+<li>offshore and onshore HVDC conversion</li>
+<li>HVDC cable export</li>
+<li>the onshore hydrogen backbone beyond the project connection</li>
+<li>downstream hydrogen storage, distribution, reconversion, and end use</li>
+</ul>
+</section>
+<section id="architecture-interfaces" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-interfaces">Architecture Interfaces</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Interface</th>
+<th>Boundary definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Generator to electrolysis</td>
+<td>The turbine-side active front end supplies the DC link; the PEM stack is connected without a separate DC/DC stage.</td>
+</tr>
+<tr class="even">
+<td>Electrolyser facility to compression</td>
+<td>Produced and conditioned hydrogen leaves the turbine-level electrolyser boundary and enters the separately accounted compressor.</td>
+</tr>
+<tr class="odd">
+<td>Turbine unit to infield network</td>
+<td>Compressed hydrogen enters the infield pipeline network.</td>
+</tr>
+<tr class="even">
+<td>Infield network to export system</td>
+<td>Collected hydrogen enters the export pipeline system.</td>
+</tr>
+<tr class="odd">
+<td>Export to backbone</td>
+<td>The project ends at the onshore hydrogen-backbone connection.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="economic-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="economic-boundary">Economic Boundary</h2>
+<p>The architecture cost includes the common offshore wind project and all turbine-level hydrogen-production, compression, collection, export, and installation activities required to reach the backbone connection. Removing the AC collection and central platform functions changes which components are booked; it does not remove the common turbine, foundation, development, or financing boundary.</p>
+<p>The hydrogen backbone and any downstream reinforcement or conditioning are outside the base architecture boundary unless a scenario explicitly assigns them to the offshore project.</p>
 
 
 </section>

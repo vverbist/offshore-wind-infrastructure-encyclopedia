@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -413,26 +461,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/hvdc_and_substation_platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">HVDC and Substation Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/central_electrolyser_platform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Central Electrolyser Platform</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_mass_and_scaling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Mass and Scaling</span></a>
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -460,14 +490,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cable Installation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/pipeline_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline Installation</span></a>
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -542,9 +566,28 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#current-assumptions" id="toc-current-assumptions" class="nav-link" data-scroll-target="#current-assumptions">Current Assumptions</a></li>
-  <li><a href="#cost-drivers" id="toc-cost-drivers" class="nav-link" data-scroll-target="#cost-drivers">Cost Drivers</a></li>
-  <li><a href="#related-components" id="toc-related-components" class="nav-link" data-scroll-target="#related-components">Related Components</a></li>
+  <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
+  <li><a href="#installation-accounting" id="toc-installation-accounting" class="nav-link" data-scroll-target="#installation-accounting">Installation Accounting</a></li>
+  <li><a href="#required-inputs" id="toc-required-inputs" class="nav-link" data-scroll-target="#required-inputs">Required Inputs</a></li>
+  <li><a href="#vessel-feasibility" id="toc-vessel-feasibility" class="nav-link" data-scroll-target="#vessel-feasibility">Vessel Feasibility</a></li>
+  <li><a href="#complete-sets-per-load" id="toc-complete-sets-per-load" class="nav-link" data-scroll-target="#complete-sets-per-load">Complete Sets per Load</a></li>
+  <li><a href="#foundation-campaign-duration" id="toc-foundation-campaign-duration" class="nav-link" data-scroll-target="#foundation-campaign-duration">Foundation-Campaign Duration</a>
+  <ul class="collapse">
+  <li><a href="#normal-onsite-activity" id="toc-normal-onsite-activity" class="nav-link" data-scroll-target="#normal-onsite-activity">Normal onsite activity</a></li>
+  <li><a href="#exceptional-foundation-routes" id="toc-exceptional-foundation-routes" class="nav-link" data-scroll-target="#exceptional-foundation-routes">Exceptional foundation routes</a></li>
+  </ul></li>
+  <li><a href="#turbine-erection-duration" id="toc-turbine-erection-duration" class="nav-link" data-scroll-target="#turbine-erection-duration">Turbine-Erection Duration</a></li>
+  <li><a href="#transport-and-supply-logistics" id="toc-transport-and-supply-logistics" class="nav-link" data-scroll-target="#transport-and-supply-logistics">Transport and Supply Logistics</a>
+  <ul class="collapse">
+  <li><a href="#self-shuttling-installation-vessel" id="toc-self-shuttling-installation-vessel" class="nav-link" data-scroll-target="#self-shuttling-installation-vessel">Self-shuttling installation vessel</a></li>
+  <li><a href="#feeder-supplied-installation-vessel" id="toc-feeder-supplied-installation-vessel" class="nav-link" data-scroll-target="#feeder-supplied-installation-vessel">Feeder-supplied installation vessel</a></li>
+  </ul></li>
+  <li><a href="#campaign-cost" id="toc-campaign-cost" class="nav-link" data-scroll-target="#campaign-cost">Campaign Cost</a></li>
+  <li><a href="#evidence-graded-screening-inputs" id="toc-evidence-graded-screening-inputs" class="nav-link" data-scroll-target="#evidence-graded-screening-inputs">Evidence-Graded Screening Inputs</a></li>
+  <li><a href="#constant-2026-eur-normalization" id="toc-constant-2026-eur-normalization" class="nav-link" data-scroll-target="#constant-2026-eur-normalization">Constant-2026-EUR Normalization</a></li>
+  <li><a href="#reported-intermediate-results" id="toc-reported-intermediate-results" class="nav-link" data-scroll-target="#reported-intermediate-results">Reported Intermediate Results</a></li>
+  <li><a href="#validation-cases-and-assertions" id="toc-validation-cases-and-assertions" class="nav-link" data-scroll-target="#validation-cases-and-assertions">Validation Cases and Assertions</a></li>
+  <li><a href="#limitations-and-required-evidence" id="toc-limitations-and-required-evidence" class="nav-link" data-scroll-target="#limitations-and-required-evidence">Limitations and Required Evidence</a></li>
   </ul>
 </nav>
     </div>
@@ -572,60 +615,809 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>Turbine and foundation installation converts component supply cost into installed offshore asset cost.</p>
+<p>This page calculates the offshore installation CAPEX of monopile-supported wind turbines. It treats installation as two independently schedulable campaigns:</p>
+<ol type="1">
+<li>monopile and, where applicable, transition-piece or secondary-steel installation; and</li>
+<li>turbine transport and erection.</li>
+</ol>
+<p>The campaigns share project inputs but have separate vessels, loads, activities, schedules and mobilisation costs. Installation is therefore not represented by a single EUR/MW or EUR/turbine coefficient. Component dimensions first determine vessel feasibility and complete sets per load; countable operations and logistics then determine vessel-days and cost.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Class changes are explicit
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A component that exceeds crane, hook-height, deck, rack or water-depth limits requires another vessel class. A larger component can also reduce the number of complete sets per load and create another port cycle. Neither effect is represented as a smooth duration or cost multiplier.</p>
+</div>
+</div>
 </section>
-<section id="current-assumptions" class="level2">
-<h2 class="anchored" data-anchor-id="current-assumptions">Current Assumptions</h2>
+<section id="cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
+<p>The installation boundary starts with mobilisation of the contracted installation spread and ends after normal mechanical completion within the stated campaign scope.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Scope</th>
+<th>Treatment</th>
+<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Foundation installation</td>
-<td style="text-align: right;">1 million EUR/turbine</td>
+<td>Installation-vessel mobilisation and demobilisation</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
 </tr>
 <tr class="even">
-<td>Turbine installation</td>
-<td style="text-align: right;">Included in current turbine/foundation assumption set unless separated later</td>
+<td>Port load-out, sea fastening and release</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Transport, offshore positioning and jack-up operations</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Normal monopile handling and impact or vibratory driving</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Transition-piece placement and normal bolting or grouting</td>
+<td>Included when the design uses a transition piece</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Turbine tower, nacelle/RNA and blade lifts and attachment</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Routine survey, ROV and support craft</td>
+<td>Included only when named in the selected spread boundary</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Turbine, monopile and transition-piece fabrication</td>
+<td>Excluded</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine</a> and <a href="../turbine_system/foundation.html">Foundation</a></td>
+</tr>
+<tr class="odd">
+<td>Marshalling-port construction and rent</td>
+<td>Excluded unless explicitly included in the installation contract</td>
+<td>Separate project cost</td>
+</tr>
+<tr class="even">
+<td>Boulder clearance, UXO work, seabed levelling and scour protection</td>
+<td>Separate exceptional work</td>
+<td><strong>This page or another named campaign, once only</strong></td>
+</tr>
+<tr class="odd">
+<td>Relief drilling, refusal remediation and pile cut-off</td>
+<td>Separate exceptional work</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="even">
+<td>Project-specific underwater-noise systems and restricted work windows</td>
+<td>Separate unless included in a quoted spread</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
+<td>Electrical commissioning beyond normal installation scope</td>
+<td>Excluded</td>
+<td>Electrical or commissioning cost category</td>
+</tr>
+<tr class="even">
+<td>Development, engineering, insurance, owner contingency and decommissioning</td>
+<td>Excluded</td>
+<td>Other model cost categories</td>
 </tr>
 </tbody>
 </table>
-<p>The current source material provides a separate foundation installation cost but does not yet provide a full vessel-based turbine installation model.</p>
+<p>Every quoted rate must be mapped to this boundary before use. A complete spread rate and its constituent vessel rates are alternative representations; they cannot be added together.</p>
 </section>
-<section id="cost-drivers" class="level2">
-<h2 class="anchored" data-anchor-id="cost-drivers">Cost Drivers</h2>
-<p>Future installation modelling should account for:</p>
+<section id="installation-accounting" class="level2">
+<h2 class="anchored" data-anchor-id="installation-accounting">Installation Accounting</h2>
+<p>The model keeps the physical and commercial counting units separate.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Definition</th>
+<th>Modelling purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turbine location</td>
+<td>One final wind-turbine position</td>
+<td>Foundation and turbine campaigns can visit it separately</td>
+</tr>
+<tr class="even">
+<td>Foundation set</td>
+<td>One monopile plus one transition piece, or one extended monopile with its defined interface</td>
+<td>Prevents assuming that every design has a separate transition piece</td>
+</tr>
+<tr class="odd">
+<td>Turbine set</td>
+<td>All tower sections, nacelle/RNA and blades for one turbine</td>
+<td>Mass, area and rack demand per vessel load</td>
+</tr>
+<tr class="even">
+<td>Component lift</td>
+<td>One crane pick from vessel or feeder to installed position</td>
+<td>Makes tower sections and individual blades countable</td>
+</tr>
+<tr class="odd">
+<td>Vessel load</td>
+<td>Product carried between port and field before reloading</td>
+<td>Determines port and transit cycles</td>
+</tr>
+<tr class="even">
+<td>Load-out</td>
+<td>Loading and sea-fastening one vessel or feeder in port</td>
+<td>Includes the initial load</td>
+</tr>
+<tr class="odd">
+<td>Port reload</td>
+<td>Return to port after the first load</td>
+<td><span class="math inline">\(N_\mathrm{reload}=N_\mathrm{load}-1\)</span> for self-shuttle logistics</td>
+</tr>
+<tr class="even">
+<td>Installation campaign</td>
+<td>Continuous deployment sharing one mobilisation</td>
+<td>Shared mobilisation does not imply simultaneous work</td>
+</tr>
+<tr class="odd">
+<td>Normal installation day</td>
+<td>Chargeable day within one defined ordinary-weather treatment</td>
+<td>Must not receive another generic weather multiplier</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="required-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="required-inputs">Required Inputs</h2>
+<p>Inputs are separated from calculated quantities so that design choices remain visible.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input group</th>
+<th>Required information</th>
+<th>Unit or basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Project</td>
+<td>Turbine count <span class="math inline">\(N\)</span>, water depth <span class="math inline">\(d_w\)</span>, port distance <span class="math inline">\(D_p\)</span>, mean inter-site distance <span class="math inline">\(D_i\)</span> and installation month</td>
+<td>count; m; km; km; month</td>
+</tr>
+<tr class="even">
+<td>Foundation</td>
+<td>Monopile mass <span class="math inline">\(m_\mathrm{MP}\)</span>, length <span class="math inline">\(L_\mathrm{MP}\)</span>, diameter <span class="math inline">\(D_\mathrm{MP}\)</span>, embedment <span class="math inline">\(L_e\)</span>, transition-piece mass <span class="math inline">\(m_\mathrm{TP}\)</span> and connection concept</td>
+<td>t; m; m; m; t; category</td>
+</tr>
+<tr class="odd">
+<td>Turbine</td>
+<td>Tower-section masses and dimensions, nacelle/RNA mass, blade mass and length, hub height <span class="math inline">\(H_h\)</span> and rotor diameter <span class="math inline">\(D_R\)</span></td>
+<td>t; m; t; t; m; m; m</td>
+</tr>
+<tr class="even">
+<td>Stowage</td>
+<td>Effective packed area for each component, rack counts, grillage, access and unusable deck space</td>
+<td>m² and counts</td>
+</tr>
+<tr class="odd">
+<td>Vessel</td>
+<td>Crane capacity at required radius, hook height, usable payload and deck area, point-load limit, leg length, stability, operating limits and transit speed</td>
+<td>vessel-specific</td>
+</tr>
+<tr class="even">
+<td>Operations</td>
+<td>Positioning, jacking, release, handling, lift, attachment, penetration and port-task durations</td>
+<td>h/activity or physical rate</td>
+</tr>
+<tr class="odd">
+<td>Weather</td>
+<td>Accessibility matched to vessel, operation, height and month, or weather-inclusive effective durations</td>
+<td>fraction or effective time</td>
+</tr>
+<tr class="even">
+<td>Cost</td>
+<td>Mobilisation, vessel or complete-spread rate, included support, currency, source year and escalation basis</td>
+<td>source currency and year</td>
+</tr>
+</tbody>
+</table>
+<p>“Effective packed area” includes racks, grillage, access and unusable space. It is not the plan area of the steel alone. When only component geometry is available, the packing factor remains an exposed provisional engineering input.</p>
+<p>Each numerical input is identified as a <strong>sourced planning input</strong>, <strong>screening fallback</strong>, <strong>site-specific input</strong>, <strong>supplier/contractor input required</strong>, or <strong>derived result</strong>. An unresolved required input blocks the affected result.</p>
+</section>
+<section id="vessel-feasibility" class="level2">
+<h2 class="anchored" data-anchor-id="vessel-feasibility">Vessel Feasibility</h2>
+<p>For every component lift <span class="math inline">\(j\)</span>, a candidate vessel must satisfy:</p>
+<p><span class="math display">\[
+\gamma_\mathrm{dyn}m_j \leq SWL(R_j),
+\qquad
+H_\mathrm{hook}\geq H_{\mathrm{required},j},
+\]</span></p>
+<p><span class="math display">\[
+\sum_j m_j\leq M_\mathrm{deck,use},
+\qquad
+\sum_j a_j\leq A_\mathrm{deck,use},
+\qquad
+p_{\mathrm{local},j}\leq p_\mathrm{deck,max}.
+\]</span></p>
+<p>Here <span class="math inline">\(\gamma_\mathrm{dyn}\)</span> is the lift dynamic factor, <span class="math inline">\(m_j\)</span> is component mass in tonnes, <span class="math inline">\(SWL(R_j)\)</span> is crane safe working load at the actual lift radius, <span class="math inline">\(H_\mathrm{hook}\)</span> and <span class="math inline">\(H_{\mathrm{required},j}\)</span> are in metres, <span class="math inline">\(M_\mathrm{deck,use}\)</span> is usable payload in tonnes, <span class="math inline">\(a_j\)</span> and <span class="math inline">\(A_\mathrm{deck,use}\)</span> are effective component and usable deck areas in square metres, and <span class="math inline">\(p_\mathrm{local,j}\)</span> and <span class="math inline">\(p_\mathrm{deck,max}\)</span> are local deck loads in consistent units.</p>
+<p>The calculation must also check water depth and leg length, air gap, stability, boom and blade clearance, rack compatibility, motion limits and positioning method. Brochure maximum crane capacity or payload cannot replace the project-specific lift and stowage checks. New-generation vessel specifications demonstrate why the limits are discontinuous: published examples range from more than 2,600 t to 5,000 t crane capacity and differ materially in payload and free deck area <span class="citation" data-cites="cadeler2026WindPace deme2026Orion">(<a href="#ref-cadeler2026WindPace" role="doc-biblioref">Cadeler, n.d.</a>; <a href="#ref-deme2026Orion" role="doc-biblioref">DEME Group, n.d.</a>)</span>. These are feasibility references, not generic project vessels or day-rate evidence.</p>
+</section>
+<section id="complete-sets-per-load" class="level2">
+<h2 class="anchored" data-anchor-id="complete-sets-per-load">Complete Sets per Load</h2>
+<p>For campaign <span class="math inline">\(c\in\{F,T\}\)</span>, where <span class="math inline">\(F\)</span> is foundation installation and <span class="math inline">\(T\)</span> is turbine erection:</p>
+<p><span class="math display">\[
+n_{\mathrm{set/load},c}
+=
+\min\left(
+\left\lfloor\frac{M_{\mathrm{use},c}}{m_{\mathrm{set},c}}\right\rfloor,
+\left\lfloor\frac{A_{\mathrm{use},c}}{a_{\mathrm{set},c}}\right\rfloor,
+n_{\mathrm{rack},c},
+n_{\mathrm{stability},c}
+\right),
+\]</span></p>
+<p><span class="math display">\[
+N_{\mathrm{load},c}
+=
+\left\lceil\frac{N}{n_{\mathrm{set/load},c}}\right\rceil,
+\qquad
+N_{\mathrm{reload},c}=\max(0,N_{\mathrm{load},c}-1).
+\]</span></p>
+<p>For foundations, <span class="math inline">\(m_\mathrm{set,F}=m_\mathrm{MP}+m_\mathrm{TP}\)</span> when both are transported together. For a three-bladed turbine:</p>
+<p><span class="math display">\[
+m_\mathrm{set,T}
+=
+\sum_k m_{\mathrm{tower},k}+m_\mathrm{nacelle}+3m_b.
+\]</span></p>
+<p>Equivalent component-by-component sums define <span class="math inline">\(a_\mathrm{set,F}\)</span> and <span class="math inline">\(a_\mathrm{set,T}\)</span>. Quantity-specific rack limits can bind before total mass or area. If <span class="math inline">\(n_\mathrm{set/load}=0\)</span>, the selected vessel and logistics configuration is infeasible.</p>
+<p><span class="math inline">\(M_\mathrm{use}\)</span> and <span class="math inline">\(A_\mathrm{use}\)</span> are project-usable deck mass and area; <span class="math inline">\(m_\mathrm{set}\)</span> and <span class="math inline">\(a_\mathrm{set}\)</span> are the mass and effective packed area of one complete set; and <span class="math inline">\(n_\mathrm{rack}\)</span> and <span class="math inline">\(n_\mathrm{stability}\)</span> are the integer limits imposed by component racks and the approved stowage/stability case. All <span class="math inline">\(n\)</span> and <span class="math inline">\(N\)</span> terms are counts.</p>
+</section>
+<section id="foundation-campaign-duration" class="level2">
+<h2 class="anchored" data-anchor-id="foundation-campaign-duration">Foundation-Campaign Duration</h2>
+<section id="normal-onsite-activity" class="level3">
+<h3 class="anchored" data-anchor-id="normal-onsite-activity">Normal onsite activity</h3>
+<p>For a straightforward driven monopile:</p>
+<p><span class="math display">\[
+\begin{aligned}
+t_{F,\mathrm{site}}={}&amp;t_\mathrm{pos}+t_\mathrm{jack}^{\mathrm{up}}
++t_\mathrm{survey}+t_\mathrm{release,MP}
++\frac{L_\mathrm{MP}}{v_\mathrm{upend}}
++\frac{d_w}{v_\mathrm{lower}}\\
+&amp;+t_\mathrm{tool}+\frac{L_e}{q_\mathrm{drive,eff}}
++t_\mathrm{TP}+t_\mathrm{jack}^{\mathrm{down}}.
+\end{aligned}
+\]</span></p>
+<p>All terms are converted to days before addition. <span class="math inline">\(q_\mathrm{drive,eff}\)</span> is the effective penetration rate for the stated pile, soil, hammer and method. Its scope must say whether normal pauses and soft-start are included. Relief drilling, refusal remediation and project-specific noise restrictions are excluded unless explicitly represented.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(t_\mathrm{pos}\)</span></td>
+<td>Vessel positioning at one location</td>
+<td>h/location</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(t_\mathrm{jack}^{\mathrm{up}}\)</span>, <span class="math inline">\(t_\mathrm{jack}^{\mathrm{down}}\)</span></td>
+<td>Raising and lowering the jack-up hull and legs as applicable</td>
+<td>h/location</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(t_\mathrm{survey}\)</span></td>
+<td>Routine pre-installation survey</td>
+<td>h/location</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(t_\mathrm{release,MP}\)</span></td>
+<td>Release of one monopile from its sea fastening</td>
+<td>h/monopile</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(v_\mathrm{upend}\)</span>, <span class="math inline">\(v_\mathrm{lower}\)</span></td>
+<td>Effective monopile upending and lowering rates</td>
+<td>m/h</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(t_\mathrm{tool}\)</span></td>
+<td>Piling-tool handling and changeover</td>
+<td>h/location</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(q_\mathrm{drive,eff}\)</span></td>
+<td>Effective normal penetration rate for the defined pile-soil-hammer system</td>
+<td>m/h</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(t_\mathrm{TP}\)</span></td>
+<td>Critical-path transition-piece installation time</td>
+<td>h/transition piece</td>
+</tr>
+</tbody>
+</table>
+<p>For a separate transition piece:</p>
+<p><span class="math display">\[
+t_\mathrm{TP}
+=
+t_\mathrm{release,TP}+t_\mathrm{reequip}
++\frac{H_\mathrm{lower,TP}}{v_\mathrm{crane}}
++
+\begin{cases}
+t_\mathrm{bolt}, &amp; \text{bolted interface},\\
+t_\mathrm{grout,pump}+t_\mathrm{grout,cure,critical}, &amp; \text{grouted interface}.
+\end{cases}
+\]</span></p>
+<p>Only critical-path grout curing occupies the primary vessel. An extended monopile omits <span class="math inline">\(t_\mathrm{TP}\)</span>, but any later secondary-steel package must remain in the installation inventory.</p>
+<p><span class="math inline">\(t_\mathrm{release,TP}\)</span> is transition-piece release time; <span class="math inline">\(t_\mathrm{reequip}\)</span> is crane or tool reconfiguration time; <span class="math inline">\(H_\mathrm{lower,TP}\)</span> and <span class="math inline">\(v_\mathrm{crane}\)</span> are lowering path in metres and applicable crane rate in metres per hour; and <span class="math inline">\(t_\mathrm{bolt}\)</span>, <span class="math inline">\(t_\mathrm{grout,pump}\)</span> and <span class="math inline">\(t_\mathrm{grout,cure,critical}\)</span> are the relevant connection times in hours.</p>
+<p>NREL’s ORBIT methodology provides a transparent public task decomposition. It uses 2 h for positioning, 1 h for routine ROV survey, 3 h for monopile release, 1 h for crane re-equipping, 4 h for bolting, and 2 h pumping plus 24 h curing for a grouted interface <span class="citation" data-cites="nunemaker2020ORBIT">(<a href="#ref-nunemaker2020ORBIT" role="doc-biblioref">Nunemaker et al. 2020</a>)</span>. Its port assumptions are 12 h fastening per monopile and 8 h per transition piece. These are planning-model assumptions, not universal observed durations. ORBIT represents simple driving and does not establish a transferable site penetration rate.</p>
+</section>
+<section id="exceptional-foundation-routes" class="level3">
+<h3 class="anchored" data-anchor-id="exceptional-foundation-routes">Exceptional foundation routes</h3>
+<p>A geotechnical requirement for relief drilling or drive-drill-drive creates a separate activity or installation class. It is not hidden by increasing normal site time. The exceptional-work structure is:</p>
+<p><span class="math display">\[
+C_\mathrm{exceptional,F}
+=
+N_\mathrm{drill}r_\mathrm{drill}t_\mathrm{drill}
++N_\mathrm{noise}C_\mathrm{noise/unit}
++A_\mathrm{scour}c_\mathrm{scour}
++N_\mathrm{boulder}C_\mathrm{boulder}
++C_\mathrm{UXO}+C_\mathrm{remediation}.
+\]</span></p>
+<p>The rates and quantities are site-specific. No transferable public unit costs were identified for these activities with a sufficiently consistent technical and commercial boundary.</p>
+<p><span class="math inline">\(N_\mathrm{drill}\)</span>, <span class="math inline">\(N_\mathrm{noise}\)</span> and <span class="math inline">\(N_\mathrm{boulder}\)</span> are affected-location counts; <span class="math inline">\(r_\mathrm{drill}\)</span> and <span class="math inline">\(t_\mathrm{drill}\)</span> are drilling-spread rate and duration; <span class="math inline">\(C_\mathrm{noise/unit}\)</span> and <span class="math inline">\(C_\mathrm{boulder}\)</span> are defined unit costs; <span class="math inline">\(A_\mathrm{scour}\)</span> and <span class="math inline">\(c_\mathrm{scour}\)</span> are scour-treatment area and unit cost; and <span class="math inline">\(C_\mathrm{UXO}\)</span> and <span class="math inline">\(C_\mathrm{remediation}\)</span> are separately estimated campaign costs. Each cost is in constant 2026 EUR after normalization.</p>
+</section>
+</section>
+<section id="turbine-erection-duration" class="level2">
+<h2 class="anchored" data-anchor-id="turbine-erection-duration">Turbine-Erection Duration</h2>
+<p>Let <span class="math inline">\(J\)</span> contain every tower section, the nacelle or rotor-nacelle assembly, and each blade. The calm-condition component-count model is:</p>
+<p><span class="math display">\[
+t_{T,\mathrm{site,calm}}
+=
+t_\mathrm{pos}+t_\mathrm{jack}^{\mathrm{up}}+t_\mathrm{jack}^{\mathrm{down}}
++\sum_{j\in J}N_j
+\left(
+t_\mathrm{release,j}
++\frac{H_\mathrm{path,j}}{v_\mathrm{crane,j}}
++t_\mathrm{attach,j}
+\right)
++t_\mathrm{reequip}.
+\]</span></p>
+<p>Hub height drives lift path and hook-height feasibility. Rotor diameter drives blade length, rack footprint, clearance and wind sensitivity. Component mass drives capacity at radius, rigging and deck loading. Without a documented crane load-speed curve, the model does not invent a continuous mass-to-lift-time coefficient.</p>
+<p><span class="math inline">\(N_j\)</span> is the count of component type <span class="math inline">\(j\)</span> per turbine; <span class="math inline">\(t_\mathrm{release,j}\)</span> and <span class="math inline">\(t_\mathrm{attach,j}\)</span> are release and attachment times in hours per component; <span class="math inline">\(H_\mathrm{path,j}\)</span> is lift path in metres; and <span class="math inline">\(v_\mathrm{crane,j}\)</span> is the applicable crane rate in metres per hour. <span class="math inline">\(t_\mathrm{reequip}\)</span> is any non-component-specific reconfiguration time not already included in those tasks.</p>
+<p>ORBIT’s public planning assumptions are <span class="citation" data-cites="nunemaker2020ORBIT">(<a href="#ref-nunemaker2020ORBIT" role="doc-biblioref">Nunemaker et al. 2020</a>)</span>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component or task</th>
+<th style="text-align: right;">Port fastening</th>
+<th style="text-align: right;">Offshore release</th>
+<th style="text-align: right;">Offshore attachment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tower set</td>
+<td style="text-align: right;">4 h/set</td>
+<td style="text-align: right;">3 h/set</td>
+<td style="text-align: right;">6 h/set</td>
+</tr>
+<tr class="even">
+<td>Nacelle</td>
+<td style="text-align: right;">4 h/component</td>
+<td style="text-align: right;">3 h/component</td>
+<td style="text-align: right;">6 h/component</td>
+</tr>
+<tr class="odd">
+<td>Blade</td>
+<td style="text-align: right;">1.5 h/blade</td>
+<td style="text-align: right;">1 h/blade</td>
+<td style="text-align: right;">3.5 h/blade</td>
+</tr>
+<tr class="even">
+<td>Vessel positioning</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2 h/location</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>Crane re-equipping</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1 h/location</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p>A standard three-bladed, single-tower-set configuration therefore has 12.5 h of component fastening per turbine set before any tower-section or port-queue adjustment. Lift time remains height divided by the applicable crane rate.</p>
+<p>Weather is represented either by explicit accessibility:</p>
+<p><span class="math display">\[
+t_{T,\mathrm{site,eff}}
+=
+\frac{t_{T,\mathrm{site,calm}}}{A_\mathrm{lift}},
+\qquad 0&lt;A_\mathrm{lift}\leq 1,
+\]</span></p>
+<p>or by a weather-inclusive effective task duration. The two treatments cannot be combined. Accessibility should match the installation month, vessel limits and wind-critical lift at hub height; a daily mean wind speed is not an adequate proxy for blade-lift access.</p>
+</section>
+<section id="transport-and-supply-logistics" class="level2">
+<h2 class="anchored" data-anchor-id="transport-and-supply-logistics">Transport and Supply Logistics</h2>
+<section id="self-shuttling-installation-vessel" class="level3">
+<h3 class="anchored" data-anchor-id="self-shuttling-installation-vessel">Self-shuttling installation vessel</h3>
+<p>For campaign <span class="math inline">\(c\)</span>:</p>
+<p><span class="math display">\[
+T_{c,\mathrm{primary}}
+=
+t_{\mathrm{setup},c}+Nt_{c,\mathrm{site}}
++N_{\mathrm{load},c}t_{\mathrm{load},c}
++N_{\mathrm{load},c}\frac{2D_p}{v_{\mathrm{transit},c}}
++(N-1)\frac{D_i}{v_{\mathrm{field},c}}.
+\]</span></p>
+<p><span class="math inline">\(t_\mathrm{load,c}\)</span> contains the applicable component fastening and defined port operations. Transit and activity units are converted consistently to days.</p>
+<p><span class="math inline">\(t_\mathrm{setup,c}\)</span> is campaign setup time in days, <span class="math inline">\(v_\mathrm{transit,c}\)</span> and <span class="math inline">\(v_\mathrm{field,c}\)</span> are port-transit and inter-site speeds in kilometres per day, and <span class="math inline">\(D_p\)</span> and <span class="math inline">\(D_i\)</span> are one-way port distance and mean inter-site distance in kilometres.</p>
+</section>
+<section id="feeder-supplied-installation-vessel" class="level3">
+<h3 class="anchored" data-anchor-id="feeder-supplied-installation-vessel">Feeder-supplied installation vessel</h3>
+<p>When the primary installation vessel remains offshore, installation and supply capacities are calculated separately:</p>
+<p><span class="math display">\[
+Q_\mathrm{install}
+=
+\frac{1}{t_{c,\mathrm{site}}+D_i/v_\mathrm{field}},
+\]</span></p>
+<p><span class="math display">\[
+Q_\mathrm{supply}
+=
+\frac{n_\mathrm{feeder}n_\mathrm{set/load},c}
+{t_\mathrm{load,feeder}}+2D_p/v_\mathrm{feeder}+t_\mathrm{transfer}},
+\]</span></p>
+<p><span class="math display">\[
+T_{c,\mathrm{primary}}
+=
+t_{\mathrm{setup},c}
++\frac{N}{\min(Q_\mathrm{install},Q_\mathrm{supply})}.
+\]</span></p>
+<p>Feeder vessel-days are calculated from their own cycles. Feeder time is not serially added to primary-vessel time when the vessels operate concurrently, but the occupied days of both vessel classes are costed.</p>
+<p><span class="math inline">\(Q_\mathrm{install}\)</span> and <span class="math inline">\(Q_\mathrm{supply}\)</span> are installation and supply capacities in sets per day; <span class="math inline">\(n_\mathrm{feeder}\)</span> is feeder count; <span class="math inline">\(v_\mathrm{feeder}\)</span> is feeder transit speed; and <span class="math inline">\(t_\mathrm{load,feeder}\)</span> and <span class="math inline">\(t_\mathrm{transfer}\)</span> are complete feeder port-turnaround and offshore-transfer times. Their boundary must state whether waiting and ordinary weather are included.</p>
+</section>
+</section>
+<section id="campaign-cost" class="level2">
+<h2 class="anchored" data-anchor-id="campaign-cost">Campaign Cost</h2>
+<p>With individually priced vessels, campaign cost is:</p>
+<p><span class="math display">\[
+C_c
+=
+C_\mathrm{mob},c
++r_\mathrm{primary},cT_\mathrm{primary},c
++\sum_v r_{v,c}T_{v,c}
++C_\mathrm{consumables},c.
+\]</span></p>
+<p>Total turbine and foundation installation CAPEX is:</p>
+<p><span class="math display">\[
+C_\mathrm{WT,inst}
+=
+\sum_{c\in\{F,T\}}C_c
++C_\mathrm{exceptional,F}
++C_\mathrm{other}.
+\]</span></p>
+<p>Two rate conventions are valid:</p>
 <ul>
-<li>turbine rating</li>
-<li>turbine mass and hub height</li>
-<li>foundation mass</li>
-<li>water depth</li>
-<li>distance to port</li>
-<li>weather downtime</li>
-<li>vessel day rate</li>
-<li>installation duration</li>
+<li><strong>Complete spread:</strong> the rate includes the primary vessel and every named ordinary support item.</li>
+<li><strong>Vessel stack:</strong> primary vessel, feeder, survey/ROV, noise-mitigation vessel and other support are costed separately.</li>
+</ul>
+<p>The model records which convention is used and what it includes. It must not add vessel-stack items already contained in a complete spread.</p>
+<p><span class="math inline">\(C_\mathrm{mob,c}\)</span> is campaign mobilisation and demobilisation cost, <span class="math inline">\(r_\mathrm{primary,c}\)</span> and <span class="math inline">\(r_{v,c}\)</span> are constant-2026-EUR day rates, <span class="math inline">\(T_\mathrm{primary,c}\)</span> and <span class="math inline">\(T_{v,c}\)</span> are chargeable vessel-days, and <span class="math inline">\(C_\mathrm{consumables,c}\)</span> contains only named installation consumables. <span class="math inline">\(C_\mathrm{other}\)</span> is reserved for separately enumerated installation work that belongs within this page’s boundary but fits neither a normal campaign nor the defined foundation exceptions; an unexplained lump sum is not permitted.</p>
+</section>
+<section id="evidence-graded-screening-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="evidence-graded-screening-inputs">Evidence-Graded Screening Inputs</h2>
+<p>The current public evidence supports some planning inputs but does not close a commercial project estimate.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Screening value</th>
+<th>Status and permitted use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Generic WTIV/FIV proxy</td>
+<td style="text-align: right;">371,069 EUR/day</td>
+<td>2024-USD ORBIT model default normalized to June-2026 EUR; cross-check only <span class="citation" data-cites="orbit2026InstallationDefaults">(<a href="#ref-orbit2026InstallationDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Generic feeder proxy</td>
+<td style="text-align: right;">86,915 EUR/day per feeder</td>
+<td>Same model and normalization basis; limited support scope <span class="citation" data-cites="orbit2026InstallationDefaults">(<a href="#ref-orbit2026InstallationDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>WTIV mobilisation duration</td>
+<td style="text-align: right;">7 chargeable days</td>
+<td>ORBIT planning input; replace for the named vessel and port <span class="citation" data-cites="orbit2026InstallationDefaults">(<a href="#ref-orbit2026InstallationDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Foundation normal no-delay site occupation</td>
+<td style="text-align: right;">2 / 3 / 4 days per location</td>
+<td>Favourable/typical/difficult fallback based on a published 2–4 day planning range; excludes weather and exceptional work <span class="citation" data-cites="boem2021SouthForkCOP">(<a href="#ref-boem2021SouthForkCOP" role="doc-biblioref">South Fork Wind, LLC 2021</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Turbine effective site occupation</td>
+<td style="text-align: right;">No universal value adopted</td>
+<td>Calculate from components and site/month accessibility</td>
+</tr>
+<tr class="even">
+<td>Foundation and turbine sets per load</td>
+<td style="text-align: right;">Calculated</td>
+<td>Never hard-code; vessel feasibility, mass, area, racks and stability determine the result</td>
+</tr>
+<tr class="odd">
+<td>Effective monopile penetration rate</td>
+<td style="text-align: right;">Site-specific input required</td>
+<td>Requires pile-soil-hammer analysis</td>
+</tr>
+<tr class="even">
+<td>Crane lift rate</td>
+<td style="text-align: right;">Supplier/contractor input required</td>
+<td>Must reflect load, radius and method</td>
+</tr>
+<tr class="odd">
+<td>Complete installation spread rate</td>
+<td style="text-align: right;">Contractor input required</td>
+<td>Required for a commercial estimate with a defined cost boundary</td>
+</tr>
+</tbody>
+</table>
+<p>The three foundation durations are coherent screening fallbacks and validation bands, not multipliers to apply after the activity model. The source assumes 24-hour operations without weather or sea delay and approximately 2–4 days per monopile foundation, including a 2–4 h driving interval <span class="citation" data-cites="boem2021SouthForkCOP">(<a href="#ref-boem2021SouthForkCOP" role="doc-biblioref">South Fork Wind, LLC 2021</a>)</span>. The activity calculation takes precedence when its inputs are available.</p>
+<p>For turbine erection, the scenarios change vessel class, sets per load, logistics and accessibility rather than inventing favourable, typical and difficult point durations.</p>
+</section>
+<section id="constant-2026-eur-normalization" class="level2">
+<h2 class="anchored" data-anchor-id="constant-2026-eur-normalization">Constant-2026-EUR Normalization</h2>
+<p>Source cost, escalation and currency conversion remain separate:</p>
+<p><span class="math display">\[
+C_{2026,\mathrm{EUR}}
+=
+C_{y,\mathrm{cur}}
+\frac{I_{2026}}{I_y}
+FX_{\mathrm{cur}\rightarrow\mathrm{EUR},2026}.
+\]</span></p>
+<p>For the ORBIT 2024-USD vessel proxies, the fallback uses 2024 annual-average CPI-U of 313.689, June 2026 CPI-U of 333.952, and the 30 July 2026 ECB reference rate of EUR 1 = USD 1.1476 <span class="citation" data-cites="bls2024CPI bls2026CPI ecb2026ExchangeRates">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2026CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2026ExchangeRates" role="doc-biblioref">European Central Bank 2026</a>)</span>:</p>
+<p><span class="math display">\[
+F_{2024\,\mathrm{USD}\rightarrow2026\,\mathrm{EUR}}
+=
+\frac{333.952}{313.689}\frac{1}{1.1476}
+=0.9276715.
+\]</span></p>
+<p>Applied to USD 400,000/day and USD 93,692/day, this gives EUR 371,069/day and EUR 86,915/day. CPI is transparent but does not reproduce a tight offshore-vessel market. A documented offshore-construction or vessel index is preferable when its scope and licensing permit. Geographic-market adjustments remain separate.</p>
+</section>
+<section id="reported-intermediate-results" class="level2">
+<h2 class="anchored" data-anchor-id="reported-intermediate-results">Reported Intermediate Results</h2>
+<p>The model must return enough information to reproduce and interrogate the total.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result group</th>
+<th>Required outputs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Feasibility</td>
+<td>Pass/fail and margin for crane at radius, hook height, deck mass, deck area, local load, racks, water depth and operating limits</td>
+</tr>
+<tr class="even">
+<td>Physical inventory</td>
+<td>Turbine locations, foundation sets, turbine sets and component lifts</td>
+</tr>
+<tr class="odd">
+<td>Logistics</td>
+<td>Sets per load, loads, reloads, port cycles, feeder cycles and inter-site moves by campaign</td>
+</tr>
+<tr class="even">
+<td>Duration</td>
+<td>Port, transit, positioning/jacking, handling, penetration, lift/attachment, weather treatment and total vessel-days</td>
+</tr>
+<tr class="odd">
+<td>Cost</td>
+<td>Mobilisation, primary vessel, feeder/support, consumables, exceptional work and total by campaign</td>
+</tr>
+<tr class="even">
+<td>Evidence</td>
+<td>Value, unit, source or assumption status, scope, price year and normalization record for each input</td>
+</tr>
+</tbody>
+</table>
+<p>A EUR/MW or EUR/turbine result may be reported only as a derived comparison after these quantities have been calculated.</p>
+</section>
+<section id="validation-cases-and-assertions" class="level2">
+<h2 class="anchored" data-anchor-id="validation-cases-and-assertions">Validation Cases and Assertions</h2>
+<p>Public projects test physical quantities and elapsed schedules; they do not provide clean, chargeable vessel-day costs.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Case</th>
+<th>What it tests</th>
+<th>Scope limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sofia foundations: 100 extended monopiles, three per vessel cycle, approximately 195 km offshore <span class="citation" data-cites="rwe2024SofiaFoundationStart rwe2025SofiaFoundationCompletion">(<a href="#ref-rwe2024SofiaFoundationStart" role="doc-biblioref">RWE Offshore Wind GmbH 2024</a>, <a href="#ref-rwe2025SofiaFoundationCompletion" role="doc-biblioref">2025</a>)</span></td>
+<td>Load count, long-distance logistics and elapsed campaign productivity</td>
+<td>Calendar period includes weather, support and interruptions</td>
+</tr>
+<tr class="even">
+<td>Sofia turbines: 100 14 MW turbines with 222 m rotors, 108 m blades and six sets per load <span class="citation" data-cites="rwe2026SofiaTurbines">(<a href="#ref-rwe2026SofiaTurbines" role="doc-biblioref">Sofia Offshore Wind Farm 2026</a>)</span></td>
+<td>Turbine sets per load and remote-project calendar productivity</td>
+<td>Calendar duration is not net WTIV occupation</td>
+</tr>
+<tr class="odd">
+<td>Baltic Power: 78 monopiles of approximately 1,300–1,700 t and more than 9 m diameter <span class="citation" data-cites="orlen2025BalticPowerStart orlen2026BalticPowerCompletion">(<a href="#ref-orlen2025BalticPowerStart" role="doc-biblioref">ORLEN Group 2025</a>, <a href="#ref-orlen2026BalticPowerCompletion" role="doc-biblioref">2026</a>)</span></td>
+<td>Crane, payload and support-fleet class</td>
+<td>No separated installation cost or net vessel days</td>
+</tr>
+<tr class="even">
+<td>NREL 15 MW and 22 MW reference turbines <span class="citation" data-cites="shields2024ReferenceTurbines">(<a href="#ref-shields2024ReferenceTurbines" role="doc-biblioref">Zahle et al. 2024</a>)</span></td>
+<td>Hook-height, deck-load and sets-per-load sensitivity as turbines scale</td>
+<td>Reference designs, not observed projects</td>
+</tr>
+<tr class="odd">
+<td>ORBIT worked example <span class="citation" data-cites="orbit2026InstallationDefaults">(<a href="#ref-orbit2026InstallationDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
+<td>Equation implementation and cost-boundary reconciliation</td>
+<td>Synthetic design and model defaults</td>
+</tr>
+</tbody>
+</table>
+<p>The implementation must assert that:</p>
+<ul>
+<li>every selected vessel passes all required feasibility gates;</li>
+<li><span class="math inline">\(n_\mathrm{set/load}\geq1\)</span> and each load count is an integer;</li>
+<li>the initial load is not counted as a reload;</li>
+<li>weather is represented by accessibility or weather-inclusive effective time, never both;</li>
+<li>concurrent feeder time is not added serially to primary-vessel duration;</li>
+<li>each support vessel is inside the spread rate or costed separately;</li>
+<li>relief drilling and other exceptional work are outside normal simple-driving time; and</li>
+<li>every cost has a currency, price year, normalization record and stated inclusions.</li>
 </ul>
 </section>
-<section id="related-components" class="level2">
-<h2 class="anchored" data-anchor-id="related-components">Related Components</h2>
-<ul>
-<li><a href="../turbine_system/wind_turbine.html">Wind Turbine</a></li>
-<li><a href="../turbine_system/foundation.html">Foundation</a></li>
-<li><a href="../turbine_system/tower_nacelle_and_mass.html">Tower, Nacelle, and Mass</a></li>
-</ul>
+<section id="limitations-and-required-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-and-required-evidence">Limitations and Required Evidence</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Unresolved evidence</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No current auditable North Sea complete-spread quotation</td>
+<td>Public vessel rates remain screening proxies</td>
+</tr>
+<tr class="even">
+<td>No transferable relationship between pile dimensions and penetration rate independent of soil and hammer</td>
+<td>Foundation duration requires project geotechnical input</td>
+</tr>
+<tr class="odd">
+<td>No documented universal relationship between component mass and crane speed</td>
+<td>Lift time requires the actual crane curve or contractor duration</td>
+</tr>
+<tr class="even">
+<td>No transferable relationship between rotor size and weather downtime</td>
+<td>Turbine access requires site-, month- and operation-specific analysis</td>
+</tr>
+<tr class="odd">
+<td>No public project split into net chargeable vessel-days with consistent inclusions</td>
+<td>Public projects validate intermediate quantities only</td>
+</tr>
+<tr class="even">
+<td>No transferable public rates for drilling, noise mitigation, scour, boulder or UXO work</td>
+<td>Exceptional work remains site-specific</td>
+</tr>
+</tbody>
+</table>
+<p>Before reporting a commercial installation CAPEX, obtain from the contractor or vessel owner: the named vessel and complete rate boundary; capacity at the required radius and hook height; project-usable deck and rack limits; port and offshore task times; ordinary-weather treatment; pile-soil-hammer penetration performance; feeder requirement; and the charging rules for standby, cancellation, repairs and overruns.</p>
+<p><strong>Evidence review date:</strong> 31 July 2026.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cadeler2026WindPace" class="csl-entry" role="listitem">
+Cadeler. n.d. <span>“Wind Pace: P-Class Vessel.”</span> Accessed July 31, 2026. <a href="https://www.cadeler.com/vessels/wind-pace">https://www.cadeler.com/vessels/wind-pace</a>.
+</div>
+<div id="ref-deme2026Orion" class="csl-entry" role="listitem">
+DEME Group. n.d. <span>“Orion: <span>DP3</span> Offshore Installation Vessel.”</span> Accessed July 31, 2026. <a href="https://www.deme-group.com/technologies/orion">https://www.deme-group.com/technologies/orion</a>.
+</div>
+<div id="ref-ecb2026ExchangeRates" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“Euro Foreign Exchange Reference Rates.”</span> July 30. <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html</a>.
+</div>
+<div id="ref-orbit2026InstallationDefaults" class="csl-entry" role="listitem">
+National Laboratory of the Rockies. n.d. <span>“<span>ORBIT</span> Introduction.”</span> Accessed July 31, 2026. <a href="https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html">https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html</a>.
+</div>
+<div id="ref-nunemaker2020ORBIT" class="csl-entry" role="listitem">
+Nunemaker, Jacob, Matthew Shields, Rob Hammond, and Patrick Duffy. 2020. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. NREL/TP-5000-77081. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1660132">https://doi.org/10.2172/1660132</a>.
+</div>
+<div id="ref-orlen2025BalticPowerStart" class="csl-entry" role="listitem">
+ORLEN Group. 2025. <span>“<span>ORLEN</span> and Northland Power Commence Construction of Poland’s First Offshore Wind Farm.”</span> February 6. <a href="https://www.orlen.pl/en/about-the-company/media/press-releases/current/2025/February-2025/ORLEN-and-Northland-Power-Commence-Construction-of-Polands-First-Offshore-Wind-Farm">https://www.orlen.pl/en/about-the-company/media/press-releases/current/2025/February-2025/ORLEN-and-Northland-Power-Commence-Construction-of-Polands-First-Offshore-Wind-Farm</a>.
+</div>
+<div id="ref-orlen2026BalticPowerCompletion" class="csl-entry" role="listitem">
+ORLEN Group. 2026. <span>“All Foundations Installed as Baltic Power Moves Closer to Completion.”</span> February 18. <a href="https://www.orlen.pl/en/about-the-company/media/press-releases/current/2026/february-2026/All-foundations-installed-as-Baltic-Power-moves-closer-to-completion">https://www.orlen.pl/en/about-the-company/media/press-releases/current/2026/february-2026/All-foundations-installed-as-Baltic-Power-moves-closer-to-completion</a>.
+</div>
+<div id="ref-rwe2024SofiaFoundationStart" class="csl-entry" role="listitem">
+RWE Offshore Wind GmbH. 2024. <span>“<span>RWE</span> Installs First Turbine Foundation at Its Flagship Sofia Offshore Wind Farm.”</span> May 21. <a href="https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2024-05-21-rwe-installs-first-turbine-foundation-at-its-flagship-sofia-offshore-wind-farm/">https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2024-05-21-rwe-installs-first-turbine-foundation-at-its-flagship-sofia-offshore-wind-farm/</a>.
+</div>
+<div id="ref-rwe2025SofiaFoundationCompletion" class="csl-entry" role="listitem">
+RWE Offshore Wind GmbH. 2025. <span>“<span>RWE</span> Reaches Major Construction Milestone at Sofia Offshore Wind Farm with Completion of Foundations Installation.”</span> July 15. <a href="https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2025-07-15-sofia-offshore-wind-farm-completes-installation-of-foundations/">https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2025-07-15-sofia-offshore-wind-farm-completes-installation-of-foundations/</a>.
+</div>
+<div id="ref-rwe2026SofiaTurbines" class="csl-entry" role="listitem">
+Sofia Offshore Wind Farm. 2026. <span>“<span>RWE</span> Completes Installation of All Turbines at Sofia Offshore Wind Farm.”</span> June 11. <a href="https://sofiawindfarm.com/latest/announcements/rwe-completes-installation-of-all-turbines-at-sofia-offshore-wind-farm/">https://sofiawindfarm.com/latest/announcements/rwe-completes-installation-of-all-turbines-at-sofia-offshore-wind-farm/</a>.
+</div>
+<div id="ref-boem2021SouthForkCOP" class="csl-entry" role="listitem">
+South Fork Wind, LLC. 2021. <em>South Fork Wind Farm and South Fork Export Cable Project: Construction and Operations Plan, Volume i</em>. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/Volume-I-Construction-and-Operations-Plan/">https://www.boem.gov/Volume-I-Construction-and-Operations-Plan/</a>.
+</div>
+<div id="ref-bls2026CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Index, June 2026.”</span> July 14. <a href="https://www.bls.gov/news.release/archives/cpi_07142026.htm">https://www.bls.gov/news.release/archives/cpi_07142026.htm</a>.
+</div>
+<div id="ref-bls2024CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
+</div>
+<div id="ref-shields2024ReferenceTurbines" class="csl-entry" role="listitem">
+Zahle, Frederik, Thanasis Barlas, Pietro Bortolotti, Daniel Zalkind, and William Collier. 2024. <em>International Energy Agency 22 <span>MW</span> Offshore Reference Wind Turbine</em>. NREL/PR-5000-89807. International Energy Agency Wind Technology Collaboration Programme Task 55; National Renewable Energy Laboratory. <a href="https://www.nrel.gov/docs/fy24osti/89807.pdf">https://www.nrel.gov/docs/fy24osti/89807.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

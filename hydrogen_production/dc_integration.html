@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -413,26 +461,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/hvdc_and_substation_platforms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">HVDC and Substation Platforms</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/central_electrolyser_platform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Central Electrolyser Platform</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_mass_and_scaling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Mass and Scaling</span></a>
+  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -460,14 +490,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cable Installation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/pipeline_installation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline Installation</span></a>
+  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -541,35 +565,29 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#purpose-of-this-section" id="toc-purpose-of-this-section" class="nav-link active" data-scroll-target="#purpose-of-this-section">Purpose of this section</a></li>
-  <li><a href="#why-direct-dc-integration-is-beneficial" id="toc-why-direct-dc-integration-is-beneficial" class="nav-link" data-scroll-target="#why-direct-dc-integration-is-beneficial">Why direct DC integration is beneficial</a>
+  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#operating-principle" id="toc-operating-principle" class="nav-link" data-scroll-target="#operating-principle">Operating Principle</a></li>
+  <li><a href="#model-calculation" id="toc-model-calculation" class="nav-link" data-scroll-target="#model-calculation">Model Calculation</a></li>
+  <li><a href="#allocation-of-converter-functions" id="toc-allocation-of-converter-functions" class="nav-link" data-scroll-target="#allocation-of-converter-functions">Allocation of Converter Functions</a></li>
+  <li><a href="#feasibility-conditions" id="toc-feasibility-conditions" class="nav-link" data-scroll-target="#feasibility-conditions">Feasibility Conditions</a>
   <ul class="collapse">
-  <li><a href="#fewer-conversion-stages" id="toc-fewer-conversion-stages" class="nav-link" data-scroll-target="#fewer-conversion-stages">Fewer conversion stages</a></li>
-  <li><a href="#lower-electrical-infrastructure-requirement" id="toc-lower-electrical-infrastructure-requirement" class="nav-link" data-scroll-target="#lower-electrical-infrastructure-requirement">Lower electrical infrastructure requirement</a></li>
-  <li><a href="#better-fit-with-a-decentralised-hydrogen-architecture" id="toc-better-fit-with-a-decentralised-hydrogen-architecture" class="nav-link" data-scroll-target="#better-fit-with-a-decentralised-hydrogen-architecture">Better fit with a decentralised hydrogen architecture</a></li>
-  <li><a href="#potentially-lower-cost-mass-and-losses" id="toc-potentially-lower-cost-mass-and-losses" class="nav-link" data-scroll-target="#potentially-lower-cost-mass-and-losses">Potentially lower cost, mass, and losses</a></li>
+  <li><a href="#electrical-matching" id="toc-electrical-matching" class="nav-link" data-scroll-target="#electrical-matching">Electrical Matching</a></li>
+  <li><a href="#boost-only-constraint" id="toc-boost-only-constraint" class="nav-link" data-scroll-target="#boost-only-constraint">Boost-Only Constraint</a></li>
+  <li><a href="#coordinated-control" id="toc-coordinated-control" class="nav-link" data-scroll-target="#coordinated-control">Coordinated Control</a></li>
+  <li><a href="#modular-stack-option" id="toc-modular-stack-option" class="nav-link" data-scroll-target="#modular-stack-option">Modular Stack Option</a></li>
+  <li><a href="#start-stop-and-faults" id="toc-start-stop-and-faults" class="nav-link" data-scroll-target="#start-stop-and-faults">Start, Stop, and Faults</a></li>
+  <li><a href="#harmonics-and-drivetrain-effects" id="toc-harmonics-and-drivetrain-effects" class="nav-link" data-scroll-target="#harmonics-and-drivetrain-effects">Harmonics and Drivetrain Effects</a></li>
   </ul></li>
-  <li><a href="#why-direct-dc-integration-should-be-technically-possible" id="toc-why-direct-dc-integration-should-be-technically-possible" class="nav-link" data-scroll-target="#why-direct-dc-integration-should-be-technically-possible">Why direct DC integration should be technically possible</a></li>
-  <li><a href="#electrical-operating-principle" id="toc-electrical-operating-principle" class="nav-link" data-scroll-target="#electrical-operating-principle">Electrical operating principle</a></li>
-  <li><a href="#what-replaces-the-missing-dcdc-converter" id="toc-what-replaces-the-missing-dcdc-converter" class="nav-link" data-scroll-target="#what-replaces-the-missing-dcdc-converter">What replaces the missing DC/DC converter</a></li>
-  <li><a href="#evidence-supporting-the-assumption" id="toc-evidence-supporting-the-assumption" class="nav-link" data-scroll-target="#evidence-supporting-the-assumption">Evidence supporting the assumption</a>
+  <li><a href="#evidence-base" id="toc-evidence-base" class="nav-link" data-scroll-target="#evidence-base">Evidence Base</a>
   <ul class="collapse">
-  <li><a href="#industrial-concept-itm-power-and-ørsted" id="toc-industrial-concept-itm-power-and-ørsted" class="nav-link" data-scroll-target="#industrial-concept-itm-power-and-ørsted">Industrial concept: ITM Power and Ørsted</a></li>
-  <li><a href="#academic-control-concept-jing-et-al." id="toc-academic-control-concept-jing-et-al." class="nav-link" data-scroll-target="#academic-control-concept-jing-et-al.">Academic control concept: Jing et al.</a></li>
-  <li><a href="#small-scale-experimental-evidence-rmit-air-403" id="toc-small-scale-experimental-evidence-rmit-air-403" class="nav-link" data-scroll-target="#small-scale-experimental-evidence-rmit-air-403">Small-scale experimental evidence: RMIT / Air 403</a></li>
-  <li><a href="#counterpoint-mainstream-dc-wind-concepts-often-retain-dcdc" id="toc-counterpoint-mainstream-dc-wind-concepts-often-retain-dcdc" class="nav-link" data-scroll-target="#counterpoint-mainstream-dc-wind-concepts-often-retain-dcdc">Counterpoint: mainstream DC wind concepts often retain DC/DC</a></li>
+  <li><a href="#direct-proof-of-principle" id="toc-direct-proof-of-principle" class="nav-link" data-scroll-target="#direct-proof-of-principle">Direct Proof of Principle</a></li>
+  <li><a href="#wind-specific-proof-of-principle" id="toc-wind-specific-proof-of-principle" class="nav-link" data-scroll-target="#wind-specific-proof-of-principle">Wind-Specific Proof of Principle</a></li>
+  <li><a href="#industrial-architecture-support" id="toc-industrial-architecture-support" class="nav-link" data-scroll-target="#industrial-architecture-support">Industrial Architecture Support</a></li>
+  <li><a href="#adjacent-electrochemical-precedent" id="toc-adjacent-electrochemical-precedent" class="nav-link" data-scroll-target="#adjacent-electrochemical-precedent">Adjacent Electrochemical Precedent</a></li>
+  <li><a href="#engineering-qualification" id="toc-engineering-qualification" class="nav-link" data-scroll-target="#engineering-qualification">Engineering Qualification</a></li>
   </ul></li>
-  <li><a href="#technical-conditions-for-feasibility" id="toc-technical-conditions-for-feasibility" class="nav-link" data-scroll-target="#technical-conditions-for-feasibility">Technical conditions for feasibility</a>
-  <ul class="collapse">
-  <li><a href="#voltage-matching" id="toc-voltage-matching" class="nav-link" data-scroll-target="#voltage-matching">Voltage matching</a></li>
-  <li><a href="#current-density-control" id="toc-current-density-control" class="nav-link" data-scroll-target="#current-density-control">Current-density control</a></li>
-  <li><a href="#low-load-and-gas-crossover-limits" id="toc-low-load-and-gas-crossover-limits" class="nav-link" data-scroll-target="#low-load-and-gas-crossover-limits">Low-load and gas-crossover limits</a></li>
-  <li><a href="#dynamic-response" id="toc-dynamic-response" class="nav-link" data-scroll-target="#dynamic-response">Dynamic response</a></li>
-  <li><a href="#thermal-and-water-management" id="toc-thermal-and-water-management" class="nav-link" data-scroll-target="#thermal-and-water-management">Thermal and water management</a></li>
-  <li><a href="#fault-handling" id="toc-fault-handling" class="nav-link" data-scroll-target="#fault-handling">Fault handling</a></li>
-  </ul></li>
-  <li><a href="#implication-for-the-model" id="toc-implication-for-the-model" class="nav-link" data-scroll-target="#implication-for-the-model">Implication for the model</a></li>
-  <li><a href="#final-assessment" id="toc-final-assessment" class="nav-link" data-scroll-target="#final-assessment">Final assessment</a></li>
+  <li><a href="#validation-priorities" id="toc-validation-priorities" class="nav-link" data-scroll-target="#validation-priorities">Validation Priorities</a></li>
+  <li><a href="#model-implication" id="toc-model-implication" class="nav-link" data-scroll-target="#model-implication">Model Implication</a></li>
   </ul>
 </nav>
     </div>
@@ -596,25 +614,12 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="purpose-of-this-section" class="level2">
-<h2 class="anchored" data-anchor-id="purpose-of-this-section">Purpose of this section</h2>
-<p>The model assumes that, in a decentralised hydrogen architecture, the PEM electrolyser can be integrated directly on the wind turbine DC link. In other words, electrical power from the turbine is not exported as grid-quality AC and then rectified again for electrolysis. Instead, the turbine-side converter produces a controlled DC link, and the PEM stack or stack array is connected to that DC system.</p>
-<p>The purpose of this section is to explain why that assumption is reasonable. The argument is made in two steps:</p>
-<ol type="1">
-<li>direct DC integration has a clear system-level benefit; and</li>
-<li>direct DC integration without a separate electrolyser-side DC/DC converter is technically plausible if the turbine converter, PEM stack, and balance of plant are designed as one system.</li>
-</ol>
-<p>The assumed electrical chain is:</p>
-<pre class="text"><code>wind generator -&gt; active front-end rectifier / turbine-side converter -&gt; controlled DC link -&gt; PEM stack or PEM stack array</code></pre>
-<p>The turbine-side rectifier is assumed to be an <strong>active front end (AFE)</strong>. It controls generator torque and DC-link voltage. The PEM stack or PEM stack array is connected directly to this controlled DC bus.</p>
-<p>The architecture considered here has:</p>
-<ul>
-<li>no AC grid export from the turbine;</li>
-<li>no grid-side inverter;</li>
-<li>no separate electrolyser-side DC/DC converter;</li>
-<li>no dedicated stack current regulator between the DC link and the PEM stack;</li>
-<li>only protection and auxiliary devices such as DC-link capacitance, contactors, precharge circuits, dump load, brake chopper, crowbar, and emergency shutdown hardware.</li>
-</ul>
+<section id="role-in-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
+<p>The decentralised-hydrogen architecture directly couples a wind-turbine generator to a PEM electrolyser through a shared DC system. The model uses this configuration to remove conversion equipment that is only required for AC export or for supplying a conventional AC-fed electrolyser. The feasibility basis is the Hygro technical assessment of direct DC PEM-wind coupling <span class="citation" data-cites="verbistDamen2026DirectDC">(<a href="#ref-verbistDamen2026DirectDC" role="doc-biblioref">Verbist and Damen 2026</a>)</span>.</p>
+<p>The modelled electrical chain is:</p>
+<pre class="text"><code>wind-turbine generator -&gt; active rectifier/up-chopper -&gt; DC link -&gt; PEM stack or stack array</code></pre>
+<p>The architecture has no AC export connection, turbine grid-side inverter, electrolyser rectifier, or separate electrolyser-side DC/DC converter. The generator-side active rectifier/up-chopper remains part of the turbine and controls generator current, electromagnetic torque, and the power extracted from the rotor.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -625,290 +630,234 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The model assumes that direct DC integration is possible at system level. This does not imply that a PEM stack can simply be connected to an uncontrolled DC source. It assumes an integrated design in which the turbine AFE, DC-link control, PEM stack configuration, module switching, and balance-of-plant controls jointly keep the stack within its allowable operating envelope.</p>
+<p>A dedicated electrolyser-side DC/DC converter is not treated as a fundamental requirement. Its functions are instead allocated to generator power control, generator-stack electrical matching, supervisory operating limits, and coordinated protection. This is an integrated turbine-electrolyser design assumption, not an off-the-shelf equipment configuration.</p>
 </div>
 </div>
 </section>
-<section id="why-direct-dc-integration-is-beneficial" class="level2">
-<h2 class="anchored" data-anchor-id="why-direct-dc-integration-is-beneficial">Why direct DC integration is beneficial</h2>
-<p>The main benefit of direct DC integration is that it removes electrical conversion stages that are otherwise required only because the energy is temporarily handled as grid-quality AC.</p>
-<p>In a conventional AC-coupled architecture, the electrical chain is typically:</p>
-<pre class="text"><code>wind generator -&gt; machine-side converter -&gt; DC link -&gt; grid-side inverter -&gt; transformer -&gt; AC collection/export -&gt; transformer/rectifier -&gt; PEM stack</code></pre>
-<p>This architecture is logical when the product is electricity, or when many turbines feed a centralised electrolyser through an AC collection grid. However, if the only product is hydrogen and there is no AC export, several parts of the chain become avoidable from a system perspective.</p>
-<p>A PEM electrolyser is fundamentally a DC load. A modern full-converter wind turbine also already contains a DC link internally. Direct integration therefore tries to connect two parts of the system that are already naturally DC:</p>
-<pre class="text"><code>wind turbine internal DC link -&gt; PEM stack DC load</code></pre>
-<p>This creates four main benefits.</p>
-<section id="fewer-conversion-stages" class="level3">
-<h3 class="anchored" data-anchor-id="fewer-conversion-stages">Fewer conversion stages</h3>
-<p>Each electrical conversion stage adds cost, losses, cooling demand, protection equipment, and controls. Direct DC integration removes the need to convert the turbine DC link back to grid-quality AC and then convert that AC back to DC for the electrolyser.</p>
-<p>ITM Power’s wind-turbine electrolyser concept makes this argument explicitly. It describes a system with:</p>
-<blockquote class="blockquote">
-<p>“an electrolyser placed at the wind turbine … directly electrically connected to the DC link in the wind turbine”</p>
-</blockquote>
-<p>and states that Type IV turbine generators and their DC links:</p>
-<blockquote class="blockquote">
-<p>“have the potential to power the electrolyser directly”</p>
-</blockquote>
-<p>ITM describes the benefit as:</p>
-<blockquote class="blockquote">
-<p>“fewer power conversion steps”</p>
-</blockquote>
-<p>Source: ITM Power, <em>Wind turbine electrolyser integration</em>: <a href="https://itm-power.com/news/wind-turbine-electrolyser-integraion" class="uri">https://itm-power.com/news/wind-turbine-electrolyser-integraion</a></p>
-<p>This directly supports the modelling idea: if electricity is not the final export product, it is inefficient to force the system through the full AC-export chain before feeding a DC electrolyser.</p>
-</section>
-<section id="lower-electrical-infrastructure-requirement" class="level3">
-<h3 class="anchored" data-anchor-id="lower-electrical-infrastructure-requirement">Lower electrical infrastructure requirement</h3>
-<p>If hydrogen is produced at the turbine, the infield system can shift from electrical collection to hydrogen collection. This can reduce or avoid equipment such as turbine grid-side inverters, step-up transformers, offshore AC collection strings, offshore electrical platforms, and centralised electrolyser rectifier infrastructure.</p>
-<p>The benefit is not only efficiency. It is also structural: the offshore wind farm no longer needs to be designed primarily as an electrical export asset. It can be designed as a distributed hydrogen-production asset.</p>
-</section>
-<section id="better-fit-with-a-decentralised-hydrogen-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="better-fit-with-a-decentralised-hydrogen-architecture">Better fit with a decentralised hydrogen architecture</h3>
-<p>Direct DC integration aligns the electrical design with the value-chain design. In a decentralised architecture, each turbine becomes a hydrogen-production unit. The infield network collects hydrogen rather than electricity.</p>
-<p>This avoids moving large amounts of electrical power through an infield AC grid only to convert it back to DC at a central electrolyser. It also reduces the relevance of AC string capacity limits and offshore electrical platform sizing in the model.</p>
-</section>
-<section id="potentially-lower-cost-mass-and-losses" class="level3">
-<h3 class="anchored" data-anchor-id="potentially-lower-cost-mass-and-losses">Potentially lower cost, mass, and losses</h3>
-<p>Removing conversion stages can reduce:</p>
+<section id="operating-principle" class="level2">
+<h2 class="anchored" data-anchor-id="operating-principle">Operating Principle</h2>
+<p>The generator-side converter controls the electrical power supplied to the PEM system. The PEM polarisation characteristic then establishes the corresponding DC voltage and current. For a single stack, or the equivalent polarisation curve of the active stack array, the operating point satisfies:</p>
+<p><span class="math display">\[
+P_{\mathrm{gen}}
+=
+V_{\mathrm{stack}}\!\left(I_{\mathrm{stack}}\right)
+I_{\mathrm{stack}}.
+\]</span></p>
+<p>where:</p>
 <ul>
-<li>converter equipment;</li>
-<li>transformers;</li>
-<li>filters;</li>
-<li>switchgear;</li>
-<li>cooling systems;</li>
-<li>electrical platform weight;</li>
-<li>conversion losses;</li>
-<li>interface complexity between turbine and central electrolyser.</li>
+<li><span class="math inline">\(P_{\mathrm{gen}}\)</span> is the generator electrical power supplied to the DC system, in W;</li>
+<li><span class="math inline">\(I_{\mathrm{stack}}\)</span> is the total current through the active stack configuration, in A; and</li>
+<li><span class="math inline">\(V_{\mathrm{stack}}(I_{\mathrm{stack}})\)</span> is the voltage given by its polarisation curve at the applicable temperature, pressure, hydration state, tolerance, and age, in V.</li>
 </ul>
-<p>These benefits are the reason direct DC integration is worth modelling, even if it requires a more integrated turbine-electrolyser control system.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>As generator power rises or falls, the operating point moves along the applicable polarisation curve. The DC-link voltage is therefore an operating result rather than the primary controlled variable. Voltage is still measured for operating-envelope supervision, converter limits, and protection, but normal hydrogen production does not require a fixed DC-voltage reference.</p>
+<p>This distinction replaces the previous page assumption that an active-front-end voltage loop must hold the DC link at a prescribed value. Even where an active rectifier is used, its normal control objective in this architecture is generator current, torque, and power.</p>
+</section>
+<section id="model-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="model-calculation">Model Calculation</h2>
+<p>At each operating point, the turbine power command is bounded by the available wind power, generator capability, and the power that the PEM system can safely accept:</p>
+<p><span class="math display">\[
+P_{\mathrm{cmd}}
+=
+\min\!\left(
+P_{\mathrm{wind,available}},
+P_{\mathrm{gen,max}},
+P_{\mathrm{PEM,permitted}}
+\right).
+\]</span></p>
+<p>All four terms are powers in W. The permitted PEM power is a supervisory limit derived from current density, stack temperature and pressure, gas purity, water supply, cooling capacity, and the active stack configuration.</p>
+<p>The electrical operating point is then found by solving:</p>
+<p><span class="math display">\[
+P_{\mathrm{cmd}}
+=
+V_{\mathrm{stack}}\!\left(I_{\mathrm{stack}}\right)
+I_{\mathrm{stack}}
+\]</span></p>
+<p>within the permitted current and voltage range. The resulting <span class="math inline">\(I_{\mathrm{stack}}\)</span> and <span class="math inline">\(V_{\mathrm{stack}}\)</span> are passed to the <a href="../hydrogen_production/stack.html">PEM stack model</a> to calculate hydrogen production, efficiency, and degradation.</p>
+<p>If a modular stack array is used, branch switching changes the equivalent polarisation curve and provides coarse capacity selection. Generator torque remains the continuous power actuator.</p>
+</section>
+<section id="allocation-of-converter-functions" class="level2">
+<h2 class="anchored" data-anchor-id="allocation-of-converter-functions">Allocation of Converter Functions</h2>
+<p>Removing the separate stack converter does not remove its required functions. It reallocates them across the integrated system.</p>
+<table class="caption-top table">
+<caption>Allocation of functions normally associated with a separate electrolyser-side converter.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Provision in the direct-DC architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Power and current control</td>
+<td>Generator torque and current control, bounded by the power that the active PEM configuration can safely accept</td>
+</tr>
+<tr class="even">
+<td>Voltage adaptation</td>
+<td>Co-design of generator winding voltage, generator speed range, rectifier/up-chopper range, and PEM cell count</td>
+</tr>
+<tr class="odd">
+<td>PEM operating limits</td>
+<td>Supervisory permitted-power envelope based on current density, temperature, pressure, gas purity, water, and cooling conditions</td>
+</tr>
+<tr class="even">
+<td>Protection and isolation</td>
+<td>Coordinated turbine and electrolyser protection; earthing, insulation, and any galvanic-isolation requirement remain explicit system-design inputs</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="feasibility-conditions" class="level2">
+<h2 class="anchored" data-anchor-id="feasibility-conditions">Feasibility Conditions</h2>
+<section id="electrical-matching" class="level3">
+<h3 class="anchored" data-anchor-id="electrical-matching">Electrical Matching</h3>
+<p>The full PEM polarisation envelope must remain within the generator-side voltage and current ratings. The check must cover generator speed, stack temperature and pressure, manufacturing tolerance, and ageing. Matching is achieved through the generator winding design, converter range, series cell count, and any stack-array series/parallel configuration.</p>
+</section>
+<section id="boost-only-constraint" class="level3">
+<h3 class="anchored" data-anchor-id="boost-only-constraint">Boost-Only Constraint</h3>
+<p>If the generator-side power stage can only raise voltage, the passive rectified generator voltage must remain below the required stack voltage across the permitted speed range. A design that violates this condition would require a buck-capable conversion stage or a different generator-stack match.</p>
+</section>
+<section id="coordinated-control" class="level3">
+<h3 class="anchored" data-anchor-id="coordinated-control">Coordinated Control</h3>
+<p>The PEM controller must provide a continuously updated permitted-power limit. The turbine controller then applies the lowest of available wind power, generator capability, and this PEM limit. Communication failure must lead to a defined safe state rather than continued operation on a stale limit.</p>
+</section>
+<section id="modular-stack-option" class="level3">
+<h3 class="anchored" data-anchor-id="modular-stack-option">Modular Stack Option</h3>
+<p>A modular array may improve low-load operation, availability, and maintainability. Branch switching can select the active capacity in discrete steps, while generator torque control adjusts power continuously. Modularity is beneficial but is not a prerequisite for the underlying direct-coupling principle.</p>
+</section>
+<section id="start-stop-and-faults" class="level3">
+<h3 class="anchored" data-anchor-id="start-stop-and-faults">Start, Stop, and Faults</h3>
+<p>Turbine current reduction, pitch control, braking, and electrical isolation must be coordinated with PEM start permissives, stack isolation, purge, and safe shutdown. The control design must define timing and authority for start-up, normal stopping, load rejection, communication loss, and emergency shutdown.</p>
+</section>
+<section id="harmonics-and-drivetrain-effects" class="level3">
+<h3 class="anchored" data-anchor-id="harmonics-and-drivetrain-effects">Harmonics and Drivetrain Effects</h3>
+<p>Diode rectification can introduce generator-current harmonics and electromagnetic torque ripple. Generator electromagnetic design, converter thermal loading, and drivetrain loads therefore require validation for the selected topology <span class="citation" data-cites="andresen2025DCWind">(<a href="#ref-andresen2025DCWind" role="doc-biblioref">Andresen et al. 2025</a>)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Modelling implication
+<span class="screen-reader-only">Warning</span>Unresolved design input
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The modelling assumption is not that power electronics disappear. The assumption is that the turbine-side AFE remains, while the downstream grid-side inverter and electrolyser-side rectification/DC conversion stages are not modelled as separate conversion steps for the decentralised case.</p>
+<p>The repository does not yet provide the project-specific generator winding voltage, speed envelope, rectifier/up-chopper limits, or PEM polarisation envelopes over temperature, pressure, tolerance, and ageing. Until those inputs are available, the model can define the operating-point calculation and equipment boundary but cannot report a verified matched operating envelope.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="why-direct-dc-integration-should-be-technically-possible" class="level2">
-<h2 class="anchored" data-anchor-id="why-direct-dc-integration-should-be-technically-possible">Why direct DC integration should be technically possible</h2>
-<p>Direct DC integration should be technically possible because the two key electrical subsystems are compatible at a basic level:</p>
+<section id="evidence-base" class="level2">
+<h2 class="anchored" data-anchor-id="evidence-base">Evidence Base</h2>
+<section id="direct-proof-of-principle" class="level3">
+<h3 class="anchored" data-anchor-id="direct-proof-of-principle">Direct Proof of Principle</h3>
+<p>Clarke et al.&nbsp;directly coupled a 2.4 kW photovoltaic array to a PEM electrolyser without an intervening MPPT unit or DC/DC converter. Series-parallel configurations were selected to match the source and electrolyser voltage-current characteristics, and the system accumulated approximately 600 operating hours. This demonstrates that deliberate electrical matching and the PEM polarisation characteristic can establish a stable operating point without an intervening converter <span class="citation" data-cites="clarke2009DirectCoupling">(<a href="#ref-clarke2009DirectCoupling" role="doc-biblioref">Clarke et al. 2009</a>)</span>.</p>
+<p>This is proof of the electrical principle, not direct evidence for a multi-megawatt wind turbine.</p>
+</section>
+<section id="wind-specific-proof-of-principle" class="level3">
+<h3 class="anchored" data-anchor-id="wind-specific-proof-of-principle">Wind-Specific Proof of Principle</h3>
+<p>Chantharasenawong et al.&nbsp;investigated direct coupling of a fixed-pitch, variable-speed aerogenerator to PEM electrolysers without intervening voltage-conversion or maximum-power-point-tracking electronics. The remote-area system is not representative of a modern offshore turbine, but it directly supports matching a wind generator and PEM load <span class="citation" data-cites="chantharasenawong2008DirectCoupling">(<a href="#ref-chantharasenawong2008DirectCoupling" role="doc-biblioref"><span class="nocase">Chantharasenawong et al.</span> 2008</a>)</span>.</p>
+</section>
+<section id="industrial-architecture-support" class="level3">
+<h3 class="anchored" data-anchor-id="industrial-architecture-support">Industrial Architecture Support</h3>
+<p>ITM Power and Ørsted proposed placing an electrolyser at an individual Type IV wind turbine and connecting it directly to the turbine DC link. They identify fewer conversion steps, lower losses, a smaller electrolyser footprint, and removal of AC rectification as potential benefits. The publication also states that the system had not been demonstrated in practice, so it supports the intended architecture but does not prove this exact converter arrangement at scale <span class="citation" data-cites="itm2020WindTurbineElectrolyser">(<a href="#ref-itm2020WindTurbineElectrolyser" role="doc-biblioref">ITM Power and Ørsted 2020</a>)</span>.</p>
+</section>
+<section id="adjacent-electrochemical-precedent" class="level3">
+<h3 class="anchored" data-anchor-id="adjacent-electrochemical-precedent">Adjacent Electrochemical Precedent</h3>
+<p>Fraunhofer ICT’s RedoxWind project connects a redox-flow battery directly to the intermediate DC circuit of a 2 MW wind turbine, eliminating an additional conversion step. A battery is not electrically or operationally identical to a PEM electrolyser, but the project validates turbine-level integration of an electrochemical system on a shared DC circuit <span class="citation" data-cites="fraunhoferRedoxWind">(<a href="#ref-fraunhoferRedoxWind" role="doc-biblioref">Fraunhofer Institute for Chemical Technology ICT, n.d.</a>)</span>.</p>
+</section>
+<section id="engineering-qualification" class="level3">
+<h3 class="anchored" data-anchor-id="engineering-qualification">Engineering Qualification</h3>
+<p>Recent DC wind-turbine research confirms the potential benefit of fewer conversion stages but generally retains high-power DC/DC conversion for voltage adaptation, isolation, and fault handling. This shows that a DC/DC converter may be useful; it does not show that one is inherently required to determine the PEM operating point. The same work identifies current harmonics and torque ripple as validation topics for diode-rectifier concepts <span class="citation" data-cites="andresen2025DCWind">(<a href="#ref-andresen2025DCWind" role="doc-biblioref">Andresen et al. 2025</a>)</span>.</p>
+</section>
+</section>
+<section id="validation-priorities" class="level2">
+<h2 class="anchored" data-anchor-id="validation-priorities">Validation Priorities</h2>
+<table class="caption-top table">
+<caption>Integration-specific validation priorities.</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Validation area</th>
+<th>Required demonstration</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Operating envelope</td>
+<td>Verify the matched generator and PEM voltage-current range over speed, temperature, pressure, tolerance, and ageing</td>
+</tr>
+<tr class="even">
+<td>Control coordination</td>
+<td>Demonstrate generator-power control against the PEM polarisation model, including low-load transitions and branch switching where used</td>
+</tr>
+<tr class="odd">
+<td>Faults and sequencing</td>
+<td>Validate start permission, load rejection, communication failure, isolation, purge, and safe shutdown with agreed timing and authority</td>
+</tr>
+<tr class="even">
+<td>Electrical and mechanical effects</td>
+<td>Measure rectifier harmonics, torque ripple, thermal loading, and current sharing before progressing to a multi-megawatt demonstrator</td>
+</tr>
+</tbody>
+</table>
+<p>Component-level turbine and PEM qualification remains necessary but is not repeated here. The new work is the matching, exchange of limits, timing, and allocation of control authority across the shared interface.</p>
+</section>
+<section id="model-implication" class="level2">
+<h2 class="anchored" data-anchor-id="model-implication">Model Implication</h2>
+<p>For the decentralised-hydrogen architecture, the model therefore:</p>
 <ul>
-<li>a Type IV wind turbine already contains a controlled DC link; and</li>
-<li>a PEM electrolyser stack is a DC electrochemical load.</li>
+<li>retains the generator-side active rectifier/up-chopper and its losses;</li>
+<li>excludes the turbine grid-side inverter and AC export equipment from the hydrogen power path;</li>
+<li>excludes an electrolyser rectifier and separate electrolyser-side DC/DC converter;</li>
+<li>determines stack voltage and current from generator power and the active PEM polarisation curve; and</li>
+<li>retains supervisory controls, measurement, protection, isolation, and balance-of-plant interlocks as required functions.</li>
 </ul>
-<p>The question is therefore not whether PEM electrolysis can use DC power. It can. The real question is whether the PEM stack can be operated safely and efficiently from the turbine DC link <strong>without adding a separate DC/DC converter between the DC link and the stack</strong>.</p>
-<p>The answer is: yes, if the system is designed around voltage matching and active DC-link control.</p>
-</section>
-<section id="electrical-operating-principle" class="level2">
-<h2 class="anchored" data-anchor-id="electrical-operating-principle">Electrical operating principle</h2>
-<p>A PEM electrolyser stack draws current according to its polarization curve. The stack voltage can be represented conceptually as:</p>
-<pre class="text"><code>V_stack = N_cells * V_cell(j, temperature, pressure, hydration, ageing)</code></pre>
-<p>where <code>j</code> is current density.</p>
-<p>With a dedicated DC/DC converter, the converter normally regulates stack current. Without that converter, stack current is instead determined by the controlled DC-link voltage and the PEM polarization curve.</p>
-<p>The direct-coupled design therefore becomes a voltage-matched system:</p>
-<pre class="text"><code>turbine DC-link operating range ~= PEM stack operating voltage range</code></pre>
-<p>If the PEM stack cell count and module configuration are selected so that the stack voltage range matches the turbine DC-link operating range, the stack can be supplied directly from the DC link. The AFE then acts as the main electrical actuator by regulating the DC-link voltage and controlling generator torque.</p>
-<p>This is why the assumption is credible: the turbine-side AFE can provide controlled DC power, and the PEM stack can accept controlled DC power.</p>
-</section>
-<section id="what-replaces-the-missing-dcdc-converter" class="level2">
-<h2 class="anchored" data-anchor-id="what-replaces-the-missing-dcdc-converter">What replaces the missing DC/DC converter</h2>
-<p>Removing the electrolyser-side DC/DC converter does not remove the need for control. It relocates the control function.</p>
-<p>In a conventional system, the DC/DC converter or rectifier supply normally provides:</p>
-<ul>
-<li>stack current control;</li>
-<li>voltage matching;</li>
-<li>current limiting;</li>
-<li>current ripple reduction;</li>
-<li>controlled start-up and shutdown;</li>
-<li>some degree of electrical decoupling;</li>
-<li>fault management and protection.</li>
-</ul>
-<p>In the direct DC architecture, these functions must be provided by the integrated system:</p>
-<ul>
-<li>the AFE regulates DC-link voltage;</li>
-<li>generator torque control limits the mechanical-to-electrical power conversion;</li>
-<li>pitch control curtails aerodynamic power when required;</li>
-<li>stack modules can be switched in and out to adjust the effective PEM load;</li>
-<li>optional series/parallel reconfiguration can adjust stack voltage range;</li>
-<li>a DC-link capacitor handles short electrical transients;</li>
-<li>a brake chopper or dump load handles stack rejection and emergency overvoltage;</li>
-<li>balance-of-plant interlocks ensure water, temperature, pressure, and gas-purity limits are respected.</li>
-</ul>
-<p>The most credible architecture is therefore:</p>
-<pre class="text"><code>PMSG wind turbine -&gt; AFE -&gt; controlled DC link -&gt; segmented PEM stack array</code></pre>
-<p>with module switching and emergency dump/brake protection.</p>
-</section>
-<section id="evidence-supporting-the-assumption" class="level2">
-<h2 class="anchored" data-anchor-id="evidence-supporting-the-assumption">Evidence supporting the assumption</h2>
-<section id="industrial-concept-itm-power-and-ørsted" class="level3">
-<h3 class="anchored" data-anchor-id="industrial-concept-itm-power-and-ørsted">Industrial concept: ITM Power and Ørsted</h3>
-<p>ITM Power explicitly describes the direct DC-link integration concept. The proposed system places the electrolyser at the wind turbine and connects it directly to the turbine DC link:</p>
-<blockquote class="blockquote">
-<p>“an electrolyser placed at the wind turbine … directly electrically connected to the DC link in the wind turbine”</p>
-</blockquote>
-<p>ITM also states that Type IV turbine generators and their DC links:</p>
-<blockquote class="blockquote">
-<p>“have the potential to power the electrolyser directly”</p>
-</blockquote>
-<p>and that the approach enables:</p>
-<blockquote class="blockquote">
-<p>“fewer power conversion steps”</p>
-</blockquote>
-<p>Source: ITM Power, <em>Wind turbine electrolyser integration</em>: <a href="https://itm-power.com/news/wind-turbine-electrolyser-integraion" class="uri">https://itm-power.com/news/wind-turbine-electrolyser-integraion</a></p>
-<p>This source is important because it confirms that direct turbine-DC-link coupling is not merely a theoretical modelling shortcut. It is an identified industrial concept for reducing conversion stages in offshore wind-to-hydrogen systems.</p>
-<p>However, ITM also states:</p>
-<blockquote class="blockquote">
-<p>“Such a system has not been demonstrated in practice”</p>
-</blockquote>
-<p>Therefore, this reference supports the feasibility and relevance of the model assumption, but it does not prove a commercial MW-scale no-DC/DC implementation.</p>
-</section>
-<section id="academic-control-concept-jing-et-al." class="level3">
-<h3 class="anchored" data-anchor-id="academic-control-concept-jing-et-al.">Academic control concept: Jing et al.</h3>
-<p>Jing et al.&nbsp;describe a non-grid-connected wind-hydrogen architecture that:</p>
-<blockquote class="blockquote">
-<p>“directly connects the Source wind turbines and the Load hydrogen production devices through a DC bus”</p>
-</blockquote>
-<p>The electrolyser load is described as:</p>
-<blockquote class="blockquote">
-<p>“a modular proton exchange membrane (PEM) water electrolytic hydrogen production array”</p>
-</blockquote>
-<p>The control strategy regulates:</p>
-<blockquote class="blockquote">
-<p>“the size of the PEM array … and DC voltage collaboratively”</p>
-</blockquote>
-<p>Source: Jing et al., <em>Research on the Structure and Control Strategy of Energy Router for Non-grid-connected Source-Load Hydrogen Production System</em>: <a href="https://link.springer.com/content/pdf/10.1007/s42835-021-00774-w.pdf" class="uri">https://link.springer.com/content/pdf/10.1007/s42835-021-00774-w.pdf</a></p>
-<p>This is directly aligned with the model assumption. Instead of using a separate DC/DC converter to regulate the PEM stack, the system controls the DC bus and changes the effective PEM array size. This supports the idea that a segmented stack array can replace part of the function of an electrolyser-side converter.</p>
-<p>The limitation is that this is an academic control and simulation reference, not evidence of a commercial field system.</p>
-</section>
-<section id="small-scale-experimental-evidence-rmit-air-403" class="level3">
-<h3 class="anchored" data-anchor-id="small-scale-experimental-evidence-rmit-air-403">Small-scale experimental evidence: RMIT / Air 403</h3>
-<p>The RMIT direct-coupling work explicitly investigated wind-to-PEM coupling:</p>
-<blockquote class="blockquote">
-<p>“without the need for intervening voltage converters and maximum power point tracking electronics”</p>
-</blockquote>
-<p>Source: RMIT, <em>Direct coupling of a fixed-pitch variable speed aerogenerator to PEM electrolysers in a wind-hydrogen system for remote area power supply</em>: <a href="https://research-repository.rmit.edu.au/articles/conference_contribution/Direct_coupling_of_a_fixed-pitch_variable_speed_aerogenerator_to_PEM_electrolysers_in_a_wind-hydrogen_system_for_remote_area_power_supply/27369558" class="uri">https://research-repository.rmit.edu.au/articles/conference_contribution/Direct_coupling_of_a_fixed-pitch_variable_speed_aerogenerator_to_PEM_electrolysers_in_a_wind-hydrogen_system_for_remote_area_power_supply/27369558</a></p>
-<p>This supports the physical feasibility of direct wind-to-PEM coupling without voltage conversion. It is not directly scalable evidence for a modern MW offshore turbine, but it demonstrates that matching generator and PEM stack electrical characteristics can produce a working direct-coupled system.</p>
-</section>
-<section id="counterpoint-mainstream-dc-wind-concepts-often-retain-dcdc" class="level3">
-<h3 class="anchored" data-anchor-id="counterpoint-mainstream-dc-wind-concepts-often-retain-dcdc">Counterpoint: mainstream DC wind concepts often retain DC/DC</h3>
-<p>A recent paper on DC wind-turbine concepts notes that DC coupling is attractive because:</p>
-<blockquote class="blockquote">
-<p>“wind turbine converters and electrolyzers operate internally with dc voltage”</p>
-</blockquote>
-<p>and that DC concepts can reduce equipment because:</p>
-<blockquote class="blockquote">
-<p>“the number of conversion stages and filters is reduced”</p>
-</blockquote>
-<p>However, the same paper states:</p>
-<blockquote class="blockquote">
-<p>“A key component for the application of dc technology in WTs is a high-power dc-dc converter”</p>
-</blockquote>
-<p>with functions including:</p>
-<blockquote class="blockquote">
-<p>“stepping up/down dc voltages, galvanic isolation and fault ride-through capability”</p>
-</blockquote>
-<p>Source: <em>Evaluation of wind turbine concepts for coupling wind energy and electrolysis</em>: <a href="https://link.springer.com/article/10.1007/s10010-025-00796-0" class="uri">https://link.springer.com/article/10.1007/s10010-025-00796-0</a></p>
-<p>This is an important qualification. It shows that direct DC integration is attractive, but a separate DC/DC converter is still often used in mainstream DC architectures because it provides voltage adaptation, isolation, and protection. Therefore, the no-DC/DC assumption is technically defensible but should be treated as an integrated-design assumption rather than a standard off-the-shelf configuration.</p>
-</section>
-</section>
-<section id="technical-conditions-for-feasibility" class="level2">
-<h2 class="anchored" data-anchor-id="technical-conditions-for-feasibility">Technical conditions for feasibility</h2>
-<section id="voltage-matching" class="level3">
-<h3 class="anchored" data-anchor-id="voltage-matching">Voltage matching</h3>
-<p>The PEM stack voltage range must match the turbine DC-link voltage range. This can be done by selecting the number of cells in series and by arranging stack modules in suitable series/parallel strings.</p>
-<p>If the DC-link voltage is too low, the stack will produce little or no hydrogen. If it is too high, current density can exceed stack limits. The design therefore needs voltage matching at rated power and acceptable operation across the expected wind-power range.</p>
-</section>
-<section id="current-density-control" class="level3">
-<h3 class="anchored" data-anchor-id="current-density-control">Current-density control</h3>
-<p>The PEM stack must remain within its allowable current-density range. A review of dynamic PEM operation notes:</p>
-<blockquote class="blockquote">
-<p>“Dynamic operation of PEM electrolyzers via modulation of the operating current density brings with it several challenges - namely, heat management, gas crossover and associated safety concerns, and stack degradation.”</p>
-</blockquote>
-<p>Source: <a href="https://arxiv.org/html/2405.06766v1" class="uri">https://arxiv.org/html/2405.06766v1</a></p>
-<p>In the direct DC architecture, current density is constrained by DC-link voltage control, wind curtailment, and stack-module switching rather than by a dedicated DC/DC converter.</p>
-</section>
-<section id="low-load-and-gas-crossover-limits" class="level3">
-<h3 class="anchored" data-anchor-id="low-load-and-gas-crossover-limits">Low-load and gas-crossover limits</h3>
-<p>Low-load operation can create gas-purity and crossover concerns. A direct wind-coupled system will naturally encounter low-load operation unless it is curtailed, idled, or shut down below a defined threshold.</p>
-<p>A 2025 RSC paper on PEM operation at differential pressure states that understanding hydrogen permeation is:</p>
-<blockquote class="blockquote">
-<p>“critical towards developing effective gas recombination strategies that enable safe operation”</p>
-</blockquote>
-<p>Source: <a href="https://pubs.rsc.org/en/Content/ArticleLanding/2025/EE/D5EE00048C" class="uri">https://pubs.rsc.org/en/Content/ArticleLanding/2025/EE/D5EE00048C</a></p>
-<p>The model assumption should therefore include a minimum safe operating region or shutdown logic. Direct DC connection should not be interpreted as uncontrolled low-current operation at arbitrary pressure.</p>
-</section>
-<section id="dynamic-response" class="level3">
-<h3 class="anchored" data-anchor-id="dynamic-response">Dynamic response</h3>
-<p>PEM electrolysers are suitable for dynamic renewable operation, but dynamic operation still affects degradation, thermal control, pressure control, and gas management. A review of PEM dynamic operation states that renewable intermittency:</p>
-<blockquote class="blockquote">
-<p>“poses several technological challenges and financial questions”</p>
-</blockquote>
-<p>Source: <a href="https://www.mdpi.com/1996-1073/18/9/2154" class="uri">https://www.mdpi.com/1996-1073/18/9/2154</a></p>
-<p>This does not invalidate direct DC integration. It means the stack and balance of plant must be qualified for turbine-driven operation, including ramps, starts, stops, and curtailment events.</p>
-</section>
-<section id="thermal-and-water-management" class="level3">
-<h3 class="anchored" data-anchor-id="thermal-and-water-management">Thermal and water management</h3>
-<p>At high current density, the stack generates more heat and requires adequate water supply and cooling. In a direct DC architecture, the AFE and the PEM balance of plant must coordinate closely so the stack is only energised when water flow, temperature, pressure, and conductivity are within safe limits.</p>
-</section>
-<section id="fault-handling" class="level3">
-<h3 class="anchored" data-anchor-id="fault-handling">Fault handling</h3>
-<p>The most critical event is a PEM stack trip while the turbine is producing power. Without a DC/DC converter, there is less electrical decoupling between the turbine and the stack. The DC link can overvoltage quickly unless excess energy is removed or turbine power is reduced.</p>
-<p>A credible direct DC architecture therefore needs:</p>
-<ul>
-<li>fast torque reduction by the AFE;</li>
-<li>pitch or aerodynamic curtailment;</li>
-<li>DC brake chopper or dump load;</li>
-<li>high-speed stack isolation;</li>
-<li>controlled DC-link discharge;</li>
-<li>safe hydrogen shutdown sequence.</li>
-</ul>
-</section>
-</section>
-<section id="implication-for-the-model" class="level2">
-<h2 class="anchored" data-anchor-id="implication-for-the-model">Implication for the model</h2>
-<p>For modelling purposes, direct DC integration can be represented as an architecture that removes the grid-side inverter and the electrolyser-side rectifier/DC conversion stage from the hydrogen-production power path.</p>
-<p>The assumption is justified because:</p>
-<ol type="1">
-<li>the PEM stack is a DC load;</li>
-<li>the turbine already has a controlled DC link;</li>
-<li>industrial concepts explicitly propose direct connection of the electrolyser to the turbine DC link;</li>
-<li>academic work supports direct DC bus connection with modular PEM stack arrays;</li>
-<li>small-scale experiments have shown direct wind-to-PEM coupling without voltage converters;</li>
-<li>the missing DC/DC functions can be replaced by AFE control, stack segmentation, and protection systems.</li>
-</ol>
-<p>The model should nevertheless treat this as an <strong>integrated turbine-electrolyser configuration</strong>, not as a conventional turbine plus conventional electrolyser package. The feasibility depends on co-design.</p>
-</section>
-<section id="final-assessment" class="level2">
-<h2 class="anchored" data-anchor-id="final-assessment">Final assessment</h2>
-<p>Direct integration of a PEM stack or PEM stack array on the turbine DC link is a reasonable model assumption for a decentralised hydrogen architecture.</p>
-<p>The main reason to use it is that it avoids unnecessary AC conversion when the final product is hydrogen rather than electricity. It can reduce conversion stages, electrical infrastructure, equipment mass, and conversion losses. It also fits the system logic of a decentralised hydrogen wind farm, where the infield network collects hydrogen instead of electricity.</p>
-<p>Technically, the assumption is defensible because a PEM stack is a DC load and a Type IV wind turbine already has a controlled DC link. With an AFE controlling DC-link voltage and generator torque, and with a voltage-matched segmented PEM stack array, direct operation without a separate electrolyser-side DC/DC converter should be possible.</p>
-<p>The strongest practical formulation is:</p>
-<pre class="text"><code>AFE-controlled turbine DC link + voltage-matched segmented PEM stack array + module switching + emergency dump/brake protection</code></pre>
+<p>No converter CAPEX or conversion-loss allowance should be assigned to a separate electrolyser-side DC/DC stage in this architecture. This treatment applies only if the project-specific electrical matching and protection requirements can be met.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Feasibility statement
+<span class="screen-reader-only">Important</span>Final assessment
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The model assumption is credible: <strong>direct DC integration without a separate electrolyser-side DC/DC converter should be technically possible</strong>, provided the turbine AFE, PEM stack array, protection system, and balance of plant are co-designed. It is not yet a widely proven MW-scale commercial standard, so it should be treated as an advanced integrated architecture rather than an off-the-shelf configuration.</p>
+<p>Direct DC coupling of a wind-turbine generator and PEM electrolyser without a dedicated electrolyser-side DC/DC converter is technically credible. The turbine controls generator power, while the PEM polarisation characteristic establishes the corresponding DC voltage and current. The remaining gap is full-scale engineering validation, not proof of the underlying electrical principle.</p>
 </div>
 </div>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-andresen2025DCWind" class="csl-entry" role="listitem">
+Andresen, Florian, Fabian Herzog, Benedict J. Mortimer, and Rik W. De Doncker. 2025. <span>“Evaluation of <span>DC</span> Wind Turbine Concepts for Coupling Wind Energy with Electrolysis.”</span> <em>Forschung Im Ingenieurwesen</em> 89 (1): 35. <a href="https://doi.org/10.1007/s10010-025-00796-0">https://doi.org/10.1007/s10010-025-00796-0</a>.
+</div>
+<div id="ref-chantharasenawong2008DirectCoupling" class="csl-entry" role="listitem">
+<span class="nocase">Chantharasenawong, Akraphon et al.</span> 2008. <span>“Direct Coupling of a Fixed-Pitch Variable-Speed Aerogenerator to <span>PEM</span> Electrolysers in a Wind-Hydrogen System for Remote Area Power Supply.”</span> <em>17th World Hydrogen Energy Conference (<span>WHEC</span> 2008)</em>. <a href="https://research-repository.rmit.edu.au/articles/conference_contribution/Direct_coupling_of_a_fixed-pitch_variable_speed_aerogenerator_to_PEM_electrolysers_in_a_wind-hydrogen_system_for_remote_area_power_supply/27369558">https://research-repository.rmit.edu.au/articles/conference_contribution/Direct_coupling_of_a_fixed-pitch_variable_speed_aerogenerator_to_PEM_electrolysers_in_a_wind-hydrogen_system_for_remote_area_power_supply/27369558</a>.
+</div>
+<div id="ref-clarke2009DirectCoupling" class="csl-entry" role="listitem">
+Clarke, R. E., S. Giddey, F. T. Ciacchi, S. P. S. Badwal, B. Paul, and J. Andrews. 2009. <span>“Direct Coupling of an Electrolyser to a Solar <span>PV</span> System for Generating Hydrogen.”</span> <em>International Journal of Hydrogen Energy</em> 34 (6): 2531–42. <a href="https://doi.org/10.1016/j.ijhydene.2009.01.053">https://doi.org/10.1016/j.ijhydene.2009.01.053</a>.
+</div>
+<div id="ref-fraunhoferRedoxWind" class="csl-entry" role="listitem">
+Fraunhofer Institute for Chemical Technology ICT. n.d. <span>“<span>RedoxWind</span>: Redox Flow Battery Meets Wind Turbine.”</span> Accessed August 5, 2026. <a href="https://www.ict.fraunhofer.de/en/research/ae/redoxwind.html">https://www.ict.fraunhofer.de/en/research/ae/redoxwind.html</a>.
+</div>
+<div id="ref-itm2020WindTurbineElectrolyser" class="csl-entry" role="listitem">
+ITM Power, and Ørsted. 2020. <span>“Wind Turbine Electrolyser Integration.”</span> April 6. <a href="https://itm-power.com/news/wind-turbine-electrolyser-integraion">https://itm-power.com/news/wind-turbine-electrolyser-integraion</a>.
+</div>
+<div id="ref-verbistDamen2026DirectDC" class="csl-entry" role="listitem">
+Verbist, Victor, and Michiel Damen. 2026. <em>Direct <span>DC</span> Coupling of a <span>PEM</span> Electrolyser to a Wind-Turbine Generator</em>. Two-page technical feasibility report. Hygro Technology B.V.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {
