@@ -7,7 +7,7 @@ completion: 90
 
 Electrolyser power electronics convert the 66 kV infield AC supply to the controlled low-voltage DC required by the PEM stacks.
 
-This page represents the complete conversion chain between the 66 kV platform input and the stack DC terminals as one aggregated subsystem. It includes the plant step-down transformer, rectifier transformers, rectifier cabinets, converter controls, and dedicated conversion-system cooling. Turbine-side conversion equipment is covered in [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd). The PEM stack and its polarisation behaviour are covered in [Stack](stack.qmd). Hydrogen compression is covered separately in [Compressor](../hydrogen_infra/compressor.qmd).
+This page represents the complete conversion chain between the 66 kV platform input and the stack DC terminals as one aggregated subsystem. It includes the plant step-down transformer, rectifier transformers, rectifier cabinets, converter controls, and dedicated conversion-system cooling. Turbine-side conversion equipment is covered in [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd). The PEM stack and its polarisation behaviour are covered in [Stack](stack.qmd). Hydrogen compression is covered separately in [Compressor](../hydrogen_infra/compressor.qmd).
 
 ## Scope
 
@@ -132,4 +132,3 @@ This model is intended for early-stage techno-economic assessment. Several previ
 
 : Remaining limitations of the power-electronics model.
 
- 

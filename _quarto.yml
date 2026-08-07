@@ -45,8 +45,6 @@ website:
         contents:
           - turbine_system/overview.qmd
           - turbine_system/wind_turbine.qmd
-          - turbine_system/generator_and_power_electronics.qmd
-          - turbine_system/tower_nacelle_and_mass.qmd
           - turbine_system/foundation.qmd
       - section: "Electrical Infrastructure"
         contents:

@@ -1,39 +1,597 @@
 ---
-title: "Wind Turbine"
-completion: 30
+title: "Wind Turbine Mass and Cost"
+completion: 70
 ---
 
-## Role in the Value Chain
+## Role and Scope
 
-The wind turbine converts wind energy to mechanical and then electrical power. In the model it defines rated power, turbine count, gross production, and the capacity basis for several downstream components.
+This page calculates the component masses and supply cost of one offshore wind turbine. The parametric inputs are generator capacity $P$, rotor diameter $D$, and hub height $H_h$. Component masses are retained individually because they determine structural loads, transport requirements, lift configurations, and installation-vessel feasibility.
 
-## Current Cost Model
+The calculation uses the NREL Cost and Scaling Model (CSM) implemented in WISDEM. The CSM estimates component masses from high-level turbine inputs and then estimates component costs from those masses [@wisdemCSM2026]. It is used here because its equations and inputs are explicit. WISDEM notes that the regressions include older WindPACT-era relationships and recommends overriding them with more detailed estimates where available [@wisdemCSM2026].
 
-| Item | Assumption |
+This implementation is pinned to WISDEM source revision `584c39191b61ab2654c1f1fab2871e0f5bec4064` [@wisdemSource2026]. A different WISDEM revision must not be substituted without checking every coefficient below.
+
+| Included on this page | Accounted elsewhere |
+|---|---|
+| Blades, hub, pitch system and spinner | Monopile or other foundation |
+| Mechanical drivetrain and generator | Offshore turbine transport and installation |
+| Nacelle structure and auxiliary systems | Array and export cables |
+| Turbine electrical equipment and transformer when present | Offshore and onshore substations |
+| Tower | Grid connection and other balance-of-system costs |
+
+The cost boundary is turbine supply at the stated commercial basis. Offshore transport and installation are calculated on [Turbine and Foundation Installation](../offshore_installation/turbine_and_foundation_installation.qmd). For decentralised hydrogen, electrolyser, water-treatment, compression, storage, and hydrogen-export equipment are not turbine CAPEX. Their masses must nevertheless enter the installation and structural models when they are installed in or on the turbine.
+
+## Parametric Inputs
+
+| Symbol | Description | Unit |
+|---|---|---:|
+| $P$ | Generator rated capacity | kW |
+| $D$ | Rotor diameter | m |
+| $H_h$ | Hub height above mean sea level | m |
+
+When hub height is not specified independently, the default relationship provides 15 m lower-tip clearance above mean sea level:
+
+$$
+H_h=\frac{D}{2}+15.
+$$
+
+The structural tower interface is assumed to be 15 m above mean sea level. Tower length is therefore derived rather than entered independently:
+
+$$
+L_t=H_h-15.
+$$
+
+Under the default hub-height relationship, $L_t=D/2$. A project-specific hub height can override the default while retaining the same 15 m interface elevation.
+
+## Fixed Model Assumptions
+
+The following quantities are model constants or scenario definitions, not parametric inputs:
+
+| Quantity | Baseline treatment |
+|---|---|
+| Number of blades | $n_b=3$ |
+| Maximum blade-tip speed | $V_\mathrm{tip}=95$ m/s |
+| Rated drivetrain efficiency | $\eta=0.95$ |
+| Blade regression | IEC Class I with carbon reinforcement |
+| Main bearings | $n_\mathrm{brg}=2$ |
+| Nacelle crane | Included |
+| Reference drivetrain | Permanent-magnet direct drive |
+| Electrical architecture | Selected scenario: electricity export or decentralised hydrogen |
+
+Rated power and rotor diameter do not uniquely determine maximum blade-tip speed. Tip speed is a turbine design and control limit affected by aerodynamic, acoustic, structural, and generator constraints. Fixing it at the IEA 15 MW reference value keeps the parametric model limited to $P$, $D$, and $H_h$ [@gaertner2020IEA15].
+
+## Calculation Sequence
+
+The calculation is performed in dependency order:
+
+1. calculate rated rotor speed and torque;
+2. calculate blade and hub-system masses;
+3. calculate drivetrain, nacelle, electrical, and tower masses;
+4. select the components present in the chosen drivetrain and electrical architecture;
+5. aggregate rotor, nacelle, RNA, tower, and complete-turbine masses;
+6. calculate raw component costs; and
+7. calibrate the raw WISDEM cost to a stated offshore-turbine cost reference.
+
+## Rated Speed and Torque
+
+The rated rotor angular velocity follows from the fixed 95 m/s tip-speed limit:
+
+$$
+\omega_r=\frac{V_\mathrm{tip}}{D/2}.
+$$
+
+Rated rotor speed and low-speed-shaft torque are:
+
+$$
+n_r=\omega_r\frac{60}{2\pi},
+\qquad
+Q_r=\frac{1000P/\eta}{\omega_r},
+$$
+
+where $n_r$ is in revolutions per minute and $Q_r$ is in Nm. A larger rotor rotates more slowly for the same tip-speed limit and consequently transmits more torque at the same rated power.
+
+## Rotor Mass
+
+### Blade
+
+The baseline WISDEM mass of one blade is:
+
+$$
+m_b=0.5\left(\frac{D}{2}\right)^b,
+$$
+
+where $m_b$ is in kg. The exponent $b$ depends on turbine class and carbon reinforcement [@wisdemSource2026].
+
+| Blade assumption | $b$ |
 |---|---:|
-| Turbine rating | 15 MW |
-| Turbine CAPEX | 1,100 EUR/kW |
-| Turbine CAPEX per 15 MW turbine | 16.5 million EUR |
-| Turbine OPEX | 200,000 EUR/turbine/year |
-| Development cost | 72 million EUR/farm plus 70,000 EUR/turbine |
+| Class I with carbon reinforcement | 2.47 |
+| Class I without carbon reinforcement | 2.54 |
+| Class II or III with carbon reinforcement | 2.44 |
+| Class II or III without carbon reinforcement | 2.50 |
 
-The turbine cost is treated as linear in rated power for the current 15 MW baseline.
+The offshore screening case uses Class I with carbon reinforcement unless another class or blade design is specified.
 
-## Energy Balance
+### Hub, pitch system, and spinner
 
-The turbine power curve and wake model determine gross turbine output. For the electricity configuration, the turbine output measurement is treated as being after the inverter and before the internal transformer. The transformer is included in total turbine cost but its efficiency is accounted for in the electrical chain.
+Hub mass is:
 
-For decentralised hydrogen, the electrical conversion chain differs because the PEM stack can connect to the turbine DC link rather than using the full inverter-transformer path.
+$$
+m_\mathrm{hub}=2.3m_b+1320.
+$$
 
-## Availability
+WISDEM first calculates pitch-bearing mass and then complete pitch-system mass:
 
-| Configuration | Turbine availability |
-|---|---:|
-| Electric turbine chain | 98.0% |
-| Hydrogen turbine chain | 98.5% |
+$$
+m_\mathrm{pb}=0.1295n_bm_b+491.31,
+$$
 
-The hydrogen turbine availability is higher in the current assumption set because fewer turbine-side electrical conversion components are present in the decentralised hydrogen chain.
+$$
+m_\mathrm{pitch}=1.328m_\mathrm{pb}+555.
+$$
 
-## Mass and Installation
+Spinner mass is:
 
-Turbine mass is not yet fully parameterised in the source material. Tower, nacelle, and component masses should be added where they affect tower cost, foundation loading, or installation vessel requirements.
+$$
+m_\mathrm{spinner}=15.5D-980.
+$$
+
+The hub-system and rotor masses are therefore:
+
+$$
+m_\mathrm{hubsys}
+=m_\mathrm{hub}+m_\mathrm{pitch}+m_\mathrm{spinner},
+$$
+
+$$
+m_\mathrm{rotor}=n_bm_b+m_\mathrm{hubsys}.
+$$
+
+The model retains blade, hub-system, and complete-rotor masses separately so that alternative rotor-assembly and lifting strategies can be evaluated.
+
+## Nacelle Mass
+
+### Low-speed shaft and main bearings
+
+The low-speed-shaft mass is:
+
+$$
+m_\mathrm{LSS}
+=13\left(m_b\frac{P}{1000}\right)^{0.65}+775.
+$$
+
+The mass of one main bearing and the total bearing mass are:
+
+$$
+m_\mathrm{bearing}=10^{-4}D^{3.5},
+\qquad
+m_\mathrm{bearings}=n_\mathrm{brg}m_\mathrm{bearing}.
+$$
+
+### Gearbox, brake, and high-speed shaft
+
+For a geared drivetrain, the pinned WISDEM source calculates gearbox mass from rated torque:
+
+$$
+m_\mathrm{gearbox}=\frac{Q_r}{\rho_Q}.
+$$
+
+The source default is $\rho_Q=200$ Nm/kg. Gearbox mass is zero for direct drive.
+
+Brake and high-speed-shaft masses are:
+
+$$
+m_\mathrm{brake}=0.00122Q_r,
+\qquad
+m_\mathrm{HSS}=0.19894P.
+$$
+
+The high-speed shaft is removed for direct drive. Brake mass must be reviewed for the selected direct-drive arrangement rather than retained automatically.
+
+### Generator
+
+The simple WISDEM relationship is:
+
+$$
+m_\mathrm{generator}=2.3P+3400.
+$$
+
+This power-based regression represents a relatively high-speed geared generator. It is not used for a large direct-drive offshore generator, whose mass is governed primarily by rated torque. The direct-drive replacement is defined under [Improvements from Mehta](#improvements-from-mehta).
+
+### Nacelle structure and auxiliaries
+
+The remaining WISDEM mass relationships are:
+
+$$
+m_\mathrm{bedplate}=D^{2.2},
+$$
+
+$$
+m_\mathrm{yaw}=1.5\left(0.0009D^{3.314}\right),
+$$
+
+$$
+m_\mathrm{HVAC}=0.08P,
+$$
+
+$$
+m_\mathrm{cover}=1.2817P+428.19,
+$$
+
+$$
+m_\mathrm{platforms}
+=0.125m_\mathrm{bedplate}+3000I_\mathrm{crane},
+$$
+
+$$
+m_\mathrm{transformer}=1.915P+1910.
+$$
+
+Transformer mass is included only when a turbine transformer is present in the selected architecture.
+
+### Electrical-equipment additions
+
+The CSM does not provide adequate masses for converters, controls, switchgear, internal cabling, DC-link equipment, or electrical protection. Those terms are explicit architecture inputs:
+
+$$
+\begin{aligned}
+m_\mathrm{electrical}={}&m_\mathrm{converter,GS}
++m_\mathrm{converter,grid}
++m_\mathrm{switchgear}\\
+&+m_\mathrm{cabling}
++m_\mathrm{DC-link}
++m_\mathrm{protection},
+\end{aligned}
+$$
+
+where GS denotes the generator-side converter. A missing required mass remains an unresolved input; it is not silently assigned a value of zero. The direct-DC electrical architecture is developed further on [DC Integration](../hydrogen_production/dc_integration.qmd).
+
+### Nacelle aggregation
+
+Only components present in the selected drivetrain and electrical architecture are included:
+
+$$
+\begin{aligned}
+m_\mathrm{nacelle}={}&m_\mathrm{LSS}+m_\mathrm{bearings}
++m_\mathrm{gearbox}+m_\mathrm{brake}+m_\mathrm{HSS}\\
+&+m_\mathrm{generator}+m_\mathrm{bedplate}+m_\mathrm{yaw}
++m_\mathrm{HVAC}+m_\mathrm{cover}\\
+&+m_\mathrm{platforms}+m_\mathrm{transformer}
++m_\mathrm{electrical}.
+\end{aligned}
+$$
+
+## Tower Mass
+
+The simple WISDEM tower relationship is:
+
+$$
+m_\mathrm{tower}=19.828L_t^{2.0282}.
+$$
+
+This regression depends only on tower length. It does not respond to rotor thrust, RNA mass, tower natural-frequency constraints, foundation stiffness, fatigue, or site conditions. It is therefore an initial screening estimate, not the preferred offshore-tower calculation.
+
+TowerSE or an equivalent load-based calculation is required before tower-section masses are used for detailed installation planning. The tower remains inside the turbine-cost boundary; the foundation remains outside it.
+
+## Aggregate Masses and Installation Outputs
+
+Rotor-nacelle assembly and complete-turbine masses are:
+
+$$
+m_\mathrm{RNA}=m_\mathrm{rotor}+m_\mathrm{nacelle},
+$$
+
+$$
+m_\mathrm{turbine}=m_\mathrm{RNA}+m_\mathrm{tower}.
+$$
+
+The calculation passes the following outputs to the installation model:
+
+| Output | Installation use |
+|---|---|
+| Individual blade mass and blade length | Blade transport, racks, and lifting |
+| Hub-system and complete-rotor mass | Hub or preassembled-rotor lift |
+| Nacelle mass | Nacelle lift |
+| RNA mass | Structural loading and alternative lift strategies |
+| Tower mass and, when available, section masses | Tower transport and lifts |
+| Largest dimensions and heaviest lift | Vessel and crane feasibility |
+
+Tower-section masses and dimensions are not generated by the simple CSM. Until TowerSE is implemented, those installation inputs remain unresolved.
+
+## Component Cost
+
+The WISDEM CSM generally calculates raw manufacturing cost as:
+
+$$
+C_i=u_im_i,
+$$
+
+where $u_i$ is a component mass-cost coefficient. Electrical connections and controls instead scale with rated capacity. The pinned source uses the following coefficients [@wisdemSource2026]:
+
+| Component | Raw cost relationship | Coefficient unit |
+|---|---:|---:|
+| Blade | $14.6m_b$ | USD/kg |
+| Hub | $3.9m_\mathrm{hub}$ | USD/kg |
+| Pitch system | $22.1m_\mathrm{pitch}$ | USD/kg |
+| Spinner | $11.1m_\mathrm{spinner}$ | USD/kg |
+| Low-speed shaft | $11.9m_\mathrm{LSS}$ | USD/kg |
+| Main bearings | $4.5m_\mathrm{bearings}$ | USD/kg |
+| Gearbox | $12.9m_\mathrm{gearbox}$ | USD/kg |
+| Brake | $3.6254m_\mathrm{brake}$ | USD/kg |
+| High-speed shaft | $6.8m_\mathrm{HSS}$ | USD/kg |
+| Generator | $12.4m_\mathrm{generator}$ | USD/kg |
+| Bedplate | $2.9m_\mathrm{bedplate}$ | USD/kg |
+| Yaw system | $8.3m_\mathrm{yaw}$ | USD/kg |
+| HVAC | $124m_\mathrm{HVAC}$ | USD/kg |
+| Nacelle cover | $5.7m_\mathrm{cover}$ | USD/kg |
+| Platforms | $17.1m_\mathrm{platforms}$, plus crane | USD/kg |
+| Transformer | $18.8m_\mathrm{transformer}$ | USD/kg |
+| Electrical connections | $41.85P$ | USD/kW |
+| Controls | $21.15P$ | USD/kW |
+| Tower | $2.9m_\mathrm{tower}$ | USD/kg |
+
+The coefficients are legacy model inputs with mixed evidential ages. They are used to distribute and scale cost between components, not as a current market quotation.
+
+Raw subsystem costs are:
+
+$$
+C_\mathrm{rotor,raw}
+=n_bC_b+C_\mathrm{hub}+C_\mathrm{pitch}+C_\mathrm{spinner},
+$$
+
+$$
+C_\mathrm{nacelle,raw}=\sum_{i\in\mathrm{nacelle}}C_i,
+$$
+
+$$
+C_\mathrm{turbine,raw}
+=C_\mathrm{rotor,raw}+C_\mathrm{nacelle,raw}+C_\mathrm{tower,raw}.
+$$
+
+WISDEM permits assembly, overhead, profit, and transport multipliers. Their defaults are zero [@wisdemCSM2026]. Offshore transport remains excluded on this page. Assembly, overhead, profit, and warranty must either be stated as separate supply-cost adders or included through the calibration below.
+
+## Cost Calibration
+
+The raw WISDEM costs are not used as the absolute turbine price. Separate RNA and tower calibration factors preserve WISDEM's component scaling while matching a stated NREL offshore reference:
+
+$$
+k_\mathrm{RNA}
+=\frac{C_\mathrm{RNA,ref}^{\mathrm{NREL}}}
+{C_\mathrm{RNA,ref}^{\mathrm{WISDEM}}},
+\qquad
+k_\mathrm{tower}
+=\frac{C_\mathrm{tower,ref}^{\mathrm{NREL}}}
+{C_\mathrm{tower,ref}^{\mathrm{WISDEM}}}.
+$$
+
+The calibrated turbine supply cost is:
+
+$$
+C_\mathrm{turbine}
+=k_\mathrm{RNA}C_\mathrm{RNA,raw}
++k_\mathrm{tower}C_\mathrm{tower,raw}.
+$$
+
+The current calibration candidate is NREL's 2022 Cost of Wind Energy Review. Its offshore reference is a 12 MW turbine with a 216 m rotor and 137 m hub height. It reports turbine CAPEX of USD 1,700/kW, separated into USD 1,462/kW for the RNA and USD 238/kW for the tower; installation is a separate cost category [@stehly2023CostWind]. These values define a reference point, not a linear EUR/kW turbine model.
+
+Currency conversion and escalation are applied after calibration using the common financial assumptions. The source currency, source year, index, and exchange-rate convention must accompany every reported result.
+
+## Decentralised Hydrogen Architecture
+
+The decentralised-hydrogen turbine is represented by changing the component ledger. No general percentage reduction is applied to turbine mass or cost.
+
+For architecture $a$:
+
+$$
+m_{\mathrm{nacelle},a}
+=\sum_i x_{i,a}m_i+\sum_jm_{j,a}^{\mathrm{replacement}},
+$$
+
+$$
+C_{\mathrm{turbine},a}
+=\sum_i x_{i,a}C_i+\sum_jC_{j,a}^{\mathrm{replacement}},
+$$
+
+where $x_{i,a}=1$ when component $i$ is present and zero when it is absent.
+
+A conventional electricity-export turbine may contain a generator-side converter or rectifier, DC link, grid-side inverter, step-up transformer, AC switchgear, protection, and high-voltage internal cabling. A direct-DC hydrogen turbine may remove or resize the grid-side inverter, transformer, part of the AC switchgear, and part of the high-voltage cabling. It may require replacement DC-link, DC protection, DC-DC conversion, cooling, and structural equipment.
+
+The mass and cost changes are therefore:
+
+$$
+\Delta m_\mathrm{H2}
+=m_\mathrm{removed}-m_\mathrm{replacement}+m_\mathrm{reinforcement},
+$$
+
+$$
+\Delta C_\mathrm{H2}
+=C_\mathrm{removed}-C_\mathrm{replacement}+C_\mathrm{reinforcement}.
+$$
+
+WISDEM calculates transformer mass explicitly. Converter, switchgear, protection, and cabling masses require separate evidence. A lighter nacelle may also reduce tower and foundation mass, but that secondary effect cannot be calculated with the length-only WISDEM tower regression.
+
+## Improvements from Mehta
+
+Mehta, Zaaijer, and von Terzi scale turbine properties around the direct-drive IEA 15 MW reference turbine [@mehta2024TurbineSizing; @gaertner2020IEA15]. Their complete model is not substituted for WISDEM: the paper does not publish standalone equations for every component, and its absolute turbine-cost calibration is not adopted. Four relationships nevertheless improve identifiable weaknesses in the WISDEM baseline.
+
+### 1. Load-responsive blade mass
+
+WISDEM blade mass depends on $D$ but does not respond to the higher rated wind speed and thrust associated with greater specific power. Mehta introduces:
+
+$$
+m_b
+=m_{b,\mathrm{ref}}
+\left(\frac{D}{D_\mathrm{ref}}\right)^\beta
+\left(\frac{V_r}{V_{r,\mathrm{ref}}}\right)^2,
+$$
+
+with baseline $\beta=3$. Rated wind speed is calculated from:
+
+$$
+V_r
+=\left(
+\frac{1000P}
+{\tfrac{1}{2}\rho A C_{P,\max}\eta}
+\right)^{1/3},
+\qquad
+A=\frac{\pi D^2}{4}.
+$$
+
+This relationship should replace the WISDEM blade-mass regression when the model varies both $P$ and $D$ around the IEA 15 MW design. Hub, pitch, and spinner masses remain separate WISDEM components. The exponent $\beta$ is an uncertainty input because geometric cubic scaling does not represent every future blade technology.
+
+### 2. Mixed blade-cost scaling
+
+WISDEM makes blade cost proportional to blade mass. Mehta separates material-related cost from tooling, labour, and other diameter-related costs:
+
+$$
+C_b
+=\gamma_\mathrm{mass}C_{b,\mathrm{ref}}
+\frac{m_b}{m_{b,\mathrm{ref}}}
++(1-\gamma_\mathrm{mass})C_{b,\mathrm{ref}}
+\left(\frac{D}{D_\mathrm{ref}}\right)^\alpha.
+$$
+
+The baseline parameters are $\gamma_\mathrm{mass}=0.6$ and $\alpha=2$ [@mehta2024TurbineSizing]. This replaces only the blade cost relationship. The absolute reference blade cost must come from the adopted NREL-compatible calibration; Mehta's absolute reference cost is not used.
+
+### 3. Torque-based direct-drive generator
+
+For a permanent-magnet direct-drive turbine, generator mass is scaled with rated torque:
+
+$$
+m_\mathrm{generator}
+=m_\mathrm{generator,ref}
+\frac{Q_r}{Q_{r,\mathrm{ref}}}.
+$$
+
+The archived Mehta implementation uses $m_\mathrm{generator,ref}=372{,}000$ kg and $Q_{r,\mathrm{ref}}=20.308$ MNm [@mehta2023WINDOW]. This corresponds to a reference torque density of approximately 54.6 Nm/kg. The relationship replaces the WISDEM power-based generator equation for direct drive. Generator torque density remains an uncertainty parameter because electromagnetic architecture, structural support, and cooling can change it materially.
+
+### 4. Tower feedback
+
+Mehta scales hub height linearly from the IEA 15 MW reference. That relationship is not adopted here because the model instead uses the directly interpretable lower-tip-clearance relationship $H_h=D/2+15$. A project-specific hub height can override this default.
+
+Mehta's support-structure method nevertheless demonstrates that tower mass must respond to RNA mass, rotor thrust, hub height, and site conditions. The full coupled monopile calculation is outside the turbine boundary, so the intended improvement is TowerSE rather than importing Mehta's complete support-structure module.
+
+## Model Status and Limitations
+
+The implemented hierarchy is:
+
+1. WISDEM provides the component ledger and baseline mass equations.
+2. Mehta replaces blade mass and blade cost when both capacity and rotor diameter vary.
+3. Mehta's torque relationship replaces the WISDEM generator equation for direct drive.
+4. Architecture-specific component inputs represent conventional electricity export and decentralised hydrogen.
+5. Separate RNA and tower factors calibrate raw WISDEM costs to NREL.
+6. All component masses pass to the later installation calculation.
+
+The calculation remains incomplete for detailed design until converter, switchgear, internal-cabling, and DC-interface masses are sourced and a load-based tower calculation produces tower-section geometry. These missing inputs are exposed explicitly. The model is a transparent scaling model, not a certified turbine design or supplier quotation, and is most reliable near the scale and architecture of its reference turbine.
+
+## Worked Example: 15 MW Turbine with a 236 m Rotor
+
+This example evaluates a conventional electricity-export turbine with:
+
+$$
+P=15{,}000\ \mathrm{kW},
+\qquad
+D=236\ \mathrm{m}.
+$$
+
+The default hub-height and tower-length relationships give:
+
+$$
+H_h=\frac{236}{2}+15=133\ \mathrm{m},
+$$
+
+$$
+L_t=H_h-15=118\ \mathrm{m}.
+$$
+
+The fixed assumptions are three blades, 95 m/s maximum tip speed, 95% drivetrain efficiency, two main bearings, a nacelle crane, and a permanent-magnet direct-drive generator. Mehta's load-responsive relationship is used for blade mass and its torque relationship is used for generator mass. The remaining applicable component masses follow the pinned WISDEM equations.
+
+### Operating point
+
+Rated rotor speed and torque are:
+
+$$
+n_r=7.69\ \mathrm{rpm},
+\qquad
+Q_r=19.61\ \mathrm{MNm}.
+$$
+
+### Mass breakdown
+
+| Component | Calculation status | Mass |
+|---|---|---:|
+| One blade | Mehta scaling from IEA 15 MW reference | 63.2 t |
+| Three blades | Derived | 189.6 t |
+| Hub | WISDEM | 146.7 t |
+| Pitch system | WISDEM | 33.8 t |
+| Spinner | WISDEM | 2.7 t |
+| **Hub system** | Derived | **183.2 t** |
+| **Complete rotor** | Derived | **372.8 t** |
+| Low-speed shaft | WISDEM | 100.5 t |
+| Two main bearings | WISDEM | 40.4 t |
+| Brake | WISDEM | 23.9 t |
+| Direct-drive generator | Mehta torque scaling | 359.2 t |
+| Bedplate | WISDEM | 166.1 t |
+| Yaw system | WISDEM | 98.7 t |
+| HVAC | WISDEM | 1.2 t |
+| Nacelle cover | WISDEM | 19.7 t |
+| Platforms and crane | WISDEM | 23.8 t |
+| Transformer | WISDEM | 30.6 t |
+| **Nacelle** | Derived known-component subtotal | **864.1 t** |
+| **Rotor-nacelle assembly** | Derived | **1,236.9 t** |
+| Tower | WISDEM screening regression | 315.8 t |
+| **Complete turbine** | Derived known-component subtotal | **1,552.8 t** |
+
+Converter, switchgear, DC-link, protection, and internal-cabling masses are not included because no traceable mass inputs have yet been selected. The nacelle, RNA, and complete-turbine results are therefore known-component subtotals. They must be updated before use as final transport or lifting masses.
+
+### Cost calibration
+
+The raw WISDEM component costs are calibrated to NREL's 12 MW offshore reference. The NREL reference uses $P_\mathrm{ref}=12$ MW, $D_\mathrm{ref}=216$ m, $H_{h,\mathrm{ref}}=137$ m, RNA cost of USD 1,462/kW, and tower cost of USD 238/kW [@stehly2023CostWind].
+
+The raw blade-cost anchor is the WISDEM coefficient applied to the 65 t IEA 15 MW reference blade:
+
+$$
+C_{b,\mathrm{ref,raw}}
+=14.6\times65{,}000
+=949{,}000\ \mathrm{USD/blade}.
+$$
+
+This anchor is used in Mehta's mixed mass/non-mass blade-cost relationship for both the NREL calibration turbine and the 236 m example. The subsequent RNA calibration, rather than the raw blade anchor, sets the absolute turbine cost level.
+
+At the NREL reference geometry, the model gives raw RNA and tower costs of USD 10.232 million and USD 0.980 million. The published calibration totals are:
+
+$$
+C_\mathrm{RNA,ref}^{\mathrm{NREL}}
+=12{,}000\times1{,}462
+=17.544\ \mathrm{million\ USD},
+$$
+
+$$
+C_\mathrm{tower,ref}^{\mathrm{NREL}}
+=12{,}000\times238
+=2.856\ \mathrm{million\ USD}.
+$$
+
+The resulting factors are:
+
+$$
+k_\mathrm{RNA}=1.7146,
+\qquad
+k_\mathrm{tower}=2.9142.
+$$
+
+The RNA factor is applied to every raw rotor and nacelle cost. The tower factor is applied only to the raw tower cost. This preserves the component-level WISDEM scaling while reproducing the separate NREL RNA and tower reference costs.
+
+### Calibrated cost breakdown
+
+| Cost category | Included components | Cost | Specific cost |
+|---|---|---:|---:|
+| Blades | Three blades, including Mehta mass/non-mass scaling | USD 4.736 million | USD 315.7/kW |
+| Hub system | Hub, pitch system and spinner | USD 2.313 million | USD 154.2/kW |
+| Drivetrain and generator | Low-speed shaft, bearings, brake and direct-drive generator | USD 10.149 million | USD 676.6/kW |
+| Nacelle structure and auxiliaries | Bedplate, yaw, HVAC, cover, platforms and crane | USD 3.307 million | USD 220.5/kW |
+| Turbine electrical equipment | Transformer, electrical connections and controls | USD 2.608 million | USD 173.9/kW |
+| **RNA subtotal** | Rotor and complete nacelle cost categories above | **USD 23.114 million** | **USD 1,540.9/kW** |
+| Tower | Calibrated WISDEM tower cost | USD 2.669 million | USD 178.0/kW |
+| **Complete turbine** | RNA and tower; foundation and installation excluded | **USD 25.783 million** | **USD 1,718.9/kW** |
+
+The cost is reported in the NREL reference currency basis before project-year escalation or conversion to EUR. The turbine electrical category includes WISDEM's transformer, electrical-connections, and controls relationships, but it does not provide a separately resolved converter cost. The RNA calibration may therefore absorb part of the unresolved electrical and commercial supply scope. The result is a transparent screening estimate rather than a supplier quotation.

@@ -33,7 +33,7 @@ flowchart LR
 | Array and export-cable installation | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) | Shared campaign model with cable-subclass methods for route preparation, laying, burial, landfall, pull-ins and testing |
 | Offshore support structure | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) | Topside structure, support structure and foundation |
 | Platform offshore installation | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Transport, foundation installation, topside installation, hookup and commissioning |
-| Turbine transformer | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) | Turbine electrical equipment before the array-network boundary |
+| Turbine transformer | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) | Turbine electrical equipment before the array-network boundary |
 
 ## Architecture Applicability
 
@@ -52,7 +52,7 @@ The centralised-hydrogen architecture diverges from electricity export at the of
 
 | Asset or function | Equipment or material owner | Installation owner | Loss and availability owner |
 |---|---|---|---|
-| Turbine transformer | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) | Turbine installation scope | Generator and power-electronics page |
+| Turbine transformer | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) | Turbine installation scope | Wind-turbine mass-and-cost page |
 | Array cables, joints and terminations | [Infield AC Cables](infield_ac_cables.qmd) | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) | Infield AC Cables |
 | Offshore collection switchgear, converter transformers and VSC equipment | [HVDC Converter Stations](hvdc_converter_stations.qmd) | Converter package and [Platform Installation](../offshore_installation/platform_and_substation_installation.qmd), as applicable | HVDC Converter Stations |
 | Offshore support structure and foundation | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) | Common-mode station states on HVDC Converter Stations |

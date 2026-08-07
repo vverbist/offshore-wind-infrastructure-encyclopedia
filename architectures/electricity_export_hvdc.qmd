@@ -32,7 +32,7 @@ flowchart LR
 |---|---|---|
 | Wind-energy capture and generation | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
 | Turbine support structure | Included | [Foundation](../turbine_system/foundation.qmd) |
-| Turbine rectification, inversion, and transformation | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Turbine rectification, inversion, and transformation | Included | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
 | AC infield collection | Included | [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) |
 | Offshore AC aggregation and HVDC conversion | Included on the electricity-export platform function | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
 | Offshore platform structure | Included | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |

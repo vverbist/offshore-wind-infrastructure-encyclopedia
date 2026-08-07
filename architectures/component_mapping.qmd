@@ -13,9 +13,9 @@ assumptions, costs, losses, availability, and limitations.
 |---|---|---|---|---|
 | Wind turbine and generator | Included | Included | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
 | Foundation | Included | Included | Included | [Foundation](../turbine_system/foundation.qmd) |
-| Turbine active front end and DC link | Included | Included | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
-| Turbine grid-side inverter | Included | Included | Not used in the hydrogen path | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
-| Turbine step-up transformer | Included | Included | Not used in the hydrogen path | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Turbine active front end and DC link | Included | Included | Included | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
+| Turbine grid-side inverter | Included | Included | Not used in the hydrogen path | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
+| Turbine step-up transformer | Included | Included | Not used in the hydrogen path | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
 | AC infield collection | Included | Included | Replaced by hydrogen collection | [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) |
 | Central offshore platform | AC aggregation and HVDC conversion | One integrated AC aggregation and electrolysis platform | Not used | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Central electrolyser transformer and rectifier | Not used | Included on the integrated platform | Not used | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) |

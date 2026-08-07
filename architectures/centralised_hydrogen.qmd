@@ -50,7 +50,7 @@ equipment.
 |---|---|---|
 | Wind-energy capture and generation | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
 | Turbine support structure | Included | [Foundation](../turbine_system/foundation.qmd) |
-| Turbine rectification, inversion, and transformation | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Turbine rectification, inversion, and transformation | Included | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
 | AC infield collection | Included | [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) |
 | Central AC aggregation and platform structure | Included on the integrated platform | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Electrolyser power conversion | Included on the integrated platform | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) |

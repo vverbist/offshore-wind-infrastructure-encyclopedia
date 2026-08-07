@@ -49,7 +49,7 @@ is not included in the electrolyser or balance-of-plant boundary.
 |---|---|---|
 | Wind-energy capture and generation | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
 | Turbine support structure | Included | [Foundation](../turbine_system/foundation.qmd) |
-| Turbine rectification and DC-link interface | Included | [Generator and Power Electronics](../turbine_system/generator_and_power_electronics.qmd) |
+| Turbine rectification and DC-link interface | Included | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
 | Direct stack connection to the turbine DC link | Included without a separate DC/DC converter | [DC Integration](../hydrogen_production/dc_integration.qmd) |
 | PEM stacks | Included at each turbine | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) |
 | Water treatment and non-electrical BOP | Included within each turbine-level electrolyser facility | [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) |
