@@ -1,12 +1,84 @@
 ---
 title: "Turbine System"
-completion: 0
+completion: 80
 ---
 
-The turbine system includes the wind turbine, generator, turbine-side power electronics, tower and nacelle mass, and foundation.
+## Purpose and System Boundary
 
-The turbine system is common to all architectures at the level of aerodynamic energy capture, but the downstream electrical conversion chain changes between electricity, centralised hydrogen, and decentralised hydrogen.
+The turbine-system model calculates the mass and supply cost of one offshore wind turbine and its monopile foundation. It retains component masses because they connect turbine design to foundation sizing, transport, lifting, and installation-vessel requirements.
 
-## Current Baseline
+The model boundary includes the rotor, nacelle, turbine electrical equipment, tower, monopile, and a transition-piece supply allowance. It excludes offshore transport and installation, scour protection, array infrastructure, export infrastructure, and hydrogen-production equipment. Where architecture-specific equipment is supported by the turbine foundation, its mass is passed into the foundation calculation without moving its cost into the turbine-system boundary.
 
-The current model uses a 15 MW turbine as the baseline unit. Turbine and foundation assumptions are documented separately because foundations, tower mass, and installation costs can scale with mass and structural loading.
+## Calculation Dependency
+
+```{mermaid}
+%%| fig-height: 1.2
+flowchart LR
+  A["Rated capacity, rotor diameter, and hub height"] --> B["Turbine component masses"]
+  C["Electrical architecture"] --> B
+  B --> D["Complete turbine mass"]
+  D --> E["Supported topside mass"]
+  F["Additional supported equipment mass"] --> E
+  G["Water depth"] --> H["Monopile mass"]
+  E --> H
+  B --> I["Turbine supply cost"]
+  H --> J["Foundation supply cost"]
+  D --> K["Transport and installation"]
+  H --> K
+```
+
+The foundation model does not use turbine rated power directly. Rated power, rotor diameter, hub height, and electrical architecture first determine the turbine component ledger. The resulting complete turbine mass, including the tower, is then combined with any additional supported equipment and water depth to estimate monopile mass.
+
+## Where to Find Information
+
+| Required information | Canonical page | Main outputs |
+|---|---|---|
+| Turbine component mass and supply cost | [Wind Turbine Mass and Cost](wind_turbine.qmd) | Component masses, rotor mass, nacelle mass, RNA mass, tower mass, complete turbine mass, and turbine supply CAPEX |
+| Monopile mass and foundation supply cost | [Monopile Foundation Mass and Cost](foundation.qmd) | Monopile mass and foundation supply CAPEX, including the transition-piece cost allowance |
+| Offshore transport and installation | [Turbine and Foundation Installation](../offshore_installation/turbine_and_foundation_installation.qmd) | Vessel feasibility, campaign duration, and installation CAPEX |
+| Electrical-architecture definition | [Architecture Comparison](../architectures/component_mapping.qmd) | Components retained, removed, or replaced in each system architecture |
+| Currency, escalation, and annualisation | [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd) | Common financial basis applied after component calculations |
+
+## Ownership Across Pages
+
+| Quantity or cost | Owner | Used by |
+|---|---|---|
+| Blade, hub, nacelle, electrical-equipment, and tower masses | Wind Turbine Mass and Cost | Turbine aggregation and installation |
+| Complete turbine mass, $m_\mathrm{turbine}$ | Wind Turbine Mass and Cost | Supported topside mass on the foundation page |
+| Additional supported equipment mass, $m_\mathrm{additional}$ | Page owning that equipment | Supported topside mass on the foundation page |
+| Monopile mass, $m_\mathrm{MP}$ | Monopile Foundation Mass and Cost | Foundation supply cost and installation |
+| Turbine supply CAPEX | Wind Turbine Mass and Cost | Project CAPEX aggregation |
+| Monopile and transition-piece supply CAPEX | Monopile Foundation Mass and Cost | Project CAPEX aggregation |
+| Transport and offshore installation CAPEX | Turbine and Foundation Installation | Project CAPEX aggregation |
+
+::: {.callout-important}
+## Book each item once
+
+The turbine page owns the tower mass and cost. The foundation page uses the tower only through the complete turbine mass passed into its structural scaling; it does not add tower cost again. Likewise, the installation page consumes turbine and monopile masses but does not repeat their supply costs.
+:::
+
+## Architecture Applicability
+
+The aerodynamic rotor and basic structural calculation are common to the electricity-export, centralised-hydrogen, and decentralised-hydrogen architectures. Their turbine electrical equipment can differ.
+
+| Architecture | Turbine-system treatment |
+|---|---|
+| Electricity export | Uses the conventional turbine electrical-component ledger |
+| Centralised hydrogen | Retains the turbine-side collection equipment required to deliver electricity to the central electrolyser |
+| Decentralised hydrogen | Removes or replaces electrical components according to the selected direct-DC arrangement |
+
+Architecture changes are made by changing explicit component masses and costs, not by applying a general percentage adjustment. Electrolyser, water-treatment, compression, storage, and hydrogen-export equipment remain owned by their respective pages. If any of that equipment is physically supported at the turbine, its mass enters $m_\mathrm{additional}$ so that the foundation calculation responds to it.
+
+## Model Outputs
+
+The turbine system passes the following quantities to the wider techno-economic model:
+
+| Output | Downstream purpose |
+|---|---|
+| Component and assembly masses | Transport arrangement, lift definition, and vessel feasibility |
+| Complete turbine mass | Foundation scaling and installation |
+| Monopile mass | Foundation fabrication cost and installation |
+| Turbine supply CAPEX | Project capital-cost aggregation |
+| Foundation supply CAPEX | Project capital-cost aggregation |
+
+Use the component pages for equations, assumptions, numerical values, evidence, and limitations. This overview defines the dependency chain and identifies where each quantity is calculated and booked.
