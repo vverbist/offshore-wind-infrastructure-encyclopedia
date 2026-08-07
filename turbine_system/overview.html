@@ -70,7 +70,37 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid-postprocess-shim.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -256,25 +286,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../turbine_system/wind_turbine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Wind Turbine</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../turbine_system/generator_and_power_electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Generator and Power Electronics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../turbine_system/tower_nacelle_and_mass.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tower, Nacelle, and Mass</span></a>
+ <span class="menu-text">Wind Turbine Mass and Cost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Foundation</span></a>
+ <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
 </li>
       </ul>
@@ -517,7 +535,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#current-baseline" id="toc-current-baseline" class="nav-link active" data-scroll-target="#current-baseline">Current Baseline</a></li>
+  <li><a href="#purpose-and-system-boundary" id="toc-purpose-and-system-boundary" class="nav-link active" data-scroll-target="#purpose-and-system-boundary">Purpose and System Boundary</a></li>
+  <li><a href="#calculation-dependency" id="toc-calculation-dependency" class="nav-link" data-scroll-target="#calculation-dependency">Calculation Dependency</a></li>
+  <li><a href="#where-to-find-information" id="toc-where-to-find-information" class="nav-link" data-scroll-target="#where-to-find-information">Where to Find Information</a></li>
+  <li><a href="#ownership-across-pages" id="toc-ownership-across-pages" class="nav-link" data-scroll-target="#ownership-across-pages">Ownership Across Pages</a></li>
+  <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
+  <li><a href="#model-outputs" id="toc-model-outputs" class="nav-link" data-scroll-target="#model-outputs">Model Outputs</a></li>
   </ul>
 </nav>
     </div>
@@ -543,11 +566,336 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The turbine system includes the wind turbine, generator, turbine-side power electronics, tower and nacelle mass, and foundation.</p>
-<p>The turbine system is common to all architectures at the level of aerodynamic energy capture, but the downstream electrical conversion chain changes between electricity, centralised hydrogen, and decentralised hydrogen.</p>
-<section id="current-baseline" class="level2">
-<h2 class="anchored" data-anchor-id="current-baseline">Current Baseline</h2>
-<p>The current model uses a 15 MW turbine as the baseline unit. Turbine and foundation assumptions are documented separately because foundations, tower mass, and installation costs can scale with mass and structural loading.</p>
+<section id="purpose-and-system-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-and-system-boundary">Purpose and System Boundary</h2>
+<p>The turbine-system model calculates the mass and supply cost of one offshore wind turbine and its monopile foundation. It retains component masses because they connect turbine design to foundation sizing, transport, lifting, and installation-vessel requirements.</p>
+<p>The model boundary includes the rotor, nacelle, turbine electrical equipment, tower, monopile, and a transition-piece supply allowance. It excludes offshore transport and installation, scour protection, array infrastructure, export infrastructure, and hydrogen-production equipment. Where architecture-specific equipment is supported by the turbine foundation, its mass is passed into the foundation calculation without moving its cost into the turbine-system boundary.</p>
+</section>
+<section id="calculation-dependency" class="level2">
+<h2 class="anchored" data-anchor-id="calculation-dependency">Calculation Dependency</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg id="mermaid-figure-1" width="672" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="flowchart" viewbox="0 0 1675.71875 355" role="graphics-document document" aria-roledescription="flowchart-v2" height="115">
+<style>#mermaid-figure-1{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-figure-1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .error-icon{fill:#552222;}#mermaid-figure-1 .error-text{fill:#552222;stroke:#552222;}#mermaid-figure-1 .edge-thickness-normal{stroke-width:1px;}#mermaid-figure-1 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-figure-1 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-figure-1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-figure-1 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-figure-1 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-figure-1 .marker{fill:#333333;stroke:#333333;}#mermaid-figure-1 .marker.cross{stroke:#333333;}#mermaid-figure-1 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-figure-1 p{margin:0;}#mermaid-figure-1 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-figure-1 .cluster-label text{fill:#333;}#mermaid-figure-1 .cluster-label span{color:#333;}#mermaid-figure-1 .cluster-label span p{background-color:transparent;}#mermaid-figure-1 .label text,#mermaid-figure-1 span{fill:#333;color:#333;}#mermaid-figure-1 .node rect,#mermaid-figure-1 .node circle,#mermaid-figure-1 .node ellipse,#mermaid-figure-1 .node polygon,#mermaid-figure-1 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-figure-1 .rough-node .label text,#mermaid-figure-1 .node .label text,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-anchor:middle;}#mermaid-figure-1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-figure-1 .rough-node .label,#mermaid-figure-1 .node .label,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-align:center;}#mermaid-figure-1 .node.clickable{cursor:pointer;}#mermaid-figure-1 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-figure-1 .arrowheadPath{fill:#333333;}#mermaid-figure-1 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-figure-1 .flowchart-link{stroke:#333333;fill:none;}#mermaid-figure-1 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-figure-1 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-figure-1 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-figure-1 .cluster text{fill:#333;}#mermaid-figure-1 .cluster span{color:#333;}#mermaid-figure-1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-figure-1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-figure-1 rect.text{fill:none;stroke-width:0;}#mermaid-figure-1 .icon-shape,#mermaid-figure-1 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .icon-shape p,#mermaid-figure-1 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-figure-1 .icon-shape rect,#mermaid-figure-1 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-figure-1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-figure-1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g><marker id="mermaid-1786111384335_flowchart-v2-pointEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786111384335_flowchart-v2-pointStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="4.5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786111384335_flowchart-v2-circleEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="11" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1786111384335_flowchart-v2-circleStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="-1" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1786111384335_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="12" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786111384335_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="-1" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M268,308L272.167,308C276.333,308,284.667,308,301.682,303.072C318.698,298.144,344.396,288.288,357.244,283.36L370.093,278.432" id="L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MjY4LCJ5IjozMDh9LHsieCI6MjkzLCJ5IjozMDh9LHsieCI6MzczLjgyNzk5MDMwMTcyNDEsInkiOjI3N31d" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M248.906,192L256.255,192C263.604,192,278.302,192,298.5,196.928C318.698,201.856,344.396,211.712,357.244,216.64L370.093,221.568" id="L_C_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_B_0" data-points="W3sieCI6MjQ4LjkwNjI1LCJ5IjoxOTJ9LHsieCI6MjkzLCJ5IjoxOTJ9LHsieCI6MzczLjgyNzk5MDMwMTcyNDEsInkiOjIyM31d" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M522.748,223L534.866,218.833C546.983,214.667,571.218,206.333,589.718,202.167C608.219,198,620.984,198,627.367,198L633.75,198" id="L_B_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_D_0" data-points="W3sieCI6NTIyLjc0ODA0Njg3NSwieSI6MjIzfSx7IngiOjU5NS40NTMxMjUsInkiOjE5OH0seyJ4Ijo2MzcuNzUsInkiOjE5OH1d" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M800.875,171L818.305,161.667C835.734,152.333,870.594,133.667,899.873,119.422C929.151,105.177,952.85,95.354,964.699,90.443L976.548,85.532" id="L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6ODAwLjg3NDgxMTc0Njk4NzksInkiOjE3MX0seyJ4Ijo5MDUuNDUzMTI1LCJ5IjoxMTV9LHsieCI6OTgwLjI0MzEzMDM4NzkzMSwieSI6ODR9XQ==" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M880.453,47L884.62,47C888.786,47,897.12,47,904.788,47.25C912.457,47.5,919.46,48.001,922.962,48.251L926.463,48.501" id="L_F_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_E_0" data-points="W3sieCI6ODgwLjQ1MzEyNSwieSI6NDd9LHsieCI6OTA1LjQ1MzEyNSwieSI6NDd9LHsieCI6OTMwLjQ1MzEyNSwieSI6NDguNzg2NjExNTc5NDc2M31d" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M1119.836,161L1130.749,161C1141.661,161,1163.487,161,1182.36,157.125C1201.234,153.25,1217.155,145.5,1225.115,141.626L1233.076,137.751" id="L_G_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6MTExOS44MzU5Mzc1LCJ5IjoxNjF9LHsieCI6MTE4NS4zMTI1LCJ5IjoxNjF9LHsieCI6MTIzNi42NzIxNzU0ODA3NjkzLCJ5IjoxMzZ9XQ==" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M1160.313,57L1164.479,57C1168.646,57,1176.979,57,1189.106,60.875C1201.234,64.75,1217.155,72.5,1225.115,76.374L1233.076,80.249" id="L_E_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_H_0" data-points="W3sieCI6MTE2MC4zMTI1LCJ5Ijo1N30seyJ4IjoxMTg1LjMxMjUsInkiOjU3fSx7IngiOjEyMzYuNjcyMTc1NDgwNzY5MywieSI6ODJ9XQ==" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M522.748,277L534.866,281.167C546.983,285.333,571.218,293.667,592.023,297.833C612.828,302,630.203,302,638.891,302L647.578,302" id="L_B_I_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_I_0" data-points="W3sieCI6NTIyLjc0ODA0Njg3NSwieSI6Mjc3fSx7IngiOjU5NS40NTMxMjUsInkiOjMwMn0seyJ4Ijo2NTEuNTc4MTI1LCJ5IjozMDJ9XQ==" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M1373.969,92.914L1378.135,92.095C1382.302,91.276,1390.635,89.638,1399.893,88.819C1409.151,88,1419.333,88,1424.424,88L1429.516,88" id="L_H_J_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_H_J_0" data-points="W3sieCI6MTM3My45Njg3NSwieSI6OTIuOTE0NDM2MTU2MjA4ODZ9LHsieCI6MTM5OC45Njg3NSwieSI6ODh9LHsieCI6MTQzMy41MTU2MjUsInkiOjg4fV0=" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M863.156,216.178L870.206,217.315C877.255,218.452,891.354,220.726,921.725,221.863C952.096,223,998.74,223,1045.383,223C1092.026,223,1138.669,223,1179.796,223C1220.922,223,1256.531,223,1292.141,223C1327.75,223,1363.359,223,1384.666,222.762C1405.972,222.523,1412.975,222.046,1416.476,221.808L1419.978,221.57" id="L_D_K_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_K_0" data-points="W3sieCI6ODYzLjE1NjI1LCJ5IjoyMTYuMTc3OTIzMzg3MDk2Nzd9LHsieCI6OTA1LjQ1MzEyNSwieSI6MjIzfSx7IngiOjEwNDUuMzgyODEyNSwieSI6MjIzfSx7IngiOjExODUuMzEyNSwieSI6MjIzfSx7IngiOjEyOTIuMTQwNjI1LCJ5IjoyMjN9LHsieCI6MTM5OC45Njg3NSwieSI6MjIzfSx7IngiOjE0MjMuOTY4NzUsInkiOjIyMS4yOTc4NzIzNDA0MjU1M31d" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path><path d="M1331.652,136L1342.872,143.667C1354.091,151.333,1376.53,166.667,1391.264,175.075C1405.997,183.484,1413.026,184.967,1416.541,185.709L1420.055,186.451" id="L_H_K_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_H_K_0" data-points="W3sieCI6MTMzMS42NTIzOTcyNjAyNzQsInkiOjEzNn0seyJ4IjoxMzk4Ljk2ODc1LCJ5IjoxODJ9LHsieCI6MTQyMy45Njg3NSwieSI6MTg3LjI3NjU5NTc0NDY4MDg2fV0=" marker-end="url(#mermaid-1786111384335_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_B_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_D_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_E_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_H_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_H_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_I_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_H_J_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_K_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_H_K_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
+<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="edgeLabel"></span>
+</div>
+</foreignobject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-0" transform="translate(138, 308)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignobject width="200" height="48">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;">
+<span class="nodeLabel">
+<p>
+Rated capacity, rotor diameter, and hub height
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-B-1" transform="translate(444.2265625, 250)"><rect class="basic label-container" style="" x="-126.2265625" y="-27" width="252.453125" height="54"></rect><g class="label" style="" transform="translate(-96.2265625, -12)"><rect></rect><foreignobject width="192.453125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Turbine component masses
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-C-2" transform="translate(138, 192)"><rect class="basic label-container" style="" x="-110.90625" y="-27" width="221.8125" height="54"></rect><g class="label" style="" transform="translate(-80.90625, -12)"><rect></rect><foreignobject width="161.8125" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Electrical architecture
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-D-5" transform="translate(750.453125, 198)"><rect class="basic label-container" style="" x="-112.703125" y="-27" width="225.40625" height="54"></rect><g class="label" style="" transform="translate(-82.703125, -12)"><rect></rect><foreignobject width="165.40625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Complete turbine mass
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-E-7" transform="translate(1045.3828125, 57)"><rect class="basic label-container" style="" x="-114.9296875" y="-27" width="229.859375" height="54"></rect><g class="label" style="" transform="translate(-84.9296875, -12)"><rect></rect><foreignobject width="169.859375" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Supported topside mass
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-F-8" transform="translate(750.453125, 47)"><rect class="basic label-container" style="" x="-130" y="-39" width="260" height="78"></rect><g class="label" style="" transform="translate(-100, -24)"><rect></rect><foreignobject width="200" height="48">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table; white-space: break-spaces; line-height: 1.5; max-width: 200px; text-align: center; width: 200px;">
+<span class="nodeLabel">
+<p>
+Additional supported equipment mass
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-G-10" transform="translate(1045.3828125, 161)"><rect class="basic label-container" style="" x="-74.453125" y="-27" width="148.90625" height="54"></rect><g class="label" style="" transform="translate(-44.453125, -12)"><rect></rect><foreignobject width="88.90625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Water depth
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-H-11" transform="translate(1292.140625, 109)"><rect class="basic label-container" style="" x="-81.828125" y="-27" width="163.65625" height="54"></rect><g class="label" style="" transform="translate(-51.828125, -12)"><rect></rect><foreignobject width="103.65625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Monopile mass
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-I-15" transform="translate(750.453125, 302)"><rect class="basic label-container" style="" x="-98.875" y="-27" width="197.75" height="54"></rect><g class="label" style="" transform="translate(-68.875, -12)"><rect></rect><foreignobject width="137.75" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Turbine supply cost
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-J-17" transform="translate(1545.84375, 88)"><rect class="basic label-container" style="" x="-112.328125" y="-27" width="224.65625" height="54"></rect><g class="label" style="" transform="translate(-82.328125, -12)"><rect></rect><foreignobject width="164.65625" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Foundation supply cost
+</p>
+</span>
+</div>
+</foreignobject></g></g><g class="node default" id="flowchart-K-19" transform="translate(1545.84375, 213)"><rect class="basic label-container" style="" x="-121.875" y="-27" width="243.75" height="54"></rect><g class="label" style="" transform="translate(-91.875, -12)"><rect></rect><foreignobject width="183.75" height="24">
+<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
+<span class="nodeLabel">
+<p>
+Transport and installation
+</p>
+</span>
+</div>
+</foreignobject></g></g></g></g></g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The foundation model does not use turbine rated power directly. Rated power, rotor diameter, hub height, and electrical architecture first determine the turbine component ledger. The resulting complete turbine mass, including the tower, is then combined with any additional supported equipment and water depth to estimate monopile mass.</p>
+</section>
+<section id="where-to-find-information" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-find-information">Where to Find Information</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Required information</th>
+<th>Canonical page</th>
+<th>Main outputs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turbine component mass and supply cost</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></td>
+<td>Component masses, rotor mass, nacelle mass, RNA mass, tower mass, complete turbine mass, and turbine supply CAPEX</td>
+</tr>
+<tr class="even">
+<td>Monopile mass and foundation supply cost</td>
+<td><a href="../turbine_system/foundation.html">Monopile Foundation Mass and Cost</a></td>
+<td>Monopile mass and foundation supply CAPEX, including the transition-piece cost allowance</td>
+</tr>
+<tr class="odd">
+<td>Offshore transport and installation</td>
+<td><a href="../offshore_installation/turbine_and_foundation_installation.html">Turbine and Foundation Installation</a></td>
+<td>Vessel feasibility, campaign duration, and installation CAPEX</td>
+</tr>
+<tr class="even">
+<td>Electrical-architecture definition</td>
+<td><a href="../architectures/component_mapping.html">Architecture Comparison</a></td>
+<td>Components retained, removed, or replaced in each system architecture</td>
+</tr>
+<tr class="odd">
+<td>Currency, escalation, and annualisation</td>
+<td><a href="../shared_model_inputs/financial_assumptions.html">Financial Assumptions</a></td>
+<td>Common financial basis applied after component calculations</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ownership-across-pages" class="level2">
+<h2 class="anchored" data-anchor-id="ownership-across-pages">Ownership Across Pages</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity or cost</th>
+<th>Owner</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blade, hub, nacelle, electrical-equipment, and tower masses</td>
+<td>Wind Turbine Mass and Cost</td>
+<td>Turbine aggregation and installation</td>
+</tr>
+<tr class="even">
+<td>Complete turbine mass, <span class="math inline">\(m_\mathrm{turbine}\)</span></td>
+<td>Wind Turbine Mass and Cost</td>
+<td>Supported topside mass on the foundation page</td>
+</tr>
+<tr class="odd">
+<td>Additional supported equipment mass, <span class="math inline">\(m_\mathrm{additional}\)</span></td>
+<td>Page owning that equipment</td>
+<td>Supported topside mass on the foundation page</td>
+</tr>
+<tr class="even">
+<td>Monopile mass, <span class="math inline">\(m_\mathrm{MP}\)</span></td>
+<td>Monopile Foundation Mass and Cost</td>
+<td>Foundation supply cost and installation</td>
+</tr>
+<tr class="odd">
+<td>Turbine supply CAPEX</td>
+<td>Wind Turbine Mass and Cost</td>
+<td>Project CAPEX aggregation</td>
+</tr>
+<tr class="even">
+<td>Monopile and transition-piece supply CAPEX</td>
+<td>Monopile Foundation Mass and Cost</td>
+<td>Project CAPEX aggregation</td>
+</tr>
+<tr class="odd">
+<td>Transport and offshore installation CAPEX</td>
+<td>Turbine and Foundation Installation</td>
+<td>Project CAPEX aggregation</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Book each item once
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The turbine page owns the tower mass and cost. The foundation page uses the tower only through the complete turbine mass passed into its structural scaling; it does not add tower cost again. Likewise, the installation page consumes turbine and monopile masses but does not repeat their supply costs.</p>
+</div>
+</div>
+</section>
+<section id="architecture-applicability" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-applicability">Architecture Applicability</h2>
+<p>The aerodynamic rotor and basic structural calculation are common to the electricity-export, centralised-hydrogen, and decentralised-hydrogen architectures. Their turbine electrical equipment can differ.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Architecture</th>
+<th>Turbine-system treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electricity export</td>
+<td>Uses the conventional turbine electrical-component ledger</td>
+</tr>
+<tr class="even">
+<td>Centralised hydrogen</td>
+<td>Retains the turbine-side collection equipment required to deliver electricity to the central electrolyser</td>
+</tr>
+<tr class="odd">
+<td>Decentralised hydrogen</td>
+<td>Removes or replaces electrical components according to the selected direct-DC arrangement</td>
+</tr>
+</tbody>
+</table>
+<p>Architecture changes are made by changing explicit component masses and costs, not by applying a general percentage adjustment. Electrolyser, water-treatment, compression, storage, and hydrogen-export equipment remain owned by their respective pages. If any of that equipment is physically supported at the turbine, its mass enters <span class="math inline">\(m_\mathrm{additional}\)</span> so that the foundation calculation responds to it.</p>
+</section>
+<section id="model-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="model-outputs">Model Outputs</h2>
+<p>The turbine system passes the following quantities to the wider techno-economic model:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Downstream purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Component and assembly masses</td>
+<td>Transport arrangement, lift definition, and vessel feasibility</td>
+</tr>
+<tr class="even">
+<td>Complete turbine mass</td>
+<td>Foundation scaling and installation</td>
+</tr>
+<tr class="odd">
+<td>Monopile mass</td>
+<td>Foundation fabrication cost and installation</td>
+</tr>
+<tr class="even">
+<td>Turbine supply CAPEX</td>
+<td>Project capital-cost aggregation</td>
+</tr>
+<tr class="odd">
+<td>Foundation supply CAPEX</td>
+<td>Project capital-cost aggregation</td>
+</tr>
+</tbody>
+</table>
+<p>Use the component pages for equations, assumptions, numerical values, evidence, and limitations. This overview defines the dependency chain and identifies where each quantity is calculated and booked.</p>
 
 
 </section>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Wind Turbine – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Wind Turbine Mass and Cost – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/wind_turbine.html">Wind Turbine</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -256,25 +304,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../turbine_system/wind_turbine.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Wind Turbine</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../turbine_system/generator_and_power_electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Generator and Power Electronics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../turbine_system/tower_nacelle_and_mass.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tower, Nacelle, and Mass</span></a>
+ <span class="menu-text">Wind Turbine Mass and Cost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Foundation</span></a>
+ <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
 </li>
       </ul>
@@ -517,20 +553,54 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#current-cost-model" id="toc-current-cost-model" class="nav-link" data-scroll-target="#current-cost-model">Current Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#mass-and-installation" id="toc-mass-and-installation" class="nav-link" data-scroll-target="#mass-and-installation">Mass and Installation</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
+  <li><a href="#parametric-inputs" id="toc-parametric-inputs" class="nav-link" data-scroll-target="#parametric-inputs">Parametric Inputs</a></li>
+  <li><a href="#fixed-model-assumptions" id="toc-fixed-model-assumptions" class="nav-link" data-scroll-target="#fixed-model-assumptions">Fixed Model Assumptions</a></li>
+  <li><a href="#calculation-sequence" id="toc-calculation-sequence" class="nav-link" data-scroll-target="#calculation-sequence">Calculation Sequence</a></li>
+  <li><a href="#rated-speed-and-torque" id="toc-rated-speed-and-torque" class="nav-link" data-scroll-target="#rated-speed-and-torque">Rated Speed and Torque</a></li>
+  <li><a href="#rotor-mass" id="toc-rotor-mass" class="nav-link" data-scroll-target="#rotor-mass">Rotor Mass</a>
+  <ul class="collapse">
+  <li><a href="#blade" id="toc-blade" class="nav-link" data-scroll-target="#blade">Blade</a></li>
+  <li><a href="#hub-pitch-system-and-spinner" id="toc-hub-pitch-system-and-spinner" class="nav-link" data-scroll-target="#hub-pitch-system-and-spinner">Hub, pitch system, and spinner</a></li>
+  </ul></li>
+  <li><a href="#nacelle-mass" id="toc-nacelle-mass" class="nav-link" data-scroll-target="#nacelle-mass">Nacelle Mass</a>
+  <ul class="collapse">
+  <li><a href="#low-speed-shaft-and-main-bearings" id="toc-low-speed-shaft-and-main-bearings" class="nav-link" data-scroll-target="#low-speed-shaft-and-main-bearings">Low-speed shaft and main bearings</a></li>
+  <li><a href="#gearbox-brake-and-high-speed-shaft" id="toc-gearbox-brake-and-high-speed-shaft" class="nav-link" data-scroll-target="#gearbox-brake-and-high-speed-shaft">Gearbox, brake, and high-speed shaft</a></li>
+  <li><a href="#generator" id="toc-generator" class="nav-link" data-scroll-target="#generator">Generator</a></li>
+  <li><a href="#nacelle-structure-and-auxiliaries" id="toc-nacelle-structure-and-auxiliaries" class="nav-link" data-scroll-target="#nacelle-structure-and-auxiliaries">Nacelle structure and auxiliaries</a></li>
+  <li><a href="#electrical-equipment-additions" id="toc-electrical-equipment-additions" class="nav-link" data-scroll-target="#electrical-equipment-additions">Electrical-equipment additions</a></li>
+  <li><a href="#nacelle-aggregation" id="toc-nacelle-aggregation" class="nav-link" data-scroll-target="#nacelle-aggregation">Nacelle aggregation</a></li>
+  </ul></li>
+  <li><a href="#tower-mass" id="toc-tower-mass" class="nav-link" data-scroll-target="#tower-mass">Tower Mass</a></li>
+  <li><a href="#aggregate-masses-and-installation-outputs" id="toc-aggregate-masses-and-installation-outputs" class="nav-link" data-scroll-target="#aggregate-masses-and-installation-outputs">Aggregate Masses and Installation Outputs</a></li>
+  <li><a href="#component-cost" id="toc-component-cost" class="nav-link" data-scroll-target="#component-cost">Component Cost</a></li>
+  <li><a href="#cost-calibration" id="toc-cost-calibration" class="nav-link" data-scroll-target="#cost-calibration">Cost Calibration</a></li>
+  <li><a href="#decentralised-hydrogen-architecture" id="toc-decentralised-hydrogen-architecture" class="nav-link" data-scroll-target="#decentralised-hydrogen-architecture">Decentralised Hydrogen Architecture</a></li>
+  <li><a href="#improvements-from-mehta" id="toc-improvements-from-mehta" class="nav-link" data-scroll-target="#improvements-from-mehta">Improvements from Mehta</a>
+  <ul class="collapse">
+  <li><a href="#load-responsive-blade-mass" id="toc-load-responsive-blade-mass" class="nav-link" data-scroll-target="#load-responsive-blade-mass">1. Load-responsive blade mass</a></li>
+  <li><a href="#mixed-blade-cost-scaling" id="toc-mixed-blade-cost-scaling" class="nav-link" data-scroll-target="#mixed-blade-cost-scaling">2. Mixed blade-cost scaling</a></li>
+  <li><a href="#torque-based-direct-drive-generator" id="toc-torque-based-direct-drive-generator" class="nav-link" data-scroll-target="#torque-based-direct-drive-generator">3. Torque-based direct-drive generator</a></li>
+  <li><a href="#tower-feedback" id="toc-tower-feedback" class="nav-link" data-scroll-target="#tower-feedback">4. Tower feedback</a></li>
+  </ul></li>
+  <li><a href="#model-status-and-limitations" id="toc-model-status-and-limitations" class="nav-link" data-scroll-target="#model-status-and-limitations">Model Status and Limitations</a></li>
+  <li><a href="#worked-example-15-mw-turbine-with-a-236-m-rotor" id="toc-worked-example-15-mw-turbine-with-a-236-m-rotor" class="nav-link" data-scroll-target="#worked-example-15-mw-turbine-with-a-236-m-rotor">Worked Example: 15 MW Turbine with a 236 m Rotor</a>
+  <ul class="collapse">
+  <li><a href="#operating-point" id="toc-operating-point" class="nav-link" data-scroll-target="#operating-point">Operating point</a></li>
+  <li><a href="#mass-breakdown" id="toc-mass-breakdown" class="nav-link" data-scroll-target="#mass-breakdown">Mass breakdown</a></li>
+  <li><a href="#cost-calibration-1" id="toc-cost-calibration-1" class="nav-link" data-scroll-target="#cost-calibration-1">Cost calibration</a></li>
+  <li><a href="#calibrated-cost-breakdown" id="toc-calibrated-cost-breakdown" class="nav-link" data-scroll-target="#calibrated-cost-breakdown">Calibrated cost breakdown</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/wind_turbine.html">Wind Turbine</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Wind Turbine</h1>
+<h1 class="title">Wind Turbine Mass and Cost</h1>
 </div>
 
 
@@ -547,79 +617,893 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The wind turbine converts wind energy to mechanical and then electrical power. In the model it defines rated power, turbine count, gross production, and the capacity basis for several downstream components.</p>
-</section>
-<section id="current-cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="current-cost-model">Current Cost Model</h2>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>This page calculates the component masses and supply cost of one offshore wind turbine. The parametric inputs are generator capacity <span class="math inline">\(P\)</span>, rotor diameter <span class="math inline">\(D\)</span>, and hub height <span class="math inline">\(H_h\)</span>. Component masses are retained individually because they determine structural loads, transport requirements, lift configurations, and installation-vessel feasibility.</p>
+<p>The calculation uses the NREL Cost and Scaling Model (CSM) implemented in WISDEM. The CSM estimates component masses from high-level turbine inputs and then estimates component costs from those masses <span class="citation" data-cites="wisdemCSM2026">(<a href="#ref-wisdemCSM2026" role="doc-biblioref">National Renewable Energy Laboratory 2026a</a>)</span>. It is used here because its equations and inputs are explicit. WISDEM notes that the regressions include older WindPACT-era relationships and recommends overriding them with more detailed estimates where available <span class="citation" data-cites="wisdemCSM2026">(<a href="#ref-wisdemCSM2026" role="doc-biblioref">National Renewable Energy Laboratory 2026a</a>)</span>.</p>
+<p>This implementation is pinned to WISDEM source revision <code>584c39191b61ab2654c1f1fab2871e0f5bec4064</code> <span class="citation" data-cites="wisdemSource2026">(<a href="#ref-wisdemSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026b</a>)</span>. A different WISDEM revision must not be substituted without checking every coefficient below.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Included on this page</th>
+<th>Accounted elsewhere</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Turbine rating</td>
-<td style="text-align: right;">15 MW</td>
+<td>Blades, hub, pitch system and spinner</td>
+<td>Monopile or other foundation</td>
 </tr>
 <tr class="even">
-<td>Turbine CAPEX</td>
-<td style="text-align: right;">1,100 EUR/kW</td>
+<td>Mechanical drivetrain and generator</td>
+<td>Offshore turbine transport and installation</td>
 </tr>
 <tr class="odd">
-<td>Turbine CAPEX per 15 MW turbine</td>
-<td style="text-align: right;">16.5 million EUR</td>
+<td>Nacelle structure and auxiliary systems</td>
+<td>Array and export cables</td>
 </tr>
 <tr class="even">
-<td>Turbine OPEX</td>
-<td style="text-align: right;">200,000 EUR/turbine/year</td>
+<td>Turbine electrical equipment and transformer when present</td>
+<td>Offshore and onshore substations</td>
 </tr>
 <tr class="odd">
-<td>Development cost</td>
-<td style="text-align: right;">72 million EUR/farm plus 70,000 EUR/turbine</td>
+<td>Tower</td>
+<td>Grid connection and other balance-of-system costs</td>
 </tr>
 </tbody>
 </table>
-<p>The turbine cost is treated as linear in rated power for the current 15 MW baseline.</p>
+<p>The cost boundary is turbine supply at the stated commercial basis. Offshore transport and installation are calculated on <a href="../offshore_installation/turbine_and_foundation_installation.html">Turbine and Foundation Installation</a>. For decentralised hydrogen, electrolyser, water-treatment, compression, storage, and hydrogen-export equipment are not turbine CAPEX. Their masses must nevertheless enter the installation and structural models when they are installed in or on the turbine.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>The turbine power curve and wake model determine gross turbine output. For the electricity configuration, the turbine output measurement is treated as being after the inverter and before the internal transformer. The transformer is included in total turbine cost but its efficiency is accounted for in the electrical chain.</p>
-<p>For decentralised hydrogen, the electrical conversion chain differs because the PEM stack can connect to the turbine DC link rather than using the full inverter-transformer path.</p>
-</section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
+<section id="parametric-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="parametric-inputs">Parametric Inputs</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Configuration</th>
-<th style="text-align: right;">Turbine availability</th>
+<th>Symbol</th>
+<th>Description</th>
+<th style="text-align: right;">Unit</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Electric turbine chain</td>
-<td style="text-align: right;">98.0%</td>
+<td><span class="math inline">\(P\)</span></td>
+<td>Generator rated capacity</td>
+<td style="text-align: right;">kW</td>
 </tr>
 <tr class="even">
-<td>Hydrogen turbine chain</td>
-<td style="text-align: right;">98.5%</td>
+<td><span class="math inline">\(D\)</span></td>
+<td>Rotor diameter</td>
+<td style="text-align: right;">m</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(H_h\)</span></td>
+<td>Hub height above mean sea level</td>
+<td style="text-align: right;">m</td>
 </tr>
 </tbody>
 </table>
-<p>The hydrogen turbine availability is higher in the current assumption set because fewer turbine-side electrical conversion components are present in the decentralised hydrogen chain.</p>
+<p>When hub height is not specified independently, the default relationship provides 15 m lower-tip clearance above mean sea level:</p>
+<p><span class="math display">\[
+H_h=\frac{D}{2}+15.
+\]</span></p>
+<p>The structural tower interface is assumed to be 15 m above mean sea level. Tower length is therefore derived rather than entered independently:</p>
+<p><span class="math display">\[
+L_t=H_h-15.
+\]</span></p>
+<p>Under the default hub-height relationship, <span class="math inline">\(L_t=D/2\)</span>. A project-specific hub height can override the default while retaining the same 15 m interface elevation.</p>
 </section>
-<section id="mass-and-installation" class="level2">
-<h2 class="anchored" data-anchor-id="mass-and-installation">Mass and Installation</h2>
-<p>Turbine mass is not yet fully parameterised in the source material. Tower, nacelle, and component masses should be added where they affect tower cost, foundation loading, or installation vessel requirements.</p>
+<section id="fixed-model-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="fixed-model-assumptions">Fixed Model Assumptions</h2>
+<p>The following quantities are model constants or scenario definitions, not parametric inputs:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Baseline treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Number of blades</td>
+<td><span class="math inline">\(n_b=3\)</span></td>
+</tr>
+<tr class="even">
+<td>Maximum blade-tip speed</td>
+<td><span class="math inline">\(V_\mathrm{tip}=95\)</span> m/s</td>
+</tr>
+<tr class="odd">
+<td>Rated drivetrain efficiency</td>
+<td><span class="math inline">\(\eta=0.95\)</span></td>
+</tr>
+<tr class="even">
+<td>Blade regression</td>
+<td>IEC Class I with carbon reinforcement</td>
+</tr>
+<tr class="odd">
+<td>Main bearings</td>
+<td><span class="math inline">\(n_\mathrm{brg}=2\)</span></td>
+</tr>
+<tr class="even">
+<td>Nacelle crane</td>
+<td>Included</td>
+</tr>
+<tr class="odd">
+<td>Reference drivetrain</td>
+<td>Permanent-magnet direct drive</td>
+</tr>
+<tr class="even">
+<td>Electrical architecture</td>
+<td>Selected scenario: electricity export or decentralised hydrogen</td>
+</tr>
+</tbody>
+</table>
+<p>Rated power and rotor diameter do not uniquely determine maximum blade-tip speed. Tip speed is a turbine design and control limit affected by aerodynamic, acoustic, structural, and generator constraints. Fixing it at the IEA 15 MW reference value keeps the parametric model limited to <span class="math inline">\(P\)</span>, <span class="math inline">\(D\)</span>, and <span class="math inline">\(H_h\)</span> <span class="citation" data-cites="gaertner2020IEA15">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>)</span>.</p>
+</section>
+<section id="calculation-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="calculation-sequence">Calculation Sequence</h2>
+<p>The calculation is performed in dependency order:</p>
+<ol type="1">
+<li>calculate rated rotor speed and torque;</li>
+<li>calculate blade and hub-system masses;</li>
+<li>calculate drivetrain, nacelle, electrical, and tower masses;</li>
+<li>select the components present in the chosen drivetrain and electrical architecture;</li>
+<li>aggregate rotor, nacelle, RNA, tower, and complete-turbine masses;</li>
+<li>calculate raw component costs; and</li>
+<li>calibrate the raw WISDEM cost to a stated offshore-turbine cost reference.</li>
+</ol>
+</section>
+<section id="rated-speed-and-torque" class="level2">
+<h2 class="anchored" data-anchor-id="rated-speed-and-torque">Rated Speed and Torque</h2>
+<p>The rated rotor angular velocity follows from the fixed 95 m/s tip-speed limit:</p>
+<p><span class="math display">\[
+\omega_r=\frac{V_\mathrm{tip}}{D/2}.
+\]</span></p>
+<p>Rated rotor speed and low-speed-shaft torque are:</p>
+<p><span class="math display">\[
+n_r=\omega_r\frac{60}{2\pi},
+\qquad
+Q_r=\frac{1000P/\eta}{\omega_r},
+\]</span></p>
+<p>where <span class="math inline">\(n_r\)</span> is in revolutions per minute and <span class="math inline">\(Q_r\)</span> is in Nm. A larger rotor rotates more slowly for the same tip-speed limit and consequently transmits more torque at the same rated power.</p>
+</section>
+<section id="rotor-mass" class="level2">
+<h2 class="anchored" data-anchor-id="rotor-mass">Rotor Mass</h2>
+<section id="blade" class="level3">
+<h3 class="anchored" data-anchor-id="blade">Blade</h3>
+<p>The baseline WISDEM mass of one blade is:</p>
+<p><span class="math display">\[
+m_b=0.5\left(\frac{D}{2}\right)^b,
+\]</span></p>
+<p>where <span class="math inline">\(m_b\)</span> is in kg. The exponent <span class="math inline">\(b\)</span> depends on turbine class and carbon reinforcement <span class="citation" data-cites="wisdemSource2026">(<a href="#ref-wisdemSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026b</a>)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Blade assumption</th>
+<th style="text-align: right;"><span class="math inline">\(b\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Class I with carbon reinforcement</td>
+<td style="text-align: right;">2.47</td>
+</tr>
+<tr class="even">
+<td>Class I without carbon reinforcement</td>
+<td style="text-align: right;">2.54</td>
+</tr>
+<tr class="odd">
+<td>Class II or III with carbon reinforcement</td>
+<td style="text-align: right;">2.44</td>
+</tr>
+<tr class="even">
+<td>Class II or III without carbon reinforcement</td>
+<td style="text-align: right;">2.50</td>
+</tr>
+</tbody>
+</table>
+<p>The offshore screening case uses Class I with carbon reinforcement unless another class or blade design is specified.</p>
+</section>
+<section id="hub-pitch-system-and-spinner" class="level3">
+<h3 class="anchored" data-anchor-id="hub-pitch-system-and-spinner">Hub, pitch system, and spinner</h3>
+<p>Hub mass is:</p>
+<p><span class="math display">\[
+m_\mathrm{hub}=2.3m_b+1320.
+\]</span></p>
+<p>WISDEM first calculates pitch-bearing mass and then complete pitch-system mass:</p>
+<p><span class="math display">\[
+m_\mathrm{pb}=0.1295n_bm_b+491.31,
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{pitch}=1.328m_\mathrm{pb}+555.
+\]</span></p>
+<p>Spinner mass is:</p>
+<p><span class="math display">\[
+m_\mathrm{spinner}=15.5D-980.
+\]</span></p>
+<p>The hub-system and rotor masses are therefore:</p>
+<p><span class="math display">\[
+m_\mathrm{hubsys}
+=m_\mathrm{hub}+m_\mathrm{pitch}+m_\mathrm{spinner},
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{rotor}=n_bm_b+m_\mathrm{hubsys}.
+\]</span></p>
+<p>The model retains blade, hub-system, and complete-rotor masses separately so that alternative rotor-assembly and lifting strategies can be evaluated.</p>
+</section>
+</section>
+<section id="nacelle-mass" class="level2">
+<h2 class="anchored" data-anchor-id="nacelle-mass">Nacelle Mass</h2>
+<section id="low-speed-shaft-and-main-bearings" class="level3">
+<h3 class="anchored" data-anchor-id="low-speed-shaft-and-main-bearings">Low-speed shaft and main bearings</h3>
+<p>The low-speed-shaft mass is:</p>
+<p><span class="math display">\[
+m_\mathrm{LSS}
+=13\left(m_b\frac{P}{1000}\right)^{0.65}+775.
+\]</span></p>
+<p>The mass of one main bearing and the total bearing mass are:</p>
+<p><span class="math display">\[
+m_\mathrm{bearing}=10^{-4}D^{3.5},
+\qquad
+m_\mathrm{bearings}=n_\mathrm{brg}m_\mathrm{bearing}.
+\]</span></p>
+</section>
+<section id="gearbox-brake-and-high-speed-shaft" class="level3">
+<h3 class="anchored" data-anchor-id="gearbox-brake-and-high-speed-shaft">Gearbox, brake, and high-speed shaft</h3>
+<p>For a geared drivetrain, the pinned WISDEM source calculates gearbox mass from rated torque:</p>
+<p><span class="math display">\[
+m_\mathrm{gearbox}=\frac{Q_r}{\rho_Q}.
+\]</span></p>
+<p>The source default is <span class="math inline">\(\rho_Q=200\)</span> Nm/kg. Gearbox mass is zero for direct drive.</p>
+<p>Brake and high-speed-shaft masses are:</p>
+<p><span class="math display">\[
+m_\mathrm{brake}=0.00122Q_r,
+\qquad
+m_\mathrm{HSS}=0.19894P.
+\]</span></p>
+<p>The high-speed shaft is removed for direct drive. Brake mass must be reviewed for the selected direct-drive arrangement rather than retained automatically.</p>
+</section>
+<section id="generator" class="level3">
+<h3 class="anchored" data-anchor-id="generator">Generator</h3>
+<p>The simple WISDEM relationship is:</p>
+<p><span class="math display">\[
+m_\mathrm{generator}=2.3P+3400.
+\]</span></p>
+<p>This power-based regression represents a relatively high-speed geared generator. It is not used for a large direct-drive offshore generator, whose mass is governed primarily by rated torque. The direct-drive replacement is defined under <a href="#improvements-from-mehta">Improvements from Mehta</a>.</p>
+</section>
+<section id="nacelle-structure-and-auxiliaries" class="level3">
+<h3 class="anchored" data-anchor-id="nacelle-structure-and-auxiliaries">Nacelle structure and auxiliaries</h3>
+<p>The remaining WISDEM mass relationships are:</p>
+<p><span class="math display">\[
+m_\mathrm{bedplate}=D^{2.2},
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{yaw}=1.5\left(0.0009D^{3.314}\right),
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{HVAC}=0.08P,
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{cover}=1.2817P+428.19,
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{platforms}
+=0.125m_\mathrm{bedplate}+3000I_\mathrm{crane},
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{transformer}=1.915P+1910.
+\]</span></p>
+<p>Transformer mass is included only when a turbine transformer is present in the selected architecture.</p>
+</section>
+<section id="electrical-equipment-additions" class="level3">
+<h3 class="anchored" data-anchor-id="electrical-equipment-additions">Electrical-equipment additions</h3>
+<p>The CSM does not provide adequate masses for converters, controls, switchgear, internal cabling, DC-link equipment, or electrical protection. Those terms are explicit architecture inputs:</p>
+<p><span class="math display">\[
+\begin{aligned}
+m_\mathrm{electrical}={}&amp;m_\mathrm{converter,GS}
++m_\mathrm{converter,grid}
++m_\mathrm{switchgear}\\
+&amp;+m_\mathrm{cabling}
++m_\mathrm{DC-link}
++m_\mathrm{protection},
+\end{aligned}
+\]</span></p>
+<p>where GS denotes the generator-side converter. A missing required mass remains an unresolved input; it is not silently assigned a value of zero. The direct-DC electrical architecture is developed further on <a href="../hydrogen_production/dc_integration.html">DC Integration</a>.</p>
+</section>
+<section id="nacelle-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="nacelle-aggregation">Nacelle aggregation</h3>
+<p>Only components present in the selected drivetrain and electrical architecture are included:</p>
+<p><span class="math display">\[
+\begin{aligned}
+m_\mathrm{nacelle}={}&amp;m_\mathrm{LSS}+m_\mathrm{bearings}
++m_\mathrm{gearbox}+m_\mathrm{brake}+m_\mathrm{HSS}\\
+&amp;+m_\mathrm{generator}+m_\mathrm{bedplate}+m_\mathrm{yaw}
++m_\mathrm{HVAC}+m_\mathrm{cover}\\
+&amp;+m_\mathrm{platforms}+m_\mathrm{transformer}
++m_\mathrm{electrical}.
+\end{aligned}
+\]</span></p>
+</section>
+</section>
+<section id="tower-mass" class="level2">
+<h2 class="anchored" data-anchor-id="tower-mass">Tower Mass</h2>
+<p>The simple WISDEM tower relationship is:</p>
+<p><span class="math display">\[
+m_\mathrm{tower}=19.828L_t^{2.0282}.
+\]</span></p>
+<p>This regression depends only on tower length. It does not respond to rotor thrust, RNA mass, tower natural-frequency constraints, foundation stiffness, fatigue, or site conditions. It is therefore an initial screening estimate, not the preferred offshore-tower calculation.</p>
+<p>TowerSE or an equivalent load-based calculation is required before tower-section masses are used for detailed installation planning. The tower remains inside the turbine-cost boundary; the foundation remains outside it.</p>
+</section>
+<section id="aggregate-masses-and-installation-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="aggregate-masses-and-installation-outputs">Aggregate Masses and Installation Outputs</h2>
+<p>Rotor-nacelle assembly and complete-turbine masses are:</p>
+<p><span class="math display">\[
+m_\mathrm{RNA}=m_\mathrm{rotor}+m_\mathrm{nacelle},
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{turbine}=m_\mathrm{RNA}+m_\mathrm{tower}.
+\]</span></p>
+<p>The calculation passes the following outputs to the installation model:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Installation use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Individual blade mass and blade length</td>
+<td>Blade transport, racks, and lifting</td>
+</tr>
+<tr class="even">
+<td>Hub-system and complete-rotor mass</td>
+<td>Hub or preassembled-rotor lift</td>
+</tr>
+<tr class="odd">
+<td>Nacelle mass</td>
+<td>Nacelle lift</td>
+</tr>
+<tr class="even">
+<td>RNA mass</td>
+<td>Structural loading and alternative lift strategies</td>
+</tr>
+<tr class="odd">
+<td>Tower mass and, when available, section masses</td>
+<td>Tower transport and lifts</td>
+</tr>
+<tr class="even">
+<td>Largest dimensions and heaviest lift</td>
+<td>Vessel and crane feasibility</td>
+</tr>
+</tbody>
+</table>
+<p>Tower-section masses and dimensions are not generated by the simple CSM. Until TowerSE is implemented, those installation inputs remain unresolved.</p>
+</section>
+<section id="component-cost" class="level2">
+<h2 class="anchored" data-anchor-id="component-cost">Component Cost</h2>
+<p>The WISDEM CSM generally calculates raw manufacturing cost as:</p>
+<p><span class="math display">\[
+C_i=u_im_i,
+\]</span></p>
+<p>where <span class="math inline">\(u_i\)</span> is a component mass-cost coefficient. Electrical connections and controls instead scale with rated capacity. The pinned source uses the following coefficients <span class="citation" data-cites="wisdemSource2026">(<a href="#ref-wisdemSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026b</a>)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th style="text-align: right;">Raw cost relationship</th>
+<th style="text-align: right;">Coefficient unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blade</td>
+<td style="text-align: right;"><span class="math inline">\(14.6m_b\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Hub</td>
+<td style="text-align: right;"><span class="math inline">\(3.9m_\mathrm{hub}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>Pitch system</td>
+<td style="text-align: right;"><span class="math inline">\(22.1m_\mathrm{pitch}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Spinner</td>
+<td style="text-align: right;"><span class="math inline">\(11.1m_\mathrm{spinner}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>Low-speed shaft</td>
+<td style="text-align: right;"><span class="math inline">\(11.9m_\mathrm{LSS}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Main bearings</td>
+<td style="text-align: right;"><span class="math inline">\(4.5m_\mathrm{bearings}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>Gearbox</td>
+<td style="text-align: right;"><span class="math inline">\(12.9m_\mathrm{gearbox}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Brake</td>
+<td style="text-align: right;"><span class="math inline">\(3.6254m_\mathrm{brake}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>High-speed shaft</td>
+<td style="text-align: right;"><span class="math inline">\(6.8m_\mathrm{HSS}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Generator</td>
+<td style="text-align: right;"><span class="math inline">\(12.4m_\mathrm{generator}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>Bedplate</td>
+<td style="text-align: right;"><span class="math inline">\(2.9m_\mathrm{bedplate}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Yaw system</td>
+<td style="text-align: right;"><span class="math inline">\(8.3m_\mathrm{yaw}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>HVAC</td>
+<td style="text-align: right;"><span class="math inline">\(124m_\mathrm{HVAC}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Nacelle cover</td>
+<td style="text-align: right;"><span class="math inline">\(5.7m_\mathrm{cover}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>Platforms</td>
+<td style="text-align: right;"><span class="math inline">\(17.1m_\mathrm{platforms}\)</span>, plus crane</td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="even">
+<td>Transformer</td>
+<td style="text-align: right;"><span class="math inline">\(18.8m_\mathrm{transformer}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+<tr class="odd">
+<td>Electrical connections</td>
+<td style="text-align: right;"><span class="math inline">\(41.85P\)</span></td>
+<td style="text-align: right;">USD/kW</td>
+</tr>
+<tr class="even">
+<td>Controls</td>
+<td style="text-align: right;"><span class="math inline">\(21.15P\)</span></td>
+<td style="text-align: right;">USD/kW</td>
+</tr>
+<tr class="odd">
+<td>Tower</td>
+<td style="text-align: right;"><span class="math inline">\(2.9m_\mathrm{tower}\)</span></td>
+<td style="text-align: right;">USD/kg</td>
+</tr>
+</tbody>
+</table>
+<p>The coefficients are legacy model inputs with mixed evidential ages. They are used to distribute and scale cost between components, not as a current market quotation.</p>
+<p>Raw subsystem costs are:</p>
+<p><span class="math display">\[
+C_\mathrm{rotor,raw}
+=n_bC_b+C_\mathrm{hub}+C_\mathrm{pitch}+C_\mathrm{spinner},
+\]</span></p>
+<p><span class="math display">\[
+C_\mathrm{nacelle,raw}=\sum_{i\in\mathrm{nacelle}}C_i,
+\]</span></p>
+<p><span class="math display">\[
+C_\mathrm{turbine,raw}
+=C_\mathrm{rotor,raw}+C_\mathrm{nacelle,raw}+C_\mathrm{tower,raw}.
+\]</span></p>
+<p>WISDEM permits assembly, overhead, profit, and transport multipliers. Their defaults are zero <span class="citation" data-cites="wisdemCSM2026">(<a href="#ref-wisdemCSM2026" role="doc-biblioref">National Renewable Energy Laboratory 2026a</a>)</span>. Offshore transport remains excluded on this page. Assembly, overhead, profit, and warranty must either be stated as separate supply-cost adders or included through the calibration below.</p>
+</section>
+<section id="cost-calibration" class="level2">
+<h2 class="anchored" data-anchor-id="cost-calibration">Cost Calibration</h2>
+<p>The raw WISDEM costs are not used as the absolute turbine price. Separate RNA and tower calibration factors preserve WISDEM’s component scaling while matching a stated NREL offshore reference:</p>
+<p><span class="math display">\[
+k_\mathrm{RNA}
+=\frac{C_\mathrm{RNA,ref}^{\mathrm{NREL}}}
+{C_\mathrm{RNA,ref}^{\mathrm{WISDEM}}},
+\qquad
+k_\mathrm{tower}
+=\frac{C_\mathrm{tower,ref}^{\mathrm{NREL}}}
+{C_\mathrm{tower,ref}^{\mathrm{WISDEM}}}.
+\]</span></p>
+<p>The calibrated turbine supply cost is:</p>
+<p><span class="math display">\[
+C_\mathrm{turbine}
+=k_\mathrm{RNA}C_\mathrm{RNA,raw}
++k_\mathrm{tower}C_\mathrm{tower,raw}.
+\]</span></p>
+<p>The current calibration candidate is NREL’s 2022 Cost of Wind Energy Review. Its offshore reference is a 12 MW turbine with a 216 m rotor and 137 m hub height. It reports turbine CAPEX of USD 1,700/kW, separated into USD 1,462/kW for the RNA and USD 238/kW for the tower; installation is a separate cost category <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>. These values define a reference point, not a linear EUR/kW turbine model.</p>
+<p>Currency conversion and escalation are applied after calibration using the common financial assumptions. The source currency, source year, index, and exchange-rate convention must accompany every reported result.</p>
+</section>
+<section id="decentralised-hydrogen-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="decentralised-hydrogen-architecture">Decentralised Hydrogen Architecture</h2>
+<p>The decentralised-hydrogen turbine is represented by changing the component ledger. No general percentage reduction is applied to turbine mass or cost.</p>
+<p>For architecture <span class="math inline">\(a\)</span>:</p>
+<p><span class="math display">\[
+m_{\mathrm{nacelle},a}
+=\sum_i x_{i,a}m_i+\sum_jm_{j,a}^{\mathrm{replacement}},
+\]</span></p>
+<p><span class="math display">\[
+C_{\mathrm{turbine},a}
+=\sum_i x_{i,a}C_i+\sum_jC_{j,a}^{\mathrm{replacement}},
+\]</span></p>
+<p>where <span class="math inline">\(x_{i,a}=1\)</span> when component <span class="math inline">\(i\)</span> is present and zero when it is absent.</p>
+<p>A conventional electricity-export turbine may contain a generator-side converter or rectifier, DC link, grid-side inverter, step-up transformer, AC switchgear, protection, and high-voltage internal cabling. A direct-DC hydrogen turbine may remove or resize the grid-side inverter, transformer, part of the AC switchgear, and part of the high-voltage cabling. It may require replacement DC-link, DC protection, DC-DC conversion, cooling, and structural equipment.</p>
+<p>The mass and cost changes are therefore:</p>
+<p><span class="math display">\[
+\Delta m_\mathrm{H2}
+=m_\mathrm{removed}-m_\mathrm{replacement}+m_\mathrm{reinforcement},
+\]</span></p>
+<p><span class="math display">\[
+\Delta C_\mathrm{H2}
+=C_\mathrm{removed}-C_\mathrm{replacement}+C_\mathrm{reinforcement}.
+\]</span></p>
+<p>WISDEM calculates transformer mass explicitly. Converter, switchgear, protection, and cabling masses require separate evidence. A lighter nacelle may also reduce tower and foundation mass, but that secondary effect cannot be calculated with the length-only WISDEM tower regression.</p>
+</section>
+<section id="improvements-from-mehta" class="level2">
+<h2 class="anchored" data-anchor-id="improvements-from-mehta">Improvements from Mehta</h2>
+<p>Mehta, Zaaijer, and von Terzi scale turbine properties around the direct-drive IEA 15 MW reference turbine <span class="citation" data-cites="mehta2024TurbineSizing gaertner2020IEA15">(<a href="#ref-mehta2024TurbineSizing" role="doc-biblioref">Mehta et al. 2024</a>; <a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>)</span>. Their complete model is not substituted for WISDEM: the paper does not publish standalone equations for every component, and its absolute turbine-cost calibration is not adopted. Four relationships nevertheless improve identifiable weaknesses in the WISDEM baseline.</p>
+<section id="load-responsive-blade-mass" class="level3">
+<h3 class="anchored" data-anchor-id="load-responsive-blade-mass">1. Load-responsive blade mass</h3>
+<p>WISDEM blade mass depends on <span class="math inline">\(D\)</span> but does not respond to the higher rated wind speed and thrust associated with greater specific power. Mehta introduces:</p>
+<p><span class="math display">\[
+m_b
+=m_{b,\mathrm{ref}}
+\left(\frac{D}{D_\mathrm{ref}}\right)^\beta
+\left(\frac{V_r}{V_{r,\mathrm{ref}}}\right)^2,
+\]</span></p>
+<p>with baseline <span class="math inline">\(\beta=3\)</span>. Rated wind speed is calculated from:</p>
+<p><span class="math display">\[
+V_r
+=\left(
+\frac{1000P}
+{\tfrac{1}{2}\rho A C_{P,\max}\eta}
+\right)^{1/3},
+\qquad
+A=\frac{\pi D^2}{4}.
+\]</span></p>
+<p>This relationship should replace the WISDEM blade-mass regression when the model varies both <span class="math inline">\(P\)</span> and <span class="math inline">\(D\)</span> around the IEA 15 MW design. Hub, pitch, and spinner masses remain separate WISDEM components. The exponent <span class="math inline">\(\beta\)</span> is an uncertainty input because geometric cubic scaling does not represent every future blade technology.</p>
+</section>
+<section id="mixed-blade-cost-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="mixed-blade-cost-scaling">2. Mixed blade-cost scaling</h3>
+<p>WISDEM makes blade cost proportional to blade mass. Mehta separates material-related cost from tooling, labour, and other diameter-related costs:</p>
+<p><span class="math display">\[
+C_b
+=\gamma_\mathrm{mass}C_{b,\mathrm{ref}}
+\frac{m_b}{m_{b,\mathrm{ref}}}
++(1-\gamma_\mathrm{mass})C_{b,\mathrm{ref}}
+\left(\frac{D}{D_\mathrm{ref}}\right)^\alpha.
+\]</span></p>
+<p>The baseline parameters are <span class="math inline">\(\gamma_\mathrm{mass}=0.6\)</span> and <span class="math inline">\(\alpha=2\)</span> <span class="citation" data-cites="mehta2024TurbineSizing">(<a href="#ref-mehta2024TurbineSizing" role="doc-biblioref">Mehta et al. 2024</a>)</span>. This replaces only the blade cost relationship. The absolute reference blade cost must come from the adopted NREL-compatible calibration; Mehta’s absolute reference cost is not used.</p>
+</section>
+<section id="torque-based-direct-drive-generator" class="level3">
+<h3 class="anchored" data-anchor-id="torque-based-direct-drive-generator">3. Torque-based direct-drive generator</h3>
+<p>For a permanent-magnet direct-drive turbine, generator mass is scaled with rated torque:</p>
+<p><span class="math display">\[
+m_\mathrm{generator}
+=m_\mathrm{generator,ref}
+\frac{Q_r}{Q_{r,\mathrm{ref}}}.
+\]</span></p>
+<p>The archived Mehta implementation uses <span class="math inline">\(m_\mathrm{generator,ref}=372{,}000\)</span> kg and <span class="math inline">\(Q_{r,\mathrm{ref}}=20.308\)</span> MNm <span class="citation" data-cites="mehta2023WINDOW">(<a href="#ref-mehta2023WINDOW" role="doc-biblioref">Mehta 2023</a>)</span>. This corresponds to a reference torque density of approximately 54.6 Nm/kg. The relationship replaces the WISDEM power-based generator equation for direct drive. Generator torque density remains an uncertainty parameter because electromagnetic architecture, structural support, and cooling can change it materially.</p>
+</section>
+<section id="tower-feedback" class="level3">
+<h3 class="anchored" data-anchor-id="tower-feedback">4. Tower feedback</h3>
+<p>Mehta scales hub height linearly from the IEA 15 MW reference. That relationship is not adopted here because the model instead uses the directly interpretable lower-tip-clearance relationship <span class="math inline">\(H_h=D/2+15\)</span>. A project-specific hub height can override this default.</p>
+<p>Mehta’s support-structure method nevertheless demonstrates that tower mass must respond to RNA mass, rotor thrust, hub height, and site conditions. The full coupled monopile calculation is outside the turbine boundary, so the intended improvement is TowerSE rather than importing Mehta’s complete support-structure module.</p>
+</section>
+</section>
+<section id="model-status-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-status-and-limitations">Model Status and Limitations</h2>
+<p>The implemented hierarchy is:</p>
+<ol type="1">
+<li>WISDEM provides the component ledger and baseline mass equations.</li>
+<li>Mehta replaces blade mass and blade cost when both capacity and rotor diameter vary.</li>
+<li>Mehta’s torque relationship replaces the WISDEM generator equation for direct drive.</li>
+<li>Architecture-specific component inputs represent conventional electricity export and decentralised hydrogen.</li>
+<li>Separate RNA and tower factors calibrate raw WISDEM costs to NREL.</li>
+<li>All component masses pass to the later installation calculation.</li>
+</ol>
+<p>The calculation remains incomplete for detailed design until converter, switchgear, internal-cabling, and DC-interface masses are sourced and a load-based tower calculation produces tower-section geometry. These missing inputs are exposed explicitly. The model is a transparent scaling model, not a certified turbine design or supplier quotation, and is most reliable near the scale and architecture of its reference turbine.</p>
+</section>
+<section id="worked-example-15-mw-turbine-with-a-236-m-rotor" class="level2">
+<h2 class="anchored" data-anchor-id="worked-example-15-mw-turbine-with-a-236-m-rotor">Worked Example: 15 MW Turbine with a 236 m Rotor</h2>
+<p>This example evaluates a conventional electricity-export turbine with:</p>
+<p><span class="math display">\[
+P=15{,}000\ \mathrm{kW},
+\qquad
+D=236\ \mathrm{m}.
+\]</span></p>
+<p>The default hub-height and tower-length relationships give:</p>
+<p><span class="math display">\[
+H_h=\frac{236}{2}+15=133\ \mathrm{m},
+\]</span></p>
+<p><span class="math display">\[
+L_t=H_h-15=118\ \mathrm{m}.
+\]</span></p>
+<p>The fixed assumptions are three blades, 95 m/s maximum tip speed, 95% drivetrain efficiency, two main bearings, a nacelle crane, and a permanent-magnet direct-drive generator. Mehta’s load-responsive relationship is used for blade mass and its torque relationship is used for generator mass. The remaining applicable component masses follow the pinned WISDEM equations.</p>
+<section id="operating-point" class="level3">
+<h3 class="anchored" data-anchor-id="operating-point">Operating point</h3>
+<p>Rated rotor speed and torque are:</p>
+<p><span class="math display">\[
+n_r=7.69\ \mathrm{rpm},
+\qquad
+Q_r=19.61\ \mathrm{MNm}.
+\]</span></p>
+</section>
+<section id="mass-breakdown" class="level3">
+<h3 class="anchored" data-anchor-id="mass-breakdown">Mass breakdown</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Calculation status</th>
+<th style="text-align: right;">Mass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>One blade</td>
+<td>Mehta scaling from IEA 15 MW reference</td>
+<td style="text-align: right;">63.2 t</td>
+</tr>
+<tr class="even">
+<td>Three blades</td>
+<td>Derived</td>
+<td style="text-align: right;">189.6 t</td>
+</tr>
+<tr class="odd">
+<td>Hub</td>
+<td>WISDEM</td>
+<td style="text-align: right;">146.7 t</td>
+</tr>
+<tr class="even">
+<td>Pitch system</td>
+<td>WISDEM</td>
+<td style="text-align: right;">33.8 t</td>
+</tr>
+<tr class="odd">
+<td>Spinner</td>
+<td>WISDEM</td>
+<td style="text-align: right;">2.7 t</td>
+</tr>
+<tr class="even">
+<td><strong>Hub system</strong></td>
+<td>Derived</td>
+<td style="text-align: right;"><strong>183.2 t</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Complete rotor</strong></td>
+<td>Derived</td>
+<td style="text-align: right;"><strong>372.8 t</strong></td>
+</tr>
+<tr class="even">
+<td>Low-speed shaft</td>
+<td>WISDEM</td>
+<td style="text-align: right;">100.5 t</td>
+</tr>
+<tr class="odd">
+<td>Two main bearings</td>
+<td>WISDEM</td>
+<td style="text-align: right;">40.4 t</td>
+</tr>
+<tr class="even">
+<td>Brake</td>
+<td>WISDEM</td>
+<td style="text-align: right;">23.9 t</td>
+</tr>
+<tr class="odd">
+<td>Direct-drive generator</td>
+<td>Mehta torque scaling</td>
+<td style="text-align: right;">359.2 t</td>
+</tr>
+<tr class="even">
+<td>Bedplate</td>
+<td>WISDEM</td>
+<td style="text-align: right;">166.1 t</td>
+</tr>
+<tr class="odd">
+<td>Yaw system</td>
+<td>WISDEM</td>
+<td style="text-align: right;">98.7 t</td>
+</tr>
+<tr class="even">
+<td>HVAC</td>
+<td>WISDEM</td>
+<td style="text-align: right;">1.2 t</td>
+</tr>
+<tr class="odd">
+<td>Nacelle cover</td>
+<td>WISDEM</td>
+<td style="text-align: right;">19.7 t</td>
+</tr>
+<tr class="even">
+<td>Platforms and crane</td>
+<td>WISDEM</td>
+<td style="text-align: right;">23.8 t</td>
+</tr>
+<tr class="odd">
+<td>Transformer</td>
+<td>WISDEM</td>
+<td style="text-align: right;">30.6 t</td>
+</tr>
+<tr class="even">
+<td><strong>Nacelle</strong></td>
+<td>Derived known-component subtotal</td>
+<td style="text-align: right;"><strong>864.1 t</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Rotor-nacelle assembly</strong></td>
+<td>Derived</td>
+<td style="text-align: right;"><strong>1,236.9 t</strong></td>
+</tr>
+<tr class="even">
+<td>Tower</td>
+<td>WISDEM screening regression</td>
+<td style="text-align: right;">315.8 t</td>
+</tr>
+<tr class="odd">
+<td><strong>Complete turbine</strong></td>
+<td>Derived known-component subtotal</td>
+<td style="text-align: right;"><strong>1,552.8 t</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Converter, switchgear, DC-link, protection, and internal-cabling masses are not included because no traceable mass inputs have yet been selected. The nacelle, RNA, and complete-turbine results are therefore known-component subtotals. They must be updated before use as final transport or lifting masses.</p>
+</section>
+<section id="cost-calibration-1" class="level3">
+<h3 class="anchored" data-anchor-id="cost-calibration-1">Cost calibration</h3>
+<p>The raw WISDEM component costs are calibrated to NREL’s 12 MW offshore reference. The NREL reference uses <span class="math inline">\(P_\mathrm{ref}=12\)</span> MW, <span class="math inline">\(D_\mathrm{ref}=216\)</span> m, <span class="math inline">\(H_{h,\mathrm{ref}}=137\)</span> m, RNA cost of USD 1,462/kW, and tower cost of USD 238/kW <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>.</p>
+<p>The raw blade-cost anchor is the WISDEM coefficient applied to the 65 t IEA 15 MW reference blade:</p>
+<p><span class="math display">\[
+C_{b,\mathrm{ref,raw}}
+=14.6\times65{,}000
+=949{,}000\ \mathrm{USD/blade}.
+\]</span></p>
+<p>This anchor is used in Mehta’s mixed mass/non-mass blade-cost relationship for both the NREL calibration turbine and the 236 m example. The subsequent RNA calibration, rather than the raw blade anchor, sets the absolute turbine cost level.</p>
+<p>At the NREL reference geometry, the model gives raw RNA and tower costs of USD 10.232 million and USD 0.980 million. The published calibration totals are:</p>
+<p><span class="math display">\[
+C_\mathrm{RNA,ref}^{\mathrm{NREL}}
+=12{,}000\times1{,}462
+=17.544\ \mathrm{million\ USD},
+\]</span></p>
+<p><span class="math display">\[
+C_\mathrm{tower,ref}^{\mathrm{NREL}}
+=12{,}000\times238
+=2.856\ \mathrm{million\ USD}.
+\]</span></p>
+<p>The resulting factors are:</p>
+<p><span class="math display">\[
+k_\mathrm{RNA}=1.7146,
+\qquad
+k_\mathrm{tower}=2.9142.
+\]</span></p>
+<p>The RNA factor is applied to every raw rotor and nacelle cost. The tower factor is applied only to the raw tower cost. This preserves the component-level WISDEM scaling while reproducing the separate NREL RNA and tower reference costs.</p>
+</section>
+<section id="calibrated-cost-breakdown" class="level3">
+<h3 class="anchored" data-anchor-id="calibrated-cost-breakdown">Calibrated cost breakdown</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cost category</th>
+<th>Included components</th>
+<th style="text-align: right;">Cost</th>
+<th style="text-align: right;">Specific cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blades</td>
+<td>Three blades, including Mehta mass/non-mass scaling</td>
+<td style="text-align: right;">USD 4.736 million</td>
+<td style="text-align: right;">USD 315.7/kW</td>
+</tr>
+<tr class="even">
+<td>Hub system</td>
+<td>Hub, pitch system and spinner</td>
+<td style="text-align: right;">USD 2.313 million</td>
+<td style="text-align: right;">USD 154.2/kW</td>
+</tr>
+<tr class="odd">
+<td>Drivetrain and generator</td>
+<td>Low-speed shaft, bearings, brake and direct-drive generator</td>
+<td style="text-align: right;">USD 10.149 million</td>
+<td style="text-align: right;">USD 676.6/kW</td>
+</tr>
+<tr class="even">
+<td>Nacelle structure and auxiliaries</td>
+<td>Bedplate, yaw, HVAC, cover, platforms and crane</td>
+<td style="text-align: right;">USD 3.307 million</td>
+<td style="text-align: right;">USD 220.5/kW</td>
+</tr>
+<tr class="odd">
+<td>Turbine electrical equipment</td>
+<td>Transformer, electrical connections and controls</td>
+<td style="text-align: right;">USD 2.608 million</td>
+<td style="text-align: right;">USD 173.9/kW</td>
+</tr>
+<tr class="even">
+<td><strong>RNA subtotal</strong></td>
+<td>Rotor and complete nacelle cost categories above</td>
+<td style="text-align: right;"><strong>USD 23.114 million</strong></td>
+<td style="text-align: right;"><strong>USD 1,540.9/kW</strong></td>
+</tr>
+<tr class="odd">
+<td>Tower</td>
+<td>Calibrated WISDEM tower cost</td>
+<td style="text-align: right;">USD 2.669 million</td>
+<td style="text-align: right;">USD 178.0/kW</td>
+</tr>
+<tr class="even">
+<td><strong>Complete turbine</strong></td>
+<td>RNA and tower; foundation and installation excluded</td>
+<td style="text-align: right;"><strong>USD 25.783 million</strong></td>
+<td style="text-align: right;"><strong>USD 1,718.9/kW</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The cost is reported in the NREL reference currency basis before project-year escalation or conversion to EUR. The turbine electrical category includes WISDEM’s transformer, electrical-connections, and controls relationships, but it does not provide a separately resolved converter cost. The RNA calibration may therefore absorb part of the unresolved electrical and commercial supply scope. The result is a transparent screening estimate rather than a supplier quotation.</p>
+
 
 
 </section>
+</section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-gaertner2020IEA15" class="csl-entry" role="listitem">
+Gaertner, Evan, Jennifer Rinker, Latha Sethuraman, et al. 2020. <em>Definition of the <span>IEA</span> 15-Megawatt Offshore Reference Wind Turbine</em>. NREL/TP-5000-75698. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1603478">https://doi.org/10.2172/1603478</a>.
+</div>
+<div id="ref-mehta2023WINDOW" class="csl-entry" role="listitem">
+Mehta, Mihir K. 2023. <em><span class="nocase">WINDOW_static</span>: Turbine Sizing for Electricity and Hydrogen Production</em>. V. v3.0_turbine_sizing. Released. <a href="https://doi.org/10.5281/zenodo.8380355">https://doi.org/10.5281/zenodo.8380355</a>.
+</div>
+<div id="ref-mehta2024TurbineSizing" class="csl-entry" role="listitem">
+Mehta, Mihir K., Michiel B. Zaaijer, and Dominic A. D. von Terzi. 2024. <span>“Drivers for Optimum Sizing of Wind Turbines for Offshore Wind Farms.”</span> <em>Wind Energy Science</em> 9 (1): 141–63. <a href="https://doi.org/10.5194/wes-9-141-2024">https://doi.org/10.5194/wes-9-141-2024</a>.
+</div>
+<div id="ref-wisdemCSM2026" class="csl-entry" role="listitem">
+National Renewable Energy Laboratory. 2026a. <span>“<span>NREL CSM</span>: Introduction and Model Documentation.”</span> <a href="https://wisdem.readthedocs.io/en/master/wisdem/nrelcsm/intro.html">https://wisdem.readthedocs.io/en/master/wisdem/nrelcsm/intro.html</a>.
+</div>
+<div id="ref-wisdemSource2026" class="csl-entry" role="listitem">
+National Renewable Energy Laboratory. 2026b. <em><span>WISDEM</span>: Wind-Plant Integrated System Design and Engineering Model</em>. V. Git revision 584c39191b61ab2654c1f1fab2871e0f5bec4064. Released. <a href="https://github.com/WISDEM/WISDEM/tree/584c39191b61ab2654c1f1fab2871e0f5bec4064/wisdem/nrelcsm">https://github.com/WISDEM/WISDEM/tree/584c39191b61ab2654c1f1fab2871e0f5bec4064/wisdem/nrelcsm</a>.
+</div>
+<div id="ref-stehly2023CostWind" class="csl-entry" role="listitem">
+Stehly, Tyler, Patrick Duffy, and Daniel Mulas Hernando. 2023. <em>2022 Cost of Wind Energy Review</em>. NREL/PR-5000-88335. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2278805">https://doi.org/10.2172/2278805</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

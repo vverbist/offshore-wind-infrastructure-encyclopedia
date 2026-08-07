@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Foundation – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Monopile Foundation Mass and Cost – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -90,6 +90,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -103,7 +132,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/foundation.html">Foundation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/foundation.html">Monopile Foundation Mass and Cost</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -275,25 +304,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../turbine_system/wind_turbine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Wind Turbine</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../turbine_system/generator_and_power_electronics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Generator and Power Electronics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../turbine_system/tower_nacelle_and_mass.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tower, Nacelle, and Mass</span></a>
+ <span class="menu-text">Wind Turbine Mass and Cost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Foundation</span></a>
+ <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
 </li>
       </ul>
@@ -536,20 +553,24 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-value-chain" id="toc-role-in-the-value-chain" class="nav-link active" data-scroll-target="#role-in-the-value-chain">Role in the Value Chain</a></li>
-  <li><a href="#current-cost-model" id="toc-current-cost-model" class="nav-link" data-scroll-target="#current-cost-model">Current Cost Model</a></li>
-  <li><a href="#energy-balance" id="toc-energy-balance" class="nav-link" data-scroll-target="#energy-balance">Energy Balance</a></li>
-  <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
-  <li><a href="#mass-and-scaling" id="toc-mass-and-scaling" class="nav-link" data-scroll-target="#mass-and-scaling">Mass and Scaling</a></li>
+  <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
+  <li><a href="#model-inputs" id="toc-model-inputs" class="nav-link" data-scroll-target="#model-inputs">Model Inputs</a></li>
+  <li><a href="#monopile-mass" id="toc-monopile-mass" class="nav-link" data-scroll-target="#monopile-mass">Monopile Mass</a>
+  <ul class="collapse">
+  <li><a href="#check-against-published-designs" id="toc-check-against-published-designs" class="nav-link" data-scroll-target="#check-against-published-designs">Check against published designs</a></li>
+  </ul></li>
+  <li><a href="#monopile-supply-cost" id="toc-monopile-supply-cost" class="nav-link" data-scroll-target="#monopile-supply-cost">Monopile Supply Cost</a></li>
+  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example">Worked Example</a></li>
+  <li><a href="#model-output-and-limitations" id="toc-model-output-and-limitations" class="nav-link" data-scroll-target="#model-output-and-limitations">Model Output and Limitations</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/foundation.html">Foundation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../turbine_system/overview.html">Turbine System</a></li><li class="breadcrumb-item"><a href="../turbine_system/foundation.html">Monopile Foundation Mass and Cost</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Foundation</h1>
+<h1 class="title">Monopile Foundation Mass and Cost</h1>
 </div>
 
 
@@ -566,59 +587,391 @@ div.csl-indent {
 </header>
 
 
-<section id="role-in-the-value-chain" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-value-chain">Role in the Value Chain</h2>
-<p>The foundation supports the offshore wind turbine and transfers turbine, tower, nacelle, and environmental loads to the seabed.</p>
-</section>
-<section id="current-cost-model" class="level2">
-<h2 class="anchored" data-anchor-id="current-cost-model">Current Cost Model</h2>
+<section id="role-and-scope" class="level2">
+<h2 class="anchored" data-anchor-id="role-and-scope">Role and Scope</h2>
+<p>This page estimates the fabricated mass and supply cost of one monopile foundation. The calculation is intended for early-stage comparison of fixed-bottom offshore wind concepts, before site-specific geotechnical and structural design is available.</p>
+<p>The two model inputs are the total mass supported above the foundation and water depth. Turbine rated power is not an input: its structural consequence already enters through the component masses calculated on <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Item</th>
-<th style="text-align: right;">Assumption</th>
+<th>Included on this page</th>
+<th>Accounted elsewhere</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Foundation type</td>
-<td style="text-align: right;">Monopile assumption</td>
+<td>Fabricated and coated monopile</td>
+<td>Turbine and tower supply</td>
 </tr>
 <tr class="even">
-<td>Foundation CAPEX</td>
-<td style="text-align: right;">6 million EUR/turbine</td>
+<td>Transition-piece supply allowance</td>
+<td>Monopile and turbine installation</td>
 </tr>
 <tr class="odd">
-<td>Foundation installation</td>
-<td style="text-align: right;">1 million EUR/turbine</td>
+<td>Mass scaling for concept comparison</td>
+<td>Scour protection</td>
 </tr>
 <tr class="even">
-<td>Foundation OPEX</td>
-<td style="text-align: right;">0.5% of CAPEX per year</td>
+<td></td>
+<td>Detailed structural and geotechnical design</td>
 </tr>
 </tbody>
 </table>
-<p>The current values are based on a study with TNO, according to the background documents <span class="citation" data-cites="tnoTurbineFoundationCost">(<a href="#ref-tnoTurbineFoundationCost" role="doc-biblioref">TNO, n.d.</a>)</span>.</p>
+<p>The cost boundary excludes transport, offshore installation, installation vessels, seabed preparation, scour protection, engineering, development, and operation and maintenance. Offshore installation is calculated on <a href="../offshore_installation/turbine_and_foundation_installation.html">Turbine and Foundation Installation</a>.</p>
 </section>
-<section id="energy-balance" class="level2">
-<h2 class="anchored" data-anchor-id="energy-balance">Energy Balance</h2>
-<p>The foundation has no direct energy conversion role. Its effect enters through CAPEX, installation cost, OPEX, and potentially availability if future assumptions add foundation-related downtime.</p>
+<section id="model-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="model-inputs">Model Inputs</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+<th style="text-align: right;">Unit</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(m_\mathrm{top}\)</span></td>
+<td>Total supported mass above the foundation interface</td>
+<td style="text-align: right;">t</td>
+<td>Calculated upstream</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(d_w\)</span></td>
+<td>Water depth at the turbine location</td>
+<td style="text-align: right;">m</td>
+<td>Project input</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c_\mathrm{MP}\)</span></td>
+<td>Monopile fabrication cost per tonne</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span>/t</td>
+<td>Derived source range</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(r_\mathrm{TP}\)</span></td>
+<td>Transition-piece cost as a fraction of monopile cost</td>
+<td style="text-align: right;">–</td>
+<td>Sourced range</td>
+</tr>
+</tbody>
+</table>
+<p>For the present system boundary,</p>
+<p><span class="math display">\[
+m_\mathrm{top}=m_\mathrm{turbine}+m_\mathrm{additional},
+\]</span></p>
+<p>where <span class="math inline">\(m_\mathrm{turbine}\)</span> is the complete turbine mass, including the tower, passed from the turbine calculation. The optional <span class="math inline">\(m_\mathrm{additional}\)</span> term includes equipment supported by the foundation but not already present in the turbine mass ledger. It is zero unless such equipment is modelled explicitly.</p>
 </section>
-<section id="availability" class="level2">
-<h2 class="anchored" data-anchor-id="availability">Availability</h2>
-<p>No separate foundation availability factor is currently applied. Foundation-related downtime is implicitly included in the turbine or farm-level availability assumptions unless modelled otherwise.</p>
+<section id="monopile-mass" class="level2">
+<h2 class="anchored" data-anchor-id="monopile-mass">Monopile Mass</h2>
+<p>Monopile design is governed by environmental loads, soil conditions, natural-frequency constraints, fatigue, fabrication limits, water depth, and the mass and loading of the supported structure. Segeren and Diepeveen demonstrate that RNA mass affects monopile dimensions and structural response, but do not provide a universal mass-only sizing law <span class="citation" data-cites="segeren2014RNA">(<a href="#ref-segeren2014RNA" role="doc-biblioref">Segeren and Diepeveen 2014</a>)</span>. A site-independent structural calculation is therefore not justified by the available inputs.</p>
+<p>For screening, the model adopts the explicit scaling assumption</p>
+<p><span class="math display">\[
+m_\mathrm{MP}
+=m_\mathrm{MP,ref}
+\left(\frac{m_\mathrm{top}}{m_\mathrm{top,ref}}\right)
+\left(\frac{d_w}{d_\mathrm{ref}}\right),
+\]</span></p>
+<p>where:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+<th style="text-align: right;">Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(m_\mathrm{MP}\)</span></td>
+<td>Fabricated monopile mass</td>
+<td style="text-align: right;">t</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(m_\mathrm{MP,ref}\)</span></td>
+<td>Reference monopile mass</td>
+<td style="text-align: right;">t</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(m_\mathrm{top,ref}\)</span></td>
+<td>Reference supported mass</td>
+<td style="text-align: right;">t</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(d_\mathrm{ref}\)</span></td>
+<td>Reference water depth</td>
+<td style="text-align: right;">m</td>
+</tr>
+</tbody>
+</table>
+<p>The reference is the IEA 15 MW offshore wind turbine <span class="citation" data-cites="gaertner2020IEA15">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Reference quantity</th>
+<th style="text-align: right;">Value</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RNA mass</td>
+<td style="text-align: right;">1,017 t</td>
+<td>Published reference-turbine mass</td>
+</tr>
+<tr class="even">
+<td>Tower mass</td>
+<td style="text-align: right;">860 t</td>
+<td>Published reference-turbine mass</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(m_\mathrm{top,ref}\)</span></td>
+<td style="text-align: right;">1,877 t</td>
+<td>RNA plus tower</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(d_\mathrm{ref}\)</span></td>
+<td style="text-align: right;">30 m</td>
+<td>Reference site water depth</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(m_\mathrm{MP,ref}\)</span></td>
+<td style="text-align: right;">1,318 t</td>
+<td>Published reference monopile mass</td>
+</tr>
+</tbody>
+</table>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+m_\mathrm{MP}=k_m m_\mathrm{top}d_w,
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+k_m
+=\frac{1{,}318}{1{,}877\times30}
+=0.02341\ \mathrm{m^{-1}}.
+\]</span></p>
+<p>The direct proportionality to supported mass and water depth is a modelling assumption, not a structural-design equation. It is deliberately simple, passes through a traceable reference design, and avoids reintroducing turbine power as a proxy after turbine and tower masses have already been calculated.</p>
+<section id="check-against-published-designs" class="level3">
+<h3 class="anchored" data-anchor-id="check-against-published-designs">Check against published designs</h3>
+<p>The scaling is checked against two independent design sources. For the IEA 22 MW reference turbine, the published RNA, tower, and monopile masses are 1,216 t, 1,574 t, and 2,097 t at a 34 m reference depth <span class="citation" data-cites="shields2024ReferenceTurbines">(<a href="#ref-shields2024ReferenceTurbines" role="doc-biblioref">Zahle et al. 2024</a>)</span>. BVG Associates gives indicative monopile masses of 1,850 t at 40 m and 2,700 t at 60 m for a 15 MW turbine <span class="citation" data-cites="bvg2025FixedGuide">(<a href="#ref-bvg2025FixedGuide" role="doc-biblioref">BVG Associates 2025</a>)</span>. Applying the IEA 15 MW supported mass to the BVG cases gives:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Comparison case</th>
+<th style="text-align: right;"><span class="math inline">\(m_\mathrm{top}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(d_w\)</span></th>
+<th style="text-align: right;">Reported <span class="math inline">\(m_\mathrm{MP}\)</span></th>
+<th style="text-align: right;">Model <span class="math inline">\(m_\mathrm{MP}\)</span></th>
+<th style="text-align: right;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>IEA 22 MW reference</td>
+<td style="text-align: right;">2,790 t</td>
+<td style="text-align: right;">34 m</td>
+<td style="text-align: right;">2,097 t</td>
+<td style="text-align: right;">2,220 t</td>
+<td style="text-align: right;">+5.9%</td>
+</tr>
+<tr class="even">
+<td>BVG 15 MW example</td>
+<td style="text-align: right;">1,877 t</td>
+<td style="text-align: right;">40 m</td>
+<td style="text-align: right;">1,850 t</td>
+<td style="text-align: right;">1,757 t</td>
+<td style="text-align: right;">-5.0%</td>
+</tr>
+<tr class="odd">
+<td>BVG 15 MW example</td>
+<td style="text-align: right;">1,877 t</td>
+<td style="text-align: right;">60 m</td>
+<td style="text-align: right;">2,700 t</td>
+<td style="text-align: right;">2,636 t</td>
+<td style="text-align: right;">-2.4%</td>
+</tr>
+</tbody>
+</table>
+<p>Agreement within approximately 6% for these comparisons supports use as a screening relationship near large contemporary monopile designs. It does not establish validity outside that range or for unusual soil and load conditions.</p>
 </section>
-<section id="mass-and-scaling" class="level2">
-<h2 class="anchored" data-anchor-id="mass-and-scaling">Mass and Scaling</h2>
-<p>The current foundation cost is fixed per 15 MW turbine. A future refinement should connect foundation cost to turbine rating, water depth, soil condition, tower/nacelle mass, and hydrogen equipment mass where relevant.</p>
+</section>
+<section id="monopile-supply-cost" class="level2">
+<h2 class="anchored" data-anchor-id="monopile-supply-cost">Monopile Supply Cost</h2>
+<p>NREL reports a finished monopile cost range of USD<span class="math inline">\(_{2022}\)</span> 250–350/kW for 12–20 MW turbines at 40 m water depth. The scope includes materials and fabrication labour but excludes transport and installation <span class="citation" data-cites="fuchs2024OffshoreCost">(<a href="#ref-fuchs2024OffshoreCost" role="doc-biblioref">Fuchs et al. 2024</a>)</span>. NREL also reports that transition-piece cost is 50–75% of monopile cost.</p>
+<p>Rated power is used only to convert this published cost range into a mass-based unit rate. It is not an input to the project calculation. Pairing NREL’s 15 MW case with BVG’s 1,850 t monopile at the same 40 m depth gives:</p>
+<p><span class="math display">\[
+c_\mathrm{MP,low}
+=\frac{15{,}000\times250}{1{,}850}
+=2{,}030\ \mathrm{USD_{2022}/t},
+\]</span></p>
+<p><span class="math display">\[
+c_\mathrm{MP,high}
+=\frac{15{,}000\times350}{1{,}850}
+=2{,}840\ \mathrm{USD_{2022}/t}.
+\]</span></p>
+<p>The midpoint is used as the baseline:</p>
+<p><span class="math display">\[
+c_\mathrm{MP,base}=2{,}430\ \mathrm{USD_{2022}/t}.
+\]</span></p>
+<p>Monopile and transition-piece supply costs are then:</p>
+<p><span class="math display">\[
+C_\mathrm{MP}=m_\mathrm{MP}c_\mathrm{MP},
+\]</span></p>
+<p><span class="math display">\[
+C_\mathrm{TP}=r_\mathrm{TP}C_\mathrm{MP},
+\]</span></p>
+<p><span class="math display">\[
+C_\mathrm{foundation}
+=C_\mathrm{MP}+C_\mathrm{TP}
+=m_\mathrm{MP}c_\mathrm{MP}(1+r_\mathrm{TP}).
+\]</span></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Case</th>
+<th style="text-align: right;"><span class="math inline">\(c_\mathrm{MP}\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(r_\mathrm{TP}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Low</td>
+<td style="text-align: right;">2,030 USD<span class="math inline">\(_{2022}\)</span>/t</td>
+<td style="text-align: right;">0.50</td>
+</tr>
+<tr class="even">
+<td>Baseline</td>
+<td style="text-align: right;">2,430 USD<span class="math inline">\(_{2022}\)</span>/t</td>
+<td style="text-align: right;">0.625</td>
+</tr>
+<tr class="odd">
+<td>High</td>
+<td style="text-align: right;">2,840 USD<span class="math inline">\(_{2022}\)</span>/t</td>
+<td style="text-align: right;">0.75</td>
+</tr>
+</tbody>
+</table>
+<p>The transition piece is represented as a cost allowance because the source reports a cost ratio rather than sufficient geometry for a separate material calculation. Its mass is not included in <span class="math inline">\(m_\mathrm{MP}\)</span> and remains a project-specific input to transport and installation analysis.</p>
+</section>
+<section id="worked-example" class="level2">
+<h2 class="anchored" data-anchor-id="worked-example">Worked Example</h2>
+<p>The worked turbine calculation gives a known-component complete-turbine mass of 1,552.8 t. With no additional supported equipment and a water depth of 30 m:</p>
+<p><span class="math display">\[
+m_\mathrm{top}=1{,}552.8\ \mathrm{t},
+\]</span></p>
+<p><span class="math display">\[
+m_\mathrm{MP}
+=1{,}318
+\left(\frac{1{,}552.8}{1{,}877}\right)
+\left(\frac{30}{30}\right)
+=1{,}090\ \mathrm{t}.
+\]</span></p>
+<p>The resulting supply-cost range is:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Case</th>
+<th style="text-align: right;">Monopile cost</th>
+<th style="text-align: right;">Transition-piece allowance</th>
+<th style="text-align: right;">Total foundation supply cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Low</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span> 2.21 million</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span> 1.11 million</td>
+<td style="text-align: right;"><strong>USD<span class="math inline">\(_{2022}\)</span> 3.32 million</strong></td>
+</tr>
+<tr class="even">
+<td>Baseline</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span> 2.65 million</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span> 1.66 million</td>
+<td style="text-align: right;"><strong>USD<span class="math inline">\(_{2022}\)</span> 4.31 million</strong></td>
+</tr>
+<tr class="odd">
+<td>High</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span> 3.10 million</td>
+<td style="text-align: right;">USD<span class="math inline">\(_{2022}\)</span> 2.32 million</td>
+<td style="text-align: right;"><strong>USD<span class="math inline">\(_{2022}\)</span> 5.42 million</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The values remain in the source’s 2022 USD basis. Currency conversion and escalation are applied later using the common financial assumptions.</p>
+</section>
+<section id="model-output-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="model-output-and-limitations">Model Output and Limitations</h2>
+<p>The page passes two outputs to the wider model:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Downstream use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(m_\mathrm{MP}\)</span></td>
+<td>Foundation fabrication cost and installation-vessel feasibility</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C_\mathrm{foundation}\)</span></td>
+<td>Foundation supply CAPEX</td>
+</tr>
+</tbody>
+</table>
+<p>The model is suitable for screening comparisons close to the cited 15–22 MW, 30–60 m reference range. It does not resolve soil profile, pile penetration, diameter, wall thickness, natural frequency, fatigue, corrosion allowance, secondary steel, grouted or bolted connections, or fabrication constraints. It must therefore be replaced by a site-specific integrated turbine, tower, and foundation design before detailed engineering or procurement.</p>
+<p>No separate foundation OPEX percentage is applied. Foundation inspection and repair should enter the project OPEX model as explicit activities when suitable evidence is available.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-tnoTurbineFoundationCost" class="csl-entry" role="listitem">
-TNO. n.d. <em>Wind Turbine and Foundation Cost Assumptions</em>. Cost basis.
+<div id="ref-bvg2025FixedGuide" class="csl-entry" role="listitem">
+BVG Associates. 2025. <span>“Guide to a Fixed Offshore Wind Farm.”</span> <a href="https://guidetoanoffshorewindfarm.com/wp-content/uploads/2025/06/BVGA-16464-Fixed-Guide-rF.pdf">https://guidetoanoffshorewindfarm.com/wp-content/uploads/2025/06/BVGA-16464-Fixed-Guide-rF.pdf</a>.
+</div>
+<div id="ref-fuchs2024OffshoreCost" class="csl-entry" role="listitem">
+Fuchs, Rebecca, Gabriel R. Zuckerman, Patrick Duffy, et al. 2024. <em>The Cost of Offshore Wind Energy in the United States from 2025 to 2050</em>. NREL/TP-5000-88988. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2433785">https://doi.org/10.2172/2433785</a>.
+</div>
+<div id="ref-gaertner2020IEA15" class="csl-entry" role="listitem">
+Gaertner, Evan, Jennifer Rinker, Latha Sethuraman, et al. 2020. <em>Definition of the <span>IEA</span> 15-Megawatt Offshore Reference Wind Turbine</em>. NREL/TP-5000-75698. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1603478">https://doi.org/10.2172/1603478</a>.
+</div>
+<div id="ref-segeren2014RNA" class="csl-entry" role="listitem">
+Segeren, M. L. A., and N. F. B. Diepeveen. 2014. <span>“Influence of the Rotor Nacelle Assembly Mass on the Design of Monopile Foundations.”</span> <em>HERON</em> 59 (1): 17–36. <a href="https://repository.tudelft.nl/record/uuid:c7358812-c0a9-4eaa-b114-48d0774b689f">https://repository.tudelft.nl/record/uuid:c7358812-c0a9-4eaa-b114-48d0774b689f</a>.
+</div>
+<div id="ref-shields2024ReferenceTurbines" class="csl-entry" role="listitem">
+Zahle, Frederik, Thanasis Barlas, Pietro Bortolotti, Daniel Zalkind, and William Collier. 2024. <em>International Energy Agency 22 <span>MW</span> Offshore Reference Wind Turbine</em>. NREL/PR-5000-89807. International Energy Agency Wind Technology Collaboration Programme Task 55; National Renewable Energy Laboratory. <a href="https://www.nrel.gov/docs/fy24osti/89807.pdf">https://www.nrel.gov/docs/fy24osti/89807.pdf</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
