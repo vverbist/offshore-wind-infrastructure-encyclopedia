@@ -1,31 +1,183 @@
 ---
-title: "Foundation"
-completion: 10
+title: "Monopile Foundation Mass and Cost"
+completion: 80
 ---
 
-## Role in the Value Chain
+## Role and Scope
 
-The foundation supports the offshore wind turbine and transfers turbine, tower, nacelle, and environmental loads to the seabed.
+This page estimates the fabricated mass and supply cost of one monopile foundation. The calculation is intended for early-stage comparison of fixed-bottom offshore wind concepts, before site-specific geotechnical and structural design is available.
 
-## Current Cost Model
+The two model inputs are the total mass supported above the foundation and water depth. Turbine rated power is not an input: its structural consequence already enters through the component masses calculated on [Wind Turbine Mass and Cost](wind_turbine.qmd).
 
-| Item | Assumption |
-|---|---:|
-| Foundation type | Monopile assumption |
-| Foundation CAPEX | 6 million EUR/turbine |
-| Foundation installation | 1 million EUR/turbine |
-| Foundation OPEX | 0.5% of CAPEX per year |
+| Included on this page | Accounted elsewhere |
+|---|---|
+| Fabricated and coated monopile | Turbine and tower supply |
+| Transition-piece supply allowance | Monopile and turbine installation |
+| Mass scaling for concept comparison | Scour protection |
+| | Detailed structural and geotechnical design |
 
-The current values are based on a study with TNO, according to the background documents [@tnoTurbineFoundationCost].
+The cost boundary excludes transport, offshore installation, installation vessels, seabed preparation, scour protection, engineering, development, and operation and maintenance. Offshore installation is calculated on [Turbine and Foundation Installation](../offshore_installation/turbine_and_foundation_installation.qmd).
 
-## Energy Balance
+## Model Inputs
 
-The foundation has no direct energy conversion role. Its effect enters through CAPEX, installation cost, OPEX, and potentially availability if future assumptions add foundation-related downtime.
+| Symbol | Description | Unit | Status |
+|---|---|---:|---|
+| $m_\mathrm{top}$ | Total supported mass above the foundation interface | t | Calculated upstream |
+| $d_w$ | Water depth at the turbine location | m | Project input |
+| $c_\mathrm{MP}$ | Monopile fabrication cost per tonne | USD$_{2022}$/t | Derived source range |
+| $r_\mathrm{TP}$ | Transition-piece cost as a fraction of monopile cost | -- | Sourced range |
 
-## Availability
+For the present system boundary,
 
-No separate foundation availability factor is currently applied. Foundation-related downtime is implicitly included in the turbine or farm-level availability assumptions unless modelled otherwise.
+$$
+m_\mathrm{top}=m_\mathrm{turbine}+m_\mathrm{additional},
+$$
 
-## Mass and Scaling
+where $m_\mathrm{turbine}$ is the complete turbine mass, including the tower, passed from the turbine calculation. The optional $m_\mathrm{additional}$ term includes equipment supported by the foundation but not already present in the turbine mass ledger. It is zero unless such equipment is modelled explicitly.
 
-The current foundation cost is fixed per 15 MW turbine. A future refinement should connect foundation cost to turbine rating, water depth, soil condition, tower/nacelle mass, and hydrogen equipment mass where relevant.
+## Monopile Mass
+
+Monopile design is governed by environmental loads, soil conditions, natural-frequency constraints, fatigue, fabrication limits, water depth, and the mass and loading of the supported structure. Segeren and Diepeveen demonstrate that RNA mass affects monopile dimensions and structural response, but do not provide a universal mass-only sizing law [@segeren2014RNA]. A site-independent structural calculation is therefore not justified by the available inputs.
+
+For screening, the model adopts the explicit scaling assumption
+
+$$
+m_\mathrm{MP}
+=m_\mathrm{MP,ref}
+\left(\frac{m_\mathrm{top}}{m_\mathrm{top,ref}}\right)
+\left(\frac{d_w}{d_\mathrm{ref}}\right),
+$$
+
+where:
+
+| Symbol | Description | Unit |
+|---|---|---:|
+| $m_\mathrm{MP}$ | Fabricated monopile mass | t |
+| $m_\mathrm{MP,ref}$ | Reference monopile mass | t |
+| $m_\mathrm{top,ref}$ | Reference supported mass | t |
+| $d_\mathrm{ref}$ | Reference water depth | m |
+
+The reference is the IEA 15 MW offshore wind turbine [@gaertner2020IEA15]:
+
+| Reference quantity | Value | Basis |
+|---|---:|---|
+| RNA mass | 1,017 t | Published reference-turbine mass |
+| Tower mass | 860 t | Published reference-turbine mass |
+| $m_\mathrm{top,ref}$ | 1,877 t | RNA plus tower |
+| $d_\mathrm{ref}$ | 30 m | Reference site water depth |
+| $m_\mathrm{MP,ref}$ | 1,318 t | Published reference monopile mass |
+
+Equivalently,
+
+$$
+m_\mathrm{MP}=k_m m_\mathrm{top}d_w,
+$$
+
+with
+
+$$
+k_m
+=\frac{1{,}318}{1{,}877\times30}
+=0.02341\ \mathrm{m^{-1}}.
+$$
+
+The direct proportionality to supported mass and water depth is a modelling assumption, not a structural-design equation. It is deliberately simple, passes through a traceable reference design, and avoids reintroducing turbine power as a proxy after turbine and tower masses have already been calculated.
+
+### Check against published designs
+
+The scaling is checked against two independent design sources. For the IEA 22 MW reference turbine, the published RNA, tower, and monopile masses are 1,216 t, 1,574 t, and 2,097 t at a 34 m reference depth [@shields2024ReferenceTurbines]. BVG Associates gives indicative monopile masses of 1,850 t at 40 m and 2,700 t at 60 m for a 15 MW turbine [@bvg2025FixedGuide]. Applying the IEA 15 MW supported mass to the BVG cases gives:
+
+| Comparison case | $m_\mathrm{top}$ | $d_w$ | Reported $m_\mathrm{MP}$ | Model $m_\mathrm{MP}$ | Difference |
+|---|---:|---:|---:|---:|---:|
+| IEA 22 MW reference | 2,790 t | 34 m | 2,097 t | 2,220 t | +5.9% |
+| BVG 15 MW example | 1,877 t | 40 m | 1,850 t | 1,757 t | -5.0% |
+| BVG 15 MW example | 1,877 t | 60 m | 2,700 t | 2,636 t | -2.4% |
+
+Agreement within approximately 6% for these comparisons supports use as a screening relationship near large contemporary monopile designs. It does not establish validity outside that range or for unusual soil and load conditions.
+
+## Monopile Supply Cost
+
+NREL reports a finished monopile cost range of USD$_{2022}$ 250--350/kW for 12--20 MW turbines at 40 m water depth. The scope includes materials and fabrication labour but excludes transport and installation [@fuchs2024OffshoreCost]. NREL also reports that transition-piece cost is 50--75% of monopile cost.
+
+Rated power is used only to convert this published cost range into a mass-based unit rate. It is not an input to the project calculation. Pairing NREL's 15 MW case with BVG's 1,850 t monopile at the same 40 m depth gives:
+
+$$
+c_\mathrm{MP,low}
+=\frac{15{,}000\times250}{1{,}850}
+=2{,}030\ \mathrm{USD_{2022}/t},
+$$
+
+$$
+c_\mathrm{MP,high}
+=\frac{15{,}000\times350}{1{,}850}
+=2{,}840\ \mathrm{USD_{2022}/t}.
+$$
+
+The midpoint is used as the baseline:
+
+$$
+c_\mathrm{MP,base}=2{,}430\ \mathrm{USD_{2022}/t}.
+$$
+
+Monopile and transition-piece supply costs are then:
+
+$$
+C_\mathrm{MP}=m_\mathrm{MP}c_\mathrm{MP},
+$$
+
+$$
+C_\mathrm{TP}=r_\mathrm{TP}C_\mathrm{MP},
+$$
+
+$$
+C_\mathrm{foundation}
+=C_\mathrm{MP}+C_\mathrm{TP}
+=m_\mathrm{MP}c_\mathrm{MP}(1+r_\mathrm{TP}).
+$$
+
+| Case | $c_\mathrm{MP}$ | $r_\mathrm{TP}$ |
+|---|---:|---:|
+| Low | 2,030 USD$_{2022}$/t | 0.50 |
+| Baseline | 2,430 USD$_{2022}$/t | 0.625 |
+| High | 2,840 USD$_{2022}$/t | 0.75 |
+
+The transition piece is represented as a cost allowance because the source reports a cost ratio rather than sufficient geometry for a separate material calculation. Its mass is not included in $m_\mathrm{MP}$ and remains a project-specific input to transport and installation analysis.
+
+## Worked Example
+
+The worked turbine calculation gives a known-component complete-turbine mass of 1,552.8 t. With no additional supported equipment and a water depth of 30 m:
+
+$$
+m_\mathrm{top}=1{,}552.8\ \mathrm{t},
+$$
+
+$$
+m_\mathrm{MP}
+=1{,}318
+\left(\frac{1{,}552.8}{1{,}877}\right)
+\left(\frac{30}{30}\right)
+=1{,}090\ \mathrm{t}.
+$$
+
+The resulting supply-cost range is:
+
+| Case | Monopile cost | Transition-piece allowance | Total foundation supply cost |
+|---|---:|---:|---:|
+| Low | USD$_{2022}$ 2.21 million | USD$_{2022}$ 1.11 million | **USD$_{2022}$ 3.32 million** |
+| Baseline | USD$_{2022}$ 2.65 million | USD$_{2022}$ 1.66 million | **USD$_{2022}$ 4.31 million** |
+| High | USD$_{2022}$ 3.10 million | USD$_{2022}$ 2.32 million | **USD$_{2022}$ 5.42 million** |
+
+The values remain in the source's 2022 USD basis. Currency conversion and escalation are applied later using the common financial assumptions.
+
+## Model Output and Limitations
+
+The page passes two outputs to the wider model:
+
+| Output | Downstream use |
+|---|---|
+| $m_\mathrm{MP}$ | Foundation fabrication cost and installation-vessel feasibility |
+| $C_\mathrm{foundation}$ | Foundation supply CAPEX |
+
+The model is suitable for screening comparisons close to the cited 15--22 MW, 30--60 m reference range. It does not resolve soil profile, pile penetration, diameter, wall thickness, natural frequency, fatigue, corrosion allowance, secondary steel, grouted or bolted connections, or fabrication constraints. It must therefore be replaced by a site-specific integrated turbine, tower, and foundation design before detailed engineering or procurement.
+
+No separate foundation OPEX percentage is applied. Foundation inspection and repair should enter the project OPEX model as explicit activities when suitable evidence is available.
