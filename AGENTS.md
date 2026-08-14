@@ -88,6 +88,45 @@ activities rather than introduced as aggregated benchmark values.
 Decompose the model as far as the evidence allows, but never farther than the
 evidence supports.
 
+# Evidence-constrained model fidelity
+
+Use the minimum sufficient model fidelity: the simplest calculation that
+preserves the material physical, logistical, and economic relationships needed
+for the model decision.
+
+A model should be detailed enough to respond to its principal inputs, preserve
+important thresholds and discontinuities, expose the quantities that materially
+determine the result, and support later validation and calibration. Additional
+detail is justified only when:
+
+1. it can materially change the result or its interpretation;
+2. the required inputs are available or can be credibly constrained; and
+3. the expected improvement in accuracy exceeds the uncertainty introduced by
+   the additional assumptions.
+
+Do not add detail merely because the physical process is more complicated. A
+more elaborate calculation can be less reliable when it depends on weakly
+evidenced dimensions, operating rates, correction factors, or correlations.
+
+- Use an upstream calculated quantity downstream only where it creates a
+  meaningful dependency or constraint. Do not invent a relationship simply to
+  use information that happens to be available.
+- Preserve material step changes such as equipment counts, vessel loads, class
+  changes, and feasibility limits. Do not replace them with smooth scaling
+  factors when the discontinuity affects cost or design choice.
+- Where detailed evidence is insufficient, use a transparent aggregate
+  parameter at the highest defensible level. State its scope and limitations
+  and keep it available for later calibration.
+- When uncertainty spans a decision threshold, report the alternative outcomes
+  instead of forcing a single precise result or adding an arbitrary safety
+  factor.
+- Stop decomposing when the next layer would add more uncertain assumptions
+  than useful explanatory or predictive accuracy.
+
+The objective is neither maximum detail nor minimum detail. It is the minimum
+sufficient detail supported by the available evidence, with an accounting
+structure that can accept better evidence later without being redesigned.
+
 # Traceability of quantitative information
 
 Every quantitative value that affects the model must be traceable. For each
