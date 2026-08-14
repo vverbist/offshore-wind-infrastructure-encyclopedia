@@ -1,0 +1,13 @@
+{
+  "carrier": "hydrogen_central",
+  "num_turbines": 50,
+  "turbine_capacity_MW": 15.0,
+  "farm_area_km2": 200.0,
+  "stack_overplant_factor": 1.0,
+  "compressor_outlet_pressure_bar": 140.0,
+  "v_in": 3.0,
+  "v_rated": 12.0,
+  "v_out": 25.0,
+  "rotor_diameter_m": 236.0,
+  "hub_height_m": 150.0
+}

@@ -1,0 +1,20 @@
+electric_turbine_availability : 0.98
+electric_infield_efficiency   : 0.98 
+electric_infield_availability : 0.98
+electric_export_efficiency    : 0.98
+electric_export_availability  : 0.97
+
+hydrogen_decentral_electric_gain  : 1.025
+hydrogen_central_electric_efficiency : 0.985 
+
+compressor_isothermal_efficiency : 0.80
+compressor_electric_efficiency : 0.95
+
+stack_degradation_per_1000hrs : 0.0018
+
+hydrogen_turbine_availability : 0.985
+hydrogen_electrolyser_availability : 0.98
+hydrogen_infield_efficiency  : 1.00
+hydrogen_infield_availability : 1.00
+hydrogen_export_efficiency : 1.00
+hydrogen_export_availability : 1.00

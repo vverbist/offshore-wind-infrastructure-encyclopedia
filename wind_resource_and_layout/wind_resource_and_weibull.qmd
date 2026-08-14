@@ -1,26 +1,125 @@
 ---
 title: "Wind Resource and Weibull Distribution"
-completion: 20
+completion: 65
 ---
 
 ## Role in the Model
 
-Wind resource modelling provides the probability distribution of wind states used to calculate annual production. The hydrogen configurations require more than mean wind speed, because stack efficiency and compressor operation depend on instantaneous power.
+The wind-resource calculation converts hourly wind speed and direction into a compact probability model. The wake model uses this distribution to calculate annual energy production, while the hydrogen calculations use the same distribution to weight part-load operating states.
 
-## Current Method
+The model retains direction because farm power depends on the alignment between the wind and turbine rows. A single all-direction Weibull distribution would remove that dependency.
 
-The background model describes fitting approximately ten years of offshore wind observations from the Dutch Offshore Wind Atlas [@dutchOffshoreWindAtlas] to a Weibull distribution and wind rose.
+## Source Basis
 
-For each wind state, the model evaluates turbine output and wake losses. The annual yield is then obtained by weighting the power output of each state by its probability.
+The intended source is the Dutch Offshore Wind Atlas (DOWA). The official single-point dataset provides hourly modelled wind information for 2008--2017 on a 2.5 km grid and at heights from 10 m to 600 m. DOWA is based on the HARMONIE-AROME weather model nested in ERA5 reanalysis [@dutchOffshoreWindAtlas].
 
-## Energy Balance
+The legacy calculation uses the following repository files:
 
-The wind resource page does not apply conversion losses directly. It supplies gross turbine power states to downstream components:
+| File | Role | Status |
+|---|---|---|
+| `background/legacy model/model_A02/WRA+H2-E_victor.xlsx` | Hourly wind speed and direction | Legacy input workbook |
+| `background/legacy model/model_A02/analyses/wind_analysis.py` | Directional Weibull fitting | Legacy transformation |
+| `background/legacy model/model_A02/weibull_per_sector.csv` | Fitted sector probabilities and parameters | Current legacy wind-resource input |
 
-- electricity components apply electrical efficiency and availability factors
-- hydrogen production evaluates stack efficiency and balance-of-plant losses at each operating point
-- compression power depends on hydrogen flow and pressure ratio
+The workbook contains 87,601 consecutive hourly records from 2008-01-01 00:00 to 2017-12-29 00:00. It does not identify the DOWA grid point, extraction height, source filename, dataset version or direction convention. It also ends 72 hours before the official 2008--2017 dataset endpoint. The fitted values below are therefore traceable to the legacy workbook, but the workbook is not yet traceable to a specific DOWA extraction.
 
-## Source Status
+## Direction Sectors
 
-The document references Dutch Offshore Wind Atlas data and a fitted wind rose. The exact data file and fitted Weibull parameters should be linked here once the model input dataset is finalised.
+The legacy fitting script divides wind direction $\theta$ into twelve 30-degree sectors. The stored label is the lower edge of each sector:
+
+$$
+s(\theta)
+=30^\circ\left\lfloor
+\frac{\theta\bmod 360^\circ}{30^\circ}
+\right\rfloor.
+$$
+
+Sector $s=0^\circ$ therefore contains observations from $0^\circ$ up to, but not including, $30^\circ$. If $n_s$ is the number of valid observations in sector $s$ and $N_\mathrm{obs}$ is the total number of observations, the direction probability is:
+
+$$
+p_s=\frac{n_s}{N_\mathrm{obs}},
+\qquad
+\sum_s p_s=1.
+$$
+
+The sector labels are passed directly to the wake model as wind directions. Because the label is a bin edge rather than its centre, the represented direction may be displaced by 15 degrees from the observations in that bin. This is retained here to document the legacy calculation and identified below as a required correction.
+
+## Conditional Weibull Distribution
+
+Wind speed $v$ within each direction sector is represented by a two-parameter Weibull distribution with shape $k_s$ and scale $c_s$. The location parameter is fixed at zero. The cumulative distribution and probability density are:
+
+$$
+F_s(v)
+=1-\exp\left[-\left(\frac{v}{c_s}\right)^{k_s}\right],
+$$
+
+$$
+f_s(v)
+=\frac{k_s}{c_s}
+\left(\frac{v}{c_s}\right)^{k_s-1}
+\exp\left[-\left(\frac{v}{c_s}\right)^{k_s}\right],
+$$
+
+where $v$ and $c_s$ are in m/s and $k_s$ is dimensionless. The fitting script estimates $k_s$ and $c_s$ by maximum likelihood using `scipy.stats.weibull_min.fit` with the location fixed at zero.
+
+For a speed bin bounded by $v_i$ and $v_{i+1}$, the joint probability of direction sector $s$ and that speed bin is:
+
+$$
+w_{s,i}
+=p_s\left[F_s(v_{i+1})-F_s(v_i)\right].
+$$
+
+This joint probability is the weight applied to the corresponding wake-aware farm-power or conversion state.
+
+## Fitted Legacy Inputs
+
+The following values are sourced inputs to the current legacy wind calculation. Displayed values are rounded; the CSV retains the machine-readable precision.
+
+| Legacy sector label | Direction probability $p_s$ | Shape $k_s$ | Scale $c_s$ (m/s) |
+|---:|---:|---:|---:|
+| 0° | 5.59% | 2.286 | 9.017 |
+| 30° | 6.30% | 2.322 | 9.824 |
+| 60° | 6.85% | 2.357 | 10.051 |
+| 90° | 5.28% | 2.148 | 9.508 |
+| 120° | 4.45% | 2.051 | 9.229 |
+| 150° | 5.70% | 1.969 | 10.598 |
+| 180° | 10.39% | 2.141 | 12.751 |
+| 210° | 17.03% | 2.500 | 14.151 |
+| 240° | 13.17% | 2.306 | 12.545 |
+| 270° | 10.34% | 2.210 | 11.400 |
+| 300° | 8.12% | 2.182 | 10.171 |
+| 330° | 6.78% | 2.173 | 9.951 |
+
+The prevailing legacy resource is concentrated in the 180°--270° sectors. This directional concentration makes layout orientation material to wake loss.
+
+## Numerical Use
+
+The legacy implementation uses two numerical wind-speed grids:
+
+| Use | Wind-speed treatment |
+|---|---|
+| PyWake farm-power table and AEP | 0 to 30 m/s in 0.5 m/s increments |
+| Hydrogen operating-state integration | 0 to 40 m/s with 0.25 m/s bins |
+
+The hydrogen calculation interpolates the PyWake farm-power table and renormalises the retained state probabilities. Turbine output is zero above cut-out, so extending the probability grid beyond cut-out does not add production. Maintaining two grids is nevertheless unnecessary and creates an avoidable consistency check.
+
+## Outputs
+
+The wind-resource calculation supplies:
+
+- the twelve direction probabilities $p_s$;
+- the Weibull parameters $k_s$ and $c_s$ for each direction;
+- the wind-speed and direction states evaluated by the wake model; and
+- the joint probability $w_{s,i}$ of each state.
+
+Availability, electrical losses and conversion losses are not applied on this page. They are applied after wake-aware farm power has been calculated.
+
+::: {.callout-warning title="Suggested technical improvements"}
+1. **Recover the source extraction.** Record the exact DOWA grid point, height, source filename, dataset version, timezone and direction convention. Replace the shortened workbook series with the complete selected period or explain the 72-hour difference.
+2. **Correct sector alignment.** Represent each 30-degree bin by its centre, or use circular bins centred on $0^\circ,30^\circ,\ldots,330^\circ$. The same convention must be used by the layout rotation and wake model.
+3. **Validate the Weibull reduction.** Calculate AEP once from the empirical hourly distribution and once from the directional Weibull fit. Report the difference before adopting the fitted distribution as the production input.
+4. **Use one probability grid.** Generate one joint direction-speed table for wake power, electricity yield and hydrogen conversion so that bin edges, tail treatment and normalisation are identical.
+5. **Create a controlled input record.** Store the fitted CSV with its fitting-script revision, source-file checksum and fit date so that the parameters can be reproduced without the legacy workbook structure.
+:::
+
+Until the first two items are resolved, the table above should be treated as a legacy model input rather than a fully verified site-specific wind resource.

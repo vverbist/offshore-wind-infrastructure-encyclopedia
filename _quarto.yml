@@ -40,7 +40,6 @@ website:
           - wind_resource_and_layout/overview.qmd
           - wind_resource_and_layout/wind_resource_and_weibull.qmd
           - wind_resource_and_layout/wake_modelling_and_spacing.qmd
-          - wind_resource_and_layout/infield_layout.qmd
       - section: "Turbine System"
         contents:
           - turbine_system/overview.qmd

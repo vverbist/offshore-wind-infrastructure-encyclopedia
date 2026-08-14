@@ -1,0 +1,49 @@
+sea_depth_m : 30
+burial_depth_m : 3
+
+development_costs_farm: 72_000_000
+development_costs_per_turbine : 70_000
+
+
+
+infield_cable_capacity_MW : 70
+infield_cable_cost_per_meter: 400
+infield_cable_installation_cost_per_meter: 1500 #635
+infield_cable_not_straight_factor : 1.20
+infield_cable_opex_rate : 0.03
+
+infield_pipeline_cost_per_m : 165
+infield_pipeline_opex_rate : 0.005
+infield_pipeline_installation_cost_per_m : 1500 #635
+
+
+infield_decommissioning_factor : 0.8
+
+
+offshore-platform_cost_per_MW : 750_000
+offshore-platform_opex_rate : 0.02
+
+offshore-substation-converter_cost_per_MW: 1_000_000
+offshore-substation-converter_opex_rate : 0.02
+
+
+
+export_length_km : 80
+
+export_cable_parallel_factor : 1
+export_pipeline_parallel_factor : 3
+
+export_cable_capacity_MW : 2010
+export_cable_cost_per_m : 5500 #7000 - 635 #1540
+export_cable_installation_cost_per_m : 1500 # 635
+export_cable_opex_rate : 0.01 #0.03
+
+export_pipeline_installation_cost_per_m : 1500 # 635
+export_pipeline_opex_rate : 0.005
+
+export_decommissioning_factor : 0.8
+
+onshore-substation_costs_per_MW : 150_000 
+onshore-substation_opex_rate : 0.02
+
+

@@ -1,17 +1,50 @@
 ---
 title: "Wind Resource and Layout"
-completion: 0
+completion: 70
 ---
 
-This section documents the wind resource, wake modelling, spacing, and infield-layout assumptions that determine gross energy production and infrastructure length.
+## Role in the Model
 
-The wind-resource and layout model connects the physical site to component sizing. Turbine positions determine wake losses and infield network geometry. Wake-aware production determines both annual yield and the operating points of hydrogen conversion equipment.
+This section converts a directional offshore wind resource and a turbine layout into wake-adjusted farm power states and annual energy production. These outputs determine gross wind-farm yield and provide the operating states used by the electricity and hydrogen conversion calculations.
 
-## Main Dependencies
+The calculation is performed in dependency order:
 
-- wind speed and wind direction distribution
-- turbine count and sea area
-- turbine spacing and farm power density
-- wake model
-- infield cable or pipeline topology
-- export distance
+1. fit a directional wind-speed distribution;
+2. place the selected number of turbines inside the modelled farm area;
+3. assign turbine power and thrust-coefficient curves;
+4. calculate wake-affected power for each wind-speed and direction state;
+5. probability-weight the states to obtain annual energy production; and
+6. pass the wake-aware power table to downstream conversion calculations.
+
+## Calculation Boundary
+
+| Included here | Accounted elsewhere |
+|---|---|
+| Directional wind-resource distribution | Turbine mass and supply cost |
+| Turbine coordinates and separation | Electrical and hydrogen infield-network topology |
+| Turbine power and thrust inputs used by the wake model | Availability and infrastructure losses |
+| Wake-affected and no-wake farm power | Export-system and hydrogen-conversion calculations |
+| Wake loss and wake-adjusted gross capacity factor | Installation, operating and decommissioning cost |
+
+Infield cable and pipeline design is intentionally excluded from this section. Those calculations use the turbine coordinates but are documented on [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) and [Hydrogen Infield Infrastructure](../hydrogen_infra/infield_infrastructure.qmd).
+
+## Pages
+
+| Page | Calculation |
+|---|---|
+| [Wind Resource and Weibull Distribution](wind_resource_and_weibull.qmd) | Direction-sector frequencies, Weibull parameters and wind-state probabilities |
+| [Wake Modelling and Spacing](wake_modelling_and_spacing.qmd) | Turbine coordinates, turbine performance, wake-aware power, annual energy and wake loss |
+
+## Principal Outputs
+
+| Output | Unit | Downstream use |
+|---|---:|---|
+| Wind-state probability | fraction | Annual energy and operating-state weighting |
+| Turbine coordinates | m | Wake calculation and infield-network length |
+| Wake-aware farm power by state | MW | Electricity and hydrogen conversion |
+| No-wake annual energy | MWh/year | Wake-loss reference |
+| Wake-adjusted annual energy | MWh/year | Gross wind-farm yield |
+| Wake loss | fraction | Energy-loss attribution |
+| Wake-adjusted gross capacity factor | fraction | Farm performance and utilisation |
+
+The current implementation is suitable as a transparent screening calculation, but its wind-data provenance, directional bin alignment, turbine performance curve and layout feasibility treatment require improvement before the results are treated as a validated energy assessment. The specific improvements are stated on the two calculation pages.

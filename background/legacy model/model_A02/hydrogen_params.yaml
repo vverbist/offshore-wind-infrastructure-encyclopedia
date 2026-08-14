@@ -1,0 +1,19 @@
+reference_rating_MW : 15
+
+stack_costs_per_MW : 112_500
+stack_scaling_factor : 1.00
+stack_opex_rate : 0.02
+
+bop_costs_per_MW : 364_500
+bop_scaling_factor : 0.6
+bop_opex_rate : 0.02
+
+decentral-electrical-bop_costs_per_MW : -50_000 
+central-electrical-bop_costs_per_MW : 100_000
+electrical-bop_scaling_factor: 1.00
+electrical-bop_opex_rate : 0.02
+
+compressor_cost_factor_A : 5138 # A = UC_TA * IF_TA * EUR/CAD19 * infl19-25. UC_TA=3083.8, IF_TA=2, EUR/CAD19=0.6732, infl19-25=1.2374
+compressor_cost_scaling_factor : 0.8335
+compressor_opex_rate : 0.02
+

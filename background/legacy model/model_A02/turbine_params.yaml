@@ -1,0 +1,8 @@
+foundation_capex_per_turbine : 3_200_000 # 6_000_000
+foundation_opex_rate         : 0.005
+foundation_installation_cost_per_turbine: 1_000_000
+foundation_decommissioning_factor : 0.8
+
+turbine_cost_per_MW    : 1_098_677
+opex_per_turbine : 300_000 # 200_000
+
