@@ -4,11 +4,11 @@ completion: 65
 ---
 
 ::: {.callout-warning}
-## Provisional cost warning
+## Incomplete cost result
 
-The worked example currently calculates **70.54 million EUR (35.27 EUR/kW)** of infield installation CAPEX for 134 turbines and 400 km of cable. Applying the same calculation to the Norfolk Vanguard quantities of 190 turbines and 452 km gives approximately **91.7 million EUR**. This is substantially below the user-provided Van Oord installation quote of approximately **600 million EUR**, or roughly **200 EUR/kW**, excluding cable supply.
+This page does not currently produce a complete cable- or TCP-installation CAPEX result. Cable lay tasks can be parameterized from ORBIT screening inputs, but burial-spread rates, survey productivity and rates, demobilisation, weather delay and exceptional scope remain unresolved. TCP additionally lacks a qualified product, vessel configuration, task times and matching spread rates.
 
-The contract boundary and price basis of this benchmark have not yet been fully reconciled with the bottom-up calculation. I am working on consolidating the two estimates. Until that work is complete, the current calculation should be treated as provisional; I believe it underestimates commercial installation costs. The Van Oord value is not yet independently evidenced in this repository and is not used as a model input.
+A user-provided Van Oord cable-installation benchmark is materially higher than the earlier proxy calculation, but its contract boundary and price basis have not been independently evidenced in this repository. It remains a reconciliation item rather than a model input. Missing terms below return **not parameterized**, not zero.
 :::
 
 ## 1. How an Installation Campaign Works
@@ -72,7 +72,7 @@ The model assumes full day-rate charging during weather standby. If a contract u
 
 **ORBIT cable reference set**
 
-The cable calculation uses the executable defaults in ORBIT version 1.3, pinned to the reviewed source revision [@orbit2026V13CableDefaults]. They are screening inputs rather than observed project performance.
+The cable-lay calculation uses the relevant executable defaults in ORBIT version 1.3, pinned to the reviewed source revision [@orbit2026V13CableDefaults]. They are screening inputs rather than observed project performance. Burial and support-vessel values are retained in the table as reference context where their project scope is not demonstrated.
 
 | Input | ORBIT value | Value used by this page | Classification |
 |---|---:|---:|---|
@@ -87,24 +87,24 @@ The cable calculation uses the executable defaults in ORBIT version 1.3, pinned 
 | Cable recovery before splice | 0.5 h/event | 0.5 h/event | Sourced ORBIT input |
 | Offshore splice | 48 h/splice | 48 h/splice | Sourced ORBIT input |
 | Separate cable laying | 0.4 km/h | 9.6 km/day/pass | Sourced ORBIT input |
-| Separate cable burial | 0.4 km/h | 9.6 km/day/pass | Sourced ORBIT input |
-| Pre-trenching | 0.1 km/h | 2.4 km/day/pass when selected | Sourced ORBIT input |
+| Separate cable burial | 0.4 km/h | Reference only; route-qualified input required | Sourced ORBIT default without route soil or tool selection |
+| Pre-trenching | 0.1 km/h | Reference only; route-qualified input required | Sourced ORBIT default without route soil or tool selection |
 | Landfall tow-plow speed | 5 km/h | 5 km/h when this ORBIT landfall method is selected | Sourced ORBIT input |
 | Landfall pull-winch speed | 5 km/h | 5 km/h when this ORBIT landfall method is selected | Sourced ORBIT input |
 | Cable-vessel operating limits | 2 m wave height; 25 m/s wind | Context for weather modelling; not converted into a percentage uplift | Sourced ORBIT input |
 | Cable-vessel mobilisation | 3 days at 50% of day rate | 1.5 full-rate-equivalent spread-days | Derived ORBIT cost input |
-| Cable-vessel day rate | 241,171 USD\textsubscript{2024}/day | 223,727 EUR\textsubscript{2026}/day for laying and burial | Provisional screening spread-rate assumption |
-| Generic support-vessel transit speed | 10 km/h | 10 km/h if selected for independent ROV/survey work | ORBIT proxy |
-| Generic support-vessel operating limits | 3 m wave height; 20 m/s wind | Context for weather modelling; not converted into a percentage uplift | ORBIT proxy |
-| Generic support-vessel mobilisation | 7 days at full rate | 7 full-rate-equivalent spread-days | ORBIT proxy |
-| Generic support-vessel day rate | 122,699 USD\textsubscript{2024}/day | 113,824 EUR\textsubscript{2026}/day for ROV/survey | Provisional screening spread-rate assumption |
+| Cable-vessel day rate | 241,171 USD\textsubscript{2024}/day | 223,727 EUR\textsubscript{2026}/day for cable laying only | Provisional screening lay-spread-rate assumption |
+| Generic support-vessel transit speed | 10 km/h | Reference only; not a survey production rate | ORBIT vessel input without a demonstrated survey scope |
+| Generic support-vessel operating limits | 3 m wave height; 20 m/s wind | Reference only; selected survey spread required | ORBIT vessel input without a demonstrated survey scope |
+| Generic support-vessel mobilisation | 7 days at full rate | Reference only; not adopted | ORBIT vessel input without a demonstrated survey scope |
+| Generic support-vessel day rate | 122,699 USD\textsubscript{2024}/day | Reference only; not adopted as an ROV/survey spread | ORBIT vessel input without a demonstrated survey scope |
 | Demobilisation | Not represented by a general ORBIT task | Unresolved | Supplier or contractor input required |
 | Survey production rate and survey-pass count | Not supplied by the cable module | Unresolved | Site-specific or contractor input required |
-| Percentage weather uplift | ORBIT instead uses time-series weather and operating limits | Unresolved | Project metocean input or explicit modelling assumption required |
+| Percentage weather uplift | ORBIT instead uses time-series weather and operating limits | Unresolved | Project metocean or evidenced campaign input required |
 
-The ORBIT cable-vessel file describes an operating-vessel rate with crew, but does not demonstrate the complete commercial boundary required above. For screening only, this page follows the modelling decision that the normalized vessel proxies stand in for complete spread rates including crew, fuel, routine workboats and tugs, and contractor overhead. They must be replaced together with their stated boundary for a commercial estimate. The ROV/survey rate is a generic support-vessel proxy; ORBIT does not assign that vessel to a cable-survey campaign.
+The ORBIT cable-vessel file describes an operating-vessel rate with crew, but does not demonstrate the complete commercial boundary required above. For cable-lay screening only, this page treats the normalized cable-vessel proxy as a complete lay-spread rate including crew, fuel, routine workboats and tugs, and contractor overhead. It must be replaced together with its stated boundary for a commercial estimate. The same rate is not assigned to burial. ORBIT does not assign its generic support vessel to a cable-survey campaign, so that vessel's rate is retained as source context but is not used in the installation calculation.
 
-ORBIT's published methodology tables show 1.0 km/h for separate laying and 0.5 km/h for separate burial, while the reviewed version 1.3 executable defaults are 0.4 km/h for both [@orbit2026V13CableDefaults]. The calculation uses the executable values so that it can be reproduced from the pinned code revision.
+ORBIT's published methodology tables show 1.0 km/h for separate laying and 0.5 km/h for separate burial, while the reviewed version 1.3 executable defaults are 0.4 km/h for both [@orbit2026V13CableDefaults]. The cable-lay screening calculation uses the executable lay value so that it can be reproduced from the pinned code revision. The burial value is retained as source context but is not adopted without a route soil, burial tool and matching spread.
 
 ## 3. Physical Quantities and Installation Configuration
 
@@ -159,6 +159,75 @@ Here $x$ identifies the lay or burial spread, $N_{\mathrm{pass},x,a}$ is its pas
 
 TenneT calls its 2 GW export connection one cable system, but defines that system as four individual cables: positive pole, negative pole, metallic return and fibre-optic cable [@tennet2026TwoGWProgramWeb]. Under the one-cable-per-pass ORBIT convention, one TenneT reference system therefore contains four physical lay units and four lay passes. Product length, mass and loading are calculated separately for each cable type; the indicative power-cable mass is not applied to the metallic return or fibre cable. This is a transparent screening convention, not evidence that TenneT's contractor necessarily installs the four-cable bundle in four separate operations.
 
+**Lay-vessel feasibility and selection**
+
+Product linear mass affects two separate installation decisions. First, it determines how much product a given vessel can carry. Second, together with reel and handling requirements, it determines which vessel classes can perform the work. The second effect is material for TCP: a light spoolable pipeline can make a smaller multipurpose lay spread feasible, while a heavy cable may require a larger cable-lay vessel.
+
+For candidate lay spread $v$ and lay unit $m$, the candidate-specific product length per load is:
+
+$$
+L_{\mathrm{load},m,v}
+=
+\min\left(
+\frac{M_{\mathrm{usable},v}}{\lambda_{\mathrm{product},m}},
+L_{\mathrm{reel/partition},m,v},
+L_{\mathrm{manufacturing},m},
+L_{\mathrm{handling},m,v}
+\right).
+$$
+
+A vessel is not qualified from payload alone. The product supplier and installation contractor must also verify minimum bend radius, tension, overboarding, dynamic loads, station keeping, water depth and route-specific operating limits. Those checks are retained at the highest defensible level as a qualification gate rather than reproduced through an unevidenced installation-engineering model:
+
+$$
+I_{\mathrm{qualified},m,v}
+=
+\begin{cases}
+1, & \text{all product-, vessel- and route-specific checks pass},\\
+0, & \text{otherwise}.
+\end{cases}
+$$
+
+The feasible candidate set is therefore:
+
+$$
+\mathcal{V}_{\mathrm{feasible},m}
+=
+\left\{
+v\;\middle|\;
+L_{\mathrm{load},m,v}\ge L_{\mathrm{minimum},m}
+\quad\text{and}\quad
+I_{\mathrm{qualified},m,v}=1
+\right\}.
+$$
+
+The campaign-feasible set is $\mathcal{V}_{\mathrm{feasible}}=\bigcap_m\mathcal{V}_{\mathrm{feasible},m}$ because the selected spread must qualify for every lay unit assigned to it.
+
+| Symbol | Definition | Unit |
+|---|---|---|
+| $v$ | Candidate lay spread or vessel class | -- |
+| $M_{\mathrm{usable},v}$ | Usable product payload of candidate $v$ after reel and deck equipment | t |
+| $\lambda_{\mathrm{product},m}$ | Linear mass of the selected product for lay unit $m$ | t/physical km |
+| $L_{\mathrm{reel/partition},m,v}$ | Product length permitted by the candidate storage arrangement | physical km/load |
+| $L_{\mathrm{manufacturing},m}$ | Available continuous manufactured product length | physical km/load |
+| $L_{\mathrm{handling},m,v}$ | Product length permitted by the qualified handling and installation arrangement | physical km/load |
+| $L_{\mathrm{minimum},m}$ | Minimum continuous product length that must be carried between permitted field connections for lay unit $m$ | km |
+| $I_{\mathrm{qualified},m,v}$ | Supplier- and contractor-confirmed installation qualification gate | binary |
+| $\mathcal{V}_{\mathrm{feasible},m}$ | Candidate spreads that satisfy the explicit loading constraint and qualification gate | set |
+
+Loading, reloads, transit, production, interface tasks and weather are then calculated separately for every feasible candidate, because vessel capacity and operating limits can change both time and cost. The cost-minimising qualified lay spread is:
+
+$$
+v^*
+=
+\underset{v\in\mathcal{V}_{\mathrm{feasible}}}{\arg\min}
+\left[
+r_{\mathrm{lay},v}T_{\mathrm{lay},v}
++C_{\mathrm{lay,fixed},v}
+\right].
+$$
+
+Here $r_{\mathrm{lay},v}$ is the all-in day rate for candidate $v$, $T_{\mathrm{lay},v}$ is its chargeable campaign time and $C_{\mathrm{lay,fixed},v}$ contains only explicitly quoted lay-spread costs not already represented by time and rate. Lower product mass can admit smaller candidates with lower rates, but the selected spread still depends on load count, productivity, mobilisation, operability and commercial boundary. If candidate-specific TCP rates are unavailable, the model reports the feasible vessel classes as alternative outcomes; it does not select $v^*$ or calculate TCP installation CAPEX.
+
 ## 4. Lay-Spread Time
 
 The lay-spread calculation follows ORBIT's cable-installation task logic. ORBIT explicitly represents mobilisation, product loading, vessel storage, port returns, route laying, positioning, pull-ins, offshore splicing, termination/testing and transit [@orbit2026V13CableDefaults]. Demobilisation remains a separate unresolved input because the reviewed cable module does not contain a general demobilisation task.
@@ -182,81 +251,50 @@ Weather is applied later, after all base tasks have been counted.
 
 **Product per load**
 
-The mass-limited product length is usable vessel capacity divided by product linear mass:
-
-$$
-L_{\mathrm{load,mass}}
-=
-\frac{M_{\mathrm{usable}}}{\lambda_{\mathrm{product}}}.
-$$
-
-Actual product per load is the lowest applicable limit:
-
-$$
-L_{\mathrm{load}}
-=
-\min\left(
-L_{\mathrm{load,mass}},
-L_{\mathrm{reel/partition}},
-L_{\mathrm{manufacturing}},
-L_{\mathrm{handling}}
-\right).
-$$
+For a selected vessel $v^*$, $L_{\mathrm{load},m}=L_{\mathrm{load},m,v^*}$ from the candidate calculation in Section 3. Before selection, load counts and campaign time are evaluated separately for every feasible candidate. This preserves the discrete trade-off between a smaller vessel with more loads and a larger vessel with a higher day rate.
 
 | Symbol | Definition | Unit |
 |---|---|---|
-| $M_{\mathrm{usable}}$ | Usable product mass on the lay vessel | t |
-| $\lambda_{\mathrm{product}}$ | Product linear mass | t/physical km |
-| $L_{\mathrm{reel/partition}}$ | Reel, carousel or partition limit | physical km/load |
-| $L_{\mathrm{manufacturing}}$ | Available continuous manufactured length | physical km/load |
-| $L_{\mathrm{handling}}$ | Handling or installation-analysis limit | physical km/load |
-| $L_{\mathrm{load}}$ | Effective product length per load | physical km/load |
+| $L_{\mathrm{load},m}$ | Effective product length per load for lay unit $m$ and the selected vessel | physical km/load |
 | $L_{\mathrm{physical},m}$ | Physical product length of lay unit $m$ | physical km |
-| $N_{\mathrm{load},m}$ | Loads for lay unit $m$, including its initial load | count |
-| $N_{\mathrm{reload},m}$ | Loads after the initial load for lay unit $m$ | count |
-| $N_{\mathrm{load}}$, $N_{\mathrm{reload}}$ | Campaign totals summed over physical lay units | count |
+| $L_{m,g}$ | Length of product $m$ assigned to vessel load $g$ | physical km |
+| $N_{\mathrm{load},c}$ | Port loads assigned to separately mobilised lay campaign $c$ | count |
+| $N_{\mathrm{load}}$, $N_{\mathrm{reload}}$ | Total port loads and subsequent reloads | count |
 
-If products with different linear masses share a load, loaded mass is calculated product by product rather than by applying one average linear mass.
-
-The ORBIT reference carousel has a 13,000 t maximum mass. The screening calculation uses $M_{\mathrm{usable}}=13{,}000$ t, while retaining the reel, manufacturing and handling limits in the minimum above. For example, an indicative 65 t/km HVDC pole cable would be mass-limited to 200 physical km/load. That result is not transferred to the metallic-return or fibre-optic cables.
-
-Loads are calculated separately for every physical lay unit $m$, so that each cable or pipeline receives one initial load and uses its own mass and handling limits:
+One vessel load can contain several complete array-cable sections or other compatible products. A valid loading plan assigns product to loads subject to:
 
 $$
-N_{\mathrm{load},m}
-=
-\left\lceil
-\frac{L_{\mathrm{physical},m}}{L_{\mathrm{load},m}}
-\right\rceil,
+\sum_m \lambda_{\mathrm{product},m}L_{m,g}
+\le M_{\mathrm{usable},v},
 \qquad
-N_{\mathrm{reload},m}
-=
-\max(0,N_{\mathrm{load},m}-1).
+0\le L_{m,g}\le L_{\mathrm{load},m,v}.
 $$
 
-Campaign totals are:
+Every physical section must remain complete unless the product and installation plan permit a field connection. Reel partitions, storage compatibility and installation order must therefore be checked in addition to total mass. This is a discrete packing problem; dividing total campaign mass by vessel payload gives only a lower bound when the detailed loading plan is unavailable.
+
+The ORBIT reference carousel has a 13,000 t maximum mass. It defines one cable-vessel candidate rather than a universal installation capacity. For example, an indicative 65 t/km HVDC pole cable would be mass-limited to 200 physical km/load before reel, manufacturing and handling limits are applied. That result is not transferred to the metallic-return or fibre-optic cables.
+
+Loads and reloads are counted by separately mobilised lay campaign $c$:
 
 $$
-N_{\mathrm{load}}=\sum_m N_{\mathrm{load},m},
+N_{\mathrm{load}}=\sum_c N_{\mathrm{load},c},
 \qquad
-N_{\mathrm{reload}}=\sum_m N_{\mathrm{reload},m}.
+N_{\mathrm{reload}}
+=
+\sum_c\max(0,N_{\mathrm{load},c}-1).
 $$
 
-Port loading time is therefore:
+Port loading time is the sum of the actual load operations:
 
 $$
 T_{\mathrm{port\ load}}
 =
-\sum_m
-\left(
-t_{\mathrm{initial\ load},m}
-+N_{\mathrm{reload},m}t_{\mathrm{reload\ load},m}
-\right).
+\sum_g t_{\mathrm{load},g}.
 $$
 
-Here $t_{\mathrm{initial\ load},m}$ and $t_{\mathrm{reload\ load},m}$ are chargeable port-loading times in days. Under the ORBIT screening values both equal 6/24 day. A TenneT system with four physical cable passes therefore has four initial loads even when every cable fits on one vessel load.
-
 ORBIT uses six hours for both the initial load and each reload [@orbit2026V13CableDefaults]. This is product-loading time only. It does not include the return transit and repositioning needed for a reload.
+
+Pass count and load count are independent. Four physical export-cable passes do not by themselves prove four port loads: the result depends on the qualified storage and loading plan. Conversely, one continuous cable can require several loads and offshore splices.
 
 **Port returns**
 
@@ -265,7 +303,7 @@ For one-way distance $D_{\mathrm{port}}$ between the work site and loading port,
 $$
 T_{\mathrm{port\ return}}
 =
-\sum_m N_{\mathrm{reload},m}
+\sum_c \max(0,N_{\mathrm{load},c}-1)
 \left(
 \frac{2D_{\mathrm{port}}}{24v_{\mathrm{transit}}}
 +t_{\mathrm{reposition}}
@@ -278,65 +316,34 @@ The ORBIT reference cable vessel uses $v_{\mathrm{transit}}=11.5$ km/h. Its relo
 
 **Route laying**
 
-Lay production time is lay pass-km divided by the selected operating lay rate:
+Lay production time is lay pass-km divided by the selected operating lay rate, summed over passes $p$:
 
 $$
 T_{\mathrm{route\ lay}}
 =
-\sum_j
-\frac{L_{\mathrm{pass,lay},j}}{q_{\mathrm{lay},j}}.
+\sum_p
+\frac{L_{\mathrm{pass,lay},p}}{q_{\mathrm{lay},p}}.
 $$
 
 The reviewed ORBIT version 1.3 implementation uses $q_{\mathrm{lay}}=0.4$ km/h, equivalent to 9.6 km/day of continuous operation [@orbit2026V13CableDefaults]. This is an operating rate, not an achieved weather-inclusive campaign rate. Product handling, stops, interfaces and weather are represented separately.
 
 **Pull-ins, splicing and testing**
 
-ORBIT divides cable interfaces into positioning, preparation, pull-in, termination/testing, lowering and, when required, cable recovery and splicing. The time for any repeated interface task $u$ is:
+The model preserves the number of physical interfaces and splices because they create material step changes in vessel time. It does not require every minor handling action as a separate model input. Instead, a sourced aggregate duration is assigned to each event type $e$:
 
 $$
-T_u
+T_{\mathrm{event}}
 =
-\frac{N_u t_u}{24}.
+\sum_e\frac{N_e t_e}{24}.
 $$
 
-The sourced task values are:
+| Event type $e$ | Aggregate duration $t_e$ | Included ORBIT tasks | Counting rule |
+|---|---:|---|---|
+| Array-cable section | 27 h/section | Positioning, preparation, two pull-ins, two termination/test tasks and lowering | Once per physical array-cable section |
+| Export power-cable interface sequence | 26 h/cable | Landfall and offshore-end positioning, preparation, pull-in, termination/test and lowering | Once per qualifying export power cable; metallic-return and fibre tasks require matching inputs |
+| Offshore splice | 51.5 h/splice | Positioning, cable recovery, splicing and lowering | Once per required continuous-route load break |
 
-| Task $u$ | $t_u$ | Counting rule |
-|---|---:|---|
-| Position onsite | 2 h/location | Once at the start of each array section and at the offshore end of an export cable; also included in each splice sequence |
-| Prepare cable | 1 h/event | At each array-cable end and at export landfall |
-| Pull in cable | 5.5 h/end | At every modeled pull-in or pull-up |
-| Terminate and test | 5.5 h/end | At every end while the lay spread remains occupied |
-| Lower cable | 1 h/event | After the first-end sequence and after a splice |
-| Raise cable | 0.5 h/splice | Before an offshore splice |
-| Splice cable | 48 h/splice | Between continuous export-cable loads |
-
-Using those task counts, the complete interface term is:
-
-$$
-T_{\mathrm{interface}}
-=
-\frac{
-2N_{\mathrm{position}}
-+N_{\mathrm{prepare}}
-+5.5N_{\mathrm{pull}}
-+5.5N_{\mathrm{termination}}
-+N_{\mathrm{lower}}
-}{24}.
-$$
-
-Each offshore splice additionally occupies the lay spread for positioning, cable recovery, splicing and lowering:
-
-$$
-T_{\mathrm{splice}}
-=
-N_{\mathrm{splice}}
-\frac{2+0.5+48+1}{24}
-=
-N_{\mathrm{splice}}\frac{51.5}{24}.
-$$
-
-These values are executable ORBIT defaults [@orbit2026V13CableDefaults]. They apply only when the lay spread remains occupied. An array-cable section uses two pull-ins and two termination/test tasks; an export cable uses a landfall sequence and an offshore-end sequence. The exact event counts remain derived from the physical installation inventory rather than embedded in a kilometre rate.
+The aggregate durations are derived from the executable ORBIT defaults listed in Section 2 [@orbit2026V13CableDefaults]. They apply only while the lay spread remains occupied. Retaining the underlying task values in the source-input table preserves traceability, while the calculation uses the event totals that materially determine campaign duration.
 
 For array cables, a reload normally supplies additional discrete cable sections and does not automatically create an offshore splice. For a continuous export route, exceeding the available continuous product length can require both a reload and an inline splice.
 
@@ -361,13 +368,11 @@ T_{\mathrm{lay,offshore,base}}
 T_{\mathrm{site\ transit}}
 +T_{\mathrm{route\ lay}}
 +T_{\mathrm{port\ return}}\\
-&+T_{\mathrm{position}}
-+T_{\mathrm{interface}}
-+T_{\mathrm{splice}}
+&+T_{\mathrm{event}}
 \end{aligned}
 $$
 
-All terms in the two aggregation equations are chargeable days. $T_{\mathrm{mob,lay}}$ is 1.5 full-rate-equivalent days in the cable screening case, representing ORBIT's three calendar days at 50% of the day rate. $T_{\mathrm{demob,lay}}$ remains unresolved. $T_{\mathrm{site\ transit}}$ is initial offshore transit, and $T_{\mathrm{position}}$ contains only positioning not already included in $T_{\mathrm{interface}}$ or $T_{\mathrm{splice}}$. Every task is assigned once.
+All terms in the two aggregation equations are chargeable days. $T_{\mathrm{mob,lay}}$ is 1.5 full-rate-equivalent days in the cable screening case, representing ORBIT's three calendar days at 50% of the day rate. $T_{\mathrm{demob,lay}}$ remains unresolved. $T_{\mathrm{site\ transit}}$ is initial offshore transit. Every event is assigned once.
 
 ## 5. Burial-Spread Time
 
@@ -390,8 +395,8 @@ T_{\mathrm{bury,offshore,base}}
 ={}&
 T_{\mathrm{transit,bury}}
 +T_{\mathrm{setup,bury}}\\
-&+\sum_j
-\frac{L_{\mathrm{pass,bury},j}}{q_{\mathrm{bury},j}}
+&+\sum_p
+\frac{L_{\mathrm{pass,bury},p}}{q_{\mathrm{bury},p}}
 +T_{\mathrm{reposition,bury}}\\
 &+T_{\mathrm{recovery,bury}}.
 \end{aligned}
@@ -413,15 +418,13 @@ $$
 | $T_{\mathrm{bury,offshore,base}}$ | Offshore-exposed burial time before weather uplift | day |
 | $T_{\mathrm{mob,bury}}$, $T_{\mathrm{demob,bury}}$ | Burial-spread mobilisation and demobilisation | day |
 | $T_{\mathrm{transit,bury}}$ | Burial-spread offshore transit | day |
-| $L_{\mathrm{pass,bury},j}$ | Burial or trenching pass length for pass $j$ | pass-km |
-| $q_{\mathrm{bury},j}$ | Operating burial or pre-trenching rate | km/day/pass |
+| $L_{\mathrm{pass,bury},p}$ | Burial or trenching pass length for pass $p$ | pass-km |
+| $q_{\mathrm{bury},p}$ | Operating burial or pre-trenching rate for pass $p$ | km/day/pass |
 | $T_{\mathrm{setup,bury}}$ | Tool deployment and setup time | day |
 | $T_{\mathrm{reposition,bury}}$ | Positioning between burial passes or sections | day |
 | $T_{\mathrm{recovery,bury}}$ | Tool recovery time | day |
 
-The reviewed ORBIT version 1.3 implementation uses $q_{\mathrm{bury}}=0.4$ km/h, equivalent to 9.6 km/day of continuous operation, and 0.1 km/h or 2.4 km/day for pre-trenching [@orbit2026V13CableDefaults]. Array-cable burial also includes two hours of positioning per section. These are operating defaults rather than achieved campaign rates and must be replaced when route-specific soil and tool evidence are available.
-
-The cable screening case uses 1.5 full-rate-equivalent mobilisation days for the burial vessel, matching the ORBIT cable-vessel proxy. ORBIT does not provide general burial transit, deployment, recovery or demobilisation values; those inputs remain unresolved rather than being silently set to zero.
+The reviewed ORBIT version 1.3 implementation contains $q_{\mathrm{bury}}=0.4$ km/h and $q_{\mathrm{pretrench}}=0.1$ km/h [@orbit2026V13CableDefaults]. These are reference defaults, not adopted base-case inputs. Route-specific soil, burial depth, tool selection, mobilisation, transit, deployment, recovery, demobilisation and the matching spread rate are required before burial time and cost are parameterized.
 
 Burial pass length is not assumed equal to lay pass length. Sections near structures, landfall or designed protection zones may have different burial lengths, but only one physical cable or pipeline is buried in each modeled pass.
 
@@ -448,7 +451,7 @@ $$
 | $q_{\mathrm{survey},k}$ | Operating survey rate for activity $k$ | km/day |
 | $T_{\mathrm{ROV,interface}}$ | Independent ROV time at pull-ins, joints, crossings or other interfaces | day |
 
-ORBIT's cable module supplies no independent survey-pass count or survey production rate. These remain site-specific or contractor inputs. For cable screening only, this page uses ORBIT's generic support vessel as the ROV/survey spread proxy: 10 km/h transit speed, seven full-rate mobilisation days and 113,824 EUR\textsubscript{2026}/day [@orbit2026V13CableDefaults]. This supplies a provisional cost rate, not the missing survey productivity or proof of a complete commercial survey spread.
+ORBIT's cable module supplies no independent survey-pass count or survey production rate. Its generic support-vessel transit speed is not a proxy for survey productivity. Survey scope, achieved production, mobilisation and the matching complete-spread rate therefore remain site-specific or contractor inputs; until they are provided, $T_{\mathrm{ROV}}$ and the ROV/survey cost term are **not parameterized**.
 
 ROV support that accompanies another spread is based on that spread's actual weather-adjusted offshore time:
 
@@ -474,7 +477,7 @@ T_{\mathrm{mob,ROV}}
 +T_{\mathrm{ROV,support}}.
 $$
 
-Here $T_{\mathrm{mob,ROV}}=7$ chargeable days in the cable screening case and $T_{\mathrm{demob,ROV}}$ remains unresolved. $T_{\mathrm{survey,independent}}$ is weather-adjusted independent survey time; $T_{\mathrm{ROV,support}}$ is concurrent support time; and $T_{\mathrm{ROV}}$ is total chargeable ROV/survey spread-days.
+Here $T_{\mathrm{survey,independent}}$ is weather-adjusted independent survey time, $T_{\mathrm{ROV,support}}$ is concurrent support time, and $T_{\mathrm{ROV}}$ is total chargeable ROV/survey spread-days. Mobilisation and demobilisation are inputs for the selected survey spread; ORBIT's generic support-vessel mobilisation is not adopted without a demonstrated survey scope.
 
 Concurrent support is a separate spread cost, not additional project elapsed time. If ROV and survey equipment are onboard and included in the lay or burial day rate, the corresponding $\alpha$ is zero and those days are not charged again.
 
@@ -542,9 +545,7 @@ $$
 | $w_{\mathrm{bury}}$ | Burial offshore-time uplift for weather | fraction |
 | $w_{\mathrm{ROV}}$ | Independent ROV/survey-time uplift for weather | fraction |
 
-An uplift of 20% would be represented as $w=0.20$ and multiply exposed time by 1.20. This is not the same as defining 20% downtime, which would require division by 0.80. No numerical weather uplift is adopted until an evidence basis or modelling decision is provided.
-
-Different spreads should use different weather uplifts where evidence permits because their operational limits differ. A common uplift can be used as a transparent screening assumption when better inputs are unavailable.
+No numerical weather uplift is adopted until an evidence basis is provided. Different spreads require different weather treatment because their operating limits differ. If weather evidence is unavailable, base exposed time can be reported, but weather-adjusted duration and installation CAPEX remain **not parameterized**.
 
 Once the three chargeable spread times are known, installation CAPEX is:
 
@@ -567,6 +568,8 @@ $$
 | $r_{\mathrm{bury}}$ | All-in burial-spread rate | 2026 EUR/day |
 | $r_{\mathrm{ROV}}$ | All-in ROV/survey-spread rate | 2026 EUR/day |
 | $C_{\mathrm{exceptional}}$ | Work and materials outside the three time-based spreads | 2026 EUR |
+
+For a campaign selected from candidate spreads, $r_{\mathrm{lay}}=r_{\mathrm{lay},v^*}$ and $T_{\mathrm{lay}}=T_{\mathrm{lay},v^*}$. A missing candidate-specific TCP rate therefore blocks the numerical TCP lay-cost term; it is not replaced by the cable-vessel rate or set to zero.
 
 Exceptional cost is:
 
@@ -613,13 +616,11 @@ F
 0.9276715\ \mathrm{EUR}_{2026}/\mathrm{USD}_{2024}.
 $$
 
-The factor gives 223,727 EUR\textsubscript{2026}/day for ORBIT's 241,171 USD\textsubscript{2024}/day cable vessel and 113,824 EUR\textsubscript{2026}/day for its 122,699 USD\textsubscript{2024}/day generic support vessel. The cable screening case adopts the first value for both the lay and burial spreads and the second for the ROV/survey spread. This promotes primary-vessel proxies to complete-spread screening assumptions under the explicit inclusion boundary in Section 2; it does not turn them into contractor quotations.
+The factor gives 223,727 EUR\textsubscript{2026}/day for ORBIT's 241,171 USD\textsubscript{2024}/day cable vessel and 113,824 EUR\textsubscript{2026}/day for its 122,699 USD\textsubscript{2024}/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.
 
-### Worked example: 2 GW all-electric wind farm
+### Worked example: evidence-gated 2 GW cable inventory
 
-This example applies the three-spread method to a 2 GW wind farm with 134 turbines, approximately 400 physical km of inter-array cable and a 100 km export corridor. It calculates **installation CAPEX only**. Cable supply, substations, crossing structures, protection materials, landfall civil works and contingency remain outside the result.
-
-The installed-capacity basis used for the specific cost is 2,000,000 kW. The turbine count is used to determine installation interfaces; the requested 2 GW rating, rather than the product of a separate assumed turbine rating and turbine count, is used as the cost denominator.
+This example shows how far the calculation can proceed for a 2 GW wind farm with 134 turbines, approximately 400 physical km of inter-array cable and a 100 km export corridor. It reports the physical inventory and the parameterized parts of lay time. It does not fill unresolved inputs in order to force a total installation CAPEX.
 
 **Example inputs**
 
@@ -629,83 +630,52 @@ The installed-capacity basis used for the specific cost is 2,000,000 kW. The tur
 | Turbines | 134 | -- | User-specified design input |
 | Cable length | 400 physical km | 100 route-km; four cables and therefore 400 physical km | User-specified design input and TenneT four-cable system definition [@tennet2026TwoGWProgramWeb] |
 | Cable sections or lay units | 134 radial sections | Four physical export cables | Infield radial-layout assumption; sourced TenneT system definition for export |
-| Linear cable mass | 42.5 t/km for all infield cable | 74 t/km for each HVDC pole cable | ORBIT 630 mm² 66 kV and 2,500 mm² 525 kV cable-library inputs [@orbit2026V13CableDefaults] |
-| Usable carousel mass | 5,000 t | 5,000 t | User-specified screening assumption; overrides the 13,000 t ORBIT reference carousel in this example only |
-| Metallic-return and fibre loading | -- | Each cable fits in one 5,000 t load | Provisional screening assumption; product-specific supplier masses remain required |
-| Port-to-worksite distance | 100 km | 100 km | Provisional screening assumption |
-| Survey scope | Pre-lay and post-burial surveys over 400 km | Pre-lay and post-burial surveys over the 100 km corridor | Provisional screening assumption; surveys follow the corridor rather than every export cable |
-| Survey production rate | 10 km/h | 10 km/h | Provisional proxy equal to the ORBIT support-vessel transit speed; ORBIT does not provide a survey production rate |
-| Lay and burial production | 9.6 km/day/pass | 9.6 km/day/pass | ORBIT version 1.3 executable defaults [@orbit2026V13CableDefaults] |
-| Lay and burial spread rate | 223,727 EUR\textsubscript{2026}/day | 223,727 EUR\textsubscript{2026}/day | Provisional complete-spread screening rate derived above |
-| ROV/survey spread rate | 113,824 EUR\textsubscript{2026}/day | 113,824 EUR\textsubscript{2026}/day | Provisional complete-spread screening rate derived above |
-| Mobilisation and demobilisation | 1.5 days each for lay and burial; 7 days each for ROV/survey | Same | Mobilisation is derived from ORBIT; equal demobilisation is an explicit screening assumption |
-| Weather uplift | 20% of offshore-exposed time | 20% of offshore-exposed time | Provisional common screening assumption, not a project metocean result |
-| Exceptional cost | Zero within this worked result | Zero within this worked result | Excluded rather than assumed unnecessary; no site-specific quantities or rates are available |
+| Linear cable mass | 42.5 t/km for the infield screening cable | 74 t/km for each HVDC pole cable; metallic-return and fibre masses unresolved | ORBIT 630 mm² 66 kV and 2,500 mm² 525 kV cable-library inputs [@orbit2026V13CableDefaults] |
+| Candidate usable carousel mass | 5,000 t | 5,000 t | User-specified screening vessel candidate |
+| Port-to-worksite distance | Unresolved | Unresolved | Project loading-port decision required |
+| Lay production | 9.6 km/day/pass | 9.6 km/day/pass | ORBIT version 1.3 executable default [@orbit2026V13CableDefaults] |
+| Cable-lay spread rate | 223,727 EUR\textsubscript{2026}/day | 223,727 EUR\textsubscript{2026}/day | Provisional ORBIT-derived cable-lay screening rate |
+| Burial production and spread rate | Unresolved | Unresolved | Route soil, burial tool and matching spread required; the ORBIT rate is reference context only |
+| Survey scope, production and spread rate | Unresolved | Unresolved | Site-specific or contractor inputs required |
+| Demobilisation and weather delay | Unresolved | Unresolved | Contractor and project metocean inputs required |
+| Exceptional scope | Unresolved | Unresolved | Crossings, protection and landfall quantities and rates required |
 
-Using one 42.5 t/km cable throughout the infield network gives 17,000 t of cable. This is a deliberately simple loading assumption, not a conductor-optimized array design. The 5,000 t carousel therefore requires:
+Using one 42.5 t/km screening cable throughout the infield network gives 17,000 t of cable. Dividing by the candidate's 5,000 t usable payload gives a lower bound of four loads:
 
 $$
 N_{\mathrm{load,infield}}
-=
+\ge
 \left\lceil\frac{400\times42.5}{5{,}000}\right\rceil
-=4,
-\qquad
-N_{\mathrm{reload,infield}}=3.
+=4.
 $$
 
-The 134 discrete infield sections do not require inline splices when the vessel reloads between sections. For export, each 100 km HVDC pole cable has a modeled mass of 7,400 t and therefore requires two loads. The metallic-return and fibre-optic cables are provisionally assigned one load each because their product-specific masses are unresolved. The complete export system therefore uses six loads, two reloads and two offshore pole-cable splices:
+This is not yet an adopted load count. The 134 section lengths, reel partitions, loading order and storage compatibility are required to prove that the sections can be packed into four loads.
 
-$$
-N_{\mathrm{load,export}}
-=2+2+1+1=6,
-\qquad
-N_{\mathrm{reload,export}}=2,
-\qquad
-N_{\mathrm{splice,export}}=2.
-$$
-
-The resulting installation inventory is:
+Each 100 km HVDC pole cable has a modeled mass of 7,400 t and therefore requires at least two 5,000 t loads. The two pole cables consequently require at least four loads and two offshore load-break splices. The complete export load count remains unresolved because the metallic-return and fibre-optic masses and storage arrangements are not available.
 
 | Quantity | Infield | Export |
 |---|---:|---:|
-| Route or network length used for survey | 400 km | 100 km |
 | Physical cable length | 400 km | 400 km |
 | Lay pass-km | 400 km | 400 km |
-| Burial pass-km | 400 km | 400 km |
 | Cable sections or lay units | 134 | 4 |
-| Initial loads plus reloads | 4 | 6 |
-| Reloads | 3 | 2 |
-| Offshore inline splices | 0 | 2 |
+| Port loads | At least 4; packing plan unresolved | At least 4 for the pole cables; complete-system count unresolved |
+| Reloads | Unresolved until campaign grouping is defined | Unresolved until campaign grouping is defined |
+| Offshore inline splices | 0 if sections remain discrete | At least 2 for the pole cables |
 
-For the infield network, each of the 134 sections receives the complete 27-hour ORBIT array-interface sequence. For export, each of the four cables receives a 26-hour landfall and offshore-end interface sequence, excluding landfall civil works. Each of the two pole-cable load breaks adds the 51.5-hour offshore splice sequence. These event times are added to production and transit time before the common weather uplift is applied to offshore-exposed work.
+The parameterized production and event components are:
 
-| Chargeable spread time | Infield | Export |
+| Lay-time component | Infield | Export |
 |---|---:|---:|
-| Lay spread | 238.38 days | 68.33 days |
-| Burial spread | 67.27 days | 53.87 days |
-| ROV/survey spread | 19.00 days | 16.00 days |
+| Route laying, $400/9.6$ | 41.7 days | 41.7 days |
+| Array or export interface events | 150.8 days | 2.2 days for the pole cables; complete-system interface time unresolved |
+| Pole-cable splice events | 0 days | At least 4.3 days |
+| Loading, port returns and site transit | Not parameterized | Not parameterized |
+| Demobilisation and weather delay | Not parameterized | Not parameterized |
+| **Complete lay-spread time** | **Not parameterized** | **Not parameterized** |
 
-These are chargeable spread-days, not additive project elapsed days. The cost of each scope follows directly from the three matching spread times and rates:
+Burial, ROV/survey, exceptional scope and total installation CAPEX are also **not parameterized**. The provisional cable-lay rate is retained for later use but is not multiplied by an incomplete duration. No installation EUR/kW result is reported.
 
-| Installation CAPEX | Infield | Export | Combined |
-|---|---:|---:|---:|
-| Laying | 53.33 million EUR | 15.29 million EUR | 68.62 million EUR |
-| Burial | 15.05 million EUR | 12.05 million EUR | 27.10 million EUR |
-| ROV/survey | 2.16 million EUR | 1.82 million EUR | 3.98 million EUR |
-| **Total installation CAPEX** | **70.54 million EUR** | **29.16 million EUR** | **99.70 million EUR** |
-| **Installation CAPEX per kW** | **35.27 EUR/kW** | **14.58 EUR/kW** | **49.85 EUR/kW** |
-
-For example, the combined specific installation cost is:
-
-$$
-c_{\mathrm{installation}}
-=
-\frac{70.544+29.160}{2{,}000{,}000}
-\times10^6
-=49.85\ \mathrm{EUR/kW}.
-$$
-
-The example does not remove the unresolved-input rules. In particular, the metallic-return and fibre load counts, demobilisation, survey rate, weather uplift and complete commercial spread boundaries require project or contractor evidence before this result can be promoted beyond screening. The assumed radial infield inventory also produces approximately 34 strings if no string contains more than four turbines; this exceeds the 28 wind-farm cable bays in the standard TenneT 2 GW platform arrangement. The installation result is therefore conditional on a collector and platform interface that can accommodate the selected 134-turbine layout.
+The radial infield inventory produces approximately 34 strings if no string contains more than four turbines, exceeding the 28 wind-farm cable bays in the standard TenneT 2 GW platform arrangement. Two outcomes must therefore remain visible: if the collector can accommodate at least 34 strings, this inventory can proceed to detailed loading; if it is limited to 28 bays, the cable topology and installation inventory must be redesigned and recalculated.
 
 ## 8. Installation-Subclass Differences
 
@@ -722,7 +692,14 @@ Public 66 kV examples span approximately 20--50 t/km, so loading must use the se
 
 An indicative 2,500 mm² copper 525 kV submarine cable has a linear mass of approximately 65 t/km, but this is not a universal HVDC mass assumption and applies neither to TenneT's metallic return nor to its fibre-optic cable [@prysmian525KVSubmarine; @tennet2026TwoGWProgramWeb].
 
-Manufacturer information supports horizontal TCP lay from a small multipurpose vessel and continuous lengths of approximately 3--6 km, depending on diameter and pressure [@strohmTCPFlowlines]. These are generic product-family capabilities, not a qualified hydrogen design point. DNV-ST-F119 supplies the offshore TCP standard basis, while DNV's hydrogen work identifies hydrogen-specific qualification gaps [@dnvSTF119; @dnvHydrogenCompositeJIP].
+Manufacturer information supports horizontal TCP lay from a small multipurpose vessel and continuous lengths of approximately 3--6 km, depending on diameter and pressure [@strohmTCPFlowlines]. This is the physical basis for admitting a smaller candidate spread to the vessel-selection calculation. The installation-cost benefit does not come from product mass directly: it arises when the lighter product and its handling envelope make that smaller spread feasible and the matching all-in rate is lower than the rate for the qualifying cable-lay spread. These are generic product-family capabilities, not a qualified hydrogen design point. DNV-ST-F119 supplies the offshore TCP standard basis, while DNV's hydrogen work identifies hydrogen-specific qualification gaps [@dnvSTF119; @dnvHydrogenCompositeJIP].
+
+Until product and contractor qualification is available, the model reports two vessel-class outcomes rather than forcing one selection:
+
+| TCP outcome | Qualification result | Cost treatment |
+|---|---|---|
+| Small multipurpose-vessel subclass | Payload and reel constraints pass and $I_{\mathrm{qualified},m,v}=1$ for the small spread | Use the matching small-spread task inputs and day rate when supplied; currently **not parameterized** |
+| Specialist lay-vessel subclass | The small spread fails payload, reel or qualification requirements | Evaluate the next qualified vessel class with its own inputs and rate; currently **not parameterized** |
 
 An offshore TCP export calculation requires:
 
@@ -745,24 +722,29 @@ An 80--100 km export route is far longer than the public 3--6 km continuous-leng
 |---|---|---|
 | Physical routes, sections and asset counts | Project design input | Project design input |
 | Physical cables per pass | Fixed at one under the ORBIT screening convention | Fixed at one as a provisional conservative assumption |
-| Cable storage, transit, load, interface, splice, lay and burial defaults | Sourced ORBIT version 1.3 screening inputs [@orbit2026V13CableDefaults] | Not applicable |
+| Product linear mass and minimum bend radius | Product-specific supplier input | Hydrogen-qualified product input required |
+| Candidate lay-vessel payload, reel and handling limits | ORBIT reference vessel for screening; project vessel data required for a commercial result | Supplier and contractor input required |
+| Product, vessel and route qualification gate | Project installation verification required beyond ORBIT screening | Hydrogen-qualified supplier and contractor verification required |
+| Selected lay spread | ORBIT cable-vessel proxy in the screening case | Selected only after physical qualification and candidate-rate comparison |
+| Cable storage, transit, load, interface, splice and lay defaults | Sourced ORBIT version 1.3 screening inputs [@orbit2026V13CableDefaults] | Not applicable |
 | Lay-spread rate | 223,727 EUR\textsubscript{2026}/day; provisional complete-spread screening assumption | Supplier or contractor input required |
-| Burial-spread rate | 223,727 EUR\textsubscript{2026}/day; provisional complete-spread screening assumption | Supplier or contractor input required |
-| ROV/survey-spread rate | 113,824 EUR\textsubscript{2026}/day; provisional generic support-vessel screening assumption | Supplier or contractor input required |
+| Burial-spread rate | Supplier or contractor input required | Supplier or contractor input required |
+| ROV/survey-spread rate | Supplier or contractor input required | Supplier or contractor input required |
 | Demobilisation | Supplier or contractor input required; not generally represented by ORBIT | Supplier or contractor input required |
-| Weather uplifts | Explicit modelling assumption or project metocean input required | Explicit modelling assumption or project metocean input required |
+| Weather uplifts | Project metocean or evidenced campaign input required | Project metocean or evidenced campaign input required |
 | Survey rates and ROV support fractions | Site-specific or contractor input required | Site-specific or contractor input required |
 | Exceptional costs | Site-specific input required | Site-specific input required |
 
-The model can calculate the parameterized portion of cable installation time and produce screening spread costs from the proxy rates. A complete base-case result remains blocked until demobilisation, survey productivity and weather uplift are resolved. A commercial result additionally requires contractor rates with verified inclusions.
+The model can calculate the physical inventory and parameterized portions of cable lay time. It does not produce a complete spread cost while loading, demobilisation, weather or matching scope rates remain unresolved. A commercial result additionally requires contractor rates with verified inclusions.
 
 **Required intermediate outputs**
 
 | Result group | Required outputs |
 |---|---|
 | Physical inventory | Route-km, physical km, lay pass-km and burial pass-km |
+| Vessel selection | Candidates considered, feasibility result by constraint, selected spread and selection basis |
 | Loading | Product per load, load count, reload count, port loading days and return-transit days |
-| Lay tasks | Route-lay, positioning, pull-in, splice, testing, transit, mobilisation and demobilisation days |
+| Lay events | Route-lay, aggregate section/interface, splice, transit, loading, mobilisation and demobilisation days |
 | Burial tasks | Burial or pre-trench, setup, repositioning, recovery, transit, mobilisation and demobilisation days |
 | ROV/survey tasks | Independent survey days, interface days and concurrent support days |
 | Weather | Base exposed time, uplift and weather-adjusted time for each spread |
@@ -782,8 +764,12 @@ The model can calculate the parameterized portion of cable installation time and
 
 - Physical product length increases with every parallel asset.
 - Every modeled lay and burial pass contains exactly one physical cable or pipeline.
+- A lay spread is considered only after the explicit loading constraints pass and the supplier/contractor qualification gate equals one.
+- Product linear mass changes candidate-specific product per load and can change the feasible vessel set; it does not directly impose a day rate.
+- Each feasible candidate's campaign time is calculated using that candidate's capacity, task inputs and operating limits before spread selection.
 - One TenneT 2 GW reference system produces four physical cable passes; the system count is not substituted for the cable count.
-- The initial product load is counted once and every later load creates one reload.
+- Every load satisfies product-specific mass, storage, partition and handling limits; a total-mass ceiling is not treated as a proven packing plan.
+- The initial product load is counted once per separately mobilised lay campaign and every later load in that campaign creates one reload.
 - An array-cable reload does not automatically create an inline splice.
 - A continuous export-cable load break creates a splice only when required by the product and installation plan.
 - Port loading is not weather-uplifted.
@@ -793,7 +779,7 @@ The model can calculate the parameterized portion of cable installation time and
 - ROV or survey equipment included in another spread rate is not charged separately.
 - Crew, fuel, routine workboats and tugs, and contractor overhead are not added outside the spread rates.
 - Exceptional scope included in a spread quotation is not added again.
-- Missing TCP task times or rates return **not parameterized**, not zero.
+- Any missing material task time, qualification, weather input or matching spread rate returns **not parameterized**, not zero.
 
 **Current limitations**
 
@@ -802,13 +788,15 @@ The model can calculate the parameterized portion of cable installation time and
 | ORBIT values are task and example-vessel defaults rather than achieved project performance | Cable-time and spread-cost results remain screening estimates |
 | ORBIT documentation and version 1.3 code disagree on lay and burial speeds | The pinned executable defaults are used and the discrepancy is disclosed |
 | ORBIT installs individual cables and does not demonstrate TenneT's actual bundled-installation method | Four separate passes are a screening convention that may overstate HVDC time |
-| Weather is represented by a percentage uplift rather than a discrete metocean simulation | Timing and seasonal operability are simplified |
-| ORBIT vessel proxies are treated as complete spread rates by modelling assumption | Commercial cable-installation CAPEX remains unresolved |
+| No project weather input is available | Weather-adjusted duration and installation CAPEX remain unresolved |
+| The ORBIT cable-vessel proxy is treated as a complete lay-spread rate by modelling assumption | Commercial cable-lay cost remains unresolved until the rate boundary is verified |
 | Demobilisation is not generally represented by ORBIT | Complete screening duration remains unresolved until a value is supplied |
 | Survey rates and ROV-support fractions are unresolved | ROV/survey time cannot yet be calculated for a base case |
+| Product section packing and campaign grouping are unresolved | Mass-derived load counts remain lower bounds rather than adopted inventories |
+| The infield example requires about 34 strings while the reference platform has 28 cable bays | The example is conditional on a compatible collector or a redesigned cable topology |
 | Crossing, protection and landfall unit costs are not transferable | Exceptional costs remain site-specific |
-| TCP product, task-time and spread-rate inputs are incomplete | TCP installation CAPEX remains blocked |
+| TCP product, vessel-feasibility, task-time and spread-rate inputs are incomplete | The smaller-vessel pathway is explicit, but TCP spread selection and installation CAPEX remain not parameterized until matching inputs are supplied |
 
-This level of detail is intended to expose the cost-driving physical tasks without creating precision unsupported by the available inputs. ORBIT supplies the cable task structure; project design, weather uplifts and matching spread rates determine the model result.
+The model stops at the highest defensible level for each subclass. It preserves cost-driving physical inventories and discrete logistics while leaving unsupported engineering checks as qualification gates and unresolved cost terms as **not parameterized**.
 
 **Evidence review date:** 5 August 2026.

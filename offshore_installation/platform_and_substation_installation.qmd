@@ -1,75 +1,165 @@
 ---
 title: "Platform and Substation Installation"
-completion: 30
+completion: 65
 ---
 
-## Role and Cost Boundary
+## Role in the Model
 
-This page owns transport from the fabrication yard, foundation installation, topside installation, offshore hookup and offshore commissioning. Platform fabrication and converter electrical equipment are costed elsewhere.
+This page calculates the offshore installation CAPEX of a crane-installed, piled-jacket offshore substation (OSS). Jacket, pile and topside supply are costed separately. The installation result is required to convert those supplied components into an installed and commissioned offshore asset.
 
-| Physical scope | Treatment | Cost owner |
-|---|---|---|
-| Load-out and transport | Included here | **This page** |
-| Jacket or foundation installation | Included here | **This page** |
-| Topside lift or float-over | Included here | **This page** |
-| Offshore hookup and commissioning | Included here | **This page** |
-| Platform fabrication | Excluded | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
-| Converter equipment and onshore station | Excluded | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+The model uses the minimum sufficient detail supported by the available evidence. It represents three installation campaigns:
 
-<span class="cost-owned">Green = booked on this page</span>
-<span class="cost-reference">Grey = reference only; not booked on this page</span>
+1. piled-jacket installation;
+2. topside installation; and
+3. offshore hook-up and commissioning.
 
-## Available Cost Evidence
+Piling and jacket installation are combined because the available public evidence supports their aggregate site duration but not a reliable task-level decomposition. Transport and other campaign logistics are represented by aggregate chargeable days rather than separate carrier schedules.
 
-The internal model description uses 750 EUR/kW for “platform and installation” [@internalModelDescription2026]. That value combines platform fabrication, transport and installation, so it cannot be adopted as installation cost alone.
+## Cost Boundary
 
-The DEA offshore-station coefficient also includes the platform and station installation within a broader offshore-station value [@danishEnergyAgency2025Transport]. It does not publish a separate heavy-lift or hookup share.
-
-| Cost-stack element | Reference value | Status | Cost owner |
-|---|---:|---|---|
-| Legacy platform + installation allocation | <span class="cost-reference">750 EUR/kW</span> | Combined scope; context only | This page and [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
-| Platform fabrication | <span class="cost-reference">TBD</span> | Costed separately | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
-| Adopted platform-installation CAPEX | <span class="cost-owned">TBD</span> | Requires vessel and schedule basis | **This page** |
-
-No portion of the 750 EUR/kW combined allocation is booked until a defensible split is available.
-
-## Bottom-Up Cost Model
-
-A future installation estimate should use:
-
-$$
-C_\mathrm{platform\ installation}
-=
-C_\mathrm{mobilisation}
-+\sum_v r_v t_v
-+C_\mathrm{port}
-+C_\mathrm{hookup}
-+C_\mathrm{commissioning},
-$$
-
-where $r_v$ and $t_v$ are the rate and required duration for each vessel or marine spread.
-
-The schedule should distinguish:
-
-- foundation transport and installation;
-- topside load-out and transport;
-- heavy-lift or float-over operations;
-- weather contingency;
-- cable and auxiliary-system pull-ins;
-- offshore hookup; and
-- testing and commissioning.
-
-## Principal Cost Drivers
-
-| Driver | Why it matters |
+| Scope | Treatment |
 |---|---|
-| Topside and foundation mass | Determines vessel class, transport method and lift feasibility |
-| Water depth and soil | Governs foundation and piling scope |
-| Distance to fabrication yard and port | Drives transport and support-vessel time |
-| Lift strategy | A single heavy lift and modular lifts require different fleets and schedules |
-| Weather window | Controls waiting time and schedule risk |
-| Offshore commissioning duration | Determines accommodation and support-vessel requirements |
+| Mobilisation and demobilisation of the three installation spreads | Included |
+| Chargeable load-out, transport, setup and critical waiting | Included as aggregate logistics time |
+| Routine pile, jacket and topside installation | Included |
+| Defined offshore hook-up, testing and commissioning | Included |
+| Jacket, pile and topside fabrication | Excluded; owned by [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
+| Converter equipment | Excluded; owned by [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
+| Cable installation, pull-in and termination | Excluded; owned by [Cable and Pipeline Installation](cable_and_pipeline_installation.qmd) |
+| Seabed preparation, UXO work, relief drilling, exceptional noise mitigation and scour protection | Excluded from normal campaign rates; added only as defined exceptional work |
+| Development, insurance, owner contingency, OPEX and decommissioning | Excluded |
 
-## Architecture Applicability
+Each activity is costed once. The campaign rates on this page are complete-spread rates: their vessel, equipment, support and consumable inclusions must be documented before use.
 
-This category applies to the offshore electricity-export platform and any centralised-hydrogen platform. The required vessel spread must be recalculated for each architecture rather than transferring the HVDC allocation unchanged.
+## Model Inputs
+
+### Design and Installation Class
+
+| Parameter | Symbol | Unit | Status |
+|---|---:|---:|---|
+| Number of substations | $N_{\mathrm{OSS}}$ | count | Project design input |
+| Topside lift modules per substation | $N_{\mathrm{module/OSS}}$ | lift/OSS | Project execution input |
+| Jacket screening lift mass | $m_J$ | t | Upstream platform and lift input |
+| Largest topside-module screening lift mass | $m_{S,\max}$ | t | Upstream platform and lift input |
+| Selected jacket installation-class capacity | $Q_J$ | t | Named-vessel or installation-class input |
+| Selected topside installation-class capacity | $Q_S$ | t | Named-vessel or installation-class input |
+
+The screening lift masses should include lift-applicable attachments and rigging where that information is available. The capacity inputs should use the capacity at the intended configuration and radius when known; a published nominal maximum provides only an exclusion screen.
+
+### Duration
+
+| Parameter | Symbol | Unit | Status |
+|---|---:|---:|---|
+| Piled-jacket net site occupation | $t_{FJ}$ | day/OSS | 5.0 day/OSS screening anchor [@boem2021CVOWCOP] |
+| Topside net placement | $t_S$ | day/lift | 2.5 day/lift screening anchor [@boem2021CVOWCOP] |
+| Chargeable piled-jacket logistics | $t_{\mathrm{log},FJ}$ | day/campaign | Project or contractor input required |
+| Chargeable topside logistics | $t_{\mathrm{log},S}$ | day/campaign | Project or contractor input required |
+| Hook-up and commissioning duration | $t_H$ | day/OSS | Owner or EPCI input required |
+
+The CVOW values are planning anchors for a piled jacket and crane-placed topside. They are not universal productivities and do not include a transferable offshore commissioning duration. Replace them when project-specific campaign evidence is available.
+
+The logistics terms combine chargeable load-out, transport, setup and critical waiting for the corresponding complete spread. They must not include time already embedded in the net site anchors or mobilisation cost.
+
+### Commercial Inputs
+
+| Parameter | Symbol | Unit | Status |
+|---|---:|---:|---|
+| Complete piled-jacket spread rate | $r_{FJ}$ | 2026 EUR/day | Contractor input required |
+| Complete topside spread rate | $r_S$ | 2026 EUR/day | Contractor input required |
+| Complete hook-up spread rate | $r_H$ | 2026 EUR/day | Contractor input required |
+| Total mobilisation and demobilisation | $C_{\mathrm{mob}}$ | 2026 EUR | Project commercial input required |
+| Defined exceptional work | $C_{\mathrm{exceptional}}$ | 2026 EUR | Project-specific input when applicable |
+
+$C_{\mathrm{mob}}$ is the total mobilisation and demobilisation cost across the three campaigns after accounting for any shared mobilisation. It must not repeat mobilisation already included in a spread rate.
+
+All commercial inputs must follow the common currency and price-basis treatment documented in [CAPEX and OPEX Conventions](../shared_model_inputs/capex_opex_conventions.qmd). The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.
+
+## Installation-Class Screen
+
+The selected class is rejected when either screening lift mass exceeds its declared capacity:
+
+$$
+m_J\leq Q_J,
+\qquad
+m_{S,\max}\leq Q_S.
+$$
+
+This is a one-sided screening check. Failure requires a larger vessel class or another installation method. Passing does not demonstrate lift feasibility: radius, hook height, dynamic effects, lift points, structure clearance, stability, seafastening and weather limits remain part of project lift engineering.
+
+The capacity check preserves the material step between installation classes without introducing unsupported task-level corrections. If the selected class fails, the model reports **class change required** and does not calculate cost using that class.
+
+## Calculation
+
+The number of topside lifts is
+
+$$
+N_S=N_{\mathrm{OSS}}N_{\mathrm{module/OSS}},
+$$
+
+where $N_S$ is a count of lifts. A split topside therefore creates a discrete increase in installation work rather than a smooth mass multiplier.
+
+Chargeable campaign durations are
+
+$$
+T_{FJ}=N_{\mathrm{OSS}}t_{FJ}+t_{\mathrm{log},FJ},
+$$
+
+$$
+T_S=N_St_S+t_{\mathrm{log},S},
+$$
+
+$$
+T_H=N_{\mathrm{OSS}}t_H.
+$$
+
+$T_{FJ}$, $T_S$ and $T_H$ are chargeable days for the complete piled-jacket, topside and hook-up spreads. Mobilisation is costed separately and is therefore not included in these durations.
+
+Normal-scope installation CAPEX is
+
+$$
+C_{\mathrm{normal}}
+=C_{\mathrm{mob}}
++r_{FJ}T_{FJ}
++r_ST_S
++r_HT_H.
+$$
+
+When exceptional work has a defined scope and cost,
+
+$$
+C_{\mathrm{inst}}
+=C_{\mathrm{normal}}
++C_{\mathrm{exceptional}}.
+$$
+
+If exceptional work is relevant but not quantified, it is reported as **not included** rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the available campaign durations are still reported.
+
+## Model Outputs
+
+| Output | Unit | Purpose |
+|---|---:|---|
+| Installation-class result | pass or class change required | Prevents use of a clearly undersized installation class |
+| Number of piled jackets | count | Equals $N_{\mathrm{OSS}}$ |
+| Number of topside lifts | count | Exposes the split-topside discontinuity |
+| Campaign duration by spread | day | Shows the time basis of each cost |
+| Campaign cost | 2026 EUR | Separates piled-jacket, topside and hook-up expenditure |
+| Mobilisation | 2026 EUR | Keeps fixed campaign cost visible |
+| Exceptional-work status and cost | text and 2026 EUR when defined | Prevents unsupported work from being silently treated as zero |
+| Total installation CAPEX | 2026 EUR | Used in the project CAPEX calculation |
+
+A EUR/kW value may be reported only as a derived comparison after total installation CAPEX is calculated. It is not a model input.
+
+## Applicability and Limitations
+
+This model applies only to crane-installed topsides on piled jackets. The following cases require another model branch rather than an adjustment factor:
+
+- float-over or self-installing topsides;
+- gravity-base or non-piled foundations;
+- a failed jacket or topside installation-class screen; and
+- exceptional work that changes the installation method or campaign structure.
+
+The model deliberately does not calculate pile handling, penetration, crane movement, carrier concurrency, mating or connection time separately. Those details can replace the aggregate parameters later if project evidence shows that the additional fidelity materially improves the estimate.
+
+The current public evidence supports the 5.0 day/OSS piled-jacket and 2.5 day/lift topside anchors [@boem2021CVOWCOP]. It does not support generic complete-spread rates, logistics time or offshore commissioning duration. These remain explicit project inputs rather than inferred assumptions.
+
+**Evidence review date:** 31 July 2026.

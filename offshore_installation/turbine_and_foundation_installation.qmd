@@ -1,36 +1,404 @@
 ---
 title: "Turbine and Foundation Installation"
-completion: 10
+completion: 70
 ---
 
 ## Role in the Model
 
-Turbine and foundation installation converts component supply cost into installed offshore asset cost.
+This page calculates the base offshore installation CAPEX of monopile-supported wind turbines. Installation is divided into two independently scheduled campaigns:
 
-## Current Assumptions
+1. foundation transport and installation; and
+2. turbine transport and erection.
 
-| Item | Assumption |
+Each campaign is calculated from the number of locations, vessel loads, port distance, installation time and vessel rate. Component masses are used only to check vessel payload and lift feasibility. They are not converted directly into installation time or cost.
+
+## Cost Boundary
+
+The base calculation includes:
+
+- mobilisation and demobilisation;
+- port loading and sea fastening;
+- vessel travel between port and the wind farm;
+- inter-turbine vessel movements;
+- normal monopile and transition-piece installation; and
+- normal turbine erection.
+
+It excludes:
+
+- turbine and foundation supply;
+- marshalling-port construction and rent;
+- feeder-vessel logistics;
+- scour protection;
+- boulder and unexploded-ordnance removal;
+- relief drilling and refusal remediation;
+- project-specific underwater-noise mitigation;
+- extraordinary standby and major repairs; and
+- electrical commissioning outside normal installation work.
+
+These excluded activities are not assigned a zero cost. They remain outside the base calculation until separately parameterised.
+
+## Project Inputs
+
+| Input | Symbol | Unit | Source |
+|---|---|---:|---|
+| Number of turbines | $N$ | count | Project design |
+| Turbine rated capacity | $P_T$ | MW | Turbine design |
+| One-way distance from port | $D_p$ | km | Project and port selection |
+| Mean inter-turbine distance | $D_i$ | km | Wind-farm layout |
+| Complete turbine mass | $m_\mathrm{turbine}$ | t/set | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
+| Nacelle mass | $m_\mathrm{nacelle}$ | t | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
+| Monopile mass | $m_\mathrm{MP}$ | t | [Monopile Foundation Mass and Cost](../turbine_system/foundation.qmd) |
+| Transition-piece mass | $m_\mathrm{TP}$ | t | Project input; not currently calculated |
+
+Turbine capacity is used to report installation cost per megawatt. It does not directly determine installation duration.
+
+The installation model is architecture-agnostic. Electrical or hydrogen architecture is resolved upstream in the turbine-system calculation and affects this page only through the resulting physical masses. Architecture is therefore not a separate installation input or cost multiplier.
+
+The turbine-system calculation also provides blade, rotor and RNA masses. The baseline calculation does not require RNA mass as an additional input because it is already included in both the nacelle and complete-turbine mass ledger. Introducing it again would double count the same physical change. Blade, rotor and RNA masses become separate installation inputs only if a later installation concept models their transport or preassembled lifts explicitly.
+
+Consequently, a higher-capacity or heavier turbine can increase installation cost when its complete mass reduces the number of sets carried per load. Conversely, an architecture that removes equipment from the nacelle can reduce installation cost when the resulting lower complete-turbine mass avoids a vessel trip. The effect is discrete: if both designs remain within the same payload and lift limits, this simplified model reports the same installation cost.
+
+## Campaign Parameters
+
+For each campaign $c\in\{F,T\}$:
+
+| Parameter | Symbol | Unit |
+|---|---|---:|
+| Vessel or complete-spread rate | $r_c$ | EUR/day |
+| Fixed mobilisation and demobilisation time | $t_{\mathrm{mob},c}$ | day/campaign |
+| Port work per transported set | $t_{\mathrm{port},c}$ | day/set |
+| Effective offshore occupation | $t_{\mathrm{site},c}$ | day/location |
+| Reference complete sets per load | $k_{\mathrm{ref},c}$ | sets/load |
+| Project-usable vessel payload | $M_{\mathrm{use},c}$ | t |
+| Governing crane capacity | $SWL_c$ | t |
+| Vessel travel speed | $v_c$ | km/day |
+
+The foundation and turbine parameters remain separate even when the same provisional value is initially used. Each campaign must use a physically coherent vessel or spread configuration. The model does not assign pricing adjustments by vessel class.
+
+Effective offshore occupation is one aggregated parameter. Its scope must state whether ordinary weather delay is included. A separate weather multiplier must not be applied when weather is already embedded in this parameter.
+
+## Mass-Constrained Sets per Load
+
+### Turbine campaign
+
+The complete transported turbine-set mass is:
+
+$$
+m_{\mathrm{set},T}=m_\mathrm{turbine}.
+$$
+
+The payload-limited number of turbine sets is:
+
+$$
+k_{\mathrm{payload},T}
+=
+\left\lfloor
+\frac{M_{\mathrm{use},T}}
+{m_\mathrm{turbine}}
+\right\rfloor.
+$$
+
+The adopted number of sets per load is:
+
+$$
+k_T
+=
+\min
+\left(
+k_{\mathrm{ref},T},
+k_{\mathrm{payload},T}
+\right).
+$$
+
+The reference value represents the demonstrated or contractor-specified deck, rack, stability and access limit. Mass can reduce this value but cannot increase it.
+
+For example, a vessel might have sufficient payload for eleven turbine sets but only enough blade racks and usable deck area for six. In that case, $k_T=6$.
+
+### Foundation campaign
+
+For a separate monopile and transition piece:
+
+$$
+m_{\mathrm{set},F}
+=
+m_\mathrm{MP}+m_\mathrm{TP}.
+$$
+
+When transition-piece mass is available:
+
+$$
+k_{\mathrm{payload},F}
+=
+\left\lfloor
+\frac{M_{\mathrm{use},F}}
+{m_{\mathrm{set},F}}
+\right\rfloor,
+$$
+
+$$
+k_F
+=
+\min
+\left(
+k_{\mathrm{ref},F},
+k_{\mathrm{payload},F}
+\right).
+$$
+
+Transition-piece mass is not currently produced by the foundation calculation. Until it is available, $k_F$ remains a project or vessel input rather than a mass-derived result.
+
+For an extended-monopile concept without a separately transported transition piece, monopile mass may be used directly as the transported foundation-set mass. Any later secondary-steel campaign must still be represented elsewhere.
+
+## Lift Feasibility Checks
+
+The simplified model applies two coarse lift checks:
+
+$$
+m_\mathrm{nacelle}\leq SWL_T,
+$$
+
+$$
+m_\mathrm{MP}\leq SWL_F.
+$$
+
+The nacelle is used as the known turbine lift check because tower-section masses are not yet calculated. The monopile is used as the governing foundation lift.
+
+Passing these checks indicates only that the selected vessel configuration is plausible. It does not prove detailed feasibility because crane capacity also depends on lift radius, rigging, boom clearance and operating conditions.
+
+If either check fails, the campaign is reported as infeasible with the selected vessel assumptions. Selecting and pricing a replacement vessel remains an unresolved project input; no class-based price uplift is inferred.
+
+## Number of Vessel Loads
+
+For campaign $c$:
+
+$$
+N_{\mathrm{load},c}
+=
+\left\lceil
+\frac{N}{k_c}
+\right\rceil.
+$$
+
+The initial vessel load is included. Every load creates one port-to-site and site-to-port travel cycle.
+
+## Campaign Duration
+
+The chargeable campaign duration is:
+
+$$
+T_c
+=
+t_{\mathrm{mob},c}
++
+N\left(
+t_{\mathrm{port},c}
++
+t_{\mathrm{site},c}
+\right)
++
+\frac{
+2N_{\mathrm{load},c}D_p
++
+(N-1)D_i
+}{
+v_c
+}.
+$$
+
+The four duration components are:
+
+| Component | Calculation |
 |---|---:|
-| Foundation installation | 1 million EUR/turbine |
-| Turbine installation | Included in current turbine/foundation assumption set unless separated later |
+| Mobilisation and demobilisation | $t_{\mathrm{mob},c}$ |
+| Port work | $Nt_{\mathrm{port},c}$ |
+| Offshore installation | $Nt_{\mathrm{site},c}$ |
+| Port and field travel | $\left[2N_{\mathrm{load},c}D_p+(N-1)D_i\right]/v_c$ |
 
-The current source material provides a separate foundation installation cost but does not yet provide a full vessel-based turbine installation model.
+This calculation assumes a self-shuttling installation vessel. It does not represent feeder vessels operating concurrently with an installation vessel.
 
-## Cost Drivers
+## Campaign and Total Cost
 
-Future installation modelling should account for:
+Campaign cost is:
 
-- turbine rating
-- turbine mass and hub height
-- foundation mass
-- water depth
-- distance to port
-- weather downtime
-- vessel day rate
-- installation duration
+$$
+C_c=r_cT_c.
+$$
 
-## Related Components
+Base turbine and foundation installation CAPEX is:
 
-- [Wind Turbine](../turbine_system/wind_turbine.qmd)
-- [Foundation](../turbine_system/foundation.qmd)
-- [Tower, Nacelle, and Mass](../turbine_system/tower_nacelle_and_mass.qmd)
+$$
+C_{\mathrm{installation}}
+=
+C_F+C_T.
+$$
+
+The derived comparison metrics are:
+
+$$
+c_{\mathrm{turbine}}
+=
+\frac{C_{\mathrm{installation}}}{N},
+$$
+
+$$
+c_{\mathrm{MW}}
+=
+\frac{C_{\mathrm{installation}}}{NP_T}.
+$$
+
+EUR/turbine and EUR/MW are reported outputs. They are not primary model inputs.
+
+## Initial Evidence Basis
+
+The first version uses three evidence packages.
+
+### NREL ORBIT
+
+NREL's ORBIT methodology provides the campaign structure and port-task assumptions [@nunemaker2020ORBIT]. Its maintained example configuration provides provisional vessel rate, mobilisation and transit-speed inputs [@orbit2026InstallationDefaults].
+
+For a monopile with a separate transition piece, ORBIT assumes 12 h of monopile fastening and 8 h of transition-piece fastening:
+
+$$
+t_{\mathrm{port},F}
+=
+\frac{12+8}{24}
+=
+0.833\ \mathrm{day/foundation}.
+$$
+
+For one tower set, one nacelle and three blades:
+
+$$
+t_{\mathrm{port},T}
+=
+\frac{4+4+3(1.5)}{24}
+=
+0.521\ \mathrm{day/turbine}.
+$$
+
+The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR 371,069/day on the documented constant-2026-EUR basis. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:
+
+$$
+10\ \mathrm{kn}
+\times1.852\ \mathrm{km/nmi}
+\times24\ \mathrm{h/day}
+=
+444\ \mathrm{km/day}.
+$$
+
+These are planning-model proxies, not contractor quotations.
+
+### South Fork foundation installation
+
+The South Fork Construction and Operations Plan gives approximately 2--4 days per monopile foundation under 24-hour working without weather or sea delay [@boem2021SouthForkCOP].
+
+The initial foundation parameter is therefore:
+
+$$
+t_{\mathrm{site},F}
+=
+3.0\ \mathrm{days/foundation},
+$$
+
+with 2 and 4 days/foundation used as sensitivity cases.
+
+This produces a normal, no-delay foundation estimate. It is not an expected weather-inclusive commercial schedule.
+
+### Sofia installation logistics
+
+Sofia provides reference logistics for large modern turbines:
+
+- three foundations per vessel cycle [@rwe2024SofiaFoundationStart]; and
+- six complete 14 MW turbine sets per load [@rwe2026SofiaTurbines].
+
+These are project-specific reference values. They cannot be combined automatically with the generic ORBIT vessel rate because the physical vessel class and commercial rate boundary may differ.
+
+The Sofia values are used as logistics anchors and later validation evidence, not universal defaults.
+
+## Initial Parameter Status
+
+| Parameter | Foundation campaign | Turbine campaign | Status |
+|---|---:|---:|---|
+| $r_c$ | 371,069 EUR/day | 371,069 EUR/day | Shared provisional ORBIT proxy; retain separate parameters |
+| $t_{\mathrm{mob},c}$ | 7 days | 7 days | ORBIT planning input |
+| $t_{\mathrm{port},c}$ | 0.833 day/set | 0.521 day/set | Derived from ORBIT tasks |
+| $t_{\mathrm{site},c}$ | 3.0 days/location | TODO | South Fork foundation input; turbine evidence required |
+| $k_{\mathrm{ref},c}$ | Project input | Six as a Sofia logistics anchor | Vessel and project specific |
+| $M_{\mathrm{use},c}$ | Named-vessel input | Named-vessel input | Required for mass check |
+| $SWL_c$ | Named-vessel input | Named-vessel input | Required for coarse lift check |
+| $v_c$ | 444 km/day | 444 km/day | Generic ORBIT vessel proxy |
+
+The turbine campaign cannot produce a final numerical cost until $t_{\mathrm{site},T}$ and a coherent vessel configuration are selected.
+
+ORBIT's fixed positioning, component-release, attachment and re-equipping tasks total 34.5 h per turbine before lift and jack-up time. This is a lower-bound task subtotal, not a complete turbine site-occupation value. No additional lift or jack-up allowance is introduced without evidence.
+
+## Treatment of Mass Uncertainty
+
+The turbine and foundation masses are screening estimates rather than supplier-certified transport masses.
+
+Material uncertainties include:
+
+- unresolved turbine electrical-component masses;
+- a length-based rather than load-based tower estimate;
+- missing tower-section masses;
+- missing transition-piece mass; and
+- simplified monopile scaling without site-specific structural or geotechnical design.
+
+These uncertainties matter because sets per load is an integer. A small mass change near a payload threshold can change the number of vessel trips.
+
+The model therefore uses upstream mass sensitivity results where available:
+
+1. calculate the payload limit at the lower mass;
+2. calculate it again at the upper mass;
+3. adopt the result when both limits give the same sets per load; and
+4. report both logistics cases when the result crosses an integer boundary.
+
+No separate arbitrary mass safety factor is added.
+
+## Why the Model Stops Here
+
+The model does not calculate deck packing, blade-rack arrangement, tower-section lifts, crane radius or detailed stability.
+
+Those calculations would require additional assumptions for:
+
+- component dimensions;
+- tower segmentation;
+- rack geometry;
+- grillage and access space;
+- crane outreach;
+- rigging mass;
+- stability limits; and
+- project-specific lift arrangements.
+
+The turbine-system model does not currently provide enough information to constrain those assumptions. Adding them would increase model complexity and apparent precision without a corresponding increase in accuracy.
+
+Mass is therefore used as a constraint on a sourced logistics parameter, not as a replacement for a vessel loading plan. It captures differences between turbine designs without requiring the installation model to know why their masses differ.
+
+Mass also does not change site occupation, vessel speed or day rate continuously. There is no adopted hours-per-tonne or EUR-per-tonne installation relationship.
+
+## Required Outputs
+
+The calculation reports:
+
+| Result group | Output |
+|---|---|
+| Mass checks | Turbine payload limit, nacelle lift check and monopile lift check |
+| Logistics | Sets per load and number of vessel loads by campaign |
+| Duration | Mobilisation, port, installation, travel and total days |
+| Cost | Foundation campaign, turbine campaign and combined base CAPEX |
+| Normalised cost | EUR/turbine and EUR/MW |
+| Evidence status | Source and unresolved status for every parameter |
+| Validity | Feasible, infeasible or unresolved vessel configuration |
+
+## Calibration Priorities
+
+Additional evidence should be collected in this order:
+
+1. effective turbine site occupation in days/turbine;
+2. coherent vessel rate, payload, crane and sets-per-load data for the same named vessel or spread;
+3. weather-inclusive foundation and turbine campaign productivity;
+4. transition-piece mass or directly evidenced foundation sets per load;
+5. contractor-defined mobilisation and complete-spread boundaries; and
+6. independent project schedules for validation.
+
+The present model is intended for transparent screening comparisons. It is not a marine-operations simulation or contractor quotation.
