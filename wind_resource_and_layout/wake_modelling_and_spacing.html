@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -228,12 +276,6 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../wind_resource_and_layout/wake_modelling_and_spacing.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Wake Modelling and Spacing</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/infield_layout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Infield Layout</span></a>
   </div>
 </li>
       </ul>
@@ -506,9 +548,12 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#current-method" id="toc-current-method" class="nav-link" data-scroll-target="#current-method">Current Method</a></li>
-  <li><a href="#yield-capacity-factor-trade-off" id="toc-yield-capacity-factor-trade-off" class="nav-link" data-scroll-target="#yield-capacity-factor-trade-off">Yield-Capacity Factor Trade-off</a></li>
-  <li><a href="#cost-link" id="toc-cost-link" class="nav-link" data-scroll-target="#cost-link">Cost Link</a></li>
+  <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
+  <li><a href="#grid-dimensions" id="toc-grid-dimensions" class="nav-link" data-scroll-target="#grid-dimensions">Grid Dimensions</a></li>
+  <li><a href="#turbine-coordinates" id="toc-turbine-coordinates" class="nav-link" data-scroll-target="#turbine-coordinates">Turbine Coordinates</a></li>
+  <li><a href="#legacy-turbine-performance" id="toc-legacy-turbine-performance" class="nav-link" data-scroll-target="#legacy-turbine-performance">Legacy Turbine Performance</a></li>
+  <li><a href="#wake-calculation" id="toc-wake-calculation" class="nav-link" data-scroll-target="#wake-calculation">Wake Calculation</a></li>
+  <li><a href="#no-wake-reference-and-outputs" id="toc-no-wake-reference-and-outputs" class="nav-link" data-scroll-target="#no-wake-reference-and-outputs">No-Wake Reference and Outputs</a></li>
   </ul>
 </nav>
     </div>
@@ -536,33 +581,278 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>Wake modelling translates turbine layout into gross and wake-corrected energy yield. Turbine spacing is the main design variable connecting energy production to infrastructure economics.</p>
+<p>This calculation converts turbine count, farm area and turbine characteristics into explicit turbine coordinates. PyWake then evaluates turbine interaction for every wind-speed and direction state and returns wake-adjusted farm power and annual energy production.</p>
+<p>The layout is deliberately schematic. It exposes the main relationship between installed capacity, occupied area, turbine separation and wake loss without claiming to reproduce a consented or commercially optimised wind-farm layout.</p>
 </section>
-<section id="current-method" class="level2">
-<h2 class="anchored" data-anchor-id="current-method">Current Method</h2>
-<p>The model uses PyWake to construct a wake-aware power lookup table indexed by wind speed and direction. Turbine positions are arranged on a rectangular grid scaled to the sea area and turbine count.</p>
+<section id="inputs" class="level2">
+<h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Description</th>
+<th style="text-align: right;">Unit</th>
+<th>Legacy treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(N\)</span></td>
+<td>Number of turbines</td>
+<td style="text-align: right;">count</td>
+<td>Scenario input</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(A\)</span></td>
+<td>Farm area</td>
+<td style="text-align: right;">km²</td>
+<td>Scenario input</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(P_r\)</span></td>
+<td>Rated power per turbine</td>
+<td style="text-align: right;">MW</td>
+<td>Scenario input; baseline 15 MW</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(D\)</span></td>
+<td>Rotor diameter</td>
+<td style="text-align: right;">m</td>
+<td>236 m</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(H_h\)</span></td>
+<td>Hub height</td>
+<td style="text-align: right;">m</td>
+<td>150 m</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\alpha\)</span></td>
+<td>Layout orientation clockwise from north</td>
+<td style="text-align: right;">degrees</td>
+<td>30°</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(I_0\)</span></td>
+<td>Ambient turbulence intensity</td>
+<td style="text-align: right;">fraction</td>
+<td>0.058</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p_s,k_s,c_s\)</span></td>
+<td>Directional Weibull inputs</td>
+<td style="text-align: right;">mixed</td>
+<td><a href="../wind_resource_and_layout/wind_resource_and_weibull.html">Wind Resource and Weibull Distribution</a></td>
+</tr>
+</tbody>
+</table>
+<p>The values for <span class="math inline">\(D\)</span>, <span class="math inline">\(H_h\)</span>, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(I_0\)</span> are explicit legacy assumptions. The 150 m hub height is not consistent with the current default relationship on <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>, which gives 133 m for a 236 m rotor. The wake calculation should ultimately consume the same turbine definition as the turbine-system calculation.</p>
 </section>
-<section id="yield-capacity-factor-trade-off" class="level2">
-<h2 class="anchored" data-anchor-id="yield-capacity-factor-trade-off">Yield-Capacity Factor Trade-off</h2>
-<p>Tighter spacing increases installed capacity per km2 and can raise total areal yield. It also increases wake losses and lowers the capacity factor. Wider spacing reduces wake losses and improves capacity factor, but uses more area per MW.</p>
-<p>This trade-off is architecture-dependent because capacity-linked infrastructure costs differ across electricity and hydrogen configurations.</p>
+<section id="grid-dimensions" class="level2">
+<h2 class="anchored" data-anchor-id="grid-dimensions">Grid Dimensions</h2>
+<p>The primary scenario workflow creates a near-rectangular grid. The number of columns and rows is:</p>
+<p><span class="math display">\[
+n_x=\left\lceil\sqrt{N}\right\rceil,
+\qquad
+n_y=\left\lceil\frac{N}{n_x}\right\rceil.
+\]</span></p>
+<p>If <span class="math inline">\(n_x&lt;n_y\)</span>, the two counts are exchanged. With <span class="math inline">\(A_m=10^6A\)</span> in m², the unrotated grid dimensions are:</p>
+<p><span class="math display">\[
+L_y=\sqrt{A_m\frac{n_y}{n_x}},
+\qquad
+L_x=\frac{A_m}{L_y},
+\]</span></p>
+<p>so that <span class="math inline">\(L_xL_y=A_m\)</span>. The nominal separations are:</p>
+<p><span class="math display">\[
+d_x=\frac{L_x}{n_x-1},
+\qquad
+d_y=\frac{L_y}{n_y-1},
+\]</span></p>
+<p>for dimensions with more than one turbine position. The minimum separation in rotor diameters is:</p>
+<p><span class="math display">\[
+s_\mathrm{min,D}=\frac{\min(d_x,d_y)}{D}.
+\]</span></p>
+<p>The legacy code prints a warning when <span class="math inline">\(s_\mathrm{min,D}&lt;3\)</span> but continues the calculation. The 3D value is an unsourced screening threshold, not a demonstrated feasibility limit.</p>
 </section>
-<section id="cost-link" class="level2">
-<h2 class="anchored" data-anchor-id="cost-link">Cost Link</h2>
-<p>Spacing affects:</p>
+<section id="turbine-coordinates" class="level2">
+<h2 class="anchored" data-anchor-id="turbine-coordinates">Turbine Coordinates</h2>
+<p>Unrotated coordinate vectors are placed over the full grid dimensions:</p>
+<p><span class="math display">\[
+u_i\in[0,L_x],
+\qquad
+v_j\in\left[-\frac{L_y}{2},\frac{L_y}{2}\right].
+\]</span></p>
+<p>The Cartesian product of these vectors is flattened row by row and truncated after the first <span class="math inline">\(N\)</span> positions. A non-full final row can therefore be asymmetric. The layout is rotated by <span class="math inline">\(\alpha\)</span> using:</p>
+<p><span class="math display">\[
+x=u\sin\alpha+v\cos\alpha,
+\]</span></p>
+<p><span class="math display">\[
+y=u\cos\alpha-v\sin\alpha.
+\]</span></p>
+<p>The resulting <span class="math inline">\((x_j,y_j)\)</span> coordinates are the actual geometric input to the wake calculation. Infield-network calculations should use these coordinates rather than a separate area or spacing multiplier.</p>
+</section>
+<section id="legacy-turbine-performance" class="level2">
+<h2 class="anchored" data-anchor-id="legacy-turbine-performance">Legacy Turbine Performance</h2>
+<p>The wake model requires both power and thrust coefficient as functions of wind speed. The legacy implementation constructs a synthetic curve on a 0.5 m/s grid:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Wind-speed region</th>
+<th style="text-align: right;">Power</th>
+<th style="text-align: right;">Thrust coefficient</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Below 3 m/s</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>3 to below 12 m/s</td>
+<td style="text-align: right;">Linear array from 0 to rated power</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td>12 to below 25 m/s</td>
+<td style="text-align: right;">Rated power</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td>25 m/s and above</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>Because the ramp is generated across the discrete points from 3.0 to 11.5 m/s inclusive, the legacy array already reaches rated power at 11.5 m/s even though the stored rated wind speed is 12 m/s. This is an implementation artefact rather than an intended turbine characteristic.</p>
+<p>The model therefore does not yet use the documented performance of the IEA 15 MW reference turbine. That reference provides a consistent 15 MW turbine definition and should be the basis for a pinned tabulated power and thrust-coefficient curve <span class="citation" data-cites="gaertner2020IEA15">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>)</span>.</p>
+</section>
+<section id="wake-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="wake-calculation">Wake Calculation</h2>
+<p>The legacy PyWake configuration is:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model element</th>
+<th>Selection</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Site</td>
+<td><code>UniformWeibullSite</code></td>
+<td>Directional Weibull resource and ambient turbulence intensity</td>
+</tr>
+<tr class="even">
+<td>Propagation</td>
+<td><code>PropagateDownwind</code></td>
+<td>Calculates wakes from upstream to downstream turbines</td>
+</tr>
+<tr class="odd">
+<td>Wake deficit</td>
+<td><code>TurboNOJDeficit</code></td>
+<td>Turbulence-dependent top-hat wake expansion</td>
+</tr>
+<tr class="even">
+<td>Rotor averaging</td>
+<td><code>AreaOverlapAvgModel</code></td>
+<td>Accounts for partial overlap of a top-hat wake and downstream rotor</td>
+</tr>
+<tr class="odd">
+<td>Superposition</td>
+<td><code>SquaredSum</code></td>
+<td>Combines deficits from multiple upstream turbines</td>
+</tr>
+<tr class="even">
+<td>Blockage</td>
+<td>None</td>
+<td>Upstream induction is excluded</td>
+</tr>
+</tbody>
+</table>
+<p><code>TurboNOJDeficit</code> implements the turbulence-optimised Park formulation described by Nygaard and co-authors <span class="citation" data-cites="nygaard2020ClusterWakes">(<a href="#ref-nygaard2020ClusterWakes" role="doc-biblioref">Nygaard et al. 2020</a>)</span>. PyWake documents it as a top-hat deficit model whose wake expansion depends on turbulence intensity <span class="citation" data-cites="pywakeDocumentation2026">(<a href="#ref-pywakeDocumentation2026" role="doc-biblioref">DTU Wind and Energy Systems 2026</a>)</span>. <code>PropagateDownwind</code> does not calculate blockage effects <span class="citation" data-cites="pywakeDocumentation2026">(<a href="#ref-pywakeDocumentation2026" role="doc-biblioref">DTU Wind and Energy Systems 2026</a>)</span>.</p>
+<p>For direction sector <span class="math inline">\(s\)</span>, wind-speed state <span class="math inline">\(i\)</span> and turbine <span class="math inline">\(j\)</span>, the wake-aware farm power is:</p>
+<p><span class="math display">\[
+P_{s,i}^\mathrm{wake}
+=\sum_{j=1}^{N}P_j(v_{s,i}^\mathrm{eff}),
+\]</span></p>
+<p>where <span class="math inline">\(v_{s,i}^\mathrm{eff}\)</span> is the wake-reduced rotor-effective wind speed. The annual wake-adjusted energy is conceptually:</p>
+<p><span class="math display">\[
+E_\mathrm{wake}
+=8760\sum_s\sum_i w_{s,i}P_{s,i}^\mathrm{wake},
+\]</span></p>
+<p>with the probability weights <span class="math inline">\(w_{s,i}\)</span> defined on the wind-resource page. PyWake performs the corresponding probability-weighted AEP calculation using the directional Weibull site.</p>
+</section>
+<section id="no-wake-reference-and-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="no-wake-reference-and-outputs">No-Wake Reference and Outputs</h2>
+<p>The no-wake reference is calculated for one isolated turbine using <code>NoWakeDeficit</code> and then multiplied by <span class="math inline">\(N\)</span>:</p>
+<p><span class="math display">\[
+E_0=NE_\mathrm{single,0}.
+\]</span></p>
+<p>Wake loss and wake-adjusted gross capacity factor are:</p>
+<p><span class="math display">\[
+L_\mathrm{wake}=1-\frac{E_\mathrm{wake}}{E_0},
+\]</span></p>
+<p><span class="math display">\[
+CF_\mathrm{wake,gross}
+=\frac{E_\mathrm{wake}}{NP_r\,8760}.
+\]</span></p>
+<p>This capacity factor includes wake loss but excludes turbine availability, infield losses, export losses and conversion losses. Those reductions are applied downstream and must not be included again here.</p>
+<p>The calculation returns:</p>
 <ul>
-<li>number of turbines for a fixed area and density</li>
-<li>wake losses and annual energy yield</li>
-<li>capacity factor</li>
-<li>infield cable or pipeline length</li>
-<li>utilisation of peak-sized export infrastructure</li>
+<li>turbine coordinates <span class="math inline">\((x_j,y_j)\)</span>;</li>
+<li>wake-aware and no-wake farm-power tables by wind speed and direction;</li>
+<li>wake-adjusted and no-wake annual energy;</li>
+<li>wake loss; and</li>
+<li>wake-adjusted gross capacity factor.</li>
 </ul>
-<p>The model therefore treats spacing or wind farm power density as a design variable, not merely a site descriptor.</p>
+<p>The wake-aware power table is passed to the electricity and hydrogen yield calculations. The coordinates are passed to the separate infield-network models.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Suggested technical improvements">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Suggested technical improvements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Use one turbine definition.</strong> Replace the synthetic curve with a version-pinned tabulated power and thrust-coefficient curve and obtain rotor diameter and hub height from the turbine-system model.</li>
+<li><strong>Use one layout geometry.</strong> Define <span class="math inline">\(N\)</span>, <span class="math inline">\(A\)</span>, aspect ratio, orientation and any boundary margin once; derive coordinates, actual nearest-neighbour spacing and power density from that geometry. Do not use the separate proxy <span class="math inline">\(\sqrt{A/(ND^2)}\)</span> as if it were the coordinate spacing.</li>
+<li><strong>Reject infeasible layouts.</strong> A scenario should fail when minimum separation or boundary constraints are violated. The accepted minimum separation must be sourced or represented as an explicit design assumption.</li>
+<li><strong>Centre incomplete rows.</strong> Avoid the asymmetric row created by truncating a full Cartesian grid, or restrict the optimisation to layouts with a deliberately defined row structure.</li>
+<li><strong>Make orientation a scenario variable.</strong> The fixed 30-degree orientation is unsupported and interacts with the directional wind resource. Evaluate a discrete orientation set or derive the orientation from an explicit layout decision.</li>
+<li><strong>Pin and benchmark the wake model.</strong> Record the PyWake version and complete model configuration. Compare representative dense and sparse layouts against at least one credible alternative wake formulation; use the difference as model uncertainty before adding more wake-model detail.</li>
+<li><strong>Test turbulence and blockage sensitivity.</strong> The fixed <span class="math inline">\(I_0=0.058\)</span> directly affects <code>TurboNOJDeficit</code>. Evaluate a sourced range and quantify whether omission of blockage changes the techno-economic decision.</li>
+<li><strong>Correct output names.</strong> The current legacy field <code>turbine_gross_yield_MWh</code> is wake-affected energy per turbine and should be renamed so that gross, no-wake, wake-adjusted and delivered energy cannot be confused.</li>
+</ol>
+</div>
+</div>
+<p>Higher-fidelity CFD, LES and full commercial layout optimisation are not proposed at this stage. They are justified only if the simpler model has first been made internally consistent and the remaining wake uncertainty can materially change the model decision.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-pywakeDocumentation2026" class="csl-entry" role="listitem">
+DTU Wind and Energy Systems. 2026. <em><span>PyWake</span> Documentation: Wake Deficit Models and Engineering Wind Farm Models</em>. <a href="https://topfarm.pages.windenergy.dtu.dk/PyWake/notebooks/Overview.html">https://topfarm.pages.windenergy.dtu.dk/PyWake/notebooks/Overview.html</a>.
+</div>
+<div id="ref-gaertner2020IEA15" class="csl-entry" role="listitem">
+Gaertner, Evan, Jennifer Rinker, Latha Sethuraman, et al. 2020. <em>Definition of the <span>IEA</span> 15-Megawatt Offshore Reference Wind Turbine</em>. NREL/TP-5000-75698. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1603478">https://doi.org/10.2172/1603478</a>.
+</div>
+<div id="ref-nygaard2020ClusterWakes" class="csl-entry" role="listitem">
+Nygaard, Nicolai Gayle, Søren Trads Steen, Lina Poulsen, and Jesper Grønnegaard Pedersen. 2020. <span>“Modelling Cluster Wakes and Wind Farm Blockage.”</span> <em>Journal of Physics: Conference Series</em> 1618 (6): 062072. <a href="https://doi.org/10.1088/1742-6596/1618/6/062072">https://doi.org/10.1088/1742-6596/1618/6/062072</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

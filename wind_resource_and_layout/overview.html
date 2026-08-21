@@ -230,12 +230,6 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Wake Modelling and Spacing</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/infield_layout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Infield Layout</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -505,7 +499,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#main-dependencies" id="toc-main-dependencies" class="nav-link active" data-scroll-target="#main-dependencies">Main Dependencies</a></li>
+  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#calculation-boundary" id="toc-calculation-boundary" class="nav-link" data-scroll-target="#calculation-boundary">Calculation Boundary</a></li>
+  <li><a href="#pages" id="toc-pages" class="nav-link" data-scroll-target="#pages">Pages</a></li>
+  <li><a href="#principal-outputs" id="toc-principal-outputs" class="nav-link" data-scroll-target="#principal-outputs">Principal Outputs</a></li>
   </ul>
 </nav>
     </div>
@@ -531,18 +528,132 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This section documents the wind resource, wake modelling, spacing, and infield-layout assumptions that determine gross energy production and infrastructure length.</p>
-<p>The wind-resource and layout model connects the physical site to component sizing. Turbine positions determine wake losses and infield network geometry. Wake-aware production determines both annual yield and the operating points of hydrogen conversion equipment.</p>
-<section id="main-dependencies" class="level2">
-<h2 class="anchored" data-anchor-id="main-dependencies">Main Dependencies</h2>
-<ul>
-<li>wind speed and wind direction distribution</li>
-<li>turbine count and sea area</li>
-<li>turbine spacing and farm power density</li>
-<li>wake model</li>
-<li>infield cable or pipeline topology</li>
-<li>export distance</li>
-</ul>
+<section id="role-in-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
+<p>This section converts a directional offshore wind resource and a turbine layout into wake-adjusted farm power states and annual energy production. These outputs determine gross wind-farm yield and provide the operating states used by the electricity and hydrogen conversion calculations.</p>
+<p>The calculation is performed in dependency order:</p>
+<ol type="1">
+<li>fit a directional wind-speed distribution;</li>
+<li>place the selected number of turbines inside the modelled farm area;</li>
+<li>assign turbine power and thrust-coefficient curves;</li>
+<li>calculate wake-affected power for each wind-speed and direction state;</li>
+<li>probability-weight the states to obtain annual energy production; and</li>
+<li>pass the wake-aware power table to downstream conversion calculations.</li>
+</ol>
+</section>
+<section id="calculation-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="calculation-boundary">Calculation Boundary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Included here</th>
+<th>Accounted elsewhere</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Directional wind-resource distribution</td>
+<td>Turbine mass and supply cost</td>
+</tr>
+<tr class="even">
+<td>Turbine coordinates and separation</td>
+<td>Electrical and hydrogen infield-network topology</td>
+</tr>
+<tr class="odd">
+<td>Turbine power and thrust inputs used by the wake model</td>
+<td>Availability and infrastructure losses</td>
+</tr>
+<tr class="even">
+<td>Wake-affected and no-wake farm power</td>
+<td>Export-system and hydrogen-conversion calculations</td>
+</tr>
+<tr class="odd">
+<td>Wake loss and wake-adjusted gross capacity factor</td>
+<td>Installation, operating and decommissioning cost</td>
+</tr>
+</tbody>
+</table>
+<p>Infield cable and pipeline design is intentionally excluded from this section. Those calculations use the turbine coordinates but are documented on <a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a> and <a href="../hydrogen_infra/infield_infrastructure.html">Hydrogen Infield Infrastructure</a>.</p>
+</section>
+<section id="pages" class="level2">
+<h2 class="anchored" data-anchor-id="pages">Pages</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Page</th>
+<th>Calculation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="../wind_resource_and_layout/wind_resource_and_weibull.html">Wind Resource and Weibull Distribution</a></td>
+<td>Direction-sector frequencies, Weibull parameters and wind-state probabilities</td>
+</tr>
+<tr class="even">
+<td><a href="../wind_resource_and_layout/wake_modelling_and_spacing.html">Wake Modelling and Spacing</a></td>
+<td>Turbine coordinates, turbine performance, wake-aware power, annual energy and wake loss</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="principal-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="principal-outputs">Principal Outputs</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th style="text-align: right;">Unit</th>
+<th>Downstream use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wind-state probability</td>
+<td style="text-align: right;">fraction</td>
+<td>Annual energy and operating-state weighting</td>
+</tr>
+<tr class="even">
+<td>Turbine coordinates</td>
+<td style="text-align: right;">m</td>
+<td>Wake calculation and infield-network length</td>
+</tr>
+<tr class="odd">
+<td>Wake-aware farm power by state</td>
+<td style="text-align: right;">MW</td>
+<td>Electricity and hydrogen conversion</td>
+</tr>
+<tr class="even">
+<td>No-wake annual energy</td>
+<td style="text-align: right;">MWh/year</td>
+<td>Wake-loss reference</td>
+</tr>
+<tr class="odd">
+<td>Wake-adjusted annual energy</td>
+<td style="text-align: right;">MWh/year</td>
+<td>Gross wind-farm yield</td>
+</tr>
+<tr class="even">
+<td>Wake loss</td>
+<td style="text-align: right;">fraction</td>
+<td>Energy-loss attribution</td>
+</tr>
+<tr class="odd">
+<td>Wake-adjusted gross capacity factor</td>
+<td style="text-align: right;">fraction</td>
+<td>Farm performance and utilisation</td>
+</tr>
+</tbody>
+</table>
+<p>The current implementation is suitable as a transparent screening calculation, but its wind-data provenance, directional bin alignment, turbine performance curve and layout feasibility treatment require improvement before the results are treated as a validated energy assessment. The specific improvements are stated on the two calculation pages.</p>
 
 
 </section>

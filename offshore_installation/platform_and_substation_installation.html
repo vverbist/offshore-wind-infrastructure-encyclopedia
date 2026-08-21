@@ -278,12 +278,6 @@ window.Quarto = {
  <span class="menu-text">Wake Modelling and Spacing</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/infield_layout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Infield Layout</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -555,25 +549,16 @@ window.Quarto = {
   <ul>
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
   <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
-  <li><a href="#installation-accounting" id="toc-installation-accounting" class="nav-link" data-scroll-target="#installation-accounting">Installation Accounting</a></li>
-  <li><a href="#required-inputs" id="toc-required-inputs" class="nav-link" data-scroll-target="#required-inputs">Required Inputs</a></li>
-  <li><a href="#lift-and-transport-feasibility" id="toc-lift-and-transport-feasibility" class="nav-link" data-scroll-target="#lift-and-transport-feasibility">Lift and Transport Feasibility</a></li>
-  <li><a href="#dependency-ordered-calculation" id="toc-dependency-ordered-calculation" class="nav-link" data-scroll-target="#dependency-ordered-calculation">Dependency-Ordered Calculation</a>
+  <li><a href="#model-inputs" id="toc-model-inputs" class="nav-link" data-scroll-target="#model-inputs">Model Inputs</a>
   <ul class="collapse">
-  <li><a href="#physical-inventory" id="toc-physical-inventory" class="nav-link" data-scroll-target="#physical-inventory">Physical Inventory</a></li>
-  <li><a href="#pile-and-template-campaign" id="toc-pile-and-template-campaign" class="nav-link" data-scroll-target="#pile-and-template-campaign">Pile and Template Campaign</a></li>
-  <li><a href="#jacket-campaign" id="toc-jacket-campaign" class="nav-link" data-scroll-target="#jacket-campaign">Jacket Campaign</a></li>
-  <li><a href="#topside-campaign" id="toc-topside-campaign" class="nav-link" data-scroll-target="#topside-campaign">Topside Campaign</a></li>
-  <li><a href="#transport-and-vessel-concurrency" id="toc-transport-and-vessel-concurrency" class="nav-link" data-scroll-target="#transport-and-vessel-concurrency">Transport and Vessel Concurrency</a></li>
-  <li><a href="#hook-up-and-commissioning" id="toc-hook-up-and-commissioning" class="nav-link" data-scroll-target="#hook-up-and-commissioning">Hook-Up and Commissioning</a></li>
+  <li><a href="#design-and-installation-class" id="toc-design-and-installation-class" class="nav-link" data-scroll-target="#design-and-installation-class">Design and Installation Class</a></li>
+  <li><a href="#duration" id="toc-duration" class="nav-link" data-scroll-target="#duration">Duration</a></li>
+  <li><a href="#commercial-inputs" id="toc-commercial-inputs" class="nav-link" data-scroll-target="#commercial-inputs">Commercial Inputs</a></li>
   </ul></li>
-  <li><a href="#cost-calculation" id="toc-cost-calculation" class="nav-link" data-scroll-target="#cost-calculation">Cost Calculation</a></li>
-  <li><a href="#evidence-graded-screening-inputs" id="toc-evidence-graded-screening-inputs" class="nav-link" data-scroll-target="#evidence-graded-screening-inputs">Evidence-Graded Screening Inputs</a></li>
-  <li><a href="#exceptional-work" id="toc-exceptional-work" class="nav-link" data-scroll-target="#exceptional-work">Exceptional Work</a></li>
-  <li><a href="#constant-2026-eur-normalization" id="toc-constant-2026-eur-normalization" class="nav-link" data-scroll-target="#constant-2026-eur-normalization">Constant-2026-EUR Normalization</a></li>
-  <li><a href="#reported-intermediate-results" id="toc-reported-intermediate-results" class="nav-link" data-scroll-target="#reported-intermediate-results">Reported Intermediate Results</a></li>
-  <li><a href="#validation-cases-and-assertions" id="toc-validation-cases-and-assertions" class="nav-link" data-scroll-target="#validation-cases-and-assertions">Validation Cases and Assertions</a></li>
-  <li><a href="#limitations-and-required-evidence" id="toc-limitations-and-required-evidence" class="nav-link" data-scroll-target="#limitations-and-required-evidence">Limitations and Required Evidence</a></li>
+  <li><a href="#installation-class-screen" id="toc-installation-class-screen" class="nav-link" data-scroll-target="#installation-class-screen">Installation-Class Screen</a></li>
+  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
+  <li><a href="#model-outputs" id="toc-model-outputs" class="nav-link" data-scroll-target="#model-outputs">Model Outputs</a></li>
+  <li><a href="#applicability-and-limitations" id="toc-applicability-and-limitations" class="nav-link" data-scroll-target="#applicability-and-limitations">Applicability and Limitations</a></li>
   </ul>
 </nav>
     </div>
@@ -601,28 +586,14 @@ window.Quarto = {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This page calculates the offshore installation CAPEX of a conventionally crane-installed, piled-jacket offshore substation (OSS). The result is needed to convert the separately costed jacket, piles and topside into an installed offshore asset without hiding transport, vessel occupation or commissioning inside the fabrication cost.</p>
-<p>The calculation separates four work packages:</p>
+<p>This page calculates the offshore installation CAPEX of a crane-installed, piled-jacket offshore substation (OSS). Jacket, pile and topside supply are costed separately. The installation result is required to convert those supplied components into an installed and commissioned offshore asset.</p>
+<p>The model uses the minimum sufficient detail supported by the available evidence. It represents three installation campaigns:</p>
 <ol type="1">
-<li>foundation piles and, for pre-piling, the positioning template;</li>
-<li>jacket transport, lift, set-down and structural connection;</li>
-<li>topside transport, lift, set-down and structural connection; and</li>
-<li>offshore hook-up, testing and commissioning.</li>
+<li>piled-jacket installation;</li>
+<li>topside installation; and</li>
+<li>offshore hook-up and commissioning.</li>
 </ol>
-<p>These packages may share a mobilisation or vessel in a project execution plan, but they do not share a universal rate or productivity. The model is not applicable without a method change to float-over topsides, gravity bases, self-installing platforms or ultra-heavy single-lift systems.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Feasibility precedes cost
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A lift or transport arrangement that fails a capacity, geometry or stability check is not represented by adding installation days. The model must select another vessel class or installation method before calculating duration and cost.</p>
-</div>
-</div>
+<p>Piling and jacket installation are combined because the available public evidence supports their aggregate site duration but not a reliable task-level decomposition. Transport and other campaign logistics are represented by aggregate chargeable days rather than separate carrier schedules.</p>
 </section>
 <section id="cost-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
@@ -631,431 +602,263 @@ window.Quarto = {
 <tr class="header">
 <th>Scope</th>
 <th>Treatment</th>
-<th>Cost owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mobilisation and demobilisation of each named installation spread</td>
+<td>Mobilisation and demobilisation of the three installation spreads</td>
 <td>Included</td>
-<td><strong>This page</strong></td>
 </tr>
 <tr class="even">
-<td>Transport from load-out quay to site on the installation vessel or deck carrier</td>
-<td>Included</td>
-<td><strong>This page</strong></td>
+<td>Chargeable load-out, transport, setup and critical waiting</td>
+<td>Included as aggregate logistics time</td>
 </tr>
 <tr class="odd">
-<td>Routine template, pile, jacket and topside installation</td>
+<td>Routine pile, jacket and topside installation</td>
 <td>Included</td>
-<td><strong>This page</strong></td>
 </tr>
 <tr class="even">
-<td>Defined offshore hook-up, testing and commissioning vessel-days</td>
+<td>Defined offshore hook-up, testing and commissioning</td>
 <td>Included</td>
-<td><strong>This page</strong></td>
 </tr>
 <tr class="odd">
-<td>Jacket, pile and topside fabrication and onshore commissioning</td>
-<td>Excluded</td>
-<td><a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
+<td>Jacket, pile and topside fabrication</td>
+<td>Excluded; owned by <a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
 </tr>
 <tr class="even">
-<td>Converter equipment and onshore converter station</td>
-<td>Excluded</td>
-<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+<td>Converter equipment</td>
+<td>Excluded; owned by <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
 </tr>
 <tr class="odd">
-<td>Export and inter-array cable installation, pull-in and termination</td>
-<td>Excluded</td>
-<td><a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
+<td>Cable installation, pull-in and termination</td>
+<td>Excluded; owned by <a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
 </tr>
 <tr class="even">
-<td>Quay strengthening, storage and port rent</td>
-<td>Separate unless explicitly included in the installation contract</td>
-<td>Relevant port or project cost</td>
-</tr>
-<tr class="odd">
 <td>Seabed preparation, UXO work, relief drilling, exceptional noise mitigation and scour protection</td>
-<td>Separate exceptional work</td>
-<td><strong>This page</strong>, when explicitly quantified</td>
+<td>Excluded from normal campaign rates; added only as defined exceptional work</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Development, insurance, owner contingency, OPEX and decommissioning</td>
 <td>Excluded</td>
-<td>Other model cost categories</td>
 </tr>
 </tbody>
 </table>
-<p>Each activity is charged once. A contracted complete-spread rate replaces the corresponding vessel stack; it is never added to that stack.</p>
+<p>Each activity is costed once. The campaign rates on this page are complete-spread rates: their vessel, equipment, support and consumable inclusions must be documented before use.</p>
 </section>
-<section id="installation-accounting" class="level2">
-<h2 class="anchored" data-anchor-id="installation-accounting">Installation Accounting</h2>
-<p>The model uses physical units that remain distinct throughout the calculation.</p>
+<section id="model-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="model-inputs">Model Inputs</h2>
+<section id="design-and-installation-class" class="level3">
+<h3 class="anchored" data-anchor-id="design-and-installation-class">Design and Installation Class</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Quantity</th>
-<th>Definition</th>
-<th>Modelling consequence</th>
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Unit</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Substation platform</td>
-<td>One functional OSS at one location</td>
-<td>Contains one or more lift modules and normally one jacket</td>
+<td>Number of substations</td>
+<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
+<td style="text-align: right;">count</td>
+<td>Project design input</td>
 </tr>
 <tr class="even">
-<td>Jacket leg</td>
-<td>One main structural leg</td>
-<td>Does not by itself determine pile count</td>
+<td>Topside lift modules per substation</td>
+<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{module/OSS}}\)</span></td>
+<td style="text-align: right;">lift/OSS</td>
+<td>Project execution input</td>
 </tr>
 <tr class="odd">
-<td>Foundation pile</td>
-<td>One driven pile</td>
-<td>A leg may have one or several piles</td>
+<td>Jacket screening lift mass</td>
+<td style="text-align: right;"><span class="math inline">\(m_J\)</span></td>
+<td style="text-align: right;">t</td>
+<td>Upstream platform and lift input</td>
 </tr>
 <tr class="even">
-<td>Pre-piling template</td>
-<td>Reusable positioning frame installed before the piles</td>
-<td>Set and recovered per location, not per pile</td>
+<td>Largest topside-module screening lift mass</td>
+<td style="text-align: right;"><span class="math inline">\(m_{S,\max}\)</span></td>
+<td style="text-align: right;">t</td>
+<td>Upstream platform and lift input</td>
 </tr>
 <tr class="odd">
-<td>Topside module</td>
-<td>One lift unit in the execution plan</td>
-<td>A split topside creates additional lifts and offshore interfaces</td>
+<td>Selected jacket installation-class capacity</td>
+<td style="text-align: right;"><span class="math inline">\(Q_J\)</span></td>
+<td style="text-align: right;">t</td>
+<td>Named-vessel or installation-class input</td>
 </tr>
 <tr class="even">
-<td>Carrier load</td>
-<td>One jacket or topside delivery from the yard or port</td>
-<td>Large structures default to one per load until a stow plan proves otherwise</td>
-</tr>
-<tr class="odd">
-<td>Heavy lift</td>
-<td>One crane pick at a specified mass, radius and lift path</td>
-<td>Brochure maximum crane capacity is insufficient evidence</td>
-</tr>
-<tr class="even">
-<td>Net installation day</td>
-<td>Chargeable work time excluding defined long interruptions</td>
-<td>Is not the full calendar commissioning period</td>
-</tr>
-<tr class="odd">
-<td>Campaign</td>
-<td>A continuous deployment sharing mobilisation</td>
-<td>Pile, jacket, topside and commissioning campaigns may differ</td>
+<td>Selected topside installation-class capacity</td>
+<td style="text-align: right;"><span class="math inline">\(Q_S\)</span></td>
+<td style="text-align: right;">t</td>
+<td>Named-vessel or installation-class input</td>
 </tr>
 </tbody>
 </table>
+<p>The screening lift masses should include lift-applicable attachments and rigging where that information is available. The capacity inputs should use the capacity at the intended configuration and radius when known; a published nominal maximum provides only an exclusion screen.</p>
 </section>
-<section id="required-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="required-inputs">Required Inputs</h2>
-<p>Inputs are separated from derived quantities and costs.</p>
+<section id="duration" class="level3">
+<h3 class="anchored" data-anchor-id="duration">Duration</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Input group</th>
-<th>Required information</th>
-<th>Evidence status</th>
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Unit</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Site and layout</td>
-<td>Number of substations, water depth, distance to load-out quay, spacing, season and metocean criteria</td>
-<td>Project input</td>
+<td>Piled-jacket net site occupation</td>
+<td style="text-align: right;"><span class="math inline">\(t_{FJ}\)</span></td>
+<td style="text-align: right;">day/OSS</td>
+<td>5.0 day/OSS screening anchor <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
 </tr>
 <tr class="even">
-<td>Jacket</td>
-<td>Certified lift mass, rigging mass, height, footprint, centre of gravity, lift points and connection method</td>
-<td>Fabricator and lift-engineering input</td>
+<td>Topside net placement</td>
+<td style="text-align: right;"><span class="math inline">\(t_S\)</span></td>
+<td style="text-align: right;">day/lift</td>
+<td>2.5 day/lift screening anchor <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
 </tr>
 <tr class="odd">
-<td>Piles</td>
-<td>Legs, piles per leg, pile mass, diameter, length, penetration, hammer and pile-soil response</td>
-<td>Structural and geotechnical input</td>
+<td>Chargeable piled-jacket logistics</td>
+<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{log},FJ}\)</span></td>
+<td style="text-align: right;">day/campaign</td>
+<td>Project or contractor input required</td>
 </tr>
 <tr class="even">
-<td>Topside</td>
-<td>Lift mass by module, dimensions, centre of gravity, lift points, installation elevation and mating method</td>
-<td>Fabricator and lift-engineering input</td>
+<td>Chargeable topside logistics</td>
+<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{log},S}\)</span></td>
+<td style="text-align: right;">day/campaign</td>
+<td>Project or contractor input required</td>
 </tr>
 <tr class="odd">
-<td>Execution method</td>
-<td>Pre-pile or post-pile sequence, template reuse, levelling, grout/weld/mechanical connection and work overlaps</td>
-<td>Contractor method statement</td>
-</tr>
-<tr class="even">
-<td>Lift vessel</td>
-<td>Safe working load at actual radius and configuration, hook height/depth, reach, deck limits, draft and weather limits</td>
-<td>Named-vessel lift chart and engineered lift plan</td>
-</tr>
-<tr class="odd">
-<td>Carrier and logistics</td>
-<td>Usable mass and area, point loads, stability, seafastening, transit speed, load-out and release time</td>
-<td>Named carrier and stow plan</td>
-</tr>
-<tr class="even">
-<td>Piling spread</td>
-<td>Hammer limit, pile handling method, effective penetration rate and support spread</td>
-<td>Site-specific contractor input</td>
-</tr>
-<tr class="odd">
-<td>Commissioning</td>
-<td>Mechanical, electrical, controls and test scope, persons on board, parallel work fronts and accommodation spread</td>
-<td>Owner or EPCI completion plan</td>
-</tr>
-<tr class="even">
-<td>Commercial</td>
-<td>Day rates, mobilisation, minimum charter, consumables and exact vessel/spread inclusions</td>
-<td>Supplier or contractor input</td>
+<td>Hook-up and commissioning duration</td>
+<td style="text-align: right;"><span class="math inline">\(t_H\)</span></td>
+<td style="text-align: right;">day/OSS</td>
+<td>Owner or EPCI input required</td>
 </tr>
 </tbody>
 </table>
-<p>Every numerical model input must be recorded as a sourced input, explicit modelling assumption or derived result. A missing required engineering or commercial input blocks the affected cost result.</p>
+<p>The CVOW values are planning anchors for a piled jacket and crane-placed topside. They are not universal productivities and do not include a transferable offshore commissioning duration. Replace them when project-specific campaign evidence is available.</p>
+<p>The logistics terms combine chargeable load-out, transport, setup and critical waiting for the corresponding complete spread. They must not include time already embedded in the net site anchors or mobilisation cost.</p>
 </section>
-<section id="lift-and-transport-feasibility" class="level2">
-<h2 class="anchored" data-anchor-id="lift-and-transport-feasibility">Lift and Transport Feasibility</h2>
-<p>For lift unit <span class="math inline">\(j\)</span>, the crane-capacity gate is</p>
-<p><span class="math display">\[
-\gamma_{\mathrm{dyn},j}\left(m_j+m_{\mathrm{rig},j}\right)
-\leq
-SWL(R_j,\mathrm{config}_j),
-\]</span></p>
-<p>with the geometry gates</p>
-<p><span class="math display">\[
-H_{\mathrm{hook}}
-\geq H_{\mathrm{required},j},
-\qquad
-R_{\mathrm{available}}
-\geq R_j.
-\]</span></p>
-<p>For the selected installation vessel or deck carrier,</p>
-<p><span class="math display">\[
-m_j+m_{\mathrm{seafast},j}\leq M_{\mathrm{use}},
-\qquad
-\frac{B_jL_j}{f_{\mathrm{pack}}}\leq A_{\mathrm{use}},
-\qquad
-p_{\mathrm{local},j}\leq p_{\mathrm{deck,max}}.
-\]</span></p>
-<p>Here <span class="math inline">\(m_j\)</span>, <span class="math inline">\(m_{\mathrm{rig},j}\)</span> and <span class="math inline">\(m_{\mathrm{seafast},j}\)</span> are the lift-unit, rigging and seafastening masses in tonnes; <span class="math inline">\(\gamma_{\mathrm{dyn},j}\)</span> is the dimensionless engineered dynamic factor; <span class="math inline">\(SWL\)</span> is the crane safe working load in tonnes at radius <span class="math inline">\(R_j\)</span> and the stated configuration; <span class="math inline">\(H_{\mathrm{hook}}\)</span> and <span class="math inline">\(H_{\mathrm{required},j}\)</span> are available and required hook heights in metres; <span class="math inline">\(B_j\)</span> and <span class="math inline">\(L_j\)</span> are cargo dimensions in metres; <span class="math inline">\(f_{\mathrm{pack}}\)</span> is the usable packing fraction; <span class="math inline">\(M_{\mathrm{use}}\)</span> and <span class="math inline">\(A_{\mathrm{use}}\)</span> are usable carrier mass and area; and <span class="math inline">\(p_{\mathrm{local},j}\)</span> and <span class="math inline">\(p_{\mathrm{deck,max}}\)</span> are actual and allowable local deck loads.</p>
-<p>The engineered check must also cover centre of gravity, lifting-point loads, tandem synchronisation, boom and structure clearance, under-hook rigging, carrier stability, quay load-out, water depth, vessel draft, air gap and DP or mooring footprint.</p>
-<p>Public fleet specifications illustrate discontinuous capability classes rather than default vessel choices: <em>Rambiz</em> and <em>Gulliver</em> are reported at 3,300 t and 4,000 t tandem capacity <span class="citation" data-cites="scaldisFleet">(<a href="#ref-scaldisFleet" role="doc-biblioref">Scaldis Salvage and Marine Contractors, n.d.</a>)</span>; <em>Saipem 7000</em> at 14,000 t combined capacity <span class="citation" data-cites="saipem7000">(<a href="#ref-saipem7000" role="doc-biblioref">Saipem, n.d.</a>)</span>; and <em>Sleipnir</em> at 20,000 t tandem capacity with a 220 m by 102 m reinforced deck <span class="citation" data-cites="heeremaSleipnir">(<a href="#ref-heeremaSleipnir" role="doc-biblioref">Heerema Marine Contractors, n.d.</a>)</span>. <em>Pioneering Spirit</em> reports separate 60,000 t topside and 20,000 t jacket systems <span class="citation" data-cites="allseasHeavyLift">(<a href="#ref-allseasHeavyLift" role="doc-biblioref">Allseas, n.d.</a>)</span>. Actual radius, lift path and configuration always govern.</p>
-</section>
-<section id="dependency-ordered-calculation" class="level2">
-<h2 class="anchored" data-anchor-id="dependency-ordered-calculation">Dependency-Ordered Calculation</h2>
-<section id="physical-inventory" class="level3">
-<h3 class="anchored" data-anchor-id="physical-inventory">Physical Inventory</h3>
-<p>For uniform platforms,</p>
-<p><span class="math display">\[
-N_{\mathrm{pile}}
-=N_{\mathrm{OSS}}N_{\mathrm{leg}}N_{\mathrm{pile/leg}},
-\]</span></p>
-<p><span class="math display">\[
-N_{\mathrm{lift},J}=N_{\mathrm{OSS}},
-\qquad
-N_{\mathrm{lift},S}=N_{\mathrm{OSS}}N_{\mathrm{module/OSS}}.
-\]</span></p>
-<p>Here all <span class="math inline">\(N\)</span> terms are counts: substations, legs, piles, jackets or topside modules as indicated by their subscripts. Designs that differ between locations are calculated individually and summed.</p>
-<p>Carrier loads are</p>
-<p><span class="math display">\[
-N_{\mathrm{load},J}
-=\left\lceil\frac{N_{\mathrm{lift},J}}{n_{J/\mathrm{load}}}\right\rceil,
-\qquad
-N_{\mathrm{load},S}
-=\left\lceil\frac{N_{\mathrm{lift},S}}{n_{S/\mathrm{load}}}\right\rceil,
-\]</span></p>
-<p>where <span class="math inline">\(n_{J/\mathrm{load}}\)</span> and <span class="math inline">\(n_{S/\mathrm{load}}\)</span> are structures per proven carrier load. The screening default is one large jacket or topside per load, consistent with the public CVOW construction envelope <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span>.</p>
-</section>
-<section id="pile-and-template-campaign" class="level3">
-<h3 class="anchored" data-anchor-id="pile-and-template-campaign">Pile and Template Campaign</h3>
-<p>For a pre-piled jacket location,</p>
-<p><span class="math display">\[
-\begin{aligned}
-t_{P,\mathrm{OSS}}={}&amp;t_{\mathrm{pos},P}+t_{\mathrm{template,set}}\\
-&amp;+N_{\mathrm{pile/OSS}}\left(
-t_{\mathrm{release},p}
-+\frac{L_p}{v_{\mathrm{upend},p}}
-+\frac{d_{\mathrm{lower},p}}{v_{\mathrm{lower},p}}
-+t_{\mathrm{stab},p}
-+\frac{L_e}{q_{\mathrm{drive,eff}}}
-+t_{\mathrm{survey},p}
-\right)\\
-&amp;+t_{\mathrm{template,recover}}.
-\end{aligned}
-\]</span></p>
-<p><span class="math inline">\(t_{P,\mathrm{OSS}}\)</span> is net pile-campaign time in days per platform. The component <span class="math inline">\(t\)</span> terms are task durations converted to days; <span class="math inline">\(L_p\)</span> and <span class="math inline">\(L_e\)</span> are pile length and embedded penetration in metres; <span class="math inline">\(d_{\mathrm{lower},p}\)</span> is lowering distance in metres; <span class="math inline">\(v_{\mathrm{upend},p}\)</span> and <span class="math inline">\(v_{\mathrm{lower},p}\)</span> are handling speeds in metres per day; and <span class="math inline">\(q_{\mathrm{drive,eff}}\)</span> is the site-specific effective penetration rate in metres per day for the selected pile-soil-hammer system.</p>
-<p>Total pile-campaign occupation is</p>
-<p><span class="math display">\[
-T_P=t_{\mathrm{setup},P}
-+\sum_{i=1}^{N_{\mathrm{OSS}}}t_{P,i}
-+T_{\mathrm{transit},P}
-+T_{\mathrm{loadout},P}
-+T_{\mathrm{fieldmove},P},
-\]</span></p>
-<p>where every <span class="math inline">\(T\)</span> and <span class="math inline">\(t\)</span> term is in days. For post-piling, the jacket is installed first and piles are handled through its sleeves. The combined jacket-vessel and piling-spread critical path must then replace the pre-pile template sequence. Relief drilling, pile refusal and extraordinary noise restrictions are not included in the normal penetration rate.</p>
-</section>
-<section id="jacket-campaign" class="level3">
-<h3 class="anchored" data-anchor-id="jacket-campaign">Jacket Campaign</h3>
-<p>Net jacket time per location is</p>
-<p><span class="math display">\[
-t_{J,\mathrm{OSS}}
-=t_{\mathrm{pos},J}+t_{\mathrm{carrier,moor}}
-+t_{\mathrm{release},J}
-+\frac{H_{\mathrm{path},J}}{v_{\mathrm{crane},J}}
-+t_{\mathrm{set},J}+t_{\mathrm{level},J}
-+t_{\mathrm{connect},J}+t_{\mathrm{survey},J}
-+t_{\mathrm{rig,release},J}.
-\]</span></p>
-<p><span class="math inline">\(H_{\mathrm{path},J}\)</span> is the jacket hook travel in metres, <span class="math inline">\(v_{\mathrm{crane},J}\)</span> is the effective hoisting or lowering speed in metres per day, and all other terms are task durations in days. The structural-connection term includes only the selected grout, weld or mechanical interface. The method statement must say whether cure and inspection occupy the heavy-lift vessel.</p>
-</section>
-<section id="topside-campaign" class="level3">
-<h3 class="anchored" data-anchor-id="topside-campaign">Topside Campaign</h3>
-<p>For each topside lift,</p>
-<p><span class="math display">\[
-t_{S,j}
-=t_{\mathrm{pos},S,j}+t_{\mathrm{carrier,moor},j}
-+t_{\mathrm{release},S,j}
-+\frac{H_{\mathrm{path},S,j}}{v_{\mathrm{crane},S,j}}
-+t_{\mathrm{mate},S,j}+t_{\mathrm{connect},S,j}
-+t_{\mathrm{survey},S,j}+t_{\mathrm{rig,release},S,j}.
-\]</span></p>
-<p>The terms have the same units and meanings as in the jacket equation, with <span class="math inline">\(S\)</span> identifying the topside. Total topside site time is <span class="math inline">\(T_{S,\mathrm{site}}=\sum_j t_{S,j}\)</span>. A split topside is calculated module by module and includes its additional module-to-module connections. No universal linear tonnes-to-hours relationship is used.</p>
-</section>
-<section id="transport-and-vessel-concurrency" class="level3">
-<h3 class="anchored" data-anchor-id="transport-and-vessel-concurrency">Transport and Vessel Concurrency</h3>
-<p>For installation class <span class="math inline">\(c\in\{J,S\}\)</span> with one round trip per carrier load,</p>
-<p><span class="math display">\[
-T_{\mathrm{carrier},c}
-=N_{\mathrm{load},c}
-\left(
-t_{\mathrm{load},c}
-+\frac{2D_p}{v_{\mathrm{carrier},c}}
-+t_{\mathrm{offload},c}
-\right),
-\]</span></p>
-<p>where <span class="math inline">\(D_p\)</span> is the one-way port or fabrication-yard distance in kilometres, <span class="math inline">\(v_{\mathrm{carrier},c}\)</span> is transit speed in kilometres per day, and the resulting duration is in days.</p>
-<p>Heavy-lift-vessel occupation is</p>
-<p><span class="math display">\[
-T_{\mathrm{HLV},c}
-=t_{\mathrm{setup},c}
-+T_{c,\mathrm{site}}
-+T_{\mathrm{HLV,transit},c}
-+T_{\mathrm{wait,critical},c}.
-\]</span></p>
-<p>Carrier and HLV durations are calculated and costed separately because they often overlap. Carrier time is added to the HLV critical path only when the schedule demonstrates a supply bottleneck. A simple one-structure-per-load capacity check is</p>
-<p><span class="math display">\[
-Q_c
-=\min\left(
-\frac{1}{t_{\mathrm{site},c}},
-\frac{n_{\mathrm{carrier},c}}{t_{\mathrm{carrier\ cycle},c}}
-\right),
-\]</span></p>
-<p>where <span class="math inline">\(Q_c\)</span> is achievable structures per day, <span class="math inline">\(n_{\mathrm{carrier},c}\)</span> is the number of carriers, and both cycle times are in days per structure.</p>
-</section>
-<section id="hook-up-and-commissioning" class="level3">
-<h3 class="anchored" data-anchor-id="hook-up-and-commissioning">Hook-Up and Commissioning</h3>
-<p>The separate commissioning campaign is</p>
-<p><span class="math display">\[
-T_H
-=\frac{N_{\mathrm{OSS}}
-\left(t_{\mathrm{mechanical}}+t_{\mathrm{electrical}}
-+t_{\mathrm{controls}}+t_{\mathrm{test}}\right)}
-{n_{\mathrm{parallel},H}}
-+t_{\mathrm{setup},H},
-\]</span></p>
-<p>where <span class="math inline">\(T_H\)</span> and all task terms are in days and <span class="math inline">\(n_{\mathrm{parallel},H}\)</span> is the number of simultaneous work fronts. The selected accommodation and commissioning spread is costed for this duration. The HLV is included only if the execution plan retains it.</p>
-</section>
-</section>
-<section id="cost-calculation" class="level2">
-<h2 class="anchored" data-anchor-id="cost-calculation">Cost Calculation</h2>
-<p>For each package <span class="math inline">\(c\in\{P,J,S,H\}\)</span>,</p>
-<p><span class="math display">\[
-C_c
-=C_{\mathrm{mob},c}
-+r_{\mathrm{primary},c}T_{\mathrm{primary},c}
-+r_{\mathrm{carrier},c}T_{\mathrm{carrier},c}
-+\sum_v r_{\mathrm{support},v}T_v
-+C_{\mathrm{consumables},c}.
-\]</span></p>
-<p>Total installation CAPEX is</p>
-<p><span class="math display">\[
-C_{\mathrm{OSS}}
-=\sum_{c\in\{P,J,S,H\}}C_c
-+C_{\mathrm{exceptional}}
-+C_{\mathrm{other}}.
-\]</span></p>
+<section id="commercial-inputs" class="level3">
+<h3 class="anchored" data-anchor-id="commercial-inputs">Commercial Inputs</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Symbol</th>
-<th>Definition</th>
-<th>Unit</th>
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Unit</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(C_c\)</span></td>
-<td>Cost of work package <span class="math inline">\(c\)</span></td>
-<td>2026 EUR</td>
+<td>Complete piled-jacket spread rate</td>
+<td style="text-align: right;"><span class="math inline">\(r_{FJ}\)</span></td>
+<td style="text-align: right;">2026 EUR/day</td>
+<td>Contractor input required</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(C_{\mathrm{mob},c}\)</span></td>
-<td>Mobilisation and demobilisation of the package spread</td>
-<td>2026 EUR/campaign</td>
+<td>Complete topside spread rate</td>
+<td style="text-align: right;"><span class="math inline">\(r_S\)</span></td>
+<td style="text-align: right;">2026 EUR/day</td>
+<td>Contractor input required</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(r_{\mathrm{primary},c}\)</span>, <span class="math inline">\(r_{\mathrm{carrier},c}\)</span>, <span class="math inline">\(r_{\mathrm{support},v}\)</span></td>
-<td>Day rate for the named primary vessel, carrier or support vessel</td>
-<td>2026 EUR/day</td>
+<td>Complete hook-up spread rate</td>
+<td style="text-align: right;"><span class="math inline">\(r_H\)</span></td>
+<td style="text-align: right;">2026 EUR/day</td>
+<td>Contractor input required</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(T_{\mathrm{primary},c}\)</span>, <span class="math inline">\(T_{\mathrm{carrier},c}\)</span>, <span class="math inline">\(T_v\)</span></td>
-<td>Chargeable occupation of the corresponding vessel</td>
-<td>day</td>
+<td>Total mobilisation and demobilisation</td>
+<td style="text-align: right;"><span class="math inline">\(C_{\mathrm{mob}}\)</span></td>
+<td style="text-align: right;">2026 EUR</td>
+<td>Project commercial input required</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(C_{\mathrm{consumables},c}\)</span></td>
-<td>Explicit package consumables not included in a vessel or spread rate</td>
-<td>2026 EUR</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
-<td>Separately enumerated exceptional work</td>
-<td>2026 EUR</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(C_{\mathrm{other}}\)</span></td>
-<td>Other named installation cost not included elsewhere</td>
-<td>2026 EUR</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(C_{\mathrm{OSS}}\)</span></td>
-<td>Total offshore-substation installation CAPEX</td>
-<td>2026 EUR</td>
+<td>Defined exceptional work</td>
+<td style="text-align: right;"><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
+<td style="text-align: right;">2026 EUR</td>
+<td>Project-specific input when applicable</td>
 </tr>
 </tbody>
 </table>
-<p>If a complete contracted spread rate <span class="math inline">\(r_{\mathrm{spread},c}\)</span> is available, the package calculation becomes <span class="math inline">\(C_c=C_{\mathrm{mob},c}+r_{\mathrm{spread},c}T_{\mathrm{spread},c}+C_{\mathrm{consumables},c}\)</span>. The vessel terms already included in that spread are omitted.</p>
+<p><span class="math inline">\(C_{\mathrm{mob}}\)</span> is the total mobilisation and demobilisation cost across the three campaigns after accounting for any shared mobilisation. It must not repeat mobilisation already included in a spread rate.</p>
+<p>All commercial inputs must follow the common currency and price-basis treatment documented in <a href="../shared_model_inputs/capex_opex_conventions.html">CAPEX and OPEX Conventions</a>. The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.</p>
 </section>
-<section id="evidence-graded-screening-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="evidence-graded-screening-inputs">Evidence-Graded Screening Inputs</h2>
+</section>
+<section id="installation-class-screen" class="level2">
+<h2 class="anchored" data-anchor-id="installation-class-screen">Installation-Class Screen</h2>
+<p>The selected class is rejected when either screening lift mass exceeds its declared capacity:</p>
+<p><span class="math display">\[
+m_J\leq Q_J,
+\qquad
+m_{S,\max}\leq Q_S.
+\]</span></p>
+<p>This is a one-sided screening check. Failure requires a larger vessel class or another installation method. Passing does not demonstrate lift feasibility: radius, hook height, dynamic effects, lift points, structure clearance, stability, seafastening and weather limits remain part of project lift engineering.</p>
+<p>The capacity check preserves the material step between installation classes without introducing unsupported task-level corrections. If the selected class fails, the model reports <strong>class change required</strong> and does not calculate cost using that class.</p>
+</section>
+<section id="calculation" class="level2">
+<h2 class="anchored" data-anchor-id="calculation">Calculation</h2>
+<p>The number of topside lifts is</p>
+<p><span class="math display">\[
+N_S=N_{\mathrm{OSS}}N_{\mathrm{module/OSS}},
+\]</span></p>
+<p>where <span class="math inline">\(N_S\)</span> is a count of lifts. A split topside therefore creates a discrete increase in installation work rather than a smooth mass multiplier.</p>
+<p>Chargeable campaign durations are</p>
+<p><span class="math display">\[
+T_{FJ}=N_{\mathrm{OSS}}t_{FJ}+t_{\mathrm{log},FJ},
+\]</span></p>
+<p><span class="math display">\[
+T_S=N_St_S+t_{\mathrm{log},S},
+\]</span></p>
+<p><span class="math display">\[
+T_H=N_{\mathrm{OSS}}t_H.
+\]</span></p>
+<p><span class="math inline">\(T_{FJ}\)</span>, <span class="math inline">\(T_S\)</span> and <span class="math inline">\(T_H\)</span> are chargeable days for the complete piled-jacket, topside and hook-up spreads. Mobilisation is costed separately and is therefore not included in these durations.</p>
+<p>Normal-scope installation CAPEX is</p>
+<p><span class="math display">\[
+C_{\mathrm{normal}}
+=C_{\mathrm{mob}}
++r_{FJ}T_{FJ}
++r_ST_S
++r_HT_H.
+\]</span></p>
+<p>When exceptional work has a defined scope and cost,</p>
+<p><span class="math display">\[
+C_{\mathrm{inst}}
+=C_{\mathrm{normal}}
++C_{\mathrm{exceptional}}.
+\]</span></p>
+<p>If exceptional work is relevant but not quantified, it is reported as <strong>not included</strong> rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the available campaign durations are still reported.</p>
+</section>
+<section id="model-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="model-outputs">Model Outputs</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -1064,249 +867,67 @@ C_{\mathrm{OSS}}
 </colgroup>
 <thead>
 <tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Screening treatment</th>
-<th>Evidence and limitation</th>
+<th>Output</th>
+<th style="text-align: right;">Unit</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Piled-jacket net site occupation</td>
-<td style="text-align: right;">5.0 day/OSS typical anchor</td>
-<td>CVOW planning envelope; calculate from activities when inputs are available <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
+<td>Installation-class result</td>
+<td style="text-align: right;">pass or class change required</td>
+<td>Prevents use of a clearly undersized installation class</td>
 </tr>
 <tr class="even">
-<td>Topside net placement</td>
-<td style="text-align: right;">2.5 day/lift typical anchor</td>
-<td>Placement and mating only; excludes full hook-up and commissioning <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
+<td>Number of piled jackets</td>
+<td style="text-align: right;">count</td>
+<td>Equals <span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
 </tr>
 <tr class="odd">
-<td>Structures per carrier load</td>
-<td style="text-align: right;">1 large jacket or topside/load</td>
-<td>Conservative CVOW planning treatment; replace with an engineered stow plan <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
+<td>Number of topside lifts</td>
+<td style="text-align: right;">count</td>
+<td>Exposes the split-topside discontinuity</td>
 </tr>
 <tr class="even">
-<td>Generic moderate-HLV proxy</td>
-<td style="text-align: right;">289,717 EUR/day</td>
-<td>Inferred from an ORBIT output of USD 936,918 for 72 h and normalized from 2024 USD; not a quote or complete spread <span class="citation" data-cites="nlr2026OrbitOutputs">(<a href="#ref-nlr2026OrbitOutputs" role="doc-biblioref">National Laboratory of the Rockies 2026</a>)</span></td>
+<td>Campaign duration by spread</td>
+<td style="text-align: right;">day</td>
+<td>Shows the time basis of each cost</td>
 </tr>
 <tr class="odd">
-<td>HLV mobilisation</td>
-<td style="text-align: right;">3 day proxy; 7 day contextual case</td>
-<td>Three days inferred from the ORBIT event; seven days is a historical NREL model assumption <span class="citation" data-cites="nlr2026OrbitOutputs shields2021TurbinePlantUpsizing">(<a href="#ref-nlr2026OrbitOutputs" role="doc-biblioref">National Laboratory of the Rockies 2026</a>; <a href="#ref-shields2021TurbinePlantUpsizing" role="doc-biblioref">Shields et al. 2021</a>)</span></td>
+<td>Campaign cost</td>
+<td style="text-align: right;">2026 EUR</td>
+<td>Separates piled-jacket, topside and hook-up expenditure</td>
 </tr>
 <tr class="even">
-<td>Carrier rate</td>
-<td style="text-align: right;">Supplier input required</td>
-<td>No current, consistently scoped public rate identified</td>
+<td>Mobilisation</td>
+<td style="text-align: right;">2026 EUR</td>
+<td>Keeps fixed campaign cost visible</td>
 </tr>
 <tr class="odd">
-<td>Piling spread and penetration</td>
-<td style="text-align: right;">Contractor and geotechnical input required</td>
-<td>Depends on the pile-soil-hammer system</td>
+<td>Exceptional-work status and cost</td>
+<td style="text-align: right;">text and 2026 EUR when defined</td>
+<td>Prevents unsupported work from being silently treated as zero</td>
 </tr>
 <tr class="even">
-<td>Hook-up duration and spread rate</td>
-<td style="text-align: right;">Owner/EPCI and contractor inputs required</td>
-<td>Must not be inferred from topside lift time</td>
+<td>Total installation CAPEX</td>
+<td style="text-align: right;">2026 EUR</td>
+<td>Used in the project CAPEX calculation</td>
 </tr>
 </tbody>
 </table>
-<p>The 5.0-day and 2.5-day values are planning anchors, not probability-distribution centres with invented bounds. A favourable case is supported by an activity calculation below the anchor; a difficult case is produced by its physical drivers above the anchor. A second topside module, relief drilling, float-over or ultra-heavy lift is a model branch, not a generic multiplier.</p>
-<p>The generic HLV proxy is suitable only for a transparent screening sensitivity in a moderate vessel class. It is not adopted automatically for a multi-thousand-tonne HVDC jacket or topside. Until named-vessel rates and complete scope boundaries are supplied, the model reports vessel-days and a cost sensitivity rather than an adopted installation CAPEX.</p>
+<p>A EUR/kW value may be reported only as a derived comparison after total installation CAPEX is calculated. It is not a model input.</p>
 </section>
-<section id="exceptional-work" class="level2">
-<h2 class="anchored" data-anchor-id="exceptional-work">Exceptional Work</h2>
-<p>Exceptional work is calculated outside normal campaign productivity:</p>
-<p><span class="math display">\[
-\begin{aligned}
-C_{\mathrm{exceptional}}={}&amp;
-N_{\mathrm{drill}}r_{\mathrm{drill}}t_{\mathrm{drill}}
-+N_{\mathrm{refusal}}C_{\mathrm{remediate}}
-+N_{\mathrm{noise}}C_{\mathrm{noise}}\\
-&amp;+A_{\mathrm{prep}}c_{\mathrm{seabed}}
-+A_{\mathrm{scour}}c_{\mathrm{scour}}
-+C_{\mathrm{UXO}}+C_{\mathrm{weather\ restriction}}
-+C_{\mathrm{exceptional,other}}.
-\end{aligned}
-\]</span></p>
-<p><span class="math inline">\(N_{\mathrm{drill}}\)</span>, <span class="math inline">\(N_{\mathrm{refusal}}\)</span> and <span class="math inline">\(N_{\mathrm{noise}}\)</span> are event counts; <span class="math inline">\(r_{\mathrm{drill}}\)</span> is a 2026-EUR/day drilling-spread rate; <span class="math inline">\(t_{\mathrm{drill}}\)</span> is days per drilled pile; <span class="math inline">\(A_{\mathrm{prep}}\)</span> and <span class="math inline">\(A_{\mathrm{scour}}\)</span> are treated areas in square metres; the corresponding lowercase <span class="math inline">\(c\)</span> terms are 2026-EUR/m2 unit costs; and the remaining uppercase <span class="math inline">\(C\)</span> terms are 2026-EUR lump sums. Each term is site-specific unless a contract explicitly includes it elsewhere.</p>
-</section>
-<section id="constant-2026-eur-normalization" class="level2">
-<h2 class="anchored" data-anchor-id="constant-2026-eur-normalization">Constant-2026-EUR Normalization</h2>
-<p>Each source cost retains its own currency, price year, index and geographic adjustment:</p>
-<p><span class="math display">\[
-C_{2026,\mathrm{EUR}}
-=C_{y,s}
-\frac{I_s(2026^*)}{I_s(y)}
-FX_{\mathrm{EUR}/s}(2026^*)
-F_{\mathrm{geo}},
-\]</span></p>
-<p>where <span class="math inline">\(C_{y,s}\)</span> is a cost in source currency <span class="math inline">\(s\)</span> and year <span class="math inline">\(y\)</span>; <span class="math inline">\(I_s\)</span> is the chosen escalation index; <span class="math inline">\(FX_{\mathrm{EUR}/s}\)</span> is euros per unit of source currency at the stated reference date; and <span class="math inline">\(F_{\mathrm{geo}}\)</span> is a separately documented dimensionless market factor.</p>
-<p>For the 2024-USD ORBIT proxy, annual-average 2024 CPI-U of 313.689, June 2026 CPI-U of 333.952 and the 30 July 2026 ECB rate of USD 1.1476 per EUR give <span class="citation" data-cites="bls2024CPI bls2026CPI ecb2026ExchangeRates">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2026CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2026ExchangeRates" role="doc-biblioref">European Central Bank 2026</a>)</span></p>
-<p><span class="math display">\[
-F_{2024\,\mathrm{USD}\rightarrow2026\,\mathrm{EUR}}
-=\frac{333.952}{313.689}\frac{1}{1.1476}
-=0.9276715\ \mathrm{EUR}_{2026}/\mathrm{USD}_{2024}.
-\]</span></p>
-<p>CPI is a transparent fallback, not an offshore-vessel market index. No geographic adjustment is embedded in this factor.</p>
-</section>
-<section id="reported-intermediate-results" class="level2">
-<h2 class="anchored" data-anchor-id="reported-intermediate-results">Reported Intermediate Results</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Result group</th>
-<th>Required output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Feasibility</td>
-<td>Crane utilization at actual radius, hook/reach margin, carrier mass/area/local-load margin and pass/fail or method change</td>
-</tr>
-<tr class="even">
-<td>Physical inventory</td>
-<td>Platforms, legs, piles, jacket lifts, topside modules and carrier loads</td>
-</tr>
-<tr class="odd">
-<td>Execution</td>
-<td>Pre- or post-pile method, connection method, named campaigns and allowed overlaps</td>
-</tr>
-<tr class="even">
-<td>Duration</td>
-<td>Task, transit, load-out, setup, critical waiting and total occupied days by vessel and package</td>
-</tr>
-<tr class="odd">
-<td>Cost</td>
-<td>Mobilisation, vessel or spread cost, consumables, exceptional work and total by package</td>
-</tr>
-<tr class="even">
-<td>Evidence</td>
-<td>Input status, source, price year, normalization record, inclusions and exclusions</td>
-</tr>
-</tbody>
-</table>
-<p>A EUR/kW value may be reported only as a derived comparison after total installation CAPEX has been calculated. It is not a substitute for the quantities and vessel-days above.</p>
-</section>
-<section id="validation-cases-and-assertions" class="level2">
-<h2 class="anchored" data-anchor-id="validation-cases-and-assertions">Validation Cases and Assertions</h2>
-<p>Public projects test selected parts of the model; they do not supply a complete transferable cost coefficient.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Case</th>
-<th>Public information used</th>
-<th>Model check</th>
-<th>Limitation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>CVOW</td>
-<td>About 5 net days per piled jacket, 2.5 net days per topside and one large structure per carrier load <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
-<td>Site duration and carrier count</td>
-<td>Planning envelope, not measured cost; commissioning is longer</td>
-</tr>
-<tr class="even">
-<td>Butendiek</td>
-<td>1,032 t jacket, four 238 t piles and 2,250 t topside <span class="citation" data-cites="scaldisButendiek">(<a href="#ref-scaldisButendiek" role="doc-biblioref">Scaldis Salvage and Marine Contractors 2014</a>)</span></td>
-<td>Pile count, lift class and activity completeness</td>
-<td>No disclosed vessel-days or package price</td>
-</tr>
-<tr class="odd">
-<td>Rampion</td>
-<td>Approximately 2,000 t topside installed by <em>Rambiz</em> <span class="citation" data-cites="rampionOSS">(<a href="#ref-rampionOSS" role="doc-biblioref">Rampion Offshore Wind Farm, n.d.</a>)</span></td>
-<td>Crane-class margin</td>
-<td>No complete jacket or spread-cost record</td>
-</tr>
-<tr class="even">
-<td>Dogger Bank A/B</td>
-<td>Approximately 2,900–3,100 t jackets and 8,500 t topsides <span class="citation" data-cites="saipem2020DoggerBank saipem2023DoggerBank">(<a href="#ref-saipem2020DoggerBank" role="doc-biblioref">Saipem 2020</a>, <a href="#ref-saipem2023DoggerBank" role="doc-biblioref">2023</a>)</span></td>
-<td>Heavy-lift class change</td>
-<td>No auditable public rates or durations</td>
-</tr>
-<tr class="odd">
-<td>Dogger Bank C</td>
-<td>Approximately 3,500 t jacket and 9,500 t topside <span class="citation" data-cites="doggerBankCOSS">(<a href="#ref-doggerBankCOSS" role="doc-biblioref">Dogger Bank Wind Farm, n.d.</a>)</span></td>
-<td>Heavy-lift class change</td>
-<td>Contract announcement, not installation cost evidence</td>
-</tr>
-<tr class="even">
-<td>ORBIT generic HLV output</td>
-<td>USD 936,918 mobilisation cost for 72 h <span class="citation" data-cites="nlr2026OrbitOutputs">(<a href="#ref-nlr2026OrbitOutputs" role="doc-biblioref">National Laboratory of the Rockies 2026</a>)</span></td>
-<td>Reproduction of the rate proxy and currency conversion</td>
-<td>Generic model output, not a jacket-specific quote</td>
-</tr>
-</tbody>
-</table>
-<p>The implementation must enforce these assertions:</p>
+<section id="applicability-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="applicability-and-limitations">Applicability and Limitations</h2>
+<p>This model applies only to crane-installed topsides on piled jackets. The following cases require another model branch rather than an adjustment factor:</p>
 <ul>
-<li>every lift and carrier gate passes before time and cost are calculated;</li>
-<li>every pile, lift and carrier load is counted from the physical design;</li>
-<li>pre-pile and post-pile logic are not combined accidentally;</li>
-<li>concurrent carrier and HLV days are costed independently but not serially added without a demonstrated critical-path effect;</li>
-<li>hook-up and commissioning are not charged at an HLV rate unless the vessel is retained;</li>
-<li>a complete spread and its constituent vessels are not both charged;</li>
-<li>exceptional work appears exactly once; and</li>
-<li>every cost input has a currency, price year, normalization record and explicit scope.</li>
+<li>float-over or self-installing topsides;</li>
+<li>gravity-base or non-piled foundations;</li>
+<li>a failed jacket or topside installation-class screen; and</li>
+<li>exceptional work that changes the installation method or campaign structure.</li>
 </ul>
-</section>
-<section id="limitations-and-required-evidence" class="level2">
-<h2 class="anchored" data-anchor-id="limitations-and-required-evidence">Limitations and Required Evidence</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Unresolved evidence</th>
-<th>Consequence</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Named-vessel rate, mobilisation, minimum charter and inclusions for each campaign</td>
-<td>No adopted commercial installation CAPEX</td>
-</tr>
-<tr class="even">
-<td>Safe working load at the engineered radius, rigging and dynamic factor</td>
-<td>Lift feasibility remains open</td>
-</tr>
-<tr class="odd">
-<td>Carrier stow plan, load-out and seafastening details</td>
-<td>Carrier count and cycle remain screening values</td>
-</tr>
-<tr class="even">
-<td>Site-specific pile handling and effective penetration</td>
-<td>Pile duration cannot be closed bottom-up</td>
-</tr>
-<tr class="odd">
-<td>Critical-path connection, grout cure and inspection time</td>
-<td>Jacket-vessel occupation remains uncertain</td>
-</tr>
-<tr class="even">
-<td>Offshore completion scope, parallel work fronts and accommodation spread</td>
-<td>Hook-up and commissioning cost remains open</td>
-</tr>
-<tr class="odd">
-<td>Relief drilling, noise, seabed, scour and UXO quantities and rates</td>
-<td>Exceptional-work allowance cannot be calculated</td>
-</tr>
-</tbody>
-</table>
-<p>The current evidence supports an auditable calculation structure, feasibility gates and limited screening sensitivities. It does not support concealing the unresolved inputs inside a platform-and-installation EUR/kW allocation.</p>
+<p>The model deliberately does not calculate pile handling, penetration, crane movement, carrier concurrency, mating or connection time separately. Those details can replace the aggregate parameters later if project evidence shows that the additional fidelity materially improves the estimate.</p>
+<p>The current public evidence supports the 5.0 day/OSS piled-jacket and 2.5 day/lift topside anchors <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span>. It does not support generic complete-spread rates, logistics time or offshore commissioning duration. These remain explicit project inputs rather than inferred assumptions.</p>
 <p><strong>Evidence review date:</strong> 31 July 2026.</p>
 
 
@@ -1314,50 +935,8 @@ F_{2024\,\mathrm{USD}\rightarrow2026\,\mathrm{EUR}}
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-allseasHeavyLift" class="csl-entry" role="listitem">
-Allseas. n.d. <span>“Heavy-Lift Equipment.”</span> Accessed July 31, 2026. <a href="https://www.allseas.com/en/who-we-are/our-equipment/heavy-lift-equipment">https://www.allseas.com/en/who-we-are/our-equipment/heavy-lift-equipment</a>.
-</div>
-<div id="ref-doggerBankCOSS" class="csl-entry" role="listitem">
-Dogger Bank Wind Farm. n.d. <span>“Dogger Bank c Offshore Substation Contract Awarded to Heerema.”</span> Accessed July 31, 2026. <a href="https://doggerbank.com/supply-chain/dogger-bank-c-offshore-substation-contract-awarded-to-heerema/">https://doggerbank.com/supply-chain/dogger-bank-c-offshore-substation-contract-awarded-to-heerema/</a>.
-</div>
 <div id="ref-boem2021CVOWCOP" class="csl-entry" role="listitem">
 Dominion Energy. 2021. <em>Coastal Virginia Offshore Wind Commercial Project: Construction and Operations Plan, Volume i, Sections 1–3</em>. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/sites/default/files/documents/renewable-energy/state-activities/CVOW-Commercial-COP-Sections-1-3.pdf">https://www.boem.gov/sites/default/files/documents/renewable-energy/state-activities/CVOW-Commercial-COP-Sections-1-3.pdf</a>.
-</div>
-<div id="ref-ecb2026ExchangeRates" class="csl-entry" role="listitem">
-European Central Bank. 2026. <span>“Euro Foreign Exchange Reference Rates.”</span> July 30. <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html</a>.
-</div>
-<div id="ref-heeremaSleipnir" class="csl-entry" role="listitem">
-Heerema Marine Contractors. n.d. <span>“Sleipnir.”</span> Accessed July 31, 2026. <a href="https://www.heerema.com/heerema-marine-contractors/fleet/sleipnir">https://www.heerema.com/heerema-marine-contractors/fleet/sleipnir</a>.
-</div>
-<div id="ref-nlr2026OrbitOutputs" class="csl-entry" role="listitem">
-National Laboratory of the Rockies. 2026. <span>“<span>ORBIT</span> Available Outputs.”</span> <a href="https://nlrwindsystems.github.io/ORBIT/tutorials/available_outputs.html">https://nlrwindsystems.github.io/ORBIT/tutorials/available_outputs.html</a>.
-</div>
-<div id="ref-rampionOSS" class="csl-entry" role="listitem">
-Rampion Offshore Wind Farm. n.d. <span>“2,000 Tonne Offshore Substation Installed at Rampion.”</span> Accessed July 31, 2026. <a href="https://www.rampionoffshore.com/news/media-releases/2000-tonne-offshore-substation-installed-rampion/">https://www.rampionoffshore.com/news/media-releases/2000-tonne-offshore-substation-installed-rampion/</a>.
-</div>
-<div id="ref-saipem2020DoggerBank" class="csl-entry" role="listitem">
-Saipem. 2020. <em>Saipem Awarded New Offshore Wind Contracts for Dogger Bank a and b</em>. Saipem. <a href="https://www.saipem.com/sites/default/files/import/press_releases/CS%20Saipem%2022.07.2020.pdf">https://www.saipem.com/sites/default/files/import/press_releases/CS%20Saipem%2022.07.2020.pdf</a>.
-</div>
-<div id="ref-saipem2023DoggerBank" class="csl-entry" role="listitem">
-Saipem. 2023. <span>“New Milestone Achieved in Offshore Wind.”</span> May 4. <a href="https://www.saipem.com/en/media/press-releases/2023-05-04/saipem-new-milestone-achieved-offshore-wind-0">https://www.saipem.com/en/media/press-releases/2023-05-04/saipem-new-milestone-achieved-offshore-wind-0</a>.
-</div>
-<div id="ref-saipem7000" class="csl-entry" role="listitem">
-Saipem. n.d. <span>“Saipem 7000.”</span> Accessed July 31, 2026. <a href="https://www.saipem.com/en/solutions-energy-transition/fleet-and-yards/saipem-7000">https://www.saipem.com/en/solutions-energy-transition/fleet-and-yards/saipem-7000</a>.
-</div>
-<div id="ref-scaldisButendiek" class="csl-entry" role="listitem">
-Scaldis Salvage and Marine Contractors. 2014. <span>“Butendiek Offshore Substation.”</span> <a href="https://www.scaldis-smc.com/en/projects/groen-2014-may-butendiek/">https://www.scaldis-smc.com/en/projects/groen-2014-may-butendiek/</a>.
-</div>
-<div id="ref-scaldisFleet" class="csl-entry" role="listitem">
-Scaldis Salvage and Marine Contractors. n.d. <span>“Company Profile and Heavy-Lift Fleet.”</span> Accessed July 31, 2026. <a href="https://www.scaldis-smc.com/en/company/company-profile/">https://www.scaldis-smc.com/en/company/company-profile/</a>.
-</div>
-<div id="ref-shields2021TurbinePlantUpsizing" class="csl-entry" role="listitem">
-Shields, Matt, Philipp Beiter, Jacob Nunemaker, Aubryn Cooperman, and Patrick Duffy. 2021. <span>“Impacts of Turbine and Plant Upsizing on the Levelized Cost of Energy for Offshore Wind.”</span> <em>Applied Energy</em> 298: 117189. <a href="https://doi.org/10.1016/j.apenergy.2021.117189">https://doi.org/10.1016/j.apenergy.2021.117189</a>.
-</div>
-<div id="ref-bls2026CPI" class="csl-entry" role="listitem">
-U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Index, June 2026.”</span> July 14. <a href="https://www.bls.gov/news.release/archives/cpi_07142026.htm">https://www.bls.gov/news.release/archives/cpi_07142026.htm</a>.
-</div>
-<div id="ref-bls2024CPI" class="csl-entry" role="listitem">
-U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->

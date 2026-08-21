@@ -89,7 +89,9 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
-<script src="../site_libs/quarto-diagram/mermaid-postprocess-shim.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -248,12 +250,6 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../wind_resource_and_layout/wake_modelling_and_spacing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wake Modelling and Spacing</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/infield_layout.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Infield Layout</span></a>
   </div>
 </li>
       </ul>
@@ -559,107 +555,20 @@ div.csl-indent {
 <h2 class="anchored" data-anchor-id="purpose-and-system-boundary">Purpose and System Boundary</h2>
 <p>This page shows how the electrical-infrastructure pages fit together and where each assumption is maintained. It does not introduce separate component assumptions.</p>
 <p>The electrical chain begins after the turbine inverter and before the turbine step-up transformer. For electricity export, it ends at the onshore grid connection point. The reference architecture uses 66 kV AC array collection and a 525 kV HVDC export system based on TenneT’s 2 GW standard <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span>.</p>
-<div class="cell" data-layout-align="default">
+<div class="cell" data-fig-height="0.5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<svg id="mermaid-figure-1" width="672" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="flowchart" viewbox="0 0 2098.359375 70" role="graphics-document document" aria-roledescription="flowchart-v2" height="48">
-<style>#mermaid-figure-1{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-figure-1 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-figure-1 .error-icon{fill:#552222;}#mermaid-figure-1 .error-text{fill:#552222;stroke:#552222;}#mermaid-figure-1 .edge-thickness-normal{stroke-width:1px;}#mermaid-figure-1 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-figure-1 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-figure-1 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-figure-1 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-figure-1 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-figure-1 .marker{fill:#333333;stroke:#333333;}#mermaid-figure-1 .marker.cross{stroke:#333333;}#mermaid-figure-1 svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-figure-1 p{margin:0;}#mermaid-figure-1 .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#333;}#mermaid-figure-1 .cluster-label text{fill:#333;}#mermaid-figure-1 .cluster-label span{color:#333;}#mermaid-figure-1 .cluster-label span p{background-color:transparent;}#mermaid-figure-1 .label text,#mermaid-figure-1 span{fill:#333;color:#333;}#mermaid-figure-1 .node rect,#mermaid-figure-1 .node circle,#mermaid-figure-1 .node ellipse,#mermaid-figure-1 .node polygon,#mermaid-figure-1 .node path{fill:#ECECFF;stroke:#9370DB;stroke-width:1px;}#mermaid-figure-1 .rough-node .label text,#mermaid-figure-1 .node .label text,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-anchor:middle;}#mermaid-figure-1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-figure-1 .rough-node .label,#mermaid-figure-1 .node .label,#mermaid-figure-1 .image-shape .label,#mermaid-figure-1 .icon-shape .label{text-align:center;}#mermaid-figure-1 .node.clickable{cursor:pointer;}#mermaid-figure-1 .root .anchor path{fill:#333333!important;stroke-width:0;stroke:#333333;}#mermaid-figure-1 .arrowheadPath{fill:#333333;}#mermaid-figure-1 .edgePath .path{stroke:#333333;stroke-width:2.0px;}#mermaid-figure-1 .flowchart-link{stroke:#333333;fill:none;}#mermaid-figure-1 .edgeLabel{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .edgeLabel p{background-color:rgba(232,232,232, 0.8);}#mermaid-figure-1 .edgeLabel rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .labelBkg{background-color:rgba(232, 232, 232, 0.5);}#mermaid-figure-1 .cluster rect{fill:#ffffde;stroke:#aaaa33;stroke-width:1px;}#mermaid-figure-1 .cluster text{fill:#333;}#mermaid-figure-1 .cluster span{color:#333;}#mermaid-figure-1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(80, 100%, 96.2745098039%);border:1px solid #aaaa33;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-figure-1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#mermaid-figure-1 rect.text{fill:none;stroke-width:0;}#mermaid-figure-1 .icon-shape,#mermaid-figure-1 .image-shape{background-color:rgba(232,232,232, 0.8);text-align:center;}#mermaid-figure-1 .icon-shape p,#mermaid-figure-1 .image-shape p{background-color:rgba(232,232,232, 0.8);padding:2px;}#mermaid-figure-1 .icon-shape rect,#mermaid-figure-1 .image-shape rect{opacity:0.5;background-color:rgba(232,232,232, 0.8);fill:rgba(232,232,232, 0.8);}#mermaid-figure-1 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-figure-1 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-figure-1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
-<g><marker id="mermaid-1786111343624_flowchart-v2-pointEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786111343624_flowchart-v2-pointStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="4.5" refy="5" markerunits="userSpaceOnUse" markerwidth="8" markerheight="8" orient="auto"><path d="M 0 5 L 10 10 L 10 0 z" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786111343624_flowchart-v2-circleEnd" class="marker flowchart-v2" viewbox="0 0 10 10" refx="11" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1786111343624_flowchart-v2-circleStart" class="marker flowchart-v2" viewbox="0 0 10 10" refx="-1" refy="5" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><circle cx="5" cy="5" r="5" class="arrowMarkerPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></circle></marker><marker id="mermaid-1786111343624_flowchart-v2-crossEnd" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="12" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><marker id="mermaid-1786111343624_flowchart-v2-crossStart" class="marker cross flowchart-v2" viewbox="0 0 11 11" refx="-1" refy="5.2" markerunits="userSpaceOnUse" markerwidth="11" markerheight="11" orient="auto"><path d="M 1,1 l 9,9 M 10,1 l -9,9" class="arrowMarkerPath" style="stroke-width: 2; stroke-dasharray: 1, 0;"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path d="M183.328,35L187.495,35C191.661,35,199.995,35,207.661,35C215.328,35,222.328,35,225.828,35L229.328,35" id="L_A_B_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_A_B_0" data-points="W3sieCI6MTgzLjMyODEyNSwieSI6MzV9LHsieCI6MjA4LjMyODEyNSwieSI6MzV9LHsieCI6MjMzLjMyODEyNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path><path d="M436.406,35L440.573,35C444.74,35,453.073,35,460.74,35C468.406,35,475.406,35,478.906,35L482.406,35" id="L_B_C_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_B_C_0" data-points="W3sieCI6NDM2LjQwNjI1LCJ5IjozNX0seyJ4Ijo0NjEuNDA2MjUsInkiOjM1fSx7IngiOjQ4Ni40MDYyNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path><path d="M690.859,35L695.026,35C699.193,35,707.526,35,715.193,35C722.859,35,729.859,35,733.359,35L736.859,35" id="L_C_D_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_C_D_0" data-points="W3sieCI6NjkwLjg1OTM3NSwieSI6MzV9LHsieCI6NzE1Ljg1OTM3NSwieSI6MzV9LHsieCI6NzQwLjg1OTM3NSwieSI6MzV9XQ==" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path><path d="M960.813,35L964.979,35C969.146,35,977.479,35,985.146,35C992.813,35,999.813,35,1003.313,35L1006.813,35" id="L_D_E_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_D_E_0" data-points="W3sieCI6OTYwLjgxMjUsInkiOjM1fSx7IngiOjk4NS44MTI1LCJ5IjozNX0seyJ4IjoxMDEwLjgxMjUsInkiOjM1fV0=" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path><path d="M1237.797,35L1241.964,35C1246.13,35,1254.464,35,1262.13,35C1269.797,35,1276.797,35,1280.297,35L1283.797,35" id="L_E_F_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_E_F_0" data-points="W3sieCI6MTIzNy43OTY4NzUsInkiOjM1fSx7IngiOjEyNjIuNzk2ODc1LCJ5IjozNX0seyJ4IjoxMjg3Ljc5Njg3NSwieSI6MzV9XQ==" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path><path d="M1545.25,35L1549.417,35C1553.583,35,1561.917,35,1569.583,35C1577.25,35,1584.25,35,1587.75,35L1591.25,35" id="L_F_G_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_F_G_0" data-points="W3sieCI6MTU0NS4yNSwieSI6MzV9LHsieCI6MTU3MC4yNSwieSI6MzV9LHsieCI6MTU5NS4yNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path><path d="M1819.156,35L1823.323,35C1827.49,35,1835.823,35,1843.49,35C1851.156,35,1858.156,35,1861.656,35L1865.156,35" id="L_G_H_0" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" style=";" data-edge="true" data-et="edge" data-id="L_G_H_0" data-points="W3sieCI6MTgxOS4xNTYyNSwieSI6MzV9LHsieCI6MTg0NC4xNTYyNSwieSI6MzV9LHsieCI6MTg2OS4xNTYyNSwieSI6MzV9XQ==" marker-end="url(#mermaid-1786111343624_flowchart-v2-pointEnd)"></path></g><g class="edgeLabels"><g class="edgeLabel"><g class="label" data-id="L_A_B_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_B_C_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_C_D_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_D_E_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_E_F_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_F_G_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g><g class="edgeLabel"><g class="label" data-id="L_G_H_0" transform="translate(0, 0)"><foreignobject width="0" height="0">
-<div class="labelBkg" data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="edgeLabel"></span>
-</div>
-</foreignobject></g></g></g><g class="nodes"><g class="node default" id="flowchart-A-0" transform="translate(95.6640625, 35)"><rect class="basic label-container" style="" x="-87.6640625" y="-27" width="175.328125" height="54"></rect><g class="label" style="" transform="translate(-57.6640625, -12)"><rect></rect><foreignobject width="115.328125" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-Turbine inverter
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-B-1" transform="translate(334.8671875, 35)"><rect class="basic label-container" style="" x="-101.5390625" y="-27" width="203.078125" height="54"></rect><g class="label" style="" transform="translate(-71.5390625, -12)"><rect></rect><foreignobject width="143.078125" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-Turbine transformer
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-C-3" transform="translate(588.6328125, 35)"><rect class="basic label-container" style="" x="-102.2265625" y="-27" width="204.453125" height="54"></rect><g class="label" style="" transform="translate(-72.2265625, -12)"><rect></rect><foreignobject width="144.453125" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-66 kV array network
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-D-5" transform="translate(850.8359375, 35)"><rect class="basic label-container" style="" x="-109.9765625" y="-27" width="219.953125" height="54"></rect><g class="label" style="" transform="translate(-79.9765625, -12)"><rect></rect><foreignobject width="159.953125" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-Offshore AC collection
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-E-7" transform="translate(1124.3046875, 35)"><rect class="basic label-container" style="" x="-113.4921875" y="-27" width="226.984375" height="54"></rect><g class="label" style="" transform="translate(-83.4921875, -12)"><rect></rect><foreignobject width="166.984375" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-Offshore VSC converter
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-F-9" transform="translate(1416.5234375, 35)"><rect class="basic label-container" style="" x="-128.7265625" y="-27" width="257.453125" height="54"></rect><g class="label" style="" transform="translate(-98.7265625, -12)"><rect></rect><foreignobject width="197.453125" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-±525 kV HVDC cable system
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-G-11" transform="translate(1707.203125, 35)"><rect class="basic label-container" style="" x="-111.953125" y="-27" width="223.90625" height="54"></rect><g class="label" style="" transform="translate(-81.953125, -12)"><rect></rect><foreignobject width="163.90625" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-Onshore VSC converter
-</p>
-</span>
-</div>
-</foreignobject></g></g><g class="node default" id="flowchart-H-13" transform="translate(1979.7578125, 35)"><rect class="basic label-container" style="" x="-110.6015625" y="-27" width="221.203125" height="54"></rect><g class="label" style="" transform="translate(-80.6015625, -12)"><rect></rect><foreignobject width="161.203125" height="24">
-<div data-xmlns="http://www.w3.org/1999/xhtml" style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;">
-<span class="nodeLabel">
-<p>
-Onshore grid interface
-</p>
-</span>
-</div>
-</foreignobject></g></g></g></g></g>
-</svg>
+<pre class="mermaid mermaid-js">flowchart LR
+  A["Turbine inverter"] --&gt; B["Turbine transformer"]
+  B --&gt; C["66 kV array network"]
+  C --&gt; D["Offshore AC collection"]
+  D --&gt; E["Offshore VSC converter"]
+  E --&gt; F["±525 kV HVDC cable system"]
+  F --&gt; G["Onshore VSC converter"]
+  G --&gt; H["Onshore grid interface"]
+</pre>
 </div>
 <p></p></figure><p></p>
 </div>
