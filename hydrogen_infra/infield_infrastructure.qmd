@@ -165,19 +165,3 @@ The length equation defines geometry only. It does not prove that every segment 
 The 500 MW-equivalent assumption supports the claim that one 6 inch rung can serve a turbine row. Header flow is higher because successive rungs add hydrogen. Header diameter, pressure drop and fault-state capacity must therefore be checked segment by segment. The current model does not yet perform this check and should not assume that every header segment can remain 6 inch.
 
 The same limitation applies to redundancy. An alternative route is useful only if isolation valves can separate the failed section and the remaining pipeline path has enough capacity. The present assumption of 100% infield-pipeline availability is a modelling convention, not a reliability result.
-
-## Current Model Inputs
-
-| Parameter | Base case |
-|---|---:|
-| Architecture | Decentralised hydrogen |
-| Topology | Two-header ladder |
-| Infield pipeline diameter | 6 inch screening assumption |
-| Infield pressure | 150 bar |
-| Assumed rung capacity | About 500 MW HHV-equivalent |
-| Farm area | 200 km$^2$ |
-| Turbine rating | 15 MW |
-| Turbine count for nominal 2 GW | 134 |
-| Continuous model length | 192.0 km |
-| Twelve-rung physical representation | 198.0 km |
-| Routing allowance | 0% in the current base case |
