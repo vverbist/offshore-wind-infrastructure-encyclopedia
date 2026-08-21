@@ -91,7 +91,6 @@ format:
     theme:
       - cosmo
       - brand
-    mermaid-format: svg
     css: styles.css
     include-after-body: progress-sidebar.html
     toc: true
