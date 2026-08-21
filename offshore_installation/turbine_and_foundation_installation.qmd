@@ -276,7 +276,7 @@ t_{\mathrm{port},T}
 0.521\ \mathrm{day/turbine}.
 $$
 
-The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR 371,069/day on the documented constant-2026-EUR basis. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:
+The current generic vessel proxy is USD\textsubscript{2024} 400,000/day, equivalent to approximately EUR~2025~ 363,297/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]. This follows the [common financial basis](../methodology/financial_and_price_basis.qmd). ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:
 
 $$
 10\ \mathrm{kn}
@@ -319,7 +319,7 @@ The Sofia values are used as logistics anchors and later validation evidence, no
 
 | Parameter | Foundation campaign | Turbine campaign | Status |
 |---|---:|---:|---|
-| $r_c$ | 371,069 EUR/day | 371,069 EUR/day | Shared provisional ORBIT proxy; retain separate parameters |
+| $r_c$ | 363,297 EUR~2025~/day | 363,297 EUR~2025~/day | Shared provisional ORBIT proxy; retain separate parameters |
 | $t_{\mathrm{mob},c}$ | 7 days | 7 days | ORBIT planning input |
 | $t_{\mathrm{port},c}$ | 0.833 day/set | 0.521 day/set | Derived from ORBIT tasks |
 | $t_{\mathrm{site},c}$ | 3.0 days/location | TODO | South Fork foundation input; turbine evidence required |

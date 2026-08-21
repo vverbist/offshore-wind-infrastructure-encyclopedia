@@ -167,7 +167,7 @@ The resulting supply-cost range is:
 | Baseline | USD$_{2022}$ 2.65 million | USD$_{2022}$ 1.66 million | **USD$_{2022}$ 4.31 million** |
 | High | USD$_{2022}$ 3.10 million | USD$_{2022}$ 2.32 million | **USD$_{2022}$ 5.42 million** |
 
-The values remain in the source's 2022 USD basis. Currency conversion and escalation are applied later using the common financial assumptions.
+The values remain in the source's 2022 USD basis. Currency conversion and escalation are applied later using the [common EUR2025 financial basis](../methodology/financial_and_price_basis.qmd).
 
 ## Model Output and Limitations
 

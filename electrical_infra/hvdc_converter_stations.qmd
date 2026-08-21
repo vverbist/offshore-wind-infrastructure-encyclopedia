@@ -51,16 +51,26 @@ At 2 GW and 525 kV per pole, $I_\mathrm{pole}=1.905$ kA. The converter MVA ratin
 
 The Danish Energy Agency gives a 2025 central planning value of 320 EUR/kW for an onshore 525 kV DC converter station, with 250--420 EUR/kW as its low and high cases. These values are stated at the 2020 price level [@danishEnergyAgency2025Transport].
 
-The 2020 values are restated to constant 2026 euros using the report's factor of 1.263. That factor uses euro-area annual-average HICP through 2025 and the European Commission's 3.0% euro-area inflation forecast for 2026 [@eurostat2026HICP; @europeanCommission2026Forecast].
+The report's factor of 1.263 restates 2020 values through forecast 2026 inflation. For the common EUR~2025~ basis, the 3.0% forecast 2026 step is removed explicitly:
+
+$$
+F_{2020\rightarrow2025}
+=
+\frac{1.263}{1.030}
+=
+1.22621.
+$$
+
+The transformation uses euro-area annual-average HICP through 2025 and the European Commission's 3.0% euro-area inflation forecast for 2026 [@eurostat2026HICP; @europeanCommission2026Forecast].
 
 Because the DEA offshore-station value explicitly includes its platform, it is not used as converter equipment CAPEX here. The model provisionally applies the onshore-station coefficient to both electrical terminals:
 
 | Converter electrical equipment | Low | Central | High | Cost owner |
 |---|---:|---:|---:|---|
-| One converter station | <span class="cost-owned">316 EUR/kW</span> | <span class="cost-owned">404 EUR/kW</span> | <span class="cost-owned">530 EUR/kW</span> | **This page** |
-| Offshore + onshore converter pair | <span class="cost-owned">632 EUR/kW</span> | <span class="cost-owned">808 EUR/kW</span> | <span class="cost-owned">1,061 EUR/kW</span> | **This page** |
+| One converter station | <span class="cost-owned">307 EUR~2025~/kW</span> | <span class="cost-owned">392 EUR~2025~/kW</span> | <span class="cost-owned">515 EUR~2025~/kW</span> | **This page** |
+| Offshore + onshore converter pair | <span class="cost-owned">613 EUR~2025~/kW</span> | <span class="cost-owned">785 EUR~2025~/kW</span> | <span class="cost-owned">1,030 EUR~2025~/kW</span> | **This page** |
 
-The adopted central coefficient is 808 EUR/kW for the two-terminal converter pair. No residual project factor is added. Owner development, financing, wider grid works and decommissioning remain outside this coefficient.
+The adopted central coefficient is 785 EUR~2025~/kW for the two-terminal converter pair. No residual project factor is added. Owner development, financing, wider grid works and decommissioning remain outside this coefficient.
 
 The offshore terminal may require more costly marinised electrical equipment than the onshore terminal. A public offshore-equipment premium separated from platform and installation cost is not currently available, so this is a stated modelling limitation.
 
@@ -70,10 +80,10 @@ The physical offshore station also needs a platform, foundation, transport and i
 
 | Cost-stack element | Reference value | Status | Cost owner |
 |---|---:|---|---|
-| Offshore + onshore converter equipment | <span class="cost-owned">808 EUR/kW</span> | Model central value | **This page** |
-| Offshore platform and offshore premium proxy | <span class="cost-reference">544 EUR/kW</span> | DEA offshore-minus-onshore difference; not an adopted standalone platform cost | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
+| Offshore + onshore converter equipment | <span class="cost-owned">785 EUR~2025~/kW</span> | Model central value | **This page** |
+| Offshore platform and offshore premium proxy | <span class="cost-reference">527 EUR~2025~/kW</span> | DEA offshore-minus-onshore difference; not an adopted standalone platform cost | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Platform offshore installation | <span class="cost-reference">TBD</span> | Must be separated from fabrication and equipment | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
-| DEA offshore + onshore station pair, platform included | <span class="cost-reference">1,352 EUR/kW</span> | Scope comparator, not added to the rows above | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
+| DEA offshore + onshore station pair, platform included | <span class="cost-reference">1,312 EUR~2025~/kW</span> | Scope comparator, not added to the rows above | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 
 ::: {.callout-note}
 ## Reference costs are not additional costs
@@ -81,7 +91,7 @@ The physical offshore station also needs a platform, foundation, transport and i
 The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. Only the green converter coefficient is booked here.
 :::
 
-Public TenneT programme announcements correspond to roughly EUR 1,000--1,170/kW when divided by announced system count and rating [@tennet2gwProgrammeData; @hitachiPetrofac2023TenneT; @geVernova2023TenneT; @siemensEnergy2023TenneT]. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with the 808 EUR/kW converter-only coefficient.
+Public TenneT programme announcements correspond to roughly EUR 1,000--1,170/kW when divided by announced system count and rating [@tennet2gwProgrammeData; @hitachiPetrofac2023TenneT; @geVernova2023TenneT; @siemensEnergy2023TenneT]. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with the 785 EUR~2025~/kW converter-only coefficient.
 
 ## Conversion Losses
 
@@ -124,7 +134,7 @@ Once these states are simulated, the corresponding flat availability factors mus
 |---|---:|---:|---|
 | Link rating | 2 GW reference | Test discrete link count | Public TenneT standard |
 | Pole voltage | +/-525 kV | Fixed for reference design | Public TenneT standard |
-| Converter pair CAPEX, platform excluded | 808 EUR/kW | 632--1,061 EUR/kW | DEA onshore-station range applied twice |
+| Converter pair CAPEX, platform excluded | 785 EUR~2025~/kW | 613--1,030 EUR~2025~/kW | DEA onshore-station range applied twice |
 | Scaling | Linear up to 2 GW | Use complete links above 2 GW | Screening assumption |
 | Offshore aggregate efficiency | 98.5% | Replace with supplier loss curve | Conservative working value |
 | Onshore aggregate efficiency | 98.5% | Replace with supplier loss curve | Conservative working value |

@@ -93,7 +93,7 @@ The cable-lay calculation uses the relevant executable defaults in ORBIT version
 | Landfall pull-winch speed | 5 km/h | 5 km/h when this ORBIT landfall method is selected | Sourced ORBIT input |
 | Cable-vessel operating limits | 2 m wave height; 25 m/s wind | Context for weather modelling; not converted into a percentage uplift | Sourced ORBIT input |
 | Cable-vessel mobilisation | 3 days at 50% of day rate | 1.5 full-rate-equivalent spread-days | Derived ORBIT cost input |
-| Cable-vessel day rate | 241,171 USD\textsubscript{2024}/day | 223,727 EUR\textsubscript{2026}/day for cable laying only | Provisional screening lay-spread-rate assumption |
+| Cable-vessel day rate | 241,171 USD\textsubscript{2024}/day | 219,041 EUR~2025~/day for cable laying only | Provisional screening lay-spread-rate assumption |
 | Generic support-vessel transit speed | 10 km/h | Reference only; not a survey production rate | ORBIT vessel input without a demonstrated survey scope |
 | Generic support-vessel operating limits | 3 m wave height; 20 m/s wind | Reference only; selected survey spread required | ORBIT vessel input without a demonstrated survey scope |
 | Generic support-vessel mobilisation | 7 days at full rate | Reference only; not adopted | ORBIT vessel input without a demonstrated survey scope |
@@ -560,14 +560,14 @@ $$
 
 | Symbol | Definition | Unit |
 |---|---|---|
-| $C_{\mathrm{installation}}$ | Total installation CAPEX | 2026 EUR |
+| $C_{\mathrm{installation}}$ | Total installation CAPEX | EUR~2025~ |
 | $T_{\mathrm{lay}}$ | Weather-adjusted chargeable lay-spread time | day |
 | $T_{\mathrm{bury}}$ | Weather-adjusted chargeable burial-spread time | day |
 | $T_{\mathrm{ROV}}$ | Chargeable independent and supporting ROV/survey-spread time | day |
-| $r_{\mathrm{lay}}$ | All-in lay-spread rate | 2026 EUR/day |
-| $r_{\mathrm{bury}}$ | All-in burial-spread rate | 2026 EUR/day |
-| $r_{\mathrm{ROV}}$ | All-in ROV/survey-spread rate | 2026 EUR/day |
-| $C_{\mathrm{exceptional}}$ | Work and materials outside the three time-based spreads | 2026 EUR |
+| $r_{\mathrm{lay}}$ | All-in lay-spread rate | EUR~2025~/day |
+| $r_{\mathrm{bury}}$ | All-in burial-spread rate | EUR~2025~/day |
+| $r_{\mathrm{ROV}}$ | All-in ROV/survey-spread rate | EUR~2025~/day |
+| $C_{\mathrm{exceptional}}$ | Work and materials outside the three time-based spreads | EUR~2025~ |
 
 For a campaign selected from candidate spreads, $r_{\mathrm{lay}}=r_{\mathrm{lay},v^*}$ and $T_{\mathrm{lay}}=T_{\mathrm{lay},v^*}$. A missing candidate-specific TCP rate therefore blocks the numerical TCP lay-cost term; it is not replaced by the cable-vessel rate or set to zero.
 
@@ -582,20 +582,20 @@ N_{\mathrm{cross}}C_{\mathrm{cross}}
 +C_{\mathrm{other}}.
 $$
 
-Here $N_{\mathrm{cross}}$ and $N_{\mathrm{landfall}}$ are counts; $C_{\mathrm{cross}}$ and $C_{\mathrm{landfall}}$ are 2026 EUR per item; $L_{\mathrm{protection}}$ is protected route length in km; $c_{\mathrm{protection}}$ is 2026 EUR/km; and $C_{\mathrm{other}}$ is any other explicitly scoped exceptional cost in 2026 EUR.
+Here $N_{\mathrm{cross}}$ and $N_{\mathrm{landfall}}$ are counts; $C_{\mathrm{cross}}$ and $C_{\mathrm{landfall}}$ are EUR~2025~ per item; $L_{\mathrm{protection}}$ is protected route length in km; $c_{\mathrm{protection}}$ is EUR~2025~/km; and $C_{\mathrm{other}}$ is any other explicitly scoped exceptional cost in EUR~2025~.
 
 Crossings, landfall, protection materials and exceptional civil work remain site-specific. A term is set to zero only when the matching spread quotation explicitly includes the same scope.
 
-**Constant-2026-EUR normalization**
+**Constant-EUR~2025~ normalisation**
 
 Each spread rate and exceptional cost is escalated in its original currency before conversion to euros:
 
 $$
-C_{2026,\mathrm{EUR}}
+C_{2025,\mathrm{EUR}}
 =
 C_{y,s}
-\frac{I_{s,k}(2026^*)}{I_{s,k}(y)}
-FX_{\mathrm{EUR}/s}(2026^*)
+\frac{I_{s,k}(2025)}{I_{s,k}(y)}
+FX_{\mathrm{EUR}/s}(2025)
 G_{\mathrm{market}}.
 $$
 
@@ -606,17 +606,17 @@ $$
 | $FX_{\mathrm{EUR}/s}$ | Euros per unit of source currency |
 | $G_{\mathrm{market}}$ | Separately stated geographic-market factor |
 
-ORBIT version 1.3 states its vessel-library costs in 2024 USD [@orbit2026V13CableDefaults]. The screening conversion uses 2024 annual-average U.S. CPI-U of 313.689, June 2026 CPI-U of 333.952 and the 30 July 2026 ECB reference rate of USD 1.1476 per EUR [@bls2024CPI; @bls2026CPI; @ecb2026ExchangeRates]:
+ORBIT version 1.3 states its vessel-library costs in 2024 USD [@orbit2026V13CableDefaults]. The screening conversion uses annual-average U.S. CPI-U values of 313.689 for 2024 and 321.943 for 2025, followed by the ECB 2025 annual-average exchange rate of USD 1.1300 per EUR [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]:
 
 $$
 F
 =
-\frac{333.952}{313.689}\frac{1}{1.1476}
+\frac{321.943}{313.689}\frac{1}{1.1300}
 =
-0.9276715\ \mathrm{EUR}_{2026}/\mathrm{USD}_{2024}.
+0.9082413\ \mathrm{EUR}_{2025}/\mathrm{USD}_{2024}.
 $$
 
-The factor gives 223,727 EUR\textsubscript{2026}/day for ORBIT's 241,171 USD\textsubscript{2024}/day cable vessel and 113,824 EUR\textsubscript{2026}/day for its 122,699 USD\textsubscript{2024}/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.
+The factor gives 219,041 EUR~2025~/day for ORBIT's 241,171 USD\textsubscript{2024}/day cable vessel and 111,440 EUR~2025~/day for its 122,699 USD\textsubscript{2024}/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.
 
 ### Worked example: evidence-gated 2 GW cable inventory
 
@@ -634,7 +634,7 @@ This example shows how far the calculation can proceed for a 2 GW wind farm with
 | Candidate usable carousel mass | 5,000 t | 5,000 t | User-specified screening vessel candidate |
 | Port-to-worksite distance | Unresolved | Unresolved | Project loading-port decision required |
 | Lay production | 9.6 km/day/pass | 9.6 km/day/pass | ORBIT version 1.3 executable default [@orbit2026V13CableDefaults] |
-| Cable-lay spread rate | 223,727 EUR\textsubscript{2026}/day | 223,727 EUR\textsubscript{2026}/day | Provisional ORBIT-derived cable-lay screening rate |
+| Cable-lay spread rate | 219,041 EUR~2025~/day | 219,041 EUR~2025~/day | Provisional ORBIT-derived cable-lay screening rate |
 | Burial production and spread rate | Unresolved | Unresolved | Route soil, burial tool and matching spread required; the ORBIT rate is reference context only |
 | Survey scope, production and spread rate | Unresolved | Unresolved | Site-specific or contractor inputs required |
 | Demobilisation and weather delay | Unresolved | Unresolved | Contractor and project metocean inputs required |
@@ -727,7 +727,7 @@ An 80--100 km export route is far longer than the public 3--6 km continuous-leng
 | Product, vessel and route qualification gate | Project installation verification required beyond ORBIT screening | Hydrogen-qualified supplier and contractor verification required |
 | Selected lay spread | ORBIT cable-vessel proxy in the screening case | Selected only after physical qualification and candidate-rate comparison |
 | Cable storage, transit, load, interface, splice and lay defaults | Sourced ORBIT version 1.3 screening inputs [@orbit2026V13CableDefaults] | Not applicable |
-| Lay-spread rate | 223,727 EUR\textsubscript{2026}/day; provisional complete-spread screening assumption | Supplier or contractor input required |
+| Lay-spread rate | 219,041 EUR~2025~/day; provisional complete-spread screening assumption | Supplier or contractor input required |
 | Burial-spread rate | Supplier or contractor input required | Supplier or contractor input required |
 | ROV/survey-spread rate | Supplier or contractor input required | Supplier or contractor input required |
 | Demobilisation | Supplier or contractor input required; not generally represented by ORBIT | Supplier or contractor input required |

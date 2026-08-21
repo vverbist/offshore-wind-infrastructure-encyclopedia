@@ -64,15 +64,15 @@ The logistics terms combine chargeable load-out, transport, setup and critical w
 
 | Parameter | Symbol | Unit | Status |
 |---|---:|---:|---|
-| Complete piled-jacket spread rate | $r_{FJ}$ | 2026 EUR/day | Contractor input required |
-| Complete topside spread rate | $r_S$ | 2026 EUR/day | Contractor input required |
-| Complete hook-up spread rate | $r_H$ | 2026 EUR/day | Contractor input required |
-| Total mobilisation and demobilisation | $C_{\mathrm{mob}}$ | 2026 EUR | Project commercial input required |
-| Defined exceptional work | $C_{\mathrm{exceptional}}$ | 2026 EUR | Project-specific input when applicable |
+| Complete piled-jacket spread rate | $r_{FJ}$ | EUR~2025~/day | Contractor input required |
+| Complete topside spread rate | $r_S$ | EUR~2025~/day | Contractor input required |
+| Complete hook-up spread rate | $r_H$ | EUR~2025~/day | Contractor input required |
+| Total mobilisation and demobilisation | $C_{\mathrm{mob}}$ | EUR~2025~ | Project commercial input required |
+| Defined exceptional work | $C_{\mathrm{exceptional}}$ | EUR~2025~ | Project-specific input when applicable |
 
 $C_{\mathrm{mob}}$ is the total mobilisation and demobilisation cost across the three campaigns after accounting for any shared mobilisation. It must not repeat mobilisation already included in a spread rate.
 
-All commercial inputs must follow the common currency and price-basis treatment documented in [CAPEX and OPEX Conventions](../shared_model_inputs/capex_opex_conventions.qmd). The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.
+All commercial inputs must follow the common treatment documented in [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd). The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.
 
 ## Installation-Class Screen
 
@@ -142,10 +142,10 @@ If exceptional work is relevant but not quantified, it is reported as **not incl
 | Number of piled jackets | count | Equals $N_{\mathrm{OSS}}$ |
 | Number of topside lifts | count | Exposes the split-topside discontinuity |
 | Campaign duration by spread | day | Shows the time basis of each cost |
-| Campaign cost | 2026 EUR | Separates piled-jacket, topside and hook-up expenditure |
-| Mobilisation | 2026 EUR | Keeps fixed campaign cost visible |
-| Exceptional-work status and cost | text and 2026 EUR when defined | Prevents unsupported work from being silently treated as zero |
-| Total installation CAPEX | 2026 EUR | Used in the project CAPEX calculation |
+| Campaign cost | EUR~2025~ | Separates piled-jacket, topside and hook-up expenditure |
+| Mobilisation | EUR~2025~ | Keeps fixed campaign cost visible |
+| Exceptional-work status and cost | text and EUR~2025~ when defined | Prevents unsupported work from being silently treated as zero |
+| Total installation CAPEX | EUR~2025~ | Used in the project CAPEX calculation |
 
 A EUR/kW value may be reported only as a derived comparison after total installation CAPEX is calculated. It is not a model input.
 

@@ -37,7 +37,7 @@ The foundation model does not use turbine rated power directly. Rated power, rot
 | Monopile mass and foundation supply cost | [Monopile Foundation Mass and Cost](foundation.qmd) | Monopile mass and foundation supply CAPEX, including the transition-piece cost allowance |
 | Offshore transport and installation | [Turbine and Foundation Installation](../offshore_installation/turbine_and_foundation_installation.qmd) | Vessel feasibility, campaign duration, and installation CAPEX |
 | Electrical-architecture definition | [Architecture Comparison](../architectures/component_mapping.qmd) | Components retained, removed, or replaced in each system architecture |
-| Currency, escalation, and annualisation | [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd) | Common financial basis applied after component calculations |
+| Currency, escalation, and annualisation | [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd) | Common EUR2025 financial basis applied after component calculations |
 
 ## Ownership Across Pages
 

@@ -27,4 +27,3 @@ For why this comparison is being made and what question it is designed to answer
 - [Hydrogen Infrastructure](hydrogen_infra/overview.qmd)
 - [Platform Material CAPEX](platforms/platform_material_capex.qmd)
 - [Offshore Installation](offshore_installation/overview.qmd)
-- [Shared Model Inputs](shared_model_inputs/overview.qmd)

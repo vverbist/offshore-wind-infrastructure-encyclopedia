@@ -76,7 +76,7 @@ The same rule applies to performance: a detailed loss or outage calculation repl
 | Discrete infrastructure choices in the optimisation | [Optimisation Variables](../methodology/optimisation_variables.qmd) |
 | Delivered-energy boundary and component availability | [Energy, Availability, and Annualisation](../methodology/energy_availability_and_annualisation.qmd) |
 | LCOE system boundary | [System Boundary and LCOE](../methodology/system_boundary_and_lcoe.qmd) |
-| Currency, inflation and annualisation | [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd) |
-| CAPEX, OPEX and cost-booking conventions | [CAPEX and OPEX Conventions](../shared_model_inputs/capex_opex_conventions.qmd) |
+| Currency, inflation and annualisation | [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd) |
+| CAPEX, OPEX and cost ownership | Relevant component and installation pages |
 
 Use the component pages for values, evidence and limitations; use this page only to identify the correct component and accounting owner.

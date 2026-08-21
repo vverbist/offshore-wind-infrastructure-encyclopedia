@@ -89,7 +89,7 @@ The NREL Atlantic Offshore Wind Transmission Study gives a separated material co
 | 525 kV, 2 GW bipole material reference | <span class="cost-owned">1.26 EUR/kW/km</span> | NREL material cost converted with the 2025 ECB average exchange rate | **This page** |
 | Marine/terrestrial installation | <span class="cost-reference">Calculated separately</span> | Shared campaign model; no fixed EUR/km coefficient is adopted | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 
-This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value is combined with constant-2026-EUR inputs.
+This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value can be adopted as a constant-EUR~2025~ model input.
 
 ## Installed-Cost Perspective
 
@@ -98,8 +98,8 @@ The background report's Adriatic Link and DEA values cover installed or EPC cabl
 | Installed-system benchmark | Reference value | Interpretation | Cost owner |
 |---|---:|---|---|
 | NREL material + installation | <span class="cost-reference">EUR 4.00 million/km</span> | Historical 2 GW installed-route comparison; not an adopted installation coefficient | This page and [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
-| Adriatic-derived subsea rate | <span class="cost-reference">EUR 2.60 million/km</span> | 2026-euro installed-system inference from a 1 GW project | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
-| DEA subsea EPC reference | <span class="cost-reference">EUR 8.14 million/km</span> | DEA 2025 value restated to 2026 euros and evaluated at 2 GW | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
+| Adriatic-derived subsea rate | <span class="cost-reference">EUR~2025~ 2.52 million/km</span> | Installed-system inference from a 1 GW project | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
+| DEA subsea EPC reference | <span class="cost-reference">EUR~2025~ 7.90 million/km</span> | DEA value restated to EUR~2025~ and evaluated at 2 GW | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 
 ::: {.callout-note}
 ## Installation is shown for perspective only
@@ -139,7 +139,7 @@ Spare cable, compatible joints, repair-vessel access, permits and trained jointi
 
 | Limitation | Implication |
 |---|---|
-| NREL source price year is unresolved | The euro conversion is not yet a constant-2026-euro input |
+| NREL source price year is unresolved | The euro conversion is not yet a constant-EUR~2025~ input |
 | NREL and TenneT topologies may differ | Metallic-return and accessory scope must be checked |
 | Adriatic and DEA values include installation | They validate only the combined route cost |
 | No matched underground material coefficient | Subsea and underground supply costs cannot yet be separated cleanly |

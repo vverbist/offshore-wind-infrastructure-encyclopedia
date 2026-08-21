@@ -44,7 +44,7 @@ The intermediate voltage and detailed transformer winding arrangement are not mo
 
 ## Cost Basis
 
-Published power-electronics costs are not fully like-for-like. The literature includes manufactured cost, purchased-equipment cost, and installed system cost, with different transformer and auxiliary-equipment boundaries. Where a source explicitly reports manufactured cost before markup, the same 50% manufacturer markup used for the stack and balance-of-plant costs is applied here before comparison (see [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd)), rather than treating any single source as a directly transferable quotation.
+Published power-electronics costs are not fully like-for-like. The literature includes manufactured cost, purchased-equipment cost, and installed system cost, with different transformer and auxiliary-equipment boundaries. Where a source explicitly reports manufactured cost before markup, the same 50% manufacturer markup used for the stack and balance-of-plant costs is applied here before comparison (see [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd)), rather than treating any single source as a directly transferable quotation.
 
 NREL adopts a cost of 199 USD\textsubscript{2020}/kW for the transformer and rectifier of a 1 MW PEM electrolyser, based on historical supplier quotations and explicitly excluding manufacturer markup, installation, soft costs, and inflation [@badgett2024PEMCost]. Applying the standard 50% markup gives an equipment purchase cost of:
 
@@ -56,7 +56,7 @@ Fraunhofer ISE estimates PEM power-electronics costs of approximately 160 EUR/kW
 
 No public vendor source was found that provides a binding price for a complete offshore 66 kV-to-DC package with a consistent scope. Vendor literature is therefore used to confirm topology, modularity, and efficiency, but not as the primary cost basis.
 
-The central model value is **185 EUR/kW** for the complete purchased 66 kV-to-stack-DC conversion package, taken directly from Fraunhofer's combined large-system transformer-plus-power-electronics estimate. This sits well below the marked-up NREL benchmark of approximately 300 USD\textsubscript{2020}/kW for a small 1 MW reference unit — compared here at face value, pending a documented USD-to-EUR conversion factor (see [Financial Assumptions](../shared_model_inputs/financial_assumptions.qmd)) — and above the lowest reported regional equipment prices.
+The central model value is **185 EUR/kW** for the complete purchased 66 kV-to-stack-DC conversion package, taken directly from Fraunhofer's combined large-system transformer-plus-power-electronics estimate. This sits well below the marked-up NREL benchmark of approximately 300 USD\textsubscript{2020}/kW for a small 1 MW reference unit — compared here at face value, pending complete EUR~2025~ normalisation (see [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd)) — and above the lowest reported regional equipment prices.
 
 ## Cost Scaling
 
@@ -131,4 +131,3 @@ This model is intended for early-stage techno-economic assessment. Several previ
 | The main 66 kV transformer is assigned to this subsystem | Model integration must ensure that the same transformer is not also included in platform or infield electrical CAPEX |
 
 : Remaining limitations of the power-electronics model.
-

@@ -124,11 +124,11 @@ as separate cost categories. Their payer and regulatory treatment may also diffe
 
 ## Cost Boundary
 
-The model books the onshore converter as part of the 808 EUR/kW two-terminal electrical-equipment coefficient on [HVDC Converter Stations](hvdc_converter_stations.qmd). The offshore platform and both cable supply and installation are separate. This page therefore assigns **no additional generic onshore-converter CAPEX**.
+The model books the onshore converter as part of the 785 EUR~2025~/kW two-terminal electrical-equipment coefficient on [HVDC Converter Stations](hvdc_converter_stations.qmd). The offshore platform and both cable supply and installation are separate. This page therefore assigns **no additional generic onshore-converter CAPEX**.
 
 | Cost element | Reference | Evidence gap | Cost owner |
 |---|---|---|---|
-| Onshore VSC equipment, transformers and cooling | <span class="cost-reference">Part of 808 EUR/kW converter pair</span> | No project equipment ledger | [HVDC Converter Stations](hvdc_converter_stations.qmd) |
+| Onshore VSC equipment, transformers and cooling | <span class="cost-reference">Part of 785 EUR~2025~/kW converter pair</span> | No project equipment ledger | [HVDC Converter Stations](hvdc_converter_stations.qmd) |
 | Underground DC cable supply | <span class="cost-reference">TBD</span> | No matched underground material-only coefficient | [HVDC Export Cables](hvdc_export_cables.qmd) |
 | Underground cable and landfall installation | <span class="cost-reference">TBD</span> | Route and civil design required | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | 380 kV station bay/extension | <span class="cost-owned">TBD</span> | Connection agreement required | **This page** |
@@ -214,7 +214,7 @@ Long underground routes can dominate civil works even when the converter site is
 | Link rating | 2 GW | Discrete 2 GW blocks | TenneT standard |
 | DC voltage | +/-525 kV | Fixed for standard case | TenneT standard |
 | Grid voltage | 380 kV | Project-specific transmission voltage | Dutch reference |
-| Onshore converter CAPEX | Included in 808 EUR/kW converter pair | 632--1,061 EUR/kW pair range | DEA coefficient; platform excluded |
+| Onshore converter CAPEX | Included in 785 EUR~2025~/kW converter pair | 613--1,030 EUR~2025~/kW pair range | DEA coefficient; platform excluded |
 | Underground DC cable material | TBD | Obtain material-only benchmark | Separate cable owner |
 | Underground cable installation | TBD | Route-specific model | Separate installation owner |
 | Residual grid-interface CAPEX | TBC, not zero by evidence | Site-specific study | Source gap |
