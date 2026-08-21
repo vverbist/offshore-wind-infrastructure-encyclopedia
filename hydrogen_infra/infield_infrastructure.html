@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -484,47 +490,6 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -553,7 +518,6 @@ window.Quarto = {
   <li><a href="#reference-calculation" id="toc-reference-calculation" class="nav-link" data-scroll-target="#reference-calculation">Reference Calculation</a></li>
   <li><a href="#scope-of-the-length-result" id="toc-scope-of-the-length-result" class="nav-link" data-scroll-target="#scope-of-the-length-result">Scope of the Length Result</a></li>
   <li><a href="#capacity-and-redundancy-checks" id="toc-capacity-and-redundancy-checks" class="nav-link" data-scroll-target="#capacity-and-redundancy-checks">Capacity and Redundancy Checks</a></li>
-  <li><a href="#current-model-inputs" id="toc-current-model-inputs" class="nav-link" data-scroll-target="#current-model-inputs">Current Model Inputs</a></li>
   </ul>
 </nav>
     </div>
@@ -725,63 +689,6 @@ L_\mathrm{infield}
 <p>The length equation defines geometry only. It does not prove that every segment can carry the required flow.</p>
 <p>The 500 MW-equivalent assumption supports the claim that one 6 inch rung can serve a turbine row. Header flow is higher because successive rungs add hydrogen. Header diameter, pressure drop and fault-state capacity must therefore be checked segment by segment. The current model does not yet perform this check and should not assume that every header segment can remain 6 inch.</p>
 <p>The same limitation applies to redundancy. An alternative route is useful only if isolation valves can separate the failed section and the remaining pipeline path has enough capacity. The present assumption of 100% infield-pipeline availability is a modelling convention, not a reliability result.</p>
-</section>
-<section id="current-model-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="current-model-inputs">Current Model Inputs</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Base case</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Architecture</td>
-<td style="text-align: right;">Decentralised hydrogen</td>
-</tr>
-<tr class="even">
-<td>Topology</td>
-<td style="text-align: right;">Two-header ladder</td>
-</tr>
-<tr class="odd">
-<td>Infield pipeline diameter</td>
-<td style="text-align: right;">6 inch screening assumption</td>
-</tr>
-<tr class="even">
-<td>Infield pressure</td>
-<td style="text-align: right;">150 bar</td>
-</tr>
-<tr class="odd">
-<td>Assumed rung capacity</td>
-<td style="text-align: right;">About 500 MW HHV-equivalent</td>
-</tr>
-<tr class="even">
-<td>Farm area</td>
-<td style="text-align: right;">200 km<span class="math inline">\(^2\)</span></td>
-</tr>
-<tr class="odd">
-<td>Turbine rating</td>
-<td style="text-align: right;">15 MW</td>
-</tr>
-<tr class="even">
-<td>Turbine count for nominal 2 GW</td>
-<td style="text-align: right;">134</td>
-</tr>
-<tr class="odd">
-<td>Continuous model length</td>
-<td style="text-align: right;">192.0 km</td>
-</tr>
-<tr class="even">
-<td>Twelve-rung physical representation</td>
-<td style="text-align: right;">198.0 km</td>
-</tr>
-<tr class="odd">
-<td>Routing allowance</td>
-<td style="text-align: right;">0% in the current base case</td>
-</tr>
-</tbody>
-</table>
 
 
 

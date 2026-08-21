@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -480,47 +486,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform and Substation Installation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
   </div>
 </li>
       </ul>
@@ -946,7 +911,7 @@ t_{\mathrm{port},T}
 =
 0.521\ \mathrm{day/turbine}.
 \]</span></p>
-<p>The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR 371,069/day on the documented constant-2026-EUR basis. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:</p>
+<p>The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR<sub>2025</sub> 363,297/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. This follows the <a href="../methodology/financial_and_price_basis.html">common financial basis</a>. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:</p>
 <p><span class="math display">\[
 10\ \mathrm{kn}
 \times1.852\ \mathrm{km/nmi}
@@ -999,8 +964,8 @@ t_{\mathrm{site},F}
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(r_c\)</span></td>
-<td style="text-align: right;">371,069 EUR/day</td>
-<td style="text-align: right;">371,069 EUR/day</td>
+<td style="text-align: right;">363,297 EUR<sub>2025</sub>/day</td>
+<td style="text-align: right;">363,297 EUR<sub>2025</sub>/day</td>
 <td>Shared provisional ORBIT proxy; retain separate parameters</td>
 </tr>
 <tr class="even">
@@ -1153,6 +1118,9 @@ t_{\mathrm{site},F}
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
 <div id="ref-orbit2026InstallationDefaults" class="csl-entry" role="listitem">
 National Laboratory of the Rockies. n.d. <span>“<span>ORBIT</span> Introduction.”</span> Accessed July 31, 2026. <a href="https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html">https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html</a>.
 </div>
@@ -1167,6 +1135,12 @@ Sofia Offshore Wind Farm. 2026. <span>“<span>RWE</span> Completes Installation
 </div>
 <div id="ref-boem2021SouthForkCOP" class="csl-entry" role="listitem">
 South Fork Wind, LLC. 2021. <em>South Fork Wind Farm and South Fork Export Cable Project: Construction and Operations Plan, Volume i</em>. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/Volume-I-Construction-and-Operations-Plan/">https://www.boem.gov/Volume-I-Construction-and-Operations-Plan/</a>.
+</div>
+<div id="ref-bls2025CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Indexes for All Urban Consumers: U.s. City Average, Annual Average.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
+</div>
+<div id="ref-bls2024CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->

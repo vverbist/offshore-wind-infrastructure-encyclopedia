@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -484,47 +490,6 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -779,37 +744,37 @@ window.Quarto = {
 <tr class="odd">
 <td>Complete piled-jacket spread rate</td>
 <td style="text-align: right;"><span class="math inline">\(r_{FJ}\)</span></td>
-<td style="text-align: right;">2026 EUR/day</td>
+<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
 <td>Contractor input required</td>
 </tr>
 <tr class="even">
 <td>Complete topside spread rate</td>
 <td style="text-align: right;"><span class="math inline">\(r_S\)</span></td>
-<td style="text-align: right;">2026 EUR/day</td>
+<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
 <td>Contractor input required</td>
 </tr>
 <tr class="odd">
 <td>Complete hook-up spread rate</td>
 <td style="text-align: right;"><span class="math inline">\(r_H\)</span></td>
-<td style="text-align: right;">2026 EUR/day</td>
+<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
 <td>Contractor input required</td>
 </tr>
 <tr class="even">
 <td>Total mobilisation and demobilisation</td>
 <td style="text-align: right;"><span class="math inline">\(C_{\mathrm{mob}}\)</span></td>
-<td style="text-align: right;">2026 EUR</td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
 <td>Project commercial input required</td>
 </tr>
 <tr class="odd">
 <td>Defined exceptional work</td>
 <td style="text-align: right;"><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
-<td style="text-align: right;">2026 EUR</td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
 <td>Project-specific input when applicable</td>
 </tr>
 </tbody>
 </table>
 <p><span class="math inline">\(C_{\mathrm{mob}}\)</span> is the total mobilisation and demobilisation cost across the three campaigns after accounting for any shared mobilisation. It must not repeat mobilisation already included in a spread rate.</p>
-<p>All commercial inputs must follow the common currency and price-basis treatment documented in <a href="../shared_model_inputs/capex_opex_conventions.html">CAPEX and OPEX Conventions</a>. The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.</p>
+<p>All commercial inputs must follow the common treatment documented in <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>. The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.</p>
 </section>
 </section>
 <section id="installation-class-screen" class="level2">
@@ -895,22 +860,22 @@ C_{\mathrm{inst}}
 </tr>
 <tr class="odd">
 <td>Campaign cost</td>
-<td style="text-align: right;">2026 EUR</td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
 <td>Separates piled-jacket, topside and hook-up expenditure</td>
 </tr>
 <tr class="even">
 <td>Mobilisation</td>
-<td style="text-align: right;">2026 EUR</td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
 <td>Keeps fixed campaign cost visible</td>
 </tr>
 <tr class="odd">
 <td>Exceptional-work status and cost</td>
-<td style="text-align: right;">text and 2026 EUR when defined</td>
+<td style="text-align: right;">text and EUR<sub>2025</sub> when defined</td>
 <td>Prevents unsupported work from being silently treated as zero</td>
 </tr>
 <tr class="even">
 <td>Total installation CAPEX</td>
-<td style="text-align: right;">2026 EUR</td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
 <td>Used in the project CAPEX calculation</td>
 </tr>
 </tbody>

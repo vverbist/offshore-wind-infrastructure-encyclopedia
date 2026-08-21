@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -484,47 +490,6 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -775,7 +740,7 @@ E_\mathrm{cable,loss}
 </tr>
 </tbody>
 </table>
-<p>This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value is combined with constant-2026-EUR inputs.</p>
+<p>This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value can be adopted as a constant-EUR<sub>2025</sub> model input.</p>
 </section>
 </section>
 <section id="installed-cost-perspective" class="level2">
@@ -799,14 +764,14 @@ E_\mathrm{cable,loss}
 </tr>
 <tr class="even">
 <td>Adriatic-derived subsea rate</td>
-<td style="text-align: right;"><span class="cost-reference">EUR 2.60 million/km</span></td>
-<td>2026-euro installed-system inference from a 1 GW project</td>
+<td style="text-align: right;"><span class="cost-reference">EUR<sub>2025</sub> 2.52 million/km</span></td>
+<td>Installed-system inference from a 1 GW project</td>
 <td><a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
 </tr>
 <tr class="odd">
 <td>DEA subsea EPC reference</td>
-<td style="text-align: right;"><span class="cost-reference">EUR 8.14 million/km</span></td>
-<td>DEA 2025 value restated to 2026 euros and evaluated at 2 GW</td>
+<td style="text-align: right;"><span class="cost-reference">EUR<sub>2025</sub> 7.90 million/km</span></td>
+<td>DEA value restated to EUR<sub>2025</sub> and evaluated at 2 GW</td>
 <td><a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
 </tr>
 </tbody>
@@ -942,7 +907,7 @@ E_\mathrm{cable,loss}
 <tbody>
 <tr class="odd">
 <td>NREL source price year is unresolved</td>
-<td>The euro conversion is not yet a constant-2026-euro input</td>
+<td>The euro conversion is not yet a constant-EUR<sub>2025</sub> input</td>
 </tr>
 <tr class="even">
 <td>NREL and TenneT topologies may differ</td>

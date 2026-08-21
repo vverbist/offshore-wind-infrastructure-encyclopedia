@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -480,47 +486,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform and Substation Installation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
   </div>
 </li>
       </ul>
@@ -1132,7 +1097,7 @@ C_\mathrm{turbine}
 +k_\mathrm{tower}C_\mathrm{tower,raw}.
 \]</span></p>
 <p>The current calibration candidate is NREL’s 2022 Cost of Wind Energy Review. Its offshore reference is a 12 MW turbine with a 216 m rotor and 137 m hub height. It reports turbine CAPEX of USD 1,700/kW, separated into USD 1,462/kW for the RNA and USD 238/kW for the tower; installation is a separate cost category <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>. These values define a reference point, not a linear EUR/kW turbine model.</p>
-<p>Currency conversion and escalation are applied after calibration using the common financial assumptions. The source currency, source year, index, and exchange-rate convention must accompany every reported result.</p>
+<p>Currency conversion and escalation are applied after calibration using the <a href="../methodology/financial_and_price_basis.html">common EUR2025 financial basis</a>. The source currency, source year, index, and exchange-rate convention must accompany every reported result.</p>
 </section>
 <section id="decentralised-hydrogen-architecture" class="level2">
 <h2 class="anchored" data-anchor-id="decentralised-hydrogen-architecture">Decentralised Hydrogen Architecture</h2>

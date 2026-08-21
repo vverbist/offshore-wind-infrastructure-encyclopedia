@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Source Quality and Uncertainty – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Financial and Price-Basis Assumptions – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../shared_model_inputs/overview.html">Shared Model Inputs</a></li><li class="breadcrumb-item"><a href="../shared_model_inputs/source_quality_and_uncertainty.html">Source Quality and Uncertainty</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -140,6 +188,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">System Boundary and LCOE</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -436,47 +490,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -499,19 +512,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#source-types" id="toc-source-types" class="nav-link active" data-scroll-target="#source-types">Source Types</a></li>
-  <li><a href="#confidential-sources" id="toc-confidential-sources" class="nav-link" data-scroll-target="#confidential-sources">Confidential Sources</a></li>
-  <li><a href="#uncertainty-treatment" id="toc-uncertainty-treatment" class="nav-link" data-scroll-target="#uncertainty-treatment">Uncertainty Treatment</a></li>
-  <li><a href="#documentation-status-labels" id="toc-documentation-status-labels" class="nav-link" data-scroll-target="#documentation-status-labels">Documentation Status Labels</a></li>
+  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#canonical-monetary-basis" id="toc-canonical-monetary-basis" class="nav-link" data-scroll-target="#canonical-monetary-basis">Canonical Monetary Basis</a></li>
+  <li><a href="#currency-and-price-year-normalisation" id="toc-currency-and-price-year-normalisation" class="nav-link" data-scroll-target="#currency-and-price-year-normalisation">Currency and Price-Year Normalisation</a></li>
+  <li><a href="#annualisation" id="toc-annualisation" class="nav-link" data-scroll-target="#annualisation">Annualisation</a></li>
+  <li><a href="#manufactured-cost-markup" id="toc-manufactured-cost-markup" class="nav-link" data-scroll-target="#manufactured-cost-markup">Manufactured-Cost Markup</a></li>
+  <li><a href="#required-checks-before-cost-aggregation" id="toc-required-checks-before-cost-aggregation" class="nav-link" data-scroll-target="#required-checks-before-cost-aggregation">Required Checks Before Cost Aggregation</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../shared_model_inputs/overview.html">Shared Model Inputs</a></li><li class="breadcrumb-item"><a href="../shared_model_inputs/source_quality_and_uncertainty.html">Source Quality and Uncertainty</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Source Quality and Uncertainty</h1>
+<h1 class="title">Financial and Price-Basis Assumptions</h1>
 </div>
 
 
@@ -528,47 +543,156 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="source-types" class="level2">
-<h2 class="anchored" data-anchor-id="source-types">Source Types</h2>
-<p>Assumptions in this encyclopedia come from several source types:</p>
-<ul>
-<li>public literature or reports</li>
-<li>supplier or manufacturer data</li>
-<li>internal engineering estimates</li>
-<li>benchmark projects</li>
-<li>model-derived fitted curves</li>
-</ul>
+<section id="role-in-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
+<p>This page defines the common basis used to combine costs from different sources and convert project CAPEX into annual cost. Component pages retain ownership of cost scope, source values, component-specific scaling and OPEX relationships.</p>
 </section>
-<section id="confidential-sources" class="level2">
-<h2 class="anchored" data-anchor-id="confidential-sources">Confidential Sources</h2>
-<p>Some assumptions rely on confidential source data, including manufacturer stack and BOP data and supplier pipeline cost data. These should be documented by method and model representation without publishing raw confidential tables.</p>
+<section id="canonical-monetary-basis" class="level2">
+<h2 class="anchored" data-anchor-id="canonical-monetary-basis">Canonical Monetary Basis</h2>
+<p>All costs entering a common model result are expressed in <strong>constant 2025 euros (EUR<sub>2025</sub>)</strong>. This is an explicit modelling convention, not a claim that every source was published in that basis.</p>
+<p>Each imported cost must retain its source currency, source price year and cost boundary. A value with an unresolved price year cannot be adopted as an EUR<sub>2025</sub> model input; it may be shown only as a non-combinable reference until that evidence gap is resolved.</p>
+<p>No generic geographic, offshore or market multiplier is applied. Such a factor may be introduced only where evidence defines its scope and prevents overlap with component, installation or commercial allowances.</p>
 </section>
-<section id="uncertainty-treatment" class="level2">
-<h2 class="anchored" data-anchor-id="uncertainty-treatment">Uncertainty Treatment</h2>
-<p>Where source uncertainty is material, the model should document:</p>
-<ul>
-<li>base value</li>
-<li>uncertainty range</li>
-<li>sensitivity range</li>
-<li>reason for uncertainty</li>
-<li>affected model outputs</li>
-</ul>
-<p>The background model currently identifies pipeline material cost, electrolyser cost, and infrastructure cost assumptions as important candidates for sensitivity analysis.</p>
+<section id="currency-and-price-year-normalisation" class="level2">
+<h2 class="anchored" data-anchor-id="currency-and-price-year-normalisation">Currency and Price-Year Normalisation</h2>
+<p>A source cost in currency <span class="math inline">\(s\)</span> and price year <span class="math inline">\(y\)</span> is normalised as:</p>
+<p><span class="math display">\[
+C_{2025,\mathrm{EUR}}
+=
+C_{y,s}
+\frac{I_{s,k}(2025)}{I_{s,k}(y)}
+FX_{\mathrm{EUR}/s,2025}
+G_\mathrm{market}.
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Definition</th>
+<th>Unit or status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(C_{y,s}\)</span></td>
+<td>Source cost in source currency <span class="math inline">\(s\)</span> and price year <span class="math inline">\(y\)</span></td>
+<td>currency <span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(I_{s,k}(t)\)</span></td>
+<td>Price index for cost type <span class="math inline">\(k\)</span> in the source market at time <span class="math inline">\(t\)</span></td>
+<td>index</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(FX_{\mathrm{EUR}/s,2025}\)</span></td>
+<td>2025 annual-average euros per unit of source currency</td>
+<td>EUR/currency <span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(G_\mathrm{market}\)</span></td>
+<td>Separately evidenced geographic-market adjustment</td>
+<td>dimensionless; default 1.0</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(C_{2025,\mathrm{EUR}}\)</span></td>
+<td>Cost on the common model basis</td>
+<td>EUR<sub>2025</sub></td>
+</tr>
+</tbody>
+</table>
+<p>Escalation is performed in the source currency before currency conversion. A cost-specific index is preferred where its scope matches the equipment or activity. A general consumer-price index may be used only as a transparent fallback, with the mismatch documented as a limitation.</p>
+<p>For USD-to-EUR conversions, the common exchange-rate convention is the ECB 2025 annual average of 1 EUR = 1.1300 USD, or <span class="math inline">\(FX_{\mathrm{EUR}/\mathrm{USD},2025}=1/1.1300\)</span> <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. A dated exchange rate is not mixed with annual-average price indices in an EUR<sub>2025</sub> model input.</p>
 </section>
-<section id="documentation-status-labels" class="level2">
-<h2 class="anchored" data-anchor-id="documentation-status-labels">Documentation Status Labels</h2>
-<p>Recommended status labels:</p>
-<ul>
-<li><code>implemented</code>: assumption is used in the model and documented here</li>
-<li><code>to verify</code>: assumption is in the drafts but source needs final verification</li>
-<li><code>placeholder</code>: component exists in the value chain but quantitative assumption is incomplete</li>
-<li><code>confidential</code>: model uses data that should not be reproduced directly</li>
-</ul>
+<section id="annualisation" class="level2">
+<h2 class="anchored" data-anchor-id="annualisation">Annualisation</h2>
+<p>The base case uses the following financial assumptions:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Value</th>
+<th>Classification and basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Real weighted average cost of capital</td>
+<td style="text-align: right;"><span class="math inline">\(r\)</span></td>
+<td style="text-align: right;">6.6%/year</td>
+<td>Explicit base-case modelling assumption carried from the current model; TODO: provide an evidence basis and sensitivity range</td>
+</tr>
+<tr class="even">
+<td>Project economic lifetime</td>
+<td style="text-align: right;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: right;">25 years</td>
+<td>Explicit base-case modelling assumption carried from the current model; TODO: reconcile component lifetimes, replacements and residual value</td>
+</tr>
+</tbody>
+</table>
+<p>The capital recovery factor is:</p>
+<p><span class="math display">\[
+CRF
+=
+\frac{r(1+r)^n}{(1+r)^n-1}.
+\]</span></p>
+<p>With <span class="math inline">\(r=0.066\)</span>/year and <span class="math inline">\(n=25\)</span> years:</p>
+<p><span class="math display">\[
+CRF=0.0827414\ \mathrm{year}^{-1},
+\]</span></p>
+<p>or 8.27%/year. The corresponding equivalent annuity period is <span class="math inline">\(1/CRF=12.09\)</span> years.</p>
+<p>For component CAPEX <span class="math inline">\(C_j\)</span> and annual OPEX <span class="math inline">\(O_j\)</span>:</p>
+<p><span class="math display">\[
+C_\mathrm{annual}
+=
+CRF\sum_j C_j
++
+\sum_j O_j.
+\]</span></p>
+<p>The LCOE denominator and delivery boundary are defined on <a href="../methodology/system_boundary_and_lcoe.html">System Boundary and LCOE</a>. Replacement expenditure, decommissioning cost and residual value are not represented by the simple recovery-factor expression and must be added as explicit discounted cash-flow terms if they enter the model.</p>
+</section>
+<section id="manufactured-cost-markup" class="level2">
+<h2 class="anchored" data-anchor-id="manufactured-cost-markup">Manufactured-Cost Markup</h2>
+<p>The 50% markup used for selected NREL PEM stack, balance-of-plant and power-electronics inputs is <strong>not</strong> a general financial escalation factor. It is a component-boundary transformation from reported manufactured cost to an assumed purchased-equipment cost:</p>
+<p><span class="math display">\[
+C_\mathrm{purchased}=1.5C_\mathrm{manufactured}.
+\]</span></p>
+<p>The 50% value is an explicit component-level modelling assumption; Badgett et al.&nbsp;document the manufactured-cost boundary but do not provide or validate this markup <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>. The relevant hydrogen component page must state when the transformation is applied, identify what the source cost excludes and prevent it from being applied to costs that already represent procurement or installed-system prices. Installation, soft costs, offshore packaging and inflation are not implicitly included by the markup.</p>
+</section>
+<section id="required-checks-before-cost-aggregation" class="level2">
+<h2 class="anchored" data-anchor-id="required-checks-before-cost-aggregation">Required Checks Before Cost Aggregation</h2>
+<p>Before costs are added, verify that:</p>
+<ol type="1">
+<li>every value has a known source currency and price year;</li>
+<li>every adopted value has been converted to EUR<sub>2025</sub>;</li>
+<li>source and model cost boundaries are compatible;</li>
+<li>installation and OPEX are neither omitted nor counted in both a component coefficient and a separate calculation; and</li>
+<li>any markup or market adjustment is explicitly evidenced and scoped.</li>
+</ol>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-badgett2024PEMCost" class="csl-entry" role="listitem">
+Badgett, Alex, Joe Brauch, Amogh Thatte, et al. 2024. <em>Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers</em>. NREL/TP-6A20-87625. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2311140">https://doi.org/10.2172/2311140</a>.
+</div>
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->
 <script>
 (() => {

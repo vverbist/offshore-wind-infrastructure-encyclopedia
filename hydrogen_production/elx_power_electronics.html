@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -484,47 +490,6 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -653,14 +618,14 @@ window.Quarto = {
 </section>
 <section id="cost-basis" class="level2">
 <h2 class="anchored" data-anchor-id="cost-basis">Cost Basis</h2>
-<p>Published power-electronics costs are not fully like-for-like. The literature includes manufactured cost, purchased-equipment cost, and installed system cost, with different transformer and auxiliary-equipment boundaries. Where a source explicitly reports manufactured cost before markup, the same 50% manufacturer markup used for the stack and balance-of-plant costs is applied here before comparison (see <a href="../shared_model_inputs/financial_assumptions.html">Financial Assumptions</a>), rather than treating any single source as a directly transferable quotation.</p>
+<p>Published power-electronics costs are not fully like-for-like. The literature includes manufactured cost, purchased-equipment cost, and installed system cost, with different transformer and auxiliary-equipment boundaries. Where a source explicitly reports manufactured cost before markup, the same 50% manufacturer markup used for the stack and balance-of-plant costs is applied here before comparison (see <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>), rather than treating any single source as a directly transferable quotation.</p>
 <p>NREL adopts a cost of 199 USD/kW for the transformer and rectifier of a 1 MW PEM electrolyser, based on historical supplier quotations and explicitly excluding manufacturer markup, installation, soft costs, and inflation <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>. Applying the standard 50% markup gives an equipment purchase cost of:</p>
 <p><span class="math display">\[
 1.5 \times 199 \approx 300 \ \mathrm{USD_{2020}/kW}
 \]</span></p>
 <p>Fraunhofer ISE estimates PEM power-electronics costs of approximately 160 EUR/kW in its 2020 cases and approximately 101–102 EUR/kW in its 2030 cases, reported at the system/investment level rather than as a bare manufactured cost. Its 100 MW cases add a separate high-voltage transformer of approximately 25–26 EUR/kW, giving a combined large-system estimate of approximately 185–186 EUR/kW. The specific cost of the power electronics changes only marginally between the 5 MW and 100 MW cases <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>. A recent industrial comparison reports substantially lower Chinese-market investment costs for 5 MW packages: approximately CNY 270/kW for a thyristor rectifier including its phase-shifting transformer, compared with CNY 320/kW for a diode-plus-chopper system and CNY 400/kW for an IGBT system <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span>. No CNY-to-EUR conversion is applied here: the comparison is used only to confirm that thyristor rectifiers are the lower-cost topology, not as a quantitative anchor, because the geography, project scope, installation boundary, and procurement conditions differ too much for a direct rate conversion to be meaningful.</p>
 <p>No public vendor source was found that provides a binding price for a complete offshore 66 kV-to-DC package with a consistent scope. Vendor literature is therefore used to confirm topology, modularity, and efficiency, but not as the primary cost basis.</p>
-<p>The central model value is <strong>185 EUR/kW</strong> for the complete purchased 66 kV-to-stack-DC conversion package, taken directly from Fraunhofer’s combined large-system transformer-plus-power-electronics estimate. This sits well below the marked-up NREL benchmark of approximately 300 USD/kW for a small 1 MW reference unit — compared here at face value, pending a documented USD-to-EUR conversion factor (see <a href="../shared_model_inputs/financial_assumptions.html">Financial Assumptions</a>) — and above the lowest reported regional equipment prices.</p>
+<p>The central model value is <strong>185 EUR/kW</strong> for the complete purchased 66 kV-to-stack-DC conversion package, taken directly from Fraunhofer’s combined large-system transformer-plus-power-electronics estimate. This sits well below the marked-up NREL benchmark of approximately 300 USD/kW for a small 1 MW reference unit — compared here at face value, pending complete EUR<sub>2025</sub> normalisation (see <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>) — and above the lowest reported regional equipment prices.</p>
 </section>
 <section id="cost-scaling" class="level2">
 <h2 class="anchored" data-anchor-id="cost-scaling">Cost Scaling</h2>

@@ -10,43 +10,35 @@
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/turbine_system/overview.html</loc>
-    <lastmod>2026-08-07T13:56:22.419Z</lastmod>
+    <lastmod>2026-08-21T09:20:23.028Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/shared_model_inputs/source_quality_and_uncertainty.html</loc>
-    <lastmod>2026-07-03T10:05:58.835Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/references.html</loc>
+    <lastmod>2026-06-26T13:24:39.176Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/shared_model_inputs/overview.html</loc>
-    <lastmod>2026-07-03T10:05:58.834Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/platforms/platform_material_capex.html</loc>
+    <lastmod>2026-08-06T09:45:02.206Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/shared_model_inputs/capex_opex_conventions.html</loc>
-    <lastmod>2026-07-03T10:05:58.826Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/platform_and_substation_installation.html</loc>
+    <lastmod>2026-08-21T09:27:50.922Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/positioning.html</loc>
-    <lastmod>2026-07-14T13:23:34.526Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/cable_and_pipeline_installation.html</loc>
+    <lastmod>2026-08-21T09:27:50.248Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/turbine_and_foundation_installation.html</loc>
-    <lastmod>2026-08-14T14:08:17.939Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/overview.html</loc>
+    <lastmod>2026-08-21T09:20:20.670Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/overview.html</loc>
-    <lastmod>2026-07-31T14:41:11.582Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/system_boundary_and_lcoe.html</loc>
-    <lastmod>2026-07-03T10:05:58.815Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/optimisation_variables.html</loc>
-    <lastmod>2026-07-03T10:05:58.809Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/modelling_workflow.html</loc>
+    <lastmod>2026-08-21T09:10:10.793Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/energy_availability_and_annualisation.html</loc>
-    <lastmod>2026-07-24T08:55:58.290Z</lastmod>
+    <lastmod>2026-08-21T09:10:13.464Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/stack.html</loc>
@@ -54,7 +46,7 @@
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/elx_power_electronics.html</loc>
-    <lastmod>2026-08-07T12:24:50.179Z</lastmod>
+    <lastmod>2026-08-21T09:26:41.846Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_production/balance_of_plant.html</loc>
@@ -70,15 +62,15 @@
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electrical_infra/overview.html</loc>
-    <lastmod>2026-08-07T12:20:18.136Z</lastmod>
+    <lastmod>2026-08-21T09:20:23.766Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electrical_infra/infield_ac_cables.html</loc>
-    <lastmod>2026-07-31T14:41:13.614Z</lastmod>
+    <lastmod>2026-08-21T09:26:43.239Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electrical_infra/hvdc_converter_stations.html</loc>
-    <lastmod>2026-08-06T09:45:07.488Z</lastmod>
+    <lastmod>2026-08-21T09:27:49.465Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/architectures/electricity_export_hvdc.html</loc>
@@ -106,11 +98,11 @@
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electrical_infra/hvdc_export_cables.html</loc>
-    <lastmod>2026-07-31T14:42:34.700Z</lastmod>
+    <lastmod>2026-08-21T09:26:43.904Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/electrical_infra/onshore_grid_connection.html</loc>
-    <lastmod>2026-07-31T14:41:14.504Z</lastmod>
+    <lastmod>2026-08-21T09:26:42.556Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_infra/compressor.html</loc>
@@ -118,7 +110,7 @@
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_infra/infield_infrastructure.html</loc>
-    <lastmod>2026-07-31T14:41:17.137Z</lastmod>
+    <lastmod>2026-08-21T09:19:15.215Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/hydrogen_infra/pipeline_pressure_and_capacity.html</loc>
@@ -134,47 +126,39 @@
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/index.html</loc>
-    <lastmod>2026-08-06T09:45:10.514Z</lastmod>
+    <lastmod>2026-08-21T09:20:19.958Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/modelling_workflow.html</loc>
-    <lastmod>2026-07-03T10:05:58.809Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/financial_and_price_basis.html</loc>
+    <lastmod>2026-08-21T09:29:32.227Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/overview.html</loc>
-    <lastmod>2026-07-03T10:05:58.809Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/optimisation_variables.html</loc>
+    <lastmod>2026-08-21T09:10:09.424Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/cable_and_pipeline_installation.html</loc>
-    <lastmod>2026-08-14T14:44:43.546Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/methodology/system_boundary_and_lcoe.html</loc>
+    <lastmod>2026-08-21T09:20:21.497Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/platform_and_substation_installation.html</loc>
-    <lastmod>2026-08-14T13:55:10.878Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/overview.html</loc>
+    <lastmod>2026-07-31T14:41:11.582Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/platforms/platform_material_capex.html</loc>
-    <lastmod>2026-08-06T09:45:02.206Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/offshore_installation/turbine_and_foundation_installation.html</loc>
+    <lastmod>2026-08-21T09:27:51.674Z</lastmod>
   </url>
   <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/references.html</loc>
-    <lastmod>2026-06-26T13:24:39.176Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/shared_model_inputs/financial_assumptions.html</loc>
-    <lastmod>2026-07-10T15:19:12.581Z</lastmod>
-  </url>
-  <url>
-    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/shared_model_inputs/scaling_laws.html</loc>
-    <lastmod>2026-07-03T10:05:58.835Z</lastmod>
+    <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/positioning.html</loc>
+    <lastmod>2026-07-14T13:23:34.526Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/turbine_system/foundation.html</loc>
-    <lastmod>2026-08-07T13:02:58.771Z</lastmod>
+    <lastmod>2026-08-21T09:20:25.820Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/turbine_system/wind_turbine.html</loc>
-    <lastmod>2026-08-07T12:20:19.287Z</lastmod>
+    <lastmod>2026-08-21T09:20:25.133Z</lastmod>
   </url>
   <url>
     <loc>https://vverbist.github.io/offshore-wind-infrastructure-encyclopedia/wind_resource_and_layout/wake_modelling_and_spacing.html</loc>

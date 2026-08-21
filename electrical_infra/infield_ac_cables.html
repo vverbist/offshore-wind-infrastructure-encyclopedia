@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -484,47 +490,6 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -685,18 +650,18 @@ window.Quarto = {
 <td style="text-align: right;">445 A</td>
 <td style="text-align: right;">50.9 MVA</td>
 <td style="text-align: right;">26.1 t/km</td>
-<td style="text-align: right;">214 EUR/m</td>
+<td style="text-align: right;">219 EUR<sub>2025</sub>/m</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">630 mm²</td>
 <td style="text-align: right;">775 A</td>
 <td style="text-align: right;">88.6 MVA</td>
 <td style="text-align: right;">42.5 t/km</td>
-<td style="text-align: right;">575 EUR/m</td>
+<td style="text-align: right;">590 EUR<sub>2025</sub>/m</td>
 </tr>
 </tbody>
 </table>
-<p>The source values are USD 241,542/km and USD 650,000/km in 2024 dollars <span class="citation" data-cites="orbit2026Cable185 orbit2026Cable630">(<a href="#ref-orbit2026Cable185" role="doc-biblioref">National Laboratory of the Rockies 2026a</a>, <a href="#ref-orbit2026Cable630" role="doc-biblioref">2026b</a>)</span>. They are converted here using the ECB 2025 annual-average rate of USD 1.1300/EUR <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. ORBIT states that its updated cost rates use industry outreach together with commodity-price, inflation and labour-index adjustments <span class="citation" data-cites="orbit2026Changelog">(<a href="#ref-orbit2026Changelog" role="doc-biblioref">National Laboratory of the Rockies 2026c</a>)</span>. They remain model inputs rather than a 2026 quotation. No additional manufacturer markup is applied because the ORBIT values already represent cable procurement unit costs. Installation is excluded.</p>
+<p>The source values are USD 241,542/km and USD 650,000/km in 2024 dollars <span class="citation" data-cites="orbit2026Cable185 orbit2026Cable630">(<a href="#ref-orbit2026Cable185" role="doc-biblioref">National Laboratory of the Rockies 2026a</a>, <a href="#ref-orbit2026Cable630" role="doc-biblioref">2026b</a>)</span>. They are normalised to EUR<sub>2025</sub> using the 2024 and 2025 annual-average U.S. CPI-U indices and the ECB 2025 annual-average exchange rate, following <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a> <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. ORBIT states that its updated cost rates use industry outreach together with commodity-price, inflation and labour-index adjustments <span class="citation" data-cites="orbit2026Changelog">(<a href="#ref-orbit2026Changelog" role="doc-biblioref">National Laboratory of the Rockies 2026c</a>)</span>. They remain planning-model inputs rather than a supplier quotation. No additional manufacturer markup is applied because the ORBIT values already represent cable procurement unit costs. Installation is excluded.</p>
 <p>TenneT’s Dutch interface study used a nominal maximum of 630 A, equivalent to about 72 MVA at 66 kV. With reactive-power duty and a 0.9 power factor, it treated approximately 64–66 MW as usable active power per connection <span class="citation" data-cites="tennet2015JTubes">(<a href="#ref-tennet2015JTubes" role="doc-biblioref">TenneT 2015</a>)</span>. This range is used as the screening string rating on this page.</p>
 <p>Three ratings should not be confused:</p>
 <ul>
@@ -890,7 +855,7 @@ L_\mathrm{pull\text{-}in},
 <section id="cost-model" class="level2">
 <h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
 <p>The screening cost on this page covers cable material and normal supply accessories. Installation is excluded and belongs to <a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a>.</p>
-<p>For supply length <span class="math inline">\(L_\mathrm{array}\)</span> in kilometres and blended cable unit cost <span class="math inline">\(c_\mathrm{cable}\)</span> in EUR/m:</p>
+<p>For supply length <span class="math inline">\(L_\mathrm{array}\)</span> in kilometres and blended cable unit cost <span class="math inline">\(c_\mathrm{cable}\)</span> in EUR<sub>2025</sub>/m:</p>
 <p><span class="math display">\[
 C_\mathrm{supply}
 =
@@ -913,13 +878,13 @@ C_\mathrm{supply}
 <tbody>
 <tr class="odd">
 <td>ORBIT 185 mm², 66 kV</td>
-<td>Cable procurement input, 2024 USD converted at the ECB 2025 annual-average exchange rate</td>
-<td style="text-align: right;">214 EUR/m</td>
+<td>Cable procurement input, 2024 USD normalised to EUR<sub>2025</sub></td>
+<td style="text-align: right;">219 EUR<sub>2025</sub>/m</td>
 </tr>
 <tr class="even">
 <td>ORBIT 630 mm², 66 kV</td>
-<td>Cable procurement input, 2024 USD converted at the ECB 2025 annual-average exchange rate</td>
-<td style="text-align: right;">575 EUR/m</td>
+<td>Cable procurement input, 2024 USD normalised to EUR<sub>2025</sub></td>
+<td style="text-align: right;">590 EUR<sub>2025</sub>/m</td>
 </tr>
 <tr class="odd">
 <td>Hollandse Kust Zuid III &amp; IV</td>
@@ -929,7 +894,7 @@ C_\mathrm{supply}
 </tbody>
 </table>
 <p>Prysmian reports the 172 km supply scope and its annual report gives the approximately EUR 30 million contract value <span class="citation" data-cites="prysmian2019HollandseKustZuid prysmian2019AnnualReport">(<a href="#ref-prysmian2019HollandseKustZuid" role="doc-biblioref">Prysmian Group 2019b</a>, <a href="#ref-prysmian2019AnnualReport" role="doc-biblioref">2019a</a>)</span>. The project average combines cable sizes and is not a direct quotation for the largest conductor.</p>
-<p>The base case remains <strong>400 EUR/m</strong>, with <strong>200–600 EUR/m</strong> used as an engineering sensitivity. This is a blended screening assumption between a historical mixed-cable contract and the current ORBIT conductor-specific inputs; it is not a statistical mean or a 2026 market quotation. No manufacturer markup is added. A conductor-by-conductor cost calculation should replace the blended rate only when the routed string design identifies the length of each cable size.</p>
+<p>The base case remains <strong>400 EUR<sub>2025</sub>/m</strong>, with <strong>200–600 EUR<sub>2025</sub>/m</strong> used as an engineering sensitivity. This is a blended screening assumption between a historical mixed-cable contract and the current ORBIT conductor-specific inputs; it is not a statistical mean or a supplier quotation. No manufacturer markup is added. A conductor-by-conductor cost calculation should replace the blended rate only when the routed string design identifies the length of each cable size.</p>
 </section>
 <section id="opex-allowance" class="level2">
 <h2 class="anchored" data-anchor-id="opex-allowance">OPEX Allowance</h2>
@@ -940,7 +905,7 @@ C_\mathrm{OPEX}
 =
 f_\mathrm{OPEX}C_\mathrm{supply},
 \]</span></p>
-<p>with <span class="math inline">\(f_\mathrm{OPEX}=2\%\)</span>/year and a 1–3% sensitivity. At the base cable price, each 100 km of supplied cable has EUR 40 million supply CAPEX and therefore a EUR 0.8 million annual allowance. The allowance represents inspection and physical repair provision only. Lost generation remains in the availability calculation and must not also be included in OPEX.</p>
+<p>with <span class="math inline">\(f_\mathrm{OPEX}=2\%\)</span>/year and a 1–3% sensitivity. At the base cable price, each 100 km of supplied cable has EUR<sub>2025</sub> 40 million supply CAPEX and therefore a EUR<sub>2025</sub> 0.8 million annual allowance. The allowance represents inspection and physical repair provision only. Lost generation remains in the availability calculation and must not also be included in OPEX.</p>
 </section>
 <section id="reliability-and-availability" class="level2">
 <h2 class="anchored" data-anchor-id="reliability-and-availability">Reliability and Availability</h2>
@@ -997,8 +962,8 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 </tr>
 <tr class="even">
 <td>Cable material cost</td>
-<td style="text-align: right;">400 EUR/m</td>
-<td style="text-align: right;">200–600 EUR/m</td>
+<td style="text-align: right;">400 EUR<sub>2025</sub>/m</td>
+<td style="text-align: right;">200–600 EUR<sub>2025</sub>/m</td>
 <td>Blended engineering range, not a statistical confidence interval</td>
 </tr>
 <tr class="odd">
@@ -1157,6 +1122,12 @@ TenneT. 2015. <em>T.2 Number of j-Tubes</em>. ONL 15-060-T2, version 1. TenneT. 
 </div>
 <div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
 TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+<div id="ref-bls2025CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Indexes for All Urban Consumers: U.s. City Average, Annual Average.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
+</div>
+<div id="ref-bls2024CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-progress-sidebar.js. -->

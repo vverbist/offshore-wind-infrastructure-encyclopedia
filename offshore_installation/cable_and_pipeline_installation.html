@@ -192,6 +192,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
@@ -480,47 +486,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform and Substation Installation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Shared Model Inputs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/overview.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Shared Model Inputs</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/financial_assumptions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Financial Assumptions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/capex_opex_conventions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">CAPEX and OPEX Conventions</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/scaling_laws.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Scaling Laws</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../shared_model_inputs/source_quality_and_uncertainty.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Source Quality and Uncertainty</span></a>
   </div>
 </li>
       </ul>
@@ -855,7 +820,7 @@ window.Quarto = {
 <tr class="even">
 <td>Cable-vessel day rate</td>
 <td style="text-align: right;">241,171 USD/day</td>
-<td style="text-align: right;">223,727 EUR/day for cable laying only</td>
+<td style="text-align: right;">219,041 EUR<sub>2025</sub>/day for cable laying only</td>
 <td>Provisional screening lay-spread-rate assumption</td>
 </tr>
 <tr class="odd">
@@ -1605,7 +1570,7 @@ r_{\mathrm{lay}}T_{\mathrm{lay}}
 <tr class="odd">
 <td><span class="math inline">\(C_{\mathrm{installation}}\)</span></td>
 <td>Total installation CAPEX</td>
-<td>2026 EUR</td>
+<td>EUR<sub>2025</sub></td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(T_{\mathrm{lay}}\)</span></td>
@@ -1625,22 +1590,22 @@ r_{\mathrm{lay}}T_{\mathrm{lay}}
 <tr class="odd">
 <td><span class="math inline">\(r_{\mathrm{lay}}\)</span></td>
 <td>All-in lay-spread rate</td>
-<td>2026 EUR/day</td>
+<td>EUR<sub>2025</sub>/day</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(r_{\mathrm{bury}}\)</span></td>
 <td>All-in burial-spread rate</td>
-<td>2026 EUR/day</td>
+<td>EUR<sub>2025</sub>/day</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(r_{\mathrm{ROV}}\)</span></td>
 <td>All-in ROV/survey-spread rate</td>
-<td>2026 EUR/day</td>
+<td>EUR<sub>2025</sub>/day</td>
 </tr>
 <tr class="even">
 <td><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
 <td>Work and materials outside the three time-based spreads</td>
-<td>2026 EUR</td>
+<td>EUR<sub>2025</sub></td>
 </tr>
 </tbody>
 </table>
@@ -1654,16 +1619,16 @@ N_{\mathrm{cross}}C_{\mathrm{cross}}
 +N_{\mathrm{landfall}}C_{\mathrm{landfall}}
 +C_{\mathrm{other}}.
 \]</span></p>
-<p>Here <span class="math inline">\(N_{\mathrm{cross}}\)</span> and <span class="math inline">\(N_{\mathrm{landfall}}\)</span> are counts; <span class="math inline">\(C_{\mathrm{cross}}\)</span> and <span class="math inline">\(C_{\mathrm{landfall}}\)</span> are 2026 EUR per item; <span class="math inline">\(L_{\mathrm{protection}}\)</span> is protected route length in km; <span class="math inline">\(c_{\mathrm{protection}}\)</span> is 2026 EUR/km; and <span class="math inline">\(C_{\mathrm{other}}\)</span> is any other explicitly scoped exceptional cost in 2026 EUR.</p>
+<p>Here <span class="math inline">\(N_{\mathrm{cross}}\)</span> and <span class="math inline">\(N_{\mathrm{landfall}}\)</span> are counts; <span class="math inline">\(C_{\mathrm{cross}}\)</span> and <span class="math inline">\(C_{\mathrm{landfall}}\)</span> are EUR<sub>2025</sub> per item; <span class="math inline">\(L_{\mathrm{protection}}\)</span> is protected route length in km; <span class="math inline">\(c_{\mathrm{protection}}\)</span> is EUR<sub>2025</sub>/km; and <span class="math inline">\(C_{\mathrm{other}}\)</span> is any other explicitly scoped exceptional cost in EUR<sub>2025</sub>.</p>
 <p>Crossings, landfall, protection materials and exceptional civil work remain site-specific. A term is set to zero only when the matching spread quotation explicitly includes the same scope.</p>
-<p><strong>Constant-2026-EUR normalization</strong></p>
+<p><strong>Constant-EUR<sub>2025</sub> normalisation</strong></p>
 <p>Each spread rate and exceptional cost is escalated in its original currency before conversion to euros:</p>
 <p><span class="math display">\[
-C_{2026,\mathrm{EUR}}
+C_{2025,\mathrm{EUR}}
 =
 C_{y,s}
-\frac{I_{s,k}(2026^*)}{I_{s,k}(y)}
-FX_{\mathrm{EUR}/s}(2026^*)
+\frac{I_{s,k}(2025)}{I_{s,k}(y)}
+FX_{\mathrm{EUR}/s}(2025)
 G_{\mathrm{market}}.
 \]</span></p>
 <table class="caption-top table">
@@ -1692,15 +1657,15 @@ G_{\mathrm{market}}.
 </tr>
 </tbody>
 </table>
-<p>ORBIT version 1.3 states its vessel-library costs in 2024 USD <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. The screening conversion uses 2024 annual-average U.S. CPI-U of 313.689, June 2026 CPI-U of 333.952 and the 30 July 2026 ECB reference rate of USD 1.1476 per EUR <span class="citation" data-cites="bls2024CPI bls2026CPI ecb2026ExchangeRates">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2026CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2026ExchangeRates" role="doc-biblioref">European Central Bank 2026</a>)</span>:</p>
+<p>ORBIT version 1.3 states its vessel-library costs in 2024 USD <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. The screening conversion uses annual-average U.S. CPI-U values of 313.689 for 2024 and 321.943 for 2025, followed by the ECB 2025 annual-average exchange rate of USD 1.1300 per EUR <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>:</p>
 <p><span class="math display">\[
 F
 =
-\frac{333.952}{313.689}\frac{1}{1.1476}
+\frac{321.943}{313.689}\frac{1}{1.1300}
 =
-0.9276715\ \mathrm{EUR}_{2026}/\mathrm{USD}_{2024}.
+0.9082413\ \mathrm{EUR}_{2025}/\mathrm{USD}_{2024}.
 \]</span></p>
-<p>The factor gives 223,727 EUR/day for ORBIT’s 241,171 USD/day cable vessel and 113,824 EUR/day for its 122,699 USD/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.</p>
+<p>The factor gives 219,041 EUR<sub>2025</sub>/day for ORBIT’s 241,171 USD/day cable vessel and 111,440 EUR<sub>2025</sub>/day for its 122,699 USD/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.</p>
 <section id="worked-example-evidence-gated-2-gw-cable-inventory" class="level3">
 <h3 class="anchored" data-anchor-id="worked-example-evidence-gated-2-gw-cable-inventory">Worked example: evidence-gated 2 GW cable inventory</h3>
 <p>This example shows how far the calculation can proceed for a 2 GW wind farm with 134 turbines, approximately 400 physical km of inter-array cable and a 100 km export corridor. It reports the physical inventory and the parameterized parts of lay time. It does not fill unresolved inputs in order to force a total installation CAPEX.</p>
@@ -1771,8 +1736,8 @@ F
 </tr>
 <tr class="odd">
 <td>Cable-lay spread rate</td>
-<td style="text-align: right;">223,727 EUR/day</td>
-<td style="text-align: right;">223,727 EUR/day</td>
+<td style="text-align: right;">219,041 EUR<sub>2025</sub>/day</td>
+<td style="text-align: right;">219,041 EUR<sub>2025</sub>/day</td>
 <td>Provisional ORBIT-derived cable-lay screening rate</td>
 </tr>
 <tr class="even">
@@ -2049,7 +2014,7 @@ N_{\mathrm{load,infield}}
 </tr>
 <tr class="even">
 <td>Lay-spread rate</td>
-<td>223,727 EUR/day; provisional complete-spread screening assumption</td>
+<td>219,041 EUR<sub>2025</sub>/day; provisional complete-spread screening assumption</td>
 <td>Supplier or contractor input required</td>
 </tr>
 <tr class="odd">
@@ -2267,8 +2232,8 @@ DNV. n.d. <span>“Non-Metallic Composite Pipes for Transportation of Hydrogen.�
 <div id="ref-dnvSTF119" class="csl-entry" role="listitem">
 <span>DNV-ST-F119</span>: Thermoplastic Composite Pipes (2019). <a href="https://www.dnv.com/energy/standards-guidelines/dnv-st-f119-thermoplastic-composite-pipes/">https://www.dnv.com/energy/standards-guidelines/dnv-st-f119-thermoplastic-composite-pipes/</a>.
 </div>
-<div id="ref-ecb2026ExchangeRates" class="csl-entry" role="listitem">
-European Central Bank. 2026. <span>“Euro Foreign Exchange Reference Rates.”</span> July 30. <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html</a>.
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
 </div>
 <div id="ref-cordisHOPE" class="csl-entry" role="listitem">
 European Commission. 2023. <span>“<span>HOPE</span>: Hydrogen Offshore Production for Europe.”</span> <a href="https://cordis.europa.eu/project/id/101111899">https://cordis.europa.eu/project/id/101111899</a>.
@@ -2297,8 +2262,8 @@ TenneT. n.d. <span>“The 2GW Program.”</span> Accessed August 5, 2026. <a hre
 <div id="ref-eibThorCableData" class="csl-entry" role="listitem">
 <em>Thor Offshore Wind Farm Environmental Material</em>. n.d. Accessed July 31, 2026. <a href="https://www.eib.org/attachments/registers/213994748.pdf">https://www.eib.org/attachments/registers/213994748.pdf</a>.
 </div>
-<div id="ref-bls2026CPI" class="csl-entry" role="listitem">
-U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Index, June 2026.”</span> July 14. <a href="https://www.bls.gov/news.release/archives/cpi_07142026.htm">https://www.bls.gov/news.release/archives/cpi_07142026.htm</a>.
+<div id="ref-bls2025CPI" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Indexes for All Urban Consumers: U.s. City Average, Annual Average.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
 </div>
 <div id="ref-bls2024CPI" class="csl-entry" role="listitem">
 U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
