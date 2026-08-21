@@ -1,0 +1,98 @@
+---
+title: "Financial and Price-Basis Assumptions"
+completion: 40
+---
+
+## Role in the Model
+
+This page defines the common basis used to combine costs from different sources and convert project CAPEX into annual cost. Component pages retain ownership of cost scope, source values, component-specific scaling and OPEX relationships.
+
+## Canonical Monetary Basis
+
+All costs entering a common model result are expressed in **constant 2025 euros (EUR~2025~)**. This is an explicit modelling convention, not a claim that every source was published in that basis.
+
+Each imported cost must retain its source currency, source price year and cost boundary. A value with an unresolved price year cannot be adopted as an EUR~2025~ model input; it may be shown only as a non-combinable reference until that evidence gap is resolved.
+
+No generic geographic, offshore or market multiplier is applied. Such a factor may be introduced only where evidence defines its scope and prevents overlap with component, installation or commercial allowances.
+
+## Currency and Price-Year Normalisation
+
+A source cost in currency $s$ and price year $y$ is normalised as:
+
+$$
+C_{2025,\mathrm{EUR}}
+=
+C_{y,s}
+\frac{I_{s,k}(2025)}{I_{s,k}(y)}
+FX_{\mathrm{EUR}/s,2025}
+G_\mathrm{market}.
+$$
+
+| Symbol | Definition | Unit or status |
+|---|---|---|
+| $C_{y,s}$ | Source cost in source currency $s$ and price year $y$ | currency $s$ |
+| $I_{s,k}(t)$ | Price index for cost type $k$ in the source market at time $t$ | index |
+| $FX_{\mathrm{EUR}/s,2025}$ | 2025 annual-average euros per unit of source currency | EUR/currency $s$ |
+| $G_\mathrm{market}$ | Separately evidenced geographic-market adjustment | dimensionless; default 1.0 |
+| $C_{2025,\mathrm{EUR}}$ | Cost on the common model basis | EUR~2025~ |
+
+Escalation is performed in the source currency before currency conversion. A cost-specific index is preferred where its scope matches the equipment or activity. A general consumer-price index may be used only as a transparent fallback, with the mismatch documented as a limitation.
+
+For USD-to-EUR conversions, the common exchange-rate convention is the ECB 2025 annual average of 1 EUR = 1.1300 USD, or $FX_{\mathrm{EUR}/\mathrm{USD},2025}=1/1.1300$ [@ecb2025USDEUR]. A dated exchange rate is not mixed with annual-average price indices in an EUR~2025~ model input.
+
+## Annualisation
+
+The base case uses the following financial assumptions:
+
+| Parameter | Symbol | Value | Classification and basis |
+|---|---:|---:|---|
+| Real weighted average cost of capital | $r$ | 6.6%/year | Explicit base-case modelling assumption carried from the current model; TODO: provide an evidence basis and sensitivity range |
+| Project economic lifetime | $n$ | 25 years | Explicit base-case modelling assumption carried from the current model; TODO: reconcile component lifetimes, replacements and residual value |
+
+The capital recovery factor is:
+
+$$
+CRF
+=
+\frac{r(1+r)^n}{(1+r)^n-1}.
+$$
+
+With $r=0.066$/year and $n=25$ years:
+
+$$
+CRF=0.0827414\ \mathrm{year}^{-1},
+$$
+
+or 8.27%/year. The corresponding equivalent annuity period is $1/CRF=12.09$ years.
+
+For component CAPEX $C_j$ and annual OPEX $O_j$:
+
+$$
+C_\mathrm{annual}
+=
+CRF\sum_j C_j
++
+\sum_j O_j.
+$$
+
+The LCOE denominator and delivery boundary are defined on [System Boundary and LCOE](system_boundary_and_lcoe.qmd). Replacement expenditure, decommissioning cost and residual value are not represented by the simple recovery-factor expression and must be added as explicit discounted cash-flow terms if they enter the model.
+
+## Manufactured-Cost Markup
+
+The 50% markup used for selected NREL PEM stack, balance-of-plant and power-electronics inputs is **not** a general financial escalation factor. It is a component-boundary transformation from reported manufactured cost to an assumed purchased-equipment cost:
+
+$$
+C_\mathrm{purchased}=1.5C_\mathrm{manufactured}.
+$$
+
+The 50% value is an explicit component-level modelling assumption; Badgett et al. document the manufactured-cost boundary but do not provide or validate this markup [@badgett2024PEMCost]. The relevant hydrogen component page must state when the transformation is applied, identify what the source cost excludes and prevent it from being applied to costs that already represent procurement or installed-system prices. Installation, soft costs, offshore packaging and inflation are not implicitly included by the markup.
+
+## Required Checks Before Cost Aggregation
+
+Before costs are added, verify that:
+
+1. every value has a known source currency and price year;
+2. every adopted value has been converted to EUR~2025~;
+3. source and model cost boundaries are compatible;
+4. installation and OPEX are neither omitted nor counted in both a component coefficient and a separate calculation; and
+5. any markup or market adjustment is explicitly evidenced and scoped.

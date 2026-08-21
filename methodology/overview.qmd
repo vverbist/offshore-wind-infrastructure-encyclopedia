@@ -1,6 +1,6 @@
 ---
 title: "Methodology"
-completion: 20
+completion: 70
 ---
 
 This section defines the modelling logic used across all component pages. The model is a deterministic techno-economic optimisation framework for offshore wind systems with alternative energy carriers.
@@ -13,6 +13,7 @@ The methodology pages define conventions that are shared across components:
 
 - the system boundary used for cost and yield accounting
 - the LCOE objective function
+- the common financial and EUR2025 price basis
 - the modelling workflow from fixed inputs to derived parameters and outputs
 - the optimisation variables treated as model outcomes
 - the annualisation, energy-basis, and availability conventions used in component calculations

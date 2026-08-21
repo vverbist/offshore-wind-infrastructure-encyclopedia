@@ -1,6 +1,6 @@
 ---
 title: "Optimisation Variables"
-completion: 30
+completion: 70
 ---
 
 The model treats several design choices as optimisation variables rather than fixed assumptions. Their values are outcomes of the system cost minimisation.
