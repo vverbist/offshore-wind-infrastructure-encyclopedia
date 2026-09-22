@@ -1,6 +1,7 @@
 ---
 title: "Platform and Substation Installation"
 completion: 65
+readiness: blocked
 ---
 
 ## Role in the Model

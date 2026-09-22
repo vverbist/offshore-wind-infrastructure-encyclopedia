@@ -1,41 +1,112 @@
 ---
-title: "Energy, Availability, and Annualisation"
+title: "Energy and Availability"
 completion: 30
+readiness: partially_implementable
 ---
+
+## Role in the Model
+
+This page defines the delivered-energy basis and combines annual availability
+once for each architecture. Component pages own efficiencies, auxiliary demand
+and subsystem availability evidence. Financial annualization is owned by
+[Financial and Price-Basis Assumptions](financial_and_price_basis.qmd).
 
 ## Energy Basis
 
-Electricity yield is evaluated as delivered electrical energy at the onshore grid connection point.
+Electricity is reported as electrical energy landed at the defined onshore
+electrical delivery point.
 
-Hydrogen yield is evaluated on an energy-equivalent basis using the higher heating value:
+Hydrogen is reported as landed mass and HHV energy. The adopted rounded higher
+heating value is:
 
-| Parameter | Value |
-|---|---:|
-| Hydrogen HHV | 39.4 kWh/kg |
+| Parameter | Symbol | Value | Basis |
+|---|---:|---:|---|
+| Hydrogen higher heating value | $HHV_{\mathrm{H2}}$ | 39.4 kWh/kg | Rounded from 39.42 kWh/kg; liquid water as combustion product [@nrel2009ElectrolysisCost] |
 
-This allows electricity and hydrogen configurations to be compared in EUR/MWh, while retaining the option to report hydrogen in EUR/kg.
+For landed hydrogen mass $m_{\mathrm{H2}}$ in kg/year:
 
-## Efficiency Treatment
+$$
+E_{\mathrm{H2,HHV}}
+=
+m_{\mathrm{H2}}
+\frac{39.4\ \mathrm{kWh/kg}}{1000\ \mathrm{kWh/MWh}}.
+$$
 
-Efficiency losses are applied at the component level. For electricity, this includes the turbine transformer, infield AC grid, integrated offshore conversion, HVDC export cable, and onshore conversion losses. For hydrogen, losses include stack conversion, balance-of-plant auxiliary demand, purification losses, power electronics where present, and compression.
+The HHV basis enables EUR/MWh-H2-HHV and EUR/kg-H2 reporting. It does not make
+hydrogen and electricity equivalent end-use services.
 
-## Availability Treatment
+## Efficiency and Auxiliary Demand
 
-Availability is applied as an annual energy multiplier, not as a time-domain repair simulation. Component unavailability is represented as a flat percentage reduction in annual yield.
+Efficiencies and auxiliary loads are applied in physical component order before
+annual availability. The owner of each component defines:
 
-The current component availability assumptions include:
+- input and output energy or mass;
+- efficiency equation and operating basis;
+- auxiliary demand and where it is withdrawn;
+- applicable time step; and
+- whether any outage or derating is already embedded.
 
-| Component | Availability |
-|---|---:|
-| Turbine, electric configuration | 98.0% |
-| Infield AC grid | 99.0% |
-| Integrated offshore station | 98.0% |
-| HVDC export cable | 99.0% |
-| Onshore converter station | 98.0% |
-| Turbine, hydrogen configuration | 98.5% |
-| Electrolyser | 98.5% |
-| Compressor | 99.0% |
-| Infield pipelines | 100.0% |
-| Export pipelines | 100.0% |
+The result is architecture-specific pre-availability annual energy,
+$E_{\mathrm{preavailability},a}$.
 
-Pipeline availability is currently assumed not to reduce annual yield. This should be treated as a modelling convention rather than a statement that pipeline failures are impossible.
+## Availability Combination
+
+For architecture $a$:
+
+$$
+E_{\mathrm{delivered},a}
+=
+E_{\mathrm{preavailability},a}
+\prod_{s\in S_a} A_s,
+$$
+
+where $S_a$ contains only non-overlapping annual subsystem factors.
+
+The rules are:
+
+1. each outage cause appears once;
+2. serial non-overlapping subsystem factors may be multiplied;
+3. the component owner supplies an already-combined factor for parallel units
+   or redundancy;
+4. a factor is omitted when the effect is embedded in the upstream energy
+   calculation;
+5. an unresolved required factor returns **not parameterized** for complete
+   delivered energy; and
+6. 100% is permitted only as an explicit zero-outage scenario assumption, not
+   as an evidence-backed reliability result.
+
+## Side-by-Side Architecture Ledger
+
+The table defines ownership and boundaries. “Unresolved” means that the
+component owner has not yet supplied an adopted, evidenced or explicitly
+approved assumption for the stated subsystem.
+
+| Subsystem boundary | Electricity export | Centralised hydrogen | Decentralised hydrogen | Owner |
+|---|---|---|---|---|
+| Wind-turbine generation system | $A_{\mathrm{turb,e}}$: unresolved | $A_{\mathrm{turb,c}}$: unresolved | Included in integrated turbine-production boundary below | TURB-002 |
+| AC infield collection | $A_{\mathrm{array,e}}$: unresolved | $A_{\mathrm{array,c}}$: unresolved | Not applicable | ELEC-002 |
+| Offshore electrical conversion/platform | $A_{\mathrm{HVDC,off}}$: unresolved | Not applicable | Not applicable | ELEC-003 |
+| Onshore electrical conversion | $A_{\mathrm{HVDC,on}}$: unresolved | Not applicable | Not applicable | ELEC-005 |
+| HVDC export system | $A_{\mathrm{HVDC,export}}$: unresolved | Not applicable | Not applicable | ELEC-004 |
+| Integrated turbine-electrolyser production | Not applicable | Not applicable | $A_{\mathrm{turb+H2,d}}$: unresolved | TURB-002 and H2P-002/003/004/005 |
+| Central electrolyser production system | Not applicable | $A_{\mathrm{H2,prod,c}}$: unresolved | Not applicable | H2P-003/004/005 |
+| Hydrogen infield collection | Not applicable | Not applicable | $A_{\mathrm{H2,array}}$: unresolved | H2I-002 |
+| Compression system | Not applicable | $A_{\mathrm{comp,c}}$: unresolved | $A_{\mathrm{comp,d}}$: unresolved | H2I-003 |
+| Hydrogen export pipeline system | Not applicable | $A_{\mathrm{H2,export,c}}$: unresolved | $A_{\mathrm{H2,export,d}}$: unresolved | H2I-004 |
+| Onshore hydrogen receipt equipment inside the endpoint | Not applicable | $A_{\mathrm{H2,on,c}}$: unresolved | $A_{\mathrm{H2,on,d}}$: unresolved | H2I-004 / future receipt owner |
+
+Platform availability is not multiplied as a generic extra factor when the same
+platform-supported equipment is already included in a subsystem boundary. If a
+future platform factor covers structural or common-utility outages not included
+elsewhere, its owner must state that non-overlapping scope before it is added.
+
+## Legacy Availability Values
+
+Earlier documentation listed flat values between 98% and 100%, including
+conflicting 98.5% and 99.5% electrolyser-related values. Their subsystem
+boundaries and evidence are not sufficient to select one as the adopted factor.
+
+Those values are therefore not active architecture-ledger inputs. Component
+owners may retain them as clearly labelled legacy assumptions or sensitivities
+until they are evidenced and scoped. In particular, 100% pipeline availability
+is only a zero-outage scenario, not a reliability conclusion.

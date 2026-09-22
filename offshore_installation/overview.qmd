@@ -1,6 +1,7 @@
 ---
 title: "Offshore Installation"
 completion: 0
+readiness: partially_implementable
 ---
 
 Offshore installation covers installation costs and installation drivers for turbines, foundations, cables, pipelines, platforms, and substations.

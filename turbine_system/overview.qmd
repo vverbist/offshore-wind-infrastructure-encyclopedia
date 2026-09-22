@@ -1,6 +1,7 @@
 ---
 title: "Turbine System"
 completion: 80
+readiness: partially_implementable
 ---
 
 ## Purpose and System Boundary

@@ -1,6 +1,7 @@
 ---
 title: "HVDC Converter Stations"
 completion: 85
+readiness: blocked
 ---
 
 ## Role and Cost Boundary

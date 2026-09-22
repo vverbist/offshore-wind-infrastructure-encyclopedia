@@ -1,5 +1,6 @@
 ---
 title: "Offshore Wind Infrastructure Model Assumptions"
+readiness: context_only
 ---
 
 This encyclopedia documents the methodology and techno-economic assumptions used to model offshore wind infrastructure, electricity export, offshore hydrogen production, and hydrogen transport.

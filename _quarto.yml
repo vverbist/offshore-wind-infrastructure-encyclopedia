@@ -6,10 +6,12 @@ project:
   pre-render:
     - uv run python tools/build_model_variables.py
     - uv run python tools/build_electrical_figures.py
-    - tools/build-progress-sidebar.js
+    - tools/build-readiness-sidebar.js
+    - tools/build-evidence-status.js
   resources:
     - figures/
-    - progress-sidebar.js
+    - readiness-sidebar.js
+    - evidence-status.js
 
 bibliography: references.bib
 
@@ -88,7 +90,9 @@ format:
       - cosmo
       - brand
     css: styles.css
-    include-after-body: progress-sidebar.html
+    include-after-body:
+      - readiness-sidebar.html
+      - evidence-status.html
     toc: true
 
 execute:

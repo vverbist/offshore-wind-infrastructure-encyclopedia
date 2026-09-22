@@ -1,10 +1,11 @@
 ---
 title: "Architectures"
 completion: 100
+readiness: partially_implementable
 ---
 
 This section defines the scope and boundary of the three offshore wind
-architectures compared by the model:
+architectures evaluated by the model:
 
 1. electricity export using AC infield collection and HVDC export
 2. centralised offshore hydrogen production with one integrated offshore
@@ -16,13 +17,17 @@ energy conversion occurs, and how the offshore system connects to the onshore
 delivery point. Component pages remain the owners of sizing methods,
 assumptions, costs, losses, availability, and technical limitations.
 
+The current Tier 1 outputs are carrier-specific. Electricity and hydrogen
+results may be shown side by side, but they are not equivalent end-use service
+prices.
+
 ## Comparison Boundary
 
 The common offshore-project boundary starts with the wind turbine and its
 support structure. It ends at:
 
-- the onshore electricity-grid connection for electricity export; or
-- the connection to the onshore hydrogen backbone for hydrogen export.
+- the defined onshore electrical delivery point for electricity export; or
+- the defined onshore hydrogen delivery point for hydrogen export.
 
 Infrastructure beyond those connection points is outside the model boundary.
 This excludes the wider electricity network, the hydrogen backbone itself,
@@ -55,7 +60,8 @@ flowchart LR
 | Offshore conversion location | Central HVDC platform | One central electrolysis platform | At each turbine |
 | Carrier exported to shore | Electricity | Hydrogen | Hydrogen |
 | Central offshore platform | AC aggregation and HVDC conversion | AC aggregation and electrolysis | None |
-| Onshore delivery point | Electricity-grid connection | Hydrogen-backbone connection | Hydrogen-backbone connection |
+| Onshore delivery point | Defined onshore electrical delivery point | Defined onshore hydrogen delivery point | Defined onshore hydrogen delivery point |
+| Carrier-cost output | EUR~2025~/MWh-electricity | EUR~2025~/MWh-H2-HHV and EUR~2025~/kg-H2 | EUR~2025~/MWh-H2-HHV and EUR~2025~/kg-H2 |
 
 The centralised-hydrogen architecture has one physical offshore platform. AC
 aggregation, electrolyser power electronics, PEM stacks, water treatment, and
@@ -84,10 +90,13 @@ for every asset within the physical boundary:
 - component replacement where represented by the model
 - decommissioning where represented by the model
 
-Common project costs remain inside the comparison when they are required by all
-architectures. They are labelled as common rather than removed from the system
-boundary. Wider network reinforcement beyond the defined connection point is
-excluded unless a scenario explicitly assigns it to the offshore project.
+The shared cost schema retains required common project categories. Development,
+shared engineering, insurance and owner contingency are currently unresolved;
+construction finance, taxes and financing fees are excluded by the approved
+simple-CRF convention. A complete result remains not parameterized while a
+required shared field is unresolved.
+
+Wider network reinforcement beyond the defined connection point is excluded.
 
 ## Scope of This Section
 
@@ -98,7 +107,7 @@ Use the individual pages for the detailed boundary of each architecture:
 - [Decentralised Hydrogen](decentralised_hydrogen.qmd)
 - [Component Mapping](component_mapping.qmd)
 
-The [System Boundary and LCOE](../methodology/system_boundary_and_lcoe.qmd)
-page defines the common economic comparison. The component mapping identifies
+The [System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd)
+page defines the endpoint, cost schema and reporting units. The component mapping identifies
 the canonical owner of each physical function so that costs and performance
 effects are booked once.

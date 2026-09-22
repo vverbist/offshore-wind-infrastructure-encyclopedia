@@ -2,6 +2,7 @@
 title: "DC Integration"
 subtitle: "Direct integration of PEM electrolyser on the DC link of wind turbine"
 completion: 90
+readiness: blocked
 ---
 
 ## Role in the Model

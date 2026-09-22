@@ -1,6 +1,7 @@
 ---
 title: "Hydrogen Infield Infrastructure"
 completion: 90
+readiness: blocked
 ---
 
 ## Role and Scope

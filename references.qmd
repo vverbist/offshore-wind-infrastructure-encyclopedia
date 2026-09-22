@@ -1,38 +1,42 @@
 ---
-title: "References and Source Basis"
+title: "References and Evidence Status"
+readiness: partially_implementable
 nocite: |
   @*
 ---
 
-This page records the source basis used to seed the encyclopedia. The bibliography below is generated from `references.bib`.
+This page is the evidence catalog for the model. It is generated from
+`references.bib`, which is the single source of truth for source identity,
+access status and current model use.
 
-## Background Documents
+## How to Read the Catalog
 
-- `260501_offshore_hydrogen_model_description.docx`
-- `260310_article_draft_A05.docx`
-- `260205_article_draft_A03.docx`
-- `260206 _article_draft_AJW.docx`
-- `2060306 H1 H2 System Reassessment Rewritten.docx`
-- `Manuscript_Ch1-Ch4_Export.docx`
-- `Methodological positioning note.docx`
+Every record has one **access** class and one **model-use** class.
 
-## Mentioned Source Types
+| Dimension | Status | Meaning |
+|---|---|---|
+| Access | **Public** | The evidence record is publicly accessible. |
+| Access | **Controlled internal** | Reproduction requires access to a controlled project source. |
+| Access | **Access unresolved** | The exact accessible source record is incomplete. |
+| Model use | **Adopted** | Supports an adopted input, method, boundary or model-relevant claim. |
+| Model use | **Validation only** | Tests or contextualises a result but is not the adopted model input. |
+| Model use | **Background only** | Retained for context and not used by the current model documentation. |
+| Model use | **Use unresolved** | No final model use has been established. |
 
-- TenneT programme data for 2 GW offshore HVDC station cost assumptions
-- NREL electrolyser cost basis, converted from 2020 USD to 2025 EUR and marked up to sales price
-- Transition Accelerator compressor cost basis
-- Manufacturer G stack polarisation curve
-- Manufacturer H balance-of-plant power consumption data
-- Supplier S pipeline cost data
-- Installer benchmark for offshore infield cable installation
-- TNO-related wind turbine and foundation cost assumptions
-- Dutch Offshore Wind Atlas wind resource data
+Public reproducibility means that a reader can obtain the cited evidence
+independently. Controlled-internal reproducibility means that the calculation
+can be reconstructed only by someone with authorised access to the underlying
+project source. A controlled source is not independently reproducible merely
+because its provenance is named.
 
-## To Do
+An unresolved record cannot support a final model result. It remains in the
+catalog so the missing source or model-use decision stays visible rather than
+being replaced by an unsupported assumption.
 
-Each component page should eventually link to a formal source entry with version, year, currency basis, confidentiality status, and model-use notes.
-
-Entries marked `TODO` should be treated as source records that still need exact report titles, versions, URLs, access dates, or confidentiality notes before they are used as final evidence.
+::: {#evidence-status-summary}
+Evidence status totals are added from the controlled bibliography metadata
+when the page loads.
+:::
 
 ## Bibliography
 

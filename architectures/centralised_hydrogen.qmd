@@ -1,6 +1,7 @@
 ---
 title: "Centralised Hydrogen"
 completion: 100
+readiness: blocked
 ---
 
 ## Architecture Definition
@@ -9,11 +10,11 @@ The centralised-hydrogen architecture retains the conventional turbine
 electrical chain and AC infield collection system. Electricity is aggregated
 and converted to hydrogen on one integrated offshore platform. Hydrogen is
 then compressed, exported through a subsea pipeline, and handed over at the
-connection to the onshore hydrogen backbone.
+defined onshore hydrogen delivery point.
 
 The physical boundary includes the wind turbines and support structures, AC
 collection, the integrated central platform, compression, pipeline export, and
-the onshore backbone-connection interface. It ends at that connection; the
+the onshore hydrogen-delivery interface. It ends at that connection; the
 onshore hydrogen backbone itself is outside the boundary.
 
 ```{mermaid}
@@ -85,17 +86,28 @@ The following functions are outside this architecture:
 | Electrical collection to electrolysis | Platform power electronics convert collected AC power for the PEM stacks. |
 | Electrolyser facility to compression | Produced and conditioned hydrogen leaves the electrolyser boundary and enters the separately accounted compressor subsystem. |
 | Compression to export | Compressed hydrogen enters the export pipeline. |
-| Export to backbone | The project ends at the onshore hydrogen-backbone connection. |
+| Export to backbone | The project ends at the defined onshore hydrogen delivery point. |
+
+## Reported Result
+
+The architecture reports installed capital intensity in
+EUR~2025~/kW of installed wind-turbine rated capacity. Annual hydrogen cost is
+reported in EUR~2025~/MWh-H2-HHV landed at the defined onshore hydrogen
+delivery point and in EUR~2025~/kg-H2. These are Tier 1 carrier-product metrics,
+not equivalent electricity end-use prices.
 
 ## Economic Boundary
 
 The architecture cost includes the common offshore wind project and every
-centralised-hydrogen asset and lifecycle activity needed to deliver hydrogen
-to the backbone connection. The one-platform definition prevents the AC
+centralised-hydrogen asset and lifecycle activity represented by the shared
+cost schema. The one-platform definition prevents the AC
 collection platform and electrolyser platform from being counted as separate
 physical structures. Component costs remain separately owned even where the
 equipment shares that platform.
 
 The hydrogen backbone and any downstream reinforcement or conditioning are
-outside the base architecture boundary unless a scenario explicitly assigns
-them to the offshore project.
+outside the Tier 1 boundary. Development, shared engineering, insurance and
+owner contingency remain unresolved shared fields; construction finance, taxes
+and financing fees are excluded by the simple-CRF convention. The reporting
+contract is defined on
+[System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd).

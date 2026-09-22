@@ -1,6 +1,7 @@
 ---
 title: "Hydrogen Production"
 completion: 90
+readiness: partially_implementable
 ---
 
 Hydrogen production covers the entire electrolyser.

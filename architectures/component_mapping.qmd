@@ -1,6 +1,7 @@
 ---
 title: "Component Mapping"
 completion: 100
+readiness: partially_implementable
 ---
 
 This page is the scope-control matrix for the three architectures. It identifies
@@ -34,9 +35,12 @@ assumptions, costs, losses, availability, and limitations.
 
 | Architecture | Project delivery point | Infrastructure beyond the boundary |
 |---|---|---|
-| Electricity export | Onshore electricity-grid connection | Wider electricity transmission, distribution, storage, and end use |
-| Centralised hydrogen | Connection to the onshore hydrogen backbone | Hydrogen backbone, storage, distribution, reconversion, and end use |
-| Decentralised hydrogen | Connection to the onshore hydrogen backbone | Hydrogen backbone, storage, distribution, reconversion, and end use |
+| Electricity export | Defined onshore electrical delivery point; EUR~2025~/MWh-electricity | Wider electricity transmission, distribution, storage, and end use |
+| Centralised hydrogen | Defined onshore hydrogen delivery point; EUR~2025~/MWh-H2-HHV and EUR~2025~/kg-H2 | Hydrogen backbone, storage, distribution, reconversion, and end use |
+| Decentralised hydrogen | Defined onshore hydrogen delivery point; EUR~2025~/MWh-H2-HHV and EUR~2025~/kg-H2 | Hydrogen backbone, storage, distribution, reconversion, and end use |
+
+The three rows are Tier 1 carrier-specific products. They do not define a
+common end-use service or authorize an equivalent carrier ranking.
 
 ## Installation and Common Project Scope
 
@@ -46,10 +50,10 @@ economic boundary for every included asset. The
 installation methods and assumptions for turbines, foundations, cables,
 pipelines, and platforms.
 
-Common project costs are retained where they are required to construct and
-operate all three architectures. These include the shared wind-turbine,
-foundation, development, and financing scopes represented elsewhere in the
-model. They are common components, not out-of-boundary components.
+The shared cost schema retains required project categories. Development,
+shared engineering, insurance and owner contingency are currently unresolved.
+Construction finance, taxes and financing fees are excluded by the approved
+simple-CRF convention rather than embedded in component costs.
 
 Wider onshore network reinforcement is excluded unless a scenario explicitly
 assigns it to the offshore project.
@@ -60,3 +64,6 @@ Architecture pages determine whether a component or function is included.
 Component and methodology pages determine how it is represented. A cost, loss,
 availability factor, installation activity, or replacement is booked by its
 canonical owner and must not be added again on an architecture page.
+
+Capital and carrier-cost reporting follows
+[System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd).

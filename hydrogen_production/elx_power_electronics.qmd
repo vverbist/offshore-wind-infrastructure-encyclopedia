@@ -1,6 +1,7 @@
 ---
 title: "Power Electronics"
 completion: 90
+readiness: blocked
 ---
 
 ## Role in the Value Chain

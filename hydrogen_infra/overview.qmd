@@ -1,6 +1,7 @@
 ---
 title: "Hydrogen Infrastructure"
 completion: 90
+readiness: partially_implementable
 ---
 
 Hydrogen infrastructure covers everything that moves hydrogen from the electrolyser outlet to the onshore interface: compression, and the pipeline network that carries the gas offshore and to shore.

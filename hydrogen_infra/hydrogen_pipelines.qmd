@@ -1,6 +1,7 @@
 ---
 title: "Hydrogen Pipelines"
 completion: 90
+readiness: blocked
 ---
 
 ## Role and Scope

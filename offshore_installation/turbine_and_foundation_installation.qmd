@@ -1,6 +1,7 @@
 ---
 title: "Turbine and Foundation Installation"
 completion: 70
+readiness: blocked
 ---
 
 ## Role in the Model

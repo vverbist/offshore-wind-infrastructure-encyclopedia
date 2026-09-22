@@ -1,6 +1,7 @@
 ---
 title: "Cable and Pipeline Installation"
 completion: 65
+readiness: blocked
 ---
 
 ::: {.callout-warning}

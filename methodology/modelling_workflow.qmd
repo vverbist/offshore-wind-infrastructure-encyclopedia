@@ -1,52 +1,141 @@
 ---
 title: "Modelling Workflow"
 completion: 70
+readiness: partially_implementable
 ---
 
-The model workflow separates fixed assumptions, scenario parameters, derived parameters, optimisation variables, and outputs.
+## One Case, One Result
 
-## Fixed Inputs
+The model evaluates one complete user-supplied case deterministically.
+Alternative designs and sensitivities are separate input records. The model
+does not run an optimizer or choose a preferred case.
 
-Fixed inputs remain constant across the compared architectures unless explicitly varied in a sensitivity case. Examples include:
+Input and output classes are defined on
+[Inputs, Parameters and Outputs](optimisation_variables.qmd).
 
-- wind resource and Weibull distributions
-- distance to shore
-- water depth
-- component cost assumptions
-- efficiency and availability assumptions
-- financing parameters
-- source-specific cost curves
+## Canonical Scalar Inputs
 
-## Scenario Parameters
+Adopted scalar inputs are stored once in `model_data/inputs.csv`, using stable,
+human-readable IDs. Website pages reference those IDs, and calculation and
+figure code reads the same numeric records. Explanations, evidence assessment,
+scope and limitations remain on the owning website page.
 
-Scenario parameters define the case being evaluated. Current scenario dimensions include:
+The website build validates IDs, values, units, classifications, price years
+and citation keys before rendering. It then calculates derived values and
+currency-only conversions. Generated display variables are not model inputs
+and must not be edited directly.
 
-- sea area
-- number of turbines
-- export architecture: electricity, centralised hydrogen, or decentralised hydrogen
-- hydrogen stack overplanting
-- hydrogen pipeline pressure
-- hydrogen pipeline selection
+## Execution Order
 
-## Derived Parameters
+### 1. Validate the Case Record
 
-Derived parameters are calculated deterministically from fixed inputs and scenario parameters. Examples include:
+Check that every required user input and fixed parameter:
 
-- turbine positions
-- infield cable or pipeline length
-- wake losses
-- production profile
-- stack operating point and efficiency
-- balance-of-plant losses
-- compressor power demand
-- peak export capacity requirement
+- has a value and unit;
+- belongs to one controlled class;
+- is applicable to the selected architecture;
+- lies within an adopted method or product envelope; and
+- does not conflict with another representation of the same quantity.
 
-## Outputs
+A missing required input returns **not parameterized**. A supplied value that
+violates a physical or technical constraint returns **infeasible**.
 
-The principal outputs are yield and LCOE. The encyclopedia does not document result values, but it documents the assumptions needed to reproduce them:
+### 2. Select the Architecture Branch
 
-- annual delivered energy in MWh/year
-- areal yield in MWh/km2/year
-- LCOE in EUR/MWh or EUR/kg-equivalent reporting where needed
-- component-level annualised cost contribution
-- optimised component sizing decisions
+Select exactly one of:
+
+- electricity export;
+- centralised offshore hydrogen production; or
+- decentralised turbine-integrated hydrogen production.
+
+The architecture mapping determines which component owners are active. An
+excluded component contributes neither cost nor loss.
+
+### 3. Calculate Resource, Layout and Gross Production
+
+The wind and layout pages return:
+
+- the accepted turbine definition;
+- turbine coordinates and farm area;
+- gross and wake-adjusted production on the documented time basis; and
+- layout feasibility and rejection reasons.
+
+Where time-varying wind data are used, the owning page retains its documented
+time step $\Delta t$.
+
+### 4. Construct Physical Inventories
+
+Calculate, before cost:
+
+- turbine and foundation records;
+- cable or pipeline route sections and physical lengths;
+- platforms and equipment inventories;
+- equipment counts; and
+- installation-relevant masses, dimensions, lifts and loads.
+
+Every downstream cost must consume an explicit physical quantity or a clearly
+labelled top-down factor.
+
+### 5. Size or Select Discrete Equipment
+
+Apply the deterministic rules owned by each component page, including ceiling
+or class-selection steps. The user supplies any design choice that is not
+uniquely determined by the documented rules.
+
+A failed capacity, product-class, lift, route or operating-envelope check
+returns infeasible. An unresolved product set or sizing input returns not
+parameterized.
+
+### 6. Calculate Energy in Physical Order
+
+Starting from wake-adjusted turbine production:
+
+1. apply component efficiency or conversion equations;
+2. subtract auxiliary demand at its owning subsystem;
+3. apply curtailment only where a documented capacity limit requires it;
+4. calculate hydrogen mass where applicable; and
+5. aggregate pre-availability annual energy.
+
+Time-varying nonlinear performance may retain the component time step.
+Availability is not applied here unless the same effect is already embedded in
+the energy record.
+
+### 7. Apply Annual Availability Once
+
+Pass pre-availability annual energy to the architecture ledger on
+[Energy and Availability](energy_availability_and_annualisation.qmd).
+
+Multiply only non-overlapping subsystem factors. A factor already embedded in
+the upstream energy record is not applied again. Parallel-unit and redundancy
+effects must already be combined by the component owner.
+
+### 8. Aggregate Cost
+
+Combine non-overlapping:
+
+- component supply CAPEX;
+- installation CAPEX;
+- shared project-cost fields;
+- required replacements;
+- decommissioning; and
+- annual OPEX.
+
+Unknown required terms return not parameterized; they are not treated as zero.
+
+### 9. Annualize and Report
+
+Apply the common CRF method from
+[Financial and Price-Basis Assumptions](financial_and_price_basis.qmd), then
+return the endpoint and units defined on
+[System Boundary and Carrier-Cost Metrics](system_boundary_and_lcoe.qmd).
+
+## Return Status
+
+| Status | Meaning | Cost-result behavior |
+|---|---|---|
+| feasible | All required inputs exist and all checks pass | Report complete applicable outputs |
+| infeasible | One or more physical or technical constraints fail | Report reasons and intermediate checks; do not report a valid carrier cost |
+| not_parameterized | A required value, evidence record or component method is missing | Report missing owners/inputs; do not substitute zero or report a complete carrier cost |
+
+The returned reasons are part of the model output. A failed case must remain
+auditable rather than disappearing from a set of results.

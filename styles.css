@@ -34,16 +34,49 @@ thead {
   font-style: italic;
 }
 
-#quarto-sidebar .sidebar-link[data-progress] {
-  color: rgba(17, 24, 39, var(--progress-alpha, 1)) !important;
-  transition: color 120ms ease;
-}
-
-#quarto-sidebar .sidebar-link[data-progress]:hover,
-#quarto-sidebar .sidebar-link[data-progress]:focus {
-  color: rgba(0, 0, 0, var(--progress-alpha, 1)) !important;
-}
-
-#quarto-sidebar .sidebar-item-section > .sidebar-item-container > .sidebar-link[data-progress] {
+.evidence-badge {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  display: inline-block;
+  font-size: 0.68rem;
   font-weight: 650;
+  line-height: 1.1;
+  padding: 0.16rem 0.36rem;
+  white-space: nowrap;
+}
+
+.evidence-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.access-public,
+.use-adopted {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.access-controlled-internal,
+.use-validation-only {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.use-background-only {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.access-unresolved,
+.use-unresolved {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+#evidence-status-summary {
+  color: #4b5563;
+  font-size: 0.9rem;
+  margin: 0.75rem 0 1rem;
 }

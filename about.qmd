@@ -1,11 +1,35 @@
 ---
 title: "About"
+readiness: partially_implementable
 ---
 
 This site documents the assumptions behind a component-level techno-economic model for offshore wind infrastructure.
 
 The model compares electricity-based export, centralised offshore hydrogen production, and decentralised turbine-integrated hydrogen production. The documentation here is limited to methodology and assumptions: system boundaries, component cost models, energy balances, availability factors, installation assumptions, and shared financial conventions.
 
-The source material is a set of working Word documents in `background/`. Some assumptions rely on internal supplier or manufacturer data; those are documented at the level needed for model reproducibility without exposing confidential raw datasets.
+The model is under development. Hover over a sidebar link to see whether each
+page is context only, not reviewed, blocked, partially implementable,
+implementable with declared uncertainty, or ready. A section tooltip reports the
+least-ready calculation page in that section; it is not an editorial-completion
+percentage.
+
+| Readiness | Interpretation |
+|---|---|
+| **Not reviewed** | The page has not completed the structured model review. |
+| **Context** | No standalone model calculation is expected. |
+| **Blocked** | Material missing inputs or decisions prevent implementation. |
+| **Partial** | Part of the calculation is implementable, but material gaps remain. |
+| **Ready — uncertain** | Implementable with material uncertainty explicitly declared. |
+| **Ready** | Implementable from the documented inputs and assumptions. |
+
+The source base includes the formal public bibliography and controlled working
+documents. Public evidence can be checked independently. Internal supplier,
+manufacturer and project evidence can be reproduced only by authorised readers
+with access to the controlled source. Where a public fallback, bounded range or
+sufficient derivation is absent, confidential evidence is not independently
+reproducible and the affected result remains limited or blocked.
+
+See [References and Evidence Status](references.qmd) for the access and model-use
+classification of every catalog record.
 
 

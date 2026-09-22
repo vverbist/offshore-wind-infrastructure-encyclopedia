@@ -1,6 +1,7 @@
 ---
 title: "Balance of Plant"
 completion: 80
+readiness: blocked
 ---
 
 ## Role and Scope

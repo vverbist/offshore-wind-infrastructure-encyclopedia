@@ -1,6 +1,7 @@
 ---
 title: "Onshore Grid Connection"
 completion: 75
+readiness: blocked
 ---
 
 ## Role and Scope

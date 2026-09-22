@@ -1,6 +1,7 @@
 ---
 title: "Hydrogen Compressor"
 completion: 80
+readiness: blocked
 ---
 
 ## Role and Scope

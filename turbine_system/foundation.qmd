@@ -1,6 +1,7 @@
 ---
 title: "Monopile Foundation Mass and Cost"
 completion: 80
+readiness: blocked
 ---
 
 ## Role and Scope

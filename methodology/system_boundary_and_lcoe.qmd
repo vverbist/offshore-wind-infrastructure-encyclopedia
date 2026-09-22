@@ -1,40 +1,124 @@
 ---
-title: "System Boundary and LCOE"
+title: "System Boundary and Carrier-Cost Metrics"
 completion: 70
+readiness: partially_implementable
 ---
 
-## System Boundary
+## Role in the Model
 
-The model boundary runs from wind turbine generation to the onshore delivery point. It includes turbines, foundations, infield collection, offshore platforms or substations, conversion equipment, export infrastructure, and onshore conversion or delivery interface.
+This page defines what each architecture delivers, which costs enter the model
+result and how those costs are normalized. Component pages calculate the
+underlying physical quantities, energy flows and costs.
 
-This boundary is used because offshore electricity and offshore hydrogen differ mainly in the infrastructure required between the turbine and the shore. Excluding export infrastructure would make the comparison structurally biased toward electricity, because the electrical pathway would be evaluated before its largest carrier-specific cost items enter the calculation.
+## Tier 1 Delivery Boundary
 
-## LCOE Definition
+The model currently reports carrier-specific Tier 1 products:
 
-The levelised cost of energy is calculated as annualised lifetime cost divided by annual delivered energy:
+| Architecture | Delivery endpoint | Delivered quantity |
+|---|---|---|
+| Electricity export | Defined onshore electrical delivery point after onshore conversion | Electrical energy |
+| Centralised hydrogen | Defined onshore hydrogen delivery point after offshore production, compression and export | Hydrogen mass and HHV energy |
+| Decentralised hydrogen | Defined onshore hydrogen delivery point after turbine-level production, collection, compression and export | Hydrogen mass and HHV energy |
 
-```text
-LCOE = annualised_cost / annual_energy_delivered
-```
+Storage, reconversion, downstream distribution, demand matching and end use are
+outside the Tier 1 boundary. They may be added only through a future Tier 2
+scenario.
 
-For electricity configurations, delivered energy is electrical energy at the onshore grid connection point. For hydrogen configurations, hydrogen yield is converted to energy using the higher heating value.
+EUR/MWh-electricity and EUR/MWh-H2-HHV therefore describe different delivered
+carrier products. They may be displayed side by side, but they must not be
+labelled as equivalent end-use prices or used to claim a like-for-like carrier
+ranking.
 
-## Conceptual Cost Structure
+## Cost Boundary
 
-The model uses the following conceptual decomposition to explain why infrastructure affects optimal design:
+The model distinguishes initial installed CAPEX from the lifecycle capital
+basis used for annualization.
 
-```text
-LCOE = C1 / Yield + C2 / Capacity Factor + C3
-```
+| Cost category | Treatment and owner |
+|---|---|
+| Component supply CAPEX | Owned by the component page |
+| Offshore installation CAPEX | Owned by the applicable installation page |
+| Onshore equipment and connection CAPEX | Owned by the applicable component page |
+| Annual OPEX | Owned by the component page on a non-overlapping scope |
+| Material short-life replacement | Owned by the component page; counted only when replacement is required within 25 years |
+| Decommissioning | Shared calculation on the financial page: 80% of total offshore installation CAPEX |
+| Commissioning | Owned once by the applicable installation/component interface |
+| Development and shared engineering | Shared project-cost field; currently unresolved |
+| Insurance and owner contingency | Shared project-cost field; currently unresolved |
+| Construction finance, taxes and financing fees | Excluded by the approved simple-CRF convention |
+| Residual value | Zero under the 25-year project convention |
 
-where:
+Development, shared engineering, insurance and owner contingency are not
+silently zero. Until they are parameterized, a complete total-system cost
+returns **not parameterized**. Explicitly bounded component or modelled-cost
+subtotals may still be reported, but they must not be called total system cost.
 
-- `C1` represents fixed project costs that do not scale strongly with installed capacity or yield.
-- `C2` represents capacity-linked infrastructure costs, such as turbines, foundations, converters, platforms, cables, electrolysers, compressors, and pipelines.
-- `C3` represents energy-linked costs or losses, including conversion penalties and variable operating costs.
+## Capital-Intensity Outputs
 
-This is a conceptual expression, not the full implementation. Its role is to show why a high cost per MW of infrastructure penalises low-capacity-factor designs: infrastructure is sized for peak power, while revenue and LCOE recovery depend on delivered annual energy.
+Let $P_{\mathrm{wind,rated}}$ be installed wind-turbine rated capacity in kW.
 
-## Annualisation
+Initial installed capital intensity is:
 
-CAPEX is converted to an annual cost using the capital recovery factor derived on [Financial and Price-Basis Assumptions](financial_and_price_basis.qmd). OPEX is added as an annual cost using the explicitly bounded relationship documented by each component owner.
+$$
+c_{\mathrm{initial}}
+=
+\frac{C_{\mathrm{initial}}}
+{P_{\mathrm{wind,rated}}},
+$$
+
+where $c_{\mathrm{initial}}$ has units EUR~2025~/kW-wind.
+
+The lifecycle capital basis may also be reported separately:
+
+$$
+c_{\mathrm{lifecycle}}
+=
+\frac{C_{\mathrm{lifecycle\ capital}}}
+{P_{\mathrm{wind,rated}}}.
+$$
+
+The label must state whether replacement and decommissioning are included.
+Neither metric may be normalized by electrolyser, converter, pipeline or export
+capacity when it is presented as the cross-architecture wind-capacity result.
+
+## Annual Carrier-Cost Outputs
+
+For electricity:
+
+$$
+LC_{\mathrm{electricity}}
+=
+\frac{C_{\mathrm{annual,electricity}}}
+{E_{\mathrm{electricity,onshore}}},
+$$
+
+with numerator in EUR~2025~/year, denominator in
+MWh-electricity/year and result in EUR~2025~/MWh-electricity.
+
+For hydrogen:
+
+$$
+LC_{\mathrm{H2,HHV}}
+=
+\frac{C_{\mathrm{annual,H2}}}
+{E_{\mathrm{H2,onshore,HHV}}},
+$$
+
+with result in EUR~2025~/MWh-H2-HHV.
+
+Hydrogen cost per kilogram is derived from the same result:
+
+$$
+LC_{\mathrm{H2,kg}}
+=
+LC_{\mathrm{H2,HHV}}
+\frac{HHV_{\mathrm{H2}}}{1000},
+$$
+
+where $HHV_{\mathrm{H2}}$ is in kWh/kg. At 39.4 kWh/kg, the conversion
+factor is 0.0394 MWh/kg.
+
+The financial numerator is calculated on
+[Financial and Price-Basis Assumptions](financial_and_price_basis.qmd).
+Delivered-energy accounting is defined on
+[Energy and Availability](energy_availability_and_annualisation.qmd).

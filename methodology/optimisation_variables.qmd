@@ -1,35 +1,97 @@
 ---
-title: "Optimisation Variables"
+title: "Inputs, Parameters and Outputs"
 completion: 70
+readiness: partially_implementable
 ---
 
-The model treats several design choices as optimisation variables rather than fixed assumptions. Their values are outcomes of the system cost minimisation.
+## Deterministic Model Contract
 
-## Layout Variables
+One complete set of user inputs and fixed parameters produces one result. The
+model does not optimize, search a design space or select a preferred case.
+Sensitivities and alternative designs are separate user-supplied cases.
 
-Turbine spacing and wind farm power density determine the trade-off between areal yield and capacity factor. Tighter spacing increases installed capacity per area but increases wake losses. Wider spacing improves capacity factor but lowers MWh/km2.
+## Controlled Taxonomy
 
-## Hydrogen Variables
+| Class | Meaning |
+|---|---|
+| User input | Value or discrete choice supplied for one model case |
+| Fixed parameter | Sourced value or explicit modelling assumption held fixed for that case |
+| Derived quantity | Calculated from inputs and parameters |
+| Output | Reported physical, energy, cost or feasibility result |
 
-For hydrogen configurations, the main optimisation variables are:
+A value must belong to exactly one class in a given calculation. A derived
+quantity must not also be supplied as an independent input.
 
-- stack overplant factor: installed electrolyser capacity relative to turbine or farm rated power
-- pipeline operating pressure
-- pipeline diameter or selected pipeline class
-- number of export pipelines, where pipeline capacity is discrete
+## Master User-Input Contract
 
-The stack overplant factor affects both conversion efficiency and CAPEX. Oversizing the stack lowers current density and can improve efficiency, but increases stack CAPEX.
+| Field | Unit/type | Applicability | Owner | Required check | Current status |
+|---|---|---|---|---|---|
+| Architecture, $a$ | category | All | Architectures | Electricity, centralised hydrogen or decentralised hydrogen | Defined |
+| Wind-resource record | dataset/version | All | WIND-002 | Source, period, location and direction convention supplied | Source record unresolved |
+| Site/layout definition | coordinates or declared layout inputs | All | WIND-003 | One unambiguous layout route; no conflicting turbine-count and spacing definitions | Method unresolved |
+| Turbine record | model/class | All | TURB-002 | Rated power, rotor, hub height and equipment boundary supplied | Partially defined |
+| Water depth | m | All | TURB-003 and platform owners | Within adopted foundation/platform method range | Scenario input; range unresolved |
+| Onshore endpoint and route records | route data | All | ELEC-004/005 or H2I-004 | Route segments and endpoint match selected carrier | Partially defined |
+| Hydrogen stack overplant factor | dimensionless | Hydrogen | H2P-003 | Positive and consistent with module count | User input; range unresolved |
+| Hydrogen operating pressure | bar | Hydrogen | H2I-003/004 | Inlet/outlet basis and product class supplied | User input; range unresolved |
+| Hydrogen pipeline product class | discrete record | Hydrogen | H2I-004 | Qualified diameter, pressure and length envelope | User input; product set unresolved |
 
-Pipeline pressure and diameter affect both transport capacity and compression energy. Because pipelines are discrete assets, the cost optimum may occur by accepting a small energy-yield loss if it avoids an additional pipeline.
+Missing ranges remain explicit because the component evidence does not yet
+support a canonical allowed set. COR-01B does not invent defaults.
 
-## Electricity Variables
+## Shared Fixed Parameters
 
-For the electricity configuration, export capacity is constrained by HVDC platform and cable block sizing. The current model assumes a 2 GW export cable/platform basis, which creates discrete capacity increments rather than a continuously scalable export link.
+| Parameter | Value | Unit | Owner and status |
+|---|---:|---|---|
+| Real WACC, $r$ | 6.6% | 1/year | METH-003; provisional unsupported assumption |
+| Project life, $n$ | 25 | year | METH-003; modelling assumption |
+| Hydrogen HHV | 39.4 | kWh/kg | METH-006; sourced and rounded |
+| HVDC reference-link rating | 2 | GW/link | ELEC-003/004; sourced fixed parameter [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard] |
+| Decommissioning factor | 0.80 | fraction of offshore installation CAPEX | METH-003; modelling assumption |
 
-## Architecture-Specific Feasible Sets
+The 2 GW HVDC rating is not an optimization variable. The electrical component
+pages own the ceiling-based link count, partial final-link utilization,
+curtailment and feasibility treatment; see
+[HVDC Export Cables](../electrical_infra/hvdc_export_cables.qmd) and
+[Onshore Grid Connection](../electrical_infra/onshore_grid_connection.qmd).
 
-Each architecture has its own feasible set:
+All other component parameters remain on their owning pages and must expose
+value, unit, source or assumption class, applicability and missing-input
+behavior.
 
-- electricity export requires AC infield collection, offshore conversion, HVDC export, and onshore conversion
-- centralised hydrogen keeps the AC infield network but replaces HVDC export with offshore electrolysis, compression, and hydrogen pipeline export
-- decentralised hydrogen moves electrolysis into the turbine and replaces the infield AC network with a hydrogen pipeline grid
+## Derived Quantities
+
+The deterministic workflow derives, where the owning component is
+parameterized:
+
+- installed wind rated capacity;
+- turbine coordinates and farm area;
+- wake-adjusted production;
+- cable, pipeline and platform inventories;
+- equipment counts and discrete link or pipeline counts;
+- conversion losses and auxiliary demand;
+- pre-availability and delivered annual energy;
+- initial CAPEX, replacement, decommissioning and annual OPEX; and
+- annualized carrier-specific cost.
+
+## Required Outputs
+
+Every case returns:
+
+| Output | Unit/status |
+|---|---|
+| Calculation status | feasible, infeasible or not_parameterized |
+| Status reasons | list of failed constraints or missing owners/inputs |
+| Installed wind rated capacity | kW |
+| Delivered electricity | MWh-electricity/year, when applicable |
+| Landed hydrogen | kg-H2/year and MWh-H2-HHV/year, when applicable |
+| Initial installed CAPEX | EUR~2025~ and EUR~2025~/kW-wind |
+| Lifecycle capital basis | EUR~2025~ and EUR~2025~/kW-wind |
+| Annual OPEX | EUR~2025~/year |
+| Annualized modelled cost | EUR~2025~/year |
+| Electricity carrier cost | EUR~2025~/MWh-electricity |
+| Hydrogen carrier cost | EUR~2025~/MWh-H2-HHV and EUR~2025~/kg-H2 |
+| Intermediate ledgers | physical, energy, availability and cost records |
+
+A complete carrier-cost output is reported only for a feasible, fully
+parameterized case.

@@ -1,6 +1,7 @@
 ---
 title: "Decentralised Hydrogen"
 completion: 100
+readiness: blocked
 ---
 
 ## Architecture Definition
@@ -8,12 +9,12 @@ completion: 100
 The decentralised-hydrogen architecture converts electrical energy to hydrogen
 at each wind turbine. Hydrogen rather than electricity is collected within the
 wind farm, exported through a subsea pipeline, and handed over at the
-connection to the onshore hydrogen backbone.
+defined onshore hydrogen delivery point.
 
 The physical boundary includes the wind turbines and support structures,
 turbine-integrated hydrogen-production equipment, turbine-level compression,
 the infield hydrogen network, export pipeline, and onshore
-backbone-connection interface. It contains no central offshore conversion
+hydrogen-delivery interface. It contains no central offshore conversion
 platform.
 
 ```{mermaid}
@@ -85,17 +86,27 @@ The following functions are not part of the decentralised architecture:
 | Electrolyser facility to compression | Produced and conditioned hydrogen leaves the turbine-level electrolyser boundary and enters the separately accounted compressor. |
 | Turbine unit to infield network | Compressed hydrogen enters the infield pipeline network. |
 | Infield network to export system | Collected hydrogen enters the export pipeline system. |
-| Export to backbone | The project ends at the onshore hydrogen-backbone connection. |
+| Export to backbone | The project ends at the defined onshore hydrogen delivery point. |
+
+## Reported Result
+
+The architecture reports installed capital intensity in
+EUR~2025~/kW of installed wind-turbine rated capacity. Annual hydrogen cost is
+reported in EUR~2025~/MWh-H2-HHV landed at the defined onshore hydrogen
+delivery point and in EUR~2025~/kg-H2. These are Tier 1 carrier-product metrics,
+not equivalent electricity end-use prices.
 
 ## Economic Boundary
 
 The architecture cost includes the common offshore wind project and all
 turbine-level hydrogen-production, compression, collection, export, and
-installation activities required to reach the backbone connection. Removing
+installation activities represented by the shared cost schema. Removing
 the AC collection and central platform functions changes which components are
-booked; it does not remove the common turbine, foundation, development, or
-financing boundary.
+booked; it does not remove the common turbine and foundation boundary.
 
 The hydrogen backbone and any downstream reinforcement or conditioning are
-outside the base architecture boundary unless a scenario explicitly assigns
-them to the offshore project.
+outside the Tier 1 boundary. Development, shared engineering, insurance and
+owner contingency remain unresolved shared fields; construction finance, taxes
+and financing fees are excluded by the simple-CRF convention. The reporting
+contract is defined on
+[System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd).

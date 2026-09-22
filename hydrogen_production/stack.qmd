@@ -1,6 +1,7 @@
 ---
 title: "Stack (PEM)"
 completion: 80
+readiness: blocked
 ---
 
 ## Role in the Value Chain

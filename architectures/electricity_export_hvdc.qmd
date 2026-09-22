@@ -1,19 +1,20 @@
 ---
 title: "Electricity Export with HVDC"
 completion: 100
+readiness: partially_implementable
 ---
 
 ## Architecture Definition
 
 The electricity-export architecture carries electrical energy from each wind
-turbine to the onshore electricity grid. Turbine output is conditioned for AC
+turbine to the defined onshore electrical delivery point. Turbine output is conditioned for AC
 infield collection, aggregated and converted to HVDC on an offshore platform,
 exported to shore, and converted back to AC at the onshore grid connection.
 
 The physical boundary includes the wind turbines, their support structures,
 the complete offshore and onshore electrical chain, and the grid-connection
-interface. It ends where the project hands electrical energy to the onshore
-grid.
+interface. It ends where the project hands electrical energy over at the
+defined onshore electrical delivery point.
 
 ```{mermaid}
 %%| fig-height: 1.0
@@ -63,15 +64,23 @@ The following functions are outside this architecture:
 | Offshore platform to export system | Converted DC power enters the HVDC cable system. |
 | Export system to onshore connection | The onshore converter returns the exported power to AC for handover at the grid connection. |
 
+## Reported Result
+
+The architecture reports installed capital intensity in
+EUR~2025~/kW of installed wind-turbine rated capacity and annual carrier cost
+in EUR~2025~/MWh-electricity landed at the defined onshore electrical delivery
+point. This is a Tier 1 carrier product, not an end-use service price.
+
 ## Economic Boundary
 
 The architecture cost includes the common offshore wind project and all
-electricity-specific assets and lifecycle activities needed to reach the
-onshore grid connection. Common turbine, foundation, development, and financing
-costs remain part of the comparison even though they also apply to the hydrogen
-architectures.
+electricity-specific assets and lifecycle activities represented by the shared
+cost schema. Development, shared engineering, insurance and owner contingency
+remain unresolved shared fields. Construction finance, taxes and financing
+fees are excluded by the simple-CRF convention.
 
 Wider onshore grid reinforcement is outside the base architecture boundary
 unless it is explicitly assigned to the project by the scenario. Costs,
 losses, availability, sizing, and unresolved evidence remain owned by the
-linked component and methodology pages.
+linked component and methodology pages. The reporting contract is defined on
+[System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd).

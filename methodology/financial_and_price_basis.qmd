@@ -1,23 +1,33 @@
 ---
 title: "Financial and Price-Basis Assumptions"
 completion: 40
+readiness: partially_implementable
 ---
 
 ## Role in the Model
 
-This page defines the common basis used to combine costs from different sources and convert project CAPEX into annual cost. Component pages retain ownership of cost scope, source values, component-specific scaling and OPEX relationships.
+This page defines the common monetary basis, lifecycle capital basis and annual
+cost calculation. Component pages retain ownership of source values,
+component-specific scaling, installation boundaries, replacement scope and
+annual OPEX.
 
 ## Canonical Monetary Basis
 
-All costs entering a common model result are expressed in **constant 2025 euros (EUR~2025~)**. This is an explicit modelling convention, not a claim that every source was published in that basis.
+All costs entering a common model result are expressed in **constant 2025 euros
+(EUR~2025~)**. Each imported cost retains its source currency, source price
+year and cost boundary.
 
-Each imported cost must retain its source currency, source price year and cost boundary. A value with an unresolved price year cannot be adopted as an EUR~2025~ model input; it may be shown only as a non-combinable reference until that evidence gap is resolved.
+A value with an unresolved price year cannot be adopted as an EUR~2025~ model
+input. It may be shown only as a non-combinable reference until the evidence
+gap is resolved.
 
-No generic geographic, offshore or market multiplier is applied. Such a factor may be introduced only where evidence defines its scope and prevents overlap with component, installation or commercial allowances.
+No generic geographic, offshore or market multiplier is applied. Such a factor
+may be introduced only where evidence defines its scope and prevents overlap
+with component, installation or commercial allowances.
 
-## Currency and Price-Year Normalisation
+## Currency and Price-Year Normalization
 
-A source cost in currency $s$ and price year $y$ is normalised as:
+A source cost in currency $s$ and price year $y$ is normalized as:
 
 $$
 C_{2025,\mathrm{EUR}}
@@ -25,31 +35,42 @@ C_{2025,\mathrm{EUR}}
 C_{y,s}
 \frac{I_{s,k}(2025)}{I_{s,k}(y)}
 FX_{\mathrm{EUR}/s,2025}
-G_\mathrm{market}.
+G_{\mathrm{market}}.
 $$
 
 | Symbol | Definition | Unit or status |
 |---|---|---|
 | $C_{y,s}$ | Source cost in source currency $s$ and price year $y$ | currency $s$ |
-| $I_{s,k}(t)$ | Price index for cost type $k$ in the source market at time $t$ | index |
+| $I_{s,k}(t)$ | Price index for cost type $k$ in source market $s$ | index |
 | $FX_{\mathrm{EUR}/s,2025}$ | 2025 annual-average euros per unit of source currency | EUR/currency $s$ |
-| $G_\mathrm{market}$ | Separately evidenced geographic-market adjustment | dimensionless; default 1.0 |
+| $G_{\mathrm{market}}$ | Separately evidenced geographic-market adjustment | dimensionless; default 1.0 |
 | $C_{2025,\mathrm{EUR}}$ | Cost on the common model basis | EUR~2025~ |
 
-Escalation is performed in the source currency before currency conversion. A cost-specific index is preferred where its scope matches the equipment or activity. A general consumer-price index may be used only as a transparent fallback, with the mismatch documented as a limitation.
+Escalation is performed in the source currency before currency conversion. A
+cost-specific index is preferred where its scope matches the equipment or
+activity. A consumer-price index may be used only as a transparent fallback,
+with the mismatch recorded as a limitation.
 
-For USD-to-EUR conversions, the common exchange-rate convention is the ECB 2025 annual average of 1 EUR = 1.1300 USD, or $FX_{\mathrm{EUR}/\mathrm{USD},2025}=1/1.1300$ [@ecb2025USDEUR]. A dated exchange rate is not mixed with annual-average price indices in an EUR~2025~ model input.
+For USD-to-EUR conversions, the common convention is the ECB 2025 annual
+average of 1 EUR = {{< var financial-usd-per-eur-2025-value >}} USD. The inverse
+rate is {{< var financial-eur-per-usd-2025 >}}
+[@ecb2025USDEUR]. A dated exchange rate is not mixed with annual-average price
+indices in an EUR~2025~ model input.
 
-## Annualisation
-
-The base case uses the following financial assumptions:
+## Project Financial Assumptions
 
 | Parameter | Symbol | Value | Classification and basis |
 |---|---:|---:|---|
-| Real weighted average cost of capital | $r$ | 6.6%/year | Explicit base-case modelling assumption carried from the current model; TODO: provide an evidence basis and sensitivity range |
-| Project economic lifetime | $n$ | 25 years | Explicit base-case modelling assumption carried from the current model; TODO: reconcile component lifetimes, replacements and residual value |
+| Real weighted average cost of capital | $r$ | {{< var financial-real-wacc >}} | Provisional project-wide modelling assumption; evidence basis and sensitivity remain unresolved |
+| Project life | $n$ | {{< var financial-project-life >}} | Project-wide modelling assumption |
+| Residual value | — | {{< var financial-residual-value-fraction >}} | Modelling convention at the project-life endpoint |
+| Decommissioning allowance | — | {{< var financial-decommissioning-fraction >}} of total offshore installation CAPEX | Simplified modelling assumption |
 
-The capital recovery factor is:
+The same {{< var financial-real-wacc >}} real WACC applies to all three architectures. Tax, debt,
+construction-finance timing and architecture-specific financing are not
+modelled.
+
+## Capital Recovery Factor
 
 $$
 CRF
@@ -57,42 +78,117 @@ CRF
 \frac{r(1+r)^n}{(1+r)^n-1}.
 $$
 
-With $r=0.066$/year and $n=25$ years:
+For a real WACC of {{< var financial-real-wacc >}} and a project life of
+{{< var financial-project-life >}}, the resulting capital recovery factor is
+{{< var financial-capital-recovery-factor >}}.
+
+## Component Replacement
+
+Replacement is included only when a component owner documents:
+
+1. a material technical life shorter than {{< var financial-project-life >}};
+2. the replaced scope;
+3. the replacement cost; and
+4. that continued operation requires the replacement.
+
+For such a component:
 
 $$
-CRF=0.0827414\ \mathrm{year}^{-1},
-$$
-
-or 8.27%/year. The corresponding equivalent annuity period is $1/CRF=12.09$ years.
-
-For component CAPEX $C_j$ and annual OPEX $O_j$:
-
-$$
-C_\mathrm{annual}
+N_{\mathrm{replacement},j}
 =
-CRF\sum_j C_j
+\left\lceil
+\frac{n}{n_j}
+\right\rceil-1.
+$$
+
+A replacement at the end of the {{< var financial-project-life >}} project life is not counted. Components with a
+technical life of at least {{< var financial-project-life >}} have zero replacement. A short nominal life
+does not create a replacement cost unless the component page defines the event
+and boundary.
+
+Total replacement cost is:
+
+$$
+C_{\mathrm{replacement}}
+=
+\sum_j
+N_{\mathrm{replacement},j}
+C_{\mathrm{replacement},j}.
+$$
+
+Replacement timing is not discounted under the approved screening convention.
+
+## Decommissioning
+
+The model does not use a separate decommissioning activity model:
+
+$$
+C_{\mathrm{decommissioning}}
+=
+f_{\mathrm{decommissioning}}
+C_{\mathrm{offshore\ installation}}.
+$$
+
+The offshore-installation total must contain non-overlapping installation costs
+from the installation pages. The factor $f_{\mathrm{decommissioning}}$ is
+{{< var financial-decommissioning-fraction >}} and is an explicit modelling assumption,
+not a sourced contractor estimate. Decommissioning timing is not discounted.
+
+## Lifecycle Capital Basis and Annual Cost
+
+$$
+C_{\mathrm{lifecycle\ capital}}
+=
+C_{\mathrm{initial}}
++
+C_{\mathrm{replacement}}
++
+C_{\mathrm{decommissioning}}.
+$$
+
+$$
+C_{\mathrm{annual}}
+=
+CRF
+C_{\mathrm{lifecycle\ capital}}
 +
 \sum_j O_j.
 $$
 
-The LCOE denominator and delivery boundary are defined on [System Boundary and LCOE](system_boundary_and_lcoe.qmd). Replacement expenditure, decommissioning cost and residual value are not represented by the simple recovery-factor expression and must be added as explicit discounted cash-flow terms if they enter the model.
+Every $O_j$ is an annual, non-overlapping component OPEX term in
+EUR~2025~/year.
+
+The shared project-cost record also contains development, shared engineering,
+insurance and owner contingency. These fields remain unresolved rather than
+being set to zero. A complete total-system result is **not parameterized** until
+all required fields have adopted values or an explicit scope decision.
 
 ## Manufactured-Cost Markup
 
-The 50% markup used for selected NREL PEM stack, balance-of-plant and power-electronics inputs is **not** a general financial escalation factor. It is a component-boundary transformation from reported manufactured cost to an assumed purchased-equipment cost:
+The {{< var hydrogen-manufactured-cost-markup >}} factor used for selected NREL PEM stack, balance-of-plant and
+power-electronics inputs is not a general financial escalation factor:
 
 $$
-C_\mathrm{purchased}=1.5C_\mathrm{manufactured}.
+C_{\mathrm{purchased}}
+=
+k_{\mathrm{markup}}C_{\mathrm{manufactured}}.
 $$
 
-The 50% value is an explicit component-level modelling assumption; Badgett et al. document the manufactured-cost boundary but do not provide or validate this markup [@badgett2024PEMCost]. The relevant hydrogen component page must state when the transformation is applied, identify what the source cost excludes and prevent it from being applied to costs that already represent procurement or installed-system prices. Installation, soft costs, offshore packaging and inflation are not implicitly included by the markup.
+The factor $k_{\mathrm{markup}}$ is {{< var hydrogen-manufactured-cost-markup >}}
+and is an explicit component-level modelling assumption. Badgett et
+al. document the manufactured-cost boundary but do not provide or validate the
+markup [@badgett2024PEMCost]. The component owner must prevent the markup from
+being applied to procurement or installed-system prices and must keep
+installation, offshore packaging, soft costs and inflation separate.
 
-## Required Checks Before Cost Aggregation
+## Required Checks Before Aggregation
 
-Before costs are added, verify that:
+Before costs are added:
 
-1. every value has a known source currency and price year;
-2. every adopted value has been converted to EUR~2025~;
-3. source and model cost boundaries are compatible;
-4. installation and OPEX are neither omitted nor counted in both a component coefficient and a separate calculation; and
-5. any markup or market adjustment is explicitly evidenced and scoped.
+1. source currency, price year and scope are known;
+2. adopted values are normalized to EUR~2025~;
+3. component, installation and project boundaries do not overlap;
+4. required unresolved fields return not parameterized;
+5. replacement is counted only under the documented rule;
+6. decommissioning is applied once to total offshore installation CAPEX; and
+7. annual OPEX is not embedded in CAPEX or another component term.

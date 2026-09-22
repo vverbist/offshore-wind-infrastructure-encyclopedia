@@ -1,0 +1,141 @@
+dependency_id,producer_page_id,output_name,symbol,unit,consumer_page_id,input_name,interface_status,issue_ids,notes
+DEP-0001,WIND-003,Turbine coordinates,"(x_j,y_j)",km,ELEC-002,Array-layout coordinates,defined_with_uncertainty,ISS-0001,Coordinates are supplied but string assignment and substation placement are not
+DEP-0002,TURB-002,Turbine rated power,P_turb,MW,ELEC-002,Turbine capacity,defined_with_uncertainty,ISS-0005,Must be reconciled with discrete string-capacity thresholds
+DEP-0003,TURB-002,Rotor diameter,D,m,ELEC-002,Spacing conversion,defined,,
+DEP-0004,METH-003,EUR2025 normalisation convention,,dimensionless,ELEC-002,Cost normalisation,defined_with_uncertainty,"ISS-0007; ISS-0013; ISS-0014",ORBIT calculation follows the convention; historical comparator and source stability need work
+DEP-0005,ELEC-002,Total cable supply length,L_array,km,INST-003,Physical infield cable inventory,not_parameterized,"ISS-0001; ISS-0002; ISS-0008",Horizontal equation exists but complete length cannot be produced
+DEP-0006,ELEC-002,Cable sections by type,E,section list,INST-003,Section and lay-unit inventory,ambiguous,"ISS-0001; ISS-0006",Installation requires section lengths and cable type for every edge
+DEP-0007,ELEC-002,Cable mass by section,,t,INST-003,Vessel loading inventory,ambiguous,"ISS-0006; ISS-0013",Installation example currently applies 630 mm2 mass to all sections
+DEP-0008,ELEC-002,Infield electrical loss,,MWh/year,METH-006,Component energy loss,missing,ISS-0003,Shared methodology requires this loss
+DEP-0009,ELEC-002,Array-network availability,A_array,dimensionless,METH-006,Annual energy multiplier,defined_with_uncertainty,ISS-0010,99.0% has no evidence or sensitivity
+DEP-0010,ELEC-002,Cable supply CAPEX,C_supply,EUR2025,METH-002,Component CAPEX,defined_with_uncertainty,"ISS-0006; ISS-0007; ISS-0008",Equation is defined but depends on incomplete length and aggregate cost
+DEP-0011,ELEC-002,Annual cable OPEX,C_OPEX,EUR2025/year,METH-002,Annual component OPEX,defined_with_uncertainty,ISS-0009,Relationship is executable but unsupported
+DEP-0012,ELEC-002,String and feeder count,n_string,count,ELEC-003,Offshore collection bays,inconsistent,"ISS-0004; ISS-0005",Worked case requires 34 while reference platform indicates at most 28 candidate bays
+DEP-0013,ELEC-002,Offshore AC collection interface,,66 kV,H2P-005,Central electrolyser upstream AC interface,ambiguous,ISS-0012,Canonical switchgear cost and mass owner is missing for centralised hydrogen
+DEP-0014,ARCH-005,Architecture component ledger,,component set,METH-004,Architecture branch,defined_with_uncertainty,"ISS-0012; ISS-0017; ISS-0028; ISS-0029; ISS-0030",Physical equipment mapping is strong but lifecycle and several interface owners are missing
+DEP-0015,METH-004,Scenario and design-variable taxonomy,,parameter schema,METH-005,Optimisation design vector,inconsistent,"ISS-0020; ISS-0022",Stack overplanting and pipeline variables have conflicting roles
+DEP-0016,METH-005,Feasible design record,,design record,METH-004,Integrated model evaluation,ambiguous,"ISS-0021; ISS-0022",Bounds constraints and selection rules are not defined
+DEP-0017,WIND-003,Wake-adjusted production profile,P_wind(t),MW,METH-004,Time-resolved generation input,ambiguous,ISS-0021,Workflow does not define temporal resolution or handoff schema
+DEP-0018,METH-006,Annual delivered energy,E_delivered,MWh/year,METH-002,LCOE denominator,ambiguous,"ISS-0015; ISS-0024; ISS-0025",Endpoint and availability combination are unresolved
+DEP-0019,METH-003,Equivalent annual project cost,C_annual,EUR2025/year,METH-002,LCOE numerator,not_parameterized,"ISS-0017; ISS-0018; ISS-0019",Simple CAPEX annuity exists but full lifecycle project cost does not
+DEP-0020,METH-003,EUR2025 cost normalisation,,normalisation rule,all component pages,Common price basis,defined_with_uncertainty,ISS-0018,Formula and FX are clear; WACC is separate and unsupported
+DEP-0021,H2P-003,Stack replacement schedule and cost,,cash-flow series,METH-003,Replacement expenditure,not_parameterized,ISS-0019,Replacement is identified but no project DCF handoff is defined
+DEP-0022,ELEC-004,HVDC link-count rule,N_link,count,METH-005,Discrete electricity export design,defined_with_uncertainty,ISS-0023,Canonical equation exists downstream but is not linked from optimisation method
+DEP-0023,METH-006,Availability ledger by architecture,,multiplier or state model,METH-004,Annual energy calculation,inconsistent,"ISS-0024; ISS-0025",No combination rule and component values conflict
+DEP-0024,H2P-003,PEM stack availability,A_stack,dimensionless,METH-006,Electrolyser availability treatment,inconsistent,ISS-0024,99.5% stack value conflicts with 98.5% electrolyser value and bundling is undefined
+DEP-0025,ARCH-003,Integrated-platform count,N_platform,count,PLAT-001,Platform structural and material calculation,not_parameterized,ISS-0027,Architecture fixes one platform without a capacity or multiplicity rule
+DEP-0026,H2P-003,Central-platform stack mass,m_stack,t,PLAT-001,Hosted-equipment mass,missing,ISS-0027,Stack page has no mass model
+DEP-0027,PLAT-001,Platform material CAPEX,C_platform,EUR2025,METH-002,Component CAPEX,not_parameterized,ISS-0027,No adopted mass-to-cost relationship
+DEP-0028,H2I-001,Onshore hydrogen-connection interface,,interface record,ARCH-003,Hydrogen delivery point,missing,ISS-0028,Owner page does not define terminal equipment specification or cost
+DEP-0029,H2I-001,Onshore hydrogen-connection interface,,interface record,ARCH-004,Hydrogen delivery point,missing,ISS-0028,Owner page does not define terminal equipment specification or cost
+DEP-0030,H2I-002,Infield header outlets,,flow and pressure,ARCH-004,Export-manifold inlet,missing,ISS-0029,Infield owner explicitly excludes the connecting manifold
+DEP-0031,ARCH-004,Export manifold and connections,,component definition,H2I-004,Export-pipeline inlet,missing,ISS-0029,No canonical owner for sizing losses mass cost or installation
+DEP-0032,ARCH-005,Common lifecycle-cost ledger,,cost-category set,METH-002,Complete project cost boundary,missing,"ISS-0017; ISS-0030",Development finance insurance contingency and terminal treatments are not mapped
+DEP-0033,WIND-002,Controlled directional resource,"p_s;k_s;c_s;wd_s",mixed,WIND-003,Wake-model resource input,defined_with_uncertainty,"ISS-0031; ISS-0032; ISS-0033; ISS-0060",Numerical table exists but source and representative direction are not controlled
+DEP-0034,TURB-002,Canonical wake turbine definition,"D;H_h;P(v);C_T(v)",mixed,WIND-003,Turbine curve and geometry,inconsistent,ISS-0036,Wake page uses a separate synthetic turbine
+DEP-0035,WIND-003,Turbine coordinates,"x_j;y_j",km,ELEC-002,Array topology coordinates,defined_with_uncertainty,"ISS-0034; ISS-0035",Area boundary and feasibility are unresolved
+DEP-0036,WIND-003,Turbine coordinates,"x_j;y_j",km,H2I-002,Hydrogen collection topology coordinates,defined_with_uncertainty,"ISS-0034; ISS-0035",Area boundary and feasibility are unresolved
+DEP-0037,WIND-003,Wake-affected farm power,"P_farm(wd;ws)",MW,METH-006,Annual energy input,defined_with_uncertainty,"ISS-0031; ISS-0032; ISS-0033; ISS-0036; ISS-0037",Resource and wake configuration are not validated
+DEP-0038,WIND-003,Farm area,A_farm,km2,METH-005,Cost-density denominator,ambiguous,ISS-0034,Edge and setback convention is undefined
+DEP-0039,TURB-002,Complete conventional turbine mass,m_turb,t,TURB-003,Supported mass,missing,ISS-0038,Electrical component masses are incomplete
+DEP-0040,TURB-002,Complete direct-DC turbine mass,m_turb_DC,t,TURB-003,Supported mass,missing,"ISS-0038; ISS-0045",Retained direct-DC equipment is not quantified
+DEP-0041,TURB-002,Turbine lift ledger,,lift records,INST-002,Turbine installation inputs,missing,ISS-0038,Architecture electrical lifts are absent
+DEP-0042,TURB-002,Turbine supply CAPEX,C_turb,EUR2025,METH-002,Component CAPEX,ambiguous,ISS-0039,Architecture deltas versus calibrated reference are undefined
+DEP-0043,TURB-003,Monopile mass,m_MP,t,INST-002,Foundation installation mass,defined_with_uncertainty,ISS-0041,Surrogate response to architecture mass is unsupported
+DEP-0044,TURB-003,Transition-piece mass,m_TP,t,INST-002,Foundation lift mass,missing,ISS-0043,Only a cost fraction is supplied
+DEP-0045,TURB-003,Scour-protection quantity,,t or m3,INST-002,Scour installation input,missing,ISS-0043,Owner and quantity are not defined
+DEP-0046,H2P-003,PEM polarisation envelope,"V_stack(I;state)",V and A,H2P-002,Direct-DC operating-point relation,missing,ISS-0047,Figure is not a numerical model
+DEP-0047,TURB-002,Generator and retained converter envelope,,capability map,H2P-002,Direct-DC electrical matching,missing,"ISS-0038; ISS-0044; ISS-0045",Voltage speed current losses and topology are absent
+DEP-0048,H2P-002,Direct-DC feasibility state,,state,METH-005,Architecture feasibility constraint,missing,ISS-0044,No numerical envelope is available
+DEP-0049,H2P-002,Retained direct-DC mass/cost/loss,,component ledger,TURB-002,Architecture electrical delta,missing,ISS-0045,Functions are allocated but not quantified
+DEP-0050,H2P-003,Hydrogen production curve,"m_H2(P;state)",kg/h,METH-006,Annual hydrogen production,missing,"ISS-0047; ISS-0048; ISS-0049; ISS-0050",Curve dispatch and degradation are not canonical
+DEP-0051,H2P-003,Stack replacement schedule,,timed events,METH-003,Lifecycle cash-flow ledger,missing,ISS-0050,No executable replacement event or reset exists
+DEP-0052,H2P-003,Stack module count and capacity,,count and MW,H2P-004,BOP train sizing,inconsistent,"ISS-0048; ISS-0053",Module basis and BOP train relationship are undefined
+DEP-0053,H2P-003,Stack equipment mass/lifts,,t and lift records,PLAT-001,Central platform hosted load,missing,ISS-0052,No stack mass model
+DEP-0054,H2P-003,Stack equipment mass/lifts,,t and lift records,TURB-002,Decentral turbine supported load,missing,ISS-0052,No stack mass model
+DEP-0055,H2P-004,BOP auxiliary demand,"P_BOP(P;state)",MW,H2P-003,Stack input power,inconsistent,ISS-0055,Page constant and code curve differ
+DEP-0056,H2P-004,BOP equipment mass/lifts,,t and lift records,PLAT-001,Central platform hosted load,missing,ISS-0052,No BOP mass model
+DEP-0057,H2P-004,BOP equipment mass/lifts,,t and lift records,TURB-002,Decentral turbine supported load,missing,ISS-0052,No BOP mass model
+DEP-0058,H2P-005,Central stack DC power,P_stack_DC,MW,H2P-003,Stack power input,inconsistent,ISS-0058,Page and code efficiency differ
+DEP-0059,H2P-005,Conversion-package mass/lifts,,t and lift records,PLAT-001,Central platform hosted load,missing,ISS-0052,Cost and efficiency are provided without physical inventory
+DEP-0060,ELEC-003,Converter-pair CAPEX,C_converter_pair,EUR2025,METH-002,Electricity-export component CAPEX,incorrect,"ISS-0061; ISS-0062",Source 2025 value is escalated twice and offshore equipment is proxied by onshore cost
+DEP-0061,ELEC-003,Offshore converter hosted-equipment mass,,t,PLAT-001,Platform topside equipment mass,missing,ISS-0063,No converter transformer reactor switchgear cooling or auxiliary mass ledger
+DEP-0062,ELEC-003,Converter equipment blocks and lifts,,block/lift records,INST-004,Platform installation inventory,missing,ISS-0063,No dimensions masses or modular lift definition
+DEP-0063,ELEC-003,Terminal conversion loss,"eta_offshore;eta_onshore",dimensionless,METH-006,Delivered-energy conversion,defined_with_uncertainty,"ISS-0025; ISS-0064; ISS-0074",Fixed factors have limited evidence and differ from legacy combined factor
+DEP-0064,ELEC-003,Terminal capacity states,,MW and hours,METH-006,Availability calculation,not_parameterized,"ISS-0024; ISS-0025",States are described but probabilities durations and combination with cable states are absent
+DEP-0065,ELEC-003,Offshore DC transfer,"P_dc;I_pole",MW and kA,ELEC-004,Cable current and loss,defined, ,Balanced relation is explicit for the 2 GW reference
+DEP-0066,ELEC-004,HVDC cable segment inventory,,cable-km and records,INST-003,Cable installation inventory,missing,"ISS-0067; ISS-0069",Marine/land cable types return fibre accessories joints and pull-ins are incomplete
+DEP-0067,ELEC-004,HVDC cable material CAPEX,C_HVDC,EUR2025,METH-002,Electricity-export component CAPEX,not_adoptable,"ISS-0065; ISS-0066",Price year and benchmark scope are unresolved
+DEP-0068,ELEC-004,Hourly cable loss,E_cable_loss,MWh/year,METH-006,Delivered-energy loss,not_parameterized,ISS-0068,Operating resistance and degraded return path are missing
+DEP-0069,ELEC-004,Cable capacity states,,MW and hours,METH-006,Availability calculation,not_parameterized,"ISS-0025; ISS-0068",Failure/repair comparators exist but no combined state calculation
+DEP-0070,ELEC-004,Underground cable route and supply,"L_u;C_land_cable",km and EUR2025,ELEC-005,Landfall-to-converter chain,missing,ISS-0067,Base route stops at shore and material-only land coefficient is absent
+DEP-0071,ELEC-005,Land cable route sections,L_land,km,INST-003,Underground cable installation inventory,missing,"ISS-0067; ISS-0072",No route or site is selected
+DEP-0072,ELEC-005,Dedicated grid-interface CAPEX,C_onshore_interface,EUR2025,METH-002,Electricity-export CAPEX,missing,"ISS-0071; ISS-0073",Bay site land and ordinary connection package are unresolved
+DEP-0073,ELEC-005,PCC feasibility and curtailment,,state and MW-hours,METH-005,Architecture feasibility constraint,missing,ISS-0072,No selected node grid-strength or acceptance rule
+DEP-0074,ELEC-005,Grid curtailment,,MWh/year,METH-006,Delivered electricity,missing,ISS-0072,Correctly separated from equipment availability but not parameterized
+DEP-0075,ELEC-003,Immediate AC switchgear boundary,,asset ledger,ELEC-005,380 kV bay and station boundary,ambiguous,ISS-0073,Breaker busbar protection metering and TSO termination are not uniquely allocated
+DEP-0076,ELEC-003,Canonical onshore converter performance,"eta_onshore;A_onshore",dimensionless,ELEC-005,Referenced terminal performance,duplicated,ISS-0074,ELEC-005 repeats rather than consumes a canonical data record
+DEP-0077,WIND-003,Turbine coordinates,"(x_j,y_j)",km,H2I-002,Hydrogen ladder geometry,inconsistent,"ISS-0034; ISS-0076",Coordinates exist but H2I-002 replaces them with a separate square area proxy
+DEP-0078,H2I-002,Infield pipeline section list,,section records,H2I-004,Section lengths flows and products,missing,"ISS-0076; ISS-0077; ISS-0078",No endpoint route flow valve or product record is emitted
+DEP-0079,H2I-004,Qualified pipe capacity by section,m_dot_max,kg/h,H2I-002,Header rung and fault-state sizing,missing,"ISS-0077; ISS-0084; ISS-0086",One export-style capacity curve cannot qualify the ladder segments
+DEP-0080,H2I-002,Export manifold and header connections,,asset records,ARCH-004,Closed decentralised architecture,missing,ISS-0029,The interface is explicitly excluded and has no other owner
+DEP-0081,H2I-002,Routed infield physical inventory,L_physical,km and records,INST-003,TCP installation units,missing,ISS-0078,"Risers tie-ins slack fittings and continuous sections are absent"
+DEP-0082,H2P-003,Hydrogen mass-flow time series,m_H2_dot,kg/h,H2I-003,Compressor flow,defined_with_uncertainty,"ISS-0048; ISS-0050",Upstream stack dispatch and replacement remain unresolved
+DEP-0083,H2P-003,Electrolyser hydrogen outlet pressure,p_ely_out,bar,H2I-003,Compressor inlet pressure,defined_with_uncertainty,ISS-0079,30 bar is stated but pressure basis and operating envelope need one canonical record
+DEP-0084,H2I-003,Compressor outlet pressure,p_comp_out,bar absolute,H2I-004,Pipeline operating inlet pressure,ambiguous,"ISS-0079; ISS-0085; ISS-0088",Operating pressure design pressure and rated class are not separated
+DEP-0085,H2I-003,Compression electricity,"e_comp;P_comp",kWh/kg and kW,METH-006,Hydrogen energy balance,defined_with_uncertainty,ISS-0079,Equation is available but property method is inconsistent
+DEP-0086,H2I-003,Compressor CAPEX,C_comp,EUR2025,METH-002,Hydrogen architecture CAPEX,missing,"ISS-0080; ISS-0081",Reference coefficient train count and offshore boundary are unresolved
+DEP-0087,H2I-003,Central compressor physical ledger,,t and lift records,PLAT-001,Hosted equipment mass,missing,ISS-0083,No mass footprint dimensions or module records
+DEP-0088,H2I-003,Turbine compressor physical ledger,,t and lift records,TURB-003,Supported turbine mass and integration,missing,ISS-0083,Distributed compression has no structural or installation handoff
+DEP-0089,H2I-004,Pipeline capacity and count,"m_dot_max;n_pipe",kg/h and count,METH-005,Feasible hydrogen design candidate,ambiguous,"ISS-0022; ISS-0084; ISS-0086; ISS-0088",Hydraulics product class and discrete search are not closed
+DEP-0090,H2I-004,Export and infield pipeline physical inventory,,route/physical km and product records,INST-003,TCP vessel and campaign calculation,missing,"ISS-0078; ISS-0086",Linear mass dimensions reel lengths fittings and qualified installation class are absent
+DEP-0091,H2I-004,Pipeline material CAPEX,C_mat,EUR2025,METH-002,Hydrogen infrastructure CAPEX,missing,ISS-0087,Confidential regression and price basis prevent an auditable output
+DEP-0092,H2I-004,Onshore delivery pressure,p_receipt,bar(a/g),ARCH-005,Hydrogen-backbone connection acceptance,missing,"ISS-0028; ISS-0085",No connection owner converts the network requirement into an operating receipt condition
+DEP-0093,H2I-004,Pipeline capacity and outage states,,kg/h and hours,METH-006,Delivered hydrogen and availability,not_parameterized,"ISS-0024; ISS-0025; ISS-0077",Only a flat 100 percent convention exists
+DEP-0094,ELEC-003,Converter and collection equipment mass,,t and module records,PLAT-001,Electricity-platform hosted mass,missing,ISS-0063,Electrical page emits no physical equipment ledger
+DEP-0095,H2P-003,PEM stack mass and modules,,t and module records,PLAT-001,Central-hydrogen hosted mass,missing,ISS-0052,Stack page emits no mass or lift inventory
+DEP-0096,H2P-004,BOP package mass and modules,,t and module records,PLAT-001,Central-hydrogen hosted mass,missing,"ISS-0052; ISS-0053",BOP package and train structure are unresolved
+DEP-0097,H2P-005,Electrolyser power-electronics mass,,t and module records,PLAT-001,Central-hydrogen hosted mass,missing,ISS-0052,Power-electronics page emits no mass or lift inventory
+DEP-0098,ARCH-003,Central platform count and rating,"N_platform;P_platform",count and MW,PLAT-001,Platform multiplicity and sizing,missing,ISS-0027,One platform is stated without a capacity or scaling rule
+DEP-0099,PLAT-001,Platform jacket pile and lift-module inventory,,t counts and records,INST-004,Platform installation design,missing,"ISS-0027; ISS-0052; ISS-0063; ISS-0083",No structural or module definition reaches installation
+DEP-0100,PLAT-001,Platform material and fabrication CAPEX,C_platform,EUR2025,METH-002,Central architecture CAPEX,missing,ISS-0027,No structural cost relationship or price basis is adopted
+DEP-0101,PLAT-001,Platform capacity and installation-class feasibility,,pass/fail and class,METH-005,Architecture feasibility constraint,missing,ISS-0027,No mass capacity multiplicity or lift-class gate exists
+DEP-0102,TURB-002,Architecture-specific complete turbine and nacelle mass,"m_turbine;m_nacelle",t,INST-002,Turbine payload and lift records,missing,"ISS-0038; ISS-0040",Electrical and hydrogen equipment mass ledgers are incomplete
+DEP-0103,TURB-003,Monopile transition-piece and foundation lift inventory,"m_MP;m_TP",t and records,INST-002,Foundation payload and lift records,missing,"ISS-0041; ISS-0043",TP mass and lift/section records are absent
+DEP-0104,WIND-003,Installation-location travel geometry,"D_i or route sequence",km,INST-002,Inter-location vessel travel,defined_with_uncertainty,,Page uses a mean spacing rather than an explicit installation sequence
+DEP-0105,INST-002,Turbine and foundation campaign feasibility and cost,"status;C_F;C_T",status and EUR2025,METH-002,Installed turbine/foundation CAPEX,missing,"ISS-0091; ISS-0093",Turbine duration and coherent spread records are absent
+DEP-0106,INST-002,Campaign class and integer logistics,"k_c;N_load,c;T_c",counts and day,METH-005,Installation feasibility and architecture comparison,missing,"ISS-0038; ISS-0043; ISS-0091",Mass/lift changes cannot yet be tested against coherent thresholds
+DEP-0107,ELEC-002,Array cable physical section and interface inventory,,records,INST-003,Array installation inventory,missing,"ISS-0001; ISS-0002; ISS-0004; ISS-0069",Topology sections conductor products and vertical allowances are incomplete
+DEP-0108,ELEC-004,Complete HVDC export cable-system inventory,,records,INST-003,Export installation inventory,missing,"ISS-0065; ISS-0067; ISS-0069",Metallic return fibre accessories and land route are incomplete
+DEP-0109,H2I-002,Coordinate-based TCP infield sections and connections,,records,INST-003,TCP infield installation inventory,missing,"ISS-0076; ISS-0078",Proxy length does not emit installable sections risers or tie-ins
+DEP-0110,H2I-004,Qualified TCP export product and section inventory,,records,INST-003,TCP export vessel and task qualification,missing,"ISS-0086; ISS-0087; ISS-0088",No qualified class physical data or auditable cost package exists
+DEP-0111,INST-003,Linear-asset installation feasibility and CAPEX,"status;C_installation",status and EUR2025,METH-002,Installed cable and TCP CAPEX,missing,"ISS-0096; ISS-0097; ISS-0098; ISS-0099",Upstream inventories and complete campaign costs are unresolved
+DEP-0112,INST-003,Candidate spread and campaign duration records,,records,METH-005,Installation feasibility and method selection,missing,"ISS-0086; ISS-0099; ISS-0100",Candidate sets rates and total-scope comparison are incomplete
+DEP-0113,ARCH-003,Central platform count and capacity,"N_OSS;P_OSS",count and MW,INST-004,Platform installation count,missing,"ISS-0027; ISS-0101",No multiplicity/capacity rule reaches installation
+DEP-0114,PLAT-001,Jacket pile and topside module inventory,,records,INST-004,Platform lift and transport design,missing,"ISS-0027; ISS-0101",No governing pile/jacket/module records are emitted
+DEP-0115,INST-003,Cable interface and final-connection event ledger,,records,INST-004,Platform commissioning boundary,missing,ISS-0104,Pull-in termination testing and final connection are not allocated once
+DEP-0116,INST-004,Platform installation feasibility and CAPEX,"status;C_inst",status and EUR2025,METH-002,Installed platform CAPEX,missing,"ISS-0101; ISS-0102; ISS-0104",Physical execution and commercial campaign inputs are unresolved
+DEP-0117,INST-004,Platform installation-class and campaign records,,records,METH-005,Central architecture feasibility,missing,"ISS-0027; ISS-0101; ISS-0103",Platform count module concept and lift class are not closed
+DEP-0118,REF-001,Active evidence classification and model-use mapping,,source records,METH-004,Source and evidence status for model inputs,missing,"ISS-0106; ISS-0107",The bibliography resolves citation keys but does not distinguish adopted background validation-only confidential and unresolved evidence
+DEP-0119,REF-001,Evidence-access and reproducibility policy,,policy,ABOUT-001,Published reproducibility statement,inconsistent,ISS-0108,About claims reproducibility without distinguishing public from controlled-internal evidence
+DEP-0120,METH-005,Complete deterministic case record,,input and parameter record,METH-004,Validated model case,defined_with_uncertainty,"ISS-0034; ISS-0048; ISS-0086",Taxonomy and required fields are defined; several component ranges and product sets remain unresolved
+DEP-0121,WIND-001,Wake-adjusted production record,,time-series energy record,METH-004,Gross architecture energy input,defined_with_uncertainty,"ISS-0031; ISS-0032; ISS-0037",Workflow handoff is defined but wind source and wake configuration remain unresolved
+DEP-0122,METH-004,Pre-availability annual carrier energy,"E_preavailability,a",MWh/year,METH-006,Architecture energy before availability,defined_with_uncertainty,"ISS-0047; ISS-0055; ISS-0058",Execution order is defined; component performance and auxiliary inputs remain incomplete
+DEP-0123,TURB-002,Scoped annual turbine-subsystem availability,,dimensionless,METH-006,Turbine availability ledger factor,not_parameterized,ISS-0025,Architecture-specific turbine and integrated turbine-hydrogen boundaries remain unresolved
+DEP-0124,ELEC-002,Scoped annual AC-collection availability,,dimensionless,METH-006,AC-collection ledger factor,not_parameterized,"ISS-0010; ISS-0025",Required for electricity and centralised hydrogen
+DEP-0125,ELEC-003,Scoped annual offshore-conversion availability,,dimensionless,METH-006,Offshore electrical-conversion ledger factor,not_parameterized,ISS-0025,Generic platform availability cannot overlap the equipment factor
+DEP-0126,ELEC-004,Scoped annual HVDC-export availability,,dimensionless,METH-006,HVDC-export ledger factor,not_parameterized,ISS-0025,Legacy flat value is not adopted
+DEP-0127,ELEC-005,Scoped annual onshore-conversion availability,,dimensionless,METH-006,Onshore electrical-conversion ledger factor,not_parameterized,ISS-0025,Legacy flat value is not adopted
+DEP-0128,H2P-003,Combined annual hydrogen-production availability,,dimensionless,METH-006,Electrolyser-production ledger factor,not_parameterized,ISS-0025,Stack BOP and power-electronics boundary must be combined without overlap
+DEP-0129,H2I-002,Scoped annual hydrogen-collection availability,,dimensionless,METH-006,Hydrogen infield-collection ledger factor,not_parameterized,ISS-0025,100 percent is only a zero-outage scenario
+DEP-0130,H2I-003,Combined annual compression availability,,dimensionless,METH-006,Architecture-specific compression ledger factor,not_parameterized,ISS-0025,Parallel-unit and redundancy effects must be pre-combined
+DEP-0131,H2I-004,Scoped annual hydrogen-export availability,,dimensionless,METH-006,Hydrogen export and receipt ledger factor,not_parameterized,ISS-0025,100 percent is only a zero-outage scenario
+DEP-0132,METH-006,Delivered annual carrier energy,"E_delivered,a",MWh/year,METH-002,Carrier-cost denominator,defined_with_uncertainty,ISS-0025,Endpoint and equation are defined; unresolved subsystem factors block a complete result
+DEP-0133,METH-005,Component cost-record schema,,cost ledger contract,METH-003,Lifecycle capital and annual cost inputs,defined_with_uncertainty,"ISS-0049; ISS-0050",Required classes units owners and missing-input behavior are defined; component records remain incomplete
+DEP-0134,INST-001,Total offshore installation CAPEX,"C_offshore installation",EUR2025,METH-003,Decommissioning basis,not_parameterized,"ISS-0093; ISS-0098; ISS-0102",Decommissioning equation is defined but complete installation CAPEX is not yet available
+DEP-0135,METH-003,Annualized modelled cost,"C_annual",EUR2025/year,METH-002,Carrier-cost numerator,defined_with_uncertainty,ISS-0018,Equation is defined; provisional WACC and unresolved shared cost fields remain declared
+DEP-0136,METH-002,Tier 1 endpoint and reporting contract,,contract,ARCH-001,Architecture overview result labels,defined,,Carrier-specific endpoints and units are explicit
+DEP-0137,METH-002,Tier 1 endpoint and reporting contract,,contract,ARCH-002,Electricity architecture result labels,defined,,Electricity is landed at the defined onshore electrical delivery point
+DEP-0138,METH-002,Tier 1 endpoint and reporting contract,,contract,ARCH-003,Centralised-hydrogen result labels,defined,,Hydrogen is landed at the defined onshore hydrogen delivery point on an HHV and mass basis
+DEP-0139,METH-002,Tier 1 endpoint and reporting contract,,contract,ARCH-004,Decentralised-hydrogen result labels,defined,,Hydrogen is landed at the defined onshore hydrogen delivery point on an HHV and mass basis
+DEP-0140,METH-002,Tier 1 endpoint and reporting contract,,contract,ARCH-005,Component-mapping delivery labels,defined,,Tier 1 products are not labelled as equivalent end-use services

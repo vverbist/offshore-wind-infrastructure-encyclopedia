@@ -1,6 +1,7 @@
 ---
 title: "Electricity and Hydrogen: Comparing Energy Carriers for Offshore Wind, over the entire value chain"
 completion: 90
+readiness: not_reviewed
 ---
 
 ## The premise: two carriers, each given its own best system

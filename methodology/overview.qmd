@@ -1,25 +1,47 @@
 ---
 title: "Methodology"
 completion: 70
+readiness: partially_implementable
 ---
 
-This section defines the modelling logic used across all component pages. The model is a deterministic techno-economic optimisation framework for offshore wind systems with alternative energy carriers.
+This section defines the shared calculation contract for the offshore wind
+infrastructure model. The model evaluates one complete user-supplied case
+deterministically; it does not optimize or select a preferred design.
 
-The modelling object is the complete turbine-to-onshore-delivery value chain. The purpose is not to compare isolated component prices, but to represent how component cost, energy conversion, availability, and installation assumptions interact when the energy carrier changes from electricity to hydrogen.
+## Calculation Logic
 
-## Methodological Role
+For each case, the model:
 
-The methodology pages define conventions that are shared across components:
+1. validates the user inputs and fixed parameters;
+2. constructs the wind-farm layout and gross production;
+3. selects the electricity, centralised-hydrogen or
+   decentralised-hydrogen component chain;
+4. calculates physical inventories, component sizing, losses and auxiliary
+   demand;
+5. returns an explicit infeasible or not-parameterized status when a required
+   constraint or input is unresolved;
+6. applies annual subsystem availability once at architecture level;
+7. aggregates non-overlapping capital and operating costs; and
+8. reports the carrier-specific energy and cost outputs.
 
-- the system boundary used for cost and yield accounting
-- the LCOE objective function
-- the common financial and EUR2025 price basis
-- the modelling workflow from fixed inputs to derived parameters and outputs
-- the optimisation variables treated as model outcomes
-- the annualisation, energy-basis, and availability conventions used in component calculations
+Electricity and hydrogen are delivered at different onshore interfaces. Their
+costs may be shown side by side, but they are not equivalent end-use service
+prices.
 
-Component-specific assumptions are not collected here. They are documented on the relevant component pages.
+## Methodology Pages
 
-## Core Principle
+Read the shared method in dependency order:
 
-Infrastructure is modelled as part of the offshore energy system, not as an external connection. This matters because export infrastructure is sized for peak capacity but paid back through delivered annual energy. The cost of capacity therefore changes the economically optimal layout and carrier choice.
+1. [System Boundary and Carrier-Cost Metrics](system_boundary_and_lcoe.qmd)
+   defines the endpoints, cost boundary and reported units.
+2. [Financial and Price-Basis Assumptions](financial_and_price_basis.qmd)
+   defines EUR 2025 normalization and annual cost.
+3. [Inputs, Parameters and Outputs](optimisation_variables.qmd) defines the
+   deterministic model record.
+4. [Modelling Workflow](modelling_workflow.qmd) defines the execution order and
+   failure states.
+5. [Energy and Availability](energy_availability_and_annualisation.qmd) defines
+   the energy basis and architecture availability ledger.
+
+Component pages own their physical equations, component-specific assumptions,
+evidence and non-overlapping CAPEX and OPEX.
