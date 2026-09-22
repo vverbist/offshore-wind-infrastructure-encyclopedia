@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Optimisation Variables – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Inputs, Parameters and Outputs – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/optimisation_variables.html">Optimisation Variables</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/optimisation_variables.html">Inputs, Parameters and Outputs</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -157,13 +205,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -445,7 +493,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -464,19 +512,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#layout-variables" id="toc-layout-variables" class="nav-link active" data-scroll-target="#layout-variables">Layout Variables</a></li>
-  <li><a href="#hydrogen-variables" id="toc-hydrogen-variables" class="nav-link" data-scroll-target="#hydrogen-variables">Hydrogen Variables</a></li>
-  <li><a href="#electricity-variables" id="toc-electricity-variables" class="nav-link" data-scroll-target="#electricity-variables">Electricity Variables</a></li>
-  <li><a href="#architecture-specific-feasible-sets" id="toc-architecture-specific-feasible-sets" class="nav-link" data-scroll-target="#architecture-specific-feasible-sets">Architecture-Specific Feasible Sets</a></li>
+  <li><a href="#deterministic-model-contract" id="toc-deterministic-model-contract" class="nav-link active" data-scroll-target="#deterministic-model-contract">Deterministic Model Contract</a></li>
+  <li><a href="#controlled-taxonomy" id="toc-controlled-taxonomy" class="nav-link" data-scroll-target="#controlled-taxonomy">Controlled Taxonomy</a></li>
+  <li><a href="#master-user-input-contract" id="toc-master-user-input-contract" class="nav-link" data-scroll-target="#master-user-input-contract">Master User-Input Contract</a></li>
+  <li><a href="#shared-fixed-parameters" id="toc-shared-fixed-parameters" class="nav-link" data-scroll-target="#shared-fixed-parameters">Shared Fixed Parameters</a></li>
+  <li><a href="#derived-quantities" id="toc-derived-quantities" class="nav-link" data-scroll-target="#derived-quantities">Derived Quantities</a></li>
+  <li><a href="#required-outputs" id="toc-required-outputs" class="nav-link" data-scroll-target="#required-outputs">Required Outputs</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/optimisation_variables.html">Optimisation Variables</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/optimisation_variables.html">Inputs, Parameters and Outputs</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Optimisation Variables</h1>
+<h1 class="title">Inputs, Parameters and Outputs</h1>
 </div>
 
 
@@ -493,58 +543,316 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The model treats several design choices as optimisation variables rather than fixed assumptions. Their values are outcomes of the system cost minimisation.</p>
-<section id="layout-variables" class="level2">
-<h2 class="anchored" data-anchor-id="layout-variables">Layout Variables</h2>
-<p>Turbine spacing and wind farm power density determine the trade-off between areal yield and capacity factor. Tighter spacing increases installed capacity per area but increases wake losses. Wider spacing improves capacity factor but lowers MWh/km2.</p>
+<section id="deterministic-model-contract" class="level2">
+<h2 class="anchored" data-anchor-id="deterministic-model-contract">Deterministic Model Contract</h2>
+<p>One complete set of user inputs and fixed parameters produces one result. The model does not optimize, search a design space or select a preferred case. Sensitivities and alternative designs are separate user-supplied cases.</p>
 </section>
-<section id="hydrogen-variables" class="level2">
-<h2 class="anchored" data-anchor-id="hydrogen-variables">Hydrogen Variables</h2>
-<p>For hydrogen configurations, the main optimisation variables are:</p>
+<section id="controlled-taxonomy" class="level2">
+<h2 class="anchored" data-anchor-id="controlled-taxonomy">Controlled Taxonomy</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>User input</td>
+<td>Value or discrete choice supplied for one model case</td>
+</tr>
+<tr class="even">
+<td>Fixed parameter</td>
+<td>Sourced value or explicit modelling assumption held fixed for that case</td>
+</tr>
+<tr class="odd">
+<td>Derived quantity</td>
+<td>Calculated from inputs and parameters</td>
+</tr>
+<tr class="even">
+<td>Output</td>
+<td>Reported physical, energy, cost or feasibility result</td>
+</tr>
+</tbody>
+</table>
+<p>A value must belong to exactly one class in a given calculation. A derived quantity must not also be supplied as an independent input.</p>
+</section>
+<section id="master-user-input-contract" class="level2">
+<h2 class="anchored" data-anchor-id="master-user-input-contract">Master User-Input Contract</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Unit/type</th>
+<th>Applicability</th>
+<th>Owner</th>
+<th>Required check</th>
+<th>Current status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Architecture, <span class="math inline">\(a\)</span></td>
+<td>category</td>
+<td>All</td>
+<td>Architectures</td>
+<td>Electricity, centralised hydrogen or decentralised hydrogen</td>
+<td>Defined</td>
+</tr>
+<tr class="even">
+<td>Wind-resource record</td>
+<td>dataset/version</td>
+<td>All</td>
+<td>WIND-002</td>
+<td>Source, period, location and direction convention supplied</td>
+<td>Source record unresolved</td>
+</tr>
+<tr class="odd">
+<td>Site/layout definition</td>
+<td>coordinates or declared layout inputs</td>
+<td>All</td>
+<td>WIND-003</td>
+<td>One unambiguous layout route; no conflicting turbine-count and spacing definitions</td>
+<td>Method unresolved</td>
+</tr>
+<tr class="even">
+<td>Turbine record</td>
+<td>model/class</td>
+<td>All</td>
+<td>TURB-002</td>
+<td>Rated power, rotor, hub height and equipment boundary supplied</td>
+<td>Partially defined</td>
+</tr>
+<tr class="odd">
+<td>Water depth</td>
+<td>m</td>
+<td>All</td>
+<td>TURB-003 and platform owners</td>
+<td>Within adopted foundation/platform method range</td>
+<td>Scenario input; range unresolved</td>
+</tr>
+<tr class="even">
+<td>Onshore endpoint and route records</td>
+<td>route data</td>
+<td>All</td>
+<td>ELEC-004/005 or H2I-004</td>
+<td>Route segments and endpoint match selected carrier</td>
+<td>Partially defined</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen stack overplant factor</td>
+<td>dimensionless</td>
+<td>Hydrogen</td>
+<td>H2P-003</td>
+<td>Positive and consistent with module count</td>
+<td>User input; range unresolved</td>
+</tr>
+<tr class="even">
+<td>Hydrogen operating pressure</td>
+<td>bar</td>
+<td>Hydrogen</td>
+<td>H2I-003/004</td>
+<td>Inlet/outlet basis and product class supplied</td>
+<td>User input; range unresolved</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen pipeline product class</td>
+<td>discrete record</td>
+<td>Hydrogen</td>
+<td>H2I-004</td>
+<td>Qualified diameter, pressure and length envelope</td>
+<td>User input; product set unresolved</td>
+</tr>
+</tbody>
+</table>
+<p>Missing ranges remain explicit because the component evidence does not yet support a canonical allowed set. COR-01B does not invent defaults.</p>
+</section>
+<section id="shared-fixed-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="shared-fixed-parameters">Shared Fixed Parameters</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Value</th>
+<th>Unit</th>
+<th>Owner and status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Real WACC, <span class="math inline">\(r\)</span></td>
+<td style="text-align: right;">6.6%</td>
+<td>1/year</td>
+<td>METH-003; provisional unsupported assumption</td>
+</tr>
+<tr class="even">
+<td>Project life, <span class="math inline">\(n\)</span></td>
+<td style="text-align: right;">25</td>
+<td>year</td>
+<td>METH-003; modelling assumption</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen HHV</td>
+<td style="text-align: right;">39.4</td>
+<td>kWh/kg</td>
+<td>METH-006; sourced and rounded</td>
+</tr>
+<tr class="even">
+<td>HVDC reference-link rating</td>
+<td style="text-align: right;">2</td>
+<td>GW/link</td>
+<td>ELEC-003/004; sourced fixed parameter <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Decommissioning factor</td>
+<td style="text-align: right;">0.80</td>
+<td>fraction of offshore installation CAPEX</td>
+<td>METH-003; modelling assumption</td>
+</tr>
+</tbody>
+</table>
+<p>The 2 GW HVDC rating is not an optimization variable. The electrical component pages own the ceiling-based link count, partial final-link utilization, curtailment and feasibility treatment; see <a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a> and <a href="../electrical_infra/onshore_grid_connection.html">Onshore Grid Connection</a>.</p>
+<p>All other component parameters remain on their owning pages and must expose value, unit, source or assumption class, applicability and missing-input behavior.</p>
+</section>
+<section id="derived-quantities" class="level2">
+<h2 class="anchored" data-anchor-id="derived-quantities">Derived Quantities</h2>
+<p>The deterministic workflow derives, where the owning component is parameterized:</p>
 <ul>
-<li>stack overplant factor: installed electrolyser capacity relative to turbine or farm rated power</li>
-<li>pipeline operating pressure</li>
-<li>pipeline diameter or selected pipeline class</li>
-<li>number of export pipelines, where pipeline capacity is discrete</li>
+<li>installed wind rated capacity;</li>
+<li>turbine coordinates and farm area;</li>
+<li>wake-adjusted production;</li>
+<li>cable, pipeline and platform inventories;</li>
+<li>equipment counts and discrete link or pipeline counts;</li>
+<li>conversion losses and auxiliary demand;</li>
+<li>pre-availability and delivered annual energy;</li>
+<li>initial CAPEX, replacement, decommissioning and annual OPEX; and</li>
+<li>annualized carrier-specific cost.</li>
 </ul>
-<p>The stack overplant factor affects both conversion efficiency and CAPEX. Oversizing the stack lowers current density and can improve efficiency, but increases stack CAPEX.</p>
-<p>Pipeline pressure and diameter affect both transport capacity and compression energy. Because pipelines are discrete assets, the cost optimum may occur by accepting a small energy-yield loss if it avoids an additional pipeline.</p>
 </section>
-<section id="electricity-variables" class="level2">
-<h2 class="anchored" data-anchor-id="electricity-variables">Electricity Variables</h2>
-<p>For the electricity configuration, export capacity is constrained by HVDC platform and cable block sizing. The current model assumes a 2 GW export cable/platform basis, which creates discrete capacity increments rather than a continuously scalable export link.</p>
-</section>
-<section id="architecture-specific-feasible-sets" class="level2">
-<h2 class="anchored" data-anchor-id="architecture-specific-feasible-sets">Architecture-Specific Feasible Sets</h2>
-<p>Each architecture has its own feasible set:</p>
-<ul>
-<li>electricity export requires AC infield collection, offshore conversion, HVDC export, and onshore conversion</li>
-<li>centralised hydrogen keeps the AC infield network but replaces HVDC export with offshore electrolysis, compression, and hydrogen pipeline export</li>
-<li>decentralised hydrogen moves electrolysis into the turbine and replaces the infield AC network with a hydrogen pipeline grid</li>
-</ul>
+<section id="required-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="required-outputs">Required Outputs</h2>
+<p>Every case returns:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th>Unit/status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Calculation status</td>
+<td>feasible, infeasible or not_parameterized</td>
+</tr>
+<tr class="even">
+<td>Status reasons</td>
+<td>list of failed constraints or missing owners/inputs</td>
+</tr>
+<tr class="odd">
+<td>Installed wind rated capacity</td>
+<td>kW</td>
+</tr>
+<tr class="even">
+<td>Delivered electricity</td>
+<td>MWh-electricity/year, when applicable</td>
+</tr>
+<tr class="odd">
+<td>Landed hydrogen</td>
+<td>kg-H2/year and MWh-H2-HHV/year, when applicable</td>
+</tr>
+<tr class="even">
+<td>Initial installed CAPEX</td>
+<td>EUR<sub>2025</sub> and EUR<sub>2025</sub>/kW-wind</td>
+</tr>
+<tr class="odd">
+<td>Lifecycle capital basis</td>
+<td>EUR<sub>2025</sub> and EUR<sub>2025</sub>/kW-wind</td>
+</tr>
+<tr class="even">
+<td>Annual OPEX</td>
+<td>EUR<sub>2025</sub>/year</td>
+</tr>
+<tr class="odd">
+<td>Annualized modelled cost</td>
+<td>EUR<sub>2025</sub>/year</td>
+</tr>
+<tr class="even">
+<td>Electricity carrier cost</td>
+<td>EUR<sub>2025</sub>/MWh-electricity</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen carrier cost</td>
+<td>EUR<sub>2025</sub>/MWh-H2-HHV and EUR<sub>2025</sub>/kg-H2</td>
+</tr>
+<tr class="even">
+<td>Intermediate ledgers</td>
+<td>physical, energy, availability and cost records</td>
+</tr>
+</tbody>
+</table>
+<p>A complete carrier-cost output is reported only for a feasible, fully parameterized case.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+<div id="ref-tennet2025TwoGWStandard" class="csl-entry" role="listitem">
+TenneT. 2025. <span>“Aansluiten van een windpark met onze 2 gigawatt-standaard.”</span> April. <a href="https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard">https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Energy, Availability, and Annualisation – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Energy and Availability – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/energy_availability_and_annualisation.html">Energy, Availability, and Annualisation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -157,13 +205,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -445,7 +493,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -464,18 +512,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#energy-basis" id="toc-energy-basis" class="nav-link active" data-scroll-target="#energy-basis">Energy Basis</a></li>
-  <li><a href="#efficiency-treatment" id="toc-efficiency-treatment" class="nav-link" data-scroll-target="#efficiency-treatment">Efficiency Treatment</a></li>
-  <li><a href="#availability-treatment" id="toc-availability-treatment" class="nav-link" data-scroll-target="#availability-treatment">Availability Treatment</a></li>
+  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#energy-basis" id="toc-energy-basis" class="nav-link" data-scroll-target="#energy-basis">Energy Basis</a></li>
+  <li><a href="#efficiency-and-auxiliary-demand" id="toc-efficiency-and-auxiliary-demand" class="nav-link" data-scroll-target="#efficiency-and-auxiliary-demand">Efficiency and Auxiliary Demand</a></li>
+  <li><a href="#availability-combination" id="toc-availability-combination" class="nav-link" data-scroll-target="#availability-combination">Availability Combination</a></li>
+  <li><a href="#side-by-side-architecture-ledger" id="toc-side-by-side-architecture-ledger" class="nav-link" data-scroll-target="#side-by-side-architecture-ledger">Side-by-Side Architecture Ledger</a></li>
+  <li><a href="#legacy-availability-values" id="toc-legacy-availability-values" class="nav-link" data-scroll-target="#legacy-availability-values">Legacy Availability Values</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/energy_availability_and_annualisation.html">Energy, Availability, and Annualisation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Energy, Availability, and Annualisation</h1>
+<h1 class="title">Energy and Availability</h1>
 </div>
 
 
@@ -492,108 +543,222 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="role-in-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
+<p>This page defines the delivered-energy basis and combines annual availability once for each architecture. Component pages own efficiencies, auxiliary demand and subsystem availability evidence. Financial annualization is owned by <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>.</p>
+</section>
 <section id="energy-basis" class="level2">
 <h2 class="anchored" data-anchor-id="energy-basis">Energy Basis</h2>
-<p>Electricity yield is evaluated as delivered electrical energy at the onshore grid connection point.</p>
-<p>Hydrogen yield is evaluated on an energy-equivalent basis using the higher heating value:</p>
+<p>Electricity is reported as electrical energy landed at the defined onshore electrical delivery point.</p>
+<p>Hydrogen is reported as landed mass and HHV energy. The adopted rounded higher heating value is:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
 <th style="text-align: right;">Value</th>
+<th>Basis</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Hydrogen HHV</td>
+<td>Hydrogen higher heating value</td>
+<td style="text-align: right;"><span class="math inline">\(HHV_{\mathrm{H2}}\)</span></td>
 <td style="text-align: right;">39.4 kWh/kg</td>
+<td>Rounded from 39.42 kWh/kg; liquid water as combustion product <span class="citation" data-cites="nrel2009ElectrolysisCost">(<a href="#ref-nrel2009ElectrolysisCost" role="doc-biblioref">Independent Review Panel 2009</a>)</span></td>
 </tr>
 </tbody>
 </table>
-<p>This allows electricity and hydrogen configurations to be compared in EUR/MWh, while retaining the option to report hydrogen in EUR/kg.</p>
+<p>For landed hydrogen mass <span class="math inline">\(m_{\mathrm{H2}}\)</span> in kg/year:</p>
+<p><span class="math display">\[
+E_{\mathrm{H2,HHV}}
+=
+m_{\mathrm{H2}}
+\frac{39.4\ \mathrm{kWh/kg}}{1000\ \mathrm{kWh/MWh}}.
+\]</span></p>
+<p>The HHV basis enables EUR/MWh-H2-HHV and EUR/kg-H2 reporting. It does not make hydrogen and electricity equivalent end-use services.</p>
 </section>
-<section id="efficiency-treatment" class="level2">
-<h2 class="anchored" data-anchor-id="efficiency-treatment">Efficiency Treatment</h2>
-<p>Efficiency losses are applied at the component level. For electricity, this includes the turbine transformer, infield AC grid, integrated offshore conversion, HVDC export cable, and onshore conversion losses. For hydrogen, losses include stack conversion, balance-of-plant auxiliary demand, purification losses, power electronics where present, and compression.</p>
+<section id="efficiency-and-auxiliary-demand" class="level2">
+<h2 class="anchored" data-anchor-id="efficiency-and-auxiliary-demand">Efficiency and Auxiliary Demand</h2>
+<p>Efficiencies and auxiliary loads are applied in physical component order before annual availability. The owner of each component defines:</p>
+<ul>
+<li>input and output energy or mass;</li>
+<li>efficiency equation and operating basis;</li>
+<li>auxiliary demand and where it is withdrawn;</li>
+<li>applicable time step; and</li>
+<li>whether any outage or derating is already embedded.</li>
+</ul>
+<p>The result is architecture-specific pre-availability annual energy, <span class="math inline">\(E_{\mathrm{preavailability},a}\)</span>.</p>
 </section>
-<section id="availability-treatment" class="level2">
-<h2 class="anchored" data-anchor-id="availability-treatment">Availability Treatment</h2>
-<p>Availability is applied as an annual energy multiplier, not as a time-domain repair simulation. Component unavailability is represented as a flat percentage reduction in annual yield.</p>
-<p>The current component availability assumptions include:</p>
+<section id="availability-combination" class="level2">
+<h2 class="anchored" data-anchor-id="availability-combination">Availability Combination</h2>
+<p>For architecture <span class="math inline">\(a\)</span>:</p>
+<p><span class="math display">\[
+E_{\mathrm{delivered},a}
+=
+E_{\mathrm{preavailability},a}
+\prod_{s\in S_a} A_s,
+\]</span></p>
+<p>where <span class="math inline">\(S_a\)</span> contains only non-overlapping annual subsystem factors.</p>
+<p>The rules are:</p>
+<ol type="1">
+<li>each outage cause appears once;</li>
+<li>serial non-overlapping subsystem factors may be multiplied;</li>
+<li>the component owner supplies an already-combined factor for parallel units or redundancy;</li>
+<li>a factor is omitted when the effect is embedded in the upstream energy calculation;</li>
+<li>an unresolved required factor returns <strong>not parameterized</strong> for complete delivered energy; and</li>
+<li>100% is permitted only as an explicit zero-outage scenario assumption, not as an evidence-backed reliability result.</li>
+</ol>
+</section>
+<section id="side-by-side-architecture-ledger" class="level2">
+<h2 class="anchored" data-anchor-id="side-by-side-architecture-ledger">Side-by-Side Architecture Ledger</h2>
+<p>The table defines ownership and boundaries. “Unresolved” means that the component owner has not yet supplied an adopted, evidenced or explicitly approved assumption for the stated subsystem.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Availability</th>
+<th>Subsystem boundary</th>
+<th>Electricity export</th>
+<th>Centralised hydrogen</th>
+<th>Decentralised hydrogen</th>
+<th>Owner</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Turbine, electric configuration</td>
-<td style="text-align: right;">98.0%</td>
+<td>Wind-turbine generation system</td>
+<td><span class="math inline">\(A_{\mathrm{turb,e}}\)</span>: unresolved</td>
+<td><span class="math inline">\(A_{\mathrm{turb,c}}\)</span>: unresolved</td>
+<td>Included in integrated turbine-production boundary below</td>
+<td>TURB-002</td>
 </tr>
 <tr class="even">
-<td>Infield AC grid</td>
-<td style="text-align: right;">99.0%</td>
+<td>AC infield collection</td>
+<td><span class="math inline">\(A_{\mathrm{array,e}}\)</span>: unresolved</td>
+<td><span class="math inline">\(A_{\mathrm{array,c}}\)</span>: unresolved</td>
+<td>Not applicable</td>
+<td>ELEC-002</td>
 </tr>
 <tr class="odd">
-<td>Integrated offshore station</td>
-<td style="text-align: right;">98.0%</td>
+<td>Offshore electrical conversion/platform</td>
+<td><span class="math inline">\(A_{\mathrm{HVDC,off}}\)</span>: unresolved</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>ELEC-003</td>
 </tr>
 <tr class="even">
-<td>HVDC export cable</td>
-<td style="text-align: right;">99.0%</td>
+<td>Onshore electrical conversion</td>
+<td><span class="math inline">\(A_{\mathrm{HVDC,on}}\)</span>: unresolved</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>ELEC-005</td>
 </tr>
 <tr class="odd">
-<td>Onshore converter station</td>
-<td style="text-align: right;">98.0%</td>
+<td>HVDC export system</td>
+<td><span class="math inline">\(A_{\mathrm{HVDC,export}}\)</span>: unresolved</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td>ELEC-004</td>
 </tr>
 <tr class="even">
-<td>Turbine, hydrogen configuration</td>
-<td style="text-align: right;">98.5%</td>
+<td>Integrated turbine-electrolyser production</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td><span class="math inline">\(A_{\mathrm{turb+H2,d}}\)</span>: unresolved</td>
+<td>TURB-002 and H2P-002/003/004/005</td>
 </tr>
 <tr class="odd">
-<td>Electrolyser</td>
-<td style="text-align: right;">98.5%</td>
+<td>Central electrolyser production system</td>
+<td>Not applicable</td>
+<td><span class="math inline">\(A_{\mathrm{H2,prod,c}}\)</span>: unresolved</td>
+<td>Not applicable</td>
+<td>H2P-003/004/005</td>
 </tr>
 <tr class="even">
-<td>Compressor</td>
-<td style="text-align: right;">99.0%</td>
+<td>Hydrogen infield collection</td>
+<td>Not applicable</td>
+<td>Not applicable</td>
+<td><span class="math inline">\(A_{\mathrm{H2,array}}\)</span>: unresolved</td>
+<td>H2I-002</td>
 </tr>
 <tr class="odd">
-<td>Infield pipelines</td>
-<td style="text-align: right;">100.0%</td>
+<td>Compression system</td>
+<td>Not applicable</td>
+<td><span class="math inline">\(A_{\mathrm{comp,c}}\)</span>: unresolved</td>
+<td><span class="math inline">\(A_{\mathrm{comp,d}}\)</span>: unresolved</td>
+<td>H2I-003</td>
 </tr>
 <tr class="even">
-<td>Export pipelines</td>
-<td style="text-align: right;">100.0%</td>
+<td>Hydrogen export pipeline system</td>
+<td>Not applicable</td>
+<td><span class="math inline">\(A_{\mathrm{H2,export,c}}\)</span>: unresolved</td>
+<td><span class="math inline">\(A_{\mathrm{H2,export,d}}\)</span>: unresolved</td>
+<td>H2I-004</td>
+</tr>
+<tr class="odd">
+<td>Onshore hydrogen receipt equipment inside the endpoint</td>
+<td>Not applicable</td>
+<td><span class="math inline">\(A_{\mathrm{H2,on,c}}\)</span>: unresolved</td>
+<td><span class="math inline">\(A_{\mathrm{H2,on,d}}\)</span>: unresolved</td>
+<td>H2I-004 / future receipt owner</td>
 </tr>
 </tbody>
 </table>
-<p>Pipeline availability is currently assumed not to reduce annual yield. This should be treated as a modelling convention rather than a statement that pipeline failures are impossible.</p>
+<p>Platform availability is not multiplied as a generic extra factor when the same platform-supported equipment is already included in a subsystem boundary. If a future platform factor covers structural or common-utility outages not included elsewhere, its owner must state that non-overlapping scope before it is added.</p>
+</section>
+<section id="legacy-availability-values" class="level2">
+<h2 class="anchored" data-anchor-id="legacy-availability-values">Legacy Availability Values</h2>
+<p>Earlier documentation listed flat values between 98% and 100%, including conflicting 98.5% and 99.5% electrolyser-related values. Their subsystem boundaries and evidence are not sufficient to select one as the adopted factor.</p>
+<p>Those values are therefore not active architecture-ledger inputs. Component owners may retain them as clearly labelled legacy assumptions or sensitivities until they are evidenced and scoped. In particular, 100% pipeline availability is only a zero-outage scenario, not a reliability conclusion.</p>
+
 
 
 </section>
 
-</main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-nrel2009ElectrolysisCost" class="csl-entry" role="listitem">
+Independent Review Panel. 2009. <em>Current (2009) State-of-the-Art Hydrogen Production Cost Estimate Using Water Electrolysis</em>. NREL/BK-6A1-46676. National Renewable Energy Laboratory. <a href="https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/46676.pdf">https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/46676.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

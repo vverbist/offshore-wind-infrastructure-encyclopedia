@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -139,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -157,13 +186,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -445,7 +474,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -464,10 +493,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#fixed-inputs" id="toc-fixed-inputs" class="nav-link active" data-scroll-target="#fixed-inputs">Fixed Inputs</a></li>
-  <li><a href="#scenario-parameters" id="toc-scenario-parameters" class="nav-link" data-scroll-target="#scenario-parameters">Scenario Parameters</a></li>
-  <li><a href="#derived-parameters" id="toc-derived-parameters" class="nav-link" data-scroll-target="#derived-parameters">Derived Parameters</a></li>
-  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#one-case-one-result" id="toc-one-case-one-result" class="nav-link active" data-scroll-target="#one-case-one-result">One Case, One Result</a></li>
+  <li><a href="#canonical-scalar-inputs" id="toc-canonical-scalar-inputs" class="nav-link" data-scroll-target="#canonical-scalar-inputs">Canonical Scalar Inputs</a></li>
+  <li><a href="#execution-order" id="toc-execution-order" class="nav-link" data-scroll-target="#execution-order">Execution Order</a>
+  <ul class="collapse">
+  <li><a href="#validate-the-case-record" id="toc-validate-the-case-record" class="nav-link" data-scroll-target="#validate-the-case-record">1. Validate the Case Record</a></li>
+  <li><a href="#select-the-architecture-branch" id="toc-select-the-architecture-branch" class="nav-link" data-scroll-target="#select-the-architecture-branch">2. Select the Architecture Branch</a></li>
+  <li><a href="#calculate-resource-layout-and-gross-production" id="toc-calculate-resource-layout-and-gross-production" class="nav-link" data-scroll-target="#calculate-resource-layout-and-gross-production">3. Calculate Resource, Layout and Gross Production</a></li>
+  <li><a href="#construct-physical-inventories" id="toc-construct-physical-inventories" class="nav-link" data-scroll-target="#construct-physical-inventories">4. Construct Physical Inventories</a></li>
+  <li><a href="#size-or-select-discrete-equipment" id="toc-size-or-select-discrete-equipment" class="nav-link" data-scroll-target="#size-or-select-discrete-equipment">5. Size or Select Discrete Equipment</a></li>
+  <li><a href="#calculate-energy-in-physical-order" id="toc-calculate-energy-in-physical-order" class="nav-link" data-scroll-target="#calculate-energy-in-physical-order">6. Calculate Energy in Physical Order</a></li>
+  <li><a href="#apply-annual-availability-once" id="toc-apply-annual-availability-once" class="nav-link" data-scroll-target="#apply-annual-availability-once">7. Apply Annual Availability Once</a></li>
+  <li><a href="#aggregate-cost" id="toc-aggregate-cost" class="nav-link" data-scroll-target="#aggregate-cost">8. Aggregate Cost</a></li>
+  <li><a href="#annualize-and-report" id="toc-annualize-and-report" class="nav-link" data-scroll-target="#annualize-and-report">9. Annualize and Report</a></li>
+  </ul></li>
+  <li><a href="#return-status" id="toc-return-status" class="nav-link" data-scroll-target="#return-status">Return Status</a></li>
   </ul>
 </nav>
     </div>
@@ -493,79 +533,169 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The model workflow separates fixed assumptions, scenario parameters, derived parameters, optimisation variables, and outputs.</p>
-<section id="fixed-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="fixed-inputs">Fixed Inputs</h2>
-<p>Fixed inputs remain constant across the compared architectures unless explicitly varied in a sensitivity case. Examples include:</p>
-<ul>
-<li>wind resource and Weibull distributions</li>
-<li>distance to shore</li>
-<li>water depth</li>
-<li>component cost assumptions</li>
-<li>efficiency and availability assumptions</li>
-<li>financing parameters</li>
-<li>source-specific cost curves</li>
-</ul>
+<section id="one-case-one-result" class="level2">
+<h2 class="anchored" data-anchor-id="one-case-one-result">One Case, One Result</h2>
+<p>The model evaluates one complete user-supplied case deterministically. Alternative designs and sensitivities are separate input records. The model does not run an optimizer or choose a preferred case.</p>
+<p>Input and output classes are defined on <a href="../methodology/optimisation_variables.html">Inputs, Parameters and Outputs</a>.</p>
 </section>
-<section id="scenario-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="scenario-parameters">Scenario Parameters</h2>
-<p>Scenario parameters define the case being evaluated. Current scenario dimensions include:</p>
-<ul>
-<li>sea area</li>
-<li>number of turbines</li>
-<li>export architecture: electricity, centralised hydrogen, or decentralised hydrogen</li>
-<li>hydrogen stack overplanting</li>
-<li>hydrogen pipeline pressure</li>
-<li>hydrogen pipeline selection</li>
-</ul>
+<section id="canonical-scalar-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="canonical-scalar-inputs">Canonical Scalar Inputs</h2>
+<p>Adopted scalar inputs are stored once in <code>model_data/inputs.csv</code>, using stable, human-readable IDs. Website pages reference those IDs, and calculation and figure code reads the same numeric records. Explanations, evidence assessment, scope and limitations remain on the owning website page.</p>
+<p>The website build validates IDs, values, units, classifications, price years and citation keys before rendering. It then calculates derived values and currency-only conversions. Generated display variables are not model inputs and must not be edited directly.</p>
 </section>
-<section id="derived-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="derived-parameters">Derived Parameters</h2>
-<p>Derived parameters are calculated deterministically from fixed inputs and scenario parameters. Examples include:</p>
+<section id="execution-order" class="level2">
+<h2 class="anchored" data-anchor-id="execution-order">Execution Order</h2>
+<section id="validate-the-case-record" class="level3">
+<h3 class="anchored" data-anchor-id="validate-the-case-record">1. Validate the Case Record</h3>
+<p>Check that every required user input and fixed parameter:</p>
 <ul>
-<li>turbine positions</li>
-<li>infield cable or pipeline length</li>
-<li>wake losses</li>
-<li>production profile</li>
-<li>stack operating point and efficiency</li>
-<li>balance-of-plant losses</li>
-<li>compressor power demand</li>
-<li>peak export capacity requirement</li>
+<li>has a value and unit;</li>
+<li>belongs to one controlled class;</li>
+<li>is applicable to the selected architecture;</li>
+<li>lies within an adopted method or product envelope; and</li>
+<li>does not conflict with another representation of the same quantity.</li>
 </ul>
+<p>A missing required input returns <strong>not parameterized</strong>. A supplied value that violates a physical or technical constraint returns <strong>infeasible</strong>.</p>
 </section>
-<section id="outputs" class="level2">
-<h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
-<p>The principal outputs are yield and LCOE. The encyclopedia does not document result values, but it documents the assumptions needed to reproduce them:</p>
+<section id="select-the-architecture-branch" class="level3">
+<h3 class="anchored" data-anchor-id="select-the-architecture-branch">2. Select the Architecture Branch</h3>
+<p>Select exactly one of:</p>
 <ul>
-<li>annual delivered energy in MWh/year</li>
-<li>areal yield in MWh/km2/year</li>
-<li>LCOE in EUR/MWh or EUR/kg-equivalent reporting where needed</li>
-<li>component-level annualised cost contribution</li>
-<li>optimised component sizing decisions</li>
+<li>electricity export;</li>
+<li>centralised offshore hydrogen production; or</li>
+<li>decentralised turbine-integrated hydrogen production.</li>
 </ul>
+<p>The architecture mapping determines which component owners are active. An excluded component contributes neither cost nor loss.</p>
+</section>
+<section id="calculate-resource-layout-and-gross-production" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-resource-layout-and-gross-production">3. Calculate Resource, Layout and Gross Production</h3>
+<p>The wind and layout pages return:</p>
+<ul>
+<li>the accepted turbine definition;</li>
+<li>turbine coordinates and farm area;</li>
+<li>gross and wake-adjusted production on the documented time basis; and</li>
+<li>layout feasibility and rejection reasons.</li>
+</ul>
+<p>Where time-varying wind data are used, the owning page retains its documented time step <span class="math inline">\(\Delta t\)</span>.</p>
+</section>
+<section id="construct-physical-inventories" class="level3">
+<h3 class="anchored" data-anchor-id="construct-physical-inventories">4. Construct Physical Inventories</h3>
+<p>Calculate, before cost:</p>
+<ul>
+<li>turbine and foundation records;</li>
+<li>cable or pipeline route sections and physical lengths;</li>
+<li>platforms and equipment inventories;</li>
+<li>equipment counts; and</li>
+<li>installation-relevant masses, dimensions, lifts and loads.</li>
+</ul>
+<p>Every downstream cost must consume an explicit physical quantity or a clearly labelled top-down factor.</p>
+</section>
+<section id="size-or-select-discrete-equipment" class="level3">
+<h3 class="anchored" data-anchor-id="size-or-select-discrete-equipment">5. Size or Select Discrete Equipment</h3>
+<p>Apply the deterministic rules owned by each component page, including ceiling or class-selection steps. The user supplies any design choice that is not uniquely determined by the documented rules.</p>
+<p>A failed capacity, product-class, lift, route or operating-envelope check returns infeasible. An unresolved product set or sizing input returns not parameterized.</p>
+</section>
+<section id="calculate-energy-in-physical-order" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-energy-in-physical-order">6. Calculate Energy in Physical Order</h3>
+<p>Starting from wake-adjusted turbine production:</p>
+<ol type="1">
+<li>apply component efficiency or conversion equations;</li>
+<li>subtract auxiliary demand at its owning subsystem;</li>
+<li>apply curtailment only where a documented capacity limit requires it;</li>
+<li>calculate hydrogen mass where applicable; and</li>
+<li>aggregate pre-availability annual energy.</li>
+</ol>
+<p>Time-varying nonlinear performance may retain the component time step. Availability is not applied here unless the same effect is already embedded in the energy record.</p>
+</section>
+<section id="apply-annual-availability-once" class="level3">
+<h3 class="anchored" data-anchor-id="apply-annual-availability-once">7. Apply Annual Availability Once</h3>
+<p>Pass pre-availability annual energy to the architecture ledger on <a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a>.</p>
+<p>Multiply only non-overlapping subsystem factors. A factor already embedded in the upstream energy record is not applied again. Parallel-unit and redundancy effects must already be combined by the component owner.</p>
+</section>
+<section id="aggregate-cost" class="level3">
+<h3 class="anchored" data-anchor-id="aggregate-cost">8. Aggregate Cost</h3>
+<p>Combine non-overlapping:</p>
+<ul>
+<li>component supply CAPEX;</li>
+<li>installation CAPEX;</li>
+<li>shared project-cost fields;</li>
+<li>required replacements;</li>
+<li>decommissioning; and</li>
+<li>annual OPEX.</li>
+</ul>
+<p>Unknown required terms return not parameterized; they are not treated as zero.</p>
+</section>
+<section id="annualize-and-report" class="level3">
+<h3 class="anchored" data-anchor-id="annualize-and-report">9. Annualize and Report</h3>
+<p>Apply the common CRF method from <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>, then return the endpoint and units defined on <a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a>.</p>
+</section>
+</section>
+<section id="return-status" class="level2">
+<h2 class="anchored" data-anchor-id="return-status">Return Status</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Status</th>
+<th>Meaning</th>
+<th>Cost-result behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>feasible</td>
+<td>All required inputs exist and all checks pass</td>
+<td>Report complete applicable outputs</td>
+</tr>
+<tr class="even">
+<td>infeasible</td>
+<td>One or more physical or technical constraints fail</td>
+<td>Report reasons and intermediate checks; do not report a valid carrier cost</td>
+</tr>
+<tr class="odd">
+<td>not_parameterized</td>
+<td>A required value, evidence record or component method is missing</td>
+<td>Report missing owners/inputs; do not substitute zero or report a complete carrier cost</td>
+</tr>
+</tbody>
+</table>
+<p>The returned reasons are part of the model output. A failed case must remain auditable rather than disappearing from a set of results.</p>
 
 
 </section>
 
 </main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

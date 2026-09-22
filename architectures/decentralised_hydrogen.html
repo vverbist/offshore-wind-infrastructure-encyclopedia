@@ -142,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -160,13 +160,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -448,7 +448,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -472,6 +472,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#included-physical-functions" id="toc-included-physical-functions" class="nav-link" data-scroll-target="#included-physical-functions">Included Physical Functions</a></li>
   <li><a href="#removed-or-excluded-functions" id="toc-removed-or-excluded-functions" class="nav-link" data-scroll-target="#removed-or-excluded-functions">Removed or Excluded Functions</a></li>
   <li><a href="#architecture-interfaces" id="toc-architecture-interfaces" class="nav-link" data-scroll-target="#architecture-interfaces">Architecture Interfaces</a></li>
+  <li><a href="#reported-result" id="toc-reported-result" class="nav-link" data-scroll-target="#reported-result">Reported Result</a></li>
   <li><a href="#economic-boundary" id="toc-economic-boundary" class="nav-link" data-scroll-target="#economic-boundary">Economic Boundary</a></li>
   </ul>
 </nav>
@@ -500,8 +501,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="architecture-definition" class="level2">
 <h2 class="anchored" data-anchor-id="architecture-definition">Architecture Definition</h2>
-<p>The decentralised-hydrogen architecture converts electrical energy to hydrogen at each wind turbine. Hydrogen rather than electricity is collected within the wind farm, exported through a subsea pipeline, and handed over at the connection to the onshore hydrogen backbone.</p>
-<p>The physical boundary includes the wind turbines and support structures, turbine-integrated hydrogen-production equipment, turbine-level compression, the infield hydrogen network, export pipeline, and onshore backbone-connection interface. It contains no central offshore conversion platform.</p>
+<p>The decentralised-hydrogen architecture converts electrical energy to hydrogen at each wind turbine. Hydrogen rather than electricity is collected within the wind farm, exported through a subsea pipeline, and handed over at the defined onshore hydrogen delivery point.</p>
+<p>The physical boundary includes the wind turbines and support structures, turbine-integrated hydrogen-production equipment, turbine-level compression, the infield hydrogen network, export pipeline, and onshore hydrogen-delivery interface. It contains no central offshore conversion platform.</p>
 <div class="cell" data-fig-height="1.1" data-layout-align="default">
 <div class="cell-output-display">
 <div>
@@ -644,38 +645,51 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Export to backbone</td>
-<td>The project ends at the onshore hydrogen-backbone connection.</td>
+<td>The project ends at the defined onshore hydrogen delivery point.</td>
 </tr>
 </tbody>
 </table>
 </section>
+<section id="reported-result" class="level2">
+<h2 class="anchored" data-anchor-id="reported-result">Reported Result</h2>
+<p>The architecture reports installed capital intensity in EUR<sub>2025</sub>/kW of installed wind-turbine rated capacity. Annual hydrogen cost is reported in EUR<sub>2025</sub>/MWh-H2-HHV landed at the defined onshore hydrogen delivery point and in EUR<sub>2025</sub>/kg-H2. These are Tier 1 carrier-product metrics, not equivalent electricity end-use prices.</p>
+</section>
 <section id="economic-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="economic-boundary">Economic Boundary</h2>
-<p>The architecture cost includes the common offshore wind project and all turbine-level hydrogen-production, compression, collection, export, and installation activities required to reach the backbone connection. Removing the AC collection and central platform functions changes which components are booked; it does not remove the common turbine, foundation, development, or financing boundary.</p>
-<p>The hydrogen backbone and any downstream reinforcement or conditioning are outside the base architecture boundary unless a scenario explicitly assigns them to the offshore project.</p>
+<p>The architecture cost includes the common offshore wind project and all turbine-level hydrogen-production, compression, collection, export, and installation activities represented by the shared cost schema. Removing the AC collection and central platform functions changes which components are booked; it does not remove the common turbine and foundation boundary.</p>
+<p>The hydrogen backbone and any downstream reinforcement or conditioning are outside the Tier 1 boundary. Development, shared engineering, insurance and owner contingency remain unresolved shared fields; construction finance, taxes and financing fees are excluded by the simple-CRF convention. The reporting contract is defined on <a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a>.</p>
 
 
 </section>
 
 </main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

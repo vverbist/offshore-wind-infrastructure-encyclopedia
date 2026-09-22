@@ -142,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -160,13 +160,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -448,7 +448,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -496,19 +496,20 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This section defines the scope and boundary of the three offshore wind architectures compared by the model:</p>
+<p>This section defines the scope and boundary of the three offshore wind architectures evaluated by the model:</p>
 <ol type="1">
 <li>electricity export using AC infield collection and HVDC export</li>
 <li>centralised offshore hydrogen production with one integrated offshore platform</li>
 <li>decentralised turbine-integrated hydrogen production</li>
 </ol>
 <p>The architecture pages identify which physical functions are present, where energy conversion occurs, and how the offshore system connects to the onshore delivery point. Component pages remain the owners of sizing methods, assumptions, costs, losses, availability, and technical limitations.</p>
+<p>The current Tier 1 outputs are carrier-specific. Electricity and hydrogen results may be shown side by side, but they are not equivalent end-use service prices.</p>
 <section id="comparison-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="comparison-boundary">Comparison Boundary</h2>
 <p>The common offshore-project boundary starts with the wind turbine and its support structure. It ends at:</p>
 <ul>
-<li>the onshore electricity-grid connection for electricity export; or</li>
-<li>the connection to the onshore hydrogen backbone for hydrogen export.</li>
+<li>the defined onshore electrical delivery point for electricity export; or</li>
+<li>the defined onshore hydrogen delivery point for hydrogen export.</li>
 </ul>
 <p>Infrastructure beyond those connection points is outside the model boundary. This excludes the wider electricity network, the hydrogen backbone itself, downstream storage, distribution, reconversion, and end use.</p>
 <div class="cell" data-fig-height="2.8" data-layout-align="default">
@@ -582,9 +583,15 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Onshore delivery point</td>
-<td>Electricity-grid connection</td>
-<td>Hydrogen-backbone connection</td>
-<td>Hydrogen-backbone connection</td>
+<td>Defined onshore electrical delivery point</td>
+<td>Defined onshore hydrogen delivery point</td>
+<td>Defined onshore hydrogen delivery point</td>
+</tr>
+<tr class="even">
+<td>Carrier-cost output</td>
+<td>EUR<sub>2025</sub>/MWh-electricity</td>
+<td>EUR<sub>2025</sub>/MWh-H2-HHV and EUR<sub>2025</sub>/kg-H2</td>
+<td>EUR<sub>2025</sub>/MWh-H2-HHV and EUR<sub>2025</sub>/kg-H2</td>
 </tr>
 </tbody>
 </table>
@@ -603,7 +610,8 @@ ul.task-list li input[type="checkbox"] {
 <li>component replacement where represented by the model</li>
 <li>decommissioning where represented by the model</li>
 </ul>
-<p>Common project costs remain inside the comparison when they are required by all architectures. They are labelled as common rather than removed from the system boundary. Wider network reinforcement beyond the defined connection point is excluded unless a scenario explicitly assigns it to the offshore project.</p>
+<p>The shared cost schema retains required common project categories. Development, shared engineering, insurance and owner contingency are currently unresolved; construction finance, taxes and financing fees are excluded by the approved simple-CRF convention. A complete result remains not parameterized while a required shared field is unresolved.</p>
+<p>Wider network reinforcement beyond the defined connection point is excluded.</p>
 </section>
 <section id="scope-of-this-section" class="level2">
 <h2 class="anchored" data-anchor-id="scope-of-this-section">Scope of This Section</h2>
@@ -614,30 +622,39 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../architectures/decentralised_hydrogen.html">Decentralised Hydrogen</a></li>
 <li><a href="../architectures/component_mapping.html">Component Mapping</a></li>
 </ul>
-<p>The <a href="../methodology/system_boundary_and_lcoe.html">System Boundary and LCOE</a> page defines the common economic comparison. The component mapping identifies the canonical owner of each physical function so that costs and performance effects are booked once.</p>
+<p>The <a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a> page defines the endpoint, cost schema and reporting units. The component mapping identifies the canonical owner of each physical function so that costs and performance effects are booked once.</p>
 
 
 </section>
 
 </main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

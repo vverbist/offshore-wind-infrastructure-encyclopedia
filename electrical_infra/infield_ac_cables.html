@@ -187,7 +187,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -205,13 +205,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -493,7 +493,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -662,7 +662,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>The source values are USD 241,542/km and USD 650,000/km in 2024 dollars <span class="citation" data-cites="orbit2026Cable185 orbit2026Cable630">(<a href="#ref-orbit2026Cable185" role="doc-biblioref">National Laboratory of the Rockies 2026a</a>, <a href="#ref-orbit2026Cable630" role="doc-biblioref">2026b</a>)</span>. They are normalised to EUR<sub>2025</sub> using the 2024 and 2025 annual-average U.S. CPI-U indices and the ECB 2025 annual-average exchange rate, following <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a> <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. ORBIT states that its updated cost rates use industry outreach together with commodity-price, inflation and labour-index adjustments <span class="citation" data-cites="orbit2026Changelog">(<a href="#ref-orbit2026Changelog" role="doc-biblioref">National Laboratory of the Rockies 2026c</a>)</span>. They remain planning-model inputs rather than a supplier quotation. No additional manufacturer markup is applied because the ORBIT values already represent cable procurement unit costs. Installation is excluded.</p>
-<p>TenneT’s Dutch interface study used a nominal maximum of 630 A, equivalent to about 72 MVA at 66 kV. With reactive-power duty and a 0.9 power factor, it treated approximately 64–66 MW as usable active power per connection <span class="citation" data-cites="tennet2015JTubes">(<a href="#ref-tennet2015JTubes" role="doc-biblioref">TenneT 2015</a>)</span>. This range is used as the screening string rating on this page.</p>
+<p>TenneT’s Dutch interface study used a nominal maximum of 630 A, equivalent to about 72 MVA at 66 kV. With reactive-power duty and a 0.9 power factor, it treated approximately 64–66 MW as usable active power per connection <span class="citation" data-cites="tennet2015JTubes">(<a href="#ref-tennet2015JTubes" role="doc-biblioref">TenneT 2015</a>)</span>. The upper end of this range is used as the screening string rating on this page.</p>
 <p>Three ratings should not be confused:</p>
 <ul>
 <li><strong>ampacity</strong> is the maximum continuous current the installed cable can carry without exceeding its allowable conductor temperature;</li>
@@ -715,8 +715,9 @@ n_\mathrm{string}
 <div class="callout-body-container callout-body">
 <p>Four 15 MW turbines place 60 MW on a string. Five place 75 MW on it and exceed the 64–66 MW screening range. A nominal 2 GW target therefore requires 134 turbines, giving 2.01 GW installed and:</p>
 <p><span class="math display">\[
-n_\mathrm{string}=\left\lceil\frac{134}{4}\right\rceil=34.
+n_\mathrm{string}=\left\lceil\frac{N_\mathrm{turb}}{n_\mathrm{turb/string}}\right\rceil.
 \]</span></p>
+<p>With 4 turbines per string, the result is 34 strings.</p>
 </div>
 </div>
 <p><a href="#fig-array-string-count" class="quarto-xref">Figure&nbsp;1</a> shows the resulting discrete string count. A small increase in plant capacity can require a complete additional feeder, switchgear bay, J-tube, pull-in and cable route.</p>
@@ -726,7 +727,7 @@ n_\mathrm{string}=\left\lceil\frac{134}{4}\right\rceil=34.
 <img src="../figures/array-string-count.svg" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-array-string-count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Required 66 kV radial strings for 15 MW turbines and a 64–66 MW usable string rating.
+Figure&nbsp;1: Required 66 kV radial strings for 15 MW turbines and a 66 MW usable string rating.
 </figcaption>
 </figure>
 </div>
@@ -740,7 +741,7 @@ Figure&nbsp;1: Required 66 kV radial strings for 15 MW turbines and a 64–66 MW
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>TenneT’s 2 GW reference arrangement shows 24 dedicated wind-farm bays plus four universal bays <span class="citation" data-cites="tennet2024TwoGWProgram">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>)</span>. The 34-string worked case therefore needs at least six more terminations than the maximum 28 shown, even if every universal bay is assigned to a feeder. A consistent design must do one or more of the following:</p>
+<p>TenneT’s 2 GW reference arrangement shows 24 dedicated wind-farm bays plus four universal bays <span class="citation" data-cites="tennet2024TwoGWProgram">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>)</span>. The 34-string worked case therefore needs more terminations than the maximum 28 shown, even if every universal bay is assigned to a feeder. A consistent design must do one or more of the following:</p>
 <ul>
 <li>adopt a cable and platform interface rated for at least 75 MW per string, so five 15 MW turbines fit and only 27 strings are required;</li>
 <li>add offshore feeder aggregation or another switchgear interface;</li>
@@ -944,7 +945,7 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 </tr>
 <tr class="odd">
 <td>Turbine rating</td>
-<td style="text-align: right;">15 MW</td>
+<td style="text-align: right;"><p>15 MW</p></td>
 <td style="text-align: right;">Model variable</td>
 <td>Four turbines per base-case string</td>
 </tr>
@@ -1130,24 +1131,33 @@ U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Indexes for All 
 U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
 </div>
 </div></section></div></main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>System Boundary and LCOE – Offshore Wind Infrastructure Model Assumptions</title>
+<title>System Boundary and Carrier-Cost Metrics – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -84,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/system_boundary_and_lcoe.html">System Boundary and LCOE</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -139,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -157,13 +186,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -445,7 +474,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -464,19 +493,20 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#system-boundary" id="toc-system-boundary" class="nav-link active" data-scroll-target="#system-boundary">System Boundary</a></li>
-  <li><a href="#lcoe-definition" id="toc-lcoe-definition" class="nav-link" data-scroll-target="#lcoe-definition">LCOE Definition</a></li>
-  <li><a href="#conceptual-cost-structure" id="toc-conceptual-cost-structure" class="nav-link" data-scroll-target="#conceptual-cost-structure">Conceptual Cost Structure</a></li>
-  <li><a href="#annualisation" id="toc-annualisation" class="nav-link" data-scroll-target="#annualisation">Annualisation</a></li>
+  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#tier-1-delivery-boundary" id="toc-tier-1-delivery-boundary" class="nav-link" data-scroll-target="#tier-1-delivery-boundary">Tier 1 Delivery Boundary</a></li>
+  <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
+  <li><a href="#capital-intensity-outputs" id="toc-capital-intensity-outputs" class="nav-link" data-scroll-target="#capital-intensity-outputs">Capital-Intensity Outputs</a></li>
+  <li><a href="#annual-carrier-cost-outputs" id="toc-annual-carrier-cost-outputs" class="nav-link" data-scroll-target="#annual-carrier-cost-outputs">Annual Carrier-Cost Outputs</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/system_boundary_and_lcoe.html">System Boundary and LCOE</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../methodology/overview.html">Methodology</a></li><li class="breadcrumb-item"><a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">System Boundary and LCOE</h1>
+<h1 class="title">System Boundary and Carrier-Cost Metrics</h1>
 </div>
 
 
@@ -493,55 +523,189 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="system-boundary" class="level2">
-<h2 class="anchored" data-anchor-id="system-boundary">System Boundary</h2>
-<p>The model boundary runs from wind turbine generation to the onshore delivery point. It includes turbines, foundations, infield collection, offshore platforms or substations, conversion equipment, export infrastructure, and onshore conversion or delivery interface.</p>
-<p>This boundary is used because offshore electricity and offshore hydrogen differ mainly in the infrastructure required between the turbine and the shore. Excluding export infrastructure would make the comparison structurally biased toward electricity, because the electrical pathway would be evaluated before its largest carrier-specific cost items enter the calculation.</p>
+<section id="role-in-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
+<p>This page defines what each architecture delivers, which costs enter the model result and how those costs are normalized. Component pages calculate the underlying physical quantities, energy flows and costs.</p>
 </section>
-<section id="lcoe-definition" class="level2">
-<h2 class="anchored" data-anchor-id="lcoe-definition">LCOE Definition</h2>
-<p>The levelised cost of energy is calculated as annualised lifetime cost divided by annual delivered energy:</p>
-<pre class="text"><code>LCOE = annualised_cost / annual_energy_delivered</code></pre>
-<p>For electricity configurations, delivered energy is electrical energy at the onshore grid connection point. For hydrogen configurations, hydrogen yield is converted to energy using the higher heating value.</p>
+<section id="tier-1-delivery-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="tier-1-delivery-boundary">Tier 1 Delivery Boundary</h2>
+<p>The model currently reports carrier-specific Tier 1 products:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Architecture</th>
+<th>Delivery endpoint</th>
+<th>Delivered quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Electricity export</td>
+<td>Defined onshore electrical delivery point after onshore conversion</td>
+<td>Electrical energy</td>
+</tr>
+<tr class="even">
+<td>Centralised hydrogen</td>
+<td>Defined onshore hydrogen delivery point after offshore production, compression and export</td>
+<td>Hydrogen mass and HHV energy</td>
+</tr>
+<tr class="odd">
+<td>Decentralised hydrogen</td>
+<td>Defined onshore hydrogen delivery point after turbine-level production, collection, compression and export</td>
+<td>Hydrogen mass and HHV energy</td>
+</tr>
+</tbody>
+</table>
+<p>Storage, reconversion, downstream distribution, demand matching and end use are outside the Tier 1 boundary. They may be added only through a future Tier 2 scenario.</p>
+<p>EUR/MWh-electricity and EUR/MWh-H2-HHV therefore describe different delivered carrier products. They may be displayed side by side, but they must not be labelled as equivalent end-use prices or used to claim a like-for-like carrier ranking.</p>
 </section>
-<section id="conceptual-cost-structure" class="level2">
-<h2 class="anchored" data-anchor-id="conceptual-cost-structure">Conceptual Cost Structure</h2>
-<p>The model uses the following conceptual decomposition to explain why infrastructure affects optimal design:</p>
-<pre class="text"><code>LCOE = C1 / Yield + C2 / Capacity Factor + C3</code></pre>
-<p>where:</p>
-<ul>
-<li><code>C1</code> represents fixed project costs that do not scale strongly with installed capacity or yield.</li>
-<li><code>C2</code> represents capacity-linked infrastructure costs, such as turbines, foundations, converters, platforms, cables, electrolysers, compressors, and pipelines.</li>
-<li><code>C3</code> represents energy-linked costs or losses, including conversion penalties and variable operating costs.</li>
-</ul>
-<p>This is a conceptual expression, not the full implementation. Its role is to show why a high cost per MW of infrastructure penalises low-capacity-factor designs: infrastructure is sized for peak power, while revenue and LCOE recovery depend on delivered annual energy.</p>
+<section id="cost-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
+<p>The model distinguishes initial installed CAPEX from the lifecycle capital basis used for annualization.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cost category</th>
+<th>Treatment and owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Component supply CAPEX</td>
+<td>Owned by the component page</td>
+</tr>
+<tr class="even">
+<td>Offshore installation CAPEX</td>
+<td>Owned by the applicable installation page</td>
+</tr>
+<tr class="odd">
+<td>Onshore equipment and connection CAPEX</td>
+<td>Owned by the applicable component page</td>
+</tr>
+<tr class="even">
+<td>Annual OPEX</td>
+<td>Owned by the component page on a non-overlapping scope</td>
+</tr>
+<tr class="odd">
+<td>Material short-life replacement</td>
+<td>Owned by the component page; counted only when replacement is required within 25 years</td>
+</tr>
+<tr class="even">
+<td>Decommissioning</td>
+<td>Shared calculation on the financial page: 80% of total offshore installation CAPEX</td>
+</tr>
+<tr class="odd">
+<td>Commissioning</td>
+<td>Owned once by the applicable installation/component interface</td>
+</tr>
+<tr class="even">
+<td>Development and shared engineering</td>
+<td>Shared project-cost field; currently unresolved</td>
+</tr>
+<tr class="odd">
+<td>Insurance and owner contingency</td>
+<td>Shared project-cost field; currently unresolved</td>
+</tr>
+<tr class="even">
+<td>Construction finance, taxes and financing fees</td>
+<td>Excluded by the approved simple-CRF convention</td>
+</tr>
+<tr class="odd">
+<td>Residual value</td>
+<td>Zero under the 25-year project convention</td>
+</tr>
+</tbody>
+</table>
+<p>Development, shared engineering, insurance and owner contingency are not silently zero. Until they are parameterized, a complete total-system cost returns <strong>not parameterized</strong>. Explicitly bounded component or modelled-cost subtotals may still be reported, but they must not be called total system cost.</p>
 </section>
-<section id="annualisation" class="level2">
-<h2 class="anchored" data-anchor-id="annualisation">Annualisation</h2>
-<p>CAPEX is converted to an annual cost using the capital recovery factor derived on <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>. OPEX is added as an annual cost using the explicitly bounded relationship documented by each component owner.</p>
+<section id="capital-intensity-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="capital-intensity-outputs">Capital-Intensity Outputs</h2>
+<p>Let <span class="math inline">\(P_{\mathrm{wind,rated}}\)</span> be installed wind-turbine rated capacity in kW.</p>
+<p>Initial installed capital intensity is:</p>
+<p><span class="math display">\[
+c_{\mathrm{initial}}
+=
+\frac{C_{\mathrm{initial}}}
+{P_{\mathrm{wind,rated}}},
+\]</span></p>
+<p>where <span class="math inline">\(c_{\mathrm{initial}}\)</span> has units EUR<sub>2025</sub>/kW-wind.</p>
+<p>The lifecycle capital basis may also be reported separately:</p>
+<p><span class="math display">\[
+c_{\mathrm{lifecycle}}
+=
+\frac{C_{\mathrm{lifecycle\ capital}}}
+{P_{\mathrm{wind,rated}}}.
+\]</span></p>
+<p>The label must state whether replacement and decommissioning are included. Neither metric may be normalized by electrolyser, converter, pipeline or export capacity when it is presented as the cross-architecture wind-capacity result.</p>
+</section>
+<section id="annual-carrier-cost-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="annual-carrier-cost-outputs">Annual Carrier-Cost Outputs</h2>
+<p>For electricity:</p>
+<p><span class="math display">\[
+LC_{\mathrm{electricity}}
+=
+\frac{C_{\mathrm{annual,electricity}}}
+{E_{\mathrm{electricity,onshore}}},
+\]</span></p>
+<p>with numerator in EUR<sub>2025</sub>/year, denominator in MWh-electricity/year and result in EUR<sub>2025</sub>/MWh-electricity.</p>
+<p>For hydrogen:</p>
+<p><span class="math display">\[
+LC_{\mathrm{H2,HHV}}
+=
+\frac{C_{\mathrm{annual,H2}}}
+{E_{\mathrm{H2,onshore,HHV}}},
+\]</span></p>
+<p>with result in EUR<sub>2025</sub>/MWh-H2-HHV.</p>
+<p>Hydrogen cost per kilogram is derived from the same result:</p>
+<p><span class="math display">\[
+LC_{\mathrm{H2,kg}}
+=
+LC_{\mathrm{H2,HHV}}
+\frac{HHV_{\mathrm{H2}}}{1000},
+\]</span></p>
+<p>where <span class="math inline">\(HHV_{\mathrm{H2}}\)</span> is in kWh/kg. At 39.4 kWh/kg, the conversion factor is 0.0394 MWh/kg.</p>
+<p>The financial numerator is calculated on <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>. Delivered-energy accounting is defined on <a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a>.</p>
 
 
 </section>
 
 </main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

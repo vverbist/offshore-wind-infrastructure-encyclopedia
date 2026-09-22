@@ -187,7 +187,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -205,13 +205,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -493,7 +493,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -604,6 +604,10 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="reference-cable-system">Reference Cable System</h2>
 <p>The TenneT 2 GW reference system uses a positive-pole cable, negative-pole cable, dedicated metallic-return cable and fibre-optic cable <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span>.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
@@ -621,7 +625,7 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>Full-load pole current</td>
-<td style="text-align: right;">1.905 kA</td>
+<td style="text-align: right;"><p>1.905 kA</p></td>
 </tr>
 <tr class="even">
 <td>TenneT programme route range</td>
@@ -663,6 +667,11 @@ P_\mathrm{cable,loss}
 \]</span></p>
 <p>Using 0.0072 ohm/km at 20 degrees C and 1.905 kA gives:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Route length</th>
@@ -673,23 +682,23 @@ P_\mathrm{cable,loss}
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">80 km</td>
-<td style="text-align: right;">4.18 MW</td>
-<td style="text-align: right;">0.209%</td>
+<td style="text-align: right;"><p>4.18 MW</p></td>
+<td style="text-align: right;"><p>0.209%</p></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">150 km</td>
-<td style="text-align: right;">7.84 MW</td>
-<td style="text-align: right;">0.392%</td>
+<td style="text-align: right;"><p>7.84 MW</p></td>
+<td style="text-align: right;"><p>0.392%</p></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">250 km</td>
-<td style="text-align: right;">13.06 MW</td>
-<td style="text-align: right;">0.653%</td>
+<td style="text-align: right;"><p>13.06 MW</p></td>
+<td style="text-align: right;"><p>0.653%</p></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">300 km</td>
-<td style="text-align: right;">15.67 MW</td>
-<td style="text-align: right;">0.784%</td>
+<td style="text-align: right;"><p>15.67 MW</p></td>
+<td style="text-align: right;"><p>0.784%</p></td>
 </tr>
 </tbody>
 </table>
@@ -715,7 +724,7 @@ E_\mathrm{cable,loss}
 <h2 class="anchored" data-anchor-id="cable-supply-cost">Cable-Supply Cost</h2>
 <section id="separated-public-reference" class="level3">
 <h3 class="anchored" data-anchor-id="separated-public-reference">Separated Public Reference</h3>
-<p>The NREL Atlantic Offshore Wind Transmission Study gives a separated material cost for a 525 kV, 2 GW HVDC bipole and states that installation is added separately <span class="citation" data-cites="brinkman2024AtlanticTransmission">(<a href="#ref-brinkman2024AtlanticTransmission" role="doc-biblioref"><span class="nocase">Brinkman et al.</span> 2024</a>)</span>. Converted with the ECB 2025 annual-average exchange rate, the material reference is EUR 2.51 million/km, or 1.26 EUR/kW/km at 2 GW <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>.</p>
+<p>The NREL Atlantic Offshore Wind Transmission Study gives a separated material cost of 4.57 million USD/mile for a 525 kV, 2 GW HVDC bipole and states that installation is added separately <span class="citation" data-cites="brinkman2024AtlanticTransmission">(<a href="#ref-brinkman2024AtlanticTransmission" role="doc-biblioref"><span class="nocase">Brinkman et al.</span> 2024</a>)</span>. Converted with the ECB 2025 annual-average exchange rate, the material reference is 2.51 million EUR/km, or 1.26 EUR/kW/km at 2 GW <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -811,7 +820,7 @@ E_\mathrm{cable,loss}
 <tbody>
 <tr class="odd">
 <td>Both poles healthy</td>
-<td style="text-align: right;">2 GW</td>
+<td style="text-align: right;"><p>2 GW</p></td>
 <td>Normal operation</td>
 </tr>
 <tr class="even">
@@ -860,7 +869,7 @@ E_\mathrm{cable,loss}
 </tr>
 <tr class="odd">
 <td>Cable material CAPEX</td>
-<td style="text-align: right;">1.26 EUR/kW/km</td>
+<td style="text-align: right;"><p>1.26 EUR/kW/km</p></td>
 <td style="text-align: right;">Confirm source price year and escalate consistently</td>
 <td>NREL reference converted at 2025 ECB average</td>
 </tr>
@@ -878,7 +887,7 @@ E_\mathrm{cable,loss}
 </tr>
 <tr class="even">
 <td>Flat cable availability</td>
-<td style="text-align: right;">99%</td>
+<td style="text-align: right;"><p>99%</p></td>
 <td style="text-align: right;">Replace with capacity states</td>
 <td>Internal convention</td>
 </tr>
@@ -959,24 +968,33 @@ TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a hr
 TenneT. 2025. <span>“Aansluiten van een windpark met onze 2 gigawatt-standaard.”</span> April. <a href="https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard">https://magazines.tennet.eu/contact-magazine-noord-nederland-april-2025/aansluiten-van-een-windpark-met-onze-2-gigawatt-standaard</a>.
 </div>
 </div></section></div></main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>

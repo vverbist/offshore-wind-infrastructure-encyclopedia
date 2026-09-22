@@ -139,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">System Boundary and LCOE</span></a>
+ <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -157,13 +157,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Optimisation Variables</span></a>
+ <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Energy, Availability, and Annualisation</span></a>
+ <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
       </ul>
@@ -445,7 +445,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References and Source Basis</span></a>
+ <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -464,8 +464,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#methodological-role" id="toc-methodological-role" class="nav-link active" data-scroll-target="#methodological-role">Methodological Role</a></li>
-  <li><a href="#core-principle" id="toc-core-principle" class="nav-link" data-scroll-target="#core-principle">Core Principle</a></li>
+  <li><a href="#calculation-logic" id="toc-calculation-logic" class="nav-link active" data-scroll-target="#calculation-logic">Calculation Logic</a></li>
+  <li><a href="#methodology-pages" id="toc-methodology-pages" class="nav-link" data-scroll-target="#methodology-pages">Methodology Pages</a></li>
   </ul>
 </nav>
     </div>
@@ -491,47 +491,65 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This section defines the modelling logic used across all component pages. The model is a deterministic techno-economic optimisation framework for offshore wind systems with alternative energy carriers.</p>
-<p>The modelling object is the complete turbine-to-onshore-delivery value chain. The purpose is not to compare isolated component prices, but to represent how component cost, energy conversion, availability, and installation assumptions interact when the energy carrier changes from electricity to hydrogen.</p>
-<section id="methodological-role" class="level2">
-<h2 class="anchored" data-anchor-id="methodological-role">Methodological Role</h2>
-<p>The methodology pages define conventions that are shared across components:</p>
-<ul>
-<li>the system boundary used for cost and yield accounting</li>
-<li>the LCOE objective function</li>
-<li>the common financial and EUR2025 price basis</li>
-<li>the modelling workflow from fixed inputs to derived parameters and outputs</li>
-<li>the optimisation variables treated as model outcomes</li>
-<li>the annualisation, energy-basis, and availability conventions used in component calculations</li>
-</ul>
-<p>Component-specific assumptions are not collected here. They are documented on the relevant component pages.</p>
+<p>This section defines the shared calculation contract for the offshore wind infrastructure model. The model evaluates one complete user-supplied case deterministically; it does not optimize or select a preferred design.</p>
+<section id="calculation-logic" class="level2">
+<h2 class="anchored" data-anchor-id="calculation-logic">Calculation Logic</h2>
+<p>For each case, the model:</p>
+<ol type="1">
+<li>validates the user inputs and fixed parameters;</li>
+<li>constructs the wind-farm layout and gross production;</li>
+<li>selects the electricity, centralised-hydrogen or decentralised-hydrogen component chain;</li>
+<li>calculates physical inventories, component sizing, losses and auxiliary demand;</li>
+<li>returns an explicit infeasible or not-parameterized status when a required constraint or input is unresolved;</li>
+<li>applies annual subsystem availability once at architecture level;</li>
+<li>aggregates non-overlapping capital and operating costs; and</li>
+<li>reports the carrier-specific energy and cost outputs.</li>
+</ol>
+<p>Electricity and hydrogen are delivered at different onshore interfaces. Their costs may be shown side by side, but they are not equivalent end-use service prices.</p>
 </section>
-<section id="core-principle" class="level2">
-<h2 class="anchored" data-anchor-id="core-principle">Core Principle</h2>
-<p>Infrastructure is modelled as part of the offshore energy system, not as an external connection. This matters because export infrastructure is sized for peak capacity but paid back through delivered annual energy. The cost of capacity therefore changes the economically optimal layout and carrier choice.</p>
+<section id="methodology-pages" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-pages">Methodology Pages</h2>
+<p>Read the shared method in dependency order:</p>
+<ol type="1">
+<li><a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a> defines the endpoints, cost boundary and reported units.</li>
+<li><a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a> defines EUR 2025 normalization and annual cost.</li>
+<li><a href="../methodology/optimisation_variables.html">Inputs, Parameters and Outputs</a> defines the deterministic model record.</li>
+<li><a href="../methodology/modelling_workflow.html">Modelling Workflow</a> defines the execution order and failure states.</li>
+<li><a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a> defines the energy basis and architecture availability ledger.</li>
+</ol>
+<p>Component pages own their physical equations, component-specific assumptions, evidence and non-overlapping CAPEX and OPEX.</p>
 
 
 </section>
 
 </main> <!-- /main -->
-<!-- Generated by tools/build-progress-sidebar.js. -->
+<!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
-  if (document.querySelector("script[data-progress-sidebar]")) {
-    return;
-  }
-
+  if (document.querySelector("script[data-readiness-sidebar]")) return;
   const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
     .map((link) => link.getAttribute("href"))
     .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
-
   const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
   const script = document.createElement("script");
-
-  script.src = rootPath + "progress-sidebar.js";
+  script.src = rootPath + "readiness-sidebar.js";
   script.defer = true;
-  script.dataset.progressSidebar = "true";
-
+  script.dataset.readinessSidebar = "true";
+  document.body.appendChild(script);
+})();
+</script>
+<!-- Generated by tools/build-evidence-status.js. -->
+<script>
+(() => {
+  if (document.querySelector("script[data-evidence-status]")) return;
+  const stylesHref = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+    .map((link) => link.getAttribute("href"))
+    .find((href) => /(^|\/|\.\.\/)styles\.css(?:[?#].*)?$/.test(href));
+  const rootPath = stylesHref ? stylesHref.replace(/styles\.css(?:[?#].*)?$/, "") : "";
+  const script = document.createElement("script");
+  script.src = rootPath + "evidence-status.js";
+  script.defer = true;
+  script.dataset.evidenceStatus = "true";
   document.body.appendChild(script);
 })();
 </script>
