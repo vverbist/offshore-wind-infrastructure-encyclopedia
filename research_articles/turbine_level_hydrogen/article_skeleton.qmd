@@ -1,0 +1,375 @@
+---
+title: "Article Skeleton: Centralised and Turbine-Level Offshore Hydrogen"
+subtitle: "Journal-facing structure"
+readiness: context_only
+draft: true
+---
+
+## Working title
+
+**System-cost consequences of centralised and turbine-level offshore hydrogen
+production: a bottom-up techno-economic comparison**
+
+This page defines the proposed paper narrative. Detailed calculation
+requirements and unresolved evidence are maintained in the
+[Model Blueprint](model_blueprint.qmd). The
+[Section Map](section_map.qmd) links both documents to the relevant model pages.
+
+## Abstract
+
+The abstract should contain five elements:
+
+1. **Context:** offshore conversion allows wind energy to be transported to
+   shore as hydrogen through pipelines rather than exclusively through
+   electrical export infrastructure.
+2. **Problem:** centralised and turbine-level hydrogen production use different
+   electrical collection, conversion, process, compression, platform and
+   pipeline systems.
+3. **Method:** a bottom-up economic model, supported by explicit technical
+   calculations, derives component quantities, capacities, costs, losses and
+   operating requirements from the physical system design.
+4. **Results:** report hydrogen landed onshore, levelised cost of hydrogen
+   (LCOH), hydrogen yield per unit of sea area, and the principal cost and
+   energy differences between architectures.
+5. **Contribution:** explain how component scale, electrolyser sizing,
+   production location and offshore hydrogen infrastructure determine system
+   cost.
+
+The abstract should not foreground detailed turbine electrical integration.
+That interface is represented as an architecture-specific modelling assumption
+and sensitivity.
+
+## 1. Introduction
+
+### 1.1 Offshore wind and pipeline-based hydrogen export
+
+Introduce offshore energy export as the motivating system problem. The main
+proposition is that offshore hydrogen conversion enables pipeline transport,
+which may provide lower bulk transport cost than electrical export at relevant
+capacities and distances. The comparison must test this proposition rather than
+assume it universally.
+
+Explain that:
+
+- electrical export infrastructure is driven substantially by peak electrical
+  capacity;
+- offshore hydrogen requires conversion equipment and incurs conversion losses;
+- hydrogen pipelines may offer lower transport CAPEX per unit of capacity;
+- the relevant comparison therefore covers the complete offshore production and
+  transport system; and
+- downstream hydrogen storage may offer additional value but is outside this
+  paper.
+
+The reported product is hydrogen landed at a defined onshore delivery point.
+
+### 1.2 Architectures compared side by side
+
+Define two alternative systems without treating either as the starting point.
+
+**Centralised production:** electricity is collected through an AC infield
+network and converted to hydrogen on a central offshore platform. Electrolyser
+balance of plant, water treatment and compression may use shared process trains.
+
+**Turbine-level production:** electricity is converted to hydrogen at individual
+turbines. The AC collection network and central electrolysis platform are
+replaced by repeated production packages, turbine-level compression and an
+infield hydrogen-pipeline network.
+
+Both architectures use an identical upstream wind-farm basis and deliver the
+same product at the same endpoint and pressure basis.
+
+### 1.3 Research gap and research question
+
+Existing research already recognises centralised and distributed offshore
+electrolysis. The gap is that their differences are often represented through
+aggregated assumptions such as fixed EUR/kW values, one system-wide scaling
+exponent, fixed conversion efficiency, fixed compression energy, or pipeline
+cost per kilometre. These assumptions can predetermine the architecture ranking.
+
+The primary research question is:
+
+> How do centralised and turbine-level offshore hydrogen production differ in
+> physical design, energy performance and cost of hydrogen landed onshore when
+> both are represented through consistent bottom-up component models?
+
+Supporting questions are:
+
+1. Which equipment, infrastructure and activities differ between the two
+   architectures?
+2. How do component size, number and utilisation affect cost?
+3. How does electrolyser oversizing affect onshore hydrogen yield and LCOH?
+4. How do compression and thermoplastic composite pipe (TCP) design affect the
+   comparison?
+5. How do farm capacity and distance to shore change the relative cost?
+6. Which uncertain inputs can reverse the result?
+
+### 1.4 Contributions
+
+The intended contributions are:
+
+1. **Bottom-up economic comparison:** architecture CAPEX and OPEX are derived
+   from equipment quantities, capacities, masses, physical routes and
+   installation activities.
+2. **Component-specific scaling:** the model separates continuous scaling within
+   evidenced ranges from discrete module, train, pipeline and platform counts.
+3. **Explicit electrolyser sizing:** stack oversizing, modular dispatch,
+   part-load performance and replacement are linked to variable wind production
+   and landed hydrogen yield.
+4. **Explicit offshore hydrogen infrastructure:** turbine-level collection and
+   export are represented using TCP sections, accumulated flow, compression,
+   pressure, qualified products and physical pipeline counts.
+5. **Comparable system outputs:** both architectures report hydrogen at the same
+   onshore delivery interface, including LCOH and spatial hydrogen yield.
+
+**Figure 1:** side-by-side architecture diagrams.
+
+**Table 1:** component ownership and inclusion matrix.
+
+## 2. System definition and comparison boundary
+
+### 2.1 Common wind-farm basis
+
+Both architectures should use the same wind record, turbine, turbine
+coordinates, installed wind capacity, sea area, water depth, distance to shore,
+project life and financial basis. The paper should use declared physical layouts
+rather than optimise wind-farm spacing.
+
+### 2.2 Centralised architecture
+
+Describe the component chain:
+
+$$
+\text{wind turbines}
+\rightarrow \text{AC collection}
+\rightarrow \text{central platform}
+\rightarrow \text{electrolysis}
+\rightarrow \text{central compression}
+\rightarrow \text{export pipeline}
+\rightarrow \text{onshore delivery}.
+$$
+
+Define the included turbine electrical equipment, AC collection, central
+switchgear and conversion, stack modules, process BOP, water treatment,
+compressor trains, platform, export pipeline, installation and lifecycle scope.
+
+### 2.3 Turbine-level architecture
+
+Describe:
+
+$$
+\text{wind turbine}
+\rightarrow \text{turbine-level electrolysis}
+\rightarrow \text{turbine-level compression}
+\rightarrow \text{TCP collection network}
+\rightarrow \text{export pipeline}
+\rightarrow \text{onshore delivery}.
+$$
+
+Define repeated production packages, turbine connections, risers, rungs,
+headers, manifold and export system.
+
+### 2.4 Electrical-integration treatment
+
+State that the paper does not design or validate the detailed
+generator-electrolyser interface. A technically feasible interface is assumed,
+supported by the available evidence. Represent its system consequences through:
+
+- a conservative, function-complete turbine-level electrical interface; and
+- a bounded converter-reduced interface consistent with the current integration
+  argument.
+
+All retained electrical functions, losses, costs and masses must be assigned
+once. No unexplained energy-gain multiplier should be used.
+
+### 2.5 Delivery and economic boundary
+
+The model ends at the same defined onshore hydrogen delivery point for both
+architectures. It excludes the downstream hydrogen backbone, storage,
+distribution, reconversion, end use, market revenues and hybrid export.
+
+For landed hydrogen mass $m_{\mathrm{H2,onshore}}$:
+
+$$
+E_{\mathrm{H2,onshore,HHV}}
+=
+m_{\mathrm{H2,onshore}}HHV_{\mathrm{H2}}.
+$$
+
+## 3. Bottom-up techno-economic model
+
+Section 3 is the methodological centre of the paper. It should present the
+calculation in dependency order:
+
+1. wind production by turbine;
+2. architecture-specific electrical losses;
+3. electrolyser capacity and module dispatch;
+4. hydrogen production and auxiliary demand;
+5. compression energy and equipment sizing;
+6. infield collection design;
+7. export-pipeline sizing;
+8. platform and structural requirements;
+9. component CAPEX, OPEX and replacement; and
+10. hydrogen landed onshore and LCOH.
+
+The section should contain the following subsections:
+
+- **3.1 Calculation framework and data flow**
+- **3.2 General component-cost and scaling formulation**
+- **3.3 Wind production and aggregation**
+- **3.4 PEM stack model and electrolyser oversizing**
+- **3.5 Electrolyser balance of plant**
+- **3.6 Architecture-specific electrical equipment**
+- **3.7 Compression**
+- **3.8 TCP infield collection**
+- **3.9 Export-pipeline hydraulics and product selection**
+- **3.10 Central platform**
+- **3.11 Availability, OPEX and replacement**
+- **3.12 Hydrogen landed onshore and LCOH**
+
+Each component subsection should identify its boundary, inputs, technical
+equations, sizing rules, discrete thresholds, cost formulation, outputs,
+evidence range, uncertainty and local verification. Detailed requirements are
+specified in the [Model Blueprint](model_blueprint.qmd).
+
+**Figure 2:** model dependency diagram.
+
+## 4. Case-study design
+
+Define one common North Sea reference farm and controlled variations in:
+
+- farm capacity;
+- distance to shore;
+- electrolyser overplanting;
+- injection pressure and TCP product class;
+- central and turbine-level BOP cost;
+- compressor cost;
+- platform cost;
+- turbine-level O&M premium; and
+- electrical-integration assumptions.
+
+Use three cases:
+
+| Case | Production siting | Electrical assumption |
+|---|---|---|
+| C | Central offshore platform | Conventional AC collection and central conversion |
+| T0 | Individual turbines | Conservative electrical interface |
+| T1 | Individual turbines | Converter-reduced interface |
+
+The comparison between C and T0 answers the main architecture question. T0
+versus T1 tests whether direct electrical integration materially affects that
+answer.
+
+**Table 2:** reference-case inputs, units, sources and classifications.
+
+**Table 3:** sensitivity variables and defensible ranges.
+
+## 5. Results
+
+### 5.1 Hydrogen landed onshore and LCOH
+
+Lead with:
+
+- annual hydrogen mass landed onshore;
+- annual landed hydrogen on an HHV basis;
+- LCOH in EUR/kg-H2;
+- LCOH in EUR/MWh-H2-HHV; and
+- MWh-H2-HHV per square kilometre of sea area.
+
+Explain differences through electrical losses, stack utilisation, auxiliary
+energy, compression, availability and curtailment.
+
+**Figure 3:** landed hydrogen yield and LCOH by architecture.
+
+**Figure 4:** LCOH versus spatial hydrogen yield.
+
+### 5.2 Cost breakdown
+
+Show contributions from turbine electrical differences, infield collection,
+stack, BOP, compression, central platform, export pipeline, installation,
+replacement and O&M. Explain why the contributions differ.
+
+**Figure 5:** component contributions to LCOH.
+
+### 5.3 Energy breakdown
+
+Show the path from generator output through electrical losses, BOP demand,
+stack conversion, compression and availability to landed hydrogen.
+
+**Figure 6:** energy waterfall for both architectures.
+
+### 5.4 Component scale and architecture crossover
+
+Show how farm capacity and distance to shore affect the result. Identify module,
+train, platform, TCP and export-pipeline count thresholds and explain observed
+discontinuities through the physical design.
+
+**Figure 7:** difference in LCOH over farm capacity and distance, with material
+equipment-count boundaries.
+
+### 5.5 Electrolyser oversizing
+
+Report the effect of oversizing on landed yield, utilisation, part-load
+efficiency, compressor rating, pipeline requirement, CAPEX and LCOH. Determine
+whether the preferred overplanting differs by architecture.
+
+**Figure 8:** LCOH and landed yield versus overplanting factor.
+
+### 5.6 Sensitivity and break-even analysis
+
+Calculate the maximum turbine-level BOP, compressor and O&M premiums; the
+platform-cost crossover; the required electrical-integration benefit; and the
+sensitivity to TCP material and installation cost. Rank inputs by their effect
+on the difference between architectures.
+
+**Figure 9:** break-even contours or ranked sensitivity of $\Delta LCOH$.
+
+## 6. Discussion
+
+### 6.1 Principal system-cost mechanisms
+
+Interpret the result through central scale versus repeated packages, electrical
+versus hydrogen collection, platform requirements, production aggregation,
+compressor distribution, export-pipeline utilisation and architecture-specific
+O&M.
+
+### 6.2 Interpretation of component scaling
+
+Discuss which components exhibit material economies of scale, which are
+approximately modular, where discrete counts dominate, and which scaling
+assumptions materially affect the comparison. The equations and scaling rules
+belong in Section 3; this subsection interprets their consequences.
+
+### 6.3 Implications for offshore hydrogen design
+
+Discuss when each architecture is favoured, whether pipeline transport or
+production equipment dominates, whether direct electrical integration is
+decisive or secondary, and which evidence gaps are most important for design
+and investment decisions.
+
+### 6.4 Limitations
+
+State the limitations explicitly: no detailed generator-electrolyser interface
+design, downstream storage value, market optimisation, transient pipeline
+simulation or detailed stochastic O&M model. Qualify any screening-level
+platform method and uncertainties in TCP qualification and cost.
+
+## 7. Conclusions
+
+Answer, in order:
+
+1. Which architecture produced more hydrogen landed onshore?
+2. Which produced hydrogen at lower LCOH?
+3. Which components caused the difference?
+4. How did farm capacity, distance and oversizing affect the result?
+5. Which assumptions could reverse the ranking?
+6. How important was direct electrical integration relative to the broader
+   architecture?
+
+Do not claim that one architecture is universally superior.
+
+## Supplementary material
+
+Provide the symbol and unit register, component ledger, input and evidence
+register, detailed equations, component verification calculations, turbine
+coordinates, pipeline-section inventories, alternative cases, machine-readable
+results and source code used to create the paper figures.

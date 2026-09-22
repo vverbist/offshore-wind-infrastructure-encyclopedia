@@ -1,0 +1,524 @@
+---
+title: "Model Blueprint: Centralised and Turbine-Level Offshore Hydrogen"
+subtitle: "Calculation, evidence and output requirements"
+readiness: context_only
+draft: true
+---
+
+## Purpose
+
+This page is the implementation-facing companion to the
+[Article Skeleton](article_skeleton.qmd). It records what each model package
+must calculate before the paper can report a defensible comparison. It does not
+replace the canonical component pages; those pages remain the owners of model
+inputs and equations.
+
+The comparison reports hydrogen landed at the same defined onshore delivery
+point for the centralised and turbine-level architectures.
+
+## Common modelling contract
+
+Every component package should expose:
+
+| Field | Required content |
+|---|---|
+| Boundary | Included and excluded equipment, activities and energy flows |
+| Inputs | Value or record, unit, classification, source and applicability |
+| Technical model | Equations, unit conversions, constraints and failure states |
+| Physical output | Capacity, count, mass, footprint, route, lift or other inventory |
+| Energy output | Input, useful output, losses and auxiliary demand |
+| Economic output | Supply CAPEX, installation CAPEX, OPEX and replacement |
+| Evidence limits | Valid range, reference conditions and unresolved extrapolations |
+| Verification | Source-point reproduction, dimensional and limiting-case checks |
+
+The common cost form is:
+
+$$
+C_k
+=
+N_k C_{k,\mathrm{ref}}
+\left(
+\frac{Q_k}{Q_{k,\mathrm{ref}}}
+\right)^{\alpha_k},
+$$
+
+but it should be used only when the reference, exponent and scaling range are
+supported. Where evidence permits, costs should instead be decomposed as:
+
+$$
+C_k
+=
+\sum_m q_{k,m}c_{k,m}
++C_{k,\mathrm{assembly}}
++C_{k,\mathrm{offshore\ package}}.
+$$
+
+Component counts, product classes and feasibility transitions remain discrete.
+
+## M1. Common wind-farm input
+
+**Canonical pages:**
+[Wind Resource and Weibull](../../wind_resource_and_layout/wind_resource_and_weibull.qmd),
+[Wake Modelling and Spacing](../../wind_resource_and_layout/wake_modelling_and_spacing.qmd),
+[Wind Turbine](../../turbine_system/wind_turbine.qmd).
+
+**Required inputs**
+
+- controlled wind-resource record;
+- turbine power and thrust definition;
+- turbine coordinates and sea-area boundary;
+- common water depth and distance to shore; and
+- architecture-independent generator output by turbine and operating state.
+
+**Required output**
+
+For turbine $i$ and state $t$, return $P_{i,t}^{\mathrm{wind}}$ before
+architecture-specific hydrogen-conversion losses. The central case additionally
+aggregates turbine output after AC collection losses.
+
+**Paper role:** common upstream input, not a principal methodological
+contribution.
+
+**Open requirement:** adopt one controlled wind, direction and layout record.
+
+## M2. Architecture equipment ledger
+
+**Canonical pages:**
+[Centralised Hydrogen](../../architectures/centralised_hydrogen.qmd),
+[Decentralised Hydrogen](../../architectures/decentralised_hydrogen.qmd),
+[Component Mapping](../../architectures/component_mapping.qmd).
+
+Create mutually exclusive equipment records for:
+
+- turbine conversion and transformation;
+- AC infield collection;
+- turbine-level electrical interface;
+- central electrolyser power electronics;
+- PEM stacks;
+- process BOP and water treatment;
+- central and turbine-level compression;
+- TCP collection, manifold and export;
+- central platform; and
+- installation, O&M and replacement.
+
+Every retained function must own its cost, loss, mass and availability effect
+once. Removed equipment must be evidenced rather than inferred from a generic
+architecture credit.
+
+**Direct-integration scope:** represent conservative and converter-reduced
+turbine-level ledgers. Detailed generator electromagnetic design, harmonics and
+control validation remain outside the paper.
+
+**Open requirement:** close the architecture-specific mass, cost and loss
+ledger.
+
+## M3. PEM stack operation and oversizing
+
+**Canonical page:**
+[PEM Stack](../../hydrogen_production/stack.qmd).
+
+Installed stack capacity is:
+
+$$
+P_{\mathrm{stack,installed}}
+=
+f_{\mathrm{overplant}}P_{\mathrm{wind,rated}}.
+$$
+
+The module count is:
+
+$$
+N_{\mathrm{module}}
+=
+\left\lceil
+\frac{P_{\mathrm{stack,installed}}}{P_{\mathrm{module,rated}}}
+\right\rceil.
+$$
+
+For each state, select an active module count satisfying minimum and maximum
+module load. Calculate:
+
+$$
+\dot m_{\mathrm{H2},t}
+=
+\frac{
+\eta_{\mathrm{stack,HHV}}(\lambda_t,\tau_t)
+P_{\mathrm{stack},t}
+}{HHV_{\mathrm{H2}}}.
+$$
+
+**Required inputs**
+
+- machine-readable polarisation or efficiency curve;
+- curve temperature, pressure and age basis;
+- module rating and minimum load;
+- dispatch and switching rule;
+- degradation and replacement criterion;
+- stack CAPEX, OPEX, mass and footprint; and
+- overplanting cases.
+
+**Required outputs**
+
+- installed and active module counts;
+- stack load by operating state;
+- hydrogen flow and annual hydrogen mass;
+- full-load hours and replacement timing;
+- CAPEX, replacement, mass and lifts; and
+- infeasibility or out-of-range state.
+
+**Local verification**
+
+- reproduce source curve points;
+- check zero, minimum-load and rated-load states;
+- preserve module-count transitions;
+- prohibit extrapolation outside the adopted curve; and
+- reproduce degradation and replacement arithmetic.
+
+**Open requirements:** adopt one canonical curve, module basis, cost,
+degradation method and replacement implementation. The existing numerical curve
+requires explicit provenance and operating conditions.
+
+## M4. Electrolyser balance of plant
+
+**Canonical page:**
+[Balance of Plant](../../hydrogen_production/balance_of_plant.qmd).
+
+Decompose BOP into the minimum defensible packages:
+
+- seawater intake, desalination and purification;
+- cooling and circulation;
+- gas-liquid separation and drying;
+- process piping;
+- instrumentation and control; and
+- enclosure and safety equipment.
+
+For package $k$:
+
+$$
+N_{k,a}
+=
+\left\lceil
+\frac{Q_{k,a}}{Q_{k,\max}}
+\right\rceil.
+$$
+
+Calculate auxiliary demand as a stated function of stack load or hydrogen
+production:
+
+$$
+P_{\mathrm{BOP},t}
+=
+f_{\mathrm{BOP}}
+\left(P_{\mathrm{stack},t},\dot m_{\mathrm{H2},t}\right).
+$$
+
+**Architecture distinction**
+
+- Centralised: shared packages and bounded process trains.
+- Turbine level: repeated packages subject to turbine space, mass, redundancy
+  and marinisation requirements.
+
+**Required outputs:** water flow, auxiliary demand, package counts, CAPEX,
+OPEX, mass, footprint and availability boundary.
+
+**Local verification:** reproduce reference cost breakdowns and water-energy
+calculations; verify the energy balance; expose train-count thresholds; reject
+unsupported scale extrapolation.
+
+**Open requirements:** replace the offshore-water placeholder and adopt
+architecture-specific package capacities, scaling ranges, power functions and
+physical records.
+
+## M5. Architecture-specific electrical equipment
+
+**Canonical pages:**
+[DC Integration](../../hydrogen_production/dc_integration.qmd),
+[Electrolyser Power Electronics](../../hydrogen_production/elx_power_electronics.qmd),
+[Wind Turbine](../../turbine_system/wind_turbine.qmd).
+
+For architecture $a$:
+
+$$
+P_{t,a}^{\mathrm{DC}}
+=
+\eta_{\mathrm{el},a}(\lambda_t)P_{t,a}^{\mathrm{input}}.
+$$
+
+Cost and mass follow from the equipment ledger:
+
+$$
+C_{\mathrm{el},a}=\sum_k N_{k,a}c_{k,a},
+\qquad
+M_{\mathrm{el},a}=\sum_k N_{k,a}m_{k,a}.
+$$
+
+**Required outputs:** usable stack DC power, conversion losses, equipment count,
+CAPEX, OPEX, mass, cooling demand and availability boundary.
+
+**Local verification:** conserve energy; reproduce vendor or literature
+efficiency cases; ensure transformer, rectifier, inverter, protection and
+cooling ownership is non-overlapping.
+
+**Open requirements:** normalise the central power-electronics cost and close
+the conservative and converter-reduced turbine-level ledgers.
+
+## M6. Compression
+
+**Canonical page:**
+[Compressor](../../hydrogen_infra/compressor.qmd).
+
+For absolute inlet and outlet pressure, calculate stage count:
+
+$$
+N_s
+=
+\left\lceil
+\frac{\ln(p_{\mathrm{out}}/p_{\mathrm{in}})}{\ln(r_{\max})}
+\right\rceil.
+$$
+
+For the selected multistage method, calculate specific electrical work and then:
+
+$$
+P_{\mathrm{comp},t}
+=
+w_{\mathrm{comp}}
+\dot m_{\mathrm{H2},t}.
+$$
+
+Annual electricity uses state-dependent flow; installed motor and train rating
+use peak simultaneous duty.
+
+**Architecture distinction**
+
+- Centralised: bounded large compressor trains and spare philosophy.
+- Turbine level: one or more qualified turbine-scale packages per turbine.
+
+**Required outputs:** stage count, specific work, time-state power, peak motor
+rating, train count, CAPEX, OPEX, mass, footprint, lifts and availability states.
+
+**Local verification:** reproduce the adopted worked case, state the
+intercooling and real-gas method, check stage-count boundaries and prevent
+unbounded cost extrapolation.
+
+**Open requirements:** select architecture-specific compressor technologies,
+train limits, redundancy, cost normalisation and physical packages.
+
+## M7. TCP infield collection
+
+**Canonical page:**
+[Hydrogen Infield Infrastructure](../../hydrogen_infra/infield_infrastructure.qmd).
+
+Build an explicit section table from the common turbine coordinates. For section
+$j$:
+
+$$
+\dot m_{j,t}
+=
+\sum_{i\in U_j}\dot m_{i,t},
+$$
+
+where $U_j$ is the set of turbines upstream of that section.
+
+Each section record should contain endpoints, horizontal and vertical length,
+connected turbines, healthy and selected fault-state flow, product class,
+connections, valves, route allowance and installation class.
+
+**Required outputs:** complete section inventory, total physical length, peak
+flow by section, riser and connection count, manifold inventory, feasibility
+state, supply CAPEX, installation CAPEX and availability states.
+
+**Local verification:** connect every turbine exactly once, conserve hydrogen
+flow, reproduce analytical length only as a cross-check, and preserve incomplete
+row and section-count steps.
+
+**Open requirements:** select the physical topology and manifold boundary,
+generate sections from coordinates, and define capacity and fault-state checks.
+
+## M8. Pipeline hydraulics and qualified products
+
+**Canonical pages:**
+[Hydrogen Pipelines](../../hydrogen_infra/hydrogen_pipelines.qmd),
+[Pipeline Pressure and Capacity](../../hydrogen_infra/pipeline_pressure_and_capacity.qmd).
+
+For each infield or export section, calculate steady-state capacity:
+
+$$
+\dot m_{\max}
+=
+F\left(
+D_{\mathrm{ID}},p_{\mathrm{in}},p_{\mathrm{out}},L,T,Z,\mu,\epsilon
+\right).
+$$
+
+The adopted equation must use absolute pressures and be validated against a
+recognised compressible-gas method. Distinguish nominal product size, true
+internal diameter, operating pressure, design pressure, rated pressure class and
+receipt pressure.
+
+Export pipeline count is:
+
+$$
+N_{\mathrm{export}}
+=
+\left\lceil
+\frac{\dot m_{\mathrm{H2,peak}}}{\dot m_{\mathrm{pipe,capacity}}}
+\right\rceil.
+$$
+
+Select the least-cost feasible candidate only from discrete hydrogen-qualified
+product classes. Reject candidates that violate pressure, temperature,
+velocity, length, bend, installation or evidence limits.
+
+Calculate:
+
+$$
+C_{\mathrm{pipeline}}
+=
+\sum_j L_jc_{\mathrm{pipe},j}
++C_{\mathrm{connections}}
++C_{\mathrm{manifold}}
++C_{\mathrm{installation}}.
+$$
+
+**Required outputs:** capacity and pressure margin, selected product, physical
+pipeline count, material inventory, connections, supply CAPEX, installation
+CAPEX, OPEX and feasibility state.
+
+**Local verification:** benchmark hydraulics, reproduce product data, check
+gauge-to-absolute conversion, enforce velocity and product limits, and report
+both outcomes when uncertainty crosses a pipeline-count threshold.
+
+**Open requirements:** replace or validate the present capacity method, adopt
+qualified TCP classes, establish a public or governed cost basis, and complete
+the installation inventory.
+
+## M9. Central platform
+
+**Canonical page:**
+[Platform Material CAPEX](../../platforms/platform_material_capex.qmd).
+
+Hosted equipment mass is:
+
+$$
+M_{\mathrm{hosted}}=\sum_k N_km_k.
+$$
+
+The platform package should return platform multiplicity, hosted mass,
+structural and outfitting mass, deck area, fabrication cost, foundation record,
+lift modules and installation requirements. Discrete reference platform cases
+are preferable to an unsupported unrestricted EUR/MW coefficient.
+
+**Local verification:** reconcile hosted equipment exactly, keep hosted
+equipment CAPEX separate from structural CAPEX, and test capacity and lift
+limits.
+
+**Open requirement:** adopt the platform multiplicity and bounded
+mass-to-structure/cost basis.
+
+## M10. Installation
+
+**Canonical pages:**
+[Cable and Pipeline Installation](../../offshore_installation/cable_and_pipeline_installation.qmd),
+[Platform and Substation Installation](../../offshore_installation/platform_and_substation_installation.qmd),
+[Turbine and Foundation Installation](../../offshore_installation/turbine_and_foundation_installation.qmd).
+
+The supplied physical inventory must equal the installed inventory. Calculate
+installation from activities, vessel or spread requirements, loads, trips,
+passes, durations and mobilisation rather than one common EUR/m assumption.
+
+For the paper, retain only the installation detail that can materially affect
+the architecture comparison. More detailed campaign optimisation remains
+outside scope.
+
+**Open requirements:** close the TCP lay-pass rule, connection and manifold
+activities, turbine-level equipment lifts, central platform lifts and complete
+commercial spread boundaries.
+
+## M11. Availability, O&M and replacement
+
+**Canonical page:**
+[Energy and Availability](../../methodology/energy_availability_and_annualisation.qmd).
+
+Combine only non-overlapping outage effects. Distributed failures should remove
+the affected turbine-level capacity rather than the complete farm. Central
+failures should reflect the affected shared train or common system.
+
+Where evidence is insufficient, use explicit sensitivity and break-even
+analysis rather than unsupported precise base values.
+
+**Required outputs:** pre-availability production, delivered production, outage
+boundary by component, annual O&M, replacement timing and architecture-specific
+capacity states.
+
+**Open requirements:** provide evidenced or explicitly bounded component
+availability and O&M packages.
+
+## M12. Financial model and reported outputs
+
+**Canonical pages:**
+[System Boundary and Carrier-Cost Metrics](../../methodology/system_boundary_and_lcoe.qmd),
+[Financial and Price-Basis Assumptions](../../methodology/financial_and_price_basis.qmd).
+
+Annual architecture cost is:
+
+$$
+C_{\mathrm{annual},a}
+=
+CRF\,C_{\mathrm{initial},a}
++C_{\mathrm{replacement},a}
++C_{\mathrm{OPEX},a}
++C_{\mathrm{decommissioning},a}.
+$$
+
+LCOH is:
+
+$$
+LCOH_a
+=
+\frac{C_{\mathrm{annual},a}}{m_{\mathrm{H2,onshore},a}}.
+$$
+
+Report:
+
+- kg-H2/year landed onshore;
+- MWh-H2-HHV/year landed onshore;
+- EUR/kg-H2;
+- EUR/MWh-H2-HHV;
+- MWh-H2-HHV/km2/year;
+- initial and lifecycle EUR/kW-wind;
+- cost and energy breakdowns; and
+- $\Delta LCOH=LCOH_{\mathrm{turbine}}-LCOH_{\mathrm{central}}$.
+
+Break-even analysis should solve $\Delta LCOH=0$ for uncertain
+architecture-specific BOP, compressor, O&M, platform, electrical-integration and
+TCP cost assumptions.
+
+**Open requirements:** normalise every included cost to the common price basis
+and keep unresolved shared project costs visible.
+
+## Proposed paper figures
+
+| Figure | Model requirement |
+|---|---|
+| 1. Architecture comparison | M2 equipment ledger |
+| 2. Model dependency diagram | M1-M12 interfaces |
+| 3. Landed yield and LCOH | M1-M12 integrated output |
+| 4. LCOH versus spatial yield | M1, M12 and sea-area basis |
+| 5. Component cost breakdown | M2-M12 cost ledger |
+| 6. Energy waterfall | M1, M3-M6 and M11 |
+| 7. Farm-capacity/distance crossover | M3-M10 discrete design cases |
+| 8. Oversizing response | M3-M8 |
+| 9. Break-even conditions | M4-M12 sensitivity cases |
+
+## Minimum completion gate for paper results
+
+Numerical paper results should not be treated as final until:
+
+1. both architectures use mutually exclusive equipment and cost ledgers;
+2. the stack, BOP and compressor models have one adopted executable basis;
+3. the turbine-level TCP network is derived from physical coordinates;
+4. export hydraulics and product selection are validated;
+5. central platform and architecture-specific installation are bounded;
+6. all reported costs share one price and commercial basis; and
+7. the onshore delivery condition is identical for both architectures.

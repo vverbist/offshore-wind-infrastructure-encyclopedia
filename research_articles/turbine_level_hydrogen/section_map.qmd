@@ -1,0 +1,70 @@
+---
+title: "Section Map: Centralised and Turbine-Level Offshore Hydrogen"
+subtitle: "Paper narrative, model requirements and canonical owners"
+readiness: context_only
+draft: true
+---
+
+## Purpose
+
+This page keeps the [Article Skeleton](article_skeleton.qmd) and
+[Model Blueprint](model_blueprint.qmd) aligned without duplicating their full
+content. The article skeleton owns the reader-facing narrative. The model
+blueprint owns calculation and evidence requirements. Existing model pages own
+the canonical equations and quantitative assumptions.
+
+## Section correspondence
+
+| Article section | Model package | Canonical model pages | Current assessment | Required paper output |
+|---|---|---|---|---|
+| 1.1 Pipeline-based export motivation | M8 Pipeline hydraulics and products | [Hydrogen Pipelines](../../hydrogen_infra/hydrogen_pipelines.qmd); [Pipeline Pressure and Capacity](../../hydrogen_infra/pipeline_pressure_and_capacity.qmd) | Conceptual trade-off is strong; product and cost basis remain open | Evidence-backed motivation without assuming universal pipeline superiority |
+| 1.2 and 2 Architecture definitions | M2 Equipment ledger | [Centralised Hydrogen](../../architectures/centralised_hydrogen.qmd); [Decentralised Hydrogen](../../architectures/decentralised_hydrogen.qmd); [Component Mapping](../../architectures/component_mapping.qmd) | Boundaries are well developed; physical ledgers are incomplete | Side-by-side architecture figure and inclusion table |
+| 2.1 Common wind-farm basis | M1 Common wind input | [Wind Resource and Weibull](../../wind_resource_and_layout/wind_resource_and_weibull.qmd); [Wake Modelling and Spacing](../../wind_resource_and_layout/wake_modelling_and_spacing.qmd); [Wind Turbine](../../turbine_system/wind_turbine.qmd) | Calculation structure exists; controlled common record remains open | Identical turbine-level power input and sea-area basis |
+| 2.4 Electrical integration | M2 and M5 Electrical ledgers | [DC Integration](../../hydrogen_production/dc_integration.qmd); [Electrolyser Power Electronics](../../hydrogen_production/elx_power_electronics.qmd) | Technical argument is sufficient for conditional treatment; cost, loss and mass ledgers remain open | Conservative and converter-reduced turbine-level cases |
+| 2.5 and 3.12 Onshore delivery and LCOH | M12 Financial outputs | [System Boundary and Carrier-Cost Metrics](../../methodology/system_boundary_and_lcoe.qmd); [Financial and Price-Basis Assumptions](../../methodology/financial_and_price_basis.qmd) | Reporting framework is available; several component costs remain unresolved | kg/year, MWh-H2-HHV/year, EUR/kg and EUR/MWh-H2-HHV landed onshore |
+| 3.2 Component cost and scaling | Common contract | All quantitative component pages | Component decomposition exists unevenly; several unrestricted factors remain | Traceable component scale laws and integer counts |
+| 3.4 Stack and oversizing | M3 PEM stack | [PEM Stack](../../hydrogen_production/stack.qmd) | Concept and numerical curve exist; curve provenance, module basis, lifecycle, cost and mass require consolidation | Hydrogen yield, module utilisation, replacement and oversizing response |
+| 3.5 BOP | M4 Balance of plant | [Balance of Plant](../../hydrogen_production/balance_of_plant.qmd) | Boundary and source breakdown are strong; offshore packages and scaling are not closed | Central and repeated turbine-level package costs, power, mass and water |
+| 3.6 Electrical equipment | M5 Electrical equipment | [DC Integration](../../hydrogen_production/dc_integration.qmd); [Electrolyser Power Electronics](../../hydrogen_production/elx_power_electronics.qmd); [Wind Turbine](../../turbine_system/wind_turbine.qmd) | Central topology is plausible; architecture-specific canonical values are not closed | Complete cost, loss and mass ledger |
+| 3.7 Compression | M6 Compression | [Compressor](../../hydrogen_infra/compressor.qmd) | Thermodynamic structure is mostly usable; technology, train, cost and mass packages are open | Annual energy, peak duty, train count, CAPEX and OPEX |
+| 3.8 TCP collection | M7 Infield collection | [Hydrogen Infield Infrastructure](../../hydrogen_infra/infield_infrastructure.qmd) | Ladder concept and length check exist; buildable section network is missing | Section flows, lengths, products, connections and manifold |
+| 3.9 Export pipeline | M8 Pipeline hydraulics and products | [Hydrogen Pipelines](../../hydrogen_infra/hydrogen_pipelines.qmd); [Pipeline Pressure and Capacity](../../hydrogen_infra/pipeline_pressure_and_capacity.qmd) | Pressure/diameter/count logic is strong; hydraulics, product qualification and cost require correction | Feasible TCP class, capacity, count, supply and installation cost |
+| 3.10 Central platform | M9 Platform | [Platform Material CAPEX](../../platforms/platform_material_capex.qmd) | Ownership boundary is strong; physical and economic calculation is absent | Platform count, mass, deck area, CAPEX and lifts |
+| 3.11 Availability and O&M | M11 Availability and lifecycle | [Energy and Availability](../../methodology/energy_availability_and_annualisation.qmd) plus component pages | Combination rules exist; component evidence and states remain open | Architecture-specific delivered production, O&M and break-even premiums |
+| 3 and supplementary verification | Local verification in M1-M12 | Each owning component page | Several worked checks exist; they need reconciliation with adopted inputs | Source reproduction, limiting cases and evidence-range checks alongside each model |
+| 4 Case study | M1-M12 integrated case | [Inputs, Parameters and Outputs](../../methodology/optimisation_variables.qmd); [Modelling Workflow](../../methodology/modelling_workflow.qmd) | Deterministic contract exists; controlled case values and candidate sets remain open | Reference case and transparent sensitivity set |
+| 5.1 Main results | M12 Integrated outputs | All model packages | Blocked until component gates close | LCOH, landed yield and spatial yield |
+| 5.2 Cost breakdown | M2-M12 cost ledger | Component and financial pages | Structure exists; incomplete physical and cost records | Component contribution to LCOH |
+| 5.3 Energy breakdown | M1 and M3-M6, M11 | Wind, hydrogen-production, compressor and availability pages | Calculation fragments exist; canonical chain is not closed | Generator-to-landed-hydrogen waterfall |
+| 5.4 Scale and crossover | M3-M10 discrete cases | Stack, BOP, compressor, pipeline and platform pages | Principal thresholds are recognised but incompletely parameterised | LCOH difference over farm capacity and distance |
+| 5.5 Oversizing | M3 with M4-M8 consequences | Stack, BOP, compressor and pipeline pages | Operating concept exists; lifecycle and downstream coupling require completion | Yield and LCOH versus overplanting |
+| 5.6 Sensitivity and break-even | M4-M12 uncertainty cases | All architecture-specific cost owners | Can be structured now; numerical ranges need evidence | Maximum distributed premiums and architecture crossover conditions |
+
+## Working rule
+
+When the article structure changes, update the first and last columns here.
+When a component calculation changes, update the model blueprint and its
+canonical page, then revise the readiness assessment here. Do not copy model
+inputs into the article skeleton until the canonical component page has adopted
+them.
+
+## Current critical path
+
+The shortest dependency-led path to the headline paper results is:
+
+$$
+\text{equipment ledger}
+\rightarrow
+\text{stack and BOP}
+\rightarrow
+\text{compression}
+\rightarrow
+\text{TCP collection and export}
+\rightarrow
+\text{central platform and installation}
+\rightarrow
+\text{landed yield and LCOH}.
+$$
+
+This order resolves the quantities that determine the architecture difference
+before writing results or conclusions.
