@@ -1,0 +1,17 @@
+id,value,unit,kind,price_year,citation
+financial-usd-per-eur-2025,1.1300,USD/EUR,conversion,2025,ecb2025USDEUR
+financial-real-wacc,0.066,fraction/year,assumption,,
+financial-project-life,25,year,assumption,,
+financial-residual-value-fraction,0,fraction,assumption,,
+financial-decommissioning-fraction,0.80,fraction,assumption,,
+hydrogen-manufactured-cost-markup,1.5,factor,assumption,,
+wind-turbine-rated-power,15,MW,sourced,,gaertner2020IEA15
+array-usable-string-rating,66,MW,sourced,,tennet2015JTubes
+array-reference-target-power,2,GW,assumption,,
+hvdc-link-rated-power,2,GW,sourced,,tennet2024TwoGWProgram
+hvdc-pole-voltage,525,kV,sourced,,tennet2025TwoGWStandard
+hvdc-cable-resistance-at-20c,0.0072,ohm/km,sourced,,prysmian525KVSubmarine
+hvdc-reference-route-length,80,km,assumption,,
+hvdc-cable-legacy-efficiency,0.995,fraction,assumption,,
+hvdc-cable-flat-availability,0.99,fraction,assumption,,
+hvdc-cable-material-source-cost,4.57,million USD/mile,reference,,brinkman2024AtlanticTransmission

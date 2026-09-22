@@ -1,6 +1,7 @@
 ---
 title: "Infield AC Cables"
 completion: 80
+readiness: blocked
 ---
 
 ## Role and Scope
@@ -57,7 +58,7 @@ The current NREL ORBIT input set provides two transparent 66 kV screening anchor
 
 The source values are USD 241,542/km and USD 650,000/km in 2024 dollars [@orbit2026Cable185; @orbit2026Cable630]. They are normalised to EUR~2025~ using the 2024 and 2025 annual-average U.S. CPI-U indices and the ECB 2025 annual-average exchange rate, following [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd) [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]. ORBIT states that its updated cost rates use industry outreach together with commodity-price, inflation and labour-index adjustments [@orbit2026Changelog]. They remain planning-model inputs rather than a supplier quotation. No additional manufacturer markup is applied because the ORBIT values already represent cable procurement unit costs. Installation is excluded.
 
-TenneT's Dutch interface study used a nominal maximum of 630 A, equivalent to about 72 MVA at 66 kV. With reactive-power duty and a 0.9 power factor, it treated approximately 64–66 MW as usable active power per connection [@tennet2015JTubes]. This range is used as the screening string rating on this page.
+TenneT's Dutch interface study used a nominal maximum of 630 A, equivalent to about 72 MVA at 66 kV. With reactive-power duty and a 0.9 power factor, it treated approximately 64–{{< var array-usable-string-rating >}} as usable active power per connection [@tennet2015JTubes]. The upper end of this range is used as the screening string rating on this page.
 
 Three ratings should not be confused:
 
@@ -108,30 +109,33 @@ The floor operator in the first equation prevents a fraction of a turbine being 
 This is the same basic capacity logic used by NREL's ORBIT model [@nunemaker2020ORBIT]. Final cable selection must also check voltage drop, short-circuit duty, charging current, burial depth, seabed thermal resistivity, conductor temperature, armour losses and post-installation protection.
 
 ::: {.callout-note}
-## Worked example: 15 MW turbines
+## Worked example: {{< var wind-turbine-rated-power >}} turbines
 
-Four 15 MW turbines place 60 MW on a string. Five place 75 MW on it and exceed the 64–66 MW screening range. A nominal 2 GW target therefore requires 134 turbines, giving 2.01 GW installed and:
+Four {{< var wind-turbine-rated-power >}} turbines place {{< var array-four-turbine-power >}} on a string. Five place {{< var array-five-turbine-power >}} on it and exceed the 64–{{< var array-usable-string-rating >}} screening range. A nominal {{< var array-reference-target-power >}} target therefore requires {{< var array-reference-turbine-count >}} turbines, giving {{< var array-reference-installed-power >}} installed and:
 
 $$
-n_\mathrm{string}=\left\lceil\frac{134}{4}\right\rceil=34.
+n_\mathrm{string}=\left\lceil\frac{N_\mathrm{turb}}{n_\mathrm{turb/string}}\right\rceil.
 $$
+
+With {{< var array-turbines-per-string >}} turbines per string, the result is
+{{< var array-reference-string-count >}} strings.
 :::
 
 @fig-array-string-count shows the resulting discrete string count. A small increase in plant capacity can require a complete additional feeder, switchgear bay, J-tube, pull-in and cable route.
 
-![Required 66 kV radial strings for 15 MW turbines and a 64–66 MW usable string rating.](../figures/array-string-count.svg){#fig-array-string-count}
+![Required 66 kV radial strings for {{< var wind-turbine-rated-power >}} turbines and a {{< var array-usable-string-rating >}} usable string rating.](../figures/array-string-count.svg){#fig-array-string-count}
 
 ::: {.callout-warning}
 ## The worked array does not fit the reference platform unchanged
 
-TenneT's 2 GW reference arrangement shows 24 dedicated wind-farm bays plus four universal bays [@tennet2024TwoGWProgram]. The 34-string worked case therefore needs at least six more terminations than the maximum 28 shown, even if every universal bay is assigned to a feeder. A consistent design must do one or more of the following:
+TenneT's {{< var array-reference-target-power >}} reference arrangement shows 24 dedicated wind-farm bays plus four universal bays [@tennet2024TwoGWProgram]. The {{< var array-reference-string-count >}}-string worked case therefore needs more terminations than the maximum 28 shown, even if every universal bay is assigned to a feeder. A consistent design must do one or more of the following:
 
-- adopt a cable and platform interface rated for at least 75 MW per string, so five 15 MW turbines fit and only 27 strings are required;
+- adopt a cable and platform interface rated for at least {{< var array-five-turbine-power >}} per string, so five {{< var wind-turbine-rated-power >}} turbines fit and only {{< var array-five-turbine-string-count >}} strings are required;
 - add offshore feeder aggregation or another switchgear interface;
 - move to a higher collection voltage; or
 - use a project-specific platform layout with more bays.
 
-This interface constraint must be solved before the 34-string cable count and standard 2 GW platform are combined in one cost case.
+This interface constraint must be solved before the {{< var array-reference-string-count >}}-string cable count and standard {{< var array-reference-target-power >}} platform are combined in one cost case.
 :::
 
 ## Cable-Length Model
@@ -258,8 +262,8 @@ No more detailed failure model is introduced until consistent array-specific fai
 | Parameter | Base case | Suggested sensitivity | Interpretation |
 |---|---:|---:|---|
 | Array voltage | 66 kV | 66 or 132 kV | 132 kV is an emerging future-plant option |
-| Usable string rating | 64–66 MW | Project-specific | TenneT screening range; final rating requires cable and interface checks |
-| Turbine rating | 15 MW | Model variable | Four turbines per base-case string |
+| Usable string rating | 64–{{< var array-usable-string-rating >}} | Project-specific | TenneT screening range; final rating requires cable and interface checks |
+| Turbine rating | {{< var wind-turbine-rated-power >}} | Model variable | Four turbines per base-case string |
 | Rotor diameter and turbine spacing | Wind-layout inputs | Layout scenarios | Converted into explicit turbine coordinates |
 | Farm area and aspect ratio | Wind-layout inputs | Site scenarios | Constrain the feasible coordinate layout |
 | Cable material cost | 400 EUR~2025~/m | 200–600 EUR~2025~/m | Blended engineering range, not a statistical confidence interval |
@@ -276,7 +280,7 @@ For electricity export, the strings terminate on the integrated offshore AC/HVDC
 | Limitation | Implication |
 |---|---|
 | One usable MW rating represents several conductor sizes | Procurement does not yet benefit from tapered strings |
-| The 34-string base case exceeds the reference platform bay count | Cable and platform designs are not yet a physically closed system |
+| The {{< var array-reference-string-count >}}-string base case exceeds the reference platform bay count | Cable and platform designs are not yet a physically closed system |
 | Idealised coordinates and string assignment replace a routed design | Exclusions, crossings and detailed approach routes remain approximate |
 | Pull-in length has no default input | Supply length remains incomplete until water depth and interface geometry are defined |
 | Public project cable quantities have inconsistent reporting scopes | Length per turbine is a validation range, not a calibration coefficient |

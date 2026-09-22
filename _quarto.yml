@@ -4,6 +4,8 @@ project:
     - "*.qmd"
     - "**/*.qmd"
   pre-render:
+    - uv run python tools/build_model_variables.py
+    - uv run python tools/build_electrical_figures.py
     - tools/build-progress-sidebar.js
   resources:
     - figures/

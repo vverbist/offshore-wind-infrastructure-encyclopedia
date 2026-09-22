@@ -1,6 +1,7 @@
 ---
 title: "HVDC Export Cables"
 completion: 85
+readiness: blocked
 ---
 
 ## Role and Cost Boundary
@@ -24,16 +25,16 @@ A **route-kilometre** measures one kilometre of corridor. A **cable-kilometre** 
 
 ## Reference Cable System
 
-The TenneT 2 GW reference system uses a positive-pole cable, negative-pole cable, dedicated metallic-return cable and fibre-optic cable [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard].
+The TenneT {{< var hvdc-link-rated-power >}} reference system uses a positive-pole cable, negative-pole cable, dedicated metallic-return cable and fibre-optic cable [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard].
 
 | Parameter | Reference value |
 |---|---:|
 | HVDC topology | Bipole with dedicated metallic return |
-| Pole voltage | +/-525 kV |
-| Full-load pole current | 1.905 kA |
+| Pole voltage | +/-{{< var hvdc-pole-voltage >}} |
+| Full-load pole current | {{< var hvdc-full-load-pole-current >}} |
 | TenneT programme route range | 150--300 km |
 | Procurement conductor options | 2,300 or 2,500 mm2 Cu; 3,100 mm2 Al |
-| Indicative copper resistance | 0.0072 ohm/km at 20 degrees C |
+| Indicative copper resistance | {{< var hvdc-cable-resistance-at-20c >}} at 20 degrees C |
 | Indicative 2,500 mm2 cable diameter | About 160 mm |
 | Indicative mass | About 65 kg/m per cable |
 
@@ -57,16 +58,17 @@ $$
 \frac{I_\mathrm{pole}R'L}{V_\mathrm{pole}}.
 $$
 
-Using 0.0072 ohm/km at 20 degrees C and 1.905 kA gives:
+Using {{< var hvdc-cable-resistance-at-20c >}} at 20 degrees C and
+{{< var hvdc-full-load-pole-current >}} gives:
 
 | Route length | Conductor loss | Share of 2 GW |
 |---:|---:|---:|
-| 80 km | 4.18 MW | 0.209% |
-| 150 km | 7.84 MW | 0.392% |
-| 250 km | 13.06 MW | 0.653% |
-| 300 km | 15.67 MW | 0.784% |
+| 80 km | {{< var hvdc-loss-80km-mw >}} | {{< var hvdc-loss-80km-percent >}} |
+| 150 km | {{< var hvdc-loss-150km-mw >}} | {{< var hvdc-loss-150km-percent >}} |
+| 250 km | {{< var hvdc-loss-250km-mw >}} | {{< var hvdc-loss-250km-percent >}} |
+| 300 km | {{< var hvdc-loss-300km-mw >}} | {{< var hvdc-loss-300km-percent >}} |
 
-![Calculated full-load conductor loss for a 2 GW, +/-525 kV bipole using an indicative 2,500 mm2 copper resistance.](../figures/hvdc-cable-loss-vs-distance.svg){#fig-hvdc-loss-distance}
+![Calculated full-load conductor loss for a {{< var hvdc-link-rated-power >}}, +/-{{< var hvdc-pole-voltage >}} bipole using an indicative 2,500 mm2 copper resistance.](../figures/hvdc-cable-loss-vs-distance.svg){#fig-hvdc-loss-distance}
 
 The calculation excludes joints, terminations, operating-temperature effects, return-current imbalance and converter losses. Annual cable loss should be calculated from the time series:
 
@@ -76,17 +78,17 @@ E_\mathrm{cable,loss}
 \sum_t2I(t)^2R'(T_t)L\,\Delta t.
 $$
 
-The current fixed 99.5% efficiency is only a legacy near-shore approximation. With the illustrative resistance, conductor loss alone reaches 0.5% at about 191 km at 20 degrees C. Distance studies should therefore use the load-dependent calculation and remove the fixed deduction.
+The current fixed {{< var hvdc-cable-legacy-efficiency >}} efficiency is only a legacy near-shore approximation. With the illustrative resistance, conductor loss alone reaches 0.5% at about {{< var hvdc-half-percent-loss-distance >}} at 20 degrees C. Distance studies should therefore use the load-dependent calculation and remove the fixed deduction.
 
 ## Cable-Supply Cost
 
 ### Separated Public Reference
 
-The NREL Atlantic Offshore Wind Transmission Study gives a separated material cost for a 525 kV, 2 GW HVDC bipole and states that installation is added separately [@brinkman2024AtlanticTransmission]. Converted with the ECB 2025 annual-average exchange rate, the material reference is EUR 2.51 million/km, or 1.26 EUR/kW/km at 2 GW [@ecb2025USDEUR].
+The NREL Atlantic Offshore Wind Transmission Study gives a separated material cost of {{< var hvdc-cable-material-source-cost >}} for a {{< var hvdc-pole-voltage >}}, {{< var hvdc-link-rated-power >}} HVDC bipole and states that installation is added separately [@brinkman2024AtlanticTransmission]. Converted with the ECB 2025 annual-average exchange rate, the material reference is {{< var hvdc-cable-material-cost-eur-per-km >}}, or {{< var hvdc-cable-material-cost-eur-per-kw-km >}} at {{< var hvdc-link-rated-power >}} [@ecb2025USDEUR].
 
 | Cable-supply element | Unit value | Status | Cost owner |
 |---|---:|---|---|
-| 525 kV, 2 GW bipole material reference | <span class="cost-owned">1.26 EUR/kW/km</span> | NREL material cost converted with the 2025 ECB average exchange rate | **This page** |
+| {{< var hvdc-pole-voltage >}}, {{< var hvdc-link-rated-power >}} bipole material reference | <span class="cost-owned">{{< var hvdc-cable-material-cost-eur-per-kw-km >}}</span> | NREL material cost converted with the 2025 ECB average exchange rate | **This page** |
 | Marine/terrestrial installation | <span class="cost-reference">Calculated separately</span> | Shared campaign model; no fixed EUR/km coefficient is adopted | [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 
 This is a currency conversion, not a price-year escalation. The NREL source price basis remains to be confirmed before the value can be adopted as a constant-EUR~2025~ model input.
@@ -111,14 +113,14 @@ The Adriatic anchor is not topology-identical to the TenneT reference: Prysmian 
 
 ## Reliability and Repair
 
-The legacy model assigns 99% cable availability. Actual energy unavailability depends on route exposure, fault frequency, repair duration and whether a fault removes one pole or the complete corridor.
+The legacy model assigns {{< var hvdc-cable-flat-availability >}} cable availability. Actual energy unavailability depends on route exposure, fault frequency, repair duration and whether a fault removes one pole or the complete corridor.
 
 ENTSO-E and Europacable report an indicative historical cable-system failure rate of about 0.07 faults per 100 km-year and average submarine repair duration of about 60 days [@entsoeEuropacable2019Reliability]. These historical values are not guarantees for a new 525 kV system.
 
 | Cable state | Available transfer | Treatment |
 |---|---:|---|
-| Both poles healthy | 2 GW | Normal operation |
-| One pole unavailable, return healthy | Approximately 1 GW | Count half-capacity exposure |
+| Both poles healthy | {{< var hvdc-link-rated-power >}} | Normal operation |
+| One pole unavailable, return healthy | Approximately {{< var hvdc-one-pole-transfer >}} | Count half-capacity exposure |
 | Common corridor or both poles unavailable | 0 GW | Count full-capacity exposure |
 
 Spare cable, compatible joints, repair-vessel access, permits and trained jointing teams affect outage duration. Their costs belong to the installation/OPEX boundary; the resulting energy loss belongs to the availability model.
@@ -127,12 +129,12 @@ Spare cable, compatible joints, repair-vessel access, permits and trained jointi
 
 | Parameter | Base case | Sensitivity or next step | Evidence status |
 |---|---:|---:|---|
-| Link rating | 2 GW reference | Test multiple links | Public TenneT standard |
-| Pole voltage | +/-525 kV | Fixed for reference design | Public TenneT standard |
-| Cable material CAPEX | 1.26 EUR/kW/km | Confirm source price year and escalate consistently | NREL reference converted at 2025 ECB average |
+| Link rating | {{< var hvdc-link-rated-power >}} reference | Test multiple links | Public TenneT standard |
+| Pole voltage | +/-{{< var hvdc-pole-voltage >}} | Fixed for reference design | Public TenneT standard |
+| Cable material CAPEX | {{< var hvdc-cable-material-cost-eur-per-kw-km >}} | Confirm source price year and escalate consistently | NREL reference converted at 2025 ECB average |
 | Installation CAPEX | Excluded from this page | Use linked installation model | Separate cost owner |
-| Cable loss | Hourly $I^2R(T)L$ preferred | 99.5% only for legacy compatibility | Engineering model |
-| Flat cable availability | 99% | Replace with capacity states | Internal convention |
+| Cable loss | Hourly $I^2R(T)L$ preferred | {{< var hvdc-cable-legacy-efficiency >}} only for legacy compatibility | Engineering model |
+| Flat cable availability | {{< var hvdc-cable-flat-availability >}} | Replace with capacity states | Internal convention |
 | Cable OPEX | TBD | Define inspection, spares and repair scope | Separate evidence required |
 
 ## Model Limitations
