@@ -1,11 +1,28 @@
 /.quarto/
 /_site/
+_variables.yml
 **/*.quarto_ipynb
 __pycache__/
 *.py[cod]
 .venv/
 .uv-cache/
 .uv-python/
+
+# Generated website helpers (rebuilt by Quarto pre-render scripts)
+/readiness-sidebar.html
+/readiness-sidebar.js
+/evidence-status.html
+/evidence-status.js
+
+# Machine-local settings and exported review documents
+/.claude/settings.local.json
+/review_exports/
+
+# Reproducible legacy-model caches and editor/profiling artifacts
+/background/legacy model/model_A02/cache/
+.ipynb_checkpoints/
+.virtual_documents/
+*.prof
 
 # Confidential supplier cost data used for local pipeline figures
 tools/pipeline_cost_curve.py
