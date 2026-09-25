@@ -27,6 +27,10 @@ __pycache__/
 # Confidential supplier cost data used for local pipeline figures
 tools/pipeline_cost_curve.py
 
+# Scenario results can contain confidential supplier-derived costs.
+/model_runs/
+/research_articles/*/results/
+
 # Working drafts kept locally, not version-controlled (large binaries)
 background/*.docx
 

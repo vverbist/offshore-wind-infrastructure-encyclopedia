@@ -1,0 +1,45 @@
+# Execution template; agreed inputs are in reference_case.toml.
+# Evidence and derivations: ../reference_case.qmd. Shared-record loading remains O1.
+# Paths are relative to this file. Fill the commented fields using the article case.
+[case]
+name = "centralised-article-case"
+architecture = "centralised"
+
+[site]
+# coordinates_file: CSV columns turbine,x_m,y_m; or use turbine_count, columns,
+# spacing_x_m, spacing_y_m, orientation_deg for the declared regular-grid layout.
+# Also required: minimum_spacing_m, farm_area_km2, water_depth_m,
+# collection_x_m, collection_y_m. Coordinate row order defines radial strings.
+
+[turbine]
+# rotor_diameter_m, hub_height_m. Optional rated_power_kw overrides the case rating.
+
+[wind]
+# power_states_file: CSV columns state,hours,<one kW column per turbine ID>.
+# Powers are at the common generator-output boundary before architecture losses.
+# design_state_ids: list of state IDs representing the adopted peak-duty envelope.
+# Zero-hour design states may be added to an annual operating-state table.
+# Alternative with PyWake: wind_states_file (state,speed_m_s,direction_deg,hours)
+# and turbine_curve_file (speed_m_s,power_kw,ct).
+
+[electrolysis]
+stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
+# overplant_factor
+
+[hydrogen]
+# stack_outlet_bar, injection_bar, delivery_bar: absolute pressures.
+# export_diameter_m: true internal diameter; export_length_km: physical route.
+
+[platform]
+# count, topside_modules_per_platform, feeder_bays
+# [platform.hosted_equipment_mass_t]: component name = hosted mass in t per platform
+# (interim scenario handoff until the component pages emit equipment mass).
+
+[installation]
+# port_distance_km, intersite_distance_km
+# [installation.collection] and [installation.export]: loads_per_campaign,
+# port_distance_km, splices, burial_pass_km, burial_other_offshore_days,
+# survey_pass_km. Loading plans remain explicit project inputs.
+
+[overrides]
+# Named, adopted central input IDs only; values retain their CSV units.

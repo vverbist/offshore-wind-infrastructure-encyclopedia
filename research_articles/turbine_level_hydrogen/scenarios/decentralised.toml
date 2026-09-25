@@ -1,0 +1,42 @@
+# Execution template; agreed inputs are in reference_case.toml.
+# Evidence and derivations: ../reference_case.qmd. Shared-record loading remains O1.
+# See centralised.toml for shared field descriptions.
+[case]
+name = "decentralised-article-case"
+architecture = "decentralised"
+
+[site]
+# coordinates_file OR regular-grid inputs; minimum_spacing_m, farm_area_km2,
+# water_depth_m
+
+[turbine]
+# rotor_diameter_m, hub_height_m; optional rated_power_kw
+
+[wind]
+# power_states_file, design_state_ids; optional PyWake input mode as in centralised.toml
+
+[electrolysis]
+interface = "converter_reduced"
+stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
+# overplant_factor. Use interface = "conservative" for the other article case.
+
+[hydrogen]
+# stack_outlet_bar, injection_bar, export_inlet_bar, delivery_bar (absolute).
+# export_diameter_m, export_length_km
+
+[collection]
+# nodes_file: node,x_m,y_m (non-turbine nodes only); sink: export manifold node ID.
+# sections_file: section,from,to,vertical_m,route_allowance,flow_share,
+# diameter_m,inlet_bar,outlet_bar. All physical ladder sections belong here.
+# Flow shares describe the selected healthy-state directed paths; zero-flow
+# standby sections still contribute to the physical supply/installation inventory.
+
+[installation]
+# port_distance_km, intersite_distance_km; collection/export plans as in centralised.toml
+
+[data]
+# Optional pipeline_cost_module: path to the existing confidential local callable.
+# Its unit-price normalization must be adopted in the central parameter CSV.
+
+[overrides]
+# Explicit sensitivity overrides, without editing the central baseline.
