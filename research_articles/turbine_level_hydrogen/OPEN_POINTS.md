@@ -216,6 +216,10 @@ optimisation of overplanting or replacement timing; design variables are
 - [x] **Stack degradation:** applied as an ex-post energy penalty (lifetime
   production factor from rate, end-of-life threshold and calculated full-load
   hours); `stack-replacement-life` still needs setting consistently.
+- [ ] **Economic stack replacement (later):** replace a stack only when the
+  replacement lowers LCOH, i.e. when the yield gain from restored efficiency
+  outweighs the replacement cost. Replaces the fixed end-of-life threshold and
+  the separate `stack-replacement-life` input once implemented.
 - [x] **BOP water treatment:** page now follows the code (aggregate exponent,
   water reference cost at 1 MW still unset).
 - [ ] **Turbine cost:** the calibrated breakdown on the turbine page cannot be
