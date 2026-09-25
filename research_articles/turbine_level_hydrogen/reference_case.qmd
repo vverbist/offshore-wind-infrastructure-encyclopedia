@@ -33,6 +33,7 @@ not a completed production or cost run. Remaining preparation is tracked in
 | Crosswind breadth / along-wind length $r$ | {{< var ijv-crosswind-to-alongwind-ratio >}} | Explicit article assumption agreed on the date above. Represents the requested broad front perpendicular to the dominant wind. |
 | Hydrogen export route | {{< var ijv-export-length-km >}} km | Explicit article assumption agreed on the date above. Physical route length from the offshore export origin to the common onshore receipt boundary; no surveyed pipeline corridor is claimed. |
 | Onshore delivery pressure $p_{\mathrm{delivery,g}}$ | {{< var ijv-delivery-pressure-bar-g >}} bar(g) | Article choice based on the upper network-pressure level described for Waterstofnetwerk West-Nederland [@hynetwork2026WestNRD, p. 18]. The **gauge** interpretation is explicitly agreed modelling judgement; that source writes only “bar”. |
+| Electrolyser stack outlet pressure $p_{\mathrm{stack,g}}$ | {{< var ijv-stack-outlet-pressure-bar-g >}} bar(g) | User-specified article assumption, applied to the centralised and turbine-level stacks alike. The **gauge** interpretation follows the delivery-pressure convention. It sets the compressor inlet pressure; it is not a product qualification of the supplied stack curve, whose source material reports approximately 30 bar ([Stack](../../hydrogen_production/stack.qmd)). |
 | Stack overplant factor $f$ | {{< var ijv-overplant-factor >}}× baseline; up to {{< var ijv-overplant-factor-sensitivity-max >}}× later | Explicit article choices, applied equally to both architectures. Establish the baseline before investigating the additional stack-capacity trade-off. |
 
 The installed wind capacity is derived, not independently prescribed:
@@ -132,18 +133,28 @@ The West-Netherlands hydrogen-network document describes initial operation at
 the article deliberately adopts the upper level as its delivery requirement.
 It does not claim that every connection currently requires that pressure.
 
-Compression and pipeline equations use **absolute** pressure:
+Compression and pipeline equations use **absolute** pressure. The agreed
+delivery and stack outlet pressures are gauge values and are converted once, at
+the model boundary:
 
 $$
-p_{\mathrm{delivery,abs}}
-=p_{\mathrm{delivery,g}}+p_{\mathrm{atm}}.
+p_{\mathrm{abs}}=p_{\mathrm{g}}+p_{\mathrm{atm}}.
 $$
 
-All pressures in this equation are in bar; $p_{\mathrm{atm}}$ is atmospheric
-pressure at the receipt boundary. The corresponding absolute pressure is
-approximately 67 bar. **TODO for executable preparation:** declare the
-atmospheric-pressure basis and calculate the conversion; do not copy the
-gauge value into the model's absolute-pressure field. Any pressure loss through
+All pressures in this equation are in bar. The atmospheric basis
+$p_{\mathrm{atm}}$ is the standard atmosphere,
+{{< var standard-atmospheric-pressure >}} (exactly 101 325 Pa
+[@nist2008SP811]), applied at both the offshore stack outlet and the onshore
+receipt boundary. This is an explicit modelling assumption: both points are
+near sea level, and weather-driven barometric variation, of the order of a few
+hundredths of a bar, is not modelled.
+
+The result is a delivery pressure of
+**{{< var ijv-delivery-pressure-bar-a >}} bar(a)** and a stack outlet pressure
+of **{{< var ijv-stack-outlet-pressure-bar-a >}} bar(a)**, calculated by
+[the reference-case calculation](analysis/reference_case.py). Scenario inputs
+take these absolute values; the gauge values are never copied into an
+absolute-pressure field. Any pressure loss through
 receipt equipment belongs upstream of the delivery interface and must be
 accounted for explicitly rather than hidden in a pressure margin.
 
@@ -172,7 +183,7 @@ efficiency choices remain O2.
 
 **O1 is partially resolved.** The site, count/rating, area, schematic geometry,
 representative depth, wind-data basis, export distance, delivery-pressure
-interpretation and overplanting range are agreed. Before claiming executable
+and stack-outlet pressure interpretations and overplanting range are agreed. Before claiming executable
 common-case results:
 
 - Connect this shared record to both scenario templates and generate the common
@@ -181,8 +192,8 @@ common-case results:
   curve; the nominal turbine rating alone does not supply these.
 - Prepare annual operating states and peak-duty states from the existing wind
   data, using the documented sector-centre convention.
-- Complete the absolute-pressure conversion and the remaining design inputs
-  needed by the selected branches. Collection origins and network design are
+- Pass the converted absolute pressures to both templates and complete the
+  remaining design inputs needed by the selected branches. Collection origins and network design are
   linked to O3/O7; onshore receipt details remain O9.
 
 ## References

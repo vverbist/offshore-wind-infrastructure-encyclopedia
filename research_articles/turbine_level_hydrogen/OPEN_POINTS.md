@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-25 (O2 scope and execution queue).
+Last reviewed: 2026-09-25 (O2 scope and execution queue; O1 stack outlet pressure recorded).
 
 Working tracker for the article and its model. Update this file when a point is
 resolved, a decision changes, or a new blocker appears. Keep stable IDs, record
@@ -36,12 +36,19 @@ These tasks are agreed but intentionally queued for a later work session. They
 are not claims that the scenario inputs, model, or encyclopedia pages have
 already been updated.
 
-- [ ] **Record the stack outlet pressure (O1).** Interpret the agreed 30 bar
+- [x] **Record the stack outlet pressure (O1).** Interpret the agreed 30 bar
   electrolyser stack outlet as 30 bar(g), consistent with the reference case's
   gauge delivery-pressure convention. Record it as a user-specified article
   assumption beside the reference case, state the atmospheric-pressure basis,
   and convert to bar(a) at the model boundary. Check related compressor text
   and scenario inputs for consistent pressure notation.
+  *Done 2026-09-25:* recorded in the [shared input record](scenarios/reference_case.toml)
+  and [reference case](reference_case.qmd); atmospheric basis is the exact
+  standard atmosphere (`standard-atmospheric-pressure`, NIST SP 811), giving
+  31.01 bar(a) stack outlet and 67.01 bar(a) delivery via
+  [the reference-case calculation](analysis/reference_case.py). Compressor page,
+  scenario templates and CSV unit convention now state bar(a). The templates
+  still have to take these values when the record is connected (next item).
 - [ ] **Finish the common operating case (O1).** Connect the shared reference
   record to both architecture scenarios; generate the rectangular-farm turbine
   coordinates; select traceable turbine dimensions and power/thrust curves;
@@ -131,7 +138,7 @@ approval of new numerical assumptions.
 
 | ID | Open point and next action | Owner | What it blocks / completion condition |
 |---|---|---|---|
-| O1 | **Partially resolved:** the [common case](reference_case.qmd) is agreed and recorded with evidence and reasoning in the [shared input record](scenarios/reference_case.toml). Remaining: connect the record to both templates, generate coordinates, select consistent turbine dimensions and power/thrust curves, prepare annual and peak-duty wind states, and convert the agreed gauge delivery pressure to absolute pressure with an explicit atmospheric basis. | Me: preparation | First real-case production and equipment inventories. Complete when both scenarios run on the same upstream wind and delivery basis. The assumption note is not an executable-case completion claim. |
+| O1 | **Partially resolved:** the [common case](reference_case.qmd) is agreed and recorded with evidence and reasoning in the [shared input record](scenarios/reference_case.toml). Remaining: connect the record to both templates, generate coordinates, select consistent turbine dimensions and power/thrust curves, prepare annual and peak-duty wind states, and pass the converted absolute stack outlet and delivery pressures (recorded 2026-09-25) into both templates. | Me: preparation | First real-case production and equipment inventories. Complete when both scenarios run on the same upstream wind and delivery basis. The assumption note is not an executable-case completion claim. |
 | O2 | **Scope and website placement agreed:** build the component inventory and implement the discussion as queued above. The central, conservative turbine-level and direct-DC (`converter_reduced`) definitions are agreed; generator-side rectifier cost stays in the common turbine baseline. Derive losses and cost/mass reconciliation from the evidenced inventory; AC resistance and power factor remain to be established. | Me: research and implementation; Joint: numerical adoption where judgement is required | Comparable energy losses, electrical CAPEX and the basis for O&M. Complete when each electrical function is counted once and any removal credit has an explicit scope. The queued inventory does not yet close numerical inputs or validate the direct-DC operating envelope. |
 | O3 | **Method drafted:** the [platform page](../../platforms/platform_material_capex.qmd) now documents the hosted-equipment, topside, jacket and pile mass chain; separate structure, integration and fabrication costs; and the lift handoff. Research the missing masses, unit costs, platform multiplicity and module choices in the execution list above. | Me: evidence and preparation; Joint: adoption | Complete centralised CAPEX and platform installation. The calculation structure exists, but the illustrative one-platform example is not an adopted, costed design. |
 | O4 | Adopt stack purchase cost and an offshore water-treatment reference purchase cost. Retain the agreed aggregate BOP scaling. | Me: evidence and normalisation; Joint: adoption | Stack and BOP supply CAPEX. Resolve `stack-purchase-unit-cost` and `bop-water-reference-purchase-cost`; lifetime treatment remains D4. |

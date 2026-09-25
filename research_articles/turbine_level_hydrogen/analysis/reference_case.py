@@ -1,11 +1,14 @@
 """Read the article assumptions and derive the quantities shown in reference_case.qmd.
 
-This prepares documentation variables only; it does not run an architecture case.
+This prepares documentation variables and the absolute pressures that the
+architecture scenarios must use; it does not run an architecture case.
 """
 import csv
 from math import ceil, sqrt
 from pathlib import Path
 import tomllib
+
+from model_data.parameters import load_parameters
 
 
 CASE_PATH = Path(__file__).resolve().parents[1] / "scenarios/reference_case.toml"
@@ -16,8 +19,13 @@ def load_reference_case():
         return tomllib.load(stream)
 
 
-def derive_reference_case(case):
-    """Lengths in km, spacing in m, power in MW, bearings clockwise from north."""
+def absolute_pressure_bar(gauge_bar, atmospheric_bar):
+    """Convert gauge to absolute pressure; all pressures in bar."""
+    return gauge_bar + atmospheric_bar
+
+
+def derive_reference_case(case, atmospheric_bar):
+    """Lengths in km, spacing in m, power in MW, pressures in bar(a), bearings clockwise from north."""
     site = case["site"]
     count, area = site["turbine_count"], site["farm_area_km2"]
     ratio = site["crosswind_to_alongwind_ratio"]
@@ -36,6 +44,10 @@ def derive_reference_case(case):
         "spacing_crosswind_m": breadth * 1000 / (columns - 1),
         "spacing_alongwind_m": length * 1000 / (rows - 1),
         "dominant_from_deg": float(dominant["sector_deg"]) + sector_width / 2,
+        "stack_outlet_pressure_bar_a": absolute_pressure_bar(
+            case["electrolysis"]["stack_outlet_pressure_bar_g"], atmospheric_bar),
+        "delivery_pressure_bar_a": absolute_pressure_bar(
+            case["hydrogen"]["delivery_pressure_bar_g"], atmospheric_bar),
     }
 
 
@@ -43,9 +55,11 @@ def quarto_variables():
     case = load_reference_case()
     values = {key: value for section in case.values() for key, value in section.items()
               if isinstance(value, (int, float))}
-    values.update(derive_reference_case(case))
+    atmospheric_bar = float(load_parameters().number("standard-atmospheric-pressure", "bar"))
+    values.update(derive_reference_case(case, atmospheric_bar))
     precision = {"breadth_km": 2, "length_km": 2,
-                 "spacing_crosswind_m": 1, "spacing_alongwind_m": 1}
+                 "spacing_crosswind_m": 1, "spacing_alongwind_m": 1,
+                 "stack_outlet_pressure_bar_a": 2, "delivery_pressure_bar_a": 2}
     return {"ijv-" + key.replace("_", "-"):
             (f"{value:.{precision[key]}f}" if key in precision else f"{value:g}")
             for key, value in values.items()}

@@ -24,5 +24,6 @@ export_length_km = 100 # Agreed physical route assumption, not a surveyed corrid
 delivery_pressure_bar_g = 66 # Agreed gauge interpretation; model requires absolute pressure.
 
 [electrolysis]
+stack_outlet_pressure_bar_g = 30 # User-specified article assumption; gauge, as for delivery pressure.
 overplant_factor = 1.0 # Requested nominal stack capacity / served wind capacity.
 overplant_factor_sensitivity_max = 3.0 # Deferred sensitivity ceiling for both architectures.

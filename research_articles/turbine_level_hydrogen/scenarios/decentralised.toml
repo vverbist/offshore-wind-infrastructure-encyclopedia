@@ -21,7 +21,8 @@ stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
 # overplant_factor. Use interface = "conservative" for the other article case.
 
 [hydrogen]
-# stack_outlet_bar, injection_bar, export_inlet_bar, delivery_bar (absolute).
+# stack_outlet_bar, injection_bar, export_inlet_bar, delivery_bar: bar(a).
+# Article case: converted stack outlet and delivery as in centralised.toml.
 # export_diameter_m, export_length_km
 
 [collection]

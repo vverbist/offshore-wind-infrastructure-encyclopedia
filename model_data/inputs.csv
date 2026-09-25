@@ -49,6 +49,7 @@ compressor-efficiency,0.8,fraction,assumption,,
 compressor-motor-efficiency,0.95,fraction,assumption,,
 universal-gas-constant,8.314,J/mol/K,assumption,,
 hydrogen-molar-mass,0.002016,kg/mol,assumption,,
+standard-atmospheric-pressure,1.01325,bar,sourced,,nist2008SP811
 compressor-train-limit,1000,kW,assumption,,
 compressor-cost-exponent,0.8335,factor,sourced,,transitionAcceleratorCompressorCost
 compressor-reference-motor-power,,kW,assumption,,

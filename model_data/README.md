@@ -42,6 +42,7 @@ point-of-use equations and scope; `reference` rows remain non-combinable evidenc
 | `bop-*` | `hydrogen_production/balance_of_plant.qmd`; NREL source category costs sum in code, existing auxiliary allowance and agreed aggregate scaling; water purchase cost remains TODO |
 | `*-conversion-*` | `hydrogen_production/elx_power_electronics.qmd` and `dc_integration.qmd`; only the central efficiency is adopted; unnormalised cost and turbine-level interfaces remain TODO |
 | `compressor-*`, `hydrogen-heat-capacity-ratio`, `universal-gas-constant`, `hydrogen-molar-mass` | `hydrogen_infra/compressor.qmd` and its existing figure builder; migrated thermodynamic assumptions and legacy rounded constants, existing sourced exponent, agreed motor-power cap |
+| `standard-atmospheric-pressure` | `research_articles/turbine_level_hydrogen/reference_case.qmd` (gauge-to-absolute conversion of article pressures) and the pressure convention on `hydrogen_infra/compressor.qmd`; exact standard atmosphere adopted as the atmospheric basis |
 | `pipeline-*` | `hydrogen_infra/hydrogen_pipelines.qmd`; existing gas-property and friction method; quote normalisation, product unit prices and connection/manifold costs remain TODO |
 | `array-*` | `electrical_infra/infield_ac_cables.qmd`; existing voltage, routing and blended supply assumptions; AC resistance and power factor require adoption |
 | `wind-turbulence-intensity` | `wind_resource_and_layout/wake_modelling_and_spacing.qmd`; existing provisional legacy assumption |
@@ -51,6 +52,9 @@ point-of-use equations and scope; `reference` rows remain non-combinable evidenc
 | `install-*` | The three `offshore_installation/` pages; coherent spread inputs remain TODO rather than combining incompatible reference vessels |
 | `*-availability`, `*-opex-rate` | Component owners and `methodology/energy_availability_and_annualisation.qmd`; deliberately unresolved pending non-overlapping scope adoption |
 | `financial-usd-escalation-*` | `methodology/financial_and_price_basis.qmd`; source-year escalation missing; no currency-only value becomes EUR2025 CAPEX |
+
+Pressures stored with unit `bar` are absolute. Gauge values are converted
+with `standard-atmospheric-pressure` before they enter a calculation.
 
 The BOP block limit and compressor train limit are the explicitly agreed
 screening choices (100 MW served electrolysis and 1 MW motor input). BOP limit

@@ -307,5 +307,21 @@ class Integration(unittest.TestCase):
                 importlib.import_module(name)
 
 
+class ReferenceCase(unittest.TestCase):
+    def test_gauge_pressures_become_absolute_with_standard_atmosphere(self):
+        from research_articles.turbine_level_hydrogen.analysis import reference_case as ref
+        atmospheric = float(load_parameters().number("standard-atmospheric-pressure", "bar"))
+        self.assertEqual(atmospheric, 1.01325)
+        case = ref.load_reference_case()
+        derived = ref.derive_reference_case(case, atmospheric)
+        self.assertAlmostEqual(derived["stack_outlet_pressure_bar_a"],
+                               case["electrolysis"]["stack_outlet_pressure_bar_g"] + 1.01325)
+        self.assertAlmostEqual(derived["delivery_pressure_bar_a"],
+                               case["hydrogen"]["delivery_pressure_bar_g"] + 1.01325)
+        variables = ref.quarto_variables()
+        self.assertEqual(variables["ijv-stack-outlet-pressure-bar-a"], "31.01")
+        self.assertEqual(variables["ijv-delivery-pressure-bar-a"], "67.01")
+
+
 if __name__ == "__main__":
     unittest.main()

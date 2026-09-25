@@ -24,13 +24,13 @@ A fixed compressor energy value would hide that trade-off from the optimisation.
 
 ## Key Assumptions {#sec-compressor-pem}
 
-Inlet and outlet pressures are scenario inputs. The illustrated reference duty is separate from the article case. Pressure and diameter sensitivity runs use the same energy and cost equations.
+Inlet and outlet pressures are scenario inputs. All pressures on this page are **absolute**, in bar(a); gauge inputs are converted with the standard atmosphere, {{< var standard-atmospheric-pressure >}}, before use. The illustrated reference duty is separate from the article case: its 30 bar inlet is an absolute illustrative value, whereas the [article reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd) specifies a 30 bar(g) stack outlet, {{< var ijv-stack-outlet-pressure-bar-a >}} bar(a). Pressure and diameter sensitivity runs use the same energy and cost equations.
 
 | Parameter | Value |
 |---|---:|
-| Electrolyser outlet pressure | 30 bar |
+| Electrolyser outlet pressure (illustrative) | 30 bar(a) |
 | Pipeline injection pressure | Decision variable |
-| Typical pressure range | 80-150 bar |
+| Typical pressure range | 80-150 bar(a) |
 | Maximum pressure ratio per stage | 3.3 |
 | Hydrogen specific heat ratio, $\gamma$ | 1.41 |
 | Gas temperature, $T$ | 298 K |

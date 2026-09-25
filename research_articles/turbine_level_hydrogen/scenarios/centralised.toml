@@ -27,7 +27,9 @@ stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
 # overplant_factor
 
 [hydrogen]
-# stack_outlet_bar, injection_bar, delivery_bar: absolute pressures.
+# stack_outlet_bar, injection_bar, delivery_bar: absolute pressures, bar(a).
+# Article case: take stack outlet and delivery from analysis/reference_case.py,
+# which converts the gauge values in reference_case.toml; never copy bar(g).
 # export_diameter_m: true internal diameter; export_length_km: physical route.
 
 [platform]
