@@ -64,8 +64,36 @@ class Inputs:
 
 
 def read_scenario(path: Path) -> dict:
+    """Read one scenario; `[case] include` adds a shared file from the same directory.
+
+    Each input may be defined in only one of the two files, so a template cannot
+    silently override shared case inputs. Data paths stay relative to that directory.
+    """
     with path.open("rb") as stream:
-        return tomllib.load(stream)
+        scenario = tomllib.load(stream)
+    include = scenario.get("case", {}).get("include")
+    if include is None:
+        return scenario
+    shared_path = path.parent / include
+    if shared_path.resolve().parent != path.resolve().parent:
+        raise ValueError("An included scenario file must be in the same directory")
+    with shared_path.open("rb") as stream:
+        shared = tomllib.load(stream)
+    if "include" in shared.get("case", {}):
+        raise ValueError("Nested scenario includes are not supported")
+    return _merge_once(shared, scenario, "")
+
+
+def _merge_once(shared: dict, own: dict, prefix: str) -> dict:
+    merged = dict(shared)
+    for key, value in own.items():
+        if key not in merged:
+            merged[key] = value
+        elif isinstance(value, dict) and isinstance(merged[key], dict):
+            merged[key] = _merge_once(merged[key], value, f"{prefix}{key}.")
+        else:
+            raise ValueError(f"Scenario input {prefix}{key} is defined in both files")
+    return merged
 
 
 def load_inputs(scenario: dict, path: Path | None = None) -> Inputs:

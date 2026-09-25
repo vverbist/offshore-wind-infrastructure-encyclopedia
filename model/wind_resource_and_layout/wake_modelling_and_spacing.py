@@ -64,13 +64,16 @@ def calculate_wakes(coordinates: pd.DataFrame, wind: dict, turbine: dict, base: 
     wake = PropagateDownwind(UniformSite(p_wd=[1], ti=ti), machine,
                             wake_deficitModel=TurboNOJDeficit(),
                             rotorAvgModel=AreaOverlapAvgModel(), superpositionModel=SquaredSum())
-    power = []
-    for state in states.itertuples():
-        result = wake(coordinates.x_m.to_numpy(), coordinates.y_m.to_numpy(),
-                      wd=[state.direction_deg], ws=[state.speed_m_s])
-        power.append(result.Power.values.reshape(-1) / 1000)
+    x, y = coordinates.x_m.to_numpy(), coordinates.y_m.to_numpy()
+    power = np.zeros((len(states), len(coordinates)))
+    # One PyWake call per direction; every state keeps its own speed and weight.
+    for direction, group in states.groupby("direction_deg", sort=False):
+        speeds, index = np.unique(group.speed_m_s.to_numpy(float), return_inverse=True)
+        result = wake(x, y, wd=[direction], ws=speeds)
+        # PyWake returns W with dimensions (turbine, direction, speed).
+        power[group.index.to_numpy()] = result.Power.values[:, 0, :].T[index] / 1000
     hours = states.hours.to_numpy(float)
     if (not np.isclose(hours.sum(), inputs.number("annual-hours", "h/year"))
             or np.any(hours < 0) or not np.isfinite(hours).all()):
         raise ValueError("Wind-state hours must cover a full year")
-    return WindStates(states.state.astype(str).tolist(), hours, coordinates.turbine.tolist(), np.array(power)), version("py-wake")
+    return WindStates(states.state.astype(str).tolist(), hours, coordinates.turbine.tolist(), power), version("py-wake")

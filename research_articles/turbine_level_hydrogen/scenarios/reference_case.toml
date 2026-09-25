@@ -11,13 +11,27 @@ turbine_count = 134 # Adopted reference configuration, also rvo2025WakeStudy.
 crosswind_to_alongwind_ratio = 2.0 # Agreed idealised geometry.
 
 [turbine]
-rated_power_mw = 15 # Agreed rating; full turbine/curve definition remains to be connected.
+rated_power_mw = 15 # Agreed rating.
+# Selected under O1 on 2026-09-25: public IEA 15 MW reference turbine, pinned release.
+reference_turbine = "IEA-15-240-RWT"
+rotor_diameter_m = 241.35 # Tabulated release value (Overview sheet, 241.350646 m).
+hub_height_m = 150 # Reference-turbine hub height, used with its own curve.
+curve_source = "https://github.com/IEAWindTask37/IEA-15-240-RWT/blob/e4993d63de10f165389534461dd544006750fe60/Documentation/IEA-15-240-RWT_tabular.xlsx"
+curve_source_sha256 = "9ed6ee219a97c443d0b900498e3ef4fefa12d855d9a7c9e4c5b9bc0702b9078a"
+
+[layout]
+# Screening check only, retained from the legacy model; unsourced, not a design limit.
+minimum_spacing_rotor_diameters = 3
 
 [wind]
 # Paths relative to this file; existing supplied DOWA-derived data are retained.
 hourly_workbook = "../../../background/legacy model/model_A02/WRA+H2-E_victor.xlsx"
 sector_file = "../../../background/legacy model/model_A02/weibull_per_sector.csv"
 orientation_basis = "centre of most frequent direction sector"
+# Wind-speed column treated as hub-height speed: the extraction height is unrecorded.
+# Discretisation of the fitted sector distribution (O1, 2026-09-25); see reference_case.qmd.
+direction_step_deg = 5
+speed_bin_m_s = 0.5
 
 [hydrogen]
 export_length_km = 100 # Agreed physical route assumption, not a surveyed corridor.

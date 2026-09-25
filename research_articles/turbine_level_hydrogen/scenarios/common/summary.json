@@ -1,0 +1,17 @@
+{
+  "pywake_version": "2.6.20",
+  "state_count": 3169,
+  "design_state": "design-all-rated",
+  "no_power_hours": 521.0843077916907,
+  "no_wake_aep_gwh": 10715.138221364057,
+  "wake_aep_gwh": 9639.061358134606,
+  "wake_loss": 0.1004258499516083,
+  "gross_capacity_factor": 0.5474375473167613,
+  "max_annual_farm_fraction": 1.0,
+  "single_turbine_weibull_aep_mwh": 79963.71806988103,
+  "single_turbine_hourly_aep_mwh": 80609.54968525763,
+  "hourly_record_count": 87601,
+  "weibull_vs_hourly_difference": -0.008011849934632775,
+  "wake_aep_1deg_gwh": 9647.099998092393,
+  "direction_step_difference": -0.0008332700976849683
+}

@@ -27,6 +27,7 @@ from model.methodology.financial_and_price_basis import annual_cost
 from model.methodology.energy_availability_and_annualisation import delivered_mass
 from model.offshore_installation.turbine_and_foundation_installation import campaign
 from model.workflow import run_case
+from model.wind_resource_and_layout.wind_resource_and_weibull import WindStates
 from model.reporting import write_result
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -321,6 +322,43 @@ class ReferenceCase(unittest.TestCase):
         variables = ref.quarto_variables()
         self.assertEqual(variables["ijv-stack-outlet-pressure-bar-a"], "31.01")
         self.assertEqual(variables["ijv-delivery-pressure-bar-a"], "67.01")
+
+    def test_generated_common_case_matches_the_record(self):
+        from research_articles.turbine_level_hydrogen.analysis import prepare_common_case as prep
+        from research_articles.turbine_level_hydrogen.analysis import reference_case as ref
+        case = ref.load_reference_case()
+        atmospheric = float(load_parameters().number("standard-atmospheric-pressure", "bar"))
+        derived = ref.derive_reference_case(case, atmospheric)
+        self.assertEqual((prep.SCENARIOS / "common_case.toml").read_text(),
+                         prep.common_case_toml(case, derived, atmospheric))
+        coordinates = pd.read_csv(prep.SCENARIOS / prep.COORDINATE_FILE, dtype={"turbine": str})
+        pd.testing.assert_frame_equal(coordinates, prep.coordinates(case, derived))
+        spacing = np.hypot(*(coordinates[["x_m", "y_m"]].to_numpy()[1] - coordinates[["x_m", "y_m"]].to_numpy()[0]))
+        self.assertAlmostEqual(spacing, derived["spacing_crosswind_m"], delta=0.02)
+        annual_hours = float(load_parameters().number("annual-hours", "h/year"))
+        wind = WindStates.read(prep.SCENARIOS / prep.POWER_FILE, coordinates.turbine.tolist(), annual_hours)
+        design = wind.state_ids.index(prep.DESIGN_STATE)
+        self.assertEqual(wind.hours[design], 0)
+        self.assertTrue(np.all(wind.power_kw[design] == case["turbine"]["rated_power_mw"] * 1000))
+        self.assertLessEqual(wind.power_kw.max(), case["turbine"]["rated_power_mw"] * 1000)
+
+    def test_article_templates_share_the_common_case(self):
+        folder = ROOT / "research_articles/turbine_level_hydrogen/scenarios"
+        central, distributed = (read_scenario(folder / f"{name}.toml") for name in ("centralised", "decentralised"))
+        for section in ("site", "turbine", "wind"):
+            shared = {key: central[section][key] for key in read_scenario(folder / "common_case.toml")[section]}
+            self.assertEqual(shared, {key: distributed[section][key] for key in shared})
+        self.assertEqual(central["hydrogen"]["delivery_bar"], distributed["hydrogen"]["delivery_bar"])
+
+    def test_scenario_include_cannot_redefine_shared_inputs(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base = Path(folder)
+            (base / "shared.toml").write_text('[site]\nwater_depth_m = 28\n')
+            (base / "case.toml").write_text('[case]\ninclude = "shared.toml"\n[site]\nfarm_area_km2 = 1\n')
+            self.assertEqual(read_scenario(base / "case.toml")["site"], {"water_depth_m": 28, "farm_area_km2": 1})
+            (base / "clash.toml").write_text('[case]\ninclude = "shared.toml"\n[site]\nwater_depth_m = 30\n')
+            with self.assertRaises(ValueError):
+                read_scenario(base / "clash.toml")
 
 
 if __name__ == "__main__":

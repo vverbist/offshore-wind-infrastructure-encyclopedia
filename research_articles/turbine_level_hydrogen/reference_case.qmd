@@ -16,9 +16,10 @@ The authoritative article inputs are in
 [reference_case.toml](scenarios/reference_case.toml). Values displayed here are
 loaded from that record; dimensions and spacing are calculated by
 [the reference-case calculation](analysis/reference_case.py). These are case
-choices, not defaults for the component methodology. The architecture templates
-have not yet been connected to this record: this note records the agreed basis,
-not a completed production or cost run. Remaining preparation is tracked in
+choices, not defaults for the component methodology. Both architecture
+templates include the same generated common case (see
+[Common operating case](#sec-common-operating-case)); this note does not claim
+a completed production or cost run. Remaining preparation is tracked in
 [O1](OPEN_POINTS.md).
 
 ## Common inputs and their basis
@@ -34,6 +35,8 @@ not a completed production or cost run. Remaining preparation is tracked in
 | Hydrogen export route | {{< var ijv-export-length-km >}} km | Explicit article assumption agreed on the date above. Physical route length from the offshore export origin to the common onshore receipt boundary; no surveyed pipeline corridor is claimed. |
 | Onshore delivery pressure $p_{\mathrm{delivery,g}}$ | {{< var ijv-delivery-pressure-bar-g >}} bar(g) | Article choice based on the upper network-pressure level described for Waterstofnetwerk West-Nederland [@hynetwork2026WestNRD, p. 18]. The **gauge** interpretation is explicitly agreed modelling judgement; that source writes only “bar”. |
 | Electrolyser stack outlet pressure $p_{\mathrm{stack,g}}$ | {{< var ijv-stack-outlet-pressure-bar-g >}} bar(g) | User-specified article assumption, applied to the centralised and turbine-level stacks alike. The **gauge** interpretation follows the delivery-pressure convention. It sets the compressor inlet pressure; it is not a product qualification of the supplied stack curve, whose source material reports approximately 30 bar ([Stack](../../hydrogen_production/stack.qmd)). |
+| Reference turbine | IEA 15 MW RWT; $D=$ {{< var ijv-rotor-diameter-m >}} m, $H_h=$ {{< var ijv-hub-height-m >}} m | Selected for O1 on 25 September 2026: a public, internally consistent 15 MW definition whose power and thrust curve, rotor diameter and hub height come from one pinned release [@gaertner2020IEA15; @ieaWind15RwtRelease2026]. The release's 241.35 m rotor (240 m in the original report) is used with its own curve. The hub height is the reference turbine's, not the lower-tip-clearance default on [Wind Turbine Mass and Cost](../../turbine_system/wind_turbine.qmd). |
+| Minimum turbine separation check | {{< var ijv-minimum-spacing-rotor-diameters >}} $D$ = {{< var ijv-minimum-spacing-m >}} m | Retained legacy screening threshold, unsourced. It only rejects coordinate errors; it is not a demonstrated wake, installation or permit limit. |
 | Stack overplant factor $f$ | {{< var ijv-overplant-factor >}}× baseline; up to {{< var ijv-overplant-factor-sensitivity-max >}}× later | Explicit article choices, applied equally to both architectures. Establish the baseline before investigating the additional stack-capacity trade-off. |
 
 The installed wind capacity is derived, not independently prescribed:
@@ -113,6 +116,78 @@ direction-convention metadata for the original extraction. Both architectures
 must receive identical annual wind-state weights and turbine-level generation
 before architecture-specific losses.
 
+## Common operating case {#sec-common-operating-case}
+
+[`prepare_common_case.py`](analysis/prepare_common_case.py) turns this record
+into `scenarios/common_case.toml` and the data files in `scenarios/common/`.
+Both architecture templates include that file. The model rejects any key defined
+in both a template and the included file, so the templates cannot silently depart
+from the common case. The script requires the optional PyWake dependency; the
+generated files are committed so that running a case does not.
+
+**Coordinates.** Positions are in metres with $x$ east, $y$ north and the
+origin at the farm centre. With the dominant direction $\theta$ (wind **from**,
+clockwise from north), the downwind and crosswind unit vectors are
+
+$$
+\mathbf{e}_d=(-\sin\theta,\,-\cos\theta),\qquad
+\mathbf{e}_c=(\cos\theta,\,-\sin\theta).
+$$
+
+A turbine in row $i$ at crosswind offset $u$ is placed at
+$u\,\mathbf{e}_c+\left(i-\tfrac{n_L-1}{2}\right)d_L\,\mathbf{e}_d$, with
+$u$ centred within its row. Turbines are numbered row by row from the upwind
+edge. The centralised AC strings follow this order, which is provisional until
+the platform location is set (O3/O7).
+
+**Turbine curve.** The tabulated electrical power and thrust coefficient come
+from the release's rotor-performance table, pinned by commit and checksum in the
+record. The table's power column is electrical output: its power coefficient is
+the aerodynamic coefficient times the 95.7% generator efficiency. This matches
+the model's common generator-output boundary. Solver noise of up to 0.06 kW
+above rating is capped at the 15 MW rating. Zero power and thrust are declared
+just outside the 3–25 m/s operating range, because PyWake would otherwise hold
+the first tabulated value for waked turbines below cut-in; idle-rotor thrust is
+neglected.
+
+**Operating states.** The fitted sector table is converted to one joint table of
+direction and speed states. Direction is spread uniformly within each 30° sector
+in {{< var ijv-direction-step-deg >}}° steps, and speed is binned in
+{{< var ijv-speed-bin-m-s >}} m/s steps represented by bin midpoints between cut-in
+and cut-out. Weights are the Weibull probabilities times the central annual
+hours; the {{< var ijv-no-power-hours >}} h/year below cut-in or above cut-out form
+one zero-power state. This gives {{< var ijv-state-count >}} states, including that
+state. The hourly speeds are treated as hub-height speeds, because the workbook
+does not record its extraction height. This is an explicit assumption carried over
+from the legacy model, not a height correction.
+
+PyWake {{< var ijv-pywake-version >}} evaluates every state with the model's wake
+configuration and the central turbulence intensity
+{{< var wind-turbulence-intensity >}}. The resulting table gives wake-affected
+power for each turbine at the generator output, before any architecture-specific
+loss. A zero-hour design state, `design-all-rated`, sets every turbine at rated
+power as the common peak-duty basis. The annual states reach this full-farm
+output at high wind speeds, so it is an attained operating condition rather than
+an added margin.
+
+| Result (before availability and architecture losses) | Value |
+|---|---:|
+| No-wake annual energy | {{< var ijv-no-wake-aep-gwh >}} GWh |
+| Wake-affected annual energy | {{< var ijv-wake-aep-gwh >}} GWh |
+| Wake loss | {{< var ijv-wake-loss >}} |
+| Wake-affected gross capacity factor | {{< var ijv-gross-capacity-factor >}} |
+
+: Common operating case generated from the record.
+
+Two checks bound the discretisation. Single-turbine energy from the fitted
+Weibull states differs from energy from the {{< var ijv-hourly-record-count >}}
+hourly records by {{< var ijv-weibull-vs-hourly-difference >}}. Wake-affected
+energy with the adopted direction step differs from a 1° calculation by
+{{< var ijv-direction-step-difference >}}. Neither check validates the wake model:
+turbulence intensity remains a provisional legacy value, blockage is excluded,
+and the wake formulation has not been benchmarked
+([Wake Modelling and Spacing](../../wind_resource_and_layout/wake_modelling_and_spacing.qmd)).
+
 ## Export and onshore delivery boundary
 
 The reported product is hydrogen delivered at the common onshore receipt
@@ -186,14 +261,11 @@ representative depth, wind-data basis, export distance, delivery-pressure
 and stack-outlet pressure interpretations and overplanting range are agreed. Before claiming executable
 common-case results:
 
-- Connect this shared record to both scenario templates and generate the common
-  coordinates, including an explicit coordinate-rotation convention.
-- Select a consistent rotor diameter, hub height and tabulated power/thrust
-  curve; the nominal turbine rating alone does not supply these.
-- Prepare annual operating states and peak-duty states from the existing wind
-  data, using the documented sector-centre convention.
-- Pass the converted absolute pressures to both templates and complete the
-  remaining design inputs needed by the selected branches. Collection origins and network design are
+- The common coordinates, turbine definition, operating and peak-duty states,
+  and converted pressures are connected to both templates (above).
+- Complete the remaining design inputs needed by the selected branches:
+  injection pressure and export diameter (O7), platform location and feeder bays
+  (O3), and electrical interface inputs (O2). Collection origins and network design are
   linked to O3/O7; onshore receipt details remain O9.
 
 ## References

@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-25 (O2 scope and execution queue; O1 stack outlet pressure recorded).
+Last reviewed: 2026-09-25 (O2 scope and execution queue; O1 pressure and common operating case).
 
 Working tracker for the article and its model. Update this file when a point is
 resolved, a decision changes, or a new blocker appears. Keep stable IDs, record
@@ -14,11 +14,11 @@ parameter values.
 
 ## Next priorities
 
-1. **Prepare the agreed common article case (O1).** The
-   [reference-case assumptions](reference_case.qmd) and
-   [shared input record](scenarios/reference_case.toml) are agreed. Connect them
-   to the scenario templates, turbine curves and existing wind data to obtain
-   common annual operating states and peak duties.
+1. **Common article case prepared (O1).** Both templates now include the
+   generated [common case](reference_case.qmd#sec-common-operating-case):
+   coordinates, IEA 15 MW curve, wake-affected operating states, peak-duty state
+   and absolute pressures. The first production run now waits on the O7
+   injection pressure and export diameter.
 2. **Build the agreed electrical equipment inventory (O2).** Research component
    costs, losses, voltage ranges and unit-size limits, then implement the
    agreed website discussion. Scope and page placement are settled; the work
@@ -49,11 +49,20 @@ already been updated.
   [the reference-case calculation](analysis/reference_case.py). Compressor page,
   scenario templates and CSV unit convention now state bar(a). The templates
   still have to take these values when the record is connected (next item).
-- [ ] **Finish the common operating case (O1).** Connect the shared reference
+- [x] **Finish the common operating case (O1).** Connect the shared reference
   record to both architecture scenarios; generate the rectangular-farm turbine
   coordinates; select traceable turbine dimensions and power/thrust curves;
   prepare common annual wind and peak-duty states. Preserve the agreed 1×
   overplanting reference, with up to 3× reserved for later sensitivity work.
+  *Done 2026-09-25:* [`prepare_common_case.py`](analysis/prepare_common_case.py)
+  writes `scenarios/common_case.toml` and `scenarios/common/`, which both
+  templates include (repeated keys are rejected). Pinned IEA 15 MW release
+  (241.35 m rotor, 150 m hub, electrical power/thrust curve); 5° × 0.5 m/s
+  sector-Weibull states with a zero-hour all-rated design state; 10.0% wake loss
+  and 54.7% wake-affected gross capacity factor before availability. Stated
+  assumptions: workbook speeds taken as hub-height speeds (height unrecorded);
+  3D minimum-spacing check retained from the legacy model; AC string order
+  provisional until the platform location is set. Overplanting stays 1×.
 - [ ] **Build the power-conversion equipment inventory (O2).** Research the
   grid-side inverter, electrolyser rectifier, turbine step-up transformer,
   central plant step-down transformer and rectifier transformer; retain the
@@ -138,7 +147,7 @@ approval of new numerical assumptions.
 
 | ID | Open point and next action | Owner | What it blocks / completion condition |
 |---|---|---|---|
-| O1 | **Partially resolved:** the [common case](reference_case.qmd) is agreed and recorded with evidence and reasoning in the [shared input record](scenarios/reference_case.toml). Remaining: connect the record to both templates, generate coordinates, select consistent turbine dimensions and power/thrust curves, prepare annual and peak-duty wind states, and pass the converted absolute stack outlet and delivery pressures (recorded 2026-09-25) into both templates. | Me: preparation | First real-case production and equipment inventories. Complete when both scenarios run on the same upstream wind and delivery basis. The assumption note is not an executable-case completion claim. |
+| O1 | **Resolved for the preparation scope (2026-09-25):** both templates include the generated [common operating case](reference_case.qmd#sec-common-operating-case) built from the [shared input record](scenarios/reference_case.toml): coordinates, IEA 15 MW turbine, wake-affected operating and peak-duty states, absolute pressures and export length. Open limitations: wind extraction height and direction metadata unrecorded; wake model and turbulence intensity not benchmarked (wake page). | Me: preparation | First real-case production and equipment inventories. Both scenarios now share the same upstream wind and delivery basis; production still requires O7 injection pressure and export diameter, and central collection requires the O3 platform location. |
 | O2 | **Scope and website placement agreed:** build the component inventory and implement the discussion as queued above. The central, conservative turbine-level and direct-DC (`converter_reduced`) definitions are agreed; generator-side rectifier cost stays in the common turbine baseline. Derive losses and cost/mass reconciliation from the evidenced inventory; AC resistance and power factor remain to be established. | Me: research and implementation; Joint: numerical adoption where judgement is required | Comparable energy losses, electrical CAPEX and the basis for O&M. Complete when each electrical function is counted once and any removal credit has an explicit scope. The queued inventory does not yet close numerical inputs or validate the direct-DC operating envelope. |
 | O3 | **Method drafted:** the [platform page](../../platforms/platform_material_capex.qmd) now documents the hosted-equipment, topside, jacket and pile mass chain; separate structure, integration and fabrication costs; and the lift handoff. Research the missing masses, unit costs, platform multiplicity and module choices in the execution list above. | Me: evidence and preparation; Joint: adoption | Complete centralised CAPEX and platform installation. The calculation structure exists, but the illustrative one-platform example is not an adopted, costed design. |
 | O4 | Adopt stack purchase cost and an offshore water-treatment reference purchase cost. Retain the agreed aggregate BOP scaling. | Me: evidence and normalisation; Joint: adoption | Stack and BOP supply CAPEX. Resolve `stack-purchase-unit-cost` and `bop-water-reference-purchase-cost`; lifetime treatment remains D4. |

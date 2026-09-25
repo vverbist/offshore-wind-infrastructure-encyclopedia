@@ -12,12 +12,20 @@ From the repository root, with the project Python environment:
 uv run python tools/run_model.py research_articles/turbine_level_hydrogen/scenarios/centralised.toml --output model_runs/my-case
 ```
 
-The two supplied TOML files are **unparameterized article case templates**.
-They contain no invented farm or financial values. Running one reports missing
-scenario inputs. Fill the commented fields from the article reference case and
+The two supplied TOML files are **partially parameterized article case
+templates**. Their common inputs come from the generated `common_case.toml`;
+they contain no invented design or financial values. Running one reports the
+remaining missing scenario inputs. Fill the commented architecture fields and
 adopt missing scalar parameters in `model_data/inputs.csv` before expecting full
 results. All data paths in a scenario are relative to that scenario's directory.
 Existing result directories are never overwritten.
+
+A scenario may declare `include = "<file>.toml"` under `[case]` to add a shared
+file from the same directory. An input may be defined in only one of the two
+files; a repeated key is an error, not an override. The article templates
+include the generated `common_case.toml`, written by
+`research_articles/turbine_level_hydrogen/analysis/prepare_common_case.py`
+from the agreed reference record.
 
 The optional `wind` dependency group provides PyWake (`uv sync --extra wind`).
 It is not required when a turbine-power-state CSV is supplied. The PyWake
@@ -200,8 +208,9 @@ Run `research_articles/turbine_level_hydrogen/analysis/run_sensitivity.py` with 
 scenario, central parameter ID, explicit values and a new output directory.
 It runs separate cases and writes a comparison CSV; it does not choose an optimum.
 
-Run `python -m unittest discover -s tests -v`. Tests use explicitly synthetic
-cases, never adopted article inputs. They check conservation, curve use, integer
+Run `python -m unittest discover -s tests -v`. Calculation tests use explicitly
+synthetic cases, never adopted article inputs; the reference-case tests only check
+that the generated article inputs still match their record. They check conservation, curve use, integer
 thresholds, documented turbine/foundation masses, calibration, financial scope,
 partial availability, incomplete-result handling and complete synthetic cases
 for both architectures. With the optional wind dependency, they also exercise

@@ -94,7 +94,7 @@ The wake model requires both power and thrust coefficient as functions of wind s
 
 Because the ramp is generated across the discrete points from 3.0 to 11.5 m/s inclusive, the legacy array already reaches rated power at 11.5 m/s even though the stored rated wind speed is 12 m/s. This is an implementation artefact rather than an intended turbine characteristic.
 
-The model therefore does not yet use the documented performance of the IEA 15 MW reference turbine. That reference provides a consistent 15 MW turbine definition and should be the basis for a pinned tabulated power and thrust-coefficient curve [@gaertner2020IEA15].
+The legacy model therefore does not use the documented performance of the IEA 15 MW reference turbine. That reference provides a consistent 15 MW turbine definition [@gaertner2020IEA15]. The [article reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case) now uses its pinned tabulated power and thrust-coefficient curve, rotor diameter and hub height, with direction states at sector centres and one joint probability grid.
 
 ## Wake Calculation
 

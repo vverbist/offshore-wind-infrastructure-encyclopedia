@@ -4,6 +4,7 @@ This prepares documentation variables and the absolute pressures that the
 architecture scenarios must use; it does not run an architecture case.
 """
 import csv
+import json
 from math import ceil, sqrt
 from pathlib import Path
 import tomllib
@@ -12,6 +13,8 @@ from model_data.parameters import load_parameters
 
 
 CASE_PATH = Path(__file__).resolve().parents[1] / "scenarios/reference_case.toml"
+# Written by prepare_common_case.py; wake results need the optional PyWake extra.
+SUMMARY_PATH = CASE_PATH.parent / "common/summary.json"
 
 
 def load_reference_case():
@@ -44,6 +47,7 @@ def derive_reference_case(case, atmospheric_bar):
         "spacing_crosswind_m": breadth * 1000 / (columns - 1),
         "spacing_alongwind_m": length * 1000 / (rows - 1),
         "dominant_from_deg": float(dominant["sector_deg"]) + sector_width / 2,
+        "minimum_spacing_m": case["layout"]["minimum_spacing_rotor_diameters"] * case["turbine"]["rotor_diameter_m"],
         "stack_outlet_pressure_bar_a": absolute_pressure_bar(
             case["electrolysis"]["stack_outlet_pressure_bar_g"], atmospheric_bar),
         "delivery_pressure_bar_a": absolute_pressure_bar(
@@ -60,6 +64,15 @@ def quarto_variables():
     precision = {"breadth_km": 2, "length_km": 2,
                  "spacing_crosswind_m": 1, "spacing_alongwind_m": 1,
                  "stack_outlet_pressure_bar_a": 2, "delivery_pressure_bar_a": 2}
-    return {"ijv-" + key.replace("_", "-"):
-            (f"{value:.{precision[key]}f}" if key in precision else f"{value:g}")
-            for key, value in values.items()}
+    variables = {"ijv-" + key.replace("_", "-"):
+                 (f"{value:.{precision[key]}f}" if key in precision else f"{value:g}")
+                 for key, value in values.items()}
+    summary = json.loads(SUMMARY_PATH.read_text())
+    for key, places in (("wake_loss", 1), ("gross_capacity_factor", 1),
+                        ("weibull_vs_hourly_difference", 1), ("direction_step_difference", 2)):
+        variables["ijv-" + key.replace("_", "-")] = f"{summary[key] * 100:.{places}f}%"
+    for key in ("no_wake_aep_gwh", "wake_aep_gwh", "no_power_hours", "hourly_record_count"):
+        variables["ijv-" + key.replace("_", "-")] = f"{summary[key]:,.0f}"
+    variables["ijv-state-count"] = f"{summary['state_count']:,}"
+    variables["ijv-pywake-version"] = summary["pywake_version"]
+    return variables

@@ -1,36 +1,24 @@
-# Execution template; agreed inputs are in reference_case.toml.
-# Evidence and derivations: ../reference_case.qmd. Shared-record loading remains O1.
-# Paths are relative to this file. Fill the commented fields using the article case.
+# Architecture template for the article case. Common inputs (site, coordinates,
+# turbine, wind power states, overplanting, stack outlet and delivery pressure,
+# export length) come from the generated common_case.toml; keys defined there
+# must not be repeated here. Evidence and derivations: ../reference_case.qmd.
+# Paths are relative to this file. Fill the commented fields below.
 [case]
 name = "centralised-article-case"
 architecture = "centralised"
+include = "common_case.toml"
 
 [site]
-# coordinates_file: CSV columns turbine,x_m,y_m; or use turbine_count, columns,
-# spacing_x_m, spacing_y_m, orientation_deg for the declared regular-grid layout.
-# Also required: minimum_spacing_m, farm_area_km2, water_depth_m,
-# collection_x_m, collection_y_m. Coordinate row order defines radial strings.
-
-[turbine]
-# rotor_diameter_m, hub_height_m. Optional rated_power_kw overrides the case rating.
-
-[wind]
-# power_states_file: CSV columns state,hours,<one kW column per turbine ID>.
-# Powers are at the common generator-output boundary before architecture losses.
-# design_state_ids: list of state IDs representing the adopted peak-duty envelope.
-# Zero-hour design states may be added to an annual operating-state table.
-# Alternative with PyWake: wind_states_file (state,speed_m_s,direction_deg,hours)
-# and turbine_curve_file (speed_m_s,power_kw,ct).
+# collection_x_m, collection_y_m: central platform location (O3/O7), in the
+# coordinate frame of common/coordinates.csv. Coordinate row order defines
+# radial strings; the generated order is provisional until the platform is set.
 
 [electrolysis]
 stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
-# overplant_factor
 
 [hydrogen]
-# stack_outlet_bar, injection_bar, delivery_bar: absolute pressures, bar(a).
-# Article case: take stack outlet and delivery from analysis/reference_case.py,
-# which converts the gauge values in reference_case.toml; never copy bar(g).
-# export_diameter_m: true internal diameter; export_length_km: physical route.
+# injection_bar: absolute pressure, bar(a) (O7).
+# export_diameter_m: true internal diameter (O7).
 
 [platform]
 # count, topside_modules_per_platform, feeder_bays
