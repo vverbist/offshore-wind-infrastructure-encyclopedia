@@ -210,7 +210,7 @@ These ratios span different turbine ratings, site shapes, substation positions a
 ::: {.callout-warning}
 ## Routing allowance is not universal
 
-The current 20% addition comes from the internal model description [@internalModelDescription2026]. It should not be added on top of coordinates or route lengths that already include bends, exclusions and slack. Use 5–20% only as a pre-route sensitivity.
+The current {{< var array-route-allowance >}} addition comes from the internal model description [@internalModelDescription2026]. It should not be added on top of coordinates or route lengths that already include bends, exclusions and slack. Use 5–20% only as a pre-route sensitivity.
 :::
 
 ## Cost Model
@@ -235,7 +235,7 @@ The following evidence brackets the screening unit cost:
 
 Prysmian reports the 172 km supply scope and its annual report gives the approximately EUR 30 million contract value [@prysmian2019HollandseKustZuid; @prysmian2019AnnualReport]. The project average combines cable sizes and is not a direct quotation for the largest conductor.
 
-The base case remains **400 EUR~2025~/m**, with **200–600 EUR~2025~/m** used as an engineering sensitivity. This is a blended screening assumption between a historical mixed-cable contract and the current ORBIT conductor-specific inputs; it is not a statistical mean or a supplier quotation. No manufacturer markup is added. A conductor-by-conductor cost calculation should replace the blended rate only when the routed string design identifies the length of each cable size.
+The base case remains **{{< var array-supply-unit-cost-value >}} EUR~2025~/m**, with **200–600 EUR~2025~/m** used as an engineering sensitivity. This is a blended screening assumption between a historical mixed-cable contract and the current ORBIT conductor-specific inputs; it is not a statistical mean or a supplier quotation. No manufacturer markup is added. A conductor-by-conductor cost calculation should replace the blended rate only when the routed string design identifies the length of each cable size.
 
 ## OPEX Allowance
 
@@ -261,13 +261,13 @@ No more detailed failure model is introduced until consistent array-specific fai
 
 | Parameter | Base case | Suggested sensitivity | Interpretation |
 |---|---:|---:|---|
-| Array voltage | 66 kV | 66 or 132 kV | 132 kV is an emerging future-plant option |
+| Array voltage | {{< var array-voltage >}} | 66 or 132 kV | 132 kV is an emerging future-plant option |
 | Usable string rating | 64–{{< var array-usable-string-rating >}} | Project-specific | TenneT screening range; final rating requires cable and interface checks |
 | Turbine rating | {{< var wind-turbine-rated-power >}} | Model variable | Four turbines per base-case string |
 | Rotor diameter and turbine spacing | Wind-layout inputs | Layout scenarios | Converted into explicit turbine coordinates |
 | Farm area and aspect ratio | Wind-layout inputs | Site scenarios | Constrain the feasible coordinate layout |
-| Cable material cost | 400 EUR~2025~/m | 200–600 EUR~2025~/m | Blended engineering range, not a statistical confidence interval |
-| Route addition | 20% | 5–20% | Apply only before a routed design exists |
+| Cable material cost | {{< var array-supply-unit-cost-value >}} EUR~2025~/m | 200–600 EUR~2025~/m | Blended engineering range, not a statistical confidence interval |
+| Route addition | {{< var array-route-allowance >}} | 5–20% | Apply only before a routed design exists |
 | Flat availability | 99.0% | Replace with string outage states | A fault normally removes partial capacity |
 | OPEX risk allowance | 2% of supply CAPEX/year | 1–3% | Physical inspection and repair provision; excludes lost generation |
 

@@ -15,6 +15,7 @@ import pandas as pd
 from model.inputs import Inputs, load_inputs, read_scenario
 from model.records import MissingInput, Infeasible, CostLine
 from model_data.parameters import ParameterSet, load_parameters
+from model.hydrogen_production import stack
 from model.hydrogen_production.stack import StackCurve, operate
 from model.hydrogen_production.balance_of_plant import size as bop_size
 from model.hydrogen_infra.compressor import specific_energy, stages, size as compressor_size
@@ -318,6 +319,17 @@ class Integration(unittest.TestCase):
             for path in (ROOT / "model").rglob("*.py"):
                 name = ".".join(path.relative_to(ROOT).with_suffix("").parts)
                 importlib.import_module(name)
+
+
+class StackDegradation(unittest.TestCase):
+    def test_sawtooth_average_loss(self):
+        inputs = synthetic_inputs({"stack-degradation-rate": 0.0018, "stack-end-of-life-degradation": 0.1})
+        factor, interval = stack.lifetime_production_factor(5000, 25, inputs)
+        self.assertAlmostEqual(interval, 0.1 / 0.009)
+        remainder = 25 - 2 * interval
+        expected = 1 - (2 * 0.1 * interval / 2 + 0.009 * remainder**2 / 2) / 25
+        self.assertAlmostEqual(factor, expected)
+        self.assertEqual(stack.lifetime_production_factor(0, 25, inputs)[0], 1.0)
 
 
 class CompressorCost(unittest.TestCase):

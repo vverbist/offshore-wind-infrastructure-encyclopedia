@@ -159,8 +159,9 @@ provisional capacity screen, not a hydrogen-product qualification.
 - Replacement development is deferred. The existing fixed-life event-count
   interface is available, but life, intervention cost and lifetime production
   remain missing until adopted. Beginning-of-life yield is not passed off as
-  lifetime-average production. The external lifetime-production factor must
-  include the adopted degradation and replacement convention consistently.
+  lifetime-average production. Degradation is applied afterwards as an energy
+  penalty: the lifetime production factor follows from the degradation rate,
+  the end-of-life threshold and the calculated stack full-load hours.
 
 ## Outputs and cost boundary
 
@@ -201,6 +202,8 @@ private Python cost module must be trusted local code. Its callable contract is
 `pipeline_cost_curve(pressure_bar, diameter_inches)` returning the existing quote
 unit rate in EUR2025/m, read at operating pressure in bar(g) (the workflow
 subtracts the standard atmosphere). `pipeline-quote-to-eur2025` is therefore 1.
+The module is a fitted bilinear surface; do not evaluate design cases far outside
+the quoted diameter and pressure classes.
 No price basis or missing supplier point is invented.
 
 ## Sensitivity and verification

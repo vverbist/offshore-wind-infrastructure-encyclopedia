@@ -146,4 +146,4 @@ Spare cable, compatible joints, repair-vessel access, permits and trained jointi
 | Adriatic and DEA values include installation | They validate only the combined route cost |
 | No matched underground material coefficient | Subsea and underground supply costs cannot yet be separated cleanly |
 | One indicative copper resistance is used | Aluminium and operating-temperature alternatives are absent |
-| Fixed 99.5% efficiency is retained only for compatibility | It is not valid across the full route range |
+| Fixed {{< var hvdc-cable-legacy-efficiency >}} efficiency is retained only for compatibility | It is not valid across the full route range |

@@ -43,7 +43,7 @@ p_s=\frac{n_s}{N_\mathrm{obs}},
 \sum_s p_s=1.
 $$
 
-The sector labels are passed directly to the wake model as wind directions. Because the label is a bin edge rather than its centre, the represented direction may be displaced by 15 degrees from the observations in that bin. This is retained here to document the legacy calculation and identified below as a required correction.
+The legacy model passed these labels directly to the wake model as wind directions, displacing each represented direction by up to 15 degrees from its observations. The current model instead spreads each sector's probability uniformly across the sector, in equal direction steps centred within it (see [Numerical Use](#numerical-use)).
 
 ## Conditional Weibull Distribution
 
@@ -93,16 +93,31 @@ The following values are sourced inputs to the current legacy wind calculation. 
 
 The prevailing legacy resource is concentrated in the 180°--270° sectors. This directional concentration makes layout orientation material to wake loss.
 
-## Numerical Use
+## Numerical Use {#numerical-use}
 
-The legacy implementation uses two numerical wind-speed grids:
+One joint table of direction and speed states serves wake power, electricity
+yield and hydrogen production alike, so bin edges, tail treatment and weights
+are identical everywhere. For a direction step $\Delta\theta$ that divides the
+sector width, sector $s$ contributes the directions
+$s+(i+\tfrac12)\Delta\theta$ for $i=0,1,\dots$, each with probability
+$p_s\Delta\theta/30^\circ$. Speeds between cut-in and cut-out are binned in
+steps $\Delta v$ and represented by the bin midpoint, with the joint probability
+$w_{s,i}$ above. All speeds below cut-in or above cut-out form one zero-power
+state, so the weights cover the whole year exactly. Each weight times the
+central annual hours gives the state's hours.
 
-| Use | Wind-speed treatment |
-|---|---|
-| PyWake farm-power table and AEP | 0 to 30 m/s in 0.5 m/s increments |
-| Hydrogen operating-state integration | 0 to 40 m/s with 0.25 m/s bins |
+The article case uses {{< var ijv-direction-step-deg >}}° and
+{{< var ijv-speed-bin-m-s >}} m/s steps. Its wake-affected energy differs from a
+1° calculation by {{< var ijv-direction-step-difference >}}, and single-turbine
+energy from these states differs from energy from the hourly records by
+{{< var ijv-weibull-vs-hourly-difference >}} (see the
+[reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case)).
+The hourly speeds are treated as hub-height speeds because the workbook does not
+record its extraction height.
 
-The hydrogen calculation interpolates the PyWake farm-power table and renormalises the retained state probabilities. Turbine output is zero above cut-out, so extending the probability grid beyond cut-out does not add production. Maintaining two grids is nevertheless unnecessary and creates an avoidable consistency check.
+The legacy model used two different grids (0 to 30 m/s in 0.5 m/s steps for
+PyWake and 0 to 40 m/s in 0.25 m/s steps for hydrogen), with renormalised
+probabilities. That duplication is removed.
 
 ## Outputs
 
@@ -115,12 +130,11 @@ The wind-resource calculation supplies:
 
 Availability, electrical losses and conversion losses are not applied on this page. They are applied after wake-aware farm power has been calculated.
 
-::: {.callout-warning title="Suggested technical improvements"}
+::: {.callout-warning title="Remaining improvements"}
 1. **Recover the source extraction.** Record the exact DOWA grid point, height, source filename, dataset version, timezone and direction convention. Replace the shortened workbook series with the complete selected period or explain the 72-hour difference.
-2. **Correct sector alignment.** Represent each 30-degree bin by its centre, or use circular bins centred on $0^\circ,30^\circ,\ldots,330^\circ$. The same convention must be used by the layout rotation and wake model.
-3. **Validate the Weibull reduction.** Calculate AEP once from the empirical hourly distribution and once from the directional Weibull fit. Report the difference before adopting the fitted distribution as the production input.
-4. **Use one probability grid.** Generate one joint direction-speed table for wake power, electricity yield and hydrogen conversion so that bin edges, tail treatment and normalisation are identical.
-5. **Create a controlled input record.** Store the fitted CSV with its fitting-script revision, source-file checksum and fit date so that the parameters can be reproduced without the legacy workbook structure.
+2. **Create a controlled input record.** Store the fitted CSV with its fitting-script revision, source-file checksum and fit date so that the parameters can be reproduced without the legacy workbook structure.
+
+Sector alignment, the single probability grid and the check of the Weibull reduction against the hourly record are implemented, as described above.
 :::
 
-Until the first two items are resolved, the table above should be treated as a legacy model input rather than a fully verified site-specific wind resource.
+Until the source extraction is recovered, the table above should be treated as a legacy model input rather than a fully verified site-specific wind resource.

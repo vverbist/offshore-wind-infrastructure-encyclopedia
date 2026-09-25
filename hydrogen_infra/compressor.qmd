@@ -28,14 +28,14 @@ Inlet and outlet pressures are scenario inputs. All pressures on this page are *
 
 | Parameter | Value |
 |---|---:|
-| Electrolyser outlet pressure (illustrative) | 30 bar(a) |
+| Electrolyser outlet pressure (illustrative) | {{< var compressor-reference-inlet-pressure >}}(a) |
 | Pipeline injection pressure | Decision variable |
 | Typical pressure range | 80-150 bar(a) |
-| Maximum pressure ratio per stage | 3.3 |
-| Hydrogen specific heat ratio, $\gamma$ | 1.41 |
-| Gas temperature, $T$ | 298 K |
-| Compressor efficiency, $\eta_\mathrm{comp}$ | 0.80 |
-| Motor efficiency, $\eta_\mathrm{motor}$ | 0.95 |
+| Maximum pressure ratio per stage | {{< var compressor-max-stage-ratio >}} |
+| Hydrogen specific heat ratio, $\gamma$ | {{< var hydrogen-heat-capacity-ratio >}} |
+| Gas temperature, $T$ | {{< var compressor-temperature >}} |
+| Compressor efficiency, $\eta_\mathrm{comp}$ | {{< var compressor-efficiency >}} |
+| Motor efficiency, $\eta_\mathrm{motor}$ | {{< var compressor-motor-efficiency >}} |
 | Compressor availability | TODO: adopt non-overlapping architecture-specific scope |
 | Compressor OPEX | TODO: adopt component allowance |
 | Compressor cost scaling exponent | {{< var compressor-cost-exponent >}} |
@@ -58,7 +58,7 @@ N =
 \right\rceil
 $$
 
-where $r_\mathrm{max}=3.3$.
+where $r_\mathrm{max}$ is the maximum stage ratio, {{< var compressor-max-stage-ratio >}}. The worked example below uses the illustrative reference duty from {{< var compressor-reference-inlet-pressure >}}(a) to {{< var compressor-reference-outlet-pressure >}}(a).
 
 The actual pressure ratio per stage is:
 
@@ -163,7 +163,7 @@ The same outlet pressure can therefore have very different compression penalties
 
 ![Compressor electricity consumption as a function of outlet pressure for different inlet pressures.](../figures/compressor-energy-vs-pressure.svg){#fig-compressor-energy}
 
-The curves confirm why PEM outlet pressure matters: at a given pipeline injection pressure, compressing from 1 bar takes roughly three to four and a half times the electricity of compressing from 30 bar, because it is the pressure *ratio* that drives compression work, not the absolute pressure difference. Each curve also shows small kinks rather than a smooth rise. These come from the discrete number of compression stages, $N$: as outlet pressure increases, $N$ occasionally steps up to keep the per-stage pressure ratio within its 3.3 limit, and each step changes the slope of the curve.
+The curves confirm why PEM outlet pressure matters: at a given pipeline injection pressure, compressing from 1 bar takes roughly three to four and a half times the electricity of compressing from 30 bar, because it is the pressure *ratio* that drives compression work, not the absolute pressure difference. Each curve also shows small kinks rather than a smooth rise. These come from the discrete number of compression stages, $N$: as outlet pressure increases, $N$ occasionally steps up to keep the per-stage pressure ratio within its {{< var compressor-max-stage-ratio-value >}} limit, and each step changes the slope of the curve.
 
 ## Cost Model
 

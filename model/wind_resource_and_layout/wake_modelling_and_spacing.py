@@ -61,9 +61,10 @@ def calculate_wakes(coordinates: pd.DataFrame, wind: dict, turbine: dict, base: 
     machine = WindTurbine("case", diameter=required(turbine, "rotor_diameter_m"),
                           hub_height=required(turbine, "hub_height_m"),
                           powerCtFunction=PowerCtTabular(curve.speed_m_s, curve.power_kw, "kW", curve.ct))
+    # Rotor averaging belongs to the deficit model (PyWake 2.6); no blockage model.
     wake = PropagateDownwind(UniformSite(p_wd=[1], ti=ti), machine,
-                            wake_deficitModel=TurboNOJDeficit(),
-                            rotorAvgModel=AreaOverlapAvgModel(), superpositionModel=SquaredSum())
+                            wake_deficitModel=TurboNOJDeficit(rotorAvgModel=AreaOverlapAvgModel()),
+                            superpositionModel=SquaredSum())
     x, y = coordinates.x_m.to_numpy(), coordinates.y_m.to_numpy()
     power = np.zeros((len(states), len(coordinates)))
     # One PyWake call per direction; every state keeps its own speed and weight.

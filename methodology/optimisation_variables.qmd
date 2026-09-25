@@ -48,11 +48,11 @@ support a canonical allowed set. COR-01B does not invent defaults.
 
 | Parameter | Value | Unit | Owner and status |
 |---|---:|---|---|
-| Real WACC, $r$ | 6.6% | 1/year | METH-003; provisional unsupported assumption |
-| Project life, $n$ | 25 | year | METH-003; modelling assumption |
-| Hydrogen HHV | 39.4 | kWh/kg | METH-006; sourced and rounded |
+| Real WACC, $r$ | {{< var financial-real-wacc >}} | 1/year | METH-003; provisional unsupported assumption |
+| Project life, $n$ | {{< var financial-project-life-value >}} | year | METH-003; modelling assumption |
+| Hydrogen HHV | {{< var hydrogen-hhv-value >}} | kWh/kg | METH-006; sourced and rounded |
 | HVDC reference-link rating | 2 | GW/link | ELEC-003/004; sourced fixed parameter [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard] |
-| Decommissioning factor | 0.80 | fraction of offshore installation CAPEX | METH-003; modelling assumption |
+| Decommissioning factor | {{< var financial-decommissioning-fraction-value >}} | fraction of offshore installation CAPEX | METH-003; modelling assumption |
 
 The 2 GW HVDC rating is not an optimization variable. The electrical component
 pages own the ceiling-based link count, partial final-link utilization,

@@ -40,13 +40,13 @@ basis used for annualization.
 | Offshore installation CAPEX | Owned by the applicable installation page |
 | Onshore equipment and connection CAPEX | Owned by the applicable component page |
 | Annual OPEX | Owned by the component page on a non-overlapping scope |
-| Material short-life replacement | Owned by the component page; counted only when replacement is required within 25 years |
-| Decommissioning | Shared calculation on the financial page: 80% of total offshore installation CAPEX |
+| Material short-life replacement | Owned by the component page; counted only when replacement is required within {{< var financial-project-life >}} |
+| Decommissioning | Shared calculation on the financial page: {{< var financial-decommissioning-fraction >}} of total offshore installation CAPEX |
 | Commissioning | Owned once by the applicable installation/component interface |
 | Development and shared engineering | Outside the model scope (agreed) |
 | Insurance and owner contingency | Outside the model scope (agreed) |
 | Construction finance, taxes and financing fees | Excluded by the approved simple-CRF convention |
-| Residual value | Zero under the 25-year project convention |
+| Residual value | Zero under the {{< var financial-project-life-value >}}-year project convention |
 
 Development, shared engineering, insurance and owner contingency are excluded
 from the model scope. Results are technical-scope costs and must not be called
@@ -114,7 +114,7 @@ LC_{\mathrm{H2,HHV}}
 \frac{HHV_{\mathrm{H2}}}{1000},
 $$
 
-where $HHV_{\mathrm{H2}}$ is in kWh/kg. At 39.4 kWh/kg, the conversion
+where $HHV_{\mathrm{H2}}$ is in kWh/kg. At {{< var hydrogen-hhv >}}, the conversion
 factor is 0.0394 MWh/kg.
 
 The financial numerator is calculated on

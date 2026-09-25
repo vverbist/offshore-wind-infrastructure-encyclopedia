@@ -127,7 +127,7 @@ unit size, and a selected size must stay within some documented limit.
 | Documented ratings | ORBIT sizes offshore main power transformers at up to about 250 MW each [@orbitSource2026]; this applies to export-voltage transformers, not to this voltage pair |
 | Cost evidence | Fraunhofer adds a separate high-voltage transformer of about 25–26 EUR/kW in its 100 MW electrolysis cases [@holst2021ElectrolysisCost]. ORBIT's main-transformer rate is 15,772 USD~2024~/MW of transformer rating, CPI-inflated, for a different voltage class [@orbitSource2026] |
 | Losses | Fraunhofer assumes 99% efficiency for its high-voltage transformer [@holst2021ElectrolysisCost]. EU Ecodesign loss limits do not apply to offshore-platform transformers [@eu2019Ecodesign1783] |
-| Package boundary | Within the central 185 EUR/kW package on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd); must not be booked again on the platform |
+| Package boundary | Within the central conversion package on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd); must not be booked again on the platform |
 | Status | Candidate evidence; booked through the central package |
 
 ### Rectifier transformer
@@ -150,7 +150,7 @@ unit size, and a selected size must stay within some documented limit.
 | Documented ratings | Thyristor units by current as above; IGBT supplies up to 10 MW and above at up to 1,000 V DC [@abbHyQ2026] |
 | Cost evidence | Transformer plus rectifier: 199 USD~2020~/kW manufactured cost for 1 MW [@badgett2024PEMCost]; about 160 EUR/kW power electronics plus 25–26 EUR/kW transformer at 100 MW [@holst2021ElectrolysisCost]; lower Chinese-market package prices [@gao2025AdvancedRectifiers] |
 | Losses | Rectifier up to 99.6% [@abbUnirecWeb2026]; transformer plus rectifier above about 97.5% [@gao2025AdvancedRectifiers]; IGBT supply above 98% [@abbHyQ2026] |
-| Status | The central package of 185 EUR/kW and 97.5% net efficiency is documented on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd). Its efficiency is adopted; its unit cost is not yet normalised to EUR~2025~ (`central-conversion-unit-cost` blank) |
+| Status | The central package's net efficiency ({{< var central-conversion-efficiency >}}) is adopted on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd). Its 185 EUR/kW is a reference value only; `central-conversion-unit-cost` is unset |
 
 ### Dedicated stack-side DC/DC converter (conservative case)
 
@@ -167,7 +167,7 @@ unit size, and a selected size must stay within some documented limit.
 
 The model's wind-power states are generator electrical output: the IEA 15 MW
 curve includes generator efficiency but no converter or transformer loss. The
-current implementation applies AC cable losses and then the central 97.5%
+current implementation applies AC cable losses and then the central {{< var central-conversion-efficiency >}}
 package; turbine-level cases use a single interface efficiency that is still
 blank. The loss terms are therefore:
 
@@ -177,7 +177,7 @@ blank. The loss terms are therefore:
 | Grid-side inverter | Centralised | Not represented | TODO: evidence gap; do not split a package efficiency |
 | Turbine step-up transformer | Centralised | Not represented | TODO |
 | 66 kV AC collection | Centralised | Calculated from cable resistance | AC resistance and power factor still to be adopted |
-| Central transformers and rectifier | Centralised | 97.5% net package efficiency | Adopted |
+| Central transformers and rectifier | Centralised | {{< var central-conversion-efficiency >}} net package efficiency | Adopted |
 | Stack-side DC/DC converter | Conservative | Blank interface efficiency | Candidates above 97.5% |
 | Direct-DC interface | Direct DC | Blank interface efficiency | Should cover only DC-link, protection and cabling losses; no converter loss |
 

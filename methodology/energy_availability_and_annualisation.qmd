@@ -21,7 +21,7 @@ heating value is:
 
 | Parameter | Symbol | Value | Basis |
 |---|---:|---:|---|
-| Hydrogen higher heating value | $HHV_{\mathrm{H2}}$ | 39.4 kWh/kg | Rounded from 39.42 kWh/kg; liquid water as combustion product [@nrel2009ElectrolysisCost] |
+| Hydrogen higher heating value | $HHV_{\mathrm{H2}}$ | {{< var hydrogen-hhv >}} | Rounded from 39.42 kWh/kg; liquid water as combustion product [@nrel2009ElectrolysisCost] |
 
 For landed hydrogen mass $m_{\mathrm{H2}}$ in kg/year:
 

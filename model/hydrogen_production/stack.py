@@ -1,11 +1,12 @@
 """PEM polarisation and modular operation; owner: hydrogen_production/stack.qmd.
 
 The workbook is used as supplied. Current density is not treated as power:
-normalised module power is j*V(j)/(j_ref*V_ref). Switching penalties and
-chronological degradation are deferred; returned operation is beginning-of-life.
+normalised module power is j*V(j)/(j_ref*V_ref). Switching penalties are not
+modelled; returned operation is beginning-of-life, and degradation is applied
+afterwards as an energy penalty (lifetime_production_factor).
 """
 from dataclasses import dataclass
-from math import ceil
+from math import ceil, floor, inf
 from pathlib import Path
 
 import numpy as np
@@ -51,6 +52,29 @@ class StackOperation:
     compressor_kw: float
     curtailed_kw: float
     current_density_a_cm2: float
+
+
+def lifetime_production_factor(full_load_hours_per_year: float, project_years: float,
+                               inputs: Inputs) -> tuple[float, float]:
+    """Ex-post degradation penalty; returns (lifetime/BOL production, replacement interval in years).
+
+    The loss d grows linearly with accumulated full-load hours and resets to zero
+    when it reaches the end-of-life fraction. Operation and sizing stay at
+    beginning of life; production is scaled by one minus the project-average loss.
+    """
+    rate = inputs.number("stack-degradation-rate", "fraction/1000h") / 1000
+    end_of_life = inputs.fraction("stack-end-of-life-degradation")
+    if full_load_hours_per_year < 0 or project_years <= 0 or rate < 0 or end_of_life <= 0:
+        raise ValueError("Degradation needs non-negative hours and rate and positive life and threshold")
+    growth = rate * full_load_hours_per_year  # loss fraction per year
+    if growth == 0:
+        return 1.0, inf
+    interval = end_of_life / growth
+    cycles = floor(project_years / interval)
+    remainder = project_years - cycles * interval
+    # Area under the sawtooth loss curve, divided by the project life.
+    average_loss = (cycles * end_of_life * interval / 2 + growth * remainder**2 / 2) / project_years
+    return 1 - average_loss, interval
 
 
 def operate(available_kw: float, requested_stack_kw: float, curve: StackCurve,

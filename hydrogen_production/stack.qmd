@@ -74,10 +74,10 @@ The model therefore represents an electrolyser as a collection of identical stac
 
 Because the electrolyser is modular, not every stack module has to operate simultaneously.
 
-For every operating point, the model selects the number of active modules that maximises the overall conversion efficiency.
+For every operating point, the model selects the number of active modules that maximises hydrogen output after the BOP and compression loads are supplied. Whenever all available power is used, this is the same as maximising system efficiency; the two differ only when surplus power is curtailed at the reference current density.
 The available electrical power is then distributed across the active modules.
 
-This operational flexibility also alleviates the minimum-load limitation of PEM stacks, which is typically around 10% of the rated module capacity.
+This operational flexibility also alleviates the minimum-load limitation of PEM stacks, which is typically around 10% of the rated module capacity; the model uses {{< var stack-min-load >}} of the module rating ({{< var stack-module-rating >}}).
 
 For example, a 10 MW electrolyser consisting of ten 1 MW modules can operate at only one active module and 10% load.
 The minimum system load therefore becomes approximately 100 kW rather than 1 MW, allowing hydrogen production to continue during periods of low wind generation without operating individual stacks below their safe operating limit.
@@ -119,12 +119,25 @@ This illustrates why component optimisation should always be performed within th
 
 PEM stacks gradually degrade during operation.
 As degradation progresses, the cell voltage increases, reducing the electrical efficiency of hydrogen production.
-The model assumes linear degradation with accumulated full-load operating hours at a rate of 0.18% per 1000 full-load hours.
+The model assumes linear degradation with accumulated full-load operating hours with a fractional efficiency loss of {{< var stack-degradation-rate-value >}} per 1000 full-load hours.
 
 **Stack replacement**
 
 Eventually the efficiency loss becomes sufficiently large that replacing the stack is economically preferable to continued operation.
-In practice, approximately 10% performance degradation is commonly considered end-of-life.
+In practice, approximately {{< var stack-end-of-life-degradation >}} performance degradation is commonly considered end-of-life; the model uses this threshold.
+
+**Ex-post energy penalty**
+
+Degradation is applied after the operating calculation, as an energy penalty. Operation, module selection and equipment sizing remain at beginning of life. Let $r$ be the degradation rate per full-load hour, $F$ the stacks' annual full-load hours (annual stack energy divided by installed stack capacity), $d_\mathrm{EOL}$ the end-of-life loss and $N$ the project life in years. The loss grows by $g=rF$ per year and resets at each replacement, after $T=d_\mathrm{EOL}/g$ years. With $k=\lfloor N/T
+floor$ complete stack lives and remainder $R=N-kT$, the project-average loss and the lifetime production factor are:
+
+$$
+ar d=rac{k\,d_\mathrm{EOL}T/2+gR^2/2}{N},
+\qquad
+f_\mathrm{life}=1-ar d.
+$$
+
+Delivered hydrogen is multiplied by $f_\mathrm{life}$ (implemented in `lifetime_production_factor` in `model/hydrogen_production/stack.py`). Degradation-driven increases in BOP load are not modelled. The replacement cost still uses the separate `stack-replacement-life` input, which should be set consistently with $T$.
 
 **Effect of partial-load operation**
 
@@ -134,8 +147,8 @@ This creates an additional economic incentive for stack overplanting, alongside 
 ::: {.callout-note}
 ## Example: Stack overplanting and degradation
 Assume a stack is replaced after reaching 10% degradation.
-With a degradation rate of 0.18% per 1000 full-load hours, replacement occurs after approximately 58,500 full-load hours.
-Assuming an offshore wind capacity factor of 40%, this corresponds to roughly 16.7 calendar years.
+With a fractional loss of {{< var stack-degradation-rate-value >}} per 1000 full-load hours, replacement occurs after approximately 55,600 full-load hours.
+Assuming an offshore wind capacity factor of 40%, this corresponds to roughly 15.9 calendar years.
 A 25-year project therefore requires at least one stack replacement.
 If this replacement is already unavoidable, installing additional stack capacity from the outset becomes an attractive alternative.
 The total stack material requirement over the project lifetime remains similar, while the system additionally benefits from:
@@ -167,7 +180,7 @@ A complication is that the rated power of a PEM stack is not a purely physical p
 
 This is important because current density is treated explicitly in this model. Operating at higher current density increases the power output of a given stack, but it also increases cell voltage, reduces efficiency and accelerates degradation. Conversely, installing more stack capacity allows operation at lower current density, improving efficiency and lifetime at the expense of higher CAPEX.
 
-The model therefore uses a **reference-rated stack capacity** as the cost-normalisation convention. This is the electrical capacity the installed stack would have if operated at a fixed reference current density of **3 A/cm²**. The reference-rated capacity is used only for cost accounting; it does not imply that the stack must operate continuously at this current density.
+The model therefore uses a **reference-rated stack capacity** as the cost-normalisation convention. This is the electrical capacity the installed stack would have if operated at a fixed reference current density of **{{< var stack-reference-current-density >}}**. The reference-rated capacity is used only for cost accounting; it does not imply that the stack must operate continuously at this current density.
 
 NREL’s cost values are converted to this 3 A/cm² reference-rating convention where necessary. This avoids treating changes in rating current density as independent cost reductions. In the NREL cost-reduction waterfall, part of the reduction in $/kW arises from increased current density, because the same physical stack area is assigned a higher rated power. In this model, that mechanism is already captured explicitly through the polarisation curve: higher current density allows more power from the same installed stack, but with an efficiency and degradation penalty. Therefore, current-density-driven reductions in reported $/kW are not applied as a separate stack cost reduction.
 

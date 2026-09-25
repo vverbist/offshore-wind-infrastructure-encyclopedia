@@ -67,9 +67,9 @@ dimensionless physical constants. Raw USD rates have unknown common price age
 and are used only as relative calibration weights. The separate crane price
 is unresolved; a documented mass subtotal does not establish a complete price.
 
-The lifetime-production factor is an unresolved interface for a later adopted
-degradation/replacement treatment. Its blank value prevents beginning-of-life
-production from being used silently as lifetime-average LCOH production.
+Stack degradation is an ex-post energy penalty: `stack-degradation-rate`
+(fraction per 1000 full-load hours) and `stack-end-of-life-degradation` give the
+lifetime-average production factor in code (`hydrogen_production/stack.qmd`).
 
 `turbine-distributed-maximum-lift` is the largest lifted assembly [t] in the
 adopted combined turbine/hydrogen installation plan. It and the additional

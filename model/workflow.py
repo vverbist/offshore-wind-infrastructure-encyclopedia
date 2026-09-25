@@ -341,8 +341,18 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
         return delivered_mass(flows, wind.hours, np.full(locations, production * compression), transport)
     annual = step("annual availability", annual_delivery)
     result.summary["delivered_hydrogen_kg_year_bol"] = annual
+    def lifetime_factor():
+        table = dependent(result.tables.get("operation"), "stack operation")
+        installed_kw = locations * float(table.installed_kw.iloc[0])
+        full_load_hours = float((table.stack_kw * table.hours).sum()) / installed_kw
+        factor, interval = stack.lifetime_production_factor(
+            full_load_hours, inputs.positive("financial-project-life", "year"), inputs)
+        result.physical["stack_full_load_hours_per_year"] = full_load_hours
+        result.physical["stack_degradation_interval_years"] = interval if interval != float("inf") else None
+        result.summary["stack_lifetime_production_factor"] = factor
+        return factor
     lifecycle_mass = step("lifetime production", lambda: dependent(annual, "annual delivered hydrogen")
-                          * inputs.fraction("stack-lifetime-production-factor"))
+                          * lifetime_factor())
     result.summary["delivered_hydrogen_kg_year_lifetime_average"] = lifecycle_mass
     if lifecycle_mass is not None:
         hhv_energy = lifecycle_mass * inputs.number("hydrogen-hhv", "kWh/kg") / 1000

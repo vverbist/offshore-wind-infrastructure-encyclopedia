@@ -213,10 +213,11 @@ optimisation of overplanting or replacement timing; design variables are
   adopted fixed-percentage loss (value and location to be chosen).
 - [ ] **Availability:** stack 99.5% and AC 99% page values are not model inputs;
   settle together with the availability ledger (O10).
-- [ ] **Stack degradation:** decide how to represent 0.18%/1000 h (D4); the page
-  still describes it while the model is beginning-of-life.
-- [ ] **BOP water treatment:** reconcile the page's flow-based package method
-  with the model's lump-sum input and the aggregate-exponent decision row.
+- [x] **Stack degradation:** applied as an ex-post energy penalty (lifetime
+  production factor from rate, end-of-life threshold and calculated full-load
+  hours); `stack-replacement-life` still needs setting consistently.
+- [x] **BOP water treatment:** page now follows the code (aggregate exponent,
+  water reference cost at 1 MW still unset).
 - [ ] **Turbine cost:** the calibrated breakdown on the turbine page cannot be
   reproduced while `turbine-cost-crane` is blank (O6); keep open.
 - [ ] **Transition-piece mass:** find a source for `foundation-transition-piece-mass`,
@@ -224,9 +225,8 @@ optimisation of overplanting or replacement timing; design variables are
 - [ ] **Structural-baseline note (D5):** state on the foundation and turbine
   pages that turbine-level hydrogen equipment mass and the removed transformer
   are held at the common baseline.
-- [ ] **Remaining documentation:** wake and Weibull pages describe the legacy
-  method; the pipeline page describes an interpolation surface where the model
-  uses a fitted formula; page values typed as text instead of linked inputs.
+- [ ] **TCP fit range:** record the minimum and maximum quoted diameter and
+  pressure class (no prices) so design cases can be checked against it.
 
 ## Active open points
 

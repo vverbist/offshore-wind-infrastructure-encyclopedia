@@ -1,172 +1,132 @@
 ---
 title: "Wake Modelling and Spacing"
-completion: 60
-readiness: blocked
+completion: 75
+readiness: partially_implementable
 ---
 
 ## Role in the Model
 
-This calculation converts turbine count, farm area and turbine characteristics into explicit turbine coordinates. PyWake then evaluates turbine interaction for every wind-speed and direction state and returns wake-adjusted farm power and annual energy production.
+This calculation turns turbine coordinates, a tabulated turbine curve and a set
+of wind states into the wake-affected electrical power of every turbine in every
+state. That table is the common input to all architectures: it gives power at the
+generator electrical output, before any architecture-specific conversion or
+collection loss. The implementation is `calculate_wakes` in
+`model/wind_resource_and_layout/wake_modelling_and_spacing.py`.
 
-The layout is deliberately schematic. It exposes the main relationship between installed capacity, occupied area, turbine separation and wake loss without claiming to reproduce a consented or commercially optimised wind-farm layout.
+The layout is deliberately schematic. It exposes the relationship between
+installed capacity, occupied area, turbine separation and wake loss without
+claiming to reproduce a consented or commercially optimised wind-farm layout.
 
 ## Inputs
 
-| Symbol | Description | Unit | Legacy treatment |
+| Symbol | Description | Unit | Source in the model |
 |---|---|---:|---|
-| $N$ | Number of turbines | count | Scenario input |
-| $A$ | Farm area | km² | Scenario input |
-| $P_r$ | Rated power per turbine | MW | Scenario input; baseline 15 MW |
-| $D$ | Rotor diameter | m | 236 m |
-| $H_h$ | Hub height | m | 150 m |
-| $\alpha$ | Layout orientation clockwise from north | degrees | 30° |
-| $I_0$ | Ambient turbulence intensity | fraction | 0.058 |
-| $p_s,k_s,c_s$ | Directional Weibull inputs | mixed | [Wind Resource and Weibull Distribution](wind_resource_and_weibull.qmd) |
+| $(x_j,y_j)$ | Turbine coordinates, $x$ east and $y$ north | m | Scenario coordinates file, or a declared regular grid |
+| $P(v)$, $C_T(v)$ | Tabulated electrical power and thrust coefficient | kW, – | Scenario turbine-curve file |
+| $D$, $H_h$ | Rotor diameter and hub height | m | Scenario turbine record |
+| $v_s$, $\theta_s$, $h_s$ | Wind speed, direction (wind **from**, clockwise from north) and annual hours of state $s$ | m/s, °, h/year | Scenario wind-state file |
+| $I_0$ | Ambient turbulence intensity | fraction | {{< var wind-turbulence-intensity >}} (provisional legacy assumption) |
 
-The values for $D$, $H_h$, $\alpha$ and $I_0$ are explicit legacy assumptions. The 150 m hub height is not consistent with the current default relationship on [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd), which gives 133 m for a 236 m rotor. The wake calculation should ultimately consume the same turbine definition as the turbine-system calculation.
+The state hours must add up to the central annual-hour basis
+({{< var annual-hours >}}); they are not renormalised.
 
-## Grid Dimensions
+## Layout
 
-The primary scenario workflow creates a near-rectangular grid. The number of columns and rows is:
+A scenario supplies coordinates directly, or declares a regular grid (turbine
+count, columns, spacings and rotation) whose incomplete final row is centred.
+In both cases the model checks that every pair of turbines is at least the
+declared minimum separation apart and rejects the layout otherwise. Farm area is
+a reporting boundary; it is never used as a multiplier on distances.
 
-$$
-n_x=\left\lceil\sqrt{N}\right\rceil,
-\qquad
-n_y=\left\lceil\frac{N}{n_x}\right\rceil.
-$$
+The article reference case generates its coordinates from the agreed site
+record: a rectangle across the dominant wind direction, rows numbered from the
+upwind edge and an explicit rotation convention (see the
+[reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case)).
 
-If $n_x<n_y$, the two counts are exchanged. With $A_m=10^6A$ in m², the unrotated grid dimensions are:
+## Turbine Performance
 
-$$
-L_y=\sqrt{A_m\frac{n_y}{n_x}},
-\qquad
-L_x=\frac{A_m}{L_y},
-$$
-
-so that $L_xL_y=A_m$. The nominal separations are:
-
-$$
-d_x=\frac{L_x}{n_x-1},
-\qquad
-d_y=\frac{L_y}{n_y-1},
-$$
-
-for dimensions with more than one turbine position. The minimum separation in rotor diameters is:
-
-$$
-s_\mathrm{min,D}=\frac{\min(d_x,d_y)}{D}.
-$$
-
-The legacy code prints a warning when $s_\mathrm{min,D}<3$ but continues the calculation. The 3D value is an unsourced screening threshold, not a demonstrated feasibility limit.
-
-## Turbine Coordinates
-
-Unrotated coordinate vectors are placed over the full grid dimensions:
-
-$$
-u_i\in[0,L_x],
-\qquad
-v_j\in\left[-\frac{L_y}{2},\frac{L_y}{2}\right].
-$$
-
-The Cartesian product of these vectors is flattened row by row and truncated after the first $N$ positions. A non-full final row can therefore be asymmetric. The layout is rotated by $\alpha$ using:
-
-$$
-x=u\sin\alpha+v\cos\alpha,
-$$
-
-$$
-y=u\cos\alpha-v\sin\alpha.
-$$
-
-The resulting $(x_j,y_j)$ coordinates are the actual geometric input to the wake calculation. Infield-network calculations should use these coordinates rather than a separate area or spacing multiplier.
-
-## Legacy Turbine Performance
-
-The wake model requires both power and thrust coefficient as functions of wind speed. The legacy implementation constructs a synthetic curve on a 0.5 m/s grid:
-
-| Wind-speed region | Power | Thrust coefficient |
-|---|---:|---:|
-| Below 3 m/s | 0 | 0 |
-| 3 to below 12 m/s | Linear array from 0 to rated power | 0.8 |
-| 12 to below 25 m/s | Rated power | 0.8 |
-| 25 m/s and above | 0 | 0 |
-
-Because the ramp is generated across the discrete points from 3.0 to 11.5 m/s inclusive, the legacy array already reaches rated power at 11.5 m/s even though the stored rated wind speed is 12 m/s. This is an implementation artefact rather than an intended turbine characteristic.
-
-The legacy model therefore does not use the documented performance of the IEA 15 MW reference turbine. That reference provides a consistent 15 MW turbine definition [@gaertner2020IEA15]. The [article reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case) now uses its pinned tabulated power and thrust-coefficient curve, rotor diameter and hub height, with direction states at sector centres and one joint probability grid.
+The wake calculation uses a supplied, tabulated power and thrust-coefficient
+curve; it never builds a synthetic curve. The article case uses the pinned IEA
+15 MW reference turbine release [@gaertner2020IEA15; @ieaWind15RwtRelease2026],
+whose power column is electrical output. Zero power and thrust are declared just
+outside the operating range, because PyWake would otherwise hold the first
+tabulated value for waked turbines below cut-in.
 
 ## Wake Calculation
 
-The legacy PyWake configuration is:
+PyWake evaluates every state with the following configuration
+[@pywakeDocumentation2026]:
 
 | Model element | Selection | Function |
 |---|---|---|
-| Site | `UniformWeibullSite` | Directional Weibull resource and ambient turbulence intensity |
+| Site | `UniformSite` with ambient $I_0$ | Uniform inflow; state weights come from the wind-state table, not from the site |
 | Propagation | `PropagateDownwind` | Calculates wakes from upstream to downstream turbines |
-| Wake deficit | `TurboNOJDeficit` | Turbulence-dependent top-hat wake expansion |
-| Rotor averaging | `AreaOverlapAvgModel` | Accounts for partial overlap of a top-hat wake and downstream rotor |
-| Superposition | `SquaredSum` | Combines deficits from multiple upstream turbines |
+| Wake deficit | `TurboNOJDeficit` | Turbulence-dependent top-hat wake expansion [@nygaard2020ClusterWakes] |
+| Rotor averaging | `AreaOverlapAvgModel`, on the deficit model | Partial overlap of a top-hat wake and a downstream rotor |
+| Superposition | `SquaredSum` | Combines deficits from several upstream turbines |
 | Blockage | None | Upstream induction is excluded |
 
-`TurboNOJDeficit` implements the turbulence-optimised Park formulation described by Nygaard and co-authors [@nygaard2020ClusterWakes]. PyWake documents it as a top-hat deficit model whose wake expansion depends on turbulence intensity [@pywakeDocumentation2026]. `PropagateDownwind` does not calculate blockage effects [@pywakeDocumentation2026].
+The calculation is run once per wind direction for all speeds in that direction;
+each state keeps its own speed and weight. For state $s$ and turbine $j$ the
+result is the wake-affected power $P_{j,s}$ in kW. The installed PyWake version is
+recorded with each result.
 
-For direction sector $s$, wind-speed state $i$ and turbine $j$, the wake-aware farm power is:
+## Annual Energy and Outputs
 
-$$
-P_{s,i}^\mathrm{wake}
-=\sum_{j=1}^{N}P_j(v_{s,i}^\mathrm{eff}),
-$$
-
-where $v_{s,i}^\mathrm{eff}$ is the wake-reduced rotor-effective wind speed. The annual wake-adjusted energy is conceptually:
+The wake-affected and no-wake annual energies, in MWh/year, are
 
 $$
-E_\mathrm{wake}
-=8760\sum_s\sum_i w_{s,i}P_{s,i}^\mathrm{wake},
+E_\mathrm{wake}=\frac{1}{1000}\sum_s h_s\sum_j P_{j,s},
+\qquad
+E_0=\frac{N}{1000}\sum_s h_s\,P(v_s),
 $$
 
-with the probability weights $w_{s,i}$ defined on the wind-resource page. PyWake performs the corresponding probability-weighted AEP calculation using the directional Weibull site.
-
-## No-Wake Reference and Outputs
-
-The no-wake reference is calculated for one isolated turbine using `NoWakeDeficit` and then multiplied by $N$:
-
-$$
-E_0=NE_\mathrm{single,0}.
-$$
-
-Wake loss and wake-adjusted gross capacity factor are:
+and the wake loss and wake-affected gross capacity factor are
 
 $$
 L_\mathrm{wake}=1-\frac{E_\mathrm{wake}}{E_0},
+\qquad
+CF_\mathrm{wake,gross}=\frac{1000\,E_\mathrm{wake}}{NP_r\,\sum_s h_s}.
 $$
 
-$$
-CF_\mathrm{wake,gross}
-=\frac{E_\mathrm{wake}}{NP_r\,8760}.
-$$
+These exclude availability, collection, conversion and export losses, which are
+applied downstream and must not be applied again here. For the article reference
+case the result is a wake loss of {{< var ijv-wake-loss >}} and a gross capacity
+factor of {{< var ijv-gross-capacity-factor >}}.
 
-This capacity factor includes wake loss but excludes turbine availability, infield losses, export losses and conversion losses. Those reductions are applied downstream and must not be included again here.
+The model accepts the wind input in two equivalent forms: a wind-state table with
+a turbine curve, from which it runs PyWake itself (optional `wind` dependency), or
+a stored table of per-turbine power by state. The article case stores the table,
+generated with the same function by
+`research_articles/turbine_level_hydrogen/analysis/prepare_common_case.py`, so
+that both architectures read identical turbine power and a case run does not need
+PyWake. A zero-hour design state may be added for peak-duty sizing.
 
-The calculation returns:
+## Legacy Implementation
 
-- turbine coordinates $(x_j,y_j)$;
-- wake-aware and no-wake farm-power tables by wind speed and direction;
-- wake-adjusted and no-wake annual energy;
-- wake loss; and
-- wake-adjusted gross capacity factor.
+The earlier model used a synthetic ramp-shaped power curve with a constant
+thrust coefficient, PyWake's `UniformWeibullSite` with sector-edge directions, a
+fixed 30° orientation and a grid truncated after $N$ positions. These are
+replaced by the method above and are retained only for traceability of older
+results.
 
-The wake-aware power table is passed to the electricity and hydrogen yield calculations. The coordinates are passed to the separate infield-network models.
-
-::: {.callout-warning title="Suggested technical improvements"}
-1. **Use one turbine definition.** Replace the synthetic curve with a version-pinned tabulated power and thrust-coefficient curve and obtain rotor diameter and hub height from the turbine-system model.
-2. **Use one layout geometry.** Define $N$, $A$, aspect ratio, orientation and any boundary margin once; derive coordinates, actual nearest-neighbour spacing and power density from that geometry. Do not use the separate proxy $\sqrt{A/(ND^2)}$ as if it were the coordinate spacing.
-3. **Reject infeasible layouts.** A scenario should fail when minimum separation or boundary constraints are violated. The accepted minimum separation must be sourced or represented as an explicit design assumption.
-4. **Centre incomplete rows.** Avoid the asymmetric row created by truncating a full Cartesian grid, or restrict the optimisation to layouts with a deliberately defined row structure.
-5. **Make orientation a scenario variable.** The fixed 30-degree orientation is unsupported and interacts with the directional wind resource. Evaluate a discrete orientation set or derive the orientation from an explicit layout decision.
-6. **Pin and benchmark the wake model.** Record the PyWake version and complete model configuration. Compare representative dense and sparse layouts against at least one credible alternative wake formulation; use the difference as model uncertainty before adding more wake-model detail.
-7. **Test turbulence and blockage sensitivity.** The fixed $I_0=0.058$ directly affects `TurboNOJDeficit`. Evaluate a sourced range and quantify whether omission of blockage changes the techno-economic decision.
-8. **Correct output names.** The current legacy field `turbine_gross_yield_MWh` is wake-affected energy per turbine and should be renamed so that gross, no-wake, wake-adjusted and delivered energy cannot be confused.
+::: {.callout-warning title="Remaining improvements"}
+1. **Benchmark the wake model.** Compare representative dense and sparse layouts
+   against at least one credible alternative wake formulation and use the
+   difference as model uncertainty.
+2. **Test turbulence and blockage sensitivity.** The provisional $I_0$ directly
+   affects `TurboNOJDeficit`; evaluate a sourced range and quantify whether the
+   omission of blockage changes the comparison.
+3. **Source the minimum-separation check.** The article case keeps the unsourced
+   legacy threshold of three rotor diameters as a coordinate check only.
 :::
 
-Higher-fidelity CFD, LES and full commercial layout optimisation are not proposed at this stage. They are justified only if the simpler model has first been made internally consistent and the remaining wake uncertainty can materially change the model decision.
+Higher-fidelity CFD, LES and full commercial layout optimisation are not proposed
+at this stage. They are justified only if the simpler model has first been made
+internally consistent and the remaining wake uncertainty can materially change
+the comparison.
+
+## References
+
+::: {#refs}
+:::

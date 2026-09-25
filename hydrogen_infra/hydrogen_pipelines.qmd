@@ -88,7 +88,7 @@ $$
 \mu(T,p_\mathrm{avg})
 $$
 
-where $T=293 \ \mathrm{K}$ in the current figure builder.
+where $T$ is {{< var pipeline-temperature >}} (`pipeline-temperature`).
 
 The implementation then evaluates the combined term $\mathrm{Re}\sqrt{f_F}$:
 
@@ -119,7 +119,7 @@ $$
 \right)
 $$
 
-where $\epsilon=1.5 \cdot 10^{-7} \ \mathrm{m}$ in the current implementation.
+where $\epsilon$ is the pipe roughness, {{< var pipeline-roughness >}} (`pipeline-roughness`), and {{< var pipeline-colebrook-roughness-divisor >}} and {{< var pipeline-colebrook-reynolds-coefficient >}} are the Colebrook constants shown in the equation.
 
 The resulting gas velocity is:
 
@@ -211,15 +211,15 @@ where $\dot{m}_{\mathrm{H_2},\mathrm{peak}}$ is the peak hydrogen flow that must
 
 ## Material Cost Model
 
-Pipeline material CAPEX is based on confidential supplier quotes for selected combinations of diameter and pressure class [@supplierSPipelineCost]. The model constructs a two-dimensional interpolation surface over diameter and pressure:
+Pipeline material CAPEX is based on confidential supplier quotes for selected combinations of diameter and pressure class [@supplierSPipelineCost]. The model uses a **fitted bilinear surface** over diameter and pressure:
 
 $$
-c_\mathrm{mat}
-=
-I(D,p)
+c_\mathrm{mat}(D,p_g)=a+b\,D+c\,p_g+d\,D\,p_g
 $$
 
-where $I(D,p)$ is the interpolated material cost per unit length. The confidential fit returns material price in EUR~2025~/m; the project owner confirmed this price basis on 25 September 2026, so the model's quote-to-EUR~2025~ factor `pipeline-quote-to-eur2025` is {{< var pipeline-quote-to-eur2025 >}}.
+where $c_\mathrm{mat}$ is material cost per unit length [EUR~2025~/m], $D$ is the diameter [inch], $p_g$ is the operating pressure [bar(g)], and $a$, $b$, $c$ and $d$ are confidential coefficients fitted to the quotes. Unlike an interpolation through the quote points, the fit is one smooth surface: it need not reproduce each quote exactly, and it returns values outside the quoted range by extending the same bilinear trend.
+
+**Stay within the quoted range.** Evaluate cases only for diameters and pressures inside, or at most slightly outside, the quoted diameter and pressure classes. Beyond them, the linear extension has no supplier support and can misstate cost in either direction. The quoted range is not yet recorded in the repository (TODO: record the minimum and maximum quoted diameter and pressure class without disclosing prices). The confidential fit returns material price in EUR~2025~/m; the project owner confirmed this price basis on 25 September 2026, so the model's quote-to-EUR~2025~ factor `pipeline-quote-to-eur2025` is {{< var pipeline-quote-to-eur2025 >}}.
 
 **Pressure basis:** the fit is read at the section's operating inlet pressure in bar(g), without a design margin (agreed 25 September 2026). The model converts its absolute pressures by subtracting the standard atmosphere before calling the fit.
 

@@ -75,7 +75,7 @@ The calculation is performed in dependency order:
 
 ## Rated Speed and Torque
 
-The rated rotor angular velocity follows from the fixed 95 m/s tip-speed limit:
+The rated rotor angular velocity follows from the fixed {{< var turbine-tip-speed >}} tip-speed limit:
 
 $$
 \omega_r=\frac{V_\mathrm{tip}}{D/2}.
@@ -372,7 +372,7 @@ C_\mathrm{turbine}
 +k_\mathrm{tower}C_\mathrm{tower,raw}.
 $$
 
-The current calibration candidate is NREL's 2022 Cost of Wind Energy Review. Its offshore reference is a 12 MW turbine with a 216 m rotor and 137 m hub height. It reports turbine CAPEX of USD 1,700/kW, separated into USD 1,462/kW for the RNA and USD 238/kW for the tower; installation is a separate cost category [@stehly2023CostWind]. These values define a reference point, not a linear EUR/kW turbine model.
+The current calibration candidate is NREL's 2022 Cost of Wind Energy Review. Its offshore reference is a {{< var turbine-calibration-power >}} turbine with a {{< var turbine-calibration-diameter >}} rotor and {{< var turbine-calibration-hub-height >}} hub height. It reports turbine CAPEX of USD 1,700/kW, separated into {{< var turbine-calibration-rna-cost >}} for the RNA and {{< var turbine-calibration-tower-cost >}} for the tower; installation is a separate cost category [@stehly2023CostWind]. These values define a reference point, not a linear EUR/kW turbine model.
 
 Currency conversion and escalation are applied after calibration using the [common EUR2025 financial basis](../methodology/financial_and_price_basis.qmd). The source currency, source year, index, and exchange-rate convention must accompany every reported result.
 
@@ -518,7 +518,7 @@ $$
 L_t=H_h-15=118\ \mathrm{m}.
 $$
 
-The fixed assumptions are three blades, 95 m/s maximum tip speed, 95% drivetrain efficiency, two main bearings, a nacelle crane, and a permanent-magnet direct-drive generator. Mehta's load-responsive relationship is used for blade mass and its torque relationship is used for generator mass. The remaining applicable component masses follow the pinned WISDEM equations.
+The fixed assumptions are three blades, {{< var turbine-tip-speed >}} maximum tip speed, {{< var turbine-drivetrain-efficiency >}} drivetrain efficiency, two main bearings, a nacelle crane, and a permanent-magnet direct-drive generator. Mehta's load-responsive relationship is used for blade mass and its torque relationship is used for generator mass. The remaining applicable component masses follow the pinned WISDEM equations.
 
 ### Operating point
 
@@ -560,7 +560,7 @@ Converter, switchgear, DC-link, protection, and internal-cabling masses are not 
 
 ### Cost calibration
 
-The raw WISDEM component costs are calibrated to NREL's 12 MW offshore reference. The NREL reference uses $P_\mathrm{ref}=12$ MW, $D_\mathrm{ref}=216$ m, $H_{h,\mathrm{ref}}=137$ m, RNA cost of USD 1,462/kW, and tower cost of USD 238/kW [@stehly2023CostWind].
+The raw WISDEM component costs are calibrated to NREL's 12 MW offshore reference. The NREL reference uses $P_\mathrm{ref}=$ {{< var turbine-calibration-power >}}, $D_\mathrm{ref}=$ {{< var turbine-calibration-diameter >}}, $H_{h,\mathrm{ref}}=$ {{< var turbine-calibration-hub-height >}}, RNA cost of {{< var turbine-calibration-rna-cost >}}, and tower cost of {{< var turbine-calibration-tower-cost >}} [@stehly2023CostWind].
 
 The raw blade-cost anchor is the WISDEM coefficient applied to the 65 t IEA 15 MW reference blade:
 

@@ -62,11 +62,11 @@ The reference is the IEA 15 MW offshore wind turbine [@gaertner2020IEA15]:
 
 | Reference quantity | Value | Basis |
 |---|---:|---|
-| RNA mass | 1,017 t | Published reference-turbine mass |
-| Tower mass | 860 t | Published reference-turbine mass |
+| RNA mass | {{< var foundation-reference-rna-mass >}} | Published reference-turbine mass |
+| Tower mass | {{< var foundation-reference-tower-mass >}} | Published reference-turbine mass |
 | $m_\mathrm{top,ref}$ | 1,877 t | RNA plus tower |
-| $d_\mathrm{ref}$ | 30 m | Reference site water depth |
-| $m_\mathrm{MP,ref}$ | 1,318 t | Published reference monopile mass |
+| $d_\mathrm{ref}$ | {{< var foundation-reference-depth >}} | Reference site water depth |
+| $m_\mathrm{MP,ref}$ | {{< var foundation-reference-monopile-mass >}} | Published reference monopile mass |
 
 Equivalently,
 
@@ -139,7 +139,7 @@ $$
 | Case | $c_\mathrm{MP}$ | $r_\mathrm{TP}$ |
 |---|---:|---:|
 | Low | 2,030 USD$_{2022}$/t | 0.50 |
-| Baseline | 2,430 USD$_{2022}$/t | 0.625 |
+| Baseline | {{< var foundation-fabrication-unit-cost-value >}} USD$_{2022}$/t | {{< var foundation-transition-piece-cost-ratio-value >}} |
 | High | 2,840 USD$_{2022}$/t | 0.75 |
 
 The transition piece is represented as a cost allowance because the source reports a cost ratio rather than sufficient geometry for a separate material calculation. Its mass is not included in $m_\mathrm{MP}$ and remains a project-specific input to transport and installation analysis.

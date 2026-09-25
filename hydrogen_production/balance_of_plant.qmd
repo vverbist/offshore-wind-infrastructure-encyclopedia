@@ -36,11 +36,11 @@ The main assumptions used in the base-case BOP model are:
 | Parameter                                   |      Base value | Comment                                              |
 | ------------------------------------------- | --------------: | ---------------------------------------------------- |
 | Non-water non-electrical BOP reference cost | 333 2020 USD/kW | NREL 1,000 MW/year case plus 50% manufacturer markup |
-| Water-treatment package references | 100 and 3,800 m³/day | Quoted small and large RO/deionisation package capacities [@chicoMoreno2021OffshoreElectrolyzer] |
+| Water-treatment reference purchase cost (1 MW) | {{< var bop-water-reference-purchase-cost >}} | Part of the aggregate BOP; quoted packages are evidence only [@chicoMoreno2021OffshoreElectrolyzer] |
 | Reference capacity                          |            1 MW | NREL reference system                                |
-| Non-water BOP scaling exponent | {{< var bop-scaling-exponent >}} | Does not govern water-treatment package count |
+| BOP scaling exponent | {{< var bop-scaling-exponent >}} | Applies to the whole BOP, including water treatment |
 | Maximum capacity per BOP block | {{< var bop-block-limit >}} | Adopted screening bound, not supplier qualification |
-| BOP electricity consumption                 |   1.0 kWh/kg H₂ | Excludes compression and power electronics           |
+| BOP electricity consumption                 | {{< var bop-specific-electricity >}} H₂ | Excludes compression and power electronics |
 
 : Main base-case assumptions for the BOP model.
 
@@ -107,57 +107,25 @@ The purchased treatment package converts seawater into electrolyser-grade water.
 
 The quotes do not establish the costs of seawater intake, intake screening, stack-water recirculation, offshore installation or additional redundancy. These remain separate unresolved costs. The prices are treated as approximately 2021 euros because the study does not specify the quote dates. No additional manufacturer markup is applied to quoted package prices.
 
-The design driver is the required **peak clean-water flow** at each production location, not installed electrical capacity. The explicit design allowance is 10 L of clean water per kg H₂: approximately 9 L/kg for the stoichiometric reaction, rounded upward to allow for process losses. For peak hydrogen output $\dot m_{\mathrm{H_2,peak}}$ [kg/h]:
+The model treats water treatment as part of the **aggregate BOP**. Its reference purchase cost at the 1 MW reference capacity, `bop-water-reference-purchase-cost` ({{< var bop-water-reference-purchase-cost >}}), is added to the non-water reference cost and scaled with the same exponent and block rule (see [Scaling Method](#scaling-method)). The quotes above are evidence for choosing that value, not a separate calculation. They cannot be read off directly: at 10 L of clean water per kg H₂ and about 19.6 kg/h per MW of stack input at the 3 A/cm² rating, a 1 MW reference needs about 0.2 m³/h, far below the smallest quoted package (4.17 m³/h). The water reference cost therefore remains an unresolved input.
 
-$$
-Q_{\mathrm{water,design}}
-=\dot m_{\mathrm{H_2,peak}}
-\frac{10\ \mathrm{L/kg_{H_2}}}{1000\ \mathrm{L/m^3}}
-=0.01\dot m_{\mathrm{H_2,peak}}\quad[\mathrm{m^3/h}].
-$$
+### Scaling Method {#scaling-method}
 
-Peak hydrogen output follows from the supplied stack polarisation curve and the feasible full-power operating point [@manufacturerGStackPolarisation]. At the 3 A/cm² rating, its approximately 1.92 V cell voltage and the model's 1.481 V HHV voltage and 39.4 kWh/kg H₂ give $1000(1.481/1.92)/39.4\approx19.6$ kg/h per MW of stack input, hence 0.196 m³/h per MW. This is a gross stack-input reference; BOP and compression loads reduce the stack power achievable from a given wind input. Stack overplanting does not automatically increase treatment flow: water is sized for the maximum hydrogen output actually achievable with available electrical power and the selected stack operating point.
-
-For each independently supplied location, select the least-cost combination of quoted small and large packages whose combined clean-water capacity meets $Q_{\mathrm{water,design}}$. With integer package counts $n_s,n_l\geq0$, the screening purchase cost is:
-
-$$
-C_{\mathrm{water,package}}
-=\min_{\substack{n_s,n_l\in\mathbb{Z}_{\geq0}\\
-4.17n_s+158.3n_l\geq Q_{\mathrm{water,design}}}}
-\left(0.30n_s+3.0n_l\right)\ \mathrm{million\ EUR}_{2021}.
-$$
-
-This keeps the equipment-count thresholds visible. It assumes the quoted package sizes can be replicated without a procurement discount or premium. No spare package is included. As a broad price-year conversion, [Eurostat's annual HICP series](https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_aind/default/table) implies approximately 1.20 EUR\textsubscript{2025}/EUR\textsubscript{2021}; this general inflation factor is not an equipment-price index. Thus the corresponding approximate 2025 package prices are €0.36 million and €3.6 million.
-
-Using gross stack input as a conservative screening basis, a 15 MW turbine requires about $15(0.196)=2.94$ m³/h, covered by one small package: approximately €0.36 million in 2025 euros, or **€24/kW** of turbine rating. A central 2 GW plant requires about $2000(0.196)=392$ m³/h, covered by three large packages: approximately €10.8 million, or **€5.4/kW**. These €/kW values are derived comparisons, not model drivers. The central example assumes treatment at a single location; a distributed layout requires separate package counts at each location. The executable model should replace these gross-input screening flows with its actual peak hydrogen outputs.
-
-The executable model still uses the unset `bop-water-reference-purchase-cost` and capacity-exponent scaling. These flow-based package costs are the adopted documentation basis for a later model change; complete BOP CAPEX remains unavailable until the flow-based calculation and the unresolved intake/installation boundaries are implemented.
-
-### Scaling Method
-
-Cooling, gas-liquid separation, drying, piping and instrumentation can be shared across multiple stacks. The non-water BOP therefore does not scale linearly with installed capacity. Water-treatment packages are costed separately from their required clean-water flow and selected equipment counts.
+Cooling, gas-liquid separation, drying, piping and instrumentation can be shared across multiple stacks. The BOP therefore does not scale linearly with installed capacity. Water treatment is scaled in the same way, as part of the aggregate BOP.
 
 Because the exact scaling exponent is not known, the model uses the six-tenths rule as a first-order process-equipment scaling approximation. The six-tenths rule is a standard preliminary process-equipment cost-scaling method in which cost scales with capacity using an exponent close to 0.6 [@engineeringLibretextsPurchasedEquipmentCost; @petersTimmerhausWestPlantDesign].
 
-For a BOP unit with capacity $P_i$, the non-water BOP cost is calculated as:
+For a BOP unit with capacity $P_i$, the BOP cost, including water treatment, is:
 
 $$
 C_{\mathrm{BOP},i} =
-C_\mathrm{BOP,ref}
+\left(C_\mathrm{BOP,ref}+C_\mathrm{water,ref}\right)
 \left(
 \frac{P_i}{P_\mathrm{ref}}
-\right)^{0.6}
+\right)^{\alpha}
 $$
 
-where $P_\mathrm{ref}=1 \ \mathrm{MW}$ is the NREL reference capacity.
-
-Water treatment instead follows the package-count calculation above. For each production location $\ell$, its design flow $Q_{\mathrm{water,design},\ell}$ determines $C_{\mathrm{water,package},\ell}$. Once the water calculation and its remaining cost boundaries are implemented, the equipment-purchase subtotal is:
-
-$$
-C_{\mathrm{BOP,total}}
-=\sum_i C_{\mathrm{BOP},i}
-+\sum_\ell C_{\mathrm{water,package},\ell}.
-$$
+where $P_\mathrm{ref}$ is the NREL reference capacity ({{< var bop-reference-rating >}}), $C_\mathrm{BOP,ref}$ the marked-up, escalated non-water reference cost, $C_\mathrm{water,ref}$ the water-treatment reference purchase cost and $\alpha$ the scaling exponent ({{< var bop-scaling-exponent >}}). The total is $C_{\mathrm{BOP,total}}=\sum_i C_{\mathrm{BOP},i}$.
 
 Each production location is divided into equally loaded BOP blocks:
 
@@ -172,14 +140,11 @@ count. Stack overplanting does not increase this BOP sizing basis. Centralised
 production shares farm power across its blocks; decentralised production sizes
 blocks independently at each turbine.
 
-The non-water BOP retains `bop-scaling-exponent`. The block limit is an explicit
-modelling choice that prevents unlimited centralisation benefits for non-water
-equipment. Lower limits can be evaluated through named scenario overrides.
-The water package count is independent of that BOP block limit, because packages
-may serve multiple blocks at one location. No spare block or water package is
-included. The current implementation in `model/hydrogen_production/balance_of_plant.py`
-has not yet been changed to this water-flow method; its cost result remains
-incomplete while the water input is unset.
+The whole BOP uses `bop-scaling-exponent`. The block limit is an explicit
+modelling choice that prevents unlimited centralisation benefits. Lower limits can be evaluated through named scenario overrides.
+No spare block is included. The method is implemented in
+`model/hydrogen_production/balance_of_plant.py`; its cost result remains
+incomplete while the water reference cost is unset.
 
 ### Manufacturing Volume Sensitivity
 
@@ -197,7 +162,7 @@ After excluding electrical BOP and separating water supply, the non-water BOP se
 
 The selected manufacturing-volume case changes $C_\mathrm{BOP,ref}$, while the six-tenths rule determines how this reference cost scales with the size of each shared BOP unit.
 
-The offshore water-treatment cost is controlled by the required clean-water flow and package count. Water quality, redundancy, offshore intake and installation remain additional design and cost uncertainties.
+Water treatment scales with the same exponent as the rest of the BOP. Water quality, redundancy, offshore intake and installation remain additional design and cost uncertainties.
 
 ## BOP Power Consumption
 
@@ -255,12 +220,12 @@ The main limitations are:
 | Limitation                                                                                | Implication                                                                                        |
 | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | Land-based NREL cost data are used as the cost basis                                      | Offshore packaging, redundancy, corrosion protection and maintainability are not explicitly costed |
-| A generic 0.6 scaling exponent is used for non-water BOP | This captures broad economies of scale but not detailed equipment-train sizing |
-| Water package prices cover only two quoted sizes | Counts preserve capacity thresholds, but intermediate sizes and procurement conditions are uncertain |
+| A generic {{< var bop-scaling-exponent >}} scaling exponent is used for the whole BOP | This captures broad economies of scale but not detailed equipment-train sizing |
+| Water treatment scales with the aggregate BOP exponent | Package-size thresholds of water treatment are not represented |
 | Offshore intake and installation costs remain unresolved | The quoted RO/deionisation package costs do not establish complete offshore water-system CAPEX |
 | BOP electricity consumption is represented by a single average value                      | Dynamic behaviour, thermal transients and detailed part-load operation are not modelled            |
 | Compression is excluded                                                                   | Any compression energy and cost must be added elsewhere in the model                               |
 
 : Main limitations of the current BOP model.
 
-The aggregate scaling approach is retained for non-water BOP. The agreed flow-based water-treatment method is documented here but is not yet implemented in the executable model; offshore intake and installation costs and non-water block-limit sensitivity remain explicit uncertainties.
+The aggregate scaling approach covers the whole BOP, including water treatment. Offshore intake and installation costs and block-limit sensitivity remain explicit uncertainties.
