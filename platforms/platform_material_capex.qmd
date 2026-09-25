@@ -87,6 +87,17 @@ Yard integration is costed per tonne of hosted equipment. This linear form is a 
 
 ORBIT sets its substation pile rate to zero, so ORBIT provides no pile cost evidence [@orbitSource2026].
 
+### Validation and Feasibility Evidence (O3 review, 25 September 2026)
+
+| Evidence | Value | Use on this page |
+|---|---:|---|
+| 2 GW, 525 kV HVDC converter platforms (LanWin) [@offshoreMag2023LanWin] | Topside about 24,000 t; jacket about 10,000 t | Implied jacket-to-topside ratio of about 0.42, close to the adopted $k_J=${{< var platform-jacket-topside-mass-ratio >}}. This supports $k_J$ at 2 GW scale for an HVDC topside; it is a plausibility check, not a calibration, and says nothing about electrolysis topsides |
+| Single-lift installation class (Pioneering Spirit) [@allseasPlatformInstallation2026] | Topsides up to 60,000 t; jackets up to 20,000 t | Lift-screen limits for one installation class. With $m_J=k_J m_{\mathrm{top}}$, the jacket limit binds first: a single-lift jacket allows $m_{\mathrm{top}}$ up to about 50,000 t |
+
+No public source was found that gives hosted-equipment masses for MW-scale PEM stacks, electrolyser balance of plant, rectifier transformers or hydrogen compressors on an offshore platform, or a topside dry-weight breakdown separating equipment from structure. Design announcements for offshore electrolysis platforms (for example 100–800 MW concepts) report capacity and volume but not mass. The ABB converter catalogue's 6.2 t for a 10 MW wind converter is recorded on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) as context only.
+
+**Proposed multiplicity rule (not adopted).** Choose the smallest $N_{\mathrm{plat}}$ and, for each platform, the smallest $N_{\mathrm{mod}}$ such that $m_{S,\max}$ and $m_J$ each stay within the selected installation class. This keeps $N_{\mathrm{plat}}$ and $N_{\mathrm{mod}}$ explicit scenario inputs checked against documented lift limits, rather than a capacity rule of thumb. It cannot be applied until $m_{\mathrm{eq}}$ and $k_{\mathrm{str}}$ exist; the page's single-platform example remains illustrative.
+
 ## Calculation
 
 The calculation is performed per platform and multiplied by $N_{\mathrm{plat}}$ at the cost step.
@@ -243,5 +254,5 @@ A material-CAPEX relationship cannot be used as an installation-cost proxy. Like
 | Yard-integration cost evidence | $C_{\mathrm{int}}$ is unresolved |
 | Jacket fabrication unit cost, and USD 2024-to-2025 escalation if the ORBIT rate is adopted | $C_J$ is unresolved |
 | USD 2022-to-2025 escalation factor | $C_P$ is unresolved |
-| Platform capacity and multiplicity rule (DEC-0007) | $N_{\mathrm{plat}}$ remains a scenario input |
+| Platform capacity and multiplicity rule (DEC-0007) | $N_{\mathrm{plat}}$ remains a scenario input; a lift-limit rule is proposed above for adoption |
 | Relationship between calculated mass and installation lift modules | $N_{\mathrm{mod}}$ remains a scenario input with an equal-split assumption |
