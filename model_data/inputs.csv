@@ -64,7 +64,7 @@ pipeline-roughness,0.00000015,m,assumption,,
 pipeline-colebrook-roughness-divisor,3.7,factor,sourced,,perrysChemicalEngineersHandbook
 pipeline-colebrook-reynolds-coefficient,1.256,factor,sourced,,perrysChemicalEngineersHandbook
 pipeline-supply-unit-cost,,EUR/m,assumption,,
-pipeline-quote-to-eur2025,,factor,assumption,,
+pipeline-quote-to-eur2025,1,factor,assumption,,
 pipeline-connections-cost,,EUR,assumption,,
 pipeline-manifold-cost,,EUR,assumption,,
 array-voltage,66,kV,assumption,,

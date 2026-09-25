@@ -127,9 +127,10 @@ already been updated.
   the template leaves open. The sweep is blocked upstream: centralised
   production needs the platform location and feeder bays (O3) and the AC
   resistance and power factor (O2); turbine-level production needs the
-  interface efficiencies (O2c) and the collection sections (next item); pipeline
-  cost needs the price basis of the confidential TCP module
-  (`pipeline-quote-to-eur2025`, your input).
+  interface efficiencies (O2c) and the collection sections (next item).
+  TCP price basis confirmed as EUR2025/m (factor 1, 2026-09-25); still open:
+  mapping operating pressure to the fit's rated pressure class (gauge basis,
+  design margin) before cost is compared across pressure cases.
 - [ ] **Reconcile the collection-layout explanation (O7).** Keep the
   encyclopedia's ladder topology but recalculate its geometry and section
   lengths for the agreed rectangular IJmuiden Ver Beta case. Describe the
