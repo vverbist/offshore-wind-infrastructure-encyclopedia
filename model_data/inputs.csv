@@ -52,8 +52,10 @@ hydrogen-molar-mass,0.002016,kg/mol,assumption,,
 standard-atmospheric-pressure,1.01325,bar,sourced,,nist2008SP811
 compressor-train-limit,1000,kW,assumption,,
 compressor-cost-exponent,0.8335,factor,sourced,,transitionAcceleratorCompressorCost
-compressor-reference-motor-power,,kW,assumption,,
-compressor-reference-purchase-cost,,EUR,assumption,,
+compressor-reference-motor-power,15,kW,assumption,,
+compressor-source-cost-coefficient,3083.3,CAD,sourced,2019,transitionAcceleratorCompressorCost
+compressor-source-usd-per-cad-2019,0.75,USD/CAD,conversion,2019,transitionAcceleratorCompressorCost
+compressor-usd-escalation-2019-2025,1.5342,factor,conversion,,blsPpiAirGasCompressors2026
 compressor-reference-inlet-pressure,30,bar,assumption,,
 compressor-reference-outlet-pressure,150,bar,assumption,,
 compressor-legacy-cost-anchor,56,EUR/kW,reference,,internalModelDescription2026

@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-25 (O1 pressure and common operating case; O2 inventory page).
+Last reviewed: 2026-09-25 (O1 pressure and common operating case; O2 inventory page; O5 compressor cost).
 
 Working tracker for the article and its model. Update this file when a point is
 resolved, a decision changes, or a new blocker appears. Keep stable IDs, record
@@ -132,7 +132,7 @@ already been updated.
   boundaries and installation feasibility before populating the case. Report
   evidence gaps rather than treating the page's illustrative one-platform
   example as an adopted design.
-- [ ] **Normalise the compressor cost source (O5).** Use the uninstalled
+- [x] **Normalise the compressor cost source (O5).** Use the uninstalled
   motor-power cost correlation in the [Transition Accelerator brief](https://transitionaccelerator.ca/wp-content/uploads/2023/04/TA-Technical-Brief-1.1_TEEA-Hydrogen-Compression_PUBLISHED.pdf),
   cited on the [compressor page](../../hydrogen_infra/compressor.qmd). Convert
   its source-year Canadian-dollar cost to the model's EUR 2025 purchase-cost
@@ -146,9 +146,18 @@ already been updated.
   not independently round the derived reference cost. Check whether the
   source's high-flow pipeline-compressor correlation is applicable to duties
   this small; the reference choice does not resolve that evidence question.
+  *Done 2026-09-25:* the brief's 2019 C$ figures are converted from US HDSAM
+  data at its stated 0.75 US$/C$, so the model reverses that rate, escalates in
+  USD with the BLS producer price index for air and gas compressor
+  manufacturing (factor 1.5342, 2019 to 2025 annual averages) and converts at
+  the common 1.1300 USD/EUR. Coefficient about 3,140 EUR2025; 15 kW reference
+  about 30,002 EUR2025, derived in code (`compressor.reference_purchase_cost`),
+  not entered in the CSV; a test confirms the reference power cancels.
+  Applicability remains open: no fitted size range is stated; turbine-level
+  duties (~0.2 MW) are about seven times below the brief's 1.36 MW example;
+  the H2A delivery vendor data (Table 2-18) still need checking.
 
-These queued tasks do not yet establish a feasible central platform or a
-normalised compressor purchase cost.
+These queued tasks do not yet establish a feasible central platform.
 
 ## Active open points
 
@@ -163,7 +172,7 @@ approval of new numerical assumptions.
 | O2 | **Inventory published (2026-09-25):** see [Power Conversion Equipment](../../electrical_infra/power_conversion_equipment.qmd). Remaining (O2c/O2d): represent generator-side converter losses in every case and grid-side inverter and turbine transformer losses in the centralised chain; select converter and stack DC voltages; adopt costs where evidence allows; leave the grid-side inverter credit unclaimed without separable evidence. The central, conservative turbine-level and direct-DC (`converter_reduced`) definitions are agreed; generator-side rectifier cost stays in the common turbine baseline. Derive losses and cost/mass reconciliation from the evidenced inventory; AC resistance and power factor remain to be established. | Me: research and implementation; Joint: numerical adoption where judgement is required | Comparable energy losses, electrical CAPEX and the basis for O&M. Complete when each electrical function is counted once and any removal credit has an explicit scope. The queued inventory does not yet close numerical inputs or validate the direct-DC operating envelope. |
 | O3 | **Method drafted:** the [platform page](../../platforms/platform_material_capex.qmd) now documents the hosted-equipment, topside, jacket and pile mass chain; separate structure, integration and fabrication costs; and the lift handoff. Research the missing masses, unit costs, platform multiplicity and module choices in the execution list above. | Me: evidence and preparation; Joint: adoption | Complete centralised CAPEX and platform installation. The calculation structure exists, but the illustrative one-platform example is not an adopted, costed design. |
 | O4 | Adopt stack purchase cost and an offshore water-treatment reference purchase cost. Retain the agreed aggregate BOP scaling. | Me: evidence and normalisation; Joint: adoption | Stack and BOP supply CAPEX. Resolve `stack-purchase-unit-cost` and `bop-water-reference-purchase-cost`; lifetime treatment remains D4. |
-| O5 | **Source and reference rating identified:** the [compressor page](../../hydrogen_infra/compressor.qmd) cites a motor-power cost correlation giving uninstalled purchase cost; use the agreed 15 kW reference and derive its cost from that correlation. Convert its Canadian-dollar source price to EUR 2025 and check equipment-class applicability as queued above. The consistent reference-power/cost pair is only a normalisation and does not affect the cost curve. | Me: normalisation and applicability check | Compressor CAPEX. Resolve `compressor-reference-purchase-cost` and `compressor-reference-motor-power` together; the legacy plotted anchor is not an adopted purchase cost. |
+| O5 | **Normalised (2026-09-25):** the [compressor page](../../hydrogen_infra/compressor.qmd) derives the EUR2025 reference cost from the sourced correlation via the brief's USD basis and the compressor PPI; `compressor-reference-motor-power` is 15 kW. Remaining: check the correlation's size range against the H2A delivery vendor data before relying on turbine-level (~0.2 MW) compressor costs. | Me: applicability check | Compressor CAPEX. The central-scale cost is usable; turbine-level cost carries an unverified extrapolation. |
 | O6 | Complete source-year price escalation and cost scope checks. Recover the separate crane coefficient required by the turbine calibration. Distinguish reference evidence from adopted model prices. | Me | Comparable turbine, foundation, BOP and other supply costs. Resolve the missing escalation factors and `turbine-cost-crane`, with evidence and consistent inclusions. |
 | O7 | Select the physical hydrogen collection arrangement, manifold boundary, diameters and pressures. Prepare the complete section inventory and healthy-state flow allocation. Connect the existing confidential TCP cost callable locally and establish its quote-to-model conversion; cost connections and manifolds explicitly. | You: design/private-data access when needed; Me: preparation; Joint: boundaries | Real-case collection/export quantities and CAPEX. Complete when every physical section is included and flow/pressure checks pass. Existing TCP method is retained; replacing it is not an active task. |
 | O8 | Assemble coherent installation campaigns: vessel/spread boundaries, rates, loading plans, productivities, weather treatment, connections and lifts. Resolve transition-piece and additional equipment masses, including the turbine-level hydrogen lifting arrangement. | Me: evidence and campaign records; Joint: adoption | Installation costs and payload/lift feasibility. Complete when supplied and installed inventories agree and the selected rates cover the declared activities. |

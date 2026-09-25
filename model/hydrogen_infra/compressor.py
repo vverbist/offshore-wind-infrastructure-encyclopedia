@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from math import ceil, log
 from CoolProp.CoolProp import PropsSI
 from model.inputs import Inputs
+from model.methodology.financial_and_price_basis import normalize_usd
 
 
 def stages(inlet_bar: float, outlet_bar: float, inputs: Inputs) -> int:
@@ -53,11 +54,29 @@ def size(peak_power_per_location_kw: list[float], inputs: Inputs) -> list[Compre
     return result
 
 
+def cost_coefficient_eur2025(inputs: Inputs) -> float:
+    """Uninstalled cost [EUR2025] of the sourced power law at 1 kW motor input.
+
+    The brief's 2019 CAD value is returned to 2019 USD at the brief's own exchange
+    rate, escalated with the compressor producer price index and converted at the
+    common 2025 USD/EUR rate. The brief's installation factor is excluded.
+    """
+    usd_2019 = (inputs.positive("compressor-source-cost-coefficient", "CAD")
+                * inputs.positive("compressor-source-usd-per-cad-2019", "USD/CAD"))
+    return normalize_usd(usd_2019, inputs.positive("compressor-usd-escalation-2019-2025", "factor"), inputs)
+
+
+def reference_purchase_cost(inputs: Inputs) -> float:
+    """EUR2025 purchase cost at the reference motor input; unrounded by construction."""
+    return (cost_coefficient_eur2025(inputs)
+            * inputs.positive("compressor-reference-motor-power", "kW") ** inputs.positive("compressor-cost-exponent", "factor"))
+
+
 def supply_cost(packages: list[Compressor], inputs: Inputs) -> float:
     if not any(p.trains for p in packages):
         return 0.0  # Explicit no-compression duty.
     reference = inputs.positive("compressor-reference-motor-power", "kW")
-    cost = inputs.number("compressor-reference-purchase-cost", "EUR")
+    cost = reference_purchase_cost(inputs)
     exponent = inputs.positive("compressor-cost-exponent", "factor")
     return sum(p.trains * cost * (p.motor_kw_per_train / reference) ** exponent for p in packages)
 

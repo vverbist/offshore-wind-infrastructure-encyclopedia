@@ -39,7 +39,7 @@ Inlet and outlet pressures are scenario inputs. All pressures on this page are *
 | Compressor availability | TODO: adopt non-overlapping architecture-specific scope |
 | Compressor OPEX | TODO: adopt component allowance |
 | Compressor cost scaling exponent | {{< var compressor-cost-exponent >}} |
-| Cost-curve reference motor input | 15 kW (normalisation choice; not a compressor design rating) |
+| Cost-curve reference motor input | {{< var compressor-reference-motor-power >}} (normalisation choice; not a compressor design rating) |
 | Maximum motor input per train | {{< var compressor-train-limit >}} |
 
 : Main compressor assumptions.
@@ -187,6 +187,35 @@ $$
 
 The agreed 15 kW reference is a convenient normalisation, **not** an independently priced compressor or a minimum motor size. Because its cost is derived from the same power law, substitution gives $C_\mathrm{comp}=A(P_\mathrm{comp}/\mathrm{kW})^\alpha$: the reference power cancels and its numerical choice has **no effect on any calculated cost**. Rounding $C_\mathrm{comp,ref}$ independently would break this equivalence. The exponent is below one, so larger compressors are cheaper per kW than smaller compressors; this affects the centralised and turbine-level train comparison, whereas the reference point does not.
 
+### Normalisation to EUR~2025~
+
+The brief's 2019 Canadian-dollar values are themselves converted from US-dollar HDSAM data: escalated with CEPCI and converted at 0.75 US\$/C\$, the 2019 average [@transitionAcceleratorCompressorCost, Table 4.1]. The model therefore reverses that stated conversion to recover the 2019 US-dollar basis. It then escalates in US dollars with the producer price index for air and gas compressor manufacturing, and converts at the common 2025 rate (see [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd)):
+
+$$
+A=a_{\mathrm{CAD},2019}\;x_{\mathrm{USD/CAD},2019}\;
+\frac{I_{\mathrm{PPI}}(2025)}{I_{\mathrm{PPI}}(2019)}\;
+\frac{1}{FX_{\mathrm{USD/EUR},2025}}.
+$$
+
+| Symbol | Meaning | Value |
+|---|---|---:|
+| $a_{\mathrm{CAD},2019}$ | Source coefficient of the uninstalled power law, motor input in kW [@transitionAcceleratorCompressorCost] | {{< var compressor-source-cost-coefficient >}} |
+| $x_{\mathrm{USD/CAD},2019}$ | The brief's own 2019 exchange rate [@transitionAcceleratorCompressorCost] | {{< var compressor-source-usd-per-cad-2019 >}} |
+| $I_{\mathrm{PPI}}(2025)/I_{\mathrm{PPI}}(2019)$ | Ratio of annual averages of the monthly index, 371.164 / 241.933 [@blsPpiAirGasCompressors2026] | {{< var compressor-usd-escalation-2019-2025 >}} |
+| $FX_{\mathrm{USD/EUR},2025}$ | Common 2025 annual-average rate [@ecb2025USDEUR] | {{< var financial-usd-per-eur-2025-value >}} USD/EUR |
+| $A$ | Coefficient in EUR~2025~ | {{< var compressor-cost-coefficient-eur2025 >}} |
+| $C_\mathrm{comp,ref}$ | Reference purchase cost, $A\,15^\alpha$, derived in code without rounding | {{< var compressor-reference-purchase-cost >}} ({{< var compressor-reference-specific-cost >}}) |
+
+: Normalisation of the compressor cost correlation.
+
+Escalating the Canadian-dollar figure with a Canadian index and converting from Canadian dollars would apply Canadian price and exchange-rate movements to US equipment data; the chosen route keeps the index in the market of the underlying data, as the price-basis convention prefers. The index covers US producer prices for all air and gas compressor manufacturing, not hydrogen compressors specifically. The installation factor of 2 remains excluded; installation is costed separately.
+
+### Applicability to the Evaluated Duties
+
+The brief states no fitted size range. Its worked pipeline example is 50 t/day compressed from 20 to 70 bar with 1,357 kW motor input, and it describes the HDSAM basis as two- and three-stage reciprocating compressor data, later supplemented by a centrifugal design projection [@transitionAcceleratorCompressorCost]. Central trains are capped at {{< var compressor-train-limit >}} and are close to that example scale. Turbine-level duties are much smaller: about 12.9 kW per MW of stack at full load for 30 to 100 bar(g), or roughly 0.2 MW per 15 MW turbine at that illustrative outlet pressure. Applying the correlation there extrapolates below the only documented example by a factor of about seven; with the sourced exponent, specific cost at 0.2 MW is about 30% higher than at 1 MW.
+
+**Unresolved:** the underlying vendor data for large reciprocating compressors [@nexant2008H2ADelivery, Table 2-18 and Figure 2-21] have not yet been checked for their size range. Until they are, turbine-level compressor cost carries this extrapolation. The 15 kW reference does not resolve the question: it only fixes the normalisation.
+
 The older illustrative figure uses roughly $56\,\text{€}/\text{kW}$ of electrolyser capacity for compression from 30 to 150 bar at a 15 MW scale. Its price basis is unresolved; it is not the 15 kW motor reference or an adopted purchase-cost anchor.
 
 ### Cost Sensitivity to Outlet Pressure
@@ -233,12 +262,10 @@ central scaling exponent. Centralised production has one farm-level location;
 decentralised production sizes each turbine location separately. The method
 is implemented in `model/hydrogen_infra/compressor.py`.
 
-**TODO:** record the agreed 15 kW motor reference and its source-derived,
-unrounded EUR~2025~ purchase cost as `compressor-reference-motor-power` and
-`compressor-reference-purchase-cost` after documenting the Canadian-dollar
-escalation and exchange-rate conversion. Check whether the sourced high-flow
-pipeline-compressor correlation covers the evaluated train duties. The legacy
-figure above illustrates relative pressure sensitivity; its unnormalised
+The reference cost $C_{\mathrm{comp,ref}}$ is calculated from the
+normalisation above (`compressor-source-*`, `compressor-usd-escalation-2019-2025`
+and `compressor-reference-motor-power`), not entered as a separate value. The
+legacy figure above illustrates relative pressure sensitivity; its unnormalised
 anchor is not an adopted model purchase cost and does not show train-count steps.
 
 ### Operating Cost and Availability

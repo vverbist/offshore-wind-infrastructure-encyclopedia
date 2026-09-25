@@ -308,6 +308,20 @@ class Integration(unittest.TestCase):
                 importlib.import_module(name)
 
 
+class CompressorCost(unittest.TestCase):
+    def test_reference_power_cancels_and_normalisation_is_explicit(self):
+        from model.hydrogen_infra.compressor import Compressor, supply_cost, cost_coefficient_eur2025
+        base = load_inputs({})
+        moved = load_inputs({"overrides": {"compressor-reference-motor-power": 50}})
+        package = [Compressor(2, 400.0, 800.0)]
+        self.assertAlmostEqual(supply_cost(package, base), supply_cost(package, moved), places=6)
+        n = base.number
+        coefficient = (n("compressor-source-cost-coefficient") * n("compressor-source-usd-per-cad-2019")
+                       * n("compressor-usd-escalation-2019-2025") / n("financial-usd-per-eur-2025"))
+        self.assertAlmostEqual(cost_coefficient_eur2025(base), coefficient)
+        self.assertAlmostEqual(supply_cost(package, base), 2 * coefficient * 400 ** n("compressor-cost-exponent"))
+
+
 class ReferenceCase(unittest.TestCase):
     def test_gauge_pressures_become_absolute_with_standard_atmosphere(self):
         from research_articles.turbine_level_hydrogen.analysis import reference_case as ref
