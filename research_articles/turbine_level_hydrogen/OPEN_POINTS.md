@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-25 (O1 common case; O2 inventory; O5 compressor cost; O7 design-case runner).
+Last reviewed: 2026-09-25 (O1 common case; O2 inventory; O5 compressor cost; O7 runner and collection layout).
 
 Working tracker for the article and its model. Update this file when a point is
 resolved, a decision changes, or a new blocker appears. Keep stable IDs, record
@@ -131,13 +131,24 @@ already been updated.
   TCP price basis confirmed as EUR2025/m (factor 1, 2026-09-25); still open:
   mapping operating pressure to the fit's rated pressure class (gauge basis,
   design margin) before cost is compared across pressure cases.
-- [ ] **Reconcile the collection-layout explanation (O7).** Keep the
+- [x] **Reconcile the collection-layout explanation (O7).** Keep the
   encyclopedia's ladder topology but recalculate its geometry and section
   lengths for the agreed rectangular IJmuiden Ver Beta case. Describe the
   physical sections, turbine connections, manifold boundary and healthy-state
   flow allocation used by the model. Correct stale square-farm and export-route
   examples on the relevant hydrogen infrastructure pages, and distinguish
   current flow/pressure checks from deferred redundancy analysis.
+  *Done 2026-09-25:* the [collection page](../../hydrogen_infra/infield_infrastructure.qmd)
+  now derives the ladder from the reference-case coordinates: 8 crosswind
+  rungs of 19.30 km and two 9.65 km headers, 173.7 km excluding tie-ins, 128
+  rung and 14 header sections (calculated in `analysis/reference_case.py`). It
+  describes turbine connections, the manifold boundary, the healthy-state
+  allocation (rungs split at their centre; each header carries half the farm,
+  1,005 MW at rating, well above the legacy 500 MW-per-6-inch claim) and
+  separates current checks from deferred redundancy (D3). The pipelines page
+  and its figures now use the agreed 100 km route and 67.01 bar(a) delivery.
+  **Open, joint decision:** the export-manifold location (and whether the last
+  rung doubles as a tie-in); the section table is generated after that choice.
 - [ ] **Complete the platform basis (O3).** Use the mass and cost chain now
   documented on the [platform page](../../platforms/platform_material_capex.qmd)
   to research hosted-equipment masses, structure and yard-integration rates,

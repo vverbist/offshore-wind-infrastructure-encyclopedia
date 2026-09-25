@@ -40,7 +40,7 @@ Pipeline sizing is governed by the variables in @tbl-pipeline-sizing-variables.
 
 : Main pipeline sizing variables. {#tbl-pipeline-sizing-variables}
 
-For the export pipeline, the current reference case uses an 80 km route length and a 66 bar outlet pressure. The 66 bar value is used because it represents the expected maximum pressure of the Dutch hydrogen backbone, allowing injection without an additional onshore compressor in the base case [@internalModelDescription2026].
+For the export pipeline, the [agreed reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd) uses a {{< var ijv-export-length-km >}} km physical route and a delivery pressure of {{< var ijv-delivery-pressure-bar-g >}} bar(g), which is {{< var ijv-delivery-pressure-bar-a >}} bar(a) in the model's absolute-pressure equations. The delivery level is the upper operating pressure described for the West-Netherlands hydrogen network [@hynetwork2026WestNRD], allowing injection without an additional onshore compressor in the base case. Inlet pressure and diameter are design inputs of each case.
 
 ## Capacity Model
 
@@ -166,7 +166,7 @@ $$
 
 where $\mathrm{HHV}_\mathrm{H_2}=39.4 \ \mathrm{kWh/kg}$ and $P_{\mathrm{H_2},\mathrm{HHV}}$ is in MW when $\dot{m}_\mathrm{max}$ is in kg/h.
 
-@fig-pipeline-capacity shows the resulting capacity curves for the current diameter and pressure range, assuming an 80 km route length and 66 bar outlet pressure.
+@fig-pipeline-capacity shows the resulting capacity curves over an illustrative diameter and inlet-pressure range, for the reference-case route of {{< var ijv-export-length-km >}} km and outlet pressure of {{< var ijv-delivery-pressure-bar-a >}} bar(a).
 
 ![Hydrogen export-pipeline capacity as a function of inlet pressure and diameter.](../figures/pipeline-capacity-vs-pressure.svg){#fig-pipeline-capacity}
 
@@ -269,13 +269,13 @@ Because capacity scales much more strongly with diameter than material cost does
 
 | Parameter | Value |
 |---|---:|
-| Baseline export length | 80 km |
-| Export pipeline outlet pressure | 66 bar |
-| Export pipeline inlet pressure | Optimisation variable |
+| Baseline export length | {{< var ijv-export-length-km >}} km (reference case) |
+| Export pipeline outlet pressure | {{< var ijv-delivery-pressure-bar-g >}} bar(g) = {{< var ijv-delivery-pressure-bar-a >}} bar(a) (reference case) |
+| Export pipeline inlet pressure | Design input of each case |
 | Typical inlet-pressure range | 80-150 bar |
 | Maximum composite pipeline diameter | 8 inch |
-| Infield pipeline diameter | 6 inch |
-| Infield pipeline pressure | 150 bar |
+| Infield pipeline diameter | 6 inch (legacy screening value; section diameters are design inputs) |
+| Infield pipeline pressure | 150 bar (legacy screening value; section pressures are design inputs) |
 | Infield pipeline capacity | about 500 MW equivalent (outlet pressure assumption not yet documented; see Model Limitations) |
 | Pipeline OPEX | 0.5% of material CAPEX per year |
 

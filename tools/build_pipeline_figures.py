@@ -13,19 +13,26 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 from model.inputs import load_inputs
 from model.hydrogen_infra.hydrogen_pipelines import capacity_kg_h
+from research_articles.turbine_level_hydrogen.analysis.reference_case import (
+    absolute_pressure_bar, load_reference_case)
 
 FIGURE_DIR = PROJECT_ROOT / "figures"
 
 
 def build_pipeline_data():
     inputs = load_inputs({})
-    # Pressure, diameter and route are explicit figure scenarios, not model defaults.
+    # Inlet pressure and diameter are explicit figure cases, not model defaults.
+    # Route length and delivery pressure come from the agreed reference case.
+    case = load_reference_case()["hydrogen"]
+    length_m = case["export_length_km"] * 1000
+    delivery_bar = absolute_pressure_bar(case["delivery_pressure_bar_g"],
+                                         inputs.number("standard-atmospheric-pressure", "bar"))
     pressures = np.arange(80, 155, 5)
     diameters = np.arange(4, 9, 1)
     rows = []
     for diameter in diameters:
         for pressure in pressures:
-            capacity = capacity_kg_h(diameter * 0.0254, pressure, 66, 80000, inputs)
+            capacity = capacity_kg_h(diameter * 0.0254, pressure, delivery_bar, length_m, inputs)
             rows.append({"P": pressure, "D": diameter, "capacity_kg_h": capacity,
                          "capacity_mw_hhv": capacity * inputs.number("hydrogen-hhv", "kWh/kg") / 1000})
     data = pd.DataFrame(rows)

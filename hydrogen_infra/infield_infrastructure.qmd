@@ -14,7 +14,7 @@ This page defines the proposed network topology and the analytical pipeline-leng
 
 The proposed network is a ladder. Two longitudinal header pipelines run along opposite sides of the turbine field. Cross-farm pipelines form the rungs. Turbines connect directly to the rung that passes through their row.
 
-![Proposed hydrogen infield ladder. The number of rungs and turbines shown is schematic.](../figures/hydrogen-infield-ladder.svg){#fig-hydrogen-infield-ladder}
+![Proposed hydrogen infield ladder. The farm outline, numbers of rungs and turbines and the manifold position are schematic.](../figures/hydrogen-infield-ladder.svg){#fig-hydrogen-infield-ladder}
 
 The layout is used for four reasons:
 
@@ -25,117 +25,82 @@ The layout is used for four reasons:
 
 The topology provides two **infield** paths, not two independent export systems. Both paths ultimately reach the same export-pipeline interface. Valves, isolation philosophy and the capacity of the remaining path determine whether the redundancy can be used after a fault.
 
-## Pipeline-Length Model
+## Ladder Geometry for the Reference Case
 
-The screening model assumes:
+The geometry follows the common coordinates of the
+[agreed reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case):
+a rectangle of breadth $B$ across the dominant wind and length $L$ along it,
+with $n_L$ crosswind rows of up to $n_B$ turbines. Turbine centres span the
+rectangle, and the shorter final row is centred.
 
-- a square wind-farm area;
-- evenly spaced turbines arranged in approximately square rows;
-- two headers, each equal to one farm side;
-- each rung spans one farm side; and
-- the number of rungs is approximated by the square root of turbine count.
+- **Rungs** follow the crosswind rows. Each rung spans the full breadth between
+  the two headers, so its horizontal length is $B$.
+- **Headers** run along-wind through the ends of the rows. Each spans from the
+  first to the last row, so its horizontal length is $L$.
+- **Turbine connections**: every turbine sits on its row's rung. The rung is
+  divided into sections between consecutive turbines; in full rows the end
+  turbines lie on the headers, while the shorter final row needs one extension
+  section at each end to reach them.
 
-For farm area $A_\mathrm{farm}$ in km$^2$, the side length is:
-
-$$
-s=\sqrt{A_\mathrm{farm}}.
-$$
-
-For $N_\mathrm{turb}$ turbines, the continuous estimate of rung count is:
-
-$$
-n_\mathrm{rung}=\sqrt{N_\mathrm{turb}}.
-$$
-
-Rung length and header length are:
+The horizontal ladder length, in km, is:
 
 $$
-L_\mathrm{rungs}
-=
-n_\mathrm{rung}s,
-\qquad
-L_\mathrm{headers}
-=
-2s.
+L_\mathrm{ladder}=n_L B+2L.
 $$
 
-The total horizontal infield pipeline length is therefore:
+| Quantity | Value |
+|---|---:|
+| Rungs $n_L$ | {{< var ijv-ladder-rungs >}} |
+| Rung length $B$ | {{< var ijv-ladder-rung-km >}} km |
+| All rungs | {{< var ijv-ladder-rungs-km >}} km |
+| Header length $L$ | {{< var ijv-ladder-header-km >}} km |
+| Both headers | {{< var ijv-ladder-headers-km >}} km |
+| **Ladder total, excluding tie-ins** | **{{< var ijv-ladder-total-km >}} km** |
+| Rung sections (inter-turbine and final-row extensions) | {{< var ijv-ladder-rung-sections >}} |
+| Header sections (between consecutive rows) | {{< var ijv-ladder-header-sections >}} |
 
-$$
-\boxed{
-L_\mathrm{infield}
-=
-\sqrt{A_\mathrm{farm}}
-\left(
-\sqrt{N_\mathrm{turb}}+2
-\right)
-}
-$$
+: Ladder geometry for the reference case, calculated by [the reference-case calculation](../research_articles/turbine_level_hydrogen/analysis/reference_case.py).
 
-with $L_\mathrm{infield}$ in km when $A_\mathrm{farm}$ is in km$^2$ [@internalModelDescription2026].
+Orienting the rungs along the crosswind rows gives fewer, longer rungs and
+shorter headers than rungs along the columns. The earlier square-farm estimate
+($\sqrt{A}(\sqrt{N}+2)$ for 200 km² and 134 turbines, 192–198 km) is superseded
+for the article case.
 
-This continuous form is suitable for optimisation. A physical layout requires an integer number of rows. For a conservative square-grid representation, use:
+## Manifold Boundary and Tie-ins
 
-$$
-n_\mathrm{rung,int}
-=
-\left\lceil
-\sqrt{N_\mathrm{turb}}
-\right\rceil,
-\qquad
-L_\mathrm{infield,int}
-=
-\sqrt{A_\mathrm{farm}}
-\left(
-n_\mathrm{rung,int}+2
-\right).
-$$
+Both headers end at the export manifold through tie-in sections, as in
+@fig-hydrogen-infield-ladder. The manifold is the boundary between infield
+collection and the export pipeline: sections upstream of it belong on this page,
+and the export line starts there. **Its location is not yet adopted** (O7, a
+joint decision). If it sits between the two header ends on the export-side edge,
+as in the schematic, the tie-ins together span about $B$ and run parallel to the
+last row's rung; whether that rung could double as a tie-in is a design choice
+that changes its duty. Tie-in lengths are therefore excluded from the total
+above.
 
-## Reference Calculation
+## Model Representation and Healthy-State Flow
 
-The reference farm has an area of 200 km$^2$ and a nominal capacity of 2 GW. With 15 MW turbines, the required turbine count is:
+The model reads the collection network as explicit sections (see the
+[model guide](../model/README.md)): each section has its end nodes, vertical
+length, route allowance, healthy-state flow share, true internal diameter and
+absolute inlet and outlet pressures. Non-turbine nodes, such as header nodes and
+the manifold, are listed separately. Every physical section is included, even
+if its healthy-state flow is zero.
 
-$$
-N_\mathrm{turb}
-=
-\left\lceil
-\frac{2{,}000}{15}
-\right\rceil
-=
-134.
-$$
+The healthy-state allocation used for the reference case is:
 
-The farm side length and continuous rung estimate are:
+- each rung splits at its centre, with half the row flowing to each header;
+  in a row with an odd turbine count, the middle turbine sends half its flow each way;
+- each header carries its half of the farm toward the export end;
+- each tie-in carries one header's flow to the manifold.
 
-$$
-s=\sqrt{200}=14.142\ \mathrm{km},
-\qquad
-n_\mathrm{rung}=\sqrt{134}=11.576.
-$$
-
-The modelled pipeline length is:
-
-$$
-\begin{aligned}
-L_\mathrm{infield}
-&=
-14.142(11.576+2) \\
-&=
-\boxed{192.0\ \mathrm{km}}.
-\end{aligned}
-$$
-
-If the layout is represented with 12 complete rungs:
-
-$$
-L_\mathrm{infield,int}
-=
-14.142(12+2)
-=
-\boxed{198.0\ \mathrm{km}}.
-$$
-
-The optimisation model should use 192.0 km if it retains the continuous approximation. A routed design with 12 physical rows should start from 198.0 km before project-specific adjustments.
+At rated output, a full rung therefore delivers {{< var ijv-ladder-rung-end-duty-mw >}}
+MW to each header, while each header's export end and each tie-in carry
+{{< var ijv-ladder-header-end-duty-mw >}} MW (HHV-equivalent electrical input;
+hydrogen flow follows from the stack model). Section diameters and pressures are
+design inputs of each case, examined in the O7 pressure–diameter study; they are
+not fixed by the geometry. The section table is generated once the manifold
+location is adopted.
 
 ## Scope of the Length Result
 
@@ -143,7 +108,7 @@ The calculated length includes the horizontal rungs and the two horizontal heade
 
 - the export pipeline from the farm boundary to shore;
 - turbine risers, local tie-ins and short spool pieces;
-- the export manifold and header-to-export connections;
+- the tie-ins and export manifold, whose location is not yet adopted;
 - route deviations around seabed constraints, crossings and exclusion zones;
 - installation slack and contingency; and
 - parallel pipe added where segment capacity is insufficient.
@@ -159,10 +124,20 @@ $$
 
 Do not apply this factor to a GIS-derived route that already includes deviations and slack.
 
-## Capacity and Redundancy Checks
+## Flow and Pressure Checks Versus Redundancy
 
-The length equation defines geometry only. It does not prove that every segment can carry the required flow.
+**Current checks (healthy state).** For the supplied sections and flow shares,
+the model conserves flow at every node, checks that each section's capacity
+covers its peak flow at the supplied inlet and outlet pressures, and rejects a
+pressure rise at a junction without a compressor. The legacy claim that one
+6 inch rung at 150 bar carries about 500 MW supports a single row
+({{< var ijv-ladder-rung-end-duty-mw >}} MW per rung end). It does not cover the
+header ends and tie-ins at {{< var ijv-ladder-header-end-duty-mw >}} MW each, which
+need a larger diameter, parallel pipe or a higher pressure; that choice belongs to
+the pressure–diameter study.
 
-The 500 MW-equivalent assumption supports the claim that one 6 inch rung can serve a turbine row. Header flow is higher because successive rungs add hydrogen. Header diameter, pressure drop and fault-state capacity must therefore be checked segment by segment. The current model does not yet perform this check and should not assume that every header segment can remain 6 inch.
-
-The same limitation applies to redundancy. An alternative route is useful only if isolation valves can separate the failed section and the remaining pipeline path has enough capacity. The present assumption of 100% infield-pipeline availability is a modelling convention, not a reliability result.
+**Deferred (D3).** Fault states, isolation valves, rerouting through the second
+header and spare capacity are not analysed. The flow allocation above is not
+solved as a hydraulic loop network, and the model claims no redundancy benefit.
+The 100% infield-pipeline availability is a modelling convention, not a
+reliability result.
