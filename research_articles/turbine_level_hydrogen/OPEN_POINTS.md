@@ -200,6 +200,34 @@ already been updated.
 
 These queued tasks do not yet establish a feasible central platform.
 
+## Model–website consistency follow-up (review 2026-09-25)
+
+Decided and applied: development, shared owner engineering, insurance and owner
+contingency are out of scope; AC pull-in length (two water depths per
+connection) is included and documented; USD escalation uses CPI-U factors
+(2020→2025 1.24393, 2022→2025 1.10008); the stack page no longer claims LCOE
+optimisation of overplanting or replacement timing; design variables are
+"optimised" only by evaluating explicit cases.
+
+- [ ] **AC collection loss:** replace the I²R screening calculation with an
+  adopted fixed-percentage loss (value and location to be chosen).
+- [ ] **Availability:** stack 99.5% and AC 99% page values are not model inputs;
+  settle together with the availability ledger (O10).
+- [ ] **Stack degradation:** decide how to represent 0.18%/1000 h (D4); the page
+  still describes it while the model is beginning-of-life.
+- [ ] **BOP water treatment:** reconcile the page's flow-based package method
+  with the model's lump-sum input and the aggregate-exponent decision row.
+- [ ] **Turbine cost:** the calibrated breakdown on the turbine page cannot be
+  reproduced while `turbine-cost-crane` is blank (O6); keep open.
+- [ ] **Transition-piece mass:** find a source for `foundation-transition-piece-mass`,
+  needed by the foundation installation payload calculation.
+- [ ] **Structural-baseline note (D5):** state on the foundation and turbine
+  pages that turbine-level hydrogen equipment mass and the removed transformer
+  are held at the common baseline.
+- [ ] **Remaining documentation:** wake and Weibull pages describe the legacy
+  method; the pipeline page describes an interpolation surface where the model
+  uses a fitted formula; page values typed as text instead of linked inputs.
+
 ## Active open points
 
 Owners: **You** = article/design choice or information you hold; **Me** = research,

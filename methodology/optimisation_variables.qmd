@@ -9,6 +9,11 @@ readiness: partially_implementable
 One complete set of user inputs and fixed parameters produces one result. The
 model does not optimize, search a design space or select a preferred case.
 Sensitivities and alternative designs are separate user-supplied cases.
+Design variables such as injection pressure, pipeline diameter and stack
+overplanting need an explicit value in every case; they are "optimised" by
+evaluating a set of cases over their candidate values and comparing the
+reported results, for example with the design-case runner
+(`research_articles/turbine_level_hydrogen/analysis/run_design_cases.py`).
 
 ## Controlled Taxonomy
 

@@ -73,8 +73,8 @@ array-ac-resistance,,ohm/km,assumption,,
 array-power-factor,,fraction,assumption,,
 array-supply-unit-cost,400,EUR/m,assumption,2025,
 wind-turbulence-intensity,0.058,fraction,assumption,,
-financial-usd-escalation-2020-2025,,factor,assumption,,
-financial-usd-escalation-2022-2025,,factor,assumption,,
+financial-usd-escalation-2020-2025,1.24393,factor,conversion,,blsCpiU2026
+financial-usd-escalation-2022-2025,1.10008,factor,conversion,,blsCpiU2026
 turbine-blade-count,3,count,assumption,,
 turbine-tip-speed,95,m/s,sourced,,gaertner2020IEA15
 turbine-drivetrain-efficiency,0.95,fraction,assumption,,

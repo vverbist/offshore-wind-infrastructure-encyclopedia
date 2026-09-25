@@ -93,9 +93,7 @@ Operating a larger installed stack capacity reduces the average current density 
 Lower current density increases conversion efficiency and slows stack degradation.
 
 These benefits come at the expense of additional stack CAPEX.
-The model therefore treats the installed stack capacity as an optimisation variable and determines the economically optimal degree of overplanting by minimising the overall LCOE.
-
-In this LCOE optimisation, the system scope greatly influences the outcome.
+When overplanting cases are compared, the system scope greatly influences the outcome.
 As the scope expands, the optimum generally shifts towards larger stack capacities and higher efficiencies, as stack costs become a smaller fraction of the total system investment.
 See the box below for a worked example.
 
@@ -126,7 +124,6 @@ The model assumes linear degradation with accumulated full-load operating hours 
 **Stack replacement**
 
 Eventually the efficiency loss becomes sufficiently large that replacing the stack is economically preferable to continued operation.
-Rather than prescribing a fixed replacement criterion, the replacement moment is determined through the LCOH optimisation.
 In practice, approximately 10% performance degradation is commonly considered end-of-life.
 
 **Effect of partial-load operation**
@@ -180,7 +177,7 @@ The stack is modelled as a modular component whose cost scales linearly with ins
 Linear scaling is used because larger PEM electrolyser systems are represented as multiple identical stack modules rather than as a single geometrically scaled stack. As a result, increasing installed stack capacity increases the number of modules, cells and active area approximately proportionally. 
 No equipment-level scaling exponent is therefore applied to the stack itself.
 
-Actual stack operation is determined separately by the optimisation. 
+Actual stack operation follows the module dispatch rule. 
 At each time step, the model chooses the number of active modules and their operating current density. 
 The corresponding electrical input, hydrogen production, efficiency and degradation are calculated from the polarisation curve. Reference-rated stack capacity is therefore a bookkeeping convention for cost only, while the physical and operational behaviour of the stack remains governed by current density.
 

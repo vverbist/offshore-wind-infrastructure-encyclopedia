@@ -188,7 +188,7 @@ L_\mathrm{array}
 L_\mathrm{pull\text{-}in},
 $$
 
-where $r$ is the route allowance and $L_\mathrm{pull\text{-}in}$ is the separately calculated total cable length between seabed touchdown points and turbine or platform terminations. No default pull-in length is inserted until the water-depth and interface assumptions are defined.
+where $r$ is the route allowance and $L_\mathrm{pull\text{-}in}$ is the total cable length between seabed touchdown points and turbine or platform terminations. It is included as two vertical legs of the water depth $d_w$ per connection, $L_\mathrm{pull\text{-}in}=2d_w|\mathcal{E}|$, as implemented in `model/electrical_infra/infield_ac_cables.py`. This is a screening length: J-tube routing, hang-off height and slack are not resolved separately.
 
 This is the same calculation structure used by ORBIT's grid-array model: turbine and row spacing define coordinates, cable capacity limits turbines per string, and the model sums the Euclidean distance between successive connection points [@nunemaker2020ORBIT].
 
@@ -282,9 +282,9 @@ For electricity export, the strings terminate on the integrated offshore AC/HVDC
 | One usable MW rating represents several conductor sizes | Procurement does not yet benefit from tapered strings |
 | The {{< var array-reference-string-count >}}-string base case exceeds the reference platform bay count | Cable and platform designs are not yet a physically closed system |
 | Idealised coordinates and string assignment replace a routed design | Exclusions, crossings and detailed approach routes remain approximate |
-| Pull-in length has no default input | Supply length remains incomplete until water depth and interface geometry are defined |
+| Pull-in length is two water depths per connection | J-tube routing, hang-off height and slack are not resolved |
 | Public project cable quantities have inconsistent reporting scopes | Length per turbine is a validation range, not a calibration coefficient |
-| Electrical losses are unresolved | No flat loss deduction is applied until a defensible load-dependent model is available |
+| Electrical losses are unresolved | A fixed-percentage loss is to be adopted (TODO); the executable model still contains an I²R screening calculation with blank resistance and power-factor inputs |
 | Flat 99% availability | String-level and common-mode outage states are hidden |
 | Supply benchmarks mix 2019 nominal EUR and 2024 USD inputs | The apparent precision of the blended EUR/m assumption exceeds source quality |
 | OPEX is a top-down percentage | Public evidence does not yet support an array-only event-frequency and cash-repair model |

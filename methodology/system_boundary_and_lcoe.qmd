@@ -43,15 +43,14 @@ basis used for annualization.
 | Material short-life replacement | Owned by the component page; counted only when replacement is required within 25 years |
 | Decommissioning | Shared calculation on the financial page: 80% of total offshore installation CAPEX |
 | Commissioning | Owned once by the applicable installation/component interface |
-| Development and shared engineering | Shared project-cost field; currently unresolved |
-| Insurance and owner contingency | Shared project-cost field; currently unresolved |
+| Development and shared engineering | Outside the model scope (agreed) |
+| Insurance and owner contingency | Outside the model scope (agreed) |
 | Construction finance, taxes and financing fees | Excluded by the approved simple-CRF convention |
 | Residual value | Zero under the 25-year project convention |
 
-Development, shared engineering, insurance and owner contingency are not
-silently zero. Until they are parameterized, a complete total-system cost
-returns **not parameterized**. Explicitly bounded component or modelled-cost
-subtotals may still be reported, but they must not be called total system cost.
+Development, shared engineering, insurance and owner contingency are excluded
+from the model scope. Results are technical-scope costs and must not be called
+total project or total system cost.
 
 ## Capital-Intensity Outputs
 

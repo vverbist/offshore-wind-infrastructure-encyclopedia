@@ -51,6 +51,16 @@ cost-specific index is preferred where its scope matches the equipment or
 activity. A consumer-price index may be used only as a transparent fallback,
 with the mismatch recorded as a limitation.
 
+US-dollar escalation to 2025 uses the U.S. CPI-U annual averages as the
+documented consumer-price fallback, because no single cost-specific index
+covers the mixed equipment scopes involved [@blsCpiU2026]. The annual averages
+are 258.811 (2020), 292.655 (2022) and 321.943 (2025; eleven months, as BLS
+published no October 2025 value), giving
+`financial-usd-escalation-2020-2025` = {{< var financial-usd-escalation-2020-2025 >}}
+and `financial-usd-escalation-2022-2025` = {{< var financial-usd-escalation-2022-2025 >}}.
+A component that has a better-matched index, such as the compressor producer
+price index, uses its own factor instead.
+
 For USD-to-EUR conversions, the common convention is the ECB 2025 annual
 average of 1 EUR = {{< var financial-usd-per-eur-2025-value >}} USD. The inverse
 rate is {{< var financial-eur-per-usd-2025 >}}
@@ -158,10 +168,10 @@ $$
 Every $O_j$ is an annual, non-overlapping component OPEX term in
 EUR~2025~/year.
 
-The shared project-cost record also contains development, shared engineering,
-insurance and owner contingency. These fields remain unresolved rather than
-being set to zero. A complete total-system result is **not parameterized** until
-all required fields have adopted values or an explicit scope decision.
+Development, shared owner engineering, insurance and owner contingency are
+**outside the model scope** (agreed decision). Results are reported as
+technical-scope costs and are labelled accordingly; they are not total project
+costs.
 
 ## Manufactured-Cost Markup
 

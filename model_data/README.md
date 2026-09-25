@@ -51,7 +51,7 @@ point-of-use equations and scope; `reference` rows remain non-combinable evidenc
 | `platform-*` | `platforms/platform_material_capex.qmd`; ORBIT jacket and pile mass fits adopted, ORBIT cost rates reference-only, structural ratio and EUR2025 unit costs remain TODO; piles reuse `foundation-fabrication-unit-cost`; site durations from platform installation page |
 | `install-*` | The three `offshore_installation/` pages; coherent spread inputs remain TODO rather than combining incompatible reference vessels |
 | `*-availability`, `*-opex-rate` | Component owners and `methodology/energy_availability_and_annualisation.qmd`; deliberately unresolved pending non-overlapping scope adoption |
-| `financial-usd-escalation-*` | `methodology/financial_and_price_basis.qmd`; source-year escalation missing; no currency-only value becomes EUR2025 CAPEX |
+| `financial-usd-escalation-*` | `methodology/financial_and_price_basis.qmd`; U.S. CPI-U annual-average fallback (2020 and 2022 to 2025); components with a better-matched index use their own factor |
 
 Pressures stored with unit `bar` are absolute. Gauge values are converted
 with `standard-atmospheric-pressure` before they enter a calculation.
