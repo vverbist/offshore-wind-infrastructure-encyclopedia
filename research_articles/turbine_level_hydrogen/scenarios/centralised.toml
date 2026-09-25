@@ -9,9 +9,11 @@ architecture = "centralised"
 include = "common_case.toml"
 
 [site]
-# collection_x_m, collection_y_m: central platform location (O3/O7), in the
-# coordinate frame of common/coordinates.csv. Coordinate row order defines
-# radial strings; the generated order is provisional until the platform is set.
+# Central platform at the farm centre (agreed 2026-09-25), in the frame of
+# common/coordinates.csv (x east, y north, origin at the farm centre).
+collection_x_m = 0.0
+collection_y_m = 0.0
+# Coordinate row order defines the radial AC strings; this order is provisional.
 
 [electrolysis]
 stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"

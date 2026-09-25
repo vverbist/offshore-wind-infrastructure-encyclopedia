@@ -170,8 +170,9 @@ already been updated.
   is proposed on the platform page, not adopted. No public hosted-equipment
   masses for PEM stacks, BOP, rectifier transformers or compressors, no
   topside equipment/structure split and no new unit costs were found; these
-  need supplier or project data. The centralised platform location
-  (`collection_x_m`, `collection_y_m`) and feeder bays are not yet set.
+  need supplier or project data. Centralised platform location agreed at the
+  farm centre (2026-09-25) and set in the centralised template; feeder bays
+  are not yet set.
 - [x] **Normalise the compressor cost source (O5).** Use the uninstalled
   motor-power cost correlation in the [Transition Accelerator brief](https://transitionaccelerator.ca/wp-content/uploads/2023/04/TA-Technical-Brief-1.1_TEEA-Hydrogen-Compression_PUBLISHED.pdf),
   cited on the [compressor page](../../hydrogen_infra/compressor.qmd). Convert
