@@ -208,6 +208,13 @@ Run `research_articles/turbine_level_hydrogen/analysis/run_sensitivity.py` with 
 scenario, central parameter ID, explicit values and a new output directory.
 It runs separate cases and writes a comparison CSV; it does not choose an optimum.
 
+Design variables such as injection pressure and export diameter are scenario
+inputs, not central parameters. Run explicit design cases with
+`research_articles/turbine_level_hydrogen/analysis/run_design_cases.py`: each
+row of its CSV names a case and supplies dotted scenario fields (for example
+`hydrogen.injection_bar`). It fills only fields the template leaves open and
+writes one result folder per case plus a comparison CSV; it selects nothing.
+
 Run `python -m unittest discover -s tests -v`. Calculation tests use explicitly
 synthetic cases, never adopted article inputs; the reference-case tests only check
 that the generated article inputs still match their record. They check conservation, curve use, integer

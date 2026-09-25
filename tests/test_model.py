@@ -1,6 +1,7 @@
 """Synthetic verification cases, not adopted article scenarios or model inputs."""
 from dataclasses import replace
 from decimal import Decimal
+import copy
 import importlib
 import json
 from pathlib import Path
@@ -300,6 +301,17 @@ class Integration(unittest.TestCase):
         sections.to_csv(path, index=False)
         with self.assertRaises(Infeasible):
             section_inventory(path, coordinates, nodes, np.array([[100, 200]]), "sink")
+
+    def test_design_cases_fill_open_fields_without_overriding(self):
+        from research_articles.turbine_level_hydrogen.analysis.run_design_cases import apply_design_values
+        open_scenario = copy.deepcopy(self.scenario)
+        del open_scenario["hydrogen"]["injection_bar"], open_scenario["hydrogen"]["export_diameter_m"]
+        filled = apply_design_values(open_scenario, {"hydrogen.injection_bar": 150,
+                                                     "hydrogen.export_diameter_m": 0.3})
+        self.assertEqual(filled, self.scenario)
+        self.assertNotIn("injection_bar", open_scenario["hydrogen"])
+        with self.assertRaises(ValueError):
+            apply_design_values(self.scenario, {"hydrogen.injection_bar": 100})
 
     def test_model_imports_do_not_run_or_write(self):
         with patch("pathlib.Path.write_text", side_effect=AssertionError("import wrote a file")):

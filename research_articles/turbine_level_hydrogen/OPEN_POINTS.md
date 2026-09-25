@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-25 (O1 pressure and common operating case; O2 inventory page; O5 compressor cost).
+Last reviewed: 2026-09-25 (O1 common case; O2 inventory; O5 compressor cost; O7 design-case runner).
 
 Working tracker for the article and its model. Update this file when a point is
 resolved, a decision changes, or a new blocker appears. Keep stable IDs, record
@@ -118,6 +118,18 @@ already been updated.
   Choose a baseline from the feasible cases rather than treating either
   variable as an externally supplied fixed value. Keep the onshore delivery
   pressure and physical export route from the agreed reference case.
+  Pressure and diameter are **explicit scenario inputs of each case**
+  (`injection_bar`, `export_inlet_bar`, `export_diameter_m`), never central
+  CSV parameters; the model reports every case and the baseline is adopted by
+  you from the reported trade-off.
+  *In progress 2026-09-25:* [`run_design_cases.py`](analysis/run_design_cases.py)
+  runs a CSV of explicit design cases against a template, filling only fields
+  the template leaves open. The sweep is blocked upstream: centralised
+  production needs the platform location and feeder bays (O3) and the AC
+  resistance and power factor (O2); turbine-level production needs the
+  interface efficiencies (O2c) and the collection sections (next item); pipeline
+  cost needs the price basis of the confidential TCP module
+  (`pipeline-quote-to-eur2025`, your input).
 - [ ] **Reconcile the collection-layout explanation (O7).** Keep the
   encyclopedia's ladder topology but recalculate its geometry and section
   lengths for the agreed rectangular IJmuiden Ver Beta case. Describe the
