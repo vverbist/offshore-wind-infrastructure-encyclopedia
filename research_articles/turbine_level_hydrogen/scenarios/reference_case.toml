@@ -1,0 +1,28 @@
+# Agreed 2026-09-23. Evidence, reasoning and boundaries: ../reference_case.qmd.
+# Article case inputs, not global methodology defaults. Derived values are not stored.
+# The architecture templates do not yet load this record; see O1 preparation TODOs.
+[site]
+name = "IJmuiden Ver Beta"
+latitude_deg_n = 52.91 # Approximate location: rvo2025WakeStudy, Appendix A.
+longitude_deg_e = 3.58
+farm_area_km2 = 186.3 # Net site area: ijmuidenBeta2023SiteDecision, section 4.2.1.
+water_depth_m = 28 # Representative average: dnv2025Doordewind, Appendix B, Table 3.
+turbine_count = 134 # Adopted reference configuration, also rvo2025WakeStudy.
+crosswind_to_alongwind_ratio = 2.0 # Agreed idealised geometry.
+
+[turbine]
+rated_power_mw = 15 # Agreed rating; full turbine/curve definition remains to be connected.
+
+[wind]
+# Paths relative to this file; existing supplied DOWA-derived data are retained.
+hourly_workbook = "../../../background/legacy model/model_A02/WRA+H2-E_victor.xlsx"
+sector_file = "../../../background/legacy model/model_A02/weibull_per_sector.csv"
+orientation_basis = "centre of most frequent direction sector"
+
+[hydrogen]
+export_length_km = 100 # Agreed physical route assumption, not a surveyed corridor.
+delivery_pressure_bar_g = 66 # Agreed gauge interpretation; model requires absolute pressure.
+
+[electrolysis]
+overplant_factor = 1.0 # Requested nominal stack capacity / served wind capacity.
+overplant_factor_sensitivity_max = 3.0 # Deferred sensitivity ceiling for both architectures.

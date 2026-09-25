@@ -11,11 +11,13 @@ from model_data.parameters import (
     load_parameters,
     write_quarto_variables,
 )
+from research_articles.turbine_level_hydrogen.analysis.reference_case import quarto_variables
 
 
 def main() -> None:
     parameters = load_parameters()
     variables = build_quarto_variables(parameters)
+    variables.update(quarto_variables())
     output_path = PROJECT_ROOT / "_variables.yml"
     write_quarto_variables(variables, output_path)
     print(

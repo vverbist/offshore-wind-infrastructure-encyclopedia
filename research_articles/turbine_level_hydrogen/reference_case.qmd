@@ -1,0 +1,191 @@
+---
+title: "Agreed Reference Case: IJmuiden Ver Beta"
+subtitle: "Assumptions, reasoning and evidence for O1"
+readiness: context_only
+draft: true
+---
+
+## Purpose and status
+
+Agreed on 23 September 2026. This case provides the common wind-farm and
+onshore hydrogen-delivery basis for the centralised and turbine-level
+comparisons. It is an idealised case based on IJmuiden Ver Beta, not a claim to
+reproduce the developer's final design.
+
+The authoritative article inputs are in
+[reference_case.toml](scenarios/reference_case.toml). Values displayed here are
+loaded from that record; dimensions and spacing are calculated by
+[the reference-case calculation](analysis/reference_case.py). These are case
+choices, not defaults for the component methodology. The architecture templates
+have not yet been connected to this record: this note records the agreed basis,
+not a completed production or cost run. Remaining preparation is tracked in
+[O1](OPEN_POINTS.md).
+
+## Common inputs and their basis
+
+| Quantity | Adopted value | Classification, evidence and reason |
+|---|---|---|
+| Reference site and approximate location | IJmuiden Ver Beta; {{< var ijv-latitude-deg-n >}}° N, {{< var ijv-longitude-deg-e >}}° E | Sourced location in the RVO wake study, Appendix A [@rvo2025WakeStudy]. Identifies the geographical reference; it does not identify the supplied DOWA extraction point. |
+| Turbine count $N$ | {{< var ijv-turbine-count >}} turbines | Article choice, matching the reference configuration in the same study [@rvo2025WakeStudy]. Keeps the upstream farm identical in both architectures. |
+| Turbine rating $P_r$ | {{< var ijv-rated-power-mw >}} MW/turbine | Article choice, matching that reference configuration [@rvo2025WakeStudy]. Rating alone does not select a rotor, hub height or performance curve. |
+| Net farm area $A$ | {{< var ijv-farm-area-km2 >}} km² | Sourced from the final Beta site decision, §4.2.1 [@ijmuidenBeta2023SiteDecision]. Uses Beta's net area rather than the area of the wider wind zone. It sets the equivalent rectangular layout and the denominator for yield per **net** km². |
+| Representative water depth $h$ | {{< var ijv-water-depth-m >}} m | Sourced average for Beta in DNV's RVO assessment, Appendix B, Table 3 [@dnv2025Doordewind]. A published site-specific average is sufficient for this common structural and installation reference. It does not resolve local bathymetry, tides or a foundation design datum. |
+| Crosswind breadth / along-wind length $r$ | {{< var ijv-crosswind-to-alongwind-ratio >}} | Explicit article assumption agreed on the date above. Represents the requested broad front perpendicular to the dominant wind. |
+| Hydrogen export route | {{< var ijv-export-length-km >}} km | Explicit article assumption agreed on the date above. Physical route length from the offshore export origin to the common onshore receipt boundary; no surveyed pipeline corridor is claimed. |
+| Onshore delivery pressure $p_{\mathrm{delivery,g}}$ | {{< var ijv-delivery-pressure-bar-g >}} bar(g) | Article choice based on the upper network-pressure level described for Waterstofnetwerk West-Nederland [@hynetwork2026WestNRD, p. 18]. The **gauge** interpretation is explicitly agreed modelling judgement; that source writes only “bar”. |
+| Stack overplant factor $f$ | {{< var ijv-overplant-factor >}}× baseline; up to {{< var ijv-overplant-factor-sensitivity-max >}}× later | Explicit article choices, applied equally to both architectures. Establish the baseline before investigating the additional stack-capacity trade-off. |
+
+The installed wind capacity is derived, not independently prescribed:
+
+$$
+P_{\mathrm{farm}}=N P_r.
+$$
+
+Here $P_{\mathrm{farm}}$ is in MW, $N$ is a turbine count and $P_r$ is in
+MW/turbine. The result is **{{< var ijv-installed-mw >}} MW**. “Approximately
+2 GW” is a descriptive label; calculations retain the exact count-times-rating
+result without introducing an electricity-grid export cap.
+
+## Layout and spacing derived from area
+
+Let $B$ be crosswind breadth and $L$ along-wind length, both in km. With
+$A$ in km² and dimensionless $r=B/L$:
+
+$$
+B=\sqrt{Ar},\qquad L=\sqrt{A/r},\qquad BL=A.
+$$
+
+This gives **{{< var ijv-breadth-km >}} km across the wind** and
+**{{< var ijv-length-km >}} km along the wind**. The adopted regular-grid
+construction chooses the number of crosswind columns $n_B$ and along-wind rows
+$n_L$ as:
+
+$$
+n_B=\left\lceil\sqrt{Nr}\right\rceil,\qquad
+n_L=\left\lceil N/n_B\right\rceil.
+$$
+
+The resulting grid has {{< var ijv-columns >}} columns and
+{{< var ijv-rows >}} rows: {{< var ijv-full-rows >}} full rows and a centred
+final row of {{< var ijv-last-row >}} turbines. This row convention is an
+explicit modelling choice; area and aspect ratio alone do not uniquely define
+a turbine layout.
+
+Turbine centres span the equivalent rectangle, with no additional boundary
+setback. Consequently, the separations in metres are:
+
+$$
+d_B=\frac{1000B}{n_B-1},\qquad
+d_L=\frac{1000L}{n_L-1}.
+$$
+
+The factor 1000 converts km to m. Crosswind spacing is
+**{{< var ijv-spacing-crosswind-m >}} m** and along-wind spacing is
+**{{< var ijv-spacing-alongwind-m >}} m**. The shorter final row retains $d_B$
+and is centred within the same breadth. All wake and collection calculations
+must use the resulting common turbine coordinates, rather than a separate
+area-based spacing proxy.
+
+Replacing the net site by a rectangle deliberately omits its actual shape,
+internal corridors and exclusions. This is a comparative layout, not a
+demonstration of site-permit compliance. Detailed polygon checks remain D7.
+
+## Wind record and orientation
+
+Use the supplied DOWA-derived hourly workbook and fitted sector table already
+described on [Wind Resource and Weibull Distribution](../../wind_resource_and_layout/wind_resource_and_weibull.qmd).
+Their paths are recorded in the case file. DOWA is the underlying atlas
+[@dutchOffshoreWindAtlas]; the atlas citation does not independently establish
+the workbook's extraction point or height. Retain the page's existing metadata
+and period limitations without substituting an unrelated wind record.
+
+The adopted orientation follows the centre of the most frequent direction
+sector in the supplied table: **{{< var ijv-dominant-from-deg >}}°**, interpreted
+as the meteorological direction **from** which wind arrives, clockwise from
+north. Thus the short axis runs southwest–northeast and the long axis
+northwest–southeast. Sector labels in the existing file are lower bin edges;
+use bin centres when preparing wake states. The centre is calculated from the
+stored sector spacing rather than entered as another independent case value.
+
+This documents the adopted interpretation. It does not recover the missing
+direction-convention metadata for the original extraction. Both architectures
+must receive identical annual wind-state weights and turbine-level generation
+before architecture-specific losses.
+
+## Export and onshore delivery boundary
+
+The reported product is hydrogen delivered at the common onshore receipt
+interface at the adopted pressure. Include the export pipeline, landfall and
+receipt functions needed to reach that boundary; exclude subsequent backbone
+transport, storage, distribution and end use. The receipt equipment scope and
+its supply, installation and operating costs remain O9.
+
+The agreed export length is a scenario assumption. For context, the published
+Beta electricity-connection assessment gives a **146 km offshore cable route**
+toward Maasvlakte [@ijmuidenBeta2021ExportMER, Table 2-14, p. 67]. This is route
+evidence for a different carrier, not an adopted hydrogen-pipeline length.
+A particular landfall and engineered route remain unresolved.
+
+The West-Netherlands hydrogen-network document describes initial operation at
+**30–50 bar** and possible future operation up to **66 bar**
+[@hynetwork2026WestNRD, p. 18]. Those are source-reported network conditions;
+the article deliberately adopts the upper level as its delivery requirement.
+It does not claim that every connection currently requires that pressure.
+
+Compression and pipeline equations use **absolute** pressure:
+
+$$
+p_{\mathrm{delivery,abs}}
+=p_{\mathrm{delivery,g}}+p_{\mathrm{atm}}.
+$$
+
+All pressures in this equation are in bar; $p_{\mathrm{atm}}$ is atmospheric
+pressure at the receipt boundary. The corresponding absolute pressure is
+approximately 67 bar. **TODO for executable preparation:** declare the
+atmospheric-pressure basis and calculate the conversion; do not copy the
+gauge value into the model's absolute-pressure field. Any pressure loss through
+receipt equipment belongs upstream of the delivery interface and must be
+accounted for explicitly rather than hidden in a pressure margin.
+
+## Stack sizing and comparison cases
+
+Define the dimensionless overplant factor as:
+
+$$
+f=\frac{P_{\mathrm{stack,requested}}}{P_{\mathrm{wind,served}}},
+$$
+
+where both capacities are in MW at their stated rating boundaries. Central
+stacks serve the complete farm; each turbine-level package serves its turbine.
+Actual installed stack capacity follows the model's integer module sizing.
+Overplanting changes stack capacity; it does not automatically increase the
+wind rating or BOP design capacity. Operation must still cover auxiliary loads
+within available wind power.
+
+Start both architectures at the agreed baseline factor. Retain the agreed
+upper factor for deferred sensitivity work (D6), not as a demonstrated feasible
+design or an optimised result. Preserve the article's centralised, conservative
+turbine-level and converter-reduced comparison cases; electrical equipment and
+efficiency choices remain O2.
+
+## Remaining preparation
+
+**O1 is partially resolved.** The site, count/rating, area, schematic geometry,
+representative depth, wind-data basis, export distance, delivery-pressure
+interpretation and overplanting range are agreed. Before claiming executable
+common-case results:
+
+- Connect this shared record to both scenario templates and generate the common
+  coordinates, including an explicit coordinate-rotation convention.
+- Select a consistent rotor diameter, hub height and tabulated power/thrust
+  curve; the nominal turbine rating alone does not supply these.
+- Prepare annual operating states and peak-duty states from the existing wind
+  data, using the documented sector-centre convention.
+- Complete the absolute-pressure conversion and the remaining design inputs
+  needed by the selected branches. Collection origins and network design are
+  linked to O3/O7; onshore receipt details remain O9.
+
+## References
+
+::: {#refs}
+:::

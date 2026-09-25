@@ -14,6 +14,8 @@ This page defines the proposed paper narrative. Detailed calculation
 requirements and unresolved evidence are maintained in the
 [Model Blueprint](model_blueprint.qmd). The
 [Section Map](section_map.qmd) links both documents to the relevant model pages.
+The [agreed reference case](reference_case.qmd) records the adopted assumptions,
+their reasoning and evidence, and remaining case-preparation work.
 
 ## Abstract
 
