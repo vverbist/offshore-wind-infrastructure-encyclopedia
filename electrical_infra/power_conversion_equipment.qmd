@@ -1,0 +1,227 @@
+---
+title: "Power Conversion Equipment"
+completion: 40
+readiness: blocked
+---
+
+## Role in the Model
+
+This page owns the inventory of power-conversion equipment between the turbine
+generator and the PEM stack DC terminals. For each equipment role it records the
+duty, voltage and insulation class, documented unit ratings, the unit count
+implied by the article reference case, cost evidence and its price basis, losses,
+package boundary and adoption status.
+
+Other pages apply this inventory rather than repeat it.
+[DC Integration](../hydrogen_production/dc_integration.qmd) defines the
+turbine-level electrical cases,
+[Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd)
+books the central transformer–rectifier package,
+[Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) owns the
+turbine removal credit, and [Component Mapping](../architectures/component_mapping.qmd)
+records which roles each architecture uses.
+
+**Candidate evidence on this page is not an adopted model input.** A value enters
+`model_data/inputs.csv` only after its scope, price basis and applicability are
+adopted on the owning page. Unsupported values stay as explicit TODOs.
+
+## Electrical Chains Compared
+
+Three article cases are compared. All start at the same generator output, the
+boundary of the [common operating case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case).
+
+| Equipment role | Centralised hydrogen | Conservative turbine-level | Direct DC (`converter_reduced`) |
+|---|:---:|:---:|:---:|
+| Generator-side converter (rectifier) and DC link | Common baseline | Common baseline | Common baseline |
+| Grid-side inverter | Used | Removed | Removed |
+| Turbine step-up transformer | Used | Removed | Removed |
+| 66 kV AC collection | Used ([Infield AC Cables](infield_ac_cables.qmd)) | Not used | Not used |
+| Central step-down transformer | Used | Not used | Not used |
+| Rectifier transformer | Used | Not used | Not used |
+| Electrolyser rectifier | Used | Not used | Not used |
+| Dedicated stack-side DC/DC converter | Not used | Used | Omitted, conditional on electrical matching and protection |
+
+: Equipment roles in the three compared electrical chains.
+
+```text
+Centralised:   generator -> generator-side converter -> DC link -> grid-side inverter
+               -> turbine transformer -> 66 kV collection -> central step-down transformer
+               -> rectifier transformer -> rectifier -> stacks
+Conservative:  generator -> generator-side converter -> DC link -> stack-side DC/DC -> stacks
+Direct DC:     generator -> generator-side converter -> DC link -> stacks
+```
+
+The generator-side converter is present in every case. It is therefore
+**excluded from the comparison cost table** and stays in the common turbine
+baseline. Its losses still apply to every case and must be accounted for
+consistently (see [Losses](#sec-pce-losses)). Auxiliary supplies, protection,
+switchgear and dedicated cooling are named separately in each role below, so
+that a package boundary cannot silently absorb or drop them.
+
+## Reference-Case Unit Counts
+
+The article case has {{< var ijv-turbine-count >}} turbines of
+{{< var ijv-rated-power-mw >}} MW ({{< var ijv-installed-mw >}} MW). Counts per
+turbine follow from the chains above; central counts depend on a selected unit
+size, which is not yet chosen.
+
+| Role | Count | Unit duty | Status |
+|---|---|---|---|
+| Grid-side inverter | one per turbine (centralised only) | turbine rating | Follows the turbine; no choice required |
+| Turbine step-up transformer | one per turbine (centralised only) | turbine rating | Follows the turbine; MVA margin TODO |
+| Central step-down transformer | $\lceil P_{\mathrm{served}}/S_{\mathrm{unit}}\rceil$ | selected unit size $S_{\mathrm{unit}}$ | TODO: select $S_{\mathrm{unit}}$ within documented limits (O3 platform layout) |
+| Rectifier transformer and rectifier | one set per rectifier block | selected block size | TODO: block size follows stack module grouping and DC voltage |
+| Stack-side DC/DC converter | one or more per turbine (conservative only) | turbine rating in parallel modules | TODO: module size within documented product limits |
+
+: Unit counts for the reference case.
+
+A product limit is a documented maximum; a model unit size is a selected design
+input. The inventory keeps them separate: a published limit does not select the
+unit size, and a selected size must stay within some documented limit.
+
+## Equipment Inventory
+
+### Generator-side converter (common baseline)
+
+| Item | Record |
+|---|---|
+| Duty | Controls generator current and torque; rectifies the generator output onto the turbine DC link |
+| Voltage | IEA 15 MW generator: 4.77 kV line voltage at rating [@gaertner2020IEA15]. The converter voltage level is not defined by the reference turbine; the turbine case's converter voltage remains TODO |
+| Documented ratings | Complete back-to-back medium-voltage converters to about 12 MW per line at 3.3 kV, and 20 MW and above with two lines [@abb2023PCS6000; @abbPCS6000Web2026] |
+| Cost | In the common turbine baseline; not in the comparison table |
+| Losses | Not separately published; the complete back-to-back converter is about 98% efficient at rated power [@abb2023PCS6000]. Not yet represented in the model (see [Losses](#sec-pce-losses)) |
+| Status | Common baseline; loss share unresolved |
+
+### Grid-side inverter
+
+| Item | Record |
+|---|---|
+| Duty | Converts the DC link to grid-frequency AC for the turbine transformer |
+| Voltage | Same converter voltage as above; TODO |
+| Documented ratings | Supplied as the grid half of a complete back-to-back package, not as a separate product [@abb2023PCS6000] |
+| Cost evidence | No public source prices it separately. Complete-package references only: power converter 5.01% of turbine cost in a 2007 EWEA breakdown [@irena2012WindCost]; a complete power take-off (converter, transformer, switchgear and cabling) of about GBP 700,000 for a 10 MW turbine [@bvg2019OffshoreGuide] |
+| Losses | No separate public value; complete-package efficiency about 98% [@abb2023PCS6000] |
+| Package boundary | Inside the turbine converter package and inside the calibrated turbine cost |
+| Status | **Evidence gap.** Neither cost nor losses are inferred by splitting a complete converter package; no removal credit is claimed until separable evidence exists |
+
+### Turbine step-up transformer
+
+| Item | Record |
+|---|---|
+| Duty | Converter AC voltage to the 66 kV array voltage |
+| Primary voltage | 66 kV array side; insulation class $U_m=72.5$ kV [@hitachiWindSTAR2026] |
+| Secondary voltage and class | Converter AC voltage, reported in the range 0.69–3.3 kV [@bvg2019OffshoreGuide]; TODO with the converter voltage |
+| Documented ratings | Tower or nacelle units above 7 MVA in 36 and 72.5 kV classes, ester insulated [@hitachiWindSTAR2026]; dry cast-resin designs are also used [@bvg2019OffshoreGuide] |
+| Mass and cost evidence | WISDEM mass $1.915P+1910$ kg with $P$ in kW, and a 18.8 USD/kg reference rate, are already in the turbine ledger [@wisdemSource2026]; 3.59% of turbine cost in the 2007 EWEA breakdown [@irena2012WindCost] |
+| Losses | No adopted value. EU Ecodesign loss limits do not apply to transformers for offshore wind turbines [@eu2019Ecodesign1783] |
+| Package boundary | Transformer only; turbine switchgear and HV cabling are separate turbine electrical items |
+| Status | Removal credit follows the explicit WISDEM transformer term (see [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd)); losses TODO |
+
+### Central step-down transformer
+
+| Item | Record |
+|---|---|
+| Duty | 66 kV collection voltage to the electrolyser plant's medium-voltage distribution |
+| Primary voltage | 66 kV; $U_m=72.5$ kV |
+| Secondary voltage and class | Plant medium voltage not selected; TODO |
+| Documented ratings | ORBIT sizes offshore main power transformers at up to about 250 MW each [@orbitSource2026]; this applies to export-voltage transformers, not to this voltage pair |
+| Cost evidence | Fraunhofer adds a separate high-voltage transformer of about 25–26 EUR/kW in its 100 MW electrolysis cases [@holst2021ElectrolysisCost]. ORBIT's main-transformer rate is 15,772 USD~2024~/MW of transformer rating, CPI-inflated, for a different voltage class [@orbitSource2026] |
+| Losses | Fraunhofer assumes 99% efficiency for its high-voltage transformer [@holst2021ElectrolysisCost]. EU Ecodesign loss limits do not apply to offshore-platform transformers [@eu2019Ecodesign1783] |
+| Package boundary | Within the central 185 EUR/kW package on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd); must not be booked again on the platform |
+| Status | Candidate evidence; booked through the central package |
+
+### Rectifier transformer
+
+| Item | Record |
+|---|---|
+| Duty | Plant medium voltage to the rectifier valve-side voltage, with phase shifting for multi-pulse operation |
+| Primary voltage | Plant medium voltage; TODO |
+| Secondary voltage | Valve-side AC matching the stack DC voltage, which is not yet defined (stack cell count and grouping TODO). Rectifier transformers are documented for DC outputs up to about 2,000 V [@hitachiRectifierTransformers2026] |
+| Documented ratings | Up to about 160 MVA per single tank [@hitachiRectifierTransformers2026]; a recent hydrogen supply used 13.3 MVA dry-type units, each feeding two 5 MW rectifiers [@hitachiKKWind2025] |
+| Cost and losses | Not published separately from the transformer–rectifier package; package evidence below |
+| Status | Booked inside the central package |
+
+### Electrolyser rectifier
+
+| Item | Record |
+|---|---|
+| Duty | Controlled DC supply to the stack group |
+| DC side | Stack DC voltage TODO; up to about 6 kA per water-cooled thyristor unit, scalable to about 25 kA [@abbUnirecWeb2026] |
+| Documented ratings | Thyristor units by current as above; IGBT supplies up to 10 MW and above at up to 1,000 V DC [@abbHyQ2026] |
+| Cost evidence | Transformer plus rectifier: 199 USD~2020~/kW manufactured cost for 1 MW [@badgett2024PEMCost]; about 160 EUR/kW power electronics plus 25–26 EUR/kW transformer at 100 MW [@holst2021ElectrolysisCost]; lower Chinese-market package prices [@gao2025AdvancedRectifiers] |
+| Losses | Rectifier up to 99.6% [@abbUnirecWeb2026]; transformer plus rectifier above about 97.5% [@gao2025AdvancedRectifiers]; IGBT supply above 98% [@abbHyQ2026] |
+| Status | The central package of 185 EUR/kW and 97.5% net efficiency is documented on [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd). Its efficiency is adopted; its unit cost is not yet normalised to EUR~2025~ (`central-conversion-unit-cost` blank) |
+
+### Dedicated stack-side DC/DC converter (conservative case)
+
+| Item | Record |
+|---|---|
+| Duty | Adapts the turbine DC-link voltage to the stack voltage, controls stack current and can provide isolation |
+| Voltage | Input: turbine DC link, TODO with the converter voltage. Output: stack DC voltage, TODO |
+| Documented ratings | No public multi-megawatt DC/DC product rating was confirmed; IGBT electrolyser supplies reach 10 MW and above [@abbHyQ2026] |
+| Cost evidence | None found for a standalone DC/DC stage at this scale. A diode rectifier plus chopper system is reported at CNY 320/kW, including the rectifier [@gao2025AdvancedRectifiers]; it is not a DC/DC-only price |
+| Losses | Vendor efficiency above 97.5% over the load range [@sungrowDCDC2026]; above 98% for comparable IGBT supplies [@abbHyQ2026] |
+| Status | **Evidence gap for cost and rating**; efficiency candidates only. `conservative-conversion-efficiency` and `conservative-conversion-unit-cost` stay blank |
+
+## Losses {#sec-pce-losses}
+
+The model's wind-power states are generator electrical output: the IEA 15 MW
+curve includes generator efficiency but no converter or transformer loss. The
+current implementation applies AC cable losses and then the central 97.5%
+package; turbine-level cases use a single interface efficiency that is still
+blank. The loss terms are therefore:
+
+| Loss term | Cases | Current model treatment | Status |
+|---|---|---|---|
+| Generator-side converter | All | Not represented | TODO: add consistently to every case |
+| Grid-side inverter | Centralised | Not represented | TODO: evidence gap; do not split a package efficiency |
+| Turbine step-up transformer | Centralised | Not represented | TODO |
+| 66 kV AC collection | Centralised | Calculated from cable resistance | AC resistance and power factor still to be adopted |
+| Central transformers and rectifier | Centralised | 97.5% net package efficiency | Adopted |
+| Stack-side DC/DC converter | Conservative | Blank interface efficiency | Candidates above 97.5% |
+| Direct-DC interface | Direct DC | Blank interface efficiency | Should cover only DC-link, protection and cabling losses; no converter loss |
+
+: Loss terms by case and their current treatment.
+
+Omitting the turbine converter and transformer losses from the centralised chain
+favours that case, while omitting the generator-side converter affects all cases
+equally. O2c must close these terms before energy comparisons are reported. A
+detailed loss calculation replaces a flat efficiency rather than being added to
+it.
+
+## Cost and Mass Reconciliation
+
+Each electrical function is counted once:
+
+- The common turbine calibration includes the complete conventional turbine
+  electrical scope, including converter and transformer. The turbine-level cases
+  adjust it through `turbine-electrical-cost-adjustment` on
+  [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd).
+- The transformer removal credit can follow the explicit WISDEM transformer term
+  in that ledger. No grid-side inverter credit is claimed, because the calibrated
+  cost has no separable converter term and no separable evidence exists.
+- The stack-side DC/DC converter is booked through the turbine-level conversion
+  unit cost on [DC Integration](../hydrogen_production/dc_integration.qmd), not in
+  the turbine adjustment.
+- The central transformers and rectifier are booked in the central package; the
+  platform page carries their mass but not their cost.
+- No mass or cost saving is assumed beyond these explicit terms. Equipment masses
+  for the platform (O3) and turbine lifts (O8) remain inputs; the ABB converter
+  catalogue gives about 6.2 t for a 10 MW converter as context only
+  [@abb2023PCS6000].
+
+## Evidence Gaps
+
+| Gap | Effect | Route to closure |
+|---|---|---|
+| Separate grid-side inverter cost and losses | No removal credit; centralised loss understated | Supplier data for a split package, or a documented converter cost model |
+| Converter AC voltage and turbine DC-link voltage | Transformer secondary and DC/DC input undefined | Select a converter voltage level for the reference turbine |
+| Stack DC voltage and grouping | Rectifier, rectifier-transformer and DC/DC output undefined | Stack cell count and series/parallel grouping on [Stack](../hydrogen_production/stack.qmd) |
+| DC/DC cost and multi-megawatt unit rating | Conservative case cannot be costed | Supplier quotation or published product data |
+| Turbine transformer losses | Centralised losses incomplete | Supplier loss data at the selected rating |
+| Central unit sizes | Central counts undefined | Platform layout (O3) within documented limits |
+
+## References
+
+::: {#refs}
+:::

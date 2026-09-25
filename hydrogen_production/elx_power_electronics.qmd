@@ -25,7 +25,7 @@ This page represents the complete conversion chain between the 66 kV platform in
 
 : Scope boundary for the centralised-electrolysis power-electronics model.
 
-The main 66 kV transformer is included on this page and should not be costed again in another electrical-infrastructure component. Harmonic filtering, phase shifting, reactive-power management, and converter cooling are not represented as separate systems; their normal provision is included within the aggregated package cost and net efficiency.
+The main 66 kV transformer is included on this page and should not be costed again in another electrical-infrastructure component. Equipment roles, unit counts, voltages, documented unit ratings and evidence for the step-down transformer, rectifier transformers and rectifiers are recorded on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd); this page books the resulting package cost and net loss. Harmonic filtering, phase shifting, reactive-power management, and converter cooling are not represented as separate systems; their normal provision is included within the aggregated package cost and net efficiency.
 
 ## Reference Architecture
 

@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-25 (O2 scope and execution queue; O1 pressure and common operating case).
+Last reviewed: 2026-09-25 (O1 pressure and common operating case; O2 inventory page).
 
 Working tracker for the article and its model. Update this file when a point is
 resolved, a decision changes, or a new blocker appears. Keep stable IDs, record
@@ -19,10 +19,11 @@ parameter values.
    coordinates, IEA 15 MW curve, wake-affected operating states, peak-duty state
    and absolute pressures. The first production run now waits on the O7
    injection pressure and export diameter.
-2. **Build the agreed electrical equipment inventory (O2).** Research component
-   costs, losses, voltage ranges and unit-size limits, then implement the
-   agreed website discussion. Scope and page placement are settled; the work
-   is queued below and needs no further user input to proceed.
+2. **Close the electrical losses and costs (O2c/O2d).** The
+   [Power Conversion Equipment](../../electrical_infra/power_conversion_equipment.qmd)
+   inventory is in place. Next: add the missing turbine converter and
+   transformer losses consistently, select the converter and stack DC voltages,
+   and seek separable grid-side inverter and DC/DC evidence.
 3. **Establish a defensible platform basis (O3).** The central platform is an
    included cost and a material part of the comparison. I prepare the method
    and evidence options for us to agree.
@@ -63,7 +64,7 @@ already been updated.
   assumptions: workbook speeds taken as hub-height speeds (height unrecorded);
   3D minimum-spacing check retained from the legacy model; AC string order
   provisional until the platform location is set. Overplanting stays 1×.
-- [ ] **Build the power-conversion equipment inventory (O2).** Research the
+- [x] **Build the power-conversion equipment inventory (O2).** Research the
   grid-side inverter, electrolyser rectifier, turbine step-up transformer,
   central plant step-down transformer and rectifier transformer; retain the
   dedicated stack-side DC/DC converter as a companion entry for the
@@ -77,7 +78,7 @@ already been updated.
   retained in every case and remains in the common turbine baseline, with its
   losses accounted for consistently. Do not infer separate inverter cost or
   losses by arbitrarily splitting a complete turbine-converter package.
-- [ ] **Implement the agreed electrical discussion on the website (O2).** Add
+- [x] **Implement the agreed electrical discussion on the website (O2).** Add
   a shared **Power Conversion Equipment** page under **Electrical
   Infrastructure**, immediately after its overview, to own the inventory and
   its evidence. Follow equipment duty, voltage and rating, unit count, cost,
@@ -99,6 +100,17 @@ already been updated.
   inputs in the central CSV and sources in the bibliography; keep unsupported
   values as explicit TODOs. The discussion and research can proceed without
   further user input; candidate evidence is not automatically adopted.
+  *Done 2026-09-25 (both O2 items):* new
+  [Power Conversion Equipment](../../electrical_infra/power_conversion_equipment.qmd)
+  page after the Electrical Infrastructure overview, with duty, voltage and
+  insulation class, documented ratings, reference-case counts, cost and loss
+  evidence, package boundaries and status per role. DC Integration records the
+  three agreed cases; Electrolyser Power Electronics, the turbine page (removal
+  credit) and Component Mapping link to it. No numerical input was adopted.
+  Findings: the model has no turbine generator-side converter, grid-side
+  inverter or turbine transformer losses; no public source separates grid-side
+  inverter cost or losses; no multi-megawatt DC/DC cost was found; converter
+  and stack DC voltages are undefined.
 - [ ] **Study injection pressure and export diameter as design variables
   (O7).** Develop evidence-supported candidate pressure/diameter combinations,
   check compression duty, pipeline capacity and count, pressure feasibility,
@@ -148,7 +160,7 @@ approval of new numerical assumptions.
 | ID | Open point and next action | Owner | What it blocks / completion condition |
 |---|---|---|---|
 | O1 | **Resolved for the preparation scope (2026-09-25):** both templates include the generated [common operating case](reference_case.qmd#sec-common-operating-case) built from the [shared input record](scenarios/reference_case.toml): coordinates, IEA 15 MW turbine, wake-affected operating and peak-duty states, absolute pressures and export length. Open limitations: wind extraction height and direction metadata unrecorded; wake model and turbulence intensity not benchmarked (wake page). | Me: preparation | First real-case production and equipment inventories. Both scenarios now share the same upstream wind and delivery basis; production still requires O7 injection pressure and export diameter, and central collection requires the O3 platform location. |
-| O2 | **Scope and website placement agreed:** build the component inventory and implement the discussion as queued above. The central, conservative turbine-level and direct-DC (`converter_reduced`) definitions are agreed; generator-side rectifier cost stays in the common turbine baseline. Derive losses and cost/mass reconciliation from the evidenced inventory; AC resistance and power factor remain to be established. | Me: research and implementation; Joint: numerical adoption where judgement is required | Comparable energy losses, electrical CAPEX and the basis for O&M. Complete when each electrical function is counted once and any removal credit has an explicit scope. The queued inventory does not yet close numerical inputs or validate the direct-DC operating envelope. |
+| O2 | **Inventory published (2026-09-25):** see [Power Conversion Equipment](../../electrical_infra/power_conversion_equipment.qmd). Remaining (O2c/O2d): represent generator-side converter losses in every case and grid-side inverter and turbine transformer losses in the centralised chain; select converter and stack DC voltages; adopt costs where evidence allows; leave the grid-side inverter credit unclaimed without separable evidence. The central, conservative turbine-level and direct-DC (`converter_reduced`) definitions are agreed; generator-side rectifier cost stays in the common turbine baseline. Derive losses and cost/mass reconciliation from the evidenced inventory; AC resistance and power factor remain to be established. | Me: research and implementation; Joint: numerical adoption where judgement is required | Comparable energy losses, electrical CAPEX and the basis for O&M. Complete when each electrical function is counted once and any removal credit has an explicit scope. The queued inventory does not yet close numerical inputs or validate the direct-DC operating envelope. |
 | O3 | **Method drafted:** the [platform page](../../platforms/platform_material_capex.qmd) now documents the hosted-equipment, topside, jacket and pile mass chain; separate structure, integration and fabrication costs; and the lift handoff. Research the missing masses, unit costs, platform multiplicity and module choices in the execution list above. | Me: evidence and preparation; Joint: adoption | Complete centralised CAPEX and platform installation. The calculation structure exists, but the illustrative one-platform example is not an adopted, costed design. |
 | O4 | Adopt stack purchase cost and an offshore water-treatment reference purchase cost. Retain the agreed aggregate BOP scaling. | Me: evidence and normalisation; Joint: adoption | Stack and BOP supply CAPEX. Resolve `stack-purchase-unit-cost` and `bop-water-reference-purchase-cost`; lifetime treatment remains D4. |
 | O5 | **Source and reference rating identified:** the [compressor page](../../hydrogen_infra/compressor.qmd) cites a motor-power cost correlation giving uninstalled purchase cost; use the agreed 15 kW reference and derive its cost from that correlation. Convert its Canadian-dollar source price to EUR 2025 and check equipment-class applicability as queued above. The consistent reference-power/cost pair is only a normalisation and does not affect the cost curve. | Me: normalisation and applicability check | Compressor CAPEX. Resolve `compressor-reference-purchase-cost` and `compressor-reference-motor-power` together; the legacy plotted anchor is not an adopted purchase cost. |
@@ -165,7 +177,7 @@ approval of new numerical assumptions.
 | Points | Main files / methodology owners |
 |---|---|
 | O1 | [Agreed reference case](reference_case.qmd), [shared inputs](scenarios/reference_case.toml), [centralised scenario](scenarios/centralised.toml), [decentralised scenario](scenarios/decentralised.toml), [wind and layout](../../wind_resource_and_layout/wake_modelling_and_spacing.qmd) |
-| O2 | Planned new page: `electrical_infra/power_conversion_equipment.qmd` (Power Conversion Equipment; not yet created). Existing owners: [DC integration](../../hydrogen_production/dc_integration.qmd), [electrolyser power electronics](../../hydrogen_production/elx_power_electronics.qmd), [AC collection](../../electrical_infra/infield_ac_cables.qmd), [turbine](../../turbine_system/wind_turbine.qmd), [component mapping](../../architectures/component_mapping.qmd). Add the new page immediately after the Electrical Infrastructure overview in `_quarto.yml`. |
+| O2 | [Power Conversion Equipment](../../electrical_infra/power_conversion_equipment.qmd) (`electrical_infra/power_conversion_equipment.qmd`). Existing owners: [DC integration](../../hydrogen_production/dc_integration.qmd), [electrolyser power electronics](../../hydrogen_production/elx_power_electronics.qmd), [AC collection](../../electrical_infra/infield_ac_cables.qmd), [turbine](../../turbine_system/wind_turbine.qmd), [component mapping](../../architectures/component_mapping.qmd). |
 | O3 | [Platform CAPEX](../../platforms/platform_material_capex.qmd), [platform installation](../../offshore_installation/platform_and_substation_installation.qmd) |
 | O4–O5 | [Stack](../../hydrogen_production/stack.qmd), [BOP](../../hydrogen_production/balance_of_plant.qmd), [compressor](../../hydrogen_infra/compressor.qmd) |
 | O6 | [Price basis](../../methodology/financial_and_price_basis.qmd), [input ownership notes](../../model_data/README.md) |
@@ -195,7 +207,7 @@ approval of new numerical assumptions.
 | Stack and TCP evidence | Keep the supplied stack curve and existing TCP model for now; later evidence work is tracked separately. |
 | Electrical comparison cases (O2) | Centralised: conventional turbine electrical chain, AC collection and central transformer–rectifier package. Conservative turbine-level: turbine DC link with a dedicated stack-side DC/DC interface. Direct DC (`converter_reduced`): no dedicated stack-side converter, conditional on electrical matching and protection. |
 | Electrical inventory boundary (O2) | Exclude generator-side rectifier cost from the comparison table because it is common to all cases; retain it in the turbine baseline and account for its losses consistently. Research the grid-side inverter, electrolyser rectifier and transformer roles, with a companion DC/DC entry for the conservative case. Transformer entries distinguish primary voltage, secondary voltage/range and insulation class. |
-| Electrical evidence and website ownership (O2) | The planned Power Conversion Equipment page under Electrical Infrastructure owns the shared component inventory. Existing DC integration, electrolyser power-electronics, turbine and component-mapping pages apply or link to it as queued above. Costs and losses follow the inventory; published package values are not arbitrarily split, and candidate evidence is not an adopted model input. |
+| Electrical evidence and website ownership (O2) | The Power Conversion Equipment page under Electrical Infrastructure owns the shared component inventory. Existing DC integration, electrolyser power-electronics, turbine and component-mapping pages apply or link to it as queued above. Costs and losses follow the inventory; published package values are not arbitrarily split, and candidate evidence is not an adopted model input. |
 | BOP | Keep one aggregate exponent for the entire BOP, including water treatment, and the agreed block limit. Values remain authoritative in `bop-scaling-exponent` and `bop-block-limit`. Stack overplanting does not resize BOP. No new subsystem decomposition is required. |
 | Compression | Retain its separate exponent and limit each train by electrical motor input. Values are in `compressor-cost-exponent` and `compressor-train-limit`; larger duties use multiple trains. |
 | O&M comparison | Decentralisation removes electrical equipment. Maintenance follows the retained inventory; there is no blanket distributed O&M premium or adopted numerical claim that power electronics dominate all maintenance. |

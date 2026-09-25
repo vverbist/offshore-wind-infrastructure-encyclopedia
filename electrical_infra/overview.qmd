@@ -26,6 +26,7 @@ flowchart LR
 
 | Information required | Canonical page | Coverage |
 |---|---|---|
+| Power-conversion equipment roles, ratings, costs, losses and evidence gaps | [Power Conversion Equipment](power_conversion_equipment.qmd) | Shared inventory for turbine converters and transformers, central transformer–rectifier equipment and the stack-side DC/DC converter |
 | Array topology and string count | [Infield AC Cables](infield_ac_cables.qmd) | 66 kV layout, cable sizing, feeder-interface checks and routing length |
 | Array-cable material cost and electrical performance | [Infield AC Cables](infield_ac_cables.qmd) | Material CAPEX, losses, reliability and availability |
 | Offshore and onshore converter stations | [HVDC Converter Stations](hvdc_converter_stations.qmd) | Reference configuration, converter CAPEX, conversion efficiency and station availability |

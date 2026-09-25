@@ -14,13 +14,13 @@ assumptions, costs, losses, availability, and limitations.
 |---|---|---|---|---|
 | Wind turbine and generator | Included | Included | Included | [Wind Turbine](../turbine_system/wind_turbine.qmd) |
 | Foundation | Included | Included | Included | [Foundation](../turbine_system/foundation.qmd) |
-| Turbine active front end and DC link | Included | Included | Included | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
-| Turbine grid-side inverter | Included | Included | Not used in the hydrogen path | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
-| Turbine step-up transformer | Included | Included | Not used in the hydrogen path | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd) |
+| Turbine generator-side converter and DC link | Included | Included | Included (common baseline) | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd); equipment record on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) |
+| Turbine grid-side inverter | Included | Included | Removed in both turbine-level cases; no removal credit claimed without separable evidence | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd); evidence on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) |
+| Turbine step-up transformer | Included | Included | Removed in both turbine-level cases; credit follows the WISDEM transformer term | [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd); evidence on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) |
 | AC infield collection | Included | Included | Replaced by hydrogen collection | [Infield AC Cables](../electrical_infra/infield_ac_cables.qmd) |
 | Central offshore platform | AC aggregation and HVDC conversion | One integrated AC aggregation and electrolysis platform | Not used | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
-| Central electrolyser transformer and rectifier | Not used | Included on the integrated platform | Not used | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) |
-| Separate electrolyser-side DC/DC converter | Not used | Not applicable to the AC-fed central chain | Not used by assumption | [DC Integration](../hydrogen_production/dc_integration.qmd) |
+| Central step-down transformer, rectifier transformers and rectifiers | Not used | Included on the integrated platform as one package | Not used | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) (package cost and loss); equipment record on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) |
+| Dedicated stack-side DC/DC converter | Not used | Not applicable to the AC-fed central chain | Used in the conservative case; omitted in the direct-DC case, conditional on electrical matching and protection | [DC Integration](../hydrogen_production/dc_integration.qmd); evidence on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) |
 | PEM stacks | Not used | Included on the integrated platform | Included at each turbine | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) |
 | Water treatment and non-electrical electrolyser BOP | Not used | Included in the platform electrolyser facility | Included in each turbine-level electrolyser facility | [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) |
 | Hydrogen compression | Not used | Separate subsystem on the integrated platform | Separate subsystem at each turbine | [Compressor](../hydrogen_infra/compressor.qmd) |

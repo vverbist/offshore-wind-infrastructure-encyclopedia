@@ -410,6 +410,20 @@ $$
 
 WISDEM calculates transformer mass explicitly. Converter, switchgear, protection, and cabling masses require separate evidence. A lighter nacelle may also reduce tower and foundation mass, but that secondary effect cannot be calculated with the length-only WISDEM tower regression.
 
+### Electrical removal credit
+
+The model keeps the conventional turbine as the common baseline for every architecture and applies turbine-level changes through the per-turbine input `turbine-electrical-cost-adjustment`. Its scope follows the shared inventory on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd):
+
+| Item | Treatment in the adjustment |
+|---|---|
+| Step-up transformer | Removed in both turbine-level cases. The credit can follow the explicit, calibrated WISDEM transformer term in this ledger; its scope is the transformer only |
+| Grid-side inverter | Removed in both turbine-level cases, but **no credit is claimed**: the calibrated cost has no separable converter term, and no public source prices the grid-side half of a converter package |
+| Generator-side converter and DC link | Retained in every case; no adjustment |
+| Stack-side DC/DC converter | Not in this adjustment; booked through the turbine-level conversion unit cost on [DC Integration](../hydrogen_production/dc_integration.qmd) |
+| DC protection, switchgear and cabling changes | Enter the adjustment only with explicit evidence |
+
+The adjustment remains blank until these terms are evidenced and normalised to EUR~2025~. No blanket percentage of turbine cost is removed.
+
 ## Improvements from Mehta
 
 Mehta, Zaaijer, and von Terzi scale turbine properties around the direct-drive IEA 15 MW reference turbine [@mehta2024TurbineSizing; @gaertner2020IEA15]. Their complete model is not substituted for WISDEM: the paper does not publish standalone equations for every component, and its absolute turbine-cost calibration is not adopted. Four relationships nevertheless improve identifiable weaknesses in the WISDEM baseline.

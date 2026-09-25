@@ -17,6 +17,20 @@ wind-turbine generator -> active rectifier/up-chopper -> DC link -> PEM stack or
 
 The architecture has no AC export connection, turbine grid-side inverter, electrolyser rectifier, or separate electrolyser-side DC/DC converter. The generator-side active rectifier/up-chopper remains part of the turbine and controls generator current, electromagnetic torque, and the power extracted from the rotor.
 
+## Compared Electrical Cases
+
+The article compares three agreed electrical cases. Equipment duty, ratings, costs, losses and evidence gaps for each role are owned by [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd).
+
+| Case | Electrical chain | Status |
+|---|---|---|
+| Centralised hydrogen | Conventional turbine electrical chain (generator-side converter, DC link, grid-side inverter, step-up transformer), 66 kV AC collection and a central transformer–rectifier package | Reference comparison |
+| Conservative turbine-level (`conservative`) | Turbine generator-side converter and DC link, then a dedicated stack-side DC/DC interface | Uses established conversion equipment |
+| Direct DC (`converter_reduced`) | Turbine generator-side converter and DC link connected directly to the stack array; no dedicated stack-side converter | Conditional on the electrical matching and protection requirements below |
+
+: Agreed electrical comparison cases.
+
+The generator-side converter is common to all three cases and stays in the common turbine baseline. The rest of this page develops the direct-DC case; the conservative case keeps the dedicated converter, so the feasibility conditions below do not apply to it.
+
 ::: {.callout-note}
 ## Model assumption
 
@@ -157,7 +171,7 @@ Component-level turbine and PEM qualification remains necessary but is not repea
 
 ## Model Implication
 
-For the decentralised-hydrogen architecture, the model therefore:
+For the direct-DC case (`converter_reduced`), the model therefore:
 
 - retains the generator-side active rectifier/up-chopper and its losses;
 - excludes the turbine grid-side inverter and AC export equipment from the hydrogen power path;
@@ -165,7 +179,9 @@ For the decentralised-hydrogen architecture, the model therefore:
 - determines stack voltage and current from generator power and the active PEM polarisation curve; and
 - retains supervisory controls, measurement, protection, isolation, and balance-of-plant interlocks as required functions.
 
-No converter CAPEX or conversion-loss allowance should be assigned to a separate electrolyser-side DC/DC stage in this architecture. This treatment applies only if the project-specific electrical matching and protection requirements can be met.
+No converter CAPEX or conversion-loss allowance should be assigned to a separate electrolyser-side DC/DC stage in this case. This treatment applies only if the project-specific electrical matching and protection requirements can be met.
+
+For the conservative case (`conservative`), the dedicated stack-side DC/DC converter is included, with its cost in `conservative-conversion-unit-cost` and its efficiency in `conservative-conversion-efficiency`. Both remain unresolved; candidate evidence and gaps are on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd). In both turbine-level cases the removed grid-side inverter and step-up transformer are reconciled against the turbine baseline on [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd).
 
 ::: {.callout-important}
 ## Final assessment

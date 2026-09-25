@@ -53,6 +53,7 @@ website:
       - section: "Electrical Infrastructure"
         contents:
           - electrical_infra/overview.qmd
+          - electrical_infra/power_conversion_equipment.qmd
           - electrical_infra/infield_ac_cables.qmd
           - electrical_infra/hvdc_converter_stations.qmd
           - electrical_infra/hvdc_export_cables.qmd
