@@ -28,7 +28,7 @@ class ParameterError(ValueError):
 class Parameter:
     id: str
     raw_value: str
-    value: Decimal
+    value: Decimal | None
     unit: str
     kind: str
     price_year: int | None
@@ -52,6 +52,8 @@ class ParameterSet:
 
     def number(self, parameter_id: str, expected_unit: str | None = None) -> Decimal:
         parameter = self.get(parameter_id)
+        if parameter.value is None:
+            raise ParameterError(f"Model input {parameter_id} is not parameterized")
         if expected_unit is not None and parameter.unit != expected_unit:
             raise ParameterError(
                 f"{parameter_id} uses {parameter.unit!r}; expected {expected_unit!r}"
@@ -102,9 +104,9 @@ def load_parameters(path: Path = DEFAULT_INPUT_PATH) -> ParameterSet:
         seen_ids.add(parameter_id)
 
         raw_value = row["value"].strip()
-        if not raw_value:
-            raise ParameterError(f"Line {line_number}: {parameter_id} has no value")
-        value = _parse_decimal(raw_value, delimiter, line_number)
+        value = _parse_decimal(raw_value, delimiter, line_number) if raw_value else None
+        if value is not None and not value.is_finite():
+            raise ParameterError(f"Line {line_number}: {parameter_id} must be finite")
 
         unit = row["unit"].strip()
         if not unit:
@@ -131,7 +133,7 @@ def load_parameters(path: Path = DEFAULT_INPUT_PATH) -> ParameterSet:
                 )
             price_year = int(raw_price_year)
 
-        if kind != "reference" and re.search(r"\b(?:EUR|USD|GBP)\b", unit):
+        if value is not None and kind != "reference" and re.search(r"\b(?:EUR|USD|GBP)\b", unit):
             if price_year is None:
                 raise ParameterError(
                     f"Line {line_number}: monetary input {parameter_id} needs a price year"
@@ -177,6 +179,8 @@ def _decimal_text(value: Decimal, places: int, strip: bool = False) -> str:
 
 
 def _format_parameter(parameter: Parameter) -> str:
+    if parameter.value is None:
+        return f"TODO ({parameter.unit})"
     if parameter.unit == "fraction":
         return f"{_decimal_text(parameter.value * 100, 3, strip=True)}%"
     if parameter.unit == "fraction/year":
@@ -190,6 +194,10 @@ def _format_parameter(parameter: Parameter) -> str:
 
 
 def capital_recovery_factor(rate: Decimal, years: int) -> Decimal:
+    if years <= 0 or rate < 0:
+        raise ValueError("Project life must be positive and discount rate non-negative")
+    if rate == 0:
+        return Decimal(1) / years
     growth = (Decimal(1) + rate) ** years
     return rate * growth / (growth - Decimal(1))
 

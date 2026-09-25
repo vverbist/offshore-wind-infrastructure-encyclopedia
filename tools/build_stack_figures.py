@@ -8,6 +8,7 @@ Run manually when numerical inputs change:
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -15,15 +16,15 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
-import pandas as pd
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = PROJECT_ROOT / "numerical_inputs" / "pem_polarisation_curve.xlsx"
 DEFAULT_OUTPUT = PROJECT_ROOT / "figures" / "pem-polarisation.svg"
 DEFAULT_SHEET = "polarisation_curve"
-REVERSIBLE_CELL_VOLTAGE_HHV = 1.481
-MIN_CURRENT_DENSITY_A_CM2 = 0.2
+sys.path.insert(0, str(PROJECT_ROOT))
+from model.inputs import load_inputs
+from model.hydrogen_production.stack import StackCurve
 
 
 def build_pem_polarisation_figure(
@@ -31,12 +32,13 @@ def build_pem_polarisation_figure(
     output_path: Path = DEFAULT_OUTPUT,
     sheet_name: str = DEFAULT_SHEET,
 ) -> None:
-    df = pd.read_excel(input_path, sheet_name=sheet_name)
-    df = df[df["current_density_A_cm2"] >= MIN_CURRENT_DENSITY_A_CM2]
-
-    current_density = df["current_density_A_cm2"]
-    cell_voltage = df["cell_voltage_V"]
-    efficiency = REVERSIBLE_CELL_VOLTAGE_HHV / cell_voltage * 100
+    inputs = load_inputs({})
+    curve = StackCurve.read(input_path, sheet_name=sheet_name)
+    minimum = inputs.number("stack-figure-min-current-density", "A/cm2")
+    selected = curve.current_density >= minimum
+    current_density = curve.current_density[selected]
+    cell_voltage = curve.voltage[selected]
+    efficiency = curve.efficiency(inputs)[selected] * 100
 
     fig, (ax_voltage, ax_efficiency) = plt.subplots(1, 2, figsize=(10, 4))
 
@@ -44,14 +46,14 @@ def build_pem_polarisation_figure(
     ax_voltage.set_xlabel("Current density [A/cm2]")
     ax_voltage.set_ylabel("Cell voltage [V]")
     ax_voltage.set_title("Polarisation curve")
-    ax_voltage.set_xlim(left=MIN_CURRENT_DENSITY_A_CM2)
+    ax_voltage.set_xlim(left=minimum)
     ax_voltage.grid(True, color="#d1d5db", linewidth=0.8)
 
     ax_efficiency.plot(current_density, efficiency, linewidth=2.2)
     ax_efficiency.set_xlabel("Current density [A/cm2]")
     ax_efficiency.set_ylabel("Stack efficiency [% HHV]")
     ax_efficiency.set_title("Efficiency")
-    ax_efficiency.set_xlim(left=MIN_CURRENT_DENSITY_A_CM2)
+    ax_efficiency.set_xlim(left=minimum)
     ax_efficiency.grid(True, color="#d1d5db", linewidth=0.8)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)

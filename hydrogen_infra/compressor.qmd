@@ -24,7 +24,7 @@ A fixed compressor energy value would hide that trade-off from the optimisation.
 
 ## Key Assumptions {#sec-compressor-pem}
 
-The base case assumes that PEM electrolysers deliver hydrogen at 30 bar. The compressor outlet pressure is not fixed. It is varied together with pipeline diameter and the number of parallel pipelines to minimise total LCOE.
+Inlet and outlet pressures are scenario inputs. The illustrated reference duty is separate from the article case. Pressure and diameter sensitivity runs use the same energy and cost equations.
 
 | Parameter | Value |
 |---|---:|
@@ -36,9 +36,11 @@ The base case assumes that PEM electrolysers deliver hydrogen at 30 bar. The com
 | Gas temperature, $T$ | 298 K |
 | Compressor efficiency, $\eta_\mathrm{comp}$ | 0.80 |
 | Motor efficiency, $\eta_\mathrm{motor}$ | 0.95 |
-| Compressor availability | 99% |
-| Compressor OPEX | 3% of CAPEX per year |
-| Compressor cost scaling exponent | 0.8335 |
+| Compressor availability | TODO: adopt non-overlapping architecture-specific scope |
+| Compressor OPEX | TODO: adopt component allowance |
+| Compressor cost scaling exponent | {{< var compressor-cost-exponent >}} |
+| Cost-curve reference motor input | 15 kW (normalisation choice; not a compressor design rating) |
+| Maximum motor input per train | {{< var compressor-train-limit >}} |
 
 : Main compressor assumptions.
 
@@ -108,7 +110,7 @@ r_s^{(\gamma - 1)/\gamma} - 1
 \right]
 $$
 
-where $Z_\mathrm{avg}$ is the average hydrogen compressibility factor between inlet and outlet pressure, evaluated from real-gas hydrogen properties via CoolProp at the arithmetic mean of $p_\mathrm{in}$ and $p_\mathrm{out}$, the same way the [pipeline capacity model](hydrogen_pipelines.qmd) evaluates gas properties at an average pipeline pressure. Hydrogen deviates only mildly from ideal-gas behaviour over this pressure range ($Z_\mathrm{avg}$ stays within a few percent of 1), but the deviation is calculated rather than assumed.
+where $Z_\mathrm{avg}$ is the average hydrogen compressibility factor between inlet and outlet pressure, evaluated from real-gas hydrogen properties via CoolProp at the arithmetic mean of $p_\mathrm{in}$ and $p_\mathrm{out}$. The [pipeline capacity model](hydrogen_pipelines.qmd) uses its own average-pressure relation; neither calculation assumes an ideal gas.
 
 The electrical energy consumption of the compressor is:
 
@@ -165,9 +167,9 @@ The curves confirm why PEM outlet pressure matters: at a given pipeline injectio
 
 ## Cost Model
 
-The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression [@transitionAcceleratorCompressorCost].
+The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression [@transitionAcceleratorCompressorCost]. Its high-flow pipeline-compressor correlation gives **uninstalled** cost as $3{,}083.3\,(P_\mathrm{comp}/\mathrm{kW})^{0.8335}$ in 2019 Canadian dollars, where $P_\mathrm{comp}$ is electrical motor input in kW. The brief's installation factor of 2 is separate and is not included in the compressor purchase cost on this page. Applicability of that high-flow equipment class to small turbine-level duties still needs checking.
 
-The model uses a power-law scaling relation:
+After source-year escalation and currency conversion, let $A$ [EUR~2025~] be the coefficient of that same uninstalled power law and let $\alpha$ be the sourced exponent. The model uses:
 
 $$
 C_\mathrm{comp}
@@ -176,12 +178,16 @@ C_\mathrm{comp,ref}
 \left(
 \frac{P_\mathrm{comp}}
 {P_\mathrm{comp,ref}}
-\right)^{0.8335}
+\right)^\alpha,
+\qquad
+P_\mathrm{comp,ref}=15\,\mathrm{kW},
+\qquad
+C_\mathrm{comp,ref}=A\,15^\alpha.
 $$
 
-The exponent is below one, so larger compressors are cheaper per kW than smaller compressors. This matters because the centralised architecture uses a smaller number of large compressor trains, while the decentralised architecture uses many smaller turbine-level compressors.
+The agreed 15 kW reference is a convenient normalisation, **not** an independently priced compressor or a minimum motor size. Because its cost is derived from the same power law, substitution gives $C_\mathrm{comp}=A(P_\mathrm{comp}/\mathrm{kW})^\alpha$: the reference power cancels and its numerical choice has **no effect on any calculated cost**. Rounding $C_\mathrm{comp,ref}$ independently would break this equivalence. The exponent is below one, so larger compressors are cheaper per kW than smaller compressors; this affects the centralised and turbine-level train comparison, whereas the reference point does not.
 
-As a reference: compression from 30 to 150 bar, for a 15 MW scale system, result in roughly $56 \text{€}/kW$ compressor costs.
+The older illustrative figure uses roughly $56\,\text{€}/\text{kW}$ of electrolyser capacity for compression from 30 to 150 bar at a 15 MW scale. Its price basis is unresolved; it is not the 15 kW motor reference or an adopted purchase-cost anchor.
 
 ### Cost Sensitivity to Outlet Pressure
 
@@ -200,92 +206,54 @@ where $P_\mathrm{ely}$ is the installed electrolyser capacity. @fig-compressor-c
 
 The cost curves are flatter than the energy curves in @fig-compressor-energy, and the staging kinks are less visible, because compressor CAPEX scales with compressor power using an exponent below one: a given percentage change in energy consumption produces a smaller percentage change in cost. The same qualitative trade-off remains, though: higher outlet pressure increases compressor cost, and higher inlet pressure reduces it, for the same reason it does for energy.
 
-### Centralised Compression
+### Train Sizing and Architecture Aggregation
 
-In the centralised hydrogen architecture, all hydrogen is produced on the offshore platform. The compressor is therefore sized for the full farm-level hydrogen flow:
-
-$$
-P_\mathrm{comp,central}
-=
-e_\mathrm{comp}
-\cdot
-\dot{m}_{\mathrm{H_2},\mathrm{farm}}
-$$
-
-The centralised compressor CAPEX is:
+At each production location $j$, the peak electrical motor demand
+$P_{\mathrm{peak},j}$ [kW] follows from the simultaneous stack/BOP/compression
+power balance. Train count and equally shared train duty are:
 
 $$
-C_\mathrm{comp,central}
-=
-C_\mathrm{comp,ref}
-\left(
-\frac{P_\mathrm{comp,central}}
-{P_\mathrm{comp,ref}}
-\right)^{0.8335}
+n_j=\left\lceil\frac{P_{\mathrm{peak},j}}{P_{\mathrm{train,max}}}\right\rceil,
+\qquad P_{\mathrm{train},j}=\frac{P_{\mathrm{peak},j}}{n_j}.
 $$
 
-This captures the economy of scale from centralising compression. In practice, the compressor would likely be split into multiple parallel trains for redundancy and maintenance, but the current model does not explicitly size those trains.
-
-### Decentralised Compression
-
-In the decentralised hydrogen architecture, compression is represented at turbine level. For turbine $j$:
-
-$$
-P_{\mathrm{comp},j}
-=
-e_{\mathrm{comp},j}
-\cdot
-\dot{m}_{\mathrm{H_2},j}
-$$
-
-The total decentralised compressor cost is calculated by summing over all turbines:
+For zero compression duty, train count and cost are zero. The adopted bound
+`compressor-train-limit` is a modelling assumption on **electrical motor input**.
+It limits economies of scale without adding a spare train. The total supply
+cost is:
 
 $$
-C_\mathrm{comp,decentral}
-=
-\sum_j
-C_\mathrm{comp,ref}
-\left(
-\frac{P_{\mathrm{comp},j}}
-{P_\mathrm{comp,ref}}
-\right)^{0.8335}
+C_{\mathrm{comp,total}}=\sum_j n_j C_{\mathrm{comp,ref}}
+\left(\frac{P_{\mathrm{train},j}}{P_{\mathrm{comp,ref}}}\right)^\alpha.
 $$
 
-This captures the cost penalty of distributing compression across many smaller units. The decentralised architecture may still be attractive because it removes the central offshore electrolysis platform and replaces the infield AC grid with hydrogen pipelines.
+Here $C_{\mathrm{comp,ref}}$ is reference purchase cost [EUR2025],
+$P_{\mathrm{comp,ref}}$ is reference motor input [kW], and $\alpha$ is the
+central scaling exponent. Centralised production has one farm-level location;
+decentralised production sizes each turbine location separately. The method
+is implemented in `model/hydrogen_infra/compressor.py`.
+
+**TODO:** record the agreed 15 kW motor reference and its source-derived,
+unrounded EUR~2025~ purchase cost as `compressor-reference-motor-power` and
+`compressor-reference-purchase-cost` after documenting the Canadian-dollar
+escalation and exchange-rate conversion. Check whether the sourced high-flow
+pipeline-compressor correlation covers the evaluated train duties. The legacy
+figure above illustrates relative pressure sensitivity; its unnormalised
+anchor is not an adopted model purchase cost and does not show train-count steps.
 
 ### Operating Cost and Availability
 
-Compressor OPEX is calculated as:
-
-$$
-OPEX_\mathrm{comp}
-=
-0.03
-\cdot
-C_\mathrm{comp}
-$$
-
-Compressor availability is assumed to be:
-
-$$
-A_\mathrm{comp} = 99\%
-$$
-
-The available hydrogen after compression is therefore:
-
-$$
-m_{\mathrm{H_2},\mathrm{after}}
-=
-A_\mathrm{comp}
-\cdot
-m_{\mathrm{H_2},\mathrm{before}}
-$$
-
-This is a simplified availability treatment. It does not explicitly model spare compressor trains, partial-load operation during failures or maintenance strategy.
+Annual O&M is total installed train supply cost times the adopted
+`compressor-opex-rate` [fraction/year]. Availability uses the architecture-specific
+`compressor-*-availability` [fraction], applied to the production capacity at
+that location. Both remain unresolved inputs; no distributed maintenance
+premium is assumed. The component ledger prevents the same outage from being
+counted again in production availability. Redundancy, failure-state redispatch
+and spare-train sizing are deferred.
 
 ## Pressure Optimisation
 
-Pipeline injection pressure is optimised together with pipeline diameter and the number of parallel pipelines, for the reasons set out in [Pipeline Pressure and Capacity](pipeline_pressure_and_capacity.qmd): pressure, diameter, material cost, and installation cost all move together, so none of them can be picked in isolation.
+Pressure, diameter and parallel-pipeline choices can be compared in separate deterministic scenarios, for the reasons set out in [Pipeline Pressure and Capacity](pipeline_pressure_and_capacity.qmd): pressure, diameter, material cost, and installation cost all move together, so none of them can be picked in isolation.
 
 The optimisation problem is therefore not:
 
@@ -299,7 +267,7 @@ $$
 \min C_\mathrm{pipeline}
 $$
 
-Instead, the model minimises the combined system cost:
+A later optimisation could minimise the combined system cost; the current draft evaluates supplied scenarios:
 
 $$
 \min_{p_\mathrm{out}, D, n_\mathrm{pipe}}
@@ -318,7 +286,7 @@ The main limitations are:
 
 | Limitation | Implication |
 |---|---|
-| Cost scales only with compressor power | Compressor type, train count and offshore packaging are simplified |
+| Cost scales with bounded train motor power | Compressor type and offshore packaging remain simplified |
 | One cost exponent is used | Technology-specific cost behaviour is not represented |
 | Compression uses a simplified multistage equation | Intercooling, compressor maps and detailed thermal design are not modelled |
 | Availability is a fixed percentage | Redundancy and partial failure are not represented |

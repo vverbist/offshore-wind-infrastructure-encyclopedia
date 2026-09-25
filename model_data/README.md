@@ -12,6 +12,12 @@ The columns are intentionally limited:
 - `price_year`: required for adopted monetary inputs; and
 - `citation`: the key in `references.bib`, without the leading `@`.
 
+A blank `value` is an explicit unresolved TODO, not zero. Blank entries retain
+their required unit and cannot be used in a numerical calculation. Website
+display renders them as TODO. Adopt the evidence/assumption and monetary price
+basis on the owning page before filling them. Sensitivity overrides apply only
+to adopted numeric baselines and are recorded without changing this file.
+
 `reference` is reserved for contextual monetary evidence that cannot yet be
 adopted, for example because its source price year is unresolved.
 
@@ -23,3 +29,45 @@ figures. `_variables.yml` must never be edited directly.
 Percentages are stored as fractions: `0.066` is rendered as `6.6%`. If Excel
 saves a European semicolon-delimited CSV with decimal commas, the loader accepts
 that format as well.
+
+## Executable model parameter ownership
+
+The draft model uses these additional groups. Page paths below identify the
+point-of-use equations and scope; `reference` rows remain non-combinable evidence.
+
+| IDs | Owner and adoption basis |
+|---|---|
+| `annual-hours`, `hydrogen-hhv` | `methodology/energy_availability_and_annualisation.qmd`; non-leap screening year and adopted rounded HHV |
+| `stack-*` | `hydrogen_production/stack.qmd`; existing curve used as supplied, reference current density and module/minimum-load assumptions; HHV voltage and figure cutoff migrated from the existing figure builder |
+| `bop-*` | `hydrogen_production/balance_of_plant.qmd`; NREL source category costs sum in code, existing auxiliary allowance and agreed aggregate scaling; water purchase cost remains TODO |
+| `*-conversion-*` | `hydrogen_production/elx_power_electronics.qmd` and `dc_integration.qmd`; only the central efficiency is adopted; unnormalised cost and turbine-level interfaces remain TODO |
+| `compressor-*`, `hydrogen-heat-capacity-ratio`, `universal-gas-constant`, `hydrogen-molar-mass` | `hydrogen_infra/compressor.qmd` and its existing figure builder; migrated thermodynamic assumptions and legacy rounded constants, existing sourced exponent, agreed motor-power cap |
+| `pipeline-*` | `hydrogen_infra/hydrogen_pipelines.qmd`; existing gas-property and friction method; quote normalisation, product unit prices and connection/manifold costs remain TODO |
+| `array-*` | `electrical_infra/infield_ac_cables.qmd`; existing voltage, routing and blended supply assumptions; AC resistance and power factor require adoption |
+| `wind-turbulence-intensity` | `wind_resource_and_layout/wake_modelling_and_spacing.qmd`; existing provisional legacy assumption |
+| `turbine-*` | `turbine_system/wind_turbine.qmd`; pinned WISDEM coefficients and Mehta replacements, source calibration; electrical additions/adjustments remain TODO |
+| `foundation-*` | `turbine_system/foundation.qmd`; reference design, fabricated unit cost and transition-piece allowance; supported reference mass is summed in code |
+| `platform-*` | `platforms/platform_material_capex.qmd`; ORBIT jacket and pile mass fits adopted, ORBIT cost rates reference-only, structural ratio and EUR2025 unit costs remain TODO; piles reuse `foundation-fabrication-unit-cost`; site durations from platform installation page |
+| `install-*` | The three `offshore_installation/` pages; coherent spread inputs remain TODO rather than combining incompatible reference vessels |
+| `*-availability`, `*-opex-rate` | Component owners and `methodology/energy_availability_and_annualisation.qmd`; deliberately unresolved pending non-overlapping scope adoption |
+| `financial-usd-escalation-*` | `methodology/financial_and_price_basis.qmd`; source-year escalation missing; no currency-only value becomes EUR2025 CAPEX |
+
+The BOP block limit and compressor train limit are the explicitly agreed
+screening choices (100 MW served electrolysis and 1 MW motor input). BOP limit
+sensitivities of 20 and 50 MW belong in scenario overrides. These limits are
+modelling assumptions, not claims about supplier qualification.
+
+WISDEM coefficients with unit `coefficient` retain the dimensions implied by
+their specific kg/m/kW/Nm regression on the turbine page; they are not
+dimensionless physical constants. Raw USD rates have unknown common price age
+and are used only as relative calibration weights. The separate crane price
+is unresolved; a documented mass subtotal does not establish a complete price.
+
+The lifetime-production factor is an unresolved interface for a later adopted
+degradation/replacement treatment. Its blank value prevents beginning-of-life
+production from being used silently as lifetime-average LCOH production.
+
+`turbine-distributed-maximum-lift` is the largest lifted assembly [t] in the
+adopted combined turbine/hydrogen installation plan. It and the additional
+hydrogen-equipment mass remain TODOs. Connections and manifolds have separate
+O&M rates, also unresolved, to retain their scope in the component ledger.

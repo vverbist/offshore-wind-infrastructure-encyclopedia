@@ -3,114 +3,40 @@
 import matplotlib
 import numpy as np
 import pandas as pd
-from CoolProp.CoolProp import PropsSI
+import sys
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
-def h2_export_pipeline_capacity( 
-    D_inch: float,
-    P_in_bar: float,
-    L_m : float = 80e3,
-    eps_surface_roughness_m: float=1.5e-7,
-    P_out_bar: float=66,
-    T_K: float=293,
-) -> float:
-    """
-    Returns hydrogen pipeline capacity in kg/h using Colebrook equation 
-    
-    [1] Transition Accelerator : https://transitionaccelerator.ca/wp-content/uploads/2023/06/The-Techno-Economics-of-Hydrogen-Pipelines-v2.pdf
-    
-    [2] Perry's Handbook: https://mathguy.us/BySubject/Chemistry/Perrys_Chemical_Engineers_Handbook.pdf
-    Eqns: (6-38) with (6-32) and (6-33) [8th Edition]
-
-    Note: [1] uses f as Darcy-Weisbach friction factor, [2] uses f as Fanning friction factor.
-    Difference is factor 4. Here [2]'s Fanning fricion factor is used (eqn 6-32)
-
-    Parameters
-    ----------
-    D_inch : inner diameter [inch]
-    Pin_bar : inlet absolute pressure [bar]
-    L_m : pipeline length [m]
-    f_darcy : Darcy friction factor [-]
-    Pout_Pa : outlet absolute pressure [bar]
-    T_K : temperature [K]
-
-    Returns
-    -------
-    Capacity [kg/h] as float
-    """
-    
-    if P_in_bar <= P_out_bar:
-        raise ValueError("Pin_Pa must be greater than Pout_Pa.")
-    
-    # unit conversions and renaming
-    D_m = D_inch * 0.0254
-    P_in_Pa  = P_in_bar  * 1e5
-    P_out_Pa = P_out_bar * 1e5
-    
-    eps = eps_surface_roughness_m
-    dP = P_in_Pa - P_out_Pa
-    
-    # from here on: everthing in SI units
-    
-    # Calculate average Pressure, using Transition Accelerator method, eqn (4)
-    P_avg_Pa = (2/3) * ( ( P_in_Pa**3 - P_out_Pa**3) / ( P_in_Pa**2 - P_out_Pa**2)  )
-    # get density and viscosity at this avg pressure
-    rho_avg = PropsSI('D', "T", T_K, "P", P_avg_Pa , "Hydrogen" ) # density, kg/m3
-    mu_avg  = PropsSI('V', "T", T_K, "P", P_avg_Pa , "Hydrogen" ) # viscosity, kg/(m.s)
-    
-    # Calc Re * sqrt(f), using (6-32) and (6-33) 
-    Re_sqrt_f = D_m**(3/2) / mu_avg * np.sqrt( (dP*rho_avg)/(2*L_m) )
-    
-    # Calc 1/sqrt(f), eqn ( 6-38 )
-    sqrt_f_inv = -4 * np.log10( eps/(3.7*D_m) + 1.256/Re_sqrt_f )
-    
-    # Calc v using eqn (6-32)
-    v = np.sqrt( (D_m*dP)/(2*rho_avg*L_m) ) * sqrt_f_inv
-    
-    # Convert speed to mass flow
-    A_m2 = np.pi/4 * D_m**2
-    m_dot_kgs = rho_avg * A_m2 * v 
-    m_dot_kgh = m_dot_kgs * 3600
-    
-    return m_dot_kgh
-
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-FIGURE_DIR = PROJECT_ROOT / "figures"
-HHV_H2_KWH_PER_KG = 39.4
+sys.path.insert(0, str(PROJECT_ROOT))
+from model.inputs import load_inputs
+from model.hydrogen_infra.hydrogen_pipelines import capacity_kg_h
 
-if "pipeline_cost_curve" not in globals():
-    try:
-        from pipeline_cost_curve import pipeline_cost_curve
-    except ModuleNotFoundError:
-        pipeline_cost_curve = None
+FIGURE_DIR = PROJECT_ROOT / "figures"
 
 
 def build_pipeline_data():
-    Ps = np.arange(80, 155, 5)
-    Ds = np.arange(4, 9, 1)
-    P_grid, D_grid = np.meshgrid(Ps, Ds)
-
-    vec_capacity = np.vectorize(h2_export_pipeline_capacity)
-    capacity_grid = vec_capacity(D_grid, P_grid)
-
-    df = pd.DataFrame({
-        "P": P_grid.ravel(),
-        "D": D_grid.ravel(),
-        "capacity_kg_h": capacity_grid.ravel(),
-    })
-    df["capacity_mw_hhv"] = df["capacity_kg_h"] * HHV_H2_KWH_PER_KG / 1000
-
-    cost_grid = None
-    if pipeline_cost_curve is not None:
-        cost_grid = pipeline_cost_curve(P_grid, D_grid)
-        df["cost"] = cost_grid.ravel()
-        df["cost_per_capacity"] = df["cost"] / df["capacity_kg_h"]
-
-    return df, cost_grid
+    inputs = load_inputs({})
+    # Pressure, diameter and route are explicit figure scenarios, not model defaults.
+    pressures = np.arange(80, 155, 5)
+    diameters = np.arange(4, 9, 1)
+    rows = []
+    for diameter in diameters:
+        for pressure in pressures:
+            capacity = capacity_kg_h(diameter * 0.0254, pressure, 66, 80000, inputs)
+            rows.append({"P": pressure, "D": diameter, "capacity_kg_h": capacity,
+                         "capacity_mw_hhv": capacity * inputs.number("hydrogen-hhv", "kWh/kg") / 1000})
+    data = pd.DataFrame(rows)
+    try:
+        from pipeline_cost_curve import pipeline_cost_curve
+    except ModuleNotFoundError:
+        return data, None
+    cost_grid = np.array([pipeline_cost_curve(row.P, row.D) for row in data.itertuples()]).reshape(-1)
+    data["cost"] = cost_grid
+    data["cost_per_capacity"] = data.cost / data.capacity_kg_h
+    return data, cost_grid
 
 
 def plot_capacity_curves(df: pd.DataFrame, output_path: Path) -> None:

@@ -162,7 +162,7 @@ The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM
 
 These values exclude manufacturer markup, installation costs, soft costs and inflation. They are therefore used here as stack manufacturing cost inputs rather than complete installed electrolyser system costs.
 
-For the base case, the model uses the **1,000 MW/year manufacturing-volume case**, corresponding to a stack manufactured cost of **164 $/kW** in the NREL reference case. This case is selected because the offshore hydrogen system considered here represents industrial-scale deployment rather than early low-volume manufacturing. The 10 MW/year and 100 MW/year cases may be used in sensitivity analysis to represent less mature supply chains or slower manufacturing scale-up.
+The article reference case adopts **2 GW/year of stack manufacturing output** as its supply-chain scenario, matching the approximate capacity of the reference wind farm. The farm's one-time capacity does not itself imply this annual factory output; it is an explicit scenario assumption. NREL's highest tabulated production rate is 1 GW/year, so the 2 GW/year stack cost below is an extrapolation. The 10 MW/year and 100 MW/year cases remain useful lower-volume sensitivities.
 
 **Reference-rated stack capacity**
 
@@ -184,17 +184,40 @@ Actual stack operation is determined separately by the optimisation.
 At each time step, the model chooses the number of active modules and their operating current density. 
 The corresponding electrical input, hydrogen production, efficiency and degradation are calculated from the polarisation curve. Reference-rated stack capacity is therefore a bookkeeping convention for cost only, while the physical and operational behaviour of the stack remains governed by current density.
 
-**Cost development**
+**Manufacturing-volume and purchase-cost calculation**
 
-The main cost reductions for PEM stacks are assumed to come from manufacturing learning, higher production volumes and material reductions rather than from size-based economies of scale at the individual-stack level. 
-In the NREL analysis, increasing manufacturing volume from 10 MW/year to 1,000 MW/year reduces the reported stack manufactured cost from 316 $/kW to 164 $/kW.
+NREL Table 10 isolates manufacturing-volume economies for the same reference design [@badgett2024PEMCost]. Raising annual output from 10 MW to 1 GW reduces manufactured stack cost from 316 to 164 USD\textsubscript{2020}/kW, a reduction of 152 USD\textsubscript{2020}/kW (48%). It does not include the additional technology changes in NREL's Figure 27 waterfall, so the waterfall reductions are not added to the Table 10 result.
 
-However, cost reductions associated purely with higher rated current density are treated separately from manufacturing learning. A higher current density reduces the reported $/kW by increasing the rated power per unit active area, but it does not necessarily reduce the physical cost of the installed stack. 
-However, in this research, the reference rated stack current density is 3 A/cm2, but NREL uses 2 A/cm2. 
-So this cost reduction must be applied as well.
+For the assumed 2 GW/year output, continue the logarithmic cost trend between NREL's 100 MW/year and 1 GW/year points for another $\log_{10}(2)$ decade. With $M$ denoting annual manufacturing output [MW/year] and $c_{\mathrm{mfg},2}$ the manufactured cost at NREL's 2 A/cm² rating [USD\textsubscript{2020}/kW]:
 
-Taking figure 27 as the reference, we apply the increased current density to 3 A/cm2 and economies of scale to 1000 MW/year to find $316-57-132-15=112$ $/kW. 
-Consequently, a 50% manufacturers cost mark-up as well as conversion to 2024€ is applied to find: 100 €/kW (CHECK)
+$$
+c_{\mathrm{mfg},2}(M)
+=164-(183-164)\log_{10}\!\left(\frac{M}{1000\ \mathrm{MW/year}}\right),
+\qquad M\geq1000\ \mathrm{MW/year}.
+$$
+
+At $M=2000$ MW/year this gives approximately 158 USD\textsubscript{2020}/kW. This extension saves about 6 USD\textsubscript{2020}/kW beyond NREL's 1 GW/year point. It is a local extrapolation, not a quoted NREL result or a forecast of further technology progress.
+
+NREL rates its reference stack at $j_2=2$ A/cm² and $V_2=1.9$ V [@badgett2024PEMCost]. The model's reference is $j_3=3$ A/cm²; the supplied polarisation curve gives $V_3\approx1.92$ V at that current density [@manufacturerGStackPolarisation]. Holding cell count and active area fixed, rated power scales with $jV$. The same physical stack therefore costs, per 3 A/cm²-rated kW:
+
+$$
+c_{\mathrm{mfg},3}
+=c_{\mathrm{mfg},2}(2000)
+\frac{j_2V_2}{j_3V_3}
+\approx158\frac{2(1.9)}{3(1.92)}
+\approx104\ \mathrm{USD}_{2020}/\mathrm{kW}.
+$$
+
+This is a rating-normalisation step, not a second manufacturing saving. Applying NREL's 50% manufacturer markup, the [U.S. CPI-U annual averages](https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm) of 258.811 (2020) and 321.943 (2025), and the [ECB 2025 average](https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A) of 1.1300 USD/EUR gives:
+
+$$
+c_{\mathrm{stack,purchase},2025}
+=c_{\mathrm{mfg},3}\,(1.5)
+\frac{321.943}{258.811}\frac{1}{1.1300}
+\approx172\ \mathrm{EUR}_{2025}/\mathrm{kW}.
+$$
+
+The rounded article reference is **175 EUR\textsubscript{2025}/kW of 3 A/cm² reference-rated stack capacity**. It is an equipment-purchase estimate, not installed offshore cost. The fixed input `stack-purchase-unit-cost` remains unset in the executable model; this page records the adopted calculation basis pending implementation in the shared inputs and model.
 
 **Scope distinction**
 
