@@ -186,6 +186,63 @@ selected, or how a reported result was obtained.
 - Where uncertainty materially affects the model, document the uncertainty and
   its consequences rather than hiding it behind a single value.
 
+# Model inputs and scenario data
+
+- Store all fixed scalar numerical inputs affecting the techno-economic model
+  in `model_data/inputs.csv`. This includes energy and cost parameters, physical
+  constants, scaling exponents, reference capacities, unit rates, lifetimes,
+  efficiencies and availability assumptions. Do not hard-code these inputs in
+  calculation modules, figure builders or website content.
+- Calculate derived quantities from their upstream inputs in code. Do not
+  maintain a second, independently entered value for a calculated result in
+  the CSV.
+- Curves and structured datasets, such as polarisation curves, wind records
+  and supplier cost surfaces, may remain in dedicated data files. Load them
+  from those files rather than copying their numerical contents into code.
+- Ordinary mathematical constants and operations, such as zero, unity,
+  percentage conversion and array indices, do not require CSV entries.
+  Physical assumptions embedded in equations do.
+- The website, model and figure builders must consume the same authoritative
+  inputs and derived calculations.
+- Scenario inputs describe the evaluated case and may be stored separately:
+  for example turbine count, layout, water depth, distance, architecture,
+  operating pressure and stack overplanting. Article reference-case choices
+  belong alongside the article, not as fixed methodology defaults.
+- Sensitivity scenarios may explicitly override a named central parameter.
+  Preserve the central baseline and record the parameter, baseline value and
+  applied override with the scenario results. Do not edit the shared CSV for
+  each sensitivity run or introduce silent overrides.
+
+# Model code structure and readability
+
+- Prefer readable, simple code over elaborate robustness mechanisms. Use
+  descriptive names, straightforward calculations and small functions. Avoid
+  unnecessary abstractions, defensive programming and general-purpose
+  frameworks.
+- Retain essential checks for missing required inputs, incompatible units,
+  invalid physical conditions and double counting. Report an understandable
+  error or an explicitly incomplete result instead of silently substituting a
+  default or recovering with an unsupported assumption.
+- Use one module per calculation-owning Quarto page as the default. Overview,
+  architecture-description and navigation pages do not require empty modules.
+  Shared calculations may have a common module; closely coupled calculations
+  may be combined, and larger calculations may be split where this improves
+  clarity. Keep the relationship between pages and modules clear.
+- Match module terminology and calculation order to the owning methodology
+  page so that readers can follow the explanation into the implementation.
+- Define units at module boundaries and use a consistent, documented unit
+  convention. Make conversions explicit; a heavy units framework is not
+  required.
+- Separate calculations from file loading, scenario execution and plotting.
+  Load inputs once, pass them into calculation functions and return named
+  results. Importing a module must not run scenarios, write files or generate
+  figures.
+- Maintain one implementation of each calculation. Website figures, article
+  results and sensitivity runs must call the model functions rather than
+  maintain independent versions of the equations.
+- Test meaningful calculations, balances and material thresholds rather than
+  mirroring implementation details or adding exhaustive defensive tests.
+
 # Repository conventions
 
 - The source content is written in Quarto Markdown (`.qmd`).
