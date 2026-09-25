@@ -221,7 +221,7 @@ $$
 
 where $I(D,p)$ is the interpolated material cost per unit length. The confidential fit returns material price in EUR~2025~/m; the project owner confirmed this price basis on 25 September 2026, so the model's quote-to-EUR~2025~ factor `pipeline-quote-to-eur2025` is {{< var pipeline-quote-to-eur2025 >}}.
 
-**Unresolved pressure basis:** the fit's pressure argument is the pipe's **rated** pressure class, whereas the model currently passes the section's operating inlet pressure in bar(a). The mapping from operating pressure to a rated class, including the gauge basis and any design margin, must be adopted before costs are compared across pressure cases; until then, material cost is evaluated at the operating pressure as a provisional screen.
+**Pressure basis:** the fit is read at the section's operating inlet pressure in bar(g), without a design margin (agreed 25 September 2026). The model converts its absolute pressures by subtracting the standard atmosphere before calling the fit.
 
 Total material cost for a pipeline route is:
 

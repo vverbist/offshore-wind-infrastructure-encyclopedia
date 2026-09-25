@@ -42,10 +42,14 @@ rectangle, and the shorter final row is centred.
   turbines lie on the headers, while the shorter final row needs one extension
   section at each end to reach them.
 
+- **Tie-ins** join the midpoint of each header to the export manifold at the
+  farm centre, running crosswind along the centreline between the two middle
+  rows; each is $B/2$ long.
+
 The horizontal ladder length, in km, is:
 
 $$
-L_\mathrm{ladder}=n_L B+2L.
+L_\mathrm{ladder}=n_L B+2L+B.
 $$
 
 | Quantity | Value |
@@ -55,9 +59,12 @@ $$
 | All rungs | {{< var ijv-ladder-rungs-km >}} km |
 | Header length $L$ | {{< var ijv-ladder-header-km >}} km |
 | Both headers | {{< var ijv-ladder-headers-km >}} km |
-| **Ladder total, excluding tie-ins** | **{{< var ijv-ladder-total-km >}} km** |
+| Tie-in length $B/2$ | {{< var ijv-ladder-tie-in-km >}} km |
+| Both tie-ins | {{< var ijv-ladder-tie-ins-km >}} km |
+| **Ladder total** | **{{< var ijv-ladder-total-km >}} km** |
 | Rung sections (inter-turbine and final-row extensions) | {{< var ijv-ladder-rung-sections >}} |
-| Header sections (between consecutive rows) | {{< var ijv-ladder-header-sections >}} |
+| Header sections (row to row, and to the header midpoints) | {{< var ijv-ladder-header-sections >}} |
+| Tie-in sections | {{< var ijv-ladder-tie-in-sections >}} |
 
 : Ladder geometry for the reference case, calculated by [the reference-case calculation](../research_articles/turbine_level_hydrogen/analysis/reference_case.py).
 
@@ -68,15 +75,14 @@ for the article case.
 
 ## Manifold Boundary and Tie-ins
 
-Both headers end at the export manifold through tie-in sections, as in
-@fig-hydrogen-infield-ladder. The manifold is the boundary between infield
-collection and the export pipeline: sections upstream of it belong on this page,
-and the export line starts there. **Its location is not yet adopted** (O7, a
-joint decision). If it sits between the two header ends on the export-side edge,
-as in the schematic, the tie-ins together span about $B$ and run parallel to the
-last row's rung; whether that rung could double as a tie-in is a design choice
-that changes its duty. Tie-in lengths are therefore excluded from the total
-above.
+The export manifold is at the **centre of the farm** (agreed 25 September 2026).
+It is the boundary between infield collection and the export pipeline: sections
+upstream of it belong on this page, and the export route length is measured from
+it. Each header drains to its midpoint, so both header halves carry at most half
+of their side's rows, and a tie-in from each header midpoint carries that
+header's flow to the manifold. @fig-hydrogen-infield-ladder shows the ladder
+topology schematically; it places the export interface at an edge and does not
+show this central tie-in routing.
 
 ## Model Representation and Healthy-State Flow
 
@@ -91,24 +97,30 @@ The healthy-state allocation used for the reference case is:
 
 - each rung splits at its centre, with half the row flowing to each header;
   in a row with an odd turbine count, the middle turbine sends half its flow each way;
-- each header carries its half of the farm toward the export end;
-- each tie-in carries one header's flow to the manifold.
+- each header flows from its ends toward its midpoint;
+- each tie-in carries one header's flow, half the farm, to the manifold.
 
-At rated output, a full rung therefore delivers {{< var ijv-ladder-rung-end-duty-mw >}}
-MW to each header, while each header's export end and each tie-in carry
-{{< var ijv-ladder-header-end-duty-mw >}} MW (HHV-equivalent electrical input;
-hydrogen flow follows from the stack model). Section diameters and pressures are
-design inputs of each case, examined in the O7 pressure–diameter study; they are
-not fixed by the geometry. The section table is generated once the manifold
-location is adopted.
+All sections carry flow in this healthy state. At rated output, a full row
+delivers {{< var ijv-ladder-rung-end-duty-mw >}} MW to each header, the most
+heavily loaded header section carries {{< var ijv-ladder-header-max-duty-mw >}} MW
+and each tie-in {{< var ijv-ladder-tie-in-duty-mw >}} MW (electrical input
+equivalent; hydrogen flow follows from the stack model).
+
+[`prepare_common_case.py`](../research_articles/turbine_level_hydrogen/analysis/prepare_common_case.py)
+writes the network nodes (`common/collection_nodes.csv`) and the section geometry
+with these flow shares (`common/collection_sections_geometry.csv`). Vertical
+length is one water depth per turbine end; header nodes and the manifold are on
+the seabed, and no route allowance is applied. Section diameters and pressures
+are **design inputs of each case**, joined to this geometry in the O7
+pressure–diameter study; they are not fixed by the geometry.
 
 ## Scope of the Length Result
 
 The calculated length includes the horizontal rungs and the two horizontal headers. It excludes:
 
-- the export pipeline from the farm boundary to shore;
+- the export pipeline from the manifold to shore;
 - turbine risers, local tie-ins and short spool pieces;
-- the tie-ins and export manifold, whose location is not yet adopted;
+- the export manifold equipment itself;
 - route deviations around seabed constraints, crossings and exclusion zones;
 - installation slack and contingency; and
 - parallel pipe added where segment capacity is insufficient.
@@ -131,10 +143,11 @@ the model conserves flow at every node, checks that each section's capacity
 covers its peak flow at the supplied inlet and outlet pressures, and rejects a
 pressure rise at a junction without a compressor. The legacy claim that one
 6 inch rung at 150 bar carries about 500 MW supports a single row
-({{< var ijv-ladder-rung-end-duty-mw >}} MW per rung end). It does not cover the
-header ends and tie-ins at {{< var ijv-ladder-header-end-duty-mw >}} MW each, which
-need a larger diameter, parallel pipe or a higher pressure; that choice belongs to
-the pressure–diameter study.
+({{< var ijv-ladder-rung-end-duty-mw >}} MW per row end) and the most loaded
+header section ({{< var ijv-ladder-header-max-duty-mw >}} MW). It does not cover the
+tie-ins at {{< var ijv-ladder-tie-in-duty-mw >}} MW each, which need a larger
+diameter, parallel pipe or a higher pressure; that choice belongs to the
+pressure–diameter study.
 
 **Deferred (D3).** Fault states, isolation valves, rerouting through the second
 header and spare capacity are not analysed. The flow allocation above is not

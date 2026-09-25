@@ -59,23 +59,27 @@ def ladder_geometry(case, derived):
     """Hydrogen collection ladder for the rectangular case; horizontal lengths in km.
 
     Rungs follow the crosswind turbine rows and span the full breadth between the
-    two headers; the headers run along-wind through the row ends. Healthy-state
-    allocation: each rung splits at its centre, half to each header, and each
-    header carries its half of the farm toward the export end. Tie-ins to the
-    export manifold are excluded because the manifold location is not adopted.
+    two headers; the headers run along-wind through the row ends. The export
+    manifold is at the farm centre (agreed 2026-09-25): each header drains to its
+    midpoint and a tie-in runs crosswind along the centreline to the manifold.
+    Healthy-state allocation: each rung splits at its centre, half to each header.
     """
     rows, columns = derived["rows"], derived["columns"]
     breadth, length = derived["breadth_km"], derived["length_km"]
     rated = case["turbine"]["rated_power_mw"]
     count = case["site"]["turbine_count"]
     rung_sections = derived["full_rows"] * (columns - 1) + (derived["last_row"] - 1) + 2
+    upwind_rows = rows // 2
     return {
         "ladder_rungs": rows, "ladder_rung_km": breadth, "ladder_rungs_km": rows * breadth,
         "ladder_header_km": length, "ladder_headers_km": 2 * length,
-        "ladder_total_km": rows * breadth + 2 * length,
-        "ladder_rung_sections": rung_sections, "ladder_header_sections": 2 * (rows - 1),
+        "ladder_tie_in_km": breadth / 2, "ladder_tie_ins_km": breadth,
+        "ladder_total_km": rows * breadth + 2 * length + breadth,
+        "ladder_rung_sections": rung_sections, "ladder_header_sections": 2 * rows,
+        "ladder_tie_in_sections": 2,
         "ladder_rung_end_duty_mw": columns * rated / 2,
-        "ladder_header_end_duty_mw": count * rated / 2,
+        "ladder_header_max_duty_mw": upwind_rows * columns * rated / 2,
+        "ladder_tie_in_duty_mw": count * rated / 2,
     }
 
 
@@ -90,8 +94,9 @@ def quarto_variables():
                  "spacing_crosswind_m": 1, "spacing_alongwind_m": 1,
                  "stack_outlet_pressure_bar_a": 2, "delivery_pressure_bar_a": 2,
                  "ladder_rung_km": 2, "ladder_rungs_km": 1, "ladder_header_km": 2,
-                 "ladder_headers_km": 1, "ladder_total_km": 1,
-                 "ladder_rung_end_duty_mw": 1, "ladder_header_end_duty_mw": 0}
+                 "ladder_headers_km": 1, "ladder_tie_in_km": 2, "ladder_tie_ins_km": 1,
+                 "ladder_total_km": 1, "ladder_rung_end_duty_mw": 1,
+                 "ladder_header_max_duty_mw": 0, "ladder_tie_in_duty_mw": 0}
     variables = {"ijv-" + key.replace("_", "-"):
                  (f"{value:.{precision[key]}f}" if key in precision else f"{value:g}")
                  for key, value in values.items()}

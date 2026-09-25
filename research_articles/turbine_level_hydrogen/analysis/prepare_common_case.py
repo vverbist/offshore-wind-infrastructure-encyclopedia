@@ -38,6 +38,8 @@ COMMON = SCENARIOS / "common"
 CURVE_FILE, COORDINATE_FILE = "common/turbine_power_ct.csv", "common/coordinates.csv"
 WIND_FILE, POWER_FILE = "common/wind_states.csv", "common/power_states.csv"
 SUMMARY_FILE = "common/summary.json"
+NODE_FILE, SECTION_GEOMETRY_FILE = "common/collection_nodes.csv", "common/collection_sections_geometry.csv"
+MANIFOLD = "manifold"
 DESIGN_STATE = "design-all-rated"
 NO_POWER_STATE = "below-cut-in-or-above-cut-out"
 # Explicit idle rows: PyWake holds the first tabulated value below the table, so
@@ -85,6 +87,72 @@ def coordinates(case: dict, derived: dict) -> pd.DataFrame:
             x, y = u * crosswind + v * downwind
             records.append({"turbine": f"T{len(records) + 1:03d}", "x_m": round(x, 2), "y_m": round(y, 2)})
     return pd.DataFrame(records)
+
+
+def collection_network(case: dict, derived: dict, coords: pd.DataFrame):
+    """Ladder nodes and section geometry with the healthy-state flow shares.
+
+    Rungs follow the rows; end turbines of full rows lie on the headers and the
+    shorter final row reaches them through one extension per side. Each rung
+    splits at its centre (the middle turbine of an odd row sends half each way).
+    Headers drain to their midpoints, and tie-ins run along the crosswind
+    centreline to the manifold at the farm centre. Vertical length is one water
+    depth per turbine end (riser); header nodes and the manifold are on the seabed.
+    No route allowance is applied (hydrogen base case). Diameters and pressures
+    are design inputs of each case and are not part of this geometry.
+    """
+    theta = np.deg2rad(derived["dominant_from_deg"])
+    downwind = np.array([-np.sin(theta), -np.cos(theta)])
+    crosswind = np.array([np.cos(theta), -np.sin(theta)])
+    half_breadth = derived["breadth_km"] * 500
+    depth = case["site"]["water_depth_m"]
+    columns, rows = derived["columns"], derived["rows"]
+    ids = coords.turbine.tolist()
+    row_ids, start = [], 0
+    for row in range(rows):
+        size = min(columns, len(ids) - start)
+        row_ids.append(ids[start:start + size])
+        start += size
+    nodes, sections = [], []
+
+    def node(name, u, v):
+        x, y = u * crosswind + v * downwind
+        nodes.append({"node": name, "x_m": round(x, 2), "y_m": round(y, 2)})
+        return name
+
+    def section(kind, a, b, share):
+        risers = sum(end in ids for end in (a, b))
+        sections.append({"section": f"{kind}-{len(sections) + 1:03d}", "class": kind, "from": a, "to": b,
+                         "vertical_m": risers * depth, "route_allowance": 0.0, "flow_share": share})
+
+    along = lambda row: (row - (rows - 1) / 2) * derived["spacing_alongwind_m"]
+    header = {}
+    for row, members in enumerate(row_ids):
+        for side, end in (("a", members[0]), ("b", members[-1])):
+            if len(members) == columns:
+                header[side, row] = end
+            else:
+                header[side, row] = node(f"header-{side}-{row + 1}", -half_breadth if side == "a" else half_breadth, along(row))
+        middle = (len(members) - 1) / 2
+        for index, turbine in enumerate(members):
+            if index < middle:
+                target = [members[index - 1] if index else header["a", row]]
+            elif index > middle:
+                target = [members[index + 1] if index < len(members) - 1 else header["b", row]]
+            else:
+                target = [members[index - 1], members[index + 1]]
+            for end in target:
+                if end != turbine:
+                    section("rung", turbine, end, 1.0 / len(target))
+    manifold = node(MANIFOLD, 0.0, 0.0)
+    for side in ("a", "b"):
+        midpoint = node(f"header-{side}-mid", -half_breadth if side == "a" else half_breadth, 0.0)
+        for row in range(rows):
+            downstream = header[side, row + 1] if row < rows // 2 - 1 else (
+                midpoint if row in (rows // 2 - 1, rows // 2) else header[side, row - 1])
+            section("header", header[side, row], downstream, 1.0)
+        section("tie-in", midpoint, manifold, 1.0)
+    return pd.DataFrame(nodes), pd.DataFrame(sections)
 
 
 def wind_states(case: dict, curve: pd.DataFrame, annual_hours: float,
@@ -166,6 +234,9 @@ def main():
     curve = pd.read_csv(SCENARIOS / CURVE_FILE)
     coords = coordinates(case, derived)
     (SCENARIOS / COORDINATE_FILE).write_text(coords.to_csv(index=False, lineterminator="\n"))
+    network_nodes, network_sections = collection_network(case, derived, coords)
+    (SCENARIOS / NODE_FILE).write_text(network_nodes.to_csv(index=False, lineterminator="\n"))
+    (SCENARIOS / SECTION_GEOMETRY_FILE).write_text(network_sections.to_csv(index=False, lineterminator="\n"))
     wind = case["wind"]
     states, remainder = wind_states(case, curve, annual_hours, wind["direction_step_deg"], wind["speed_bin_m_s"])
     table, version = power_states(coords, states, remainder, case, inputs)

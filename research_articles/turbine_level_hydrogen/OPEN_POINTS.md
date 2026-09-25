@@ -128,9 +128,8 @@ already been updated.
   production needs the platform location and feeder bays (O3) and the AC
   resistance and power factor (O2); turbine-level production needs the
   interface efficiencies (O2c) and the collection sections (next item).
-  TCP price basis confirmed as EUR2025/m (factor 1, 2026-09-25); still open:
-  mapping operating pressure to the fit's rated pressure class (gauge basis,
-  design margin) before cost is compared across pressure cases.
+  TCP price basis confirmed as EUR2025/m (factor 1) and read at operating
+  pressure in bar(g) without design margin (both 2026-09-25).
 - [x] **Reconcile the collection-layout explanation (O7).** Keep the
   encyclopedia's ladder topology but recalculate its geometry and section
   lengths for the agreed rectangular IJmuiden Ver Beta case. Describe the
@@ -147,8 +146,15 @@ already been updated.
   1,005 MW at rating, well above the legacy 500 MW-per-6-inch claim) and
   separates current checks from deferred redundancy (D3). The pipelines page
   and its figures now use the agreed 100 km route and 67.01 bar(a) delivery.
-  **Open, joint decision:** the export-manifold location (and whether the last
-  rung doubles as a tie-in); the section table is generated after that choice.
+  *Update 2026-09-25:* manifold agreed at the **farm centre**. Headers drain to
+  their midpoints and two 9.65 km tie-ins run along the centreline (ladder
+  193.0 km; 146 sections, all carrying flow in the healthy state; peak duties
+  127.5 MW per row end, 510 MW on the most loaded header section, 1,005 MW per
+  tie-in). `prepare_common_case.py` writes `common/collection_nodes.csv` and
+  `common/collection_sections_geometry.csv`; the turbine-level template points
+  to them. Section diameters and pressures are joined per design case (O7
+  study). TCP fit agreed to be read at operating pressure in bar(g) without
+  design margin; the workflow and figure builder convert from bar(a).
 - [ ] **Complete the platform basis (O3).** Use the mass and cost chain now
   documented on the [platform page](../../platforms/platform_material_capex.qmd)
   to research hosted-equipment masses, structure and yard-integration rates,

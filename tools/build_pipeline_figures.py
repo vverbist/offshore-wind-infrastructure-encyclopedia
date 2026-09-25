@@ -40,7 +40,9 @@ def build_pipeline_data():
         from pipeline_cost_curve import pipeline_cost_curve
     except ModuleNotFoundError:
         return data, None
-    cost_grid = np.array([pipeline_cost_curve(row.P, row.D) for row in data.itertuples()]).reshape(-1)
+    # Pressures on the figure axis are absolute; the fit is read in bar(g).
+    atmospheric = inputs.number("standard-atmospheric-pressure", "bar")
+    cost_grid = np.array([pipeline_cost_curve(row.P - atmospheric, row.D) for row in data.itertuples()]).reshape(-1)
     data["cost"] = cost_grid
     data["cost_per_capacity"] = data.cost / data.capacity_kg_h
     return data, cost_grid
@@ -60,7 +62,7 @@ def plot_capacity_curves(df: pd.DataFrame, output_path: Path) -> None:
         )
 
     ax.set_title("Hydrogen Pipeline Capacity")
-    ax.set_xlabel("Inlet pressure [bar]")
+    ax.set_xlabel("Inlet pressure [bar(a)]")
     ax.set_ylabel("Capacity [MW HHV]")
     ax.set_ylim(bottom=0)
     ax.grid(True, color="#d1d5db", linewidth=0.8)
@@ -84,7 +86,7 @@ def plot_cost_curves(df: pd.DataFrame, output_path: Path) -> None:
         )
 
     ax.set_title("Hydrogen Pipeline Material Cost")
-    ax.set_xlabel("Inlet pressure [bar]")
+    ax.set_xlabel("Inlet pressure [bar(a)]")
     ax.set_ylabel("Material cost per unit length")
     ax.set_ylim(bottom=0)
     ax.set_yticklabels([])
@@ -109,7 +111,7 @@ def plot_cost_per_capacity_curves(df: pd.DataFrame, output_path: Path) -> None:
         )
 
     ax.set_title("Hydrogen Pipeline Cost per Unit Capacity")
-    ax.set_xlabel("Inlet pressure [bar]")
+    ax.set_xlabel("Inlet pressure [bar(a)]")
     ax.set_ylabel("Material cost per unit capacity")
     ax.set_ylim(bottom=0)
     ax.set_yticklabels([])

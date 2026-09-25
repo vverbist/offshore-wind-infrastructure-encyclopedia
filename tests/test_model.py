@@ -368,6 +368,27 @@ class ReferenceCase(unittest.TestCase):
         self.assertTrue(np.all(wind.power_kw[design] == case["turbine"]["rated_power_mw"] * 1000))
         self.assertLessEqual(wind.power_kw.max(), case["turbine"]["rated_power_mw"] * 1000)
 
+    def test_generated_collection_network_conserves_flow(self):
+        from research_articles.turbine_level_hydrogen.analysis import prepare_common_case as prep
+        from research_articles.turbine_level_hydrogen.analysis import reference_case as ref
+        case = ref.load_reference_case()
+        derived = ref.derive_reference_case(case, float(load_parameters().number("standard-atmospheric-pressure", "bar")))
+        coordinates = pd.read_csv(prep.SCENARIOS / prep.COORDINATE_FILE, dtype={"turbine": str})
+        nodes, geometry = prep.collection_network(case, derived, coordinates)
+        pd.testing.assert_frame_equal(nodes, pd.read_csv(prep.SCENARIOS / prep.NODE_FILE, dtype={"node": str}))
+        pd.testing.assert_frame_equal(geometry, pd.read_csv(prep.SCENARIOS / prep.SECTION_GEOMETRY_FILE,
+                                                            dtype={"section": str, "from": str, "to": str}))
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "sections.csv"
+            geometry.assign(diameter_m=0.1, inlet_bar=100, outlet_bar=90).to_csv(path, index=False)
+            rated = case["turbine"]["rated_power_mw"]
+            sections, _ = section_inventory(path, coordinates, nodes, np.full((1, len(coordinates)), rated), prep.MANIFOLD)
+        tie_ins = sections[sections["class"] == "tie-in"]
+        self.assertTrue(np.allclose(tie_ins.peak_kg_h, len(coordinates) * rated / 2))
+        horizontal = (sections.physical_km - sections.vertical_m / 1000).sum()
+        # Coordinates are stored to the centimetre.
+        self.assertAlmostEqual(horizontal, ref.ladder_geometry(case, derived)["ladder_total_km"], places=3)
+
     def test_article_templates_share_the_common_case(self):
         folder = ROOT / "research_articles/turbine_level_hydrogen/scenarios"
         central, distributed = (read_scenario(folder / f"{name}.toml") for name in ("centralised", "decentralised"))

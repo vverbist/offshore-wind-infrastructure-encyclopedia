@@ -199,7 +199,8 @@ Results are local and git-ignored because they can expose confidential supplier
 costs. Do not publish result folders or input snapshots automatically. A supplied
 private Python cost module must be trusted local code. Its callable contract is
 `pipeline_cost_curve(pressure_bar, diameter_inches)` returning the existing quote
-unit rate. `pipeline-quote-to-eur2025` must convert that exact rate to EUR2025/m.
+unit rate in EUR2025/m, read at operating pressure in bar(g) (the workflow
+subtracts the standard atmosphere). `pipeline-quote-to-eur2025` is therefore 1.
 No price basis or missing supplier point is invented.
 
 ## Sensitivity and verification

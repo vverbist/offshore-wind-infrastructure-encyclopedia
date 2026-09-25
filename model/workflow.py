@@ -237,7 +237,10 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
                 private_pipeline_curve = module.pipeline_cost_curve
-            raw = float(private_pipeline_curve(pressure_bar, diameter_m / 0.0254))
+            # The fit is read at operating pressure in bar(g), without a design
+            # margin (project owner, 2026-09-25); model pressures are bar(a).
+            gauge_bar = pressure_bar - inputs.positive("standard-atmospheric-pressure", "bar")
+            raw = float(private_pipeline_curve(gauge_bar, diameter_m / 0.0254))
             return raw * inputs.positive("pipeline-quote-to-eur2025", "factor")
         return inputs.number("pipeline-supply-unit-cost", "EUR/m")
 

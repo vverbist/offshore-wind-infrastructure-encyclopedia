@@ -15,18 +15,21 @@ stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
 # export_diameter_m (O7).
 
 [collection]
-# nodes_file: node,x_m,y_m (non-turbine nodes only); sink: export manifold node ID.
-# sections_file: section,from,to,vertical_m,route_allowance,flow_share,
+# Ladder with the export manifold at the farm centre, generated from the record
+# by analysis/prepare_common_case.py; see ../../../hydrogen_infra/infield_infrastructure.qmd.
+nodes_file = "common/collection_nodes.csv"
+sink = "manifold"
+# sections_file: common/collection_sections_geometry.csv joined with each case's
+# diameter_m, inlet_bar and outlet_bar (bar(a)); these are design inputs (O7).
+# Sections file columns: section,from,to,vertical_m,route_allowance,flow_share,
 # diameter_m,inlet_bar,outlet_bar. All physical ladder sections belong here.
-# Flow shares describe the selected healthy-state directed paths; zero-flow
-# standby sections still contribute to the physical supply/installation inventory.
 
 [installation]
 # port_distance_km, intersite_distance_km; collection/export plans as in centralised.toml
 
 [data]
-# Optional pipeline_cost_module: path to the existing confidential local callable.
-# Its unit-price normalization must be adopted in the central parameter CSV.
+# Optional pipeline_cost_module: path to the existing confidential local callable,
+# which returns EUR2025/m read at operating pressure in bar(g).
 
 [overrides]
 # Explicit sensitivity overrides, without editing the central baseline.
