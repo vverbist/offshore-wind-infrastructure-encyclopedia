@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -514,10 +526,11 @@ window.Quarto = {
   <ul>
   <li><a href="#role-and-scope" id="toc-role-and-scope" class="nav-link active" data-scroll-target="#role-and-scope">Role and Scope</a></li>
   <li><a href="#proposed-ladder-layout" id="toc-proposed-ladder-layout" class="nav-link" data-scroll-target="#proposed-ladder-layout">Proposed Ladder Layout</a></li>
-  <li><a href="#pipeline-length-model" id="toc-pipeline-length-model" class="nav-link" data-scroll-target="#pipeline-length-model">Pipeline-Length Model</a></li>
-  <li><a href="#reference-calculation" id="toc-reference-calculation" class="nav-link" data-scroll-target="#reference-calculation">Reference Calculation</a></li>
+  <li><a href="#ladder-geometry-for-the-reference-case" id="toc-ladder-geometry-for-the-reference-case" class="nav-link" data-scroll-target="#ladder-geometry-for-the-reference-case">Ladder Geometry for the Reference Case</a></li>
+  <li><a href="#manifold-boundary-and-tie-ins" id="toc-manifold-boundary-and-tie-ins" class="nav-link" data-scroll-target="#manifold-boundary-and-tie-ins">Manifold Boundary and Tie-ins</a></li>
+  <li><a href="#model-representation-and-healthy-state-flow" id="toc-model-representation-and-healthy-state-flow" class="nav-link" data-scroll-target="#model-representation-and-healthy-state-flow">Model Representation and Healthy-State Flow</a></li>
   <li><a href="#scope-of-the-length-result" id="toc-scope-of-the-length-result" class="nav-link" data-scroll-target="#scope-of-the-length-result">Scope of the Length Result</a></li>
-  <li><a href="#capacity-and-redundancy-checks" id="toc-capacity-and-redundancy-checks" class="nav-link" data-scroll-target="#capacity-and-redundancy-checks">Capacity and Redundancy Checks</a></li>
+  <li><a href="#flow-and-pressure-checks-versus-redundancy" id="toc-flow-and-pressure-checks-versus-redundancy" class="nav-link" data-scroll-target="#flow-and-pressure-checks-versus-redundancy">Flow and Pressure Checks Versus Redundancy</a></li>
   </ul>
 </nav>
     </div>
@@ -557,7 +570,7 @@ window.Quarto = {
 <img src="../figures/hydrogen-infield-ladder.svg" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hydrogen-infield-ladder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Proposed hydrogen infield ladder. The number of rungs and turbines shown is schematic.
+Figure&nbsp;1: Proposed hydrogen infield ladder. The farm outline, numbers of rungs and turbines and the manifold position are schematic.
 </figcaption>
 </figure>
 </div>
@@ -570,107 +583,99 @@ Figure&nbsp;1: Proposed hydrogen infield ladder. The number of rungs and turbine
 </ul>
 <p>The topology provides two <strong>infield</strong> paths, not two independent export systems. Both paths ultimately reach the same export-pipeline interface. Valves, isolation philosophy and the capacity of the remaining path determine whether the redundancy can be used after a fault.</p>
 </section>
-<section id="pipeline-length-model" class="level2">
-<h2 class="anchored" data-anchor-id="pipeline-length-model">Pipeline-Length Model</h2>
-<p>The screening model assumes:</p>
+<section id="ladder-geometry-for-the-reference-case" class="level2">
+<h2 class="anchored" data-anchor-id="ladder-geometry-for-the-reference-case">Ladder Geometry for the Reference Case</h2>
+<p>The geometry follows the common coordinates of the agreed reference case: a rectangle of breadth <span class="math inline">\(B\)</span> across the dominant wind and length <span class="math inline">\(L\)</span> along it, with <span class="math inline">\(n_L\)</span> crosswind rows of up to <span class="math inline">\(n_B\)</span> turbines. Turbine centres span the rectangle, and the shorter final row is centred.</p>
 <ul>
-<li>a square wind-farm area;</li>
-<li>evenly spaced turbines arranged in approximately square rows;</li>
-<li>two headers, each equal to one farm side;</li>
-<li>each rung spans one farm side; and</li>
-<li>the number of rungs is approximated by the square root of turbine count.</li>
+<li><p><strong>Rungs</strong> follow the crosswind rows. Each rung spans the full breadth between the two headers, so its horizontal length is <span class="math inline">\(B\)</span>.</p></li>
+<li><p><strong>Headers</strong> run along-wind through the ends of the rows. Each spans from the first to the last row, so its horizontal length is <span class="math inline">\(L\)</span>.</p></li>
+<li><p><strong>Turbine connections</strong>: every turbine sits on its row’s rung. The rung is divided into sections between consecutive turbines; in full rows the end turbines lie on the headers, while the shorter final row needs one extension section at each end to reach them.</p></li>
+<li><p><strong>Tie-ins</strong> join the midpoint of each header to the export manifold at the farm centre, running crosswind along the centreline between the two middle rows; each is <span class="math inline">\(B/2\)</span> long.</p></li>
 </ul>
-<p>For farm area <span class="math inline">\(A_\mathrm{farm}\)</span> in km<span class="math inline">\(^2\)</span>, the side length is:</p>
+<p>The horizontal ladder length, in km, is:</p>
 <p><span class="math display">\[
-s=\sqrt{A_\mathrm{farm}}.
+L_\mathrm{ladder}=n_L B+2L+B.
 \]</span></p>
-<p>For <span class="math inline">\(N_\mathrm{turb}\)</span> turbines, the continuous estimate of rung count is:</p>
-<p><span class="math display">\[
-n_\mathrm{rung}=\sqrt{N_\mathrm{turb}}.
-\]</span></p>
-<p>Rung length and header length are:</p>
-<p><span class="math display">\[
-L_\mathrm{rungs}
-=
-n_\mathrm{rung}s,
-\qquad
-L_\mathrm{headers}
-=
-2s.
-\]</span></p>
-<p>The total horizontal infield pipeline length is therefore:</p>
-<p><span class="math display">\[
-\boxed{
-L_\mathrm{infield}
-=
-\sqrt{A_\mathrm{farm}}
-\left(
-\sqrt{N_\mathrm{turb}}+2
-\right)
-}
-\]</span></p>
-<p>with <span class="math inline">\(L_\mathrm{infield}\)</span> in km when <span class="math inline">\(A_\mathrm{farm}\)</span> is in km<span class="math inline">\(^2\)</span> <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</p>
-<p>This continuous form is suitable for optimisation. A physical layout requires an integer number of rows. For a conservative square-grid representation, use:</p>
-<p><span class="math display">\[
-n_\mathrm{rung,int}
-=
-\left\lceil
-\sqrt{N_\mathrm{turb}}
-\right\rceil,
-\qquad
-L_\mathrm{infield,int}
-=
-\sqrt{A_\mathrm{farm}}
-\left(
-n_\mathrm{rung,int}+2
-\right).
-\]</span></p>
+<table class="caption-top table">
+<caption>Ladder geometry for the reference case, calculated by <a href="../research_articles/turbine_level_hydrogen/analysis/reference_case.py">the reference-case calculation</a>.</caption>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rungs <span class="math inline">\(n_L\)</span></td>
+<td style="text-align: right;"><p>8</p></td>
+</tr>
+<tr class="even">
+<td>Rung length <span class="math inline">\(B\)</span></td>
+<td style="text-align: right;">19.30 km</td>
+</tr>
+<tr class="odd">
+<td>All rungs</td>
+<td style="text-align: right;">154.4 km</td>
+</tr>
+<tr class="even">
+<td>Header length <span class="math inline">\(L\)</span></td>
+<td style="text-align: right;">9.65 km</td>
+</tr>
+<tr class="odd">
+<td>Both headers</td>
+<td style="text-align: right;">19.3 km</td>
+</tr>
+<tr class="even">
+<td>Tie-in length <span class="math inline">\(B/2\)</span></td>
+<td style="text-align: right;">9.65 km</td>
+</tr>
+<tr class="odd">
+<td>Both tie-ins</td>
+<td style="text-align: right;">19.3 km</td>
+</tr>
+<tr class="even">
+<td><strong>Ladder total</strong></td>
+<td style="text-align: right;"><strong>193.0 km</strong></td>
+</tr>
+<tr class="odd">
+<td>Rung sections (inter-turbine and final-row extensions)</td>
+<td style="text-align: right;"><p>128</p></td>
+</tr>
+<tr class="even">
+<td>Header sections (row to row, and to the header midpoints)</td>
+<td style="text-align: right;"><p>16</p></td>
+</tr>
+<tr class="odd">
+<td>Tie-in sections</td>
+<td style="text-align: right;"><p>2</p></td>
+</tr>
+</tbody>
+</table>
+<p>Orienting the rungs along the crosswind rows gives fewer, longer rungs and shorter headers than rungs along the columns. The earlier square-farm estimate (<span class="math inline">\(\sqrt{A}(\sqrt{N}+2)\)</span> for 200 km² and 134 turbines, 192–198 km) is superseded for the article case.</p>
 </section>
-<section id="reference-calculation" class="level2">
-<h2 class="anchored" data-anchor-id="reference-calculation">Reference Calculation</h2>
-<p>The reference farm has an area of 200 km<span class="math inline">\(^2\)</span> and a nominal capacity of 2 GW. With 15 MW turbines, the required turbine count is:</p>
-<p><span class="math display">\[
-N_\mathrm{turb}
-=
-\left\lceil
-\frac{2{,}000}{15}
-\right\rceil
-=
-134.
-\]</span></p>
-<p>The farm side length and continuous rung estimate are:</p>
-<p><span class="math display">\[
-s=\sqrt{200}=14.142\ \mathrm{km},
-\qquad
-n_\mathrm{rung}=\sqrt{134}=11.576.
-\]</span></p>
-<p>The modelled pipeline length is:</p>
-<p><span class="math display">\[
-\begin{aligned}
-L_\mathrm{infield}
-&amp;=
-14.142(11.576+2) \\
-&amp;=
-\boxed{192.0\ \mathrm{km}}.
-\end{aligned}
-\]</span></p>
-<p>If the layout is represented with 12 complete rungs:</p>
-<p><span class="math display">\[
-L_\mathrm{infield,int}
-=
-14.142(12+2)
-=
-\boxed{198.0\ \mathrm{km}}.
-\]</span></p>
-<p>The optimisation model should use 192.0 km if it retains the continuous approximation. A routed design with 12 physical rows should start from 198.0 km before project-specific adjustments.</p>
+<section id="manifold-boundary-and-tie-ins" class="level2">
+<h2 class="anchored" data-anchor-id="manifold-boundary-and-tie-ins">Manifold Boundary and Tie-ins</h2>
+<p>The export manifold is at the <strong>centre of the farm</strong> (agreed 25 September 2026). It is the boundary between infield collection and the export pipeline: sections upstream of it belong on this page, and the export route length is measured from it. Each header drains to its midpoint, so both header halves carry at most half of their side’s rows, and a tie-in from each header midpoint carries that header’s flow to the manifold. <a href="#fig-hydrogen-infield-ladder" class="quarto-xref">Figure&nbsp;1</a> shows the ladder topology schematically; it places the export interface at an edge and does not show this central tie-in routing.</p>
+</section>
+<section id="model-representation-and-healthy-state-flow" class="level2">
+<h2 class="anchored" data-anchor-id="model-representation-and-healthy-state-flow">Model Representation and Healthy-State Flow</h2>
+<p>The model reads the collection network as explicit sections (see the <a href="../model/README.md">model guide</a>): each section has its end nodes, vertical length, route allowance, healthy-state flow share, true internal diameter and absolute inlet and outlet pressures. Non-turbine nodes, such as header nodes and the manifold, are listed separately. Every physical section is included, even if its healthy-state flow is zero.</p>
+<p>The healthy-state allocation used for the reference case is:</p>
+<ul>
+<li>each rung splits at its centre, with half the row flowing to each header; in a row with an odd turbine count, the middle turbine sends half its flow each way;</li>
+<li>each header flows from its ends toward its midpoint;</li>
+<li>each tie-in carries one header’s flow, half the farm, to the manifold.</li>
+</ul>
+<p>All sections carry flow in this healthy state. At rated output, a full row delivers 127.5 MW to each header, the most heavily loaded header section carries 510 MW and each tie-in 1005 MW (electrical input equivalent; hydrogen flow follows from the stack model).</p>
+<p><a href="../research_articles/turbine_level_hydrogen/analysis/prepare_common_case.py"><code>prepare_common_case.py</code></a> writes the network nodes (<code>common/collection_nodes.csv</code>) and the section geometry with these flow shares (<code>common/collection_sections_geometry.csv</code>). Vertical length is one water depth per turbine end; header nodes and the manifold are on the seabed, and no route allowance is applied. Section diameters and pressures are <strong>design inputs of each case</strong>, joined to this geometry in the O7 pressure–diameter study; they are not fixed by the geometry.</p>
 </section>
 <section id="scope-of-the-length-result" class="level2">
 <h2 class="anchored" data-anchor-id="scope-of-the-length-result">Scope of the Length Result</h2>
 <p>The calculated length includes the horizontal rungs and the two horizontal headers. It excludes:</p>
 <ul>
-<li>the export pipeline from the farm boundary to shore;</li>
+<li>the export pipeline from the manifold to shore;</li>
 <li>turbine risers, local tie-ins and short spool pieces;</li>
-<li>the export manifold and header-to-export connections;</li>
+<li>the export manifold equipment itself;</li>
 <li>route deviations around seabed constraints, crossings and exclusion zones;</li>
 <li>installation slack and contingency; and</li>
 <li>parallel pipe added where segment capacity is insufficient.</li>
@@ -684,11 +689,10 @@ L_\mathrm{infield}
 \]</span></p>
 <p>Do not apply this factor to a GIS-derived route that already includes deviations and slack.</p>
 </section>
-<section id="capacity-and-redundancy-checks" class="level2">
-<h2 class="anchored" data-anchor-id="capacity-and-redundancy-checks">Capacity and Redundancy Checks</h2>
-<p>The length equation defines geometry only. It does not prove that every segment can carry the required flow.</p>
-<p>The 500 MW-equivalent assumption supports the claim that one 6 inch rung can serve a turbine row. Header flow is higher because successive rungs add hydrogen. Header diameter, pressure drop and fault-state capacity must therefore be checked segment by segment. The current model does not yet perform this check and should not assume that every header segment can remain 6 inch.</p>
-<p>The same limitation applies to redundancy. An alternative route is useful only if isolation valves can separate the failed section and the remaining pipeline path has enough capacity. The present assumption of 100% infield-pipeline availability is a modelling convention, not a reliability result.</p>
+<section id="flow-and-pressure-checks-versus-redundancy" class="level2">
+<h2 class="anchored" data-anchor-id="flow-and-pressure-checks-versus-redundancy">Flow and Pressure Checks Versus Redundancy</h2>
+<p><strong>Current checks (healthy state).</strong> For the supplied sections and flow shares, the model conserves flow at every node, checks that each section’s capacity covers its peak flow at the supplied inlet and outlet pressures, and rejects a pressure rise at a junction without a compressor. The legacy claim that one 6 inch rung at 150 bar carries about 500 MW supports a single row (127.5 MW per row end) and the most loaded header section (510 MW). It does not cover the tie-ins at 1005 MW each, which need a larger diameter, parallel pipe or a higher pressure; that choice belongs to the pressure–diameter study.</p>
+<p><strong>Deferred (D3).</strong> Fault states, isolation valves, rerouting through the second header and spare capacity are not analysed. The flow allocation above is not solved as a hydraulic loop network, and the model claims no redundancy benefit. The 100% infield-pipeline availability is a modelling convention, not a reliability result.</p>
 
 
 
@@ -802,7 +806,7 @@ Project Team. 2026. <em>Offshore Hydrogen Model Description</em>. Internal backg
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

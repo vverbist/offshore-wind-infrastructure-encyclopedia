@@ -283,6 +283,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -302,6 +308,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -552,46 +564,51 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
+<td>Power-conversion equipment roles, ratings, costs, losses and evidence gaps</td>
+<td><a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></td>
+<td>Shared inventory for turbine converters and transformers, central transformer–rectifier equipment and the stack-side DC/DC converter</td>
+</tr>
+<tr class="even">
 <td>Array topology and string count</td>
 <td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a></td>
 <td>66 kV layout, cable sizing, feeder-interface checks and routing length</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Array-cable material cost and electrical performance</td>
 <td><a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a></td>
 <td>Material CAPEX, losses, reliability and availability</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Offshore and onshore converter stations</td>
 <td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
 <td>Reference configuration, converter CAPEX, conversion efficiency and station availability</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>HVDC export-cable system</td>
 <td><a href="../electrical_infra/hvdc_export_cables.html">HVDC Export Cables</a></td>
 <td>Cable topology, material CAPEX, resistance losses, reliability and availability</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Onshore connection</td>
 <td><a href="../electrical_infra/onshore_grid_connection.html">Onshore Grid Connection</a></td>
 <td>Converter-site interface, grid connection, grid-code requirements and wider reinforcement boundary</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Array and export-cable installation</td>
 <td><a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
 <td>Shared campaign model with cable-subclass methods for route preparation, laying, burial, landfall, pull-ins and testing</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Offshore support structure</td>
 <td><a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
 <td>Topside structure, support structure and foundation</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Platform offshore installation</td>
 <td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
 <td>Transport, foundation installation, topside installation, hookup and commissioning</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Turbine transformer</td>
 <td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></td>
 <td>Turbine electrical equipment before the array-network boundary</td>
@@ -881,7 +898,7 @@ TenneT. 2025. <span>“Aansluiten van een windpark met onze 2 gigawatt-standaard
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -90,6 +90,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -280,6 +309,12 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -299,6 +334,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -602,9 +643,9 @@ div.csl-indent {
 <td>NREL 1,000 MW/year case plus 50% manufacturer markup</td>
 </tr>
 <tr class="even">
-<td>Offshore water treatment placeholder</td>
-<td style="text-align: right;">63 2020 USD/kW</td>
-<td>NREL water supply value plus 50% manufacturer markup</td>
+<td>Water-treatment reference purchase cost (1 MW)</td>
+<td style="text-align: right;"><p>TODO (EUR)</p></td>
+<td>Part of the aggregate BOP; quoted packages are evidence only <span class="citation" data-cites="chicoMoreno2021OffshoreElectrolyzer">(<a href="#ref-chicoMoreno2021OffshoreElectrolyzer" role="doc-biblioref">Chico Moreno 2021</a>)</span></td>
 </tr>
 <tr class="odd">
 <td>Reference capacity</td>
@@ -612,18 +653,23 @@ div.csl-indent {
 <td>NREL reference system</td>
 </tr>
 <tr class="even">
-<td>Scaling exponent</td>
-<td style="text-align: right;">0.6</td>
-<td>Six-tenths rule</td>
+<td>BOP scaling exponent</td>
+<td style="text-align: right;"><p>0.6</p></td>
+<td>Applies to the whole BOP, including water treatment</td>
 </tr>
 <tr class="odd">
+<td>Maximum capacity per BOP block</td>
+<td style="text-align: right;"><p>100000 kW</p></td>
+<td>Adopted screening bound, not supplier qualification</td>
+</tr>
+<tr class="even">
 <td>BOP electricity consumption</td>
 <td style="text-align: right;">1.0 kWh/kg H₂</td>
 <td>Excludes compression and power electronics</td>
 </tr>
 </tbody>
 </table>
-<p>These assumptions should be interpreted as early-stage modelling values. The NREL reference system is a land-based 1 MW manufactured-cost estimate. Applying it to offshore multi-MW or GW-scale systems introduces uncertainty because offshore systems require different packaging, redundancy, corrosion protection, maintainability, water intake, cooling strategy and safety zoning. The scaling exponent captures generic economies of scale, but it does not represent a detailed offshore process design.</p>
+<p>These assumptions should be interpreted as early-stage modelling values. The NREL reference system is a land-based 1 MW manufactured-cost estimate. Applying it to offshore multi-MW or GW-scale systems introduces uncertainty because offshore systems require different packaging, redundancy, corrosion protection, maintainability, water intake, cooling strategy and safety zoning. The non-water scaling exponent captures generic economies of scale; water treatment is sized by the peak clean-water flow and discrete treatment packages below.</p>
 </section>
 <section id="cost-basis" class="level2">
 <h2 class="anchored" data-anchor-id="cost-basis">Cost Basis</h2>
@@ -705,39 +751,72 @@ div.csl-indent {
 </tbody>
 </table>
 <p>A manufacturer markup of <strong>50%</strong> is applied to convert manufactured cost into an approximate equipment purchase cost. The resulting marked-up non-water BOP reference cost is:</p>
-<p>[ c_ = 1.5 = 333 &nbsp;]</p>
+<p><span class="math display">\[
+c_\mathrm{BOP,ref} = 1.5 \cdot 222 = 333 \ \mathrm{2020\ USD/kW}
+\]</span></p>
 <p>For the 1 MW NREL reference system, this corresponds to:</p>
-<p>[ C_ = 333{,}000 &nbsp;]</p>
+<p><span class="math display">\[
+C_\mathrm{BOP,ref} = 333{,}000 \ \mathrm{2020\ USD}
+\]</span></p>
 <p>This value excludes power electronics, stack costs, offshore water treatment, installation, offshore structures, site preparation, indirect costs, inflation and offshore-specific cost adders.</p>
 </section>
 <section id="offshore-water-treatment" class="level3">
 <h3 class="anchored" data-anchor-id="offshore-water-treatment">Offshore Water Treatment</h3>
-<p>The offshore water treatment system converts seawater into the high-purity water required by the PEM electrolyser. This system includes seawater intake, coarse filtration, desalination, polishing and deionisation.</p>
-<p>The cost is represented separately because the NREL water supply category is not assumed to fully capture offshore seawater desalination and purification.</p>
-<p>The offshore water treatment reference cost is defined as:</p>
-<p>[ C_]</p>
-<p>where (C_) is the marked-up cost of the water treatment system for a 1 MW electrolyser reference unit.</p>
-<p>If no dedicated offshore desalination cost estimate is available, the NREL water supply value may be used only as a placeholder and should be clearly labelled as incomplete. In the NREL 1,000 MW/year case, the water supply manufactured cost is 42 2020 USD/kW. Applying the same 50% manufacturer markup gives a placeholder value of:</p>
-<p>[ c_ = 1.5 = 63 &nbsp;]</p>
-<p>For the 1 MW reference system, this corresponds to:</p>
-<p>[ C_ = 63{,}000 &nbsp;]</p>
-<p>when the placeholder value is used.</p>
-<p>This placeholder should be replaced by a desalination and ultrapure-water treatment cost estimate when available. The water treatment cost is kept separate so that offshore-specific assumptions can be tested independently from the rest of the BOP.</p>
+<p>The purchased treatment package converts seawater into electrolyser-grade water. A study of an electrolyser integrated with an offshore wind turbine reports vendor quotes for reverse-osmosis packages with a second RO pass, cleaning, electro-deionisation and controls. The study states that these packages deliver water at the required electrolyser quality <span class="citation" data-cites="chicoMoreno2021OffshoreElectrolyzer">(<a href="#ref-chicoMoreno2021OffshoreElectrolyzer" role="doc-biblioref">Chico Moreno 2021</a>, Table 43)</span>. Its two complete-package references are:</p>
+<table class="caption-top table">
+<caption>Vendor-quoted RO and deionisation package references, reported in a 2021 study <span class="citation" data-cites="chicoMoreno2021OffshoreElectrolyzer">(<a href="#ref-chicoMoreno2021OffshoreElectrolyzer" role="doc-biblioref">Chico Moreno 2021</a>)</span>. The €/m³/h values divide package price by package output; they are comparison metrics, not continuously scalable unit rates.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Package</th>
+<th style="text-align: right;">Clean-water capacity</th>
+<th style="text-align: right;">Quoted investment</th>
+<th style="text-align: right;">Unit cost at quoted capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Small</td>
+<td style="text-align: right;">100 m³/day = 4.17 m³/h</td>
+<td style="text-align: right;">€0.30 million</td>
+<td style="text-align: right;">€72,000 per (m³/h)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Large</td>
+<td style="text-align: right;">3,800 m³/day = 158.3 m³/h</td>
+<td style="text-align: right;">€3.0 million</td>
+<td style="text-align: right;">€18,900 per (m³/h)</td>
+</tr>
+</tbody>
+</table>
+<p>The quotes do not establish the costs of seawater intake, intake screening, stack-water recirculation, offshore installation or additional redundancy. These remain separate unresolved costs. The prices are treated as approximately 2021 euros because the study does not specify the quote dates. No additional manufacturer markup is applied to quoted package prices.</p>
+<p>The model treats water treatment as part of the <strong>aggregate BOP</strong>. Its reference purchase cost at the 1 MW reference capacity, <code>bop-water-reference-purchase-cost</code> (TODO (EUR)), is added to the non-water reference cost and scaled with the same exponent and block rule (see <a href="#scaling-method">Scaling Method</a>). The quotes above are evidence for choosing that value, not a separate calculation. They cannot be read off directly: at 10 L of clean water per kg H₂ and about 19.6 kg/h per MW of stack input at the 3 A/cm² rating, a 1 MW reference needs about 0.2 m³/h, far below the smallest quoted package (4.17 m³/h). The water reference cost therefore remains an unresolved input.</p>
 </section>
 <section id="scaling-method" class="level3">
 <h3 class="anchored" data-anchor-id="scaling-method">Scaling Method</h3>
-<p>The BOP is not assumed to scale linearly with installed capacity. Water treatment, cooling, gas-liquid separation, drying, piping and instrumentation can be shared across multiple stacks. A centralised or semi-centralised BOP system is therefore expected to be cheaper than many small independent BOP systems with the same total capacity.</p>
+<p>Cooling, gas-liquid separation, drying, piping and instrumentation can be shared across multiple stacks. The BOP therefore does not scale linearly with installed capacity. Water treatment is scaled in the same way, as part of the aggregate BOP.</p>
 <p>Because the exact scaling exponent is not known, the model uses the six-tenths rule as a first-order process-equipment scaling approximation. The six-tenths rule is a standard preliminary process-equipment cost-scaling method in which cost scales with capacity using an exponent close to 0.6 <span class="citation" data-cites="engineeringLibretextsPurchasedEquipmentCost petersTimmerhausWestPlantDesign">(<a href="#ref-engineeringLibretextsPurchasedEquipmentCost" role="doc-biblioref">Engineering LibreTexts, n.d.</a>; <a href="#ref-petersTimmerhausWestPlantDesign" role="doc-biblioref">Peters et al., n.d.</a>)</span>.</p>
-<p>For a BOP unit with capacity (P_i), the non-water BOP cost is calculated as:</p>
-<p>[ C_{,i} = C_ ( )^{0.6}]</p>
-<p>where (P_=1 &nbsp;) is the NREL reference capacity.</p>
-<p>The offshore water treatment cost is scaled separately:</p>
-<p>[ C_{,i} = C_ ( )^{0.6}]</p>
-<p>The total BOP cost is calculated by summing the non-water BOP and offshore water treatment costs over all independent BOP units:</p>
-<p>[ C_ = _i ]</p>
-<p>This formulation allows the model to distinguish between decentralised and centralised electrolyser architectures.</p>
-<p>Under this scaling assumption, a more centralised BOP architecture is cheaper than a highly decentralised architecture with the same total electrolyser capacity. In practice, the optimum is likely to involve several shared BOP trains rather than one fully centralised unit, because redundancy, maintainability and safety constraints limit the practical size of individual BOP systems.</p>
-<p>The scaling rule should therefore be interpreted as an early-stage approximation rather than a detailed equipment design. Future work may replace this rule with a process-level BOP model for seawater intake, desalination, deionisation, cooling, gas-liquid separation, drying and hydrogen-side piping.</p>
+<p>For a BOP unit with capacity <span class="math inline">\(P_i\)</span>, the BOP cost, including water treatment, is:</p>
+<p><span class="math display">\[
+C_{\mathrm{BOP},i} =
+\left(C_\mathrm{BOP,ref}+C_\mathrm{water,ref}\right)
+\left(
+\frac{P_i}{P_\mathrm{ref}}
+\right)^{\alpha}
+\]</span></p>
+<p>where <span class="math inline">\(P_\mathrm{ref}\)</span> is the NREL reference capacity (1000 kW), <span class="math inline">\(C_\mathrm{BOP,ref}\)</span> the marked-up, escalated non-water reference cost, <span class="math inline">\(C_\mathrm{water,ref}\)</span> the water-treatment reference purchase cost and <span class="math inline">\(\alpha\)</span> the scaling exponent (0.6). The total is <span class="math inline">\(C_{\mathrm{BOP,total}}=\sum_i C_{\mathrm{BOP},i}\)</span>.</p>
+<p>Each production location is divided into equally loaded BOP blocks:</p>
+<p><span class="math display">\[
+n_b=\left\lceil\frac{P_{\mathrm{served}}}{P_{\mathrm{block,max}}}\right\rceil,
+\qquad P_i=\frac{P_{\mathrm{served}}}{n_b}.
+\]</span></p>
+<p>Here <span class="math inline">\(P_{\mathrm{served}}\)</span> is the wind capacity served at that location [kW], <span class="math inline">\(P_{\mathrm{block,max}}\)</span> is <code>bop-block-limit</code> [kW], and <span class="math inline">\(n_b\)</span> is the integer block count. Stack overplanting does not increase this BOP sizing basis. Centralised production shares farm power across its blocks; decentralised production sizes blocks independently at each turbine.</p>
+<p>The whole BOP uses <code>bop-scaling-exponent</code>. The block limit is an explicit modelling choice that prevents unlimited centralisation benefits. Lower limits can be evaluated through named scenario overrides. No spare block is included. The method is implemented in <code>model/hydrogen_production/balance_of_plant.py</code>; its cost result remains incomplete while the water reference cost is unset.</p>
 </section>
 <section id="manufacturing-volume-sensitivity" class="level3">
 <h3 class="anchored" data-anchor-id="manufacturing-volume-sensitivity">Manufacturing Volume Sensitivity</h3>
@@ -775,8 +854,8 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<p>The selected manufacturing-volume case changes (C_), while the six-tenths rule determines how this reference cost scales with the size of each shared BOP unit.</p>
-<p>The offshore water treatment cost is controlled separately through (C_), because desalination and ultrapure-water polishing depend on offshore water quality, redundancy requirements and the selected treatment process.</p>
+<p>The selected manufacturing-volume case changes <span class="math inline">\(C_\mathrm{BOP,ref}\)</span>, while the six-tenths rule determines how this reference cost scales with the size of each shared BOP unit.</p>
+<p>Water treatment scales with the same exponent as the rest of the BOP. Water quality, redundancy, offshore intake and installation remain additional design and cost uncertainties.</p>
 </section>
 </section>
 <section id="bop-power-consumption" class="level2">
@@ -831,16 +910,20 @@ div.csl-indent {
 </table>
 <p>A simple lifetime average gives approximately 2.0 kWh/kg H₂ at rated power and 0.6 kWh/kg H₂ at the minimum-loss operating point. The difference is mainly caused by thermal management. At the minimum-loss operating point, the stack operates more efficiently and therefore produces less waste heat. Lower waste heat reduces the cooling duty and associated mechanical power consumption.</p>
 <p>In this study, the stack is deliberately oversized so that the electrolyser usually operates closer to the minimum-loss point than to rated stack operation. The model therefore assumes an average non-electrical BOP power consumption of:</p>
-<p>[ e_ = 1.0 &nbsp;]</p>
+<p><span class="math display">\[
+e_\mathrm{BOP} = 1.0 \ \mathrm{kWh/kg_{H_2}}
+\]</span></p>
 <p>This value includes mechanical BOP loads and hydrogen drying losses. It is selected as a conservative average. It is higher than the minimum-loss values reported by Ruth and Ahluwalia to allow for offshore cooling, water handling, drying, control systems, part-load operation and uncertainty in auxiliary loads.</p>
 <section id="desalination" class="level3">
 <h3 class="anchored" data-anchor-id="desalination">Desalination</h3>
 <p>Offshore desalination and water polishing are small compared with the main BOP parasitic loads. A worst-case reverse-osmosis electricity use of 5.0 kWh/m³ corresponds to approximately 0.05 kWh/kg H₂ when 10 L of water is required per kg H₂. This is small relative to the assumed 1.0 kWh/kg H₂ BOP consumption.</p>
 <p>Desalination power is therefore included within the BOP power allowance unless a separate water-treatment model is used.</p>
 <p>The total BOP electricity consumption is calculated as:</p>
-<p>[ E_ = e_ m_]</p>
-<p>where (E_) is the BOP electricity consumption and (m_) is the hydrogen production.</p>
-<p>The assumed value of (e_) should be interpreted as an average value for an oversized offshore PEM electrolyser operating predominantly away from rated stack power.</p>
+<p><span class="math display">\[
+E_\mathrm{BOP} = e_\mathrm{BOP} \cdot m_\mathrm{H_2}
+\]</span></p>
+<p>where <span class="math inline">\(E_\mathrm{BOP}\)</span> is the BOP electricity consumption and <span class="math inline">\(m_\mathrm{H_2}\)</span> is the hydrogen production.</p>
+<p>The assumed value of <span class="math inline">\(e_\mathrm{BOP}\)</span> should be interpreted as an average value for an oversized offshore PEM electrolyser operating predominantly away from rated stack power.</p>
 </section>
 </section>
 <section id="model-limitations" class="level2">
@@ -865,24 +948,28 @@ div.csl-indent {
 <td>Offshore packaging, redundancy, corrosion protection and maintainability are not explicitly costed</td>
 </tr>
 <tr class="even">
-<td>A generic 0.6 scaling exponent is used</td>
-<td>The model captures broad economies of scale but not detailed equipment train sizing</td>
+<td>A generic 0.6 scaling exponent is used for the whole BOP</td>
+<td>This captures broad economies of scale but not detailed equipment-train sizing</td>
 </tr>
 <tr class="odd">
-<td>Offshore water treatment uses a placeholder value when no dedicated estimate is available</td>
-<td>Desalination and ultrapure-water costs should be updated when project-specific data are available</td>
+<td>Water treatment scales with the aggregate BOP exponent</td>
+<td>Package-size thresholds of water treatment are not represented</td>
 </tr>
 <tr class="even">
+<td>Offshore intake and installation costs remain unresolved</td>
+<td>The quoted RO/deionisation package costs do not establish complete offshore water-system CAPEX</td>
+</tr>
+<tr class="odd">
 <td>BOP electricity consumption is represented by a single average value</td>
 <td>Dynamic behaviour, thermal transients and detailed part-load operation are not modelled</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Compression is excluded</td>
 <td>Any compression energy and cost must be added elsewhere in the model</td>
 </tr>
 </tbody>
 </table>
-<p>Future work should replace the generic scaling approach with a process-level BOP model that separately estimates seawater intake, desalination, deionisation, cooling, gas-liquid separation, drying, hydrogen-side piping, redundancy and offshore packaging.</p>
+<p>The aggregate scaling approach covers the whole BOP, including water treatment. Offshore intake and installation costs and block-limit sensitivity remain explicit uncertainties.</p>
 
 
 
@@ -891,6 +978,9 @@ div.csl-indent {
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-badgett2024PEMCost" class="csl-entry" role="listitem">
 Badgett, Alex, Joe Brauch, Amogh Thatte, et al. 2024. <em>Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers</em>. NREL/TP-6A20-87625. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2311140">https://doi.org/10.2172/2311140</a>.
+</div>
+<div id="ref-chicoMoreno2021OffshoreElectrolyzer" class="csl-entry" role="listitem">
+Chico Moreno, Fabian David. 2021. <span>“Design of an Electrolyzer Integrated in an Offshore Wind Turbine System.”</span> {PDEng} thesis, University of Twente. <a href="https://ris.utwente.nl/ws/files/267465220/PDEng_Report_FDCM.pdf">https://ris.utwente.nl/ws/files/267465220/PDEng_Report_FDCM.pdf</a>.
 </div>
 <div id="ref-engineeringLibretextsPurchasedEquipmentCost" class="csl-entry" role="listitem">
 Engineering LibreTexts. n.d. <span>“Purchased Equipment Cost.”</span>
@@ -1002,7 +1092,7 @@ Peters, Max S., Klaus D. Timmerhaus, and Ronald E. West. n.d. <em>Plant Design a
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

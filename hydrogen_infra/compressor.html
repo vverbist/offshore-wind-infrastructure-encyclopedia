@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -520,9 +532,12 @@ window.Quarto = {
   </ul></li>
   <li><a href="#cost-model" id="toc-cost-model" class="nav-link" data-scroll-target="#cost-model">Cost Model</a>
   <ul class="collapse">
+  <li><a href="#normalisation-to-eur2025" id="toc-normalisation-to-eur2025" class="nav-link" data-scroll-target="#normalisation-to-eur2025">Normalisation to EUR<sub>2025</sub></a></li>
+  <li><a href="#applicability-to-the-evaluated-duties" id="toc-applicability-to-the-evaluated-duties" class="nav-link" data-scroll-target="#applicability-to-the-evaluated-duties">Applicability to the Evaluated Duties</a></li>
+  <li><a href="#purchase-cost-reference-per-turbine-kw" id="toc-purchase-cost-reference-per-turbine-kw" class="nav-link" data-scroll-target="#purchase-cost-reference-per-turbine-kw">Purchase-Cost Reference per Turbine kW</a></li>
+  <li><a href="#installation-boundary" id="toc-installation-boundary" class="nav-link" data-scroll-target="#installation-boundary">Installation Boundary</a></li>
   <li><a href="#cost-sensitivity-to-outlet-pressure" id="toc-cost-sensitivity-to-outlet-pressure" class="nav-link" data-scroll-target="#cost-sensitivity-to-outlet-pressure">Cost Sensitivity to Outlet Pressure</a></li>
-  <li><a href="#centralised-compression" id="toc-centralised-compression" class="nav-link" data-scroll-target="#centralised-compression">Centralised Compression</a></li>
-  <li><a href="#decentralised-compression" id="toc-decentralised-compression" class="nav-link" data-scroll-target="#decentralised-compression">Decentralised Compression</a></li>
+  <li><a href="#train-sizing-and-architecture-aggregation" id="toc-train-sizing-and-architecture-aggregation" class="nav-link" data-scroll-target="#train-sizing-and-architecture-aggregation">Train Sizing and Architecture Aggregation</a></li>
   <li><a href="#operating-cost-and-availability" id="toc-operating-cost-and-availability" class="nav-link" data-scroll-target="#operating-cost-and-availability">Operating Cost and Availability</a></li>
   </ul></li>
   <li><a href="#pressure-optimisation" id="toc-pressure-optimisation" class="nav-link" data-scroll-target="#pressure-optimisation">Pressure Optimisation</a></li>
@@ -575,9 +590,13 @@ window.Quarto = {
 </section>
 <section id="sec-compressor-pem" class="level2">
 <h2 class="anchored" data-anchor-id="sec-compressor-pem">Key Assumptions</h2>
-<p>The base case assumes that PEM electrolysers deliver hydrogen at 30 bar. The compressor outlet pressure is not fixed. It is varied together with pipeline diameter and the number of parallel pipelines to minimise total LCOE.</p>
+<p>Inlet and outlet pressures are scenario inputs. All pressures on this page are <strong>absolute</strong>, in bar(a); gauge inputs are converted with the standard atmosphere, 1.01325 bar, before use. The illustrated reference duty is separate from the article case: its 30 bar inlet is an absolute illustrative value, whereas the article reference case specifies a 30 bar(g) stack outlet, 31.01 bar(a). Pressure and diameter sensitivity runs use the same energy and cost equations.</p>
 <table class="caption-top table">
 <caption>Main compressor assumptions.</caption>
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
@@ -586,8 +605,8 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Electrolyser outlet pressure</td>
-<td style="text-align: right;">30 bar</td>
+<td>Electrolyser outlet pressure (illustrative)</td>
+<td style="text-align: right;">30 bar(a)</td>
 </tr>
 <tr class="even">
 <td>Pipeline injection pressure</td>
@@ -595,39 +614,47 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>Typical pressure range</td>
-<td style="text-align: right;">80-150 bar</td>
+<td style="text-align: right;">80-150 bar(a)</td>
 </tr>
 <tr class="even">
 <td>Maximum pressure ratio per stage</td>
-<td style="text-align: right;">3.3</td>
+<td style="text-align: right;"><p>3.3</p></td>
 </tr>
 <tr class="odd">
 <td>Hydrogen specific heat ratio, <span class="math inline">\(\gamma\)</span></td>
-<td style="text-align: right;">1.41</td>
+<td style="text-align: right;"><p>1.41</p></td>
 </tr>
 <tr class="even">
 <td>Gas temperature, <span class="math inline">\(T\)</span></td>
-<td style="text-align: right;">298 K</td>
+<td style="text-align: right;"><p>298 K</p></td>
 </tr>
 <tr class="odd">
 <td>Compressor efficiency, <span class="math inline">\(\eta_\mathrm{comp}\)</span></td>
-<td style="text-align: right;">0.80</td>
+<td style="text-align: right;"><p>80%</p></td>
 </tr>
 <tr class="even">
 <td>Motor efficiency, <span class="math inline">\(\eta_\mathrm{motor}\)</span></td>
-<td style="text-align: right;">0.95</td>
+<td style="text-align: right;"><p>95%</p></td>
 </tr>
 <tr class="odd">
 <td>Compressor availability</td>
-<td style="text-align: right;">99%</td>
+<td style="text-align: right;">TODO: adopt non-overlapping architecture-specific scope</td>
 </tr>
 <tr class="even">
 <td>Compressor OPEX</td>
-<td style="text-align: right;">3% of CAPEX per year</td>
+<td style="text-align: right;">TODO: adopt component allowance</td>
 </tr>
 <tr class="odd">
 <td>Compressor cost scaling exponent</td>
-<td style="text-align: right;">0.8335</td>
+<td style="text-align: right;"><p>0.8335</p></td>
+</tr>
+<tr class="even">
+<td>Cost-curve reference motor input</td>
+<td style="text-align: right;">15 kW (normalisation choice; not a compressor design rating)</td>
+</tr>
+<tr class="odd">
+<td>Maximum motor input per train</td>
+<td style="text-align: right;"><p>1000 kW</p></td>
 </tr>
 </tbody>
 </table>
@@ -643,7 +670,7 @@ N =
 {\ln(r_\mathrm{max})}
 \right\rceil
 \]</span></p>
-<p>where <span class="math inline">\(r_\mathrm{max}=3.3\)</span>.</p>
+<p>where <span class="math inline">\(r_\mathrm{max}\)</span> is the maximum stage ratio, 3.3. The worked example below uses the illustrative reference duty from 30 bar(a) to 150 bar(a).</p>
 <p>The actual pressure ratio per stage is:</p>
 <p><span class="math display">\[
 r_s =
@@ -684,7 +711,7 @@ N \gamma Z_\mathrm{avg} R T
 r_s^{(\gamma - 1)/\gamma} - 1
 \right]
 \]</span></p>
-<p>where <span class="math inline">\(Z_\mathrm{avg}\)</span> is the average hydrogen compressibility factor between inlet and outlet pressure, evaluated from real-gas hydrogen properties via CoolProp at the arithmetic mean of <span class="math inline">\(p_\mathrm{in}\)</span> and <span class="math inline">\(p_\mathrm{out}\)</span>, the same way the <a href="../hydrogen_infra/hydrogen_pipelines.html">pipeline capacity model</a> evaluates gas properties at an average pipeline pressure. Hydrogen deviates only mildly from ideal-gas behaviour over this pressure range (<span class="math inline">\(Z_\mathrm{avg}\)</span> stays within a few percent of 1), but the deviation is calculated rather than assumed.</p>
+<p>where <span class="math inline">\(Z_\mathrm{avg}\)</span> is the average hydrogen compressibility factor between inlet and outlet pressure, evaluated from real-gas hydrogen properties via CoolProp at the arithmetic mean of <span class="math inline">\(p_\mathrm{in}\)</span> and <span class="math inline">\(p_\mathrm{out}\)</span>. The <a href="../hydrogen_infra/hydrogen_pipelines.html">pipeline capacity model</a> uses its own average-pressure relation; neither calculation assumes an ideal gas.</p>
 <p>The electrical energy consumption of the compressor is:</p>
 <p><span class="math display">\[
 e_\mathrm{comp} =
@@ -736,8 +763,8 @@ Figure&nbsp;1: Compressor electricity consumption as a function of outlet pressu
 </section>
 <section id="cost-model" class="level2">
 <h2 class="anchored" data-anchor-id="cost-model">Cost Model</h2>
-<p>The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>)</span>.</p>
-<p>The model uses a power-law scaling relation:</p>
+<p>The compressor cost model is based on the Transition Accelerator technical brief on hydrogen compression <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>)</span>. Its high-flow pipeline-compressor correlation gives <strong>uninstalled</strong> cost as <span class="math inline">\(3{,}083.3\,(P_\mathrm{comp}/\mathrm{kW})^{0.8335}\)</span> in 2019 Canadian dollars, where <span class="math inline">\(P_\mathrm{comp}\)</span> is electrical motor input in kW. The brief’s installation factor of 2 is separate and is not included in the compressor purchase cost on this page. Applicability of that high-flow equipment class to small turbine-level duties still needs checking.</p>
+<p>After source-year escalation and currency conversion, let <span class="math inline">\(A\)</span> [EUR<sub>2025</sub>] be the coefficient of that same uninstalled power law and let <span class="math inline">\(\alpha\)</span> be the sourced exponent. The model uses:</p>
 <p><span class="math display">\[
 C_\mathrm{comp}
 =
@@ -745,105 +772,174 @@ C_\mathrm{comp,ref}
 \left(
 \frac{P_\mathrm{comp}}
 {P_\mathrm{comp,ref}}
-\right)^{0.8335}
+\right)^\alpha,
+\qquad
+P_\mathrm{comp,ref}=15\,\mathrm{kW},
+\qquad
+C_\mathrm{comp,ref}=A\,15^\alpha.
 \]</span></p>
-<p>The exponent is below one, so larger compressors are cheaper per kW than smaller compressors. This matters because the centralised architecture uses a smaller number of large compressor trains, while the decentralised architecture uses many smaller turbine-level compressors.</p>
-<p>As a reference: compression from 30 to 150 bar, for a 15 MW scale system, result in roughly <span class="math inline">\(56 \text{€}/kW\)</span> compressor costs.</p>
+<p>The agreed 15 kW reference is a convenient normalisation, <strong>not</strong> an independently priced compressor or a minimum motor size. Because its cost is derived from the same power law, substitution gives <span class="math inline">\(C_\mathrm{comp}=A(P_\mathrm{comp}/\mathrm{kW})^\alpha\)</span>: the reference power cancels and its numerical choice has <strong>no effect on any calculated cost</strong>. Rounding <span class="math inline">\(C_\mathrm{comp,ref}\)</span> independently would break this equivalence. The exponent is below one, so larger compressors are cheaper per kW than smaller compressors; this affects the centralised and turbine-level train comparison, whereas the reference point does not.</p>
+<section id="normalisation-to-eur2025" class="level3">
+<h3 class="anchored" data-anchor-id="normalisation-to-eur2025">Normalisation to EUR<sub>2025</sub></h3>
+<p>The brief’s 2019 Canadian-dollar values are themselves converted from US-dollar HDSAM data: escalated with CEPCI and converted at 0.75 US$/C$, the 2019 average <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>, Table 4.1)</span>. The model therefore reverses that stated conversion to recover the 2019 US-dollar basis. It then escalates in US dollars with the producer price index for air and gas compressor manufacturing, and converts at the common 2025 rate (see <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>):</p>
+<p><span class="math display">\[
+A=a_{\mathrm{CAD},2019}\;x_{\mathrm{USD/CAD},2019}\;
+\frac{I_{\mathrm{PPI}}(2025)}{I_{\mathrm{PPI}}(2019)}\;
+\frac{1}{FX_{\mathrm{USD/EUR},2025}}.
+\]</span></p>
+<table class="caption-top table">
+<caption>Normalisation of the compressor cost correlation.</caption>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Meaning</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a_{\mathrm{CAD},2019}\)</span></td>
+<td>Source coefficient of the uninstalled power law, motor input in kW <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>)</span></td>
+<td style="text-align: right;"><p>3083.3 CAD</p></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_{\mathrm{USD/CAD},2019}\)</span></td>
+<td>The brief’s own 2019 exchange rate <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>)</span></td>
+<td style="text-align: right;"><p>0.75 USD/CAD</p></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(I_{\mathrm{PPI}}(2025)/I_{\mathrm{PPI}}(2019)\)</span></td>
+<td>Ratio of annual averages of the monthly index, 371.164 / 241.933 <span class="citation" data-cites="blsPpiAirGasCompressors2026">(<a href="#ref-blsPpiAirGasCompressors2026" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026</a>)</span></td>
+<td style="text-align: right;"><p>1.5342</p></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(FX_{\mathrm{USD/EUR},2025}\)</span></td>
+<td>Common 2025 annual-average rate <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span></td>
+<td style="text-align: right;">1.1300 USD/EUR</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(A\)</span></td>
+<td>Coefficient in EUR<sub>2025</sub></td>
+<td style="text-align: right;"><p>3,140 EUR</p></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C_\mathrm{comp,ref}\)</span></td>
+<td>Reference purchase cost, <span class="math inline">\(A\,15^\alpha\)</span>, derived in code without rounding</td>
+<td style="text-align: right;">30,002 EUR (2,000 EUR/kW of motor input)</td>
+</tr>
+</tbody>
+</table>
+<p>Escalating the Canadian-dollar figure with a Canadian index and converting from Canadian dollars would apply Canadian price and exchange-rate movements to US equipment data; the chosen route keeps the index in the market of the underlying data, as the price-basis convention prefers. The index covers US producer prices for all air and gas compressor manufacturing, not hydrogen compressors specifically. The installation factor of 2 remains excluded; installation is costed separately.</p>
+</section>
+<section id="applicability-to-the-evaluated-duties" class="level3">
+<h3 class="anchored" data-anchor-id="applicability-to-the-evaluated-duties">Applicability to the Evaluated Duties</h3>
+<p>The brief states no fitted size range. Its worked pipeline example is 50 t/day compressed from 20 to 70 bar with 1,357 kW motor input, and it describes the HDSAM basis as two- and three-stage reciprocating compressor data, later supplemented by a centrifugal design projection <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>)</span>. Central trains are capped at 1000 kW and are close to that example scale. Turbine-level duties are much smaller: about 12.9 kW per MW of stack at full load for 30 to 100 bar(g), or roughly 0.2 MW per 15 MW turbine at that illustrative outlet pressure. Applying the correlation there extrapolates below the only documented example by a factor of about seven; with the sourced exponent, specific cost at 0.2 MW is about 30% higher than at 1 MW.</p>
+<p><strong>Unresolved:</strong> the underlying vendor data for large reciprocating compressors <span class="citation" data-cites="nexant2008H2ADelivery">(<a href="#ref-nexant2008H2ADelivery" role="doc-biblioref"><span class="nocase">Nexant, Inc. et al.</span> 2008</a>, Table 2-18 and Figure 2-21)</span> have not yet been checked for their size range. Until they are, turbine-level compressor cost carries this extrapolation. The 15 kW reference does not resolve the question: it only fixes the normalisation.</p>
+</section>
+<section id="purchase-cost-reference-per-turbine-kw" class="level3">
+<h3 class="anchored" data-anchor-id="purchase-cost-reference-per-turbine-kw">Purchase-Cost Reference per Turbine kW</h3>
+<p>For an illustrative turbine of 15 MW, use full turbine power and nominal stack capacity equal to turbine rating (1× overplanting). The reference pressures are 30 bar(a) to 150 bar(a). Conversion losses are omitted in this illustration. The <a href="../hydrogen_production/stack.html">stack model</a> allocates the available power between stack, BOP and compression using the supplied polarisation curve <span class="citation" data-cites="manufacturerGStackPolarisation">(<a href="#ref-manufacturerGStackPolarisation" role="doc-biblioref">Manufacturer G, n.d.</a>)</span> and the shared <a href="../hydrogen_production/balance_of_plant.html">BOP electricity input</a>. These are illustration choices, not a completed article case or a selected export pressure.</p>
+<p>The compressor motor duty follows from hydrogen flow and specific compression energy. Its purchase cost follows from the EUR2025 correlation above and the <a href="#train-sizing-and-architecture-aggregation">train-count rule</a> below. For reporting:</p>
+<p><span class="math display">\[
+c_{\mathrm{comp,turbine}}=\frac{C_{\mathrm{comp,purchase}}}{P_{\mathrm{turbine}}},
+\]</span></p>
+<p>where <span class="math inline">\(C_{\mathrm{comp,purchase}}\)</span> is compressor purchase cost [EUR2025], <span class="math inline">\(P_{\mathrm{turbine}}\)</span> is turbine rated electrical power [kW], and <span class="math inline">\(c_{\mathrm{comp,turbine}}\)</span> is purchase cost per turbine kW [EUR2025/kW]. Motor power remains the cost driver; turbine rating is the reporting denominator.</p>
+<table class="caption-top table">
+<caption>Reference results generated by <code>compressor.turbine_reference</code> from the shared operating and cost calculations. Installation is excluded; correlation applicability remains unresolved as described above.</caption>
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Derived reference quantity</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Available turbine power</td>
+<td style="text-align: right;">15,000 kW</td>
+</tr>
+<tr class="even">
+<td>Stack input</td>
+<td style="text-align: right;">14,470 kW</td>
+</tr>
+<tr class="odd">
+<td>BOP input</td>
+<td style="text-align: right;">284.9 kW</td>
+</tr>
+<tr class="even">
+<td>Hydrogen production</td>
+<td style="text-align: right;">284.9 kg/h</td>
+</tr>
+<tr class="odd">
+<td>Compressor motor input</td>
+<td style="text-align: right;">244.6 kW</td>
+</tr>
+<tr class="even">
+<td>Compressor trains</td>
+<td style="text-align: right;"><p>1</p></td>
+</tr>
+<tr class="odd">
+<td>Compressor purchase cost</td>
+<td style="text-align: right;">307,378 EUR2025</td>
+</tr>
+<tr class="even">
+<td><strong>Purchase cost per turbine kW</strong></td>
+<td style="text-align: right;"><strong>20.5 EUR2025/kW turbine</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="installation-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="installation-boundary">Installation Boundary</h3>
+<p>The compressor reference reports <strong>purchase cost only</strong>. The source’s factor of 2 converts purchase cost to installed cost by adding installation labour and parts <span class="citation" data-cites="transitionAcceleratorCompressorCost">(<a href="#ref-transitionAcceleratorCompressorCost" role="doc-biblioref">Khan et al. 2021</a>, Table 4.1)</span>; it is not adopted as an offshore installation allowance here.</p>
+<p>For centralised hydrogen, <a href="../platforms/platform_material_capex.html">platform yard integration</a> owns equipment placement, fixing, connections and testing, while <a href="../offshore_installation/platform_and_substation_installation.html">platform installation</a> owns offshore hook-up and commissioning. Those scopes and their unresolved inputs must be reconciled with compressor installation before adding any factor. For turbine-level hydrogen, the lifting calculation represents equipment transport and lift requirements but does not yet establish compressor integration, connection and commissioning costs.</p>
+<p><strong>TODO (O8):</strong> define and cost the remaining compressor installation activities for each architecture, counting each activity once. The source factor may be considered as an aggregate assumption only for otherwise uncosted work after its scope and offshore applicability are addressed. Unresolved installation is not free, and the purchase reference is not a complete installed-cost result.</p>
+</section>
 <section id="cost-sensitivity-to-outlet-pressure" class="level3">
 <h3 class="anchored" data-anchor-id="cost-sensitivity-to-outlet-pressure">Cost Sensitivity to Outlet Pressure</h3>
-<p>For a fixed hydrogen production rate, compressor power scales directly with <span class="math inline">\(e_\mathrm{comp}(p_\mathrm{in}, p_\mathrm{out})\)</span>, so the cost-scaling relation above can be re-expressed as compressor cost per unit of electrolyser capacity:</p>
-<p><span class="math display">\[
-c_\mathrm{comp}
-=
-\frac{C_\mathrm{comp}}
-{P_\mathrm{ely}}
-\]</span></p>
-<p>where <span class="math inline">\(P_\mathrm{ely}\)</span> is the installed electrolyser capacity. <a href="#fig-compressor-cost" class="quarto-xref">Figure&nbsp;2</a> shows this quantity over the same outlet-pressure range and inlet pressures as <a href="#fig-compressor-energy" class="quarto-xref">Figure&nbsp;1</a>, anchored to the 30-to-150-bar reference value above.</p>
+<p><a href="#fig-compressor-cost" class="quarto-xref">Figure&nbsp;2</a> repeats the reference calculation across the pressures in <a href="#fig-compressor-energy" class="quarto-xref">Figure&nbsp;1</a>. Each point recalculates hydrogen output, motor duty, train count and purchase cost at the same available turbine power and stack capacity. It uses the adopted EUR2025 correlation, not the former legacy cost anchor. The curves therefore include the stack’s operating response and any train-count steps as well as the pressure dependence of compression energy.</p>
 <div id="fig-compressor-cost" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-compressor-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="../figures/compressor-cost-vs-pressure.svg" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-compressor-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Compressor cost as a function of outlet pressure for different inlet pressures.
+Figure&nbsp;2: Compressor purchase cost per turbine kW at full turbine power, with 1× stack capacity and no conversion losses. Installation is excluded.
 </figcaption>
 </figure>
 </div>
-<p>The cost curves are flatter than the energy curves in <a href="#fig-compressor-energy" class="quarto-xref">Figure&nbsp;1</a>, and the staging kinks are less visible, because compressor CAPEX scales with compressor power using an exponent below one: a given percentage change in energy consumption produces a smaller percentage change in cost. The same qualitative trade-off remains, though: higher outlet pressure increases compressor cost, and higher inlet pressure reduces it, for the same reason it does for energy.</p>
 </section>
-<section id="centralised-compression" class="level3">
-<h3 class="anchored" data-anchor-id="centralised-compression">Centralised Compression</h3>
-<p>In the centralised hydrogen architecture, all hydrogen is produced on the offshore platform. The compressor is therefore sized for the full farm-level hydrogen flow:</p>
+<section id="train-sizing-and-architecture-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="train-sizing-and-architecture-aggregation">Train Sizing and Architecture Aggregation</h3>
+<p>At each production location <span class="math inline">\(j\)</span>, the peak electrical motor demand <span class="math inline">\(P_{\mathrm{peak},j}\)</span> [kW] follows from the simultaneous stack/BOP/compression power balance. Train count and equally shared train duty are:</p>
 <p><span class="math display">\[
-P_\mathrm{comp,central}
-=
-e_\mathrm{comp}
-\cdot
-\dot{m}_{\mathrm{H_2},\mathrm{farm}}
+n_j=\left\lceil\frac{P_{\mathrm{peak},j}}{P_{\mathrm{train,max}}}\right\rceil,
+\qquad P_{\mathrm{train},j}=\frac{P_{\mathrm{peak},j}}{n_j}.
 \]</span></p>
-<p>The centralised compressor CAPEX is:</p>
+<p>For zero compression duty, train count and cost are zero. The adopted bound <code>compressor-train-limit</code> is a modelling assumption on <strong>electrical motor input</strong>. It limits economies of scale without adding a spare train. The total supply cost is:</p>
 <p><span class="math display">\[
-C_\mathrm{comp,central}
-=
-C_\mathrm{comp,ref}
-\left(
-\frac{P_\mathrm{comp,central}}
-{P_\mathrm{comp,ref}}
-\right)^{0.8335}
+C_{\mathrm{comp,total}}=\sum_j n_j C_{\mathrm{comp,ref}}
+\left(\frac{P_{\mathrm{train},j}}{P_{\mathrm{comp,ref}}}\right)^\alpha.
 \]</span></p>
-<p>This captures the economy of scale from centralising compression. In practice, the compressor would likely be split into multiple parallel trains for redundancy and maintenance, but the current model does not explicitly size those trains.</p>
-</section>
-<section id="decentralised-compression" class="level3">
-<h3 class="anchored" data-anchor-id="decentralised-compression">Decentralised Compression</h3>
-<p>In the decentralised hydrogen architecture, compression is represented at turbine level. For turbine <span class="math inline">\(j\)</span>:</p>
-<p><span class="math display">\[
-P_{\mathrm{comp},j}
-=
-e_{\mathrm{comp},j}
-\cdot
-\dot{m}_{\mathrm{H_2},j}
-\]</span></p>
-<p>The total decentralised compressor cost is calculated by summing over all turbines:</p>
-<p><span class="math display">\[
-C_\mathrm{comp,decentral}
-=
-\sum_j
-C_\mathrm{comp,ref}
-\left(
-\frac{P_{\mathrm{comp},j}}
-{P_\mathrm{comp,ref}}
-\right)^{0.8335}
-\]</span></p>
-<p>This captures the cost penalty of distributing compression across many smaller units. The decentralised architecture may still be attractive because it removes the central offshore electrolysis platform and replaces the infield AC grid with hydrogen pipelines.</p>
+<p>Here <span class="math inline">\(C_{\mathrm{comp,ref}}\)</span> is reference purchase cost [EUR2025], <span class="math inline">\(P_{\mathrm{comp,ref}}\)</span> is reference motor input [kW], and <span class="math inline">\(\alpha\)</span> is the central scaling exponent. Centralised production has one farm-level location; decentralised production sizes each turbine location separately. The method is implemented in <code>model/hydrogen_infra/compressor.py</code>.</p>
+<p>The reference cost <span class="math inline">\(C_{\mathrm{comp,ref}}\)</span> is calculated from the normalisation above (<code>compressor-source-*</code>, <code>compressor-usd-escalation-2019-2025</code> and <code>compressor-reference-motor-power</code>), not entered as a separate value. The reference table and cost figure call the same train-sizing and supply-cost functions as the architecture calculations.</p>
 </section>
 <section id="operating-cost-and-availability" class="level3">
 <h3 class="anchored" data-anchor-id="operating-cost-and-availability">Operating Cost and Availability</h3>
-<p>Compressor OPEX is calculated as:</p>
-<p><span class="math display">\[
-OPEX_\mathrm{comp}
-=
-0.03
-\cdot
-C_\mathrm{comp}
-\]</span></p>
-<p>Compressor availability is assumed to be:</p>
-<p><span class="math display">\[
-A_\mathrm{comp} = 99\%
-\]</span></p>
-<p>The available hydrogen after compression is therefore:</p>
-<p><span class="math display">\[
-m_{\mathrm{H_2},\mathrm{after}}
-=
-A_\mathrm{comp}
-\cdot
-m_{\mathrm{H_2},\mathrm{before}}
-\]</span></p>
-<p>This is a simplified availability treatment. It does not explicitly model spare compressor trains, partial-load operation during failures or maintenance strategy.</p>
+<p>Annual O&amp;M is total installed train supply cost times the adopted <code>compressor-opex-rate</code> [fraction/year]. Availability uses the architecture-specific <code>compressor-*-availability</code> [fraction], applied to the production capacity at that location. Both remain unresolved inputs; no distributed maintenance premium is assumed. The component ledger prevents the same outage from being counted again in production availability. Redundancy, failure-state redispatch and spare-train sizing are deferred.</p>
 </section>
 </section>
 <section id="pressure-optimisation" class="level2">
 <h2 class="anchored" data-anchor-id="pressure-optimisation">Pressure Optimisation</h2>
-<p>Pipeline injection pressure is optimised together with pipeline diameter and the number of parallel pipelines, for the reasons set out in <a href="../hydrogen_infra/pipeline_pressure_and_capacity.html">Pipeline Pressure and Capacity</a>: pressure, diameter, material cost, and installation cost all move together, so none of them can be picked in isolation.</p>
+<p>Pressure, diameter and parallel-pipeline choices can be compared in separate deterministic scenarios, for the reasons set out in <a href="../hydrogen_infra/pipeline_pressure_and_capacity.html">Pipeline Pressure and Capacity</a>: pressure, diameter, material cost, and installation cost all move together, so none of them can be picked in isolation.</p>
 <p>The optimisation problem is therefore not:</p>
 <p><span class="math display">\[
 \min e_\mathrm{comp}
@@ -852,7 +948,7 @@ m_{\mathrm{H_2},\mathrm{before}}
 <p><span class="math display">\[
 \min C_\mathrm{pipeline}
 \]</span></p>
-<p>Instead, the model minimises the combined system cost:</p>
+<p>A later optimisation could minimise the combined system cost; the current draft evaluates supplied scenarios:</p>
 <p><span class="math display">\[
 \min_{p_\mathrm{out}, D, n_\mathrm{pipe}}
 LCOE
@@ -878,8 +974,8 @@ LCOE
 </thead>
 <tbody>
 <tr class="odd">
-<td>Cost scales only with compressor power</td>
-<td>Compressor type, train count and offshore packaging are simplified</td>
+<td>Cost scales with bounded train motor power</td>
+<td>Compressor type and offshore packaging remain simplified</td>
 </tr>
 <tr class="even">
 <td>One cost exponent is used</td>
@@ -894,8 +990,8 @@ LCOE
 <td>Redundancy and partial failure are not represented</td>
 </tr>
 <tr class="odd">
-<td>Offshore integration cost is excluded</td>
-<td>Platform or turbine layout impacts may be underestimated</td>
+<td>Purchase reference excludes installation</td>
+<td>Compressor integration, connections and commissioning must be reconciled with platform and turbine installation scopes (O8)</td>
 </tr>
 </tbody>
 </table>
@@ -906,8 +1002,20 @@ LCOE
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
 <div id="ref-transitionAcceleratorCompressorCost" class="csl-entry" role="listitem">
 Khan, M. A., C. Young, C. MacKinnon, and D. B. Layzell. 2021. <em>The Techno-Economics of Hydrogen Compression</em>. Technical Brief No. 1. Vol. 1. Transition Accelerator Technical Briefs. Transition Accelerator.
+</div>
+<div id="ref-manufacturerGStackPolarisation" class="csl-entry" role="listitem">
+Manufacturer G. n.d. <em>Stack Polarisation Curve</em>. Confidential manufacturer data.
+</div>
+<div id="ref-nexant2008H2ADelivery" class="csl-entry" role="listitem">
+<span class="nocase">Nexant, Inc. et al.</span> 2008. <em><span>H2A</span> Hydrogen Delivery Infrastructure Analysis Models and Conventional Pathway Options Analysis Results</em>. U.S. Department of Energy. <a href="https://www1.eere.energy.gov/hydrogenandfuelcells/pdfs/nexant_h2a.pdf">https://www1.eere.energy.gov/hydrogenandfuelcells/pdfs/nexant_h2a.pdf</a>.
+</div>
+<div id="ref-blsPpiAirGasCompressors2026" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026. <span>“Producer Price Index by Industry: Air and Gas Compressor Manufacturing.”</span> No. PCU333912333912. Federal Reserve Bank of St. Louis (FRED). <a href="https://fred.stlouisfed.org/series/PCU333912333912">https://fred.stlouisfed.org/series/PCU333912333912</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->
@@ -1013,7 +1121,7 @@ Khan, M. A., C. Young, C. MacKinnon, and D. B. Layzell. 2021. <em>The Techno-Eco
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

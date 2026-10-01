@@ -1,0 +1,7 @@
+# Article design choices agreed with the user on 2026-10-01; not supplier limits.
+# Compressor discharge pressure is gauge pressure. Export diameter is true ID.
+# The runner converts pressure using standard-atmospheric-pressure in inputs.csv
+# and diameter using the exact conversion 1 inch = 0.0254 m.
+# Collection section sizes/pressures and distributed export inlet remain open.
+injection_bar_g = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
+export_diameter_inches = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8]

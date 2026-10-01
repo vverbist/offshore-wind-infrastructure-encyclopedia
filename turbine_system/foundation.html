@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -676,6 +688,11 @@ m_\mathrm{MP}
 </table>
 <p>The reference is the IEA 15 MW offshore wind turbine <span class="citation" data-cites="gaertner2020IEA15">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>)</span>:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Reference quantity</th>
@@ -686,12 +703,12 @@ m_\mathrm{MP}
 <tbody>
 <tr class="odd">
 <td>RNA mass</td>
-<td style="text-align: right;">1,017 t</td>
+<td style="text-align: right;"><p>1017 t</p></td>
 <td>Published reference-turbine mass</td>
 </tr>
 <tr class="even">
 <td>Tower mass</td>
-<td style="text-align: right;">860 t</td>
+<td style="text-align: right;"><p>860 t</p></td>
 <td>Published reference-turbine mass</td>
 </tr>
 <tr class="odd">
@@ -701,12 +718,12 @@ m_\mathrm{MP}
 </tr>
 <tr class="even">
 <td><span class="math inline">\(d_\mathrm{ref}\)</span></td>
-<td style="text-align: right;">30 m</td>
+<td style="text-align: right;"><p>30 m</p></td>
 <td>Reference site water depth</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(m_\mathrm{MP,ref}\)</span></td>
-<td style="text-align: right;">1,318 t</td>
+<td style="text-align: right;"><p>1318 t</p></td>
 <td>Published reference monopile mass</td>
 </tr>
 </tbody>
@@ -805,6 +822,11 @@ C_\mathrm{foundation}
 =m_\mathrm{MP}c_\mathrm{MP}(1+r_\mathrm{TP}).
 \]</span></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Case</th>
@@ -820,8 +842,8 @@ C_\mathrm{foundation}
 </tr>
 <tr class="even">
 <td>Baseline</td>
-<td style="text-align: right;">2,430 USD<span class="math inline">\(_{2022}\)</span>/t</td>
-<td style="text-align: right;">0.625</td>
+<td style="text-align: right;">2430 USD<span class="math inline">\(_{2022}\)</span>/t</td>
+<td style="text-align: right;"><p>0.625</p></td>
 </tr>
 <tr class="odd">
 <td>High</td>
@@ -1036,7 +1058,7 @@ Zahle, Frederik, Thanasis Barlas, Pietro Bortolotti, Daniel Zalkind, and William
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

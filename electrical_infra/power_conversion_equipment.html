@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Platform and Substation Installation – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Power Conversion Equipment – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -132,7 +132,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../offshore_installation/overview.html">Offshore Installation</a></li><li class="breadcrumb-item"><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../electrical_infra/overview.html">Electrical Infrastructure</a></li><li class="breadcrumb-item"><a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -338,7 +338,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
@@ -496,7 +496,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link active">
+  <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform and Substation Installation</span></a>
   </div>
 </li>
@@ -525,26 +525,31 @@ window.Quarto = {
    
   <ul>
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
-  <li><a href="#model-inputs" id="toc-model-inputs" class="nav-link" data-scroll-target="#model-inputs">Model Inputs</a>
+  <li><a href="#electrical-chains-compared" id="toc-electrical-chains-compared" class="nav-link" data-scroll-target="#electrical-chains-compared">Electrical Chains Compared</a></li>
+  <li><a href="#reference-case-unit-counts" id="toc-reference-case-unit-counts" class="nav-link" data-scroll-target="#reference-case-unit-counts">Reference-Case Unit Counts</a></li>
+  <li><a href="#equipment-inventory" id="toc-equipment-inventory" class="nav-link" data-scroll-target="#equipment-inventory">Equipment Inventory</a>
   <ul class="collapse">
-  <li><a href="#design-and-installation-class" id="toc-design-and-installation-class" class="nav-link" data-scroll-target="#design-and-installation-class">Design and Installation Class</a></li>
-  <li><a href="#duration" id="toc-duration" class="nav-link" data-scroll-target="#duration">Duration</a></li>
-  <li><a href="#commercial-inputs" id="toc-commercial-inputs" class="nav-link" data-scroll-target="#commercial-inputs">Commercial Inputs</a></li>
+  <li><a href="#generator-side-converter-common-baseline" id="toc-generator-side-converter-common-baseline" class="nav-link" data-scroll-target="#generator-side-converter-common-baseline">Generator-side converter (common baseline)</a></li>
+  <li><a href="#sec-grid-side-inverter" id="toc-sec-grid-side-inverter" class="nav-link" data-scroll-target="#sec-grid-side-inverter">Grid-side inverter</a></li>
+  <li><a href="#turbine-step-up-transformer" id="toc-turbine-step-up-transformer" class="nav-link" data-scroll-target="#turbine-step-up-transformer">Turbine step-up transformer</a></li>
+  <li><a href="#central-step-down-transformer" id="toc-central-step-down-transformer" class="nav-link" data-scroll-target="#central-step-down-transformer">Central step-down transformer</a></li>
+  <li><a href="#rectifier-transformer" id="toc-rectifier-transformer" class="nav-link" data-scroll-target="#rectifier-transformer">Rectifier transformer</a></li>
+  <li><a href="#electrolyser-rectifier" id="toc-electrolyser-rectifier" class="nav-link" data-scroll-target="#electrolyser-rectifier">Electrolyser rectifier</a></li>
+  <li><a href="#dedicated-stack-side-dcdc-converter-conservative-case" id="toc-dedicated-stack-side-dcdc-converter-conservative-case" class="nav-link" data-scroll-target="#dedicated-stack-side-dcdc-converter-conservative-case">Dedicated stack-side DC/DC converter (conservative case)</a></li>
   </ul></li>
-  <li><a href="#installation-class-screen" id="toc-installation-class-screen" class="nav-link" data-scroll-target="#installation-class-screen">Installation-Class Screen</a></li>
-  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
-  <li><a href="#model-outputs" id="toc-model-outputs" class="nav-link" data-scroll-target="#model-outputs">Model Outputs</a></li>
-  <li><a href="#applicability-and-limitations" id="toc-applicability-and-limitations" class="nav-link" data-scroll-target="#applicability-and-limitations">Applicability and Limitations</a></li>
+  <li><a href="#sec-pce-losses" id="toc-sec-pce-losses" class="nav-link" data-scroll-target="#sec-pce-losses">Losses</a></li>
+  <li><a href="#cost-and-mass-reconciliation" id="toc-cost-and-mass-reconciliation" class="nav-link" data-scroll-target="#cost-and-mass-reconciliation">Cost and Mass Reconciliation</a></li>
+  <li><a href="#evidence-gaps" id="toc-evidence-gaps" class="nav-link" data-scroll-target="#evidence-gaps">Evidence Gaps</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../offshore_installation/overview.html">Offshore Installation</a></li><li class="breadcrumb-item"><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../electrical_infra/overview.html">Electrical Infrastructure</a></li><li class="breadcrumb-item"><a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Platform and Substation Installation</h1>
+<h1 class="title">Power Conversion Equipment</h1>
 </div>
 
 
@@ -563,359 +568,653 @@ window.Quarto = {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This page calculates the offshore installation CAPEX of a crane-installed, piled-jacket offshore substation (OSS). Jacket, pile and topside supply are costed separately. The installation result is required to convert those supplied components into an installed and commissioned offshore asset.</p>
-<p>The model uses the minimum sufficient detail supported by the available evidence. It represents three installation campaigns:</p>
-<ol type="1">
-<li>piled-jacket installation;</li>
-<li>topside installation; and</li>
-<li>offshore hook-up and commissioning.</li>
-</ol>
-<p>Piling and jacket installation are combined because the available public evidence supports their aggregate site duration but not a reliable task-level decomposition. Transport and other campaign logistics are represented by aggregate chargeable days rather than separate carrier schedules.</p>
+<p>This page owns the inventory of power-conversion equipment between the turbine generator and the PEM stack DC terminals. For each equipment role it records the duty, voltage and insulation class, documented unit ratings, the unit count implied by the article reference case, cost evidence and its price basis, losses, package boundary and adoption status.</p>
+<p>Other pages apply this inventory rather than repeat it. <a href="../hydrogen_production/dc_integration.html">DC Integration</a> defines the turbine-level electrical cases, <a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a> books the central transformer–rectifier package, <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a> owns the turbine removal credit, and <a href="../architectures/component_mapping.html">Component Mapping</a> records which roles each architecture uses.</p>
+<p><strong>Candidate evidence on this page is not an adopted model input.</strong> A value enters <code>model_data/inputs.csv</code> only after its scope, price basis and applicability are adopted on the owning page. Unsupported values stay as explicit TODOs.</p>
 </section>
-<section id="cost-boundary" class="level2">
-<h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
+<section id="electrical-chains-compared" class="level2">
+<h2 class="anchored" data-anchor-id="electrical-chains-compared">Electrical Chains Compared</h2>
+<p>Three article cases are compared. The adopted power-curve boundary is the inverter AC output, before the turbine transformer, as defined on <a href="../turbine_system/power_electronics.html">Turbine Power Electronics</a>. The existing common operating case still documents generator output; reconciliation of that source curve remains required before numerical use of the new boundary.</p>
 <table class="caption-top table">
+<caption>Equipment roles in the three compared electrical chains.</caption>
 <thead>
 <tr class="header">
-<th>Scope</th>
-<th>Treatment</th>
+<th>Equipment role</th>
+<th style="text-align: center;">Centralised hydrogen</th>
+<th style="text-align: center;">Conservative turbine-level</th>
+<th style="text-align: center;">Direct DC (<code>converter_reduced</code>)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mobilisation and demobilisation of the three installation spreads</td>
-<td>Included</td>
+<td>Generator-side converter (rectifier) and DC link</td>
+<td style="text-align: center;">Common baseline</td>
+<td style="text-align: center;">Common baseline</td>
+<td style="text-align: center;">Common baseline</td>
 </tr>
 <tr class="even">
-<td>Chargeable load-out, transport, setup and critical waiting</td>
-<td>Included as aggregate logistics time</td>
+<td>Grid-side inverter</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Removed</td>
+<td style="text-align: center;">Removed</td>
 </tr>
 <tr class="odd">
-<td>Routine pile, jacket and topside installation</td>
-<td>Included</td>
+<td>Turbine step-up transformer</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Removed</td>
+<td style="text-align: center;">Removed</td>
 </tr>
 <tr class="even">
-<td>Defined offshore hook-up, testing and commissioning</td>
-<td>Included</td>
+<td>66 kV AC collection</td>
+<td style="text-align: center;">Used (<a href="../electrical_infra/infield_ac_cables.html">Infield AC Cables</a>)</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
 </tr>
 <tr class="odd">
-<td>Jacket, pile and topside fabrication</td>
-<td>Excluded; owned by <a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
+<td>Central step-down transformer</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
 </tr>
 <tr class="even">
-<td>Converter equipment</td>
-<td>Excluded; owned by <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
+<td>Rectifier transformer</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
 </tr>
 <tr class="odd">
-<td>Cable installation, pull-in and termination</td>
-<td>Excluded; owned by <a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
+<td>Electrolyser rectifier</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Not used</td>
 </tr>
 <tr class="even">
-<td>Seabed preparation, UXO work, relief drilling, exceptional noise mitigation and scour protection</td>
-<td>Excluded from normal campaign rates; added only as defined exceptional work</td>
-</tr>
-<tr class="odd">
-<td>Development, insurance, owner contingency, OPEX and decommissioning</td>
-<td>Excluded</td>
+<td>Dedicated stack-side DC/DC converter</td>
+<td style="text-align: center;">Not used</td>
+<td style="text-align: center;">Used</td>
+<td style="text-align: center;">Omitted, conditional on electrical matching and protection</td>
 </tr>
 </tbody>
 </table>
-<p>Each activity is costed once. The campaign rates on this page are complete-spread rates: their vessel, equipment, support and consumable inclusions must be documented before use.</p>
+<pre class="text"><code>Centralised:   generator -&gt; generator-side converter -&gt; DC link -&gt; grid-side inverter
+               -&gt; turbine transformer -&gt; 66 kV collection -&gt; central step-down transformer
+               -&gt; rectifier transformer -&gt; rectifier -&gt; stacks
+Conservative:  generator -&gt; generator-side converter -&gt; DC link -&gt; stack-side DC/DC -&gt; stacks
+Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stacks</code></pre>
+<p>The generator-side converter is present in every case. It is therefore <strong>excluded from the comparison cost table</strong> and stays in the common turbine baseline. At the adopted inverter-output boundary its losses are already upstream of the power curve; no extra generator-side loss or credit is applied when comparing architectures (see <a href="#sec-pce-losses">Losses</a>). Auxiliary supplies, protection, switchgear and dedicated cooling are named separately in each role below, so that a package boundary cannot silently absorb or drop them.</p>
 </section>
-<section id="model-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="model-inputs">Model Inputs</h2>
-<section id="design-and-installation-class" class="level3">
-<h3 class="anchored" data-anchor-id="design-and-installation-class">Design and Installation Class</h3>
+<section id="reference-case-unit-counts" class="level2">
+<h2 class="anchored" data-anchor-id="reference-case-unit-counts">Reference-Case Unit Counts</h2>
+<p>The article case has 134 turbines of 15 MW (2010 MW). Counts per turbine follow from the chains above; central counts depend on a selected unit size, which is not yet chosen.</p>
 <table class="caption-top table">
+<caption>Unit counts for the reference case.</caption>
 <colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Symbol</th>
-<th style="text-align: right;">Unit</th>
+<th>Role</th>
+<th>Count</th>
+<th>Unit duty</th>
 <th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Number of substations</td>
-<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
-<td style="text-align: right;">count</td>
-<td>Project design input</td>
+<td>Grid-side inverter</td>
+<td>one per turbine (centralised only)</td>
+<td>turbine rating</td>
+<td>Follows the turbine; no choice required</td>
 </tr>
 <tr class="even">
-<td>Topside lift modules per substation</td>
-<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{module/OSS}}\)</span></td>
-<td style="text-align: right;">lift/OSS</td>
-<td>Project execution input</td>
+<td>Turbine step-up transformer</td>
+<td>one per turbine (centralised only)</td>
+<td>turbine rating</td>
+<td>Follows the turbine; MVA margin TODO</td>
 </tr>
 <tr class="odd">
-<td>Jacket screening lift mass</td>
-<td style="text-align: right;"><span class="math inline">\(m_J\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Upstream platform and lift input</td>
+<td>Central step-down transformer</td>
+<td><span class="math inline">\(\lceil P_{\mathrm{served}}/S_{\mathrm{unit}}\rceil\)</span></td>
+<td>selected unit size <span class="math inline">\(S_{\mathrm{unit}}\)</span></td>
+<td>TODO: select <span class="math inline">\(S_{\mathrm{unit}}\)</span> within documented limits (O3 platform layout)</td>
 </tr>
 <tr class="even">
-<td>Largest topside-module screening lift mass</td>
-<td style="text-align: right;"><span class="math inline">\(m_{S,\max}\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Upstream platform and lift input</td>
+<td>Rectifier transformer and rectifier</td>
+<td>one set per rectifier block</td>
+<td>selected block size</td>
+<td>TODO: block size follows stack module grouping and DC voltage</td>
 </tr>
 <tr class="odd">
-<td>Selected jacket installation-class capacity</td>
-<td style="text-align: right;"><span class="math inline">\(Q_J\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Named-vessel or installation-class input</td>
-</tr>
-<tr class="even">
-<td>Selected topside installation-class capacity</td>
-<td style="text-align: right;"><span class="math inline">\(Q_S\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Named-vessel or installation-class input</td>
+<td>Stack-side DC/DC converter</td>
+<td>one or more per turbine (conservative only)</td>
+<td>turbine rating in parallel modules</td>
+<td>TODO: module size within documented product limits</td>
 </tr>
 </tbody>
 </table>
-<p>The screening lift masses should include lift-applicable attachments and rigging where that information is available. The capacity inputs should use the capacity at the intended configuration and radius when known; a published nominal maximum provides only an exclusion screen.</p>
+<p>A product limit is a documented maximum; a model unit size is a selected design input. The inventory keeps them separate: a published limit does not select the unit size, and a selected size must stay within some documented limit.</p>
 </section>
-<section id="duration" class="level3">
-<h3 class="anchored" data-anchor-id="duration">Duration</h3>
+<section id="equipment-inventory" class="level2">
+<h2 class="anchored" data-anchor-id="equipment-inventory">Equipment Inventory</h2>
+<section id="generator-side-converter-common-baseline" class="level3">
+<h3 class="anchored" data-anchor-id="generator-side-converter-common-baseline">Generator-side converter (common baseline)</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Symbol</th>
-<th style="text-align: right;">Unit</th>
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>Controls generator current and torque; rectifies the generator output onto the turbine DC link</td>
+</tr>
+<tr class="even">
+<td>Voltage</td>
+<td>IEA 15 MW generator: 4.77 kV line voltage at rating <span class="citation" data-cites="gaertner2020IEA15">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>)</span>. The converter voltage level is not defined by the reference turbine; the turbine case’s converter voltage remains TODO</td>
+</tr>
+<tr class="odd">
+<td>Documented ratings</td>
+<td>Complete back-to-back medium-voltage converters to about 12 MW per line at 3.3 kV, and 20 MW and above with two lines <span class="citation" data-cites="abb2023PCS6000 abbPCS6000Web2026">(<a href="#ref-abb2023PCS6000" role="doc-biblioref">ABB 2023</a>; <a href="#ref-abbPCS6000Web2026" role="doc-biblioref"><span>“<span>PCS6000</span> Medium Voltage Wind Converter”</span> 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Cost</td>
+<td>In the common turbine baseline; not in the comparison table</td>
+</tr>
+<tr class="odd">
+<td>Losses</td>
+<td>Upstream of the adopted power-curve boundary; no separate architecture adjustment. The complete back-to-back converter is about 98% efficient at rated power <span class="citation" data-cites="abb2023PCS6000">(<a href="#ref-abb2023PCS6000" role="doc-biblioref">ABB 2023</a>)</span>, which does not establish an inverter-only efficiency</td>
+</tr>
+<tr class="even">
+<td>Status</td>
+<td>Common baseline; supplied curve boundary still requires reconciliation</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-grid-side-inverter" class="level3">
+<h3 class="anchored" data-anchor-id="sec-grid-side-inverter">Grid-side inverter</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>Converts the DC link to grid-frequency AC for the turbine transformer</td>
+</tr>
+<tr class="even">
+<td>Voltage</td>
+<td>Same converter voltage as above; TODO</td>
+</tr>
+<tr class="odd">
+<td>Documented ratings</td>
+<td>Supplied as the grid half of a complete back-to-back package, not as a separate product <span class="citation" data-cites="abb2023PCS6000">(<a href="#ref-abb2023PCS6000" role="doc-biblioref">ABB 2023</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Cost evidence</td>
+<td>No public source prices it separately. Complete-package references only: power converter 5.01% of turbine cost in a 2007 EWEA breakdown <span class="citation" data-cites="irena2012WindCost">(<a href="#ref-irena2012WindCost" role="doc-biblioref">International Renewable Energy Agency 2012</a>)</span>; a complete power take-off (converter, transformer, switchgear and cabling) of about GBP 700,000 for a 10 MW turbine <span class="citation" data-cites="bvg2019OffshoreGuide">(<a href="#ref-bvg2019OffshoreGuide" role="doc-biblioref">BVG Associates 2019</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Losses</td>
+<td>No separate public value; complete-package efficiency about 98% <span class="citation" data-cites="abb2023PCS6000">(<a href="#ref-abb2023PCS6000" role="doc-biblioref">ABB 2023</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Package boundary</td>
+<td>Inside the turbine converter package and inside the calibrated turbine cost</td>
+</tr>
+<tr class="odd">
+<td>Status</td>
+<td><strong>Evidence gap.</strong> Neither cost nor losses are inferred by splitting a complete converter package; no removal credit is claimed until separable evidence exists</td>
+</tr>
+</tbody>
+</table>
+<p>This page owns the grid-side inverter specifications. The turbine page uses these inputs through the <a href="../turbine_system/power_electronics.html">boundary and removal equations</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model specification</th>
+<th>Definition and adoption status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Required AC duty</td>
+<td>Turbine power-curve output, in kW; unit count must meet the selected turbine rating</td>
+</tr>
+<tr class="even">
+<td>DC input and AC output voltage</td>
+<td>V DC and V AC line-to-line respectively; TODO: select a compatible converter and generator design</td>
+</tr>
+<tr class="odd">
+<td>Inverter-only efficiency</td>
+<td><code>turbine-inverter-efficiency</code> (fraction): TODO (fraction). TODO: DC-link input to inverter AC terminals, with loading and cooling boundary specified</td>
+</tr>
+<tr class="even">
+<td>Inverter-only purchase cost</td>
+<td><code>turbine-inverter-unit-cost</code> (EUR2025/kW of rated AC output): TODO (EUR/kW). TODO: separable grid-side stage, price basis and included controls/cooling; excludes retained rectifier, transformer and installation</td>
+</tr>
+</tbody>
+</table>
+<p>NREL/WISDEM’s cost-model example exposes a converter category, but does not establish a separately priced grid-side inverter or its efficiency <span class="citation" data-cites="wisdemCostExample2026">(<a href="#ref-wisdemCostExample2026" role="doc-biblioref">WISDEM Development Team, n.d.</a>)</span>. A complete converter cost cannot be deducted when the rectifier remains. The DEA offshore-wind technology brief reports project-level investment categories, including turbines, array cables and substations; it does not provide the inverter-only specifications needed here <span class="citation" data-cites="dea2025OffshoreWindBrief">(<a href="#ref-dea2025OffshoreWindBrief" role="doc-biblioref">Danish Energy Agency 2025</a>)</span>. These sources support checking package boundaries, not a numerical inverter credit. The blank central inputs above preserve that evidence gap rather than assigning an unsupported split of a package value.</p>
+</section>
+<section id="turbine-step-up-transformer" class="level3">
+<h3 class="anchored" data-anchor-id="turbine-step-up-transformer">Turbine step-up transformer</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>Converter AC voltage to the 66 kV array voltage</td>
+</tr>
+<tr class="even">
+<td>Primary voltage</td>
+<td>66 kV array side; insulation class <span class="math inline">\(U_m=72.5\)</span> kV <span class="citation" data-cites="hitachiWindSTAR2026">(<a href="#ref-hitachiWindSTAR2026" role="doc-biblioref"><span>“<span>WindSTAR</span> Transformers”</span> 2026</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Secondary voltage and class</td>
+<td>Converter AC voltage, reported in the range 0.69–3.3 kV <span class="citation" data-cites="bvg2019OffshoreGuide">(<a href="#ref-bvg2019OffshoreGuide" role="doc-biblioref">BVG Associates 2019</a>)</span>; TODO with the converter voltage</td>
+</tr>
+<tr class="even">
+<td>Documented ratings</td>
+<td>Tower or nacelle units above 7 MVA in 36 and 72.5 kV classes, ester insulated <span class="citation" data-cites="hitachiWindSTAR2026">(<a href="#ref-hitachiWindSTAR2026" role="doc-biblioref"><span>“<span>WindSTAR</span> Transformers”</span> 2026</a>)</span>; dry cast-resin designs are also used <span class="citation" data-cites="bvg2019OffshoreGuide">(<a href="#ref-bvg2019OffshoreGuide" role="doc-biblioref">BVG Associates 2019</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Mass and cost evidence</td>
+<td>WISDEM mass <span class="math inline">\(1.915P+1910\)</span> kg with <span class="math inline">\(P\)</span> in kW, and a 18.8 USD/kg reference rate, are already in the turbine ledger <span class="citation" data-cites="wisdemSource2026">(<a href="#ref-wisdemSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026b</a>)</span>; 3.59% of turbine cost in the 2007 EWEA breakdown <span class="citation" data-cites="irena2012WindCost">(<a href="#ref-irena2012WindCost" role="doc-biblioref">International Renewable Energy Agency 2012</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Losses</td>
+<td>No adopted value. EU Ecodesign loss limits do not apply to transformers for offshore wind turbines <span class="citation" data-cites="eu2019Ecodesign1783">(<a href="#ref-eu2019Ecodesign1783" role="doc-biblioref">European Commission 2019</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Package boundary</td>
+<td>Electrical infrastructure, outside turbine cost and power-output scope, even when physically housed inside the turbine; switchgear and HV cabling remain separate items</td>
+</tr>
+<tr class="even">
+<td>Status</td>
+<td>Removal credit follows the explicit WISDEM transformer term (see <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>); losses TODO</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="central-step-down-transformer" class="level3">
+<h3 class="anchored" data-anchor-id="central-step-down-transformer">Central step-down transformer</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>66 kV collection voltage to the electrolyser plant’s medium-voltage distribution</td>
+</tr>
+<tr class="even">
+<td>Primary voltage</td>
+<td>66 kV; <span class="math inline">\(U_m=72.5\)</span> kV</td>
+</tr>
+<tr class="odd">
+<td>Secondary voltage and class</td>
+<td>Plant medium voltage not selected; TODO</td>
+</tr>
+<tr class="even">
+<td>Documented ratings</td>
+<td>ORBIT sizes offshore main power transformers at up to about 250 MW each <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026a</a>)</span>; this applies to export-voltage transformers, not to this voltage pair</td>
+</tr>
+<tr class="odd">
+<td>Cost evidence</td>
+<td>Fraunhofer adds a separate high-voltage transformer of about 25–26 EUR/kW in its 100 MW electrolysis cases <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>. ORBIT’s main-transformer rate is 15,772 USD<sub>2024</sub>/MW of transformer rating, CPI-inflated, for a different voltage class <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026a</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Losses</td>
+<td>Fraunhofer assumes 99% efficiency for its high-voltage transformer <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>. EU Ecodesign loss limits do not apply to offshore-platform transformers <span class="citation" data-cites="eu2019Ecodesign1783">(<a href="#ref-eu2019Ecodesign1783" role="doc-biblioref">European Commission 2019</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Package boundary</td>
+<td>Within the central conversion package on <a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a>; must not be booked again on the platform</td>
+</tr>
+<tr class="even">
+<td>Status</td>
+<td>Candidate evidence; booked through the central package</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rectifier-transformer" class="level3">
+<h3 class="anchored" data-anchor-id="rectifier-transformer">Rectifier transformer</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>Plant medium voltage to the rectifier valve-side voltage, with phase shifting for multi-pulse operation</td>
+</tr>
+<tr class="even">
+<td>Primary voltage</td>
+<td>Plant medium voltage; TODO</td>
+</tr>
+<tr class="odd">
+<td>Secondary voltage</td>
+<td>Valve-side AC matching the stack DC voltage, which is not yet defined (stack cell count and grouping TODO). Rectifier transformers are documented for DC outputs up to about 2,000 V <span class="citation" data-cites="hitachiRectifierTransformers2026">(<a href="#ref-hitachiRectifierTransformers2026" role="doc-biblioref"><span>“Rectifier Transformers”</span> 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Documented ratings</td>
+<td>Up to about 160 MVA per single tank <span class="citation" data-cites="hitachiRectifierTransformers2026">(<a href="#ref-hitachiRectifierTransformers2026" role="doc-biblioref"><span>“Rectifier Transformers”</span> 2026</a>)</span>; a recent hydrogen supply used 13.3 MVA dry-type units, each feeding two 5 MW rectifiers <span class="citation" data-cites="hitachiKKWind2025">(<a href="#ref-hitachiKKWind2025" role="doc-biblioref"><span>“Rectifier Transformers to Support Expansion of Green Hydrogen Production in <span>Europe</span> for <span>KK Wind</span>”</span> 2025</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Cost and losses</td>
+<td>Not published separately from the transformer–rectifier package; package evidence below</td>
+</tr>
+<tr class="even">
+<td>Status</td>
+<td>Booked inside the central package</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="electrolyser-rectifier" class="level3">
+<h3 class="anchored" data-anchor-id="electrolyser-rectifier">Electrolyser rectifier</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>Controlled DC supply to the stack group</td>
+</tr>
+<tr class="even">
+<td>DC side</td>
+<td>Stack DC voltage TODO; up to about 6 kA per water-cooled thyristor unit, scalable to about 25 kA <span class="citation" data-cites="abbUnirecWeb2026">(<a href="#ref-abbUnirecWeb2026" role="doc-biblioref"><span>“<span>UNIREC</span> Power Rectifiers for Hydrogen Production”</span> 2026</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Documented ratings</td>
+<td>Thyristor units by current as above; IGBT supplies up to 10 MW and above at up to 1,000 V DC <span class="citation" data-cites="abbHyQ2026">(<a href="#ref-abbHyQ2026" role="doc-biblioref"><span>“<span>HyQ ACS880</span> <span>IGBT</span> Electrolyzer Power Supply”</span> 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Cost evidence</td>
+<td>Transformer plus rectifier: 199 USD<sub>2020</sub>/kW manufactured cost for 1 MW <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>; about 160 EUR/kW power electronics plus 25–26 EUR/kW transformer at 100 MW <span class="citation" data-cites="holst2021ElectrolysisCost">(<a href="#ref-holst2021ElectrolysisCost" role="doc-biblioref">Holst et al. 2021</a>)</span>; lower Chinese-market package prices <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Losses</td>
+<td>Rectifier up to 99.6% <span class="citation" data-cites="abbUnirecWeb2026">(<a href="#ref-abbUnirecWeb2026" role="doc-biblioref"><span>“<span>UNIREC</span> Power Rectifiers for Hydrogen Production”</span> 2026</a>)</span>; transformer plus rectifier above about 97.5% <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span>; IGBT supply above 98% <span class="citation" data-cites="abbHyQ2026">(<a href="#ref-abbHyQ2026" role="doc-biblioref"><span>“<span>HyQ ACS880</span> <span>IGBT</span> Electrolyzer Power Supply”</span> 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Status</td>
+<td>The central package’s net efficiency (97.5%) is adopted on <a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a>. Its 185 EUR/kW is a reference value only; <code>central-conversion-unit-cost</code> is unset</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="dedicated-stack-side-dcdc-converter-conservative-case" class="level3">
+<h3 class="anchored" data-anchor-id="dedicated-stack-side-dcdc-converter-conservative-case">Dedicated stack-side DC/DC converter (conservative case)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Record</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duty</td>
+<td>Adapts the turbine DC-link voltage to the stack voltage, controls stack current and can provide isolation</td>
+</tr>
+<tr class="even">
+<td>Voltage</td>
+<td>Input: turbine DC link, TODO with the converter voltage. Output: stack DC voltage, TODO</td>
+</tr>
+<tr class="odd">
+<td>Documented ratings</td>
+<td>No public multi-megawatt DC/DC product rating was confirmed; IGBT electrolyser supplies reach 10 MW and above <span class="citation" data-cites="abbHyQ2026">(<a href="#ref-abbHyQ2026" role="doc-biblioref"><span>“<span>HyQ ACS880</span> <span>IGBT</span> Electrolyzer Power Supply”</span> 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Cost evidence</td>
+<td>None found for a standalone DC/DC stage at this scale. A diode rectifier plus chopper system is reported at CNY 320/kW, including the rectifier <span class="citation" data-cites="gao2025AdvancedRectifiers">(<a href="#ref-gao2025AdvancedRectifiers" role="doc-biblioref">Gao et al. 2025</a>)</span>; it is not a DC/DC-only price</td>
+</tr>
+<tr class="odd">
+<td>Losses</td>
+<td>Vendor efficiency above 97.5% over the load range <span class="citation" data-cites="sungrowDCDC2026">(<a href="#ref-sungrowDCDC2026" role="doc-biblioref"><span>“<span>DC/DC</span> Converter for Hydrogen Production”</span> 2026</a>)</span>; above 98% for comparable IGBT supplies <span class="citation" data-cites="abbHyQ2026">(<a href="#ref-abbHyQ2026" role="doc-biblioref"><span>“<span>HyQ ACS880</span> <span>IGBT</span> Electrolyzer Power Supply”</span> 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Status</td>
+<td><strong>Evidence gap for cost and rating</strong>; efficiency candidates only. <code>conservative-conversion-efficiency</code> and <code>conservative-conversion-unit-cost</code> stay blank</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sec-pce-losses" class="level2">
+<h2 class="anchored" data-anchor-id="sec-pce-losses">Losses</h2>
+<p>For a curve reconciled to inverter AC output, generator and rectifier losses are already included. Centralised hydrogen and electricity export apply the turbine transformer efficiency downstream; decentralised hydrogen divides curve power by inverter efficiency to recover the removed inverter loss. The current implementation still uses the legacy generator-output record, AC cable losses and the central 97.5% package. It must not be treated as an implementation of the adopted boundary. The required terms are:</p>
+<table class="caption-top table">
+<caption>Loss terms by case and their current treatment.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Loss term</th>
+<th>Cases</th>
+<th>Current model treatment</th>
 <th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Piled-jacket net site occupation</td>
-<td style="text-align: right;"><span class="math inline">\(t_{FJ}\)</span></td>
-<td style="text-align: right;">day/OSS</td>
-<td>5.0 day/OSS screening anchor <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
+<td>Generator-side converter</td>
+<td>All</td>
+<td>Legacy source-curve boundary unresolved</td>
+<td>Included upstream in a reconciled inverter-output curve; no additional architecture loss</td>
 </tr>
 <tr class="even">
-<td>Topside net placement</td>
-<td style="text-align: right;"><span class="math inline">\(t_S\)</span></td>
-<td style="text-align: right;">day/lift</td>
-<td>2.5 day/lift screening anchor <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
+<td>Grid-side inverter</td>
+<td>Included in AC cases; removed in turbine-level cases</td>
+<td>Recovery not implemented</td>
+<td>TODO: inverter-only efficiency and curve reconciliation; recover by division in decentralised cases</td>
 </tr>
 <tr class="odd">
-<td>Chargeable piled-jacket logistics</td>
-<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{log},FJ}\)</span></td>
-<td style="text-align: right;">day/campaign</td>
-<td>Project or contractor input required</td>
+<td>Turbine step-up transformer</td>
+<td>Centralised</td>
+<td>Not represented</td>
+<td>TODO</td>
 </tr>
 <tr class="even">
-<td>Chargeable topside logistics</td>
-<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{log},S}\)</span></td>
-<td style="text-align: right;">day/campaign</td>
-<td>Project or contractor input required</td>
+<td>66 kV AC collection</td>
+<td>Centralised</td>
+<td>Calculated from cable resistance</td>
+<td>AC resistance and power factor still to be adopted</td>
 </tr>
 <tr class="odd">
-<td>Hook-up and commissioning duration</td>
-<td style="text-align: right;"><span class="math inline">\(t_H\)</span></td>
-<td style="text-align: right;">day/OSS</td>
-<td>Owner or EPCI input required</td>
+<td>Central transformers and rectifier</td>
+<td>Centralised</td>
+<td>97.5% net package efficiency</td>
+<td>Adopted</td>
+</tr>
+<tr class="even">
+<td>Stack-side DC/DC converter</td>
+<td>Conservative</td>
+<td>Blank interface efficiency</td>
+<td>Candidates above 97.5%</td>
+</tr>
+<tr class="odd">
+<td>Direct-DC interface</td>
+<td>Direct DC</td>
+<td>Blank interface efficiency</td>
+<td>Should cover only DC-link, protection and cabling losses; no converter loss</td>
 </tr>
 </tbody>
 </table>
-<p>The CVOW values are planning anchors for a piled jacket and crane-placed topside. They are not universal productivities and do not include a transferable offshore commissioning duration. Replace them when project-specific campaign evidence is available.</p>
-<p>The logistics terms combine chargeable load-out, transport, setup and critical waiting for the corresponding complete spread. They must not include time already embedded in the net site anchors or mobilisation cost.</p>
+<p>O2c must reconcile the curve boundary and close these terms before comparable energy results are reported. No separate generator or rectifier loss is added to the adopted curve. A detailed loss calculation replaces a flat efficiency rather than being added to it.</p>
 </section>
-<section id="commercial-inputs" class="level3">
-<h3 class="anchored" data-anchor-id="commercial-inputs">Commercial Inputs</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Symbol</th>
-<th style="text-align: right;">Unit</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Complete piled-jacket spread rate</td>
-<td style="text-align: right;"><span class="math inline">\(r_{FJ}\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
-<td>Contractor input required</td>
-</tr>
-<tr class="even">
-<td>Complete topside spread rate</td>
-<td style="text-align: right;"><span class="math inline">\(r_S\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
-<td>Contractor input required</td>
-</tr>
-<tr class="odd">
-<td>Complete hook-up spread rate</td>
-<td style="text-align: right;"><span class="math inline">\(r_H\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
-<td>Contractor input required</td>
-</tr>
-<tr class="even">
-<td>Total mobilisation and demobilisation</td>
-<td style="text-align: right;"><span class="math inline">\(C_{\mathrm{mob}}\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Project commercial input required</td>
-</tr>
-<tr class="odd">
-<td>Defined exceptional work</td>
-<td style="text-align: right;"><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Project-specific input when applicable</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(C_{\mathrm{mob}}\)</span> is the total mobilisation and demobilisation cost across the three campaigns after accounting for any shared mobilisation. It must not repeat mobilisation already included in a spread rate.</p>
-<p>All commercial inputs must follow the common treatment documented in <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>. The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.</p>
-</section>
-</section>
-<section id="installation-class-screen" class="level2">
-<h2 class="anchored" data-anchor-id="installation-class-screen">Installation-Class Screen</h2>
-<p>The selected class is rejected when either screening lift mass exceeds its declared capacity:</p>
-<p><span class="math display">\[
-m_J\leq Q_J,
-\qquad
-m_{S,\max}\leq Q_S.
-\]</span></p>
-<p>This is a one-sided screening check. Failure requires a larger vessel class or another installation method. Passing does not demonstrate lift feasibility: radius, hook height, dynamic effects, lift points, structure clearance, stability, seafastening and weather limits remain part of project lift engineering.</p>
-<p>The capacity check preserves the material step between installation classes without introducing unsupported task-level corrections. If the selected class fails, the model reports <strong>class change required</strong> and does not calculate cost using that class.</p>
-</section>
-<section id="calculation" class="level2">
-<h2 class="anchored" data-anchor-id="calculation">Calculation</h2>
-<p>The number of topside lifts is</p>
-<p><span class="math display">\[
-N_S=N_{\mathrm{OSS}}N_{\mathrm{module/OSS}},
-\]</span></p>
-<p>where <span class="math inline">\(N_S\)</span> is a count of lifts. A split topside therefore creates a discrete increase in installation work rather than a smooth mass multiplier.</p>
-<p>Chargeable campaign durations are</p>
-<p><span class="math display">\[
-T_{FJ}=N_{\mathrm{OSS}}t_{FJ}+t_{\mathrm{log},FJ},
-\]</span></p>
-<p><span class="math display">\[
-T_S=N_St_S+t_{\mathrm{log},S},
-\]</span></p>
-<p><span class="math display">\[
-T_H=N_{\mathrm{OSS}}t_H.
-\]</span></p>
-<p><span class="math inline">\(T_{FJ}\)</span>, <span class="math inline">\(T_S\)</span> and <span class="math inline">\(T_H\)</span> are chargeable days for the complete piled-jacket, topside and hook-up spreads. Mobilisation is costed separately and is therefore not included in these durations.</p>
-<p>Normal-scope installation CAPEX is</p>
-<p><span class="math display">\[
-C_{\mathrm{normal}}
-=C_{\mathrm{mob}}
-+r_{FJ}T_{FJ}
-+r_ST_S
-+r_HT_H.
-\]</span></p>
-<p>When exceptional work has a defined scope and cost,</p>
-<p><span class="math display">\[
-C_{\mathrm{inst}}
-=C_{\mathrm{normal}}
-+C_{\mathrm{exceptional}}.
-\]</span></p>
-<p>If exceptional work is relevant but not quantified, it is reported as <strong>not included</strong> rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the available campaign durations are still reported.</p>
-</section>
-<section id="model-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="model-outputs">Model Outputs</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Output</th>
-<th style="text-align: right;">Unit</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Installation-class result</td>
-<td style="text-align: right;">pass or class change required</td>
-<td>Prevents use of a clearly undersized installation class</td>
-</tr>
-<tr class="even">
-<td>Number of piled jackets</td>
-<td style="text-align: right;">count</td>
-<td>Equals <span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
-</tr>
-<tr class="odd">
-<td>Number of topside lifts</td>
-<td style="text-align: right;">count</td>
-<td>Exposes the split-topside discontinuity</td>
-</tr>
-<tr class="even">
-<td>Campaign duration by spread</td>
-<td style="text-align: right;">day</td>
-<td>Shows the time basis of each cost</td>
-</tr>
-<tr class="odd">
-<td>Campaign cost</td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Separates piled-jacket, topside and hook-up expenditure</td>
-</tr>
-<tr class="even">
-<td>Mobilisation</td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Keeps fixed campaign cost visible</td>
-</tr>
-<tr class="odd">
-<td>Exceptional-work status and cost</td>
-<td style="text-align: right;">text and EUR<sub>2025</sub> when defined</td>
-<td>Prevents unsupported work from being silently treated as zero</td>
-</tr>
-<tr class="even">
-<td>Total installation CAPEX</td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Used in the project CAPEX calculation</td>
-</tr>
-</tbody>
-</table>
-<p>A EUR/kW value may be reported only as a derived comparison after total installation CAPEX is calculated. It is not a model input.</p>
-</section>
-<section id="applicability-and-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="applicability-and-limitations">Applicability and Limitations</h2>
-<p>This model applies only to crane-installed topsides on piled jackets. The following cases require another model branch rather than an adjustment factor:</p>
+<section id="cost-and-mass-reconciliation" class="level2">
+<h2 class="anchored" data-anchor-id="cost-and-mass-reconciliation">Cost and Mass Reconciliation</h2>
+<p>Each electrical function is counted once:</p>
 <ul>
-<li>float-over or self-installing topsides;</li>
-<li>gravity-base or non-piled foundations;</li>
-<li>a failed jacket or topside installation-class screen; and</li>
-<li>exceptional work that changes the installation method or campaign structure.</li>
+<li>The legacy common turbine calibration includes the complete conventional turbine electrical scope, including converter and transformer. The turbine-level cases adjust it through <code>turbine-electrical-cost-adjustment</code> on <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>.</li>
+<li>Under the adopted boundary, the calibrated transformer term moves out of turbine cost and into electrical infrastructure for the AC architectures. Combined AC purchase cost must remain unchanged. The executable ledger has not yet made this reallocation; do not add a second transformer charge.</li>
+<li>The transformer removal credit can follow the explicit WISDEM transformer term in that ledger. No grid-side inverter credit is claimed, because the calibrated cost has no separable converter term and no separable evidence exists.</li>
+<li>The stack-side DC/DC converter is booked through the turbine-level conversion unit cost on <a href="../hydrogen_production/dc_integration.html">DC Integration</a>, not in the turbine adjustment.</li>
+<li>The central transformers and rectifier are booked in the central package; the platform page carries their mass but not their cost.</li>
+<li>No mass or cost saving is assumed beyond these explicit terms. Equipment masses for the platform (O3) and turbine lifts (O8) remain inputs; the ABB converter catalogue gives about 6.2 t for a 10 MW converter as context only <span class="citation" data-cites="abb2023PCS6000">(<a href="#ref-abb2023PCS6000" role="doc-biblioref">ABB 2023</a>)</span>.</li>
 </ul>
-<p>The model deliberately does not calculate pile handling, penetration, crane movement, carrier concurrency, mating or connection time separately. Those details can replace the aggregate parameters later if project evidence shows that the additional fidelity materially improves the estimate.</p>
-<p>The current public evidence supports the 5.0 day/OSS piled-jacket and 2.5 day/lift topside anchors <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span>. It does not support generic complete-spread rates, logistics time or offshore commissioning duration. These remain explicit project inputs rather than inferred assumptions.</p>
-<p><strong>Evidence review date:</strong> 31 July 2026.</p>
-
+</section>
+<section id="evidence-gaps" class="level2">
+<h2 class="anchored" data-anchor-id="evidence-gaps">Evidence Gaps</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Gap</th>
+<th>Effect</th>
+<th>Route to closure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Separate grid-side inverter cost and losses</td>
+<td>Decentralised cost credit and recovered DC-link power unresolved</td>
+<td>Supplier data for a split package, or a documented inverter-only model</td>
+</tr>
+<tr class="even">
+<td>Converter AC voltage and turbine DC-link voltage</td>
+<td>Transformer secondary and DC/DC input undefined</td>
+<td>Select a converter voltage level for the reference turbine</td>
+</tr>
+<tr class="odd">
+<td>Stack DC voltage and grouping</td>
+<td>Rectifier, rectifier-transformer and DC/DC output undefined</td>
+<td>Stack cell count and series/parallel grouping on <a href="../hydrogen_production/stack.html">Stack</a></td>
+</tr>
+<tr class="even">
+<td>DC/DC cost and multi-megawatt unit rating</td>
+<td>Conservative case cannot be costed</td>
+<td>Supplier quotation or published product data</td>
+</tr>
+<tr class="odd">
+<td>Turbine transformer losses</td>
+<td>Centralised losses incomplete</td>
+<td>Supplier loss data at the selected rating</td>
+</tr>
+<tr class="even">
+<td>Central unit sizes</td>
+<td>Central counts undefined</td>
+<td>Platform layout (O3) within documented limits</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abb2023PCS6000" class="csl-entry" role="listitem">
+ABB. 2023. <em><span>PCS6000</span>: Medium Voltage Wind Turbine Converters, Catalog</em>. 3BHS351272 E01 Rev D. ABB. <a href="https://library.e.abb.com/public/32e7505899a64a8c9005133829458579/PCS6000_wind_turbine_converter_catalog_3BHS351272_RevD_EN.pdf">https://library.e.abb.com/public/32e7505899a64a8c9005133829458579/PCS6000_wind_turbine_converter_catalog_3BHS351272_RevD_EN.pdf</a>.
+</div>
+<div id="ref-badgett2024PEMCost" class="csl-entry" role="listitem">
+Badgett, Alex, Joe Brauch, Amogh Thatte, et al. 2024. <em>Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers</em>. NREL/TP-6A20-87625. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2311140">https://doi.org/10.2172/2311140</a>.
+</div>
+<div id="ref-bvg2019OffshoreGuide" class="csl-entry" role="listitem">
+BVG Associates. 2019. <em>Guide to an Offshore Wind Farm</em>. The Crown Estate; Offshore Renewable Energy Catapult. <a href="https://cms.ore.catapult.org.uk/wp-content/uploads/2019/04/BVGA-5238-Guide-r2.pdf">https://cms.ore.catapult.org.uk/wp-content/uploads/2019/04/BVGA-5238-Guide-r2.pdf</a>.
+</div>
+<div id="ref-dea2025OffshoreWindBrief" class="csl-entry" role="listitem">
+Danish Energy Agency. 2025. <em>Technology Brief: Update of Offshore Wind in the Technology Catalogue</em>. Danish Energy Agency. <a href="https://ens.dk/media/6572/download">https://ens.dk/media/6572/download</a>.
+</div>
+<div id="ref-sungrowDCDC2026" class="csl-entry" role="listitem">
+<span>“<span>DC/DC</span> Converter for Hydrogen Production.”</span> 2026. <span>Sungrow</span>. <a href="https://www.sungrowpower.com/en/products/hydrogen/dc-dc-converter">https://www.sungrowpower.com/en/products/hydrogen/dc-dc-converter</a>.
+</div>
+<div id="ref-eu2019Ecodesign1783" class="csl-entry" role="listitem">
+European Commission. 2019. <em>Commission Regulation (<span>EU</span>) 2019/1783 of 1 October 2019 Amending Regulation (<span>EU</span>) No 548/2014 with Regard to Small, Medium and Large Power Transformers</em>. Official Journal of the European Union, L 272. <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019R1783">https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019R1783</a>.
+</div>
+<div id="ref-gaertner2020IEA15" class="csl-entry" role="listitem">
+Gaertner, Evan, Jennifer Rinker, Latha Sethuraman, et al. 2020. <em>Definition of the <span>IEA</span> 15-Megawatt Offshore Reference Wind Turbine</em>. NREL/TP-5000-75698. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1603478">https://doi.org/10.2172/1603478</a>.
+</div>
+<div id="ref-gao2025AdvancedRectifiers" class="csl-entry" role="listitem">
+Gao, Yan, Xiongzheng Wang, and Xin Meng. 2025. <span>“Advanced Rectifier Technologies for Electrolysis-Based Hydrogen Production: A Comparative Study and Real-World Applications.”</span> <em>Energies</em> 18 (1): 48. <a href="https://doi.org/10.3390/en18010048">https://doi.org/10.3390/en18010048</a>.
+</div>
+<div id="ref-holst2021ElectrolysisCost" class="csl-entry" role="listitem">
+Holst, Marius, Stefan Aschbrenner, Tom Smolinka, Christopher Voglstätter, and Gunter Grimm. 2021. <em>Cost Forecast for Low-Temperature Electrolysis: Technology-Driven Bottom-up Prognosis for PEM and Alkaline Water Electrolysis Systems</em>. Fraunhofer Institute for Solar Energy Systems ISE. <a href="https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/cost-forecast-for-low-temperature-electrolysis.pdf">https://www.ise.fraunhofer.de/content/dam/ise/de/documents/publications/studies/cost-forecast-for-low-temperature-electrolysis.pdf</a>.
+</div>
+<div id="ref-abbHyQ2026" class="csl-entry" role="listitem">
+<span>“<span>HyQ ACS880</span> <span>IGBT</span> Electrolyzer Power Supply.”</span> 2026. <span>ABB</span>. <a href="https://www.abb.com/global/en/areas/renewable-power/electrolyzer-power-supplies/hyq-acs880">https://www.abb.com/global/en/areas/renewable-power/electrolyzer-power-supplies/hyq-acs880</a>.
+</div>
+<div id="ref-irena2012WindCost" class="csl-entry" role="listitem">
+International Renewable Energy Agency. 2012. <em>Renewable Energy Technologies: Cost Analysis Series, Volume 1, Issue 5/5: Wind Power</em>. IRENA. <a href="https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2012/RE_Technologies_Cost_Analysis-WIND_POWER.pdf">https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2012/RE_Technologies_Cost_Analysis-WIND_POWER.pdf</a>.
+</div>
+<div id="ref-orbitSource2026" class="csl-entry" role="listitem">
+National Renewable Energy Laboratory. 2026a. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. V. Git revision bf357ee9e7fc01ee73d7085139055c598ac02ff8. Released. <a href="https://github.com/WISDEM/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8">https://github.com/WISDEM/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8</a>.
+</div>
+<div id="ref-wisdemSource2026" class="csl-entry" role="listitem">
+National Renewable Energy Laboratory. 2026b. <em><span>WISDEM</span>: Wind-Plant Integrated System Design and Engineering Model</em>. V. Git revision 584c39191b61ab2654c1f1fab2871e0f5bec4064. Released. <a href="https://github.com/WISDEM/WISDEM/tree/584c39191b61ab2654c1f1fab2871e0f5bec4064/wisdem/nrelcsm">https://github.com/WISDEM/WISDEM/tree/584c39191b61ab2654c1f1fab2871e0f5bec4064/wisdem/nrelcsm</a>.
+</div>
+<div id="ref-abbPCS6000Web2026" class="csl-entry" role="listitem">
+<span>“<span>PCS6000</span> Medium Voltage Wind Converter.”</span> 2026. <span>ABB</span>. <a href="https://www.abb.com/global/en/areas/renewable-power/wind-converters/full-power-medium-voltage-converters/pcs6000">https://www.abb.com/global/en/areas/renewable-power/wind-converters/full-power-medium-voltage-converters/pcs6000</a>.
+</div>
+<div id="ref-hitachiRectifierTransformers2026" class="csl-entry" role="listitem">
+<span>“Rectifier Transformers.”</span> 2026. <span>Hitachi Energy</span>. <a href="https://www.hitachienergy.com/us/en/products-and-solutions/transformers/special-application-transformers/rectifier-transformers">https://www.hitachienergy.com/us/en/products-and-solutions/transformers/special-application-transformers/rectifier-transformers</a>.
+</div>
+<div id="ref-hitachiKKWind2025" class="csl-entry" role="listitem">
+<span>“Rectifier Transformers to Support Expansion of Green Hydrogen Production in <span>Europe</span> for <span>KK Wind</span>.”</span> 2025. <span>Hitachi Energy</span>. <a href="https://www.hitachienergy.com/us/en/news-and-events/customer-stories/rectifier-transformers-to-support-expansion-of-green-hydrogen-production-in-europe-for-kk-wind">https://www.hitachienergy.com/us/en/news-and-events/customer-stories/rectifier-transformers-to-support-expansion-of-green-hydrogen-production-in-europe-for-kk-wind</a>.
+</div>
+<div id="ref-abbUnirecWeb2026" class="csl-entry" role="listitem">
+<span>“<span>UNIREC</span> Power Rectifiers for Hydrogen Production.”</span> 2026. <span>ABB</span>. <a href="https://www.abb.com/global/en/areas/power-conversion-control/power-rectifiers/unirec-rectifiers">https://www.abb.com/global/en/areas/power-conversion-control/power-rectifiers/unirec-rectifiers</a>.
+</div>
+<div id="ref-hitachiWindSTAR2026" class="csl-entry" role="listitem">
+<span>“<span>WindSTAR</span> Transformers.”</span> 2026. <span>Hitachi Energy</span>. <a href="https://www.hitachienergy.com/us/en/products-and-solutions/transformers/special-application-transformers/windstar-transformers">https://www.hitachienergy.com/us/en/products-and-solutions/transformers/special-application-transformers/windstar-transformers</a>.
+</div>
+<div id="ref-wisdemCostExample2026" class="csl-entry" role="listitem">
+WISDEM Development Team. n.d. <span>“<span>NREL</span> Cost and Scaling Model Example.”</span> Accessed October 1, 2026. <a href="https://wisdem.readthedocs.io/en/master/examples/01_nrelcsm/tutorial.html">https://wisdem.readthedocs.io/en/master/examples/01_nrelcsm/tutorial.html</a>.
+</div>
+</div>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-boem2021CVOWCOP" class="csl-entry" role="listitem">
-Dominion Energy. 2021. <em>Coastal Virginia Offshore Wind Commercial Project: Construction and Operations Plan, Volume i, Sections 1–3</em>. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/sites/default/files/documents/renewable-energy/state-activities/CVOW-Commercial-COP-Sections-1-3.pdf">https://www.boem.gov/sites/default/files/documents/renewable-energy/state-activities/CVOW-Commercial-COP-Sections-1-3.pdf</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {

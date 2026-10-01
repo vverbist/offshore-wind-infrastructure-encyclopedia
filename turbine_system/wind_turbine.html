@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -535,7 +547,10 @@ window.Quarto = {
   <li><a href="#aggregate-masses-and-installation-outputs" id="toc-aggregate-masses-and-installation-outputs" class="nav-link" data-scroll-target="#aggregate-masses-and-installation-outputs">Aggregate Masses and Installation Outputs</a></li>
   <li><a href="#component-cost" id="toc-component-cost" class="nav-link" data-scroll-target="#component-cost">Component Cost</a></li>
   <li><a href="#cost-calibration" id="toc-cost-calibration" class="nav-link" data-scroll-target="#cost-calibration">Cost Calibration</a></li>
-  <li><a href="#decentralised-hydrogen-architecture" id="toc-decentralised-hydrogen-architecture" class="nav-link" data-scroll-target="#decentralised-hydrogen-architecture">Decentralised Hydrogen Architecture</a></li>
+  <li><a href="#decentralised-hydrogen-architecture" id="toc-decentralised-hydrogen-architecture" class="nav-link" data-scroll-target="#decentralised-hydrogen-architecture">Decentralised Hydrogen Architecture</a>
+  <ul class="collapse">
+  <li><a href="#sec-turbine-electrical-credit" id="toc-sec-turbine-electrical-credit" class="nav-link" data-scroll-target="#sec-turbine-electrical-credit">Electrical removal credit</a></li>
+  </ul></li>
   <li><a href="#improvements-from-mehta" id="toc-improvements-from-mehta" class="nav-link" data-scroll-target="#improvements-from-mehta">Improvements from Mehta</a>
   <ul class="collapse">
   <li><a href="#load-responsive-blade-mass" id="toc-load-responsive-blade-mass" class="nav-link" data-scroll-target="#load-responsive-blade-mass">1. Load-responsive blade mass</a></li>
@@ -1096,7 +1111,7 @@ C_\mathrm{turbine}
 =k_\mathrm{RNA}C_\mathrm{RNA,raw}
 +k_\mathrm{tower}C_\mathrm{tower,raw}.
 \]</span></p>
-<p>The current calibration candidate is NREL’s 2022 Cost of Wind Energy Review. Its offshore reference is a 12 MW turbine with a 216 m rotor and 137 m hub height. It reports turbine CAPEX of USD 1,700/kW, separated into USD 1,462/kW for the RNA and USD 238/kW for the tower; installation is a separate cost category <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>. These values define a reference point, not a linear EUR/kW turbine model.</p>
+<p>The current calibration candidate is NREL’s 2022 Cost of Wind Energy Review. Its offshore reference is a 12000 kW turbine with a 216 m rotor and 137 m hub height. It reports turbine CAPEX of USD 1,700/kW, separated into 1462 USD/kW for the RNA and 238 USD/kW for the tower; installation is a separate cost category <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>. These values define a reference point, not a linear EUR/kW turbine model.</p>
 <p>Currency conversion and escalation are applied after calibration using the <a href="../methodology/financial_and_price_basis.html">common EUR2025 financial basis</a>. The source currency, source year, index, and exchange-rate convention must accompany every reported result.</p>
 </section>
 <section id="decentralised-hydrogen-architecture" class="level2">
@@ -1123,6 +1138,42 @@ C_{\mathrm{turbine},a}
 =C_\mathrm{removed}-C_\mathrm{replacement}+C_\mathrm{reinforcement}.
 \]</span></p>
 <p>WISDEM calculates transformer mass explicitly. Converter, switchgear, protection, and cabling masses require separate evidence. A lighter nacelle may also reduce tower and foundation mass, but that secondary effect cannot be calculated with the length-only WISDEM tower regression.</p>
+<section id="sec-turbine-electrical-credit" class="level3">
+<h3 class="anchored" data-anchor-id="sec-turbine-electrical-credit">Electrical removal credit</h3>
+<p>The adopted <a href="../turbine_system/power_electronics.html">turbine electrical boundary</a> excludes the step-up transformer from turbine supply cost and places the power-curve boundary at the inverter AC output. The equations and executable calibration on this page still describe the legacy package including its transformer. Its calibrated transformer term must be reallocated to electrical infrastructure without changing the combined AC package cost. Physical transformer mass remains in the applicable support and lifting inventory. The following adjustment describes the current implementation pending that migration, not a second transformer purchase.</p>
+<p>The model keeps the conventional turbine as the common baseline for every architecture and applies turbine-level changes through the per-turbine input <code>turbine-electrical-cost-adjustment</code>. Its scope follows the shared inventory on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Treatment in the adjustment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Step-up transformer</td>
+<td>Removed in both turbine-level cases. The credit can follow the explicit, calibrated WISDEM transformer term in this ledger; its scope is the transformer only</td>
+</tr>
+<tr class="even">
+<td>Grid-side inverter</td>
+<td>Removed in both turbine-level cases, but <strong>no credit is claimed</strong>: the calibrated cost has no separable converter term, and no public source prices the grid-side half of a converter package</td>
+</tr>
+<tr class="odd">
+<td>Generator-side converter and DC link</td>
+<td>Retained in every case; no adjustment</td>
+</tr>
+<tr class="even">
+<td>Stack-side DC/DC converter</td>
+<td>Not in this adjustment; booked through the turbine-level conversion unit cost on <a href="../hydrogen_production/dc_integration.html">DC Integration</a></td>
+</tr>
+<tr class="odd">
+<td>DC protection, switchgear and cabling changes</td>
+<td>Enter the adjustment only with explicit evidence</td>
+</tr>
+</tbody>
+</table>
+<p>The adjustment remains blank until these terms are evidenced and normalised to EUR<sub>2025</sub>. No blanket percentage of turbine cost is removed.</p>
+</section>
 </section>
 <section id="improvements-from-mehta" class="level2">
 <h2 class="anchored" data-anchor-id="improvements-from-mehta">Improvements from Mehta</h2>
@@ -1341,7 +1392,7 @@ Q_r=19.61\ \mathrm{MNm}.
 </section>
 <section id="cost-calibration-1" class="level3">
 <h3 class="anchored" data-anchor-id="cost-calibration-1">Cost calibration</h3>
-<p>The raw WISDEM component costs are calibrated to NREL’s 12 MW offshore reference. The NREL reference uses <span class="math inline">\(P_\mathrm{ref}=12\)</span> MW, <span class="math inline">\(D_\mathrm{ref}=216\)</span> m, <span class="math inline">\(H_{h,\mathrm{ref}}=137\)</span> m, RNA cost of USD 1,462/kW, and tower cost of USD 238/kW <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>.</p>
+<p>The raw WISDEM component costs are calibrated to NREL’s 12 MW offshore reference. The NREL reference uses <span class="math inline">\(P_\mathrm{ref}=\)</span> 12000 kW, <span class="math inline">\(D_\mathrm{ref}=\)</span> 216 m, <span class="math inline">\(H_{h,\mathrm{ref}}=\)</span> 137 m, RNA cost of 1462 USD/kW, and tower cost of 238 USD/kW <span class="citation" data-cites="stehly2023CostWind">(<a href="#ref-stehly2023CostWind" role="doc-biblioref">Stehly et al. 2023</a>)</span>.</p>
 <p>The raw blade-cost anchor is the WISDEM coefficient applied to the 65 t IEA 15 MW reference blade:</p>
 <p><span class="math display">\[
 C_{b,\mathrm{ref,raw}}
@@ -1566,7 +1617,7 @@ Stehly, Tyler, Patrick Duffy, and Daniel Mulas Hernando. 2023. <em>2022 Cost of 
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

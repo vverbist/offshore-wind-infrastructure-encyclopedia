@@ -290,6 +290,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -309,6 +315,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -537,6 +549,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="one-case-one-result">One Case, One Result</h2>
 <p>The model evaluates one complete user-supplied case deterministically. Alternative designs and sensitivities are separate input records. The model does not run an optimizer or choose a preferred case.</p>
 <p>Input and output classes are defined on <a href="../methodology/optimisation_variables.html">Inputs, Parameters and Outputs</a>.</p>
+<p>The executable draft is in <code>model/</code>, with calculation modules named after their owning pages. It currently implements the two hydrogen branches. Electricity export remains documented but is not yet an executable scenario branch. <code>tools/run_model.py</code> reads one article TOML scenario and writes an explicit local result folder. Article case templates and sensitivity execution live beside the article under <code>research_articles/turbine_level_hydrogen/</code>.</p>
+<p>The draft retains turbine-level power until conversion and solves stack, BOP and compression demand against the available bus power in each operating state. Zero-hour design states can establish equipment duty without adding annual production. Availability and lifetime-production adjustments follow the operating calculation. The current cost scope excludes development, shared owner engineering, insurance and owner contingency; included platform, installation and replacement gaps still prevent a complete LCOH.</p>
+<p>The model README documents input tables, module boundaries and remaining interfaces. Missing scalar values stay blank in the central CSV and are reported as required inputs. Website rendering only builds shared display values and figures; it does not execute article cases.</p>
 </section>
 <section id="canonical-scalar-inputs" class="level2">
 <h2 class="anchored" data-anchor-id="canonical-scalar-inputs">Canonical Scalar Inputs</h2>
@@ -772,7 +787,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

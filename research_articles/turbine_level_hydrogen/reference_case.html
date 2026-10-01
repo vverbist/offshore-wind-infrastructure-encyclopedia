@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Wake Modelling and Spacing – Offshore Wind Infrastructure Model Assumptions</title>
+<title>Agreed Reference Case: IJmuiden Ver Beta – Offshore Wind Infrastructure Model Assumptions</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -45,23 +80,23 @@ div.csl-indent {
 }</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-787e033c7b6f65c9dfccb6078e5d2d34.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-787e033c7b6f65c9dfccb6078e5d2d34.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -120,7 +155,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar docked quarto-light">
@@ -132,7 +167,9 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../wind_resource_and_layout/overview.html">Wind Resource and Layout</a></li><li class="breadcrumb-item"><a href="../wind_resource_and_layout/wake_modelling_and_spacing.html">Wake Modelling and Spacing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Offshore Wind Infrastructure Model Assumptions
+      </li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -147,7 +184,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Offshore Wind Infrastructure Model Assumptions</a> 
+      <a href="../../">Offshore Wind Infrastructure Model Assumptions</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -159,13 +196,13 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../positioning.html" class="sidebar-item-text sidebar-link">
+  <a href="../../positioning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Positioning</span></a>
   </div>
 </li>
@@ -180,37 +217,37 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../methodology/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../methodology/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Methodology</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
+  <a href="../../methodology/system_boundary_and_lcoe.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">System Boundary and Carrier-Cost Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
+  <a href="../../methodology/financial_and_price_basis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Financial and Price-Basis Assumptions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
+  <a href="../../methodology/modelling_workflow.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Modelling Workflow</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
+  <a href="../../methodology/optimisation_variables.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Inputs, Parameters and Outputs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../methodology/energy_availability_and_annualisation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Energy and Availability</span></a>
   </div>
 </li>
@@ -227,31 +264,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../architectures/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../architectures/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Architectures</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../architectures/electricity_export_hvdc.html" class="sidebar-item-text sidebar-link">
+  <a href="../../architectures/electricity_export_hvdc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electricity Export with HVDC</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../architectures/centralised_hydrogen.html" class="sidebar-item-text sidebar-link">
+  <a href="../../architectures/centralised_hydrogen.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Centralised Hydrogen</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../architectures/decentralised_hydrogen.html" class="sidebar-item-text sidebar-link">
+  <a href="../../architectures/decentralised_hydrogen.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Decentralised Hydrogen</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../architectures/component_mapping.html" class="sidebar-item-text sidebar-link">
+  <a href="../../architectures/component_mapping.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Component Mapping</span></a>
   </div>
 </li>
@@ -268,19 +305,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../wind_resource_and_layout/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wind Resource and Layout</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/wind_resource_and_weibull.html" class="sidebar-item-text sidebar-link">
+  <a href="../../wind_resource_and_layout/wind_resource_and_weibull.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wind Resource and Weibull Distribution</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wind_resource_and_layout/wake_modelling_and_spacing.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../wind_resource_and_layout/wake_modelling_and_spacing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wake Modelling and Spacing</span></a>
   </div>
 </li>
@@ -297,25 +334,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../turbine_system/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../turbine_system/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Turbine System</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../turbine_system/wind_turbine.html" class="sidebar-item-text sidebar-link">
+  <a href="../../turbine_system/wind_turbine.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Wind Turbine Mass and Cost</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+  <a href="../../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Turbine Power Electronics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
 </li>
@@ -332,37 +369,37 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+  <a href="../../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/infield_ac_cables.html" class="sidebar-item-text sidebar-link">
+  <a href="../../electrical_infra/infield_ac_cables.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Infield AC Cables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
+  <a href="../../electrical_infra/hvdc_converter_stations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Converter Stations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/hvdc_export_cables.html" class="sidebar-item-text sidebar-link">
+  <a href="../../electrical_infra/hvdc_export_cables.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HVDC Export Cables</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../electrical_infra/onshore_grid_connection.html" class="sidebar-item-text sidebar-link">
+  <a href="../../electrical_infra/onshore_grid_connection.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Onshore Grid Connection</span></a>
   </div>
 </li>
@@ -379,31 +416,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_production/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Production</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/dc_integration.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_production/dc_integration.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">DC Integration</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/stack.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_production/stack.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Stack (PEM)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/balance_of_plant.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_production/balance_of_plant.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Balance of Plant</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_production/elx_power_electronics.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_production/elx_power_electronics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Power Electronics</span></a>
   </div>
 </li>
@@ -420,31 +457,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_infra/infield_infrastructure.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Infield Infrastructure</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_infra/compressor.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_infra/compressor.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Compressor</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_infra/hydrogen_pipelines.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_infra/hydrogen_pipelines.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hydrogen Pipelines</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hydrogen_infra/pipeline_pressure_and_capacity.html" class="sidebar-item-text sidebar-link">
+  <a href="../../hydrogen_infra/pipeline_pressure_and_capacity.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pipeline Pressure and Capacity</span></a>
   </div>
 </li>
@@ -461,7 +498,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
+  <a href="../../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform Material CAPEX</span></a>
   </div>
 </li>
@@ -478,25 +515,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/overview.html" class="sidebar-item-text sidebar-link">
+  <a href="../../offshore_installation/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Offshore Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/turbine_and_foundation_installation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../offshore_installation/turbine_and_foundation_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Turbine and Foundation Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../offshore_installation/cable_and_pipeline_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Cable and Pipeline Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
+  <a href="../../offshore_installation/platform_and_substation_installation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform and Substation Installation</span></a>
   </div>
 </li>
@@ -504,13 +541,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../references.html" class="sidebar-item-text sidebar-link">
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References and Evidence Status</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../about.html" class="sidebar-item-text sidebar-link">
+  <a href="../../about.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About</span></a>
   </div>
 </li>
@@ -524,13 +561,15 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#inputs" id="toc-inputs" class="nav-link" data-scroll-target="#inputs">Inputs</a></li>
-  <li><a href="#layout" id="toc-layout" class="nav-link" data-scroll-target="#layout">Layout</a></li>
-  <li><a href="#turbine-performance" id="toc-turbine-performance" class="nav-link" data-scroll-target="#turbine-performance">Turbine Performance</a></li>
-  <li><a href="#wake-calculation" id="toc-wake-calculation" class="nav-link" data-scroll-target="#wake-calculation">Wake Calculation</a></li>
-  <li><a href="#annual-energy-and-outputs" id="toc-annual-energy-and-outputs" class="nav-link" data-scroll-target="#annual-energy-and-outputs">Annual Energy and Outputs</a></li>
-  <li><a href="#legacy-implementation" id="toc-legacy-implementation" class="nav-link" data-scroll-target="#legacy-implementation">Legacy Implementation</a></li>
+  <li><a href="#purpose-and-status" id="toc-purpose-and-status" class="nav-link active" data-scroll-target="#purpose-and-status">Purpose and status</a></li>
+  <li><a href="#common-inputs-and-their-basis" id="toc-common-inputs-and-their-basis" class="nav-link" data-scroll-target="#common-inputs-and-their-basis">Common inputs and their basis</a></li>
+  <li><a href="#layout-and-spacing-derived-from-area" id="toc-layout-and-spacing-derived-from-area" class="nav-link" data-scroll-target="#layout-and-spacing-derived-from-area">Layout and spacing derived from area</a></li>
+  <li><a href="#wind-record-and-orientation" id="toc-wind-record-and-orientation" class="nav-link" data-scroll-target="#wind-record-and-orientation">Wind record and orientation</a></li>
+  <li><a href="#sec-common-operating-case" id="toc-sec-common-operating-case" class="nav-link" data-scroll-target="#sec-common-operating-case">Common operating case</a></li>
+  <li><a href="#export-and-onshore-delivery-boundary" id="toc-export-and-onshore-delivery-boundary" class="nav-link" data-scroll-target="#export-and-onshore-delivery-boundary">Export and onshore delivery boundary</a></li>
+  <li><a href="#stack-sizing-and-comparison-cases" id="toc-stack-sizing-and-comparison-cases" class="nav-link" data-scroll-target="#stack-sizing-and-comparison-cases">Stack sizing and comparison cases</a></li>
+  <li><a href="#pressure-and-export-diameter-design-grid" id="toc-pressure-and-export-diameter-design-grid" class="nav-link" data-scroll-target="#pressure-and-export-diameter-design-grid">Pressure and export-diameter design grid</a></li>
+  <li><a href="#remaining-preparation" id="toc-remaining-preparation" class="nav-link" data-scroll-target="#remaining-preparation">Remaining preparation</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -538,9 +577,10 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../wind_resource_and_layout/overview.html">Wind Resource and Layout</a></li><li class="breadcrumb-item"><a href="../wind_resource_and_layout/wake_modelling_and_spacing.html">Wake Modelling and Spacing</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Wake Modelling and Spacing</h1>
+<h1 class="title">Agreed Reference Case: IJmuiden Ver Beta</h1>
+<p class="subtitle lead">Assumptions, reasoning and evidence for O1</p>
 </div>
 
 
@@ -557,167 +597,209 @@ window.Quarto = {
 </header>
 
 
-<section id="role-in-the-model" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This calculation turns turbine coordinates, a tabulated turbine curve and a set of wind states into the wake-affected electrical power of every turbine in every state. That table is the common input to all architectures: it gives power at the generator electrical output, before any architecture-specific conversion or collection loss. The implementation is <code>calculate_wakes</code> in <code>model/wind_resource_and_layout/wake_modelling_and_spacing.py</code>.</p>
-<p>The layout is deliberately schematic. It exposes the relationship between installed capacity, occupied area, turbine separation and wake loss without claiming to reproduce a consented or commercially optimised wind-farm layout.</p>
+<section id="purpose-and-status" class="level2">
+<h2 class="anchored" data-anchor-id="purpose-and-status">Purpose and status</h2>
+<p>Agreed on 23 September 2026. This case provides the common wind-farm and onshore hydrogen-delivery basis for the centralised and turbine-level comparisons. It is an idealised case based on IJmuiden Ver Beta, not a claim to reproduce the developer’s final design.</p>
+<p>The authoritative article inputs are in <a href="scenarios/reference_case.toml">reference_case.toml</a>. Values displayed here are loaded from that record; dimensions and spacing are calculated by <a href="analysis/reference_case.py">the reference-case calculation</a>. These are case choices, not defaults for the component methodology. Both architecture templates include the same generated common case (see <a href="#sec-common-operating-case">Common operating case</a>); this note does not claim a completed production or cost run. Remaining preparation is tracked in <a href="OPEN_POINTS.md">O1</a>.</p>
 </section>
-<section id="inputs" class="level2">
-<h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
+<section id="common-inputs-and-their-basis" class="level2">
+<h2 class="anchored" data-anchor-id="common-inputs-and-their-basis">Common inputs and their basis</h2>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 23%">
-<col style="width: 23%">
-<col style="width: 30%">
-<col style="width: 23%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Symbol</th>
-<th>Description</th>
-<th style="text-align: right;">Unit</th>
-<th>Source in the model</th>
+<th>Quantity</th>
+<th>Adopted value</th>
+<th>Classification, evidence and reason</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\((x_j,y_j)\)</span></td>
-<td>Turbine coordinates, <span class="math inline">\(x\)</span> east and <span class="math inline">\(y\)</span> north</td>
-<td style="text-align: right;">m</td>
-<td>Scenario coordinates file, or a declared regular grid</td>
+<td>Reference site and approximate location</td>
+<td>IJmuiden Ver Beta; 52.91° N, 3.58° E</td>
+<td>Sourced location in the RVO wake study, Appendix A <span class="citation" data-cites="rvo2025WakeStudy">(<a href="#ref-rvo2025WakeStudy" role="doc-biblioref"><span>“<span>RVO</span> Wake Study”</span> 2025</a>)</span>. Identifies the geographical reference; it does not identify the supplied DOWA extraction point.</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(P(v)\)</span>, <span class="math inline">\(C_T(v)\)</span></td>
-<td>Tabulated electrical power and thrust coefficient</td>
-<td style="text-align: right;">kW, –</td>
-<td>Scenario turbine-curve file</td>
+<td>Turbine count <span class="math inline">\(N\)</span></td>
+<td>134 turbines</td>
+<td>Article choice, matching the reference configuration in the same study <span class="citation" data-cites="rvo2025WakeStudy">(<a href="#ref-rvo2025WakeStudy" role="doc-biblioref"><span>“<span>RVO</span> Wake Study”</span> 2025</a>)</span>. Keeps the upstream farm identical in both architectures.</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(D\)</span>, <span class="math inline">\(H_h\)</span></td>
-<td>Rotor diameter and hub height</td>
-<td style="text-align: right;">m</td>
-<td>Scenario turbine record</td>
+<td>Turbine rating <span class="math inline">\(P_r\)</span></td>
+<td>15 MW/turbine</td>
+<td>Article choice, matching that reference configuration <span class="citation" data-cites="rvo2025WakeStudy">(<a href="#ref-rvo2025WakeStudy" role="doc-biblioref"><span>“<span>RVO</span> Wake Study”</span> 2025</a>)</span>. Rating alone does not select a rotor, hub height or performance curve.</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(v_s\)</span>, <span class="math inline">\(\theta_s\)</span>, <span class="math inline">\(h_s\)</span></td>
-<td>Wind speed, direction (wind <strong>from</strong>, clockwise from north) and annual hours of state <span class="math inline">\(s\)</span></td>
-<td style="text-align: right;">m/s, °, h/year</td>
-<td>Scenario wind-state file</td>
+<td>Net farm area <span class="math inline">\(A\)</span></td>
+<td>186.3 km²</td>
+<td>Sourced from the final Beta site decision, §4.2.1 <span class="citation" data-cites="ijmuidenBeta2023SiteDecision">(<a href="#ref-ijmuidenBeta2023SiteDecision" role="doc-biblioref"><span>“Kavelbesluit Kavel Beta Windenergiegebied IJmuiden Ver”</span> 2023</a>)</span>. Uses Beta’s net area rather than the area of the wider wind zone. It sets the equivalent rectangular layout and the denominator for yield per <strong>net</strong> km².</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(I_0\)</span></td>
-<td>Ambient turbulence intensity</td>
-<td style="text-align: right;">fraction</td>
-<td>5.8% (provisional legacy assumption)</td>
+<td>Representative water depth <span class="math inline">\(h\)</span></td>
+<td>28 m</td>
+<td>Sourced average for Beta in DNV’s RVO assessment, Appendix B, Table 3 <span class="citation" data-cites="dnv2025Doordewind">(<a href="#ref-dnv2025Doordewind" role="doc-biblioref">DNV 2025</a>)</span>. A published site-specific average is sufficient for this common structural and installation reference. It does not resolve local bathymetry, tides or a foundation design datum.</td>
+</tr>
+<tr class="even">
+<td>Crosswind breadth / along-wind length <span class="math inline">\(r\)</span></td>
+<td><p>2</p></td>
+<td>Explicit article assumption agreed on the date above. Represents the requested broad front perpendicular to the dominant wind.</td>
+</tr>
+<tr class="odd">
+<td>Hydrogen export route</td>
+<td>100 km</td>
+<td>Explicit article assumption agreed on the date above. Physical route length from the offshore export origin to the common onshore receipt boundary; no surveyed pipeline corridor is claimed.</td>
+</tr>
+<tr class="even">
+<td>Onshore delivery pressure <span class="math inline">\(p_{\mathrm{delivery,g}}\)</span></td>
+<td>66 bar(g)</td>
+<td>Article choice based on the upper network-pressure level described for Waterstofnetwerk West-Nederland <span class="citation" data-cites="hynetwork2026WestNRD">(<a href="#ref-hynetwork2026WestNRD" role="doc-biblioref"><em>Concept Notitie Reikwijdte En Detailniveau</em> 2026, 18</a>)</span>. The <strong>gauge</strong> interpretation is explicitly agreed modelling judgement; that source writes only “bar”.</td>
+</tr>
+<tr class="odd">
+<td>Electrolyser stack outlet pressure <span class="math inline">\(p_{\mathrm{stack,g}}\)</span></td>
+<td>30 bar(g)</td>
+<td>User-specified article assumption, applied to the centralised and turbine-level stacks alike. The <strong>gauge</strong> interpretation follows the delivery-pressure convention. It sets the compressor inlet pressure; it is not a product qualification of the supplied stack curve, whose source material reports approximately 30 bar (<a href="../../hydrogen_production/stack.html">Stack</a>).</td>
+</tr>
+<tr class="even">
+<td>Reference turbine</td>
+<td>IEA 15 MW RWT; <span class="math inline">\(D=\)</span> 241.35 m, <span class="math inline">\(H_h=\)</span> 150 m</td>
+<td>Selected for O1 on 25 September 2026: a public, internally consistent 15 MW definition whose power and thrust curve, rotor diameter and hub height come from one pinned release <span class="citation" data-cites="gaertner2020IEA15 ieaWind15RwtRelease2026">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>; <a href="#ref-ieaWind15RwtRelease2026" role="doc-biblioref">IEA Wind TCP Task 37 2026</a>)</span>. The release’s 241.35 m rotor (240 m in the original report) is used with its own curve. The hub height is the reference turbine’s, not the lower-tip-clearance default on <a href="../../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>.</td>
+</tr>
+<tr class="odd">
+<td>Minimum turbine separation check</td>
+<td>3 <span class="math inline">\(D\)</span> = 724.05 m</td>
+<td>Retained legacy screening threshold, unsourced. It only rejects coordinate errors; it is not a demonstrated wake, installation or permit limit.</td>
+</tr>
+<tr class="even">
+<td>Stack overplant factor <span class="math inline">\(f\)</span></td>
+<td>1× baseline; up to 3× later</td>
+<td>Explicit article choices, applied equally to both architectures. Establish the baseline before investigating the additional stack-capacity trade-off.</td>
 </tr>
 </tbody>
 </table>
-<p>The state hours must add up to the central annual-hour basis (8760 h/year); they are not renormalised.</p>
+<p>The installed wind capacity is derived, not independently prescribed:</p>
+<p><span class="math display">\[
+P_{\mathrm{farm}}=N P_r.
+\]</span></p>
+<p>Here <span class="math inline">\(P_{\mathrm{farm}}\)</span> is in MW, <span class="math inline">\(N\)</span> is a turbine count and <span class="math inline">\(P_r\)</span> is in MW/turbine. The result is <strong>2010 MW</strong>. “Approximately 2 GW” is a descriptive label; calculations retain the exact count-times-rating result without introducing an electricity-grid export cap.</p>
 </section>
-<section id="layout" class="level2">
-<h2 class="anchored" data-anchor-id="layout">Layout</h2>
-<p>A scenario supplies coordinates directly, or declares a regular grid (turbine count, columns, spacings and rotation) whose incomplete final row is centred. In both cases the model checks that every pair of turbines is at least the declared minimum separation apart and rejects the layout otherwise. Farm area is a reporting boundary; it is never used as a multiplier on distances.</p>
-<p>The article reference case generates its coordinates from the agreed site record: a rectangle across the dominant wind direction, rows numbered from the upwind edge and an explicit rotation convention (see the reference case).</p>
+<section id="layout-and-spacing-derived-from-area" class="level2">
+<h2 class="anchored" data-anchor-id="layout-and-spacing-derived-from-area">Layout and spacing derived from area</h2>
+<p>Let <span class="math inline">\(B\)</span> be crosswind breadth and <span class="math inline">\(L\)</span> along-wind length, both in km. With <span class="math inline">\(A\)</span> in km² and dimensionless <span class="math inline">\(r=B/L\)</span>:</p>
+<p><span class="math display">\[
+B=\sqrt{Ar},\qquad L=\sqrt{A/r},\qquad BL=A.
+\]</span></p>
+<p>This gives <strong>19.30 km across the wind</strong> and <strong>9.65 km along the wind</strong>. The adopted regular-grid construction chooses the number of crosswind columns <span class="math inline">\(n_B\)</span> and along-wind rows <span class="math inline">\(n_L\)</span> as:</p>
+<p><span class="math display">\[
+n_B=\left\lceil\sqrt{Nr}\right\rceil,\qquad
+n_L=\left\lceil N/n_B\right\rceil.
+\]</span></p>
+<p>The resulting grid has 17 columns and 8 rows: 7 full rows and a centred final row of 15 turbines. This row convention is an explicit modelling choice; area and aspect ratio alone do not uniquely define a turbine layout.</p>
+<p>Turbine centres span the equivalent rectangle, with no additional boundary setback. Consequently, the separations in metres are:</p>
+<p><span class="math display">\[
+d_B=\frac{1000B}{n_B-1},\qquad
+d_L=\frac{1000L}{n_L-1}.
+\]</span></p>
+<p>The factor 1000 converts km to m. Crosswind spacing is <strong>1206.4 m</strong> and along-wind spacing is <strong>1378.8 m</strong>. The shorter final row retains <span class="math inline">\(d_B\)</span> and is centred within the same breadth. All wake and collection calculations must use the resulting common turbine coordinates, rather than a separate area-based spacing proxy.</p>
+<p>Replacing the net site by a rectangle deliberately omits its actual shape, internal corridors and exclusions. This is a comparative layout, not a demonstration of site-permit compliance. Detailed polygon checks remain D7.</p>
 </section>
-<section id="turbine-performance" class="level2">
-<h2 class="anchored" data-anchor-id="turbine-performance">Turbine Performance</h2>
-<p>The wake calculation uses a supplied, tabulated power and thrust-coefficient curve; it never builds a synthetic curve. The article case uses the pinned IEA 15 MW reference turbine release <span class="citation" data-cites="gaertner2020IEA15 ieaWind15RwtRelease2026">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>; <a href="#ref-ieaWind15RwtRelease2026" role="doc-biblioref">IEA Wind TCP Task 37 2026</a>)</span>, whose power column is electrical output. Zero power and thrust are declared just outside the operating range, because PyWake would otherwise hold the first tabulated value for waked turbines below cut-in.</p>
+<section id="wind-record-and-orientation" class="level2">
+<h2 class="anchored" data-anchor-id="wind-record-and-orientation">Wind record and orientation</h2>
+<p>Use the supplied DOWA-derived hourly workbook and fitted sector table already described on <a href="../../wind_resource_and_layout/wind_resource_and_weibull.html">Wind Resource and Weibull Distribution</a>. Their paths are recorded in the case file. DOWA is the underlying atlas <span class="citation" data-cites="dutchOffshoreWindAtlas">(<a href="#ref-dutchOffshoreWindAtlas" role="doc-biblioref">Royal Netherlands Meteorological Institute (KNMI) 2018</a>)</span>; the atlas citation does not independently establish the workbook’s extraction point or height. Retain the page’s existing metadata and period limitations without substituting an unrelated wind record.</p>
+<p>The adopted orientation follows the centre of the most frequent direction sector in the supplied table: <strong>225°</strong>, interpreted as the meteorological direction <strong>from</strong> which wind arrives, clockwise from north. Thus the short axis runs southwest–northeast and the long axis northwest–southeast. Sector labels in the existing file are lower bin edges; use bin centres when preparing wake states. The centre is calculated from the stored sector spacing rather than entered as another independent case value.</p>
+<p>This documents the adopted interpretation. It does not recover the missing direction-convention metadata for the original extraction. Both architectures must receive identical annual wind-state weights and turbine-level generation before architecture-specific losses.</p>
 </section>
-<section id="wake-calculation" class="level2">
-<h2 class="anchored" data-anchor-id="wake-calculation">Wake Calculation</h2>
-<p>PyWake evaluates every state with the following configuration <span class="citation" data-cites="pywakeDocumentation2026">(<a href="#ref-pywakeDocumentation2026" role="doc-biblioref">DTU Wind and Energy Systems 2026</a>)</span>:</p>
+<section id="sec-common-operating-case" class="level2">
+<h2 class="anchored" data-anchor-id="sec-common-operating-case">Common operating case</h2>
+<p><a href="analysis/prepare_common_case.py"><code>prepare_common_case.py</code></a> turns this record into <code>scenarios/common_case.toml</code> and the data files in <code>scenarios/common/</code>. Both architecture templates include that file. The model rejects any key defined in both a template and the included file, so the templates cannot silently depart from the common case. The script requires the optional PyWake dependency; the generated files are committed so that running a case does not.</p>
+<p><strong>Coordinates.</strong> Positions are in metres with <span class="math inline">\(x\)</span> east, <span class="math inline">\(y\)</span> north and the origin at the farm centre. With the dominant direction <span class="math inline">\(\theta\)</span> (wind <strong>from</strong>, clockwise from north), the downwind and crosswind unit vectors are</p>
+<p><span class="math display">\[
+\mathbf{e}_d=(-\sin\theta,\,-\cos\theta),\qquad
+\mathbf{e}_c=(\cos\theta,\,-\sin\theta).
+\]</span></p>
+<p>A turbine in row <span class="math inline">\(i\)</span> at crosswind offset <span class="math inline">\(u\)</span> is placed at <span class="math inline">\(u\,\mathbf{e}_c+\left(i-\tfrac{n_L-1}{2}\right)d_L\,\mathbf{e}_d\)</span>, with <span class="math inline">\(u\)</span> centred within its row. Turbines are numbered row by row from the upwind edge. The centralised AC strings follow this order, which is provisional until the platform location is set (O3/O7).</p>
+<p><strong>Turbine curve.</strong> The tabulated electrical power and thrust coefficient come from the release’s rotor-performance table, pinned by commit and checksum in the record. The table’s power column is electrical output: its power coefficient is the aerodynamic coefficient times the 95.7% generator efficiency. This matches the model’s common generator-output boundary. Solver noise of up to 0.06 kW above rating is capped at the 15 MW rating. Zero power and thrust are declared just outside the 3–25 m/s operating range, because PyWake would otherwise hold the first tabulated value for waked turbines below cut-in; idle-rotor thrust is neglected.</p>
+<p>The adopted <a href="../../turbine_system/power_electronics.html">turbine electrical boundary</a> is now inverter AC output, before the transformer. The source-table description above records the existing data provenance, not a verified conversion to that boundary. <strong>TODO (O2):</strong> confirm which converter losses the table includes or document its conversion before recovering inverter losses for decentralised hydrogen. Existing operating states have not been relabelled or rescaled.</p>
+<p><strong>Operating states.</strong> The fitted sector table is converted to one joint table of direction and speed states. Direction is spread uniformly within each 30° sector in 5° steps, and speed is binned in 0.5 m/s steps represented by bin midpoints between cut-in and cut-out. Weights are the Weibull probabilities times the central annual hours; the 521 h/year below cut-in or above cut-out form one zero-power state. This gives 3,169 states, including that state. The hourly speeds are treated as hub-height speeds, because the workbook does not record its extraction height. This is an explicit assumption carried over from the legacy model, not a height correction.</p>
+<p>PyWake 2.6.20 evaluates every state with the model’s wake configuration and the central turbulence intensity 5.8%. The resulting table gives wake-affected power for each turbine at the generator output, before any architecture-specific loss. A zero-hour design state, <code>design-all-rated</code>, sets every turbine at rated power as the common peak-duty basis. The annual states reach this full-farm output at high wind speeds, so it is an attained operating condition rather than an added margin.</p>
 <table class="caption-top table">
+<caption>Common operating case generated from the record.</caption>
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 42%">
+<col style="width: 57%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Model element</th>
-<th>Selection</th>
-<th>Function</th>
+<th>Result (before availability and architecture losses)</th>
+<th style="text-align: right;">Value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Site</td>
-<td><code>UniformSite</code> with ambient <span class="math inline">\(I_0\)</span></td>
-<td>Uniform inflow; state weights come from the wind-state table, not from the site</td>
+<td>No-wake annual energy</td>
+<td style="text-align: right;">10,715 GWh</td>
 </tr>
 <tr class="even">
-<td>Propagation</td>
-<td><code>PropagateDownwind</code></td>
-<td>Calculates wakes from upstream to downstream turbines</td>
+<td>Wake-affected annual energy</td>
+<td style="text-align: right;">9,639 GWh</td>
 </tr>
 <tr class="odd">
-<td>Wake deficit</td>
-<td><code>TurboNOJDeficit</code></td>
-<td>Turbulence-dependent top-hat wake expansion <span class="citation" data-cites="nygaard2020ClusterWakes">(<a href="#ref-nygaard2020ClusterWakes" role="doc-biblioref">Nygaard et al. 2020</a>)</span></td>
+<td>Wake loss</td>
+<td style="text-align: right;"><p>10.0%</p></td>
 </tr>
 <tr class="even">
-<td>Rotor averaging</td>
-<td><code>AreaOverlapAvgModel</code>, on the deficit model</td>
-<td>Partial overlap of a top-hat wake and a downstream rotor</td>
-</tr>
-<tr class="odd">
-<td>Superposition</td>
-<td><code>SquaredSum</code></td>
-<td>Combines deficits from several upstream turbines</td>
-</tr>
-<tr class="even">
-<td>Blockage</td>
-<td>None</td>
-<td>Upstream induction is excluded</td>
+<td>Wake-affected gross capacity factor</td>
+<td style="text-align: right;"><p>54.7%</p></td>
 </tr>
 </tbody>
 </table>
-<p>The calculation is run once per wind direction for all speeds in that direction; each state keeps its own speed and weight. For state <span class="math inline">\(s\)</span> and turbine <span class="math inline">\(j\)</span> the result is the wake-affected power <span class="math inline">\(P_{j,s}\)</span> in kW. The installed PyWake version is recorded with each result.</p>
+<p>Two checks bound the discretisation. Single-turbine energy from the fitted Weibull states differs from energy from the 87,601 hourly records by -0.8%. Wake-affected energy with the adopted direction step differs from a 1° calculation by -0.08%. Neither check validates the wake model: turbulence intensity remains a provisional legacy value, blockage is excluded, and the wake formulation has not been benchmarked (<a href="../../wind_resource_and_layout/wake_modelling_and_spacing.html">Wake Modelling and Spacing</a>).</p>
 </section>
-<section id="annual-energy-and-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="annual-energy-and-outputs">Annual Energy and Outputs</h2>
-<p>The wake-affected and no-wake annual energies, in MWh/year, are</p>
+<section id="export-and-onshore-delivery-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="export-and-onshore-delivery-boundary">Export and onshore delivery boundary</h2>
+<p>The reported product is hydrogen delivered at the common onshore receipt interface at the adopted pressure. Include the export pipeline, landfall and receipt functions needed to reach that boundary; exclude subsequent backbone transport, storage, distribution and end use. The receipt equipment scope and its supply, installation and operating costs remain O9.</p>
+<p>The agreed export length is a scenario assumption. For context, the published Beta electricity-connection assessment gives a <strong>146 km offshore cable route</strong> toward Maasvlakte <span class="citation" data-cites="ijmuidenBeta2021ExportMER">(<a href="#ref-ijmuidenBeta2021ExportMER" role="doc-biblioref"><span>“Net Op Zee IJmuiden Ver Beta”</span> 2021</a>, Table 2-14, p.&nbsp;67)</span>. This is route evidence for a different carrier, not an adopted hydrogen-pipeline length. A particular landfall and engineered route remain unresolved.</p>
+<p>The West-Netherlands hydrogen-network document describes initial operation at <strong>30–50 bar</strong> and possible future operation up to <strong>66 bar</strong> <span class="citation" data-cites="hynetwork2026WestNRD">(<a href="#ref-hynetwork2026WestNRD" role="doc-biblioref"><em>Concept Notitie Reikwijdte En Detailniveau</em> 2026, 18</a>)</span>. Those are source-reported network conditions; the article deliberately adopts the upper level as its delivery requirement. It does not claim that every connection currently requires that pressure.</p>
+<p>Compression and pipeline equations use <strong>absolute</strong> pressure. The agreed delivery and stack outlet pressures are gauge values and are converted once, at the model boundary:</p>
 <p><span class="math display">\[
-E_\mathrm{wake}=\frac{1}{1000}\sum_s h_s\sum_j P_{j,s},
-\qquad
-E_0=\frac{N}{1000}\sum_s h_s\,P(v_s),
+p_{\mathrm{abs}}=p_{\mathrm{g}}+p_{\mathrm{atm}}.
 \]</span></p>
-<p>and the wake loss and wake-affected gross capacity factor are</p>
-<p><span class="math display">\[
-L_\mathrm{wake}=1-\frac{E_\mathrm{wake}}{E_0},
-\qquad
-CF_\mathrm{wake,gross}=\frac{1000\,E_\mathrm{wake}}{NP_r\,\sum_s h_s}.
-\]</span></p>
-<p>These exclude availability, collection, conversion and export losses, which are applied downstream and must not be applied again here. For the article reference case the result is a wake loss of 10.0% and a gross capacity factor of 54.7%.</p>
-<p>The model accepts the wind input in two equivalent forms: a wind-state table with a turbine curve, from which it runs PyWake itself (optional <code>wind</code> dependency), or a stored table of per-turbine power by state. The article case stores the table, generated with the same function by <code>research_articles/turbine_level_hydrogen/analysis/prepare_common_case.py</code>, so that both architectures read identical turbine power and a case run does not need PyWake. A zero-hour design state may be added for peak-duty sizing.</p>
+<p>All pressures in this equation are in bar. The atmospheric basis <span class="math inline">\(p_{\mathrm{atm}}\)</span> is the standard atmosphere, 1.01325 bar (exactly 101 325 Pa <span class="citation" data-cites="nist2008SP811">(<a href="#ref-nist2008SP811" role="doc-biblioref">Thompson and Taylor 2008</a>)</span>), applied at both the offshore stack outlet and the onshore receipt boundary. This is an explicit modelling assumption: both points are near sea level, and weather-driven barometric variation, of the order of a few hundredths of a bar, is not modelled.</p>
+<p>The result is a delivery pressure of <strong>67.01 bar(a)</strong> and a stack outlet pressure of <strong>31.01 bar(a)</strong>, calculated by <a href="analysis/reference_case.py">the reference-case calculation</a>. Scenario inputs take these absolute values; the gauge values are never copied into an absolute-pressure field. Any pressure loss through receipt equipment belongs upstream of the delivery interface and must be accounted for explicitly rather than hidden in a pressure margin.</p>
 </section>
-<section id="legacy-implementation" class="level2">
-<h2 class="anchored" data-anchor-id="legacy-implementation">Legacy Implementation</h2>
-<p>The earlier model used a synthetic ramp-shaped power curve with a constant thrust coefficient, PyWake’s <code>UniformWeibullSite</code> with sector-edge directions, a fixed 30° orientation and a grid truncated after <span class="math inline">\(N\)</span> positions. These are replaced by the method above and are retained only for traceability of older results.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Remaining improvements">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Remaining improvements
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>Benchmark the wake model.</strong> Compare representative dense and sparse layouts against at least one credible alternative wake formulation and use the difference as model uncertainty.</li>
-<li><strong>Test turbulence and blockage sensitivity.</strong> The provisional <span class="math inline">\(I_0\)</span> directly affects <code>TurboNOJDeficit</code>; evaluate a sourced range and quantify whether the omission of blockage changes the comparison.</li>
-<li><strong>Source the minimum-separation check.</strong> The article case keeps the unsourced legacy threshold of three rotor diameters as a coordinate check only.</li>
-</ol>
-</div>
-</div>
-<p>Higher-fidelity CFD, LES and full commercial layout optimisation are not proposed at this stage. They are justified only if the simpler model has first been made internally consistent and the remaining wake uncertainty can materially change the comparison.</p>
+<section id="stack-sizing-and-comparison-cases" class="level2">
+<h2 class="anchored" data-anchor-id="stack-sizing-and-comparison-cases">Stack sizing and comparison cases</h2>
+<p>Define the dimensionless overplant factor as:</p>
+<p><span class="math display">\[
+f=\frac{P_{\mathrm{stack,requested}}}{P_{\mathrm{wind,served}}},
+\]</span></p>
+<p>where both capacities are in MW at their stated rating boundaries. Central stacks serve the complete farm; each turbine-level package serves its turbine. Actual installed stack capacity follows the model’s integer module sizing. Overplanting changes stack capacity; it does not automatically increase the wind rating or BOP design capacity. Operation must still cover auxiliary loads within available wind power.</p>
+<p>Start both architectures at the agreed baseline factor. Retain the agreed upper factor for deferred sensitivity work (D6), not as a demonstrated feasible design or an optimised result. Preserve the article’s centralised, conservative turbine-level and converter-reduced comparison cases; electrical equipment and efficiency choices remain O2.</p>
+</section>
+<section id="pressure-and-export-diameter-design-grid" class="level2">
+<h2 class="anchored" data-anchor-id="pressure-and-export-diameter-design-grid">Pressure and export-diameter design grid</h2>
+<p>The article design grid, agreed on 1 October 2026, evaluates compressor discharge pressures of <strong>50–150 bar(g) in 10 bar steps</strong> and export-pipe <strong>internal diameters of 4–8 inches in 0.5 inch steps</strong>. These are scenario choices, not supplier qualification limits or a selected baseline. The <a href="scenarios/pressure_diameter_grid.toml">grid record</a> is authoritative: its 11 pressures and 9 diameters give <strong>99 combinations per architecture</strong>.</p>
+<p>The <a href="analysis/run_design_cases.py">design-case runner</a> expands that record. It adds the central standard atmospheric pressure to each gauge pressure and multiplies each diameter in inches by the exact conversion <strong>0.0254 m/inch</strong>. The resulting absolute pressures and internal diameters feed the existing compression and pipeline calculations; they are recorded in each run’s <code>design_cases.csv</code> and case results.</p>
+<p>The 50 and 60 bar(g) cases cannot supply the agreed 66 bar(g) delivery boundary without intermediate recompression, which is outside this design. They remain in the comparison as <strong>infeasible</strong>. Higher pressures pass only this initial boundary check; they are not thereby proven feasible. Pipe capacity and integer parallel-pipe count must still be checked against calculated production.</p>
+<p>For central production, compressor discharge is the export inlet. For turbine-level production, collection losses intervene: section diameters and inlet/outlet pressures must support a separately declared export inlet pressure. The grid does not impose its export diameter on collection sections or assume zero collection pressure loss. These section choices remain O7. Cases lacking required inputs report <strong>not_parameterized</strong>, without selecting a baseline or claiming a complete cost comparison. O3 platform sizing still requires the equipment duties, masses and feeder interface.</p>
+<p>For example, from the repository root:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>uv run python research_articles<span class="op">/</span>turbine_level_hydrogen<span class="op">/</span>analysis<span class="op">/</span>run_design_cases<span class="op">.</span><span class="fu">py</span> research_articles<span class="op">/</span>turbine_level_hydrogen<span class="op">/</span>scenarios<span class="op">/</span>centralised<span class="op">.</span><span class="fu">toml</span> research_articles<span class="op">/</span>turbine_level_hydrogen<span class="op">/</span>scenarios<span class="op">/</span>pressure_diameter_grid<span class="op">.</span><span class="fu">toml</span> <span class="op">--</span>output model_runs<span class="op">/</span>central-pressure-diameter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use the decentralised template and a separate output directory for the turbine-level case. Each output directory must be new; results remain local.</p>
+</section>
+<section id="remaining-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="remaining-preparation">Remaining preparation</h2>
+<p><strong>O1 is partially resolved.</strong> The site, count/rating, area, schematic geometry, representative depth, wind-data basis, export distance, delivery-pressure and stack-outlet pressure interpretations and overplanting range are agreed. Before claiming executable common-case results:</p>
+<ul>
+<li>The common coordinates, turbine definition, operating and peak-duty states, and converted pressures are connected to both templates (above).</li>
+<li>Complete the remaining design inputs needed by the selected branches: collection section pressures/diameters and distributed export inlet (O7), feeder bays (O3), and electrical interface inputs (O2). Collection origins and network design are linked to O3/O7; onshore receipt details remain O9.</li>
+</ul>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-pywakeDocumentation2026" class="csl-entry" role="listitem">
-DTU Wind and Energy Systems. 2026. <em><span>PyWake</span> Documentation: Wake Deficit Models and Engineering Wind Farm Models</em>. <a href="https://topfarm.pages.windenergy.dtu.dk/PyWake/notebooks/Overview.html">https://topfarm.pages.windenergy.dtu.dk/PyWake/notebooks/Overview.html</a>.
+<div id="ref-hynetwork2026WestNRD" class="csl-entry" role="listitem">
+<em>Concept Notitie Reikwijdte En Detailniveau: Waterstofnetwerk West-Nederland</em>. 2026. 0496841.101. N.V. Nederlandse Gasunie. <a href="https://www.rvo.nl/sites/default/files/2026-04/Concept-notitie-reikwijdte-detailniveau-Waterstofnetwerk-West-Nederland.pdf">https://www.rvo.nl/sites/default/files/2026-04/Concept-notitie-reikwijdte-detailniveau-Waterstofnetwerk-West-Nederland.pdf</a>.
+</div>
+<div id="ref-dnv2025Doordewind" class="csl-entry" role="listitem">
+DNV. 2025. <em><span>LCoE</span> Assessment for Doordewind Site: Site Specific Report</em>. L2C207719-NLAR-M-19, Rev. A. DNV Energy Systems, for RVO. <a href="https://offshorewind.rvo.nl/file/download/d950b5d5-d905-4c15-88c1-e3f986bb7c3d/ddw_2025_lcoe_dnv_report.pdf">https://offshorewind.rvo.nl/file/download/d950b5d5-d905-4c15-88c1-e3f986bb7c3d/ddw_2025_lcoe_dnv_report.pdf</a>.
 </div>
 <div id="ref-gaertner2020IEA15" class="csl-entry" role="listitem">
 Gaertner, Evan, Jennifer Rinker, Latha Sethuraman, et al. 2020. <em>Definition of the <span>IEA</span> 15-Megawatt Offshore Reference Wind Turbine</em>. NREL/TP-5000-75698. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1603478">https://doi.org/10.2172/1603478</a>.
@@ -725,8 +807,20 @@ Gaertner, Evan, Jennifer Rinker, Latha Sethuraman, et al. 2020. <em>Definition o
 <div id="ref-ieaWind15RwtRelease2026" class="csl-entry" role="listitem">
 IEA Wind TCP Task 37. 2026. <em><span>IEA-15-240-RWT</span>: <span>IEA</span> Wind 15 <span>MW</span> Offshore Reference Wind Turbine, Tabular Documentation</em>. V. commit e4993d63de10f165389534461dd544006750fe60. Released. <a href="https://github.com/IEAWindTask37/IEA-15-240-RWT/blob/e4993d63de10f165389534461dd544006750fe60/Documentation/IEA-15-240-RWT_tabular.xlsx">https://github.com/IEAWindTask37/IEA-15-240-RWT/blob/e4993d63de10f165389534461dd544006750fe60/Documentation/IEA-15-240-RWT_tabular.xlsx</a>.
 </div>
-<div id="ref-nygaard2020ClusterWakes" class="csl-entry" role="listitem">
-Nygaard, Nicolai Gayle, Søren Trads Steen, Lina Poulsen, and Jesper Grønnegaard Pedersen. 2020. <span>“Modelling Cluster Wakes and Wind Farm Blockage.”</span> <em>Journal of Physics: Conference Series</em> 1618 (6): 062072. <a href="https://doi.org/10.1088/1742-6596/1618/6/062072">https://doi.org/10.1088/1742-6596/1618/6/062072</a>.
+<div id="ref-ijmuidenBeta2023SiteDecision" class="csl-entry" role="listitem">
+<span>“Kavelbesluit Kavel Beta Windenergiegebied IJmuiden Ver.”</span> 2023. <span>Ministerie van Economische Zaken en Klimaat</span>. <a href="https://www.rvo.nl/sites/default/files/2023-12/Kavelbesluit-Beta-Wind-op-Zee-IJmuiden-Ver-Alpha-en-Beta.pdf">https://www.rvo.nl/sites/default/files/2023-12/Kavelbesluit-Beta-Wind-op-Zee-IJmuiden-Ver-Alpha-en-Beta.pdf</a>.
+</div>
+<div id="ref-ijmuidenBeta2021ExportMER" class="csl-entry" role="listitem">
+<span>“Net Op Zee IJmuiden Ver Beta: MER Fase 2, Deel b.”</span> 2021. <span>Netherlands Enterprise Agency (RVO)</span>. <a href="https://www.rvo.nl/sites/default/files/2021/12/Deel-B-MER-fase-2-Net-op-zee-IJmuiden-Ver-Beta.pdf">https://www.rvo.nl/sites/default/files/2021/12/Deel-B-MER-fase-2-Net-op-zee-IJmuiden-Ver-Beta.pdf</a>.
+</div>
+<div id="ref-dutchOffshoreWindAtlas" class="csl-entry" role="listitem">
+Royal Netherlands Meteorological Institute (KNMI). 2018. <em>Dutch Offshore Wind Atlas: Time Series Files from 2008–2017 at 10–600 Meter Height at Individual 2.5 Km Grid Location</em>. Dataset. Version 1. <a href="https://dataplatform.knmi.nl/dataset/dowa-netcdf-ts-singlepoint-1">https://dataplatform.knmi.nl/dataset/dowa-netcdf-ts-singlepoint-1</a>.
+</div>
+<div id="ref-rvo2025WakeStudy" class="csl-entry" role="listitem">
+<span>“<span>RVO</span> Wake Study: Final Report, Version 4.”</span> 2025. <span>Netherlands Enterprise Agency (RVO)</span>. <a href="https://offshorewind.rvo.nl/file/download/52757701-13a5-4c0f-8dff-b7ef7304ebed/rvo_wakestudy_final_report_version4_20250606_linkviewer.pdf">https://offshorewind.rvo.nl/file/download/52757701-13a5-4c0f-8dff-b7ef7304ebed/rvo_wakestudy_final_report_version4_20250606_linkviewer.pdf</a>.
+</div>
+<div id="ref-nist2008SP811" class="csl-entry" role="listitem">
+Thompson, Ambler, and Barry N. Taylor. 2008. <em>Guide for the Use of the International System of Units (<span>SI</span>)</em>. {NIST} Special Publication 811, 2008 edition. National Institute of Standards; Technology. <a href="https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8">https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b8</a>.
 </div>
 </div>
 

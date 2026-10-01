@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -601,7 +613,7 @@ p_s=\frac{n_s}{N_\mathrm{obs}},
 \qquad
 \sum_s p_s=1.
 \]</span></p>
-<p>The sector labels are passed directly to the wake model as wind directions. Because the label is a bin edge rather than its centre, the represented direction may be displaced by 15 degrees from the observations in that bin. This is retained here to document the legacy calculation and identified below as a required correction.</p>
+<p>The legacy model passed these labels directly to the wake model as wind directions, displacing each represented direction by up to 15 degrees from its observations. The current model instead spreads each sector’s probability uniformly across the sector, in equal direction steps centred within it (see <a href="#numerical-use">Numerical Use</a>).</p>
 </section>
 <section id="conditional-weibull-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="conditional-weibull-distribution">Conditional Weibull Distribution</h2>
@@ -721,30 +733,9 @@ w_{s,i}
 </section>
 <section id="numerical-use" class="level2">
 <h2 class="anchored" data-anchor-id="numerical-use">Numerical Use</h2>
-<p>The legacy implementation uses two numerical wind-speed grids:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Use</th>
-<th>Wind-speed treatment</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PyWake farm-power table and AEP</td>
-<td>0 to 30 m/s in 0.5 m/s increments</td>
-</tr>
-<tr class="even">
-<td>Hydrogen operating-state integration</td>
-<td>0 to 40 m/s with 0.25 m/s bins</td>
-</tr>
-</tbody>
-</table>
-<p>The hydrogen calculation interpolates the PyWake farm-power table and renormalises the retained state probabilities. Turbine output is zero above cut-out, so extending the probability grid beyond cut-out does not add production. Maintaining two grids is nevertheless unnecessary and creates an avoidable consistency check.</p>
+<p>One joint table of direction and speed states serves wake power, electricity yield and hydrogen production alike, so bin edges, tail treatment and weights are identical everywhere. For a direction step <span class="math inline">\(\Delta\theta\)</span> that divides the sector width, sector <span class="math inline">\(s\)</span> contributes the directions <span class="math inline">\(s+(i+\tfrac12)\Delta\theta\)</span> for <span class="math inline">\(i=0,1,\dots\)</span>, each with probability <span class="math inline">\(p_s\Delta\theta/30^\circ\)</span>. Speeds between cut-in and cut-out are binned in steps <span class="math inline">\(\Delta v\)</span> and represented by the bin midpoint, with the joint probability <span class="math inline">\(w_{s,i}\)</span> above. All speeds below cut-in or above cut-out form one zero-power state, so the weights cover the whole year exactly. Each weight times the central annual hours gives the state’s hours.</p>
+<p>The article case uses 5° and 0.5 m/s steps. Its wake-affected energy differs from a 1° calculation by -0.08%, and single-turbine energy from these states differs from energy from the hourly records by -0.8% (see the reference case). The hourly speeds are treated as hub-height speeds because the workbook does not record its extraction height.</p>
+<p>The legacy model used two different grids (0 to 30 m/s in 0.5 m/s steps for PyWake and 0 to 40 m/s in 0.25 m/s steps for hydrogen), with renormalised probabilities. That duplication is removed.</p>
 </section>
 <section id="outputs" class="level2">
 <h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
@@ -756,26 +747,24 @@ w_{s,i}
 <li>the joint probability <span class="math inline">\(w_{s,i}\)</span> of each state.</li>
 </ul>
 <p>Availability, electrical losses and conversion losses are not applied on this page. They are applied after wake-aware farm power has been calculated.</p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Suggested technical improvements">
+<div class="callout callout-style-default callout-warning callout-titled" title="Remaining improvements">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Suggested technical improvements
+<span class="screen-reader-only">Warning</span>Remaining improvements
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li><strong>Recover the source extraction.</strong> Record the exact DOWA grid point, height, source filename, dataset version, timezone and direction convention. Replace the shortened workbook series with the complete selected period or explain the 72-hour difference.</li>
-<li><strong>Correct sector alignment.</strong> Represent each 30-degree bin by its centre, or use circular bins centred on <span class="math inline">\(0^\circ,30^\circ,\ldots,330^\circ\)</span>. The same convention must be used by the layout rotation and wake model.</li>
-<li><strong>Validate the Weibull reduction.</strong> Calculate AEP once from the empirical hourly distribution and once from the directional Weibull fit. Report the difference before adopting the fitted distribution as the production input.</li>
-<li><strong>Use one probability grid.</strong> Generate one joint direction-speed table for wake power, electricity yield and hydrogen conversion so that bin edges, tail treatment and normalisation are identical.</li>
 <li><strong>Create a controlled input record.</strong> Store the fitted CSV with its fitting-script revision, source-file checksum and fit date so that the parameters can be reproduced without the legacy workbook structure.</li>
 </ol>
+<p>Sector alignment, the single probability grid and the check of the Weibull reduction against the hourly record are implemented, as described above.</p>
 </div>
 </div>
-<p>Until the first two items are resolved, the table above should be treated as a legacy model input rather than a fully verified site-specific wind resource.</p>
+<p>Until the source extraction is recovered, the table above should be treated as a legacy model input rather than a fully verified site-specific wind resource.</p>
 
 
 
@@ -889,7 +878,7 @@ Royal Netherlands Meteorological Institute (KNMI). 2018. <em>Dutch Offshore Wind
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -513,6 +525,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#sec-dc-compared-cases" id="toc-sec-dc-compared-cases" class="nav-link" data-scroll-target="#sec-dc-compared-cases">Compared Electrical Cases</a></li>
   <li><a href="#operating-principle" id="toc-operating-principle" class="nav-link" data-scroll-target="#operating-principle">Operating Principle</a></li>
   <li><a href="#model-calculation" id="toc-model-calculation" class="nav-link" data-scroll-target="#model-calculation">Model Calculation</a></li>
   <li><a href="#allocation-of-converter-functions" id="toc-allocation-of-converter-functions" class="nav-link" data-scroll-target="#allocation-of-converter-functions">Allocation of Converter Functions</a></li>
@@ -567,6 +580,44 @@ window.Quarto = {
 <p>The modelled electrical chain is:</p>
 <pre class="text"><code>wind-turbine generator -&gt; active rectifier/up-chopper -&gt; DC link -&gt; PEM stack or stack array</code></pre>
 <p>The architecture has no AC export connection, turbine grid-side inverter, electrolyser rectifier, or separate electrolyser-side DC/DC converter. The generator-side active rectifier/up-chopper remains part of the turbine and controls generator current, electromagnetic torque, and the power extracted from the rotor.</p>
+</section>
+<section id="sec-dc-compared-cases" class="level2">
+<h2 class="anchored" data-anchor-id="sec-dc-compared-cases">Compared Electrical Cases</h2>
+<p><a href="../turbine_system/power_electronics.html">Turbine Power Electronics</a> defines the adopted inverter-output power-curve boundary. Both turbine-level cases omit the grid-side inverter: available DC-link power is obtained by dividing that curve output by inverter efficiency, and the separable inverter purchase cost is deducted from turbine cost. Specifications remain owned by <a href="../electrical_infra/power_conversion_equipment.html#sec-grid-side-inverter">Power Conversion Equipment</a>. The supplied curve’s boundary and numerical credit remain unresolved; this relationship must not be applied to an unreconciled generator-output curve.</p>
+<p>The article compares three agreed electrical cases. Equipment duty, ratings, costs, losses and evidence gaps for each role are owned by <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a>.</p>
+<table class="caption-top table">
+<caption>Agreed electrical comparison cases.</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Case</th>
+<th>Electrical chain</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Centralised hydrogen</td>
+<td>Conventional turbine electrical chain (generator-side converter, DC link, grid-side inverter, step-up transformer), 66 kV AC collection and a central transformer–rectifier package</td>
+<td>Reference comparison</td>
+</tr>
+<tr class="even">
+<td>Conservative turbine-level (<code>conservative</code>)</td>
+<td>Turbine generator-side converter and DC link, then a dedicated stack-side DC/DC interface</td>
+<td>Uses established conversion equipment</td>
+</tr>
+<tr class="odd">
+<td>Direct DC (<code>converter_reduced</code>)</td>
+<td>Turbine generator-side converter and DC link connected directly to the stack array; no dedicated stack-side converter</td>
+<td>Conditional on the electrical matching and protection requirements below</td>
+</tr>
+</tbody>
+</table>
+<p>The generator-side converter is common to all three cases and stays in the common turbine baseline. The rest of this page develops the direct-DC case; the conservative case keeps the dedicated converter, so the feasibility conditions below do not apply to it.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -758,7 +809,7 @@ I_{\mathrm{stack}}
 </section>
 <section id="model-implication" class="level2">
 <h2 class="anchored" data-anchor-id="model-implication">Model Implication</h2>
-<p>For the decentralised-hydrogen architecture, the model therefore:</p>
+<p>For the direct-DC case (<code>converter_reduced</code>), the model therefore:</p>
 <ul>
 <li>retains the generator-side active rectifier/up-chopper and its losses;</li>
 <li>excludes the turbine grid-side inverter and AC export equipment from the hydrogen power path;</li>
@@ -766,7 +817,8 @@ I_{\mathrm{stack}}
 <li>determines stack voltage and current from generator power and the active PEM polarisation curve; and</li>
 <li>retains supervisory controls, measurement, protection, isolation, and balance-of-plant interlocks as required functions.</li>
 </ul>
-<p>No converter CAPEX or conversion-loss allowance should be assigned to a separate electrolyser-side DC/DC stage in this architecture. This treatment applies only if the project-specific electrical matching and protection requirements can be met.</p>
+<p>No converter CAPEX or conversion-loss allowance should be assigned to a separate electrolyser-side DC/DC stage in this case. This treatment applies only if the project-specific electrical matching and protection requirements can be met.</p>
+<p>For the conservative case (<code>conservative</code>), the dedicated stack-side DC/DC converter is included, with its cost in <code>conservative-conversion-unit-cost</code> and its efficiency in <code>conservative-conversion-efficiency</code>. Both remain unresolved; candidate evidence and gaps are on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a>. In both turbine-level cases the removed grid-side inverter and step-up transformer are reconciled against the turbine baseline on <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -908,7 +960,7 @@ Verbist, Victor, and Michiel Damen. 2026. <em>Direct <span>DC</span> Coupling of
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -789,7 +801,7 @@ L_\mathrm{array}
 +
 L_\mathrm{pull\text{-}in},
 \]</span></p>
-<p>where <span class="math inline">\(r\)</span> is the route allowance and <span class="math inline">\(L_\mathrm{pull\text{-}in}\)</span> is the separately calculated total cable length between seabed touchdown points and turbine or platform terminations. No default pull-in length is inserted until the water-depth and interface assumptions are defined.</p>
+<p>where <span class="math inline">\(r\)</span> is the route allowance and <span class="math inline">\(L_\mathrm{pull\text{-}in}\)</span> is the total cable length between seabed touchdown points and turbine or platform terminations. It is included as two vertical legs of the water depth <span class="math inline">\(d_w\)</span> per connection, <span class="math inline">\(L_\mathrm{pull\text{-}in}=2d_w|\mathcal{E}|\)</span>, as implemented in <code>model/electrical_infra/infield_ac_cables.py</code>. This is a screening length: J-tube routing, hang-off height and slack are not resolved separately.</p>
 <p>This is the same calculation structure used by ORBIT’s grid-array model: turbine and row spacing define coordinates, cable capacity limits turbines per string, and the model sums the Euclidean distance between successive connection points <span class="citation" data-cites="nunemaker2020ORBIT">(<a href="#ref-nunemaker2020ORBIT" role="doc-biblioref">Nunemaker et al. 2020</a>)</span>.</p>
 <section id="validation-against-public-projects" class="level3">
 <h3 class="anchored" data-anchor-id="validation-against-public-projects">Validation against public projects</h3>
@@ -933,7 +945,7 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 <tbody>
 <tr class="odd">
 <td>Array voltage</td>
-<td style="text-align: right;">66 kV</td>
+<td style="text-align: right;"><p>66 kV</p></td>
 <td style="text-align: right;">66 or 132 kV</td>
 <td>132 kV is an emerging future-plant option</td>
 </tr>
@@ -969,7 +981,7 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 </tr>
 <tr class="odd">
 <td>Route addition</td>
-<td style="text-align: right;">20%</td>
+<td style="text-align: right;"><p>20%</p></td>
 <td style="text-align: right;">5–20%</td>
 <td>Apply only before a routed design exists</td>
 </tr>
@@ -1019,8 +1031,8 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 <td>Exclusions, crossings and detailed approach routes remain approximate</td>
 </tr>
 <tr class="even">
-<td>Pull-in length has no default input</td>
-<td>Supply length remains incomplete until water depth and interface geometry are defined</td>
+<td>Pull-in length is two water depths per connection</td>
+<td>J-tube routing, hang-off height and slack are not resolved</td>
 </tr>
 <tr class="odd">
 <td>Public project cable quantities have inconsistent reporting scopes</td>
@@ -1028,7 +1040,7 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 </tr>
 <tr class="even">
 <td>Electrical losses are unresolved</td>
-<td>No flat loss deduction is applied until a defensible load-dependent model is available</td>
+<td>A fixed-percentage loss is to be adopted (TODO); the executable model still contains an I²R screening calculation with blank resistance and power-factor inputs</td>
 </tr>
 <tr class="odd">
 <td>Flat 99% availability</td>
@@ -1234,7 +1246,7 @@ U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annu
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

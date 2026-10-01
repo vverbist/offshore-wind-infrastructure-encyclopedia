@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="540" viewBox="0 0 760 540" role="img" aria-labelledby="title desc">
   <title id="title">Hydrogen infield ladder layout</title>
-  <desc id="desc">A square wind farm with two vertical header pipelines, five horizontal rung pipelines, turbines connected along each rung, and both headers connected to a common export pipeline interface.</desc>
+  <desc id="desc">A schematic wind farm with two vertical header pipelines, five horizontal rung pipelines, turbines connected along each rung, and both headers connected to a common export pipeline interface.</desc>
   <defs>
     <style>
       .label { font: 15px Arial, sans-serif; fill: #1f2937; }
@@ -20,7 +20,7 @@
   </defs>
 
   <rect x="105" y="48" width="550" height="385" rx="4" class="farm"/>
-  <text x="105" y="30" class="label">Square wind-farm boundary</text>
+  <text x="105" y="30" class="label">Wind-farm boundary (schematic)</text>
 
   <path d="M155 82 L155 399" class="header"/>
   <path d="M605 82 L605 399" class="header"/>

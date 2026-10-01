@@ -309,6 +309,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -328,6 +334,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -620,7 +632,7 @@ Table&nbsp;1: Main pipeline sizing variables.
 </div>
 </figure>
 </div>
-<p>For the export pipeline, the current reference case uses an 80 km route length and a 66 bar outlet pressure. The 66 bar value is used because it represents the expected maximum pressure of the Dutch hydrogen backbone, allowing injection without an additional onshore compressor in the base case <span class="citation" data-cites="internalModelDescription2026">(<a href="#ref-internalModelDescription2026" role="doc-biblioref">Project Team 2026</a>)</span>.</p>
+<p>For the export pipeline, the agreed reference case uses a 100 km physical route and a delivery pressure of 66 bar(g), which is 67.01 bar(a) in the model’s absolute-pressure equations. The delivery level is the upper operating pressure described for the West-Netherlands hydrogen network <span class="citation" data-cites="hynetwork2026WestNRD">(<a href="#ref-hynetwork2026WestNRD" role="doc-biblioref"><em>Concept Notitie Reikwijdte En Detailniveau</em> 2026</a>)</span>, allowing injection without an additional onshore compressor in the base case. Inlet pressure and diameter are design inputs of each case.</p>
 </section>
 <section id="capacity-model" class="level2">
 <h2 class="anchored" data-anchor-id="capacity-model">Capacity Model</h2>
@@ -659,7 +671,7 @@ p_\mathrm{in}^2 - p_\mathrm{out}^2
 =
 \mu(T,p_\mathrm{avg})
 \]</span></p>
-<p>where <span class="math inline">\(T=293 \ \mathrm{K}\)</span> in the current figure builder.</p>
+<p>where <span class="math inline">\(T\)</span> is 293 K (<code>pipeline-temperature</code>).</p>
 <p>The implementation then evaluates the combined term <span class="math inline">\(\mathrm{Re}\sqrt{f_F}\)</span>:</p>
 <p><span class="math display">\[
 \mathrm{Re}\sqrt{f_F}
@@ -685,7 +697,7 @@ p_\mathrm{in}^2 - p_\mathrm{out}^2
 \frac{1.256}{\mathrm{Re}\sqrt{f_F}}
 \right)
 \]</span></p>
-<p>where <span class="math inline">\(\epsilon=1.5 \cdot 10^{-7} \ \mathrm{m}\)</span> in the current implementation.</p>
+<p>where <span class="math inline">\(\epsilon\)</span> is the pipe roughness, 0.00000015 m (<code>pipeline-roughness</code>), and 3.7 and 1.256 are the Colebrook constants shown in the equation.</p>
 <p>The resulting gas velocity is:</p>
 <p><span class="math display">\[
 v
@@ -723,7 +735,7 @@ P_{\mathrm{H_2},\mathrm{HHV}}
 }
 \]</span></p>
 <p>where <span class="math inline">\(\mathrm{HHV}_\mathrm{H_2}=39.4 \ \mathrm{kWh/kg}\)</span> and <span class="math inline">\(P_{\mathrm{H_2},\mathrm{HHV}}\)</span> is in MW when <span class="math inline">\(\dot{m}_\mathrm{max}\)</span> is in kg/h.</p>
-<p><a href="#fig-pipeline-capacity" class="quarto-xref">Figure&nbsp;1</a> shows the resulting capacity curves for the current diameter and pressure range, assuming an 80 km route length and 66 bar outlet pressure.</p>
+<p><a href="#fig-pipeline-capacity" class="quarto-xref">Figure&nbsp;1</a> shows the resulting capacity curves over an illustrative diameter and inlet-pressure range, for the reference-case route of 100 km and outlet pressure of 67.01 bar(a).</p>
 <div id="fig-pipeline-capacity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pipeline-capacity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -768,13 +780,14 @@ n_\mathrm{pipe}
 </section>
 <section id="material-cost-model" class="level2">
 <h2 class="anchored" data-anchor-id="material-cost-model">Material Cost Model</h2>
-<p>Pipeline material CAPEX is based on confidential supplier quotes for selected combinations of diameter and pressure class <span class="citation" data-cites="supplierSPipelineCost">(<a href="#ref-supplierSPipelineCost" role="doc-biblioref">Supplier S, n.d.</a>)</span>. The model constructs a two-dimensional interpolation surface over diameter and pressure:</p>
+<p>Pipeline material CAPEX is based on confidential supplier quotes for selected combinations of diameter and pressure class <span class="citation" data-cites="supplierSPipelineCost">(<a href="#ref-supplierSPipelineCost" role="doc-biblioref">Supplier S, n.d.</a>)</span>. The model uses a <strong>fitted bilinear surface</strong> over diameter and pressure:</p>
 <p><span class="math display">\[
-c_\mathrm{mat}
-=
-I(D,p)
+c_\mathrm{mat}(D,p_g)=a+b\,D+c\,p_g+d\,D\,p_g
 \]</span></p>
-<p>where <span class="math inline">\(I(D,p)\)</span> is the interpolated material cost per unit length. Total material cost for a pipeline route is:</p>
+<p>where <span class="math inline">\(c_\mathrm{mat}\)</span> is material cost per unit length [EUR<sub>2025</sub>/m], <span class="math inline">\(D\)</span> is the diameter [inch], <span class="math inline">\(p_g\)</span> is the operating pressure [bar(g)], and <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> are confidential coefficients fitted to the quotes. Unlike an interpolation through the quote points, the fit is one smooth surface: it need not reproduce each quote exactly, and it returns values outside the quoted range by extending the same bilinear trend.</p>
+<p><strong>Stay within the quoted range.</strong> Evaluate cases only for diameters and pressures inside, or at most slightly outside, the quoted diameter and pressure classes. Beyond them, the linear extension has no supplier support and can misstate cost in either direction. The quoted range is not yet recorded in the repository (TODO: record the minimum and maximum quoted diameter and pressure class without disclosing prices). The confidential fit returns material price in EUR<sub>2025</sub>/m; the project owner confirmed this price basis on 25 September 2026, so the model’s quote-to-EUR<sub>2025</sub> factor <code>pipeline-quote-to-eur2025</code> is 1.</p>
+<p><strong>Pressure basis:</strong> the fit is read at the section’s operating inlet pressure in bar(g), without a design margin (agreed 25 September 2026). The model converts its absolute pressures by subtracting the standard atmosphere before calling the fit.</p>
+<p>Total material cost for a pipeline route is:</p>
 <p><span class="math display">\[
 C_\mathrm{mat}
 =
@@ -843,15 +856,15 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 <tbody>
 <tr class="odd">
 <td>Baseline export length</td>
-<td style="text-align: right;">80 km</td>
+<td style="text-align: right;">100 km (reference case)</td>
 </tr>
 <tr class="even">
 <td>Export pipeline outlet pressure</td>
-<td style="text-align: right;">66 bar</td>
+<td style="text-align: right;">66 bar(g) = 67.01 bar(a) (reference case)</td>
 </tr>
 <tr class="odd">
 <td>Export pipeline inlet pressure</td>
-<td style="text-align: right;">Optimisation variable</td>
+<td style="text-align: right;">Design input of each case</td>
 </tr>
 <tr class="even">
 <td>Typical inlet-pressure range</td>
@@ -863,11 +876,11 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 </tr>
 <tr class="even">
 <td>Infield pipeline diameter</td>
-<td style="text-align: right;">6 inch</td>
+<td style="text-align: right;">6 inch (legacy screening value; section diameters are design inputs)</td>
 </tr>
 <tr class="odd">
 <td>Infield pipeline pressure</td>
-<td style="text-align: right;">150 bar</td>
+<td style="text-align: right;">150 bar (legacy screening value; section pressures are design inputs)</td>
 </tr>
 <tr class="even">
 <td>Infield pipeline capacity</td>
@@ -955,6 +968,9 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-hynetwork2026WestNRD" class="csl-entry" role="listitem">
+<em>Concept Notitie Reikwijdte En Detailniveau: Waterstofnetwerk West-Nederland</em>. 2026. 0496841.101. N.V. Nederlandse Gasunie. <a href="https://www.rvo.nl/sites/default/files/2026-04/Concept-notitie-reikwijdte-detailniveau-Waterstofnetwerk-West-Nederland.pdf">https://www.rvo.nl/sites/default/files/2026-04/Concept-notitie-reikwijdte-detailniveau-Waterstofnetwerk-West-Nederland.pdf</a>.
+</div>
 <div id="ref-perrysChemicalEngineersHandbook" class="csl-entry" role="listitem">
 Perry’s Chemical Engineers’ Handbook. n.d. <em>Perry’s Chemical Engineers’ Handbook</em>.
 </div>
@@ -1071,7 +1087,7 @@ Transition Accelerator. 2023. <em>The Techno-Economics of Hydrogen Pipelines</em
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

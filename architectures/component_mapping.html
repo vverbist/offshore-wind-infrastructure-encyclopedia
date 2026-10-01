@@ -261,6 +261,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -280,6 +286,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -522,25 +534,25 @@ ul.task-list li input[type="checkbox"] {
 <td><a href="../turbine_system/foundation.html">Foundation</a></td>
 </tr>
 <tr class="odd">
-<td>Turbine active front end and DC link</td>
+<td>Turbine generator-side converter and DC link</td>
 <td>Included</td>
 <td>Included</td>
-<td>Included</td>
-<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></td>
+<td>Included (common baseline)</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>; equipment record on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></td>
 </tr>
 <tr class="even">
 <td>Turbine grid-side inverter</td>
 <td>Included</td>
 <td>Included</td>
-<td>Not used in the hydrogen path</td>
-<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></td>
+<td>Removed in both turbine-level cases; no removal credit claimed without separable evidence</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>; evidence on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></td>
 </tr>
 <tr class="odd">
 <td>Turbine step-up transformer</td>
 <td>Included</td>
 <td>Included</td>
-<td>Not used in the hydrogen path</td>
-<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a></td>
+<td>Removed in both turbine-level cases; credit follows the WISDEM transformer term</td>
+<td><a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>; evidence on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></td>
 </tr>
 <tr class="even">
 <td>AC infield collection</td>
@@ -557,18 +569,18 @@ ul.task-list li input[type="checkbox"] {
 <td><a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
 </tr>
 <tr class="even">
-<td>Central electrolyser transformer and rectifier</td>
+<td>Central step-down transformer, rectifier transformers and rectifiers</td>
 <td>Not used</td>
-<td>Included on the integrated platform</td>
+<td>Included on the integrated platform as one package</td>
 <td>Not used</td>
-<td><a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a></td>
+<td><a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a> (package cost and loss); equipment record on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></td>
 </tr>
 <tr class="odd">
-<td>Separate electrolyser-side DC/DC converter</td>
+<td>Dedicated stack-side DC/DC converter</td>
 <td>Not used</td>
 <td>Not applicable to the AC-fed central chain</td>
-<td>Not used by assumption</td>
-<td><a href="../hydrogen_production/dc_integration.html">DC Integration</a></td>
+<td>Used in the conservative case; omitted in the direct-DC case, conditional on electrical matching and protection</td>
+<td><a href="../hydrogen_production/dc_integration.html">DC Integration</a>; evidence on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a></td>
 </tr>
 <tr class="even">
 <td>PEM stacks</td>
@@ -789,7 +801,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

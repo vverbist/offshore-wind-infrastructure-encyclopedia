@@ -290,6 +290,12 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -309,6 +315,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -609,11 +621,11 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>Development and shared engineering</td>
-<td>Shared project-cost field; currently unresolved</td>
+<td>Outside the model scope (agreed)</td>
 </tr>
 <tr class="odd">
 <td>Insurance and owner contingency</td>
-<td>Shared project-cost field; currently unresolved</td>
+<td>Outside the model scope (agreed)</td>
 </tr>
 <tr class="even">
 <td>Construction finance, taxes and financing fees</td>
@@ -625,7 +637,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Development, shared engineering, insurance and owner contingency are not silently zero. Until they are parameterized, a complete total-system cost returns <strong>not parameterized</strong>. Explicitly bounded component or modelled-cost subtotals may still be reported, but they must not be called total system cost.</p>
+<p>Development, shared engineering, insurance and owner contingency are excluded from the model scope. Results are technical-scope costs and must not be called total project or total system cost.</p>
 </section>
 <section id="capital-intensity-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="capital-intensity-outputs">Capital-Intensity Outputs</h2>
@@ -782,7 +794,7 @@ LC_{\mathrm{H2,HHV}}
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

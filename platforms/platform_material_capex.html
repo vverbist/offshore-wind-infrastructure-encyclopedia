@@ -23,7 +23,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -71,6 +90,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -261,6 +309,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../turbine_system/power_electronics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Turbine Power Electronics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../turbine_system/foundation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monopile Foundation Mass and Cost</span></a>
   </div>
@@ -280,6 +334,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../electrical_infra/overview.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Electrical Infrastructure</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../electrical_infra/power_conversion_equipment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Power Conversion Equipment</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -467,8 +527,23 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
   <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
   <li><a href="#architecture-inputs" id="toc-architecture-inputs" class="nav-link" data-scroll-target="#architecture-inputs">Architecture Inputs</a></li>
-  <li><a href="#required-inputs" id="toc-required-inputs" class="nav-link" data-scroll-target="#required-inputs">Required Inputs</a></li>
+  <li><a href="#model-inputs" id="toc-model-inputs" class="nav-link" data-scroll-target="#model-inputs">Model Inputs</a>
+  <ul class="collapse">
+  <li><a href="#scenario-and-upstream-inputs" id="toc-scenario-and-upstream-inputs" class="nav-link" data-scroll-target="#scenario-and-upstream-inputs">Scenario and Upstream Inputs</a></li>
+  <li><a href="#mass-relationships" id="toc-mass-relationships" class="nav-link" data-scroll-target="#mass-relationships">Mass Relationships</a></li>
+  <li><a href="#unit-costs" id="toc-unit-costs" class="nav-link" data-scroll-target="#unit-costs">Unit Costs</a></li>
+  <li><a href="#reference-evidence-not-adopted" id="toc-reference-evidence-not-adopted" class="nav-link" data-scroll-target="#reference-evidence-not-adopted">Reference Evidence Not Adopted</a></li>
+  <li><a href="#validation-and-feasibility-evidence-o3-review-25-september-2026" id="toc-validation-and-feasibility-evidence-o3-review-25-september-2026" class="nav-link" data-scroll-target="#validation-and-feasibility-evidence-o3-review-25-september-2026">Validation and Feasibility Evidence (O3 review, 25 September 2026)</a></li>
+  </ul></li>
+  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
+  <li><a href="#model-outputs" id="toc-model-outputs" class="nav-link" data-scroll-target="#model-outputs">Model Outputs</a></li>
+  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example">Worked Example: 2 GW Platforms</a>
+  <ul class="collapse">
+  <li><a href="#hosted-equipment-inventory" id="toc-hosted-equipment-inventory" class="nav-link" data-scroll-target="#hosted-equipment-inventory">Hosted-Equipment Inventory</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  </ul></li>
   <li><a href="#interface-with-installation" id="toc-interface-with-installation" class="nav-link" data-scroll-target="#interface-with-installation">Interface with Installation</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#unresolved-evidence" id="toc-unresolved-evidence" class="nav-link" data-scroll-target="#unresolved-evidence">Unresolved Evidence</a></li>
   </ul>
 </nav>
@@ -497,8 +572,8 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This page owns the material and fabrication CAPEX of a central offshore platform. The calculation is common to the electricity-export and centralised-hydrogen architectures: architecture-specific equipment determines the required topside mass, while this page converts that physical requirement into the cost of the platform structure.</p>
-<p>The hosted electrical, electrolysis and compression equipment is costed by its component owner. Transport, offshore installation, hook-up and commissioning are also calculated separately.</p>
+<p>This page owns the material and fabrication CAPEX of a central offshore platform. The calculation is common to the electricity-export and centralised-hydrogen architectures: architecture-specific equipment determines the hosted mass, and this page converts that physical requirement into the platform structure, its support structure and their cost.</p>
+<p>The calculation is a mass chain. Hosted-equipment mass sets the topside mass; the topside mass sets the jacket and pile masses; each mass is multiplied by a unit cost for its own scope. The same masses are passed to <a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a> for lift screening.</p>
 </section>
 <section id="cost-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
@@ -517,43 +592,53 @@ ul.task-list li input[type="checkbox"] {
 <td><strong>This page</strong></td>
 </tr>
 <tr class="even">
+<td>Onshore yard integration of hosted equipment into the topside</td>
+<td>Included</td>
+<td><strong>This page</strong></td>
+</tr>
+<tr class="odd">
 <td>Jacket or other support structure</td>
 <td>Included</td>
 <td><strong>This page</strong></td>
 </tr>
-<tr class="odd">
-<td>Foundation piles or equivalent structural foundation</td>
+<tr class="even">
+<td>Foundation piles</td>
 <td>Included</td>
 <td><strong>This page</strong></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>HVDC converter equipment</td>
 <td>Excluded</td>
 <td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Electrolyser transformers and rectifiers</td>
 <td>Excluded</td>
 <td><a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>PEM stacks and non-electrical balance of plant</td>
 <td>Excluded</td>
 <td><a href="../hydrogen_production/stack.html">PEM Electrolyser Stack</a> and <a href="../hydrogen_production/balance_of_plant.html">Balance of Plant</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Hydrogen compression equipment</td>
 <td>Excluded</td>
 <td><a href="../hydrogen_infra/compressor.html">Compressor</a></td>
 </tr>
-<tr class="even">
-<td>Transport, offshore installation, hook-up and commissioning</td>
+<tr class="odd">
+<td>Transport, offshore installation, offshore hook-up and commissioning</td>
 <td>Excluded</td>
 <td><a href="../offshore_installation/platform_and_substation_installation.html">Platform and Substation Installation</a></td>
 </tr>
+<tr class="even">
+<td>Engineering, development, insurance and owner contingency</td>
+<td>Excluded</td>
+<td>Not currently modelled</td>
+</tr>
 </tbody>
 </table>
-<p>Equipment cost and equipment mass have different owners. The component pages book the equipment CAPEX and provide the equipment mass required for platform sizing. This page must not add the equipment CAPEX again.</p>
+<p>Equipment cost and equipment mass have different owners. The component pages book the equipment CAPEX and provide the equipment mass required for platform sizing. This page uses the equipment mass only to size the structure and to cost yard integration; it never applies a structural fabrication rate to equipment mass. Onshore yard integration covers placing, fixing, connecting and testing the hosted equipment in the topside before sail-away; offshore hook-up and commissioning remain with the installation page.</p>
 </section>
 <section id="architecture-inputs" class="level2">
 <h2 class="anchored" data-anchor-id="architecture-inputs">Architecture Inputs</h2>
@@ -590,35 +675,544 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <p>The architecture pages determine whether a central platform is present. The relevant component pages determine the hosted-equipment inventory and mass. This page receives those results; it does not recreate architecture-specific equipment models.</p>
 </section>
-<section id="required-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="required-inputs">Required Inputs</h2>
-<p>The material-CAPEX calculation will require, at minimum:</p>
-<ul>
-<li>number of platforms;</li>
-<li>total topside equipment mass, with its component breakdown and source trail;</li>
-<li>any structural, outfitting or integration mass added to the equipment mass;</li>
-<li>support-structure and foundation quantities required by the selected cost relationship; and</li>
-<li>the scope, price basis and applicability of the material or fabrication cost evidence.</li>
-</ul>
-<p>Every input must be identified as a sourced value, an explicit modelling assumption or a derived result. Masses from different component pages must use compatible boundaries so that shared auxiliaries, buildings, structural steel and equipment are neither omitted nor counted twice.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<section id="model-inputs" class="level2">
+<h2 class="anchored" data-anchor-id="model-inputs">Model Inputs</h2>
+<section id="scenario-and-upstream-inputs" class="level3">
+<h3 class="anchored" data-anchor-id="scenario-and-upstream-inputs">Scenario and Upstream Inputs</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Unit</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Number of central platforms</td>
+<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{plat}}\)</span></td>
+<td style="text-align: right;">count</td>
+<td>Scenario input; the capacity and multiplicity rule is unresolved (DEC-0007)</td>
+</tr>
+<tr class="even">
+<td>Topside lift modules per platform</td>
+<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{mod}}\)</span></td>
+<td style="text-align: right;">lift/platform</td>
+<td>Scenario execution input, shared with the installation page</td>
+</tr>
+<tr class="odd">
+<td>Hosted mass of equipment item <span class="math inline">\(k\)</span> per platform</td>
+<td style="text-align: right;"><span class="math inline">\(m_{\mathrm{eq},k}\)</span></td>
+<td style="text-align: right;">t</td>
+<td>Derived result of the owning component page; supplied as a scenario list until those pages emit mass</td>
+</tr>
+<tr class="even">
+<td>Rated power received by the platform</td>
+<td style="text-align: right;"><span class="math inline">\(P_{\mathrm{plat}}\)</span></td>
+<td style="text-align: right;">kW</td>
+<td>Scenario input; used only for the specific-cost metric</td>
+</tr>
+</tbody>
+</table>
+<p>The hosted-equipment list must name each item and its owning page so that shared auxiliaries, buildings and equipment are neither omitted nor counted twice. No component page currently provides equipment mass, so the list is unresolved for every architecture.</p>
+</section>
+<section id="mass-relationships" class="level3">
+<h3 class="anchored" data-anchor-id="mass-relationships">Mass Relationships</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Value</th>
+<th>Kind and source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topside structural and outfitting mass per tonne of hosted equipment</td>
+<td style="text-align: right;"><span class="math inline">\(k_{\mathrm{str}}\)</span></td>
+<td style="text-align: right;"><p>TODO (t/t)</p></td>
+<td>Modelling assumption; evidence required</td>
+</tr>
+<tr class="even">
+<td>Jacket mass per tonne of complete topside</td>
+<td style="text-align: right;"><span class="math inline">\(k_J\)</span></td>
+<td style="text-align: right;"><p>0.4 t/t</p></td>
+<td>Sourced curve fit <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Pile-mass coefficient</td>
+<td style="text-align: right;"><span class="math inline">\(a_P\)</span></td>
+<td style="text-align: right;"><p>8 coefficient</p></td>
+<td>Sourced curve fit <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Pile-mass exponent</td>
+<td style="text-align: right;"><span class="math inline">\(b_P\)</span></td>
+<td style="text-align: right;"><p>0.5574 coefficient</p></td>
+<td>Sourced curve fit <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(k_{\mathrm{str}}\)</span> represents the deck steel, primary and secondary structure, modules, buildings, cladding and structural outfitting that surround the hosted equipment. It must be sourced from published topside dry-weight breakdowns that separate equipment from structure; no such breakdown is adopted yet.</p>
+<p><span class="math inline">\(k_J\)</span>, <span class="math inline">\(a_P\)</span> and <span class="math inline">\(b_P\)</span> are the substructure and pile relationships in ORBIT’s offshore-substation design module, where the substructure mass is <span class="math inline">\(0.4\)</span> times the complete topside mass and the pile mass is <span class="math inline">\(8\,m_J^{0.5574}\)</span> with both masses in tonnes <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span>. ORBIT documents them as curve fits without identifying the underlying data set <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span>. They are adopted as top-down relationships because they are the only public mass chain found that links topside mass to jacket and pile mass. Their implicit basis is a crane-installed, piled-jacket HVAC substation; application to HVDC and electrolysis topsides is an extrapolation (see <a href="#limitations">Limitations</a>).</p>
+</section>
+<section id="unit-costs" class="level3">
+<h3 class="anchored" data-anchor-id="unit-costs">Unit Costs</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th style="text-align: right;">Symbol</th>
+<th style="text-align: right;">Value</th>
+<th>Kind and scope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topside structure fabrication unit cost</td>
+<td style="text-align: right;"><span class="math inline">\(c_{\mathrm{str}}\)</span></td>
+<td style="text-align: right;"><p>TODO (EUR/t)</p></td>
+<td>Assumption; applies to <span class="math inline">\(m_{\mathrm{str}}\)</span> only; evidence required</td>
+</tr>
+<tr class="even">
+<td>Yard integration unit cost</td>
+<td style="text-align: right;"><span class="math inline">\(c_{\mathrm{int}}\)</span></td>
+<td style="text-align: right;"><p>TODO (EUR/t)</p></td>
+<td>Assumption; applies to <span class="math inline">\(m_{\mathrm{eq}}\)</span>; evidence required</td>
+</tr>
+<tr class="odd">
+<td>Jacket fabrication unit cost</td>
+<td style="text-align: right;"><span class="math inline">\(c_J\)</span></td>
+<td style="text-align: right;"><p>TODO (EUR/t)</p></td>
+<td>Assumption; evidence required</td>
+</tr>
+<tr class="even">
+<td>Pile fabrication unit cost</td>
+<td style="text-align: right;"><span class="math inline">\(c_P\)</span></td>
+<td style="text-align: right;">2430 USD/t (USD<sub>2022</sub>)</td>
+<td>Reused from <a href="../turbine_system/foundation.html">Monopile Foundation Mass and Cost</a></td>
+</tr>
+<tr class="odd">
+<td>USD escalation 2022 to 2025</td>
+<td style="text-align: right;"><span class="math inline">\(e_{2022}\)</span></td>
+<td style="text-align: right;"><p>1.10008</p></td>
+<td><a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a></td>
+</tr>
+<tr class="even">
+<td>Exchange rate</td>
+<td style="text-align: right;"><span class="math inline">\(X\)</span></td>
+<td style="text-align: right;"><p>1.1300 USD/EUR</p></td>
+<td><a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a></td>
+</tr>
+</tbody>
+</table>
+<p>Piles are open-ended fabricated tubular steel, which is the same product class as a monopile. The monopile fabrication unit cost is therefore reused for piles. The monopile page’s transition-piece allowance is not applied, because a pile has no transition piece.</p>
+<p>Yard integration is costed per tonne of hosted equipment. This linear form is a modelling assumption: integration work is expected to grow with the quantity of equipment installed, but no public evidence has been found to support a specific relationship. The line is kept separate so that it can be recalibrated or replaced when a supplier breakdown is available.</p>
+</section>
+<section id="reference-evidence-not-adopted" class="level3">
+<h3 class="anchored" data-anchor-id="reference-evidence-not-adopted">Reference Evidence Not Adopted</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Evidence</th>
+<th style="text-align: right;">Value</th>
+<th>Reason not adopted</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ORBIT topside fabrication rate <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span></td>
+<td style="text-align: right;"><p>14500 USD/t</p></td>
+<td>Applied by ORBIT to the complete topside mass including equipment, so its scope overlaps equipment CAPEX booked elsewhere. ORBIT’s procurement-year table lists 18,296 USD<sub>2024</sub>/t for the same attribute, so the default’s price year is unresolved.</td>
+</tr>
+<tr class="even">
+<td>ORBIT substructure rate <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span></td>
+<td style="text-align: right;">3785 USD/t (USD<sub>2024</sub>)</td>
+<td>Candidate for <span class="math inline">\(c_J\)</span>. Adoption requires a USD 2024-to-2025 escalation factor and confirmation that the rate is for fabricated jacket steel excluding transport and installation.</td>
+</tr>
+</tbody>
+</table>
+<p>ORBIT sets its substation pile rate to zero, so ORBIT provides no pile cost evidence <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span>.</p>
+</section>
+<section id="validation-and-feasibility-evidence-o3-review-25-september-2026" class="level3">
+<h3 class="anchored" data-anchor-id="validation-and-feasibility-evidence-o3-review-25-september-2026">Validation and Feasibility Evidence (O3 review, 25 September 2026)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Evidence</th>
+<th style="text-align: right;">Value</th>
+<th>Use on this page</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2 GW, 525 kV HVDC converter platforms (LanWin) <span class="citation" data-cites="offshoreMag2023LanWin">(<a href="#ref-offshoreMag2023LanWin" role="doc-biblioref">Offshore staff 2023</a>)</span></td>
+<td style="text-align: right;">Topside about 24,000 t; jacket about 10,000 t</td>
+<td>Implied jacket-to-topside ratio of about 0.42, close to the adopted <span class="math inline">\(k_J=\)</span>0.4 t/t. This supports <span class="math inline">\(k_J\)</span> at 2 GW scale for an HVDC topside; it is a plausibility check, not a calibration, and says nothing about electrolysis topsides</td>
+</tr>
+<tr class="even">
+<td>Single-lift installation class (Pioneering Spirit) <span class="citation" data-cites="allseasPlatformInstallation2026">(<a href="#ref-allseasPlatformInstallation2026" role="doc-biblioref"><span>“Platform Transportation and Installation”</span> 2026</a>)</span></td>
+<td style="text-align: right;">Topsides up to 60,000 t; jackets up to 20,000 t</td>
+<td>Lift-screen limits for one installation class. With <span class="math inline">\(m_J=k_J m_{\mathrm{top}}\)</span>, the jacket limit binds first: a single-lift jacket allows <span class="math inline">\(m_{\mathrm{top}}\)</span> up to about 50,000 t</td>
+</tr>
+</tbody>
+</table>
+<p>No public source was found that gives hosted-equipment masses for MW-scale PEM stacks, electrolyser balance of plant, rectifier transformers or hydrogen compressors on an offshore platform, or a topside dry-weight breakdown separating equipment from structure. Design announcements for offshore electrolysis platforms (for example 100–800 MW concepts) report capacity and volume but not mass. The ABB converter catalogue’s 6.2 t for a 10 MW wind converter is recorded on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a> as context only.</p>
+<p><strong>Proposed multiplicity rule (not adopted).</strong> Choose the smallest <span class="math inline">\(N_{\mathrm{plat}}\)</span> and, for each platform, the smallest <span class="math inline">\(N_{\mathrm{mod}}\)</span> such that <span class="math inline">\(m_{S,\max}\)</span> and <span class="math inline">\(m_J\)</span> each stay within the selected installation class. This keeps <span class="math inline">\(N_{\mathrm{plat}}\)</span> and <span class="math inline">\(N_{\mathrm{mod}}\)</span> explicit scenario inputs checked against documented lift limits, rather than a capacity rule of thumb. It cannot be applied until <span class="math inline">\(m_{\mathrm{eq}}\)</span> and <span class="math inline">\(k_{\mathrm{str}}\)</span> exist; the page’s single-platform example remains illustrative.</p>
+</section>
+</section>
+<section id="calculation" class="level2">
+<h2 class="anchored" data-anchor-id="calculation">Calculation</h2>
+<p>The calculation is performed per platform and multiplied by <span class="math inline">\(N_{\mathrm{plat}}\)</span> at the cost step.</p>
+<p><strong>Step 1: hosted-equipment mass.</strong></p>
+<p><span class="math display">\[
+m_{\mathrm{eq}}=\sum_k m_{\mathrm{eq},k}
+\]</span></p>
+<p><strong>Step 2: topside mass.</strong></p>
+<p><span class="math display">\[
+m_{\mathrm{str}}=k_{\mathrm{str}}\,m_{\mathrm{eq}},
+\qquad
+m_{\mathrm{top}}=m_{\mathrm{eq}}+m_{\mathrm{str}}
+\]</span></p>
+<p><span class="math inline">\(m_{\mathrm{top}}\)</span> is the complete topside dry mass in tonnes. It is the quantity that <span class="math inline">\(k_J\)</span> is referenced to.</p>
+<p><strong>Step 3: topside lift modules.</strong></p>
+<p><span class="math display">\[
+N_S=N_{\mathrm{plat}}N_{\mathrm{mod}},
+\qquad
+m_{S,\max}=\frac{m_{\mathrm{top}}}{N_{\mathrm{mod}}}
+\]</span></p>
+<p>The topside is assumed to be split into modules of equal mass. <span class="math inline">\(N_{\mathrm{mod}}\)</span> is a discrete input, so a split topside is represented as a step in lift count rather than a smooth mass correction.</p>
+<p><strong>Step 4: jacket and pile masses.</strong></p>
+<p><span class="math display">\[
+m_J=k_J\,m_{\mathrm{top}},
+\qquad
+m_P=a_P\,m_J^{\,b_P}
+\]</span></p>
+<p>with <span class="math inline">\(m_J\)</span> and <span class="math inline">\(m_P\)</span> in tonnes. <span class="math inline">\(a_P\)</span> carries the dimension <span class="math inline">\(\mathrm{t}^{1-b_P}\)</span> implied by the source fit.</p>
+<p><strong>Step 5: material and fabrication CAPEX.</strong></p>
+<p><span class="math display">\[
+C_{\mathrm{str}}=c_{\mathrm{str}}\,m_{\mathrm{str}},
+\qquad
+C_{\mathrm{int}}=c_{\mathrm{int}}\,m_{\mathrm{eq}},
+\qquad
+C_J=c_J\,m_J,
+\qquad
+C_P=\frac{c_P\,e_{2022}}{X}\,m_P
+\]</span></p>
+<p><span class="math display">\[
+C_{\mathrm{plat}}=N_{\mathrm{plat}}\left(C_{\mathrm{str}}+C_{\mathrm{int}}+C_J+C_P\right)
+\]</span></p>
+<p>All terms are in EUR<sub>2025</sub>. <span class="math inline">\(C_P\)</span> is escalated in USD before conversion, following the common price basis.</p>
+<p><strong>Step 6: averaged specific cost.</strong></p>
+<p><span class="math display">\[
+c_{\mathrm{plat}}=\frac{C_{\mathrm{plat}}}{P_{\mathrm{plat}}}
+\]</span></p>
+<p><span class="math inline">\(c_{\mathrm{plat}}\)</span> in EUR<sub>2025</sub>/kW is a reporting and comparison metric only. The model uses <span class="math inline">\(C_{\mathrm{plat}}\)</span>, which responds to mass, not to rated power.</p>
+<p>If any input is unresolved, the corresponding mass or cost is reported as not parameterised rather than zero.</p>
+</section>
+<section id="model-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="model-outputs">Model Outputs</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Output</th>
+<th style="text-align: right;">Unit</th>
+<th>Downstream use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(m_{\mathrm{eq}}\)</span>, <span class="math inline">\(m_{\mathrm{str}}\)</span>, <span class="math inline">\(m_{\mathrm{top}}\)</span></td>
+<td style="text-align: right;">t/platform</td>
+<td>Mass-balance inspection</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(m_J\)</span></td>
+<td style="text-align: right;">t/platform</td>
+<td>Jacket lift screen on the installation page</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(m_P\)</span></td>
+<td style="text-align: right;">t/platform</td>
+<td>Pile handling input for the installation page</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(N_S\)</span> and <span class="math inline">\(m_{S,\max}\)</span></td>
+<td style="text-align: right;">count and t</td>
+<td>Topside lift count and lift screen on the installation page</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(C_{\mathrm{str}}\)</span>, <span class="math inline">\(C_{\mathrm{int}}\)</span>, <span class="math inline">\(C_J\)</span>, <span class="math inline">\(C_P\)</span></td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
+<td>Cost breakdown</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C_{\mathrm{plat}}\)</span></td>
+<td style="text-align: right;">EUR<sub>2025</sub></td>
+<td>Platform supply CAPEX in the project cost summary</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c_{\mathrm{plat}}\)</span></td>
+<td style="text-align: right;">EUR<sub>2025</sub>/kW</td>
+<td>Comparison with published platform-inclusive station costs</td>
+</tr>
+</tbody>
+</table>
+<p>The implementation is <code>model/platforms/platform_material_capex.py</code>.</p>
+</section>
+<section id="worked-example" class="level2">
+<h2 class="anchored" data-anchor-id="worked-example">Worked Example: 2 GW Platforms</h2>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Calculation logic not yet selected
+<span class="screen-reader-only">Note</span>Reserved: results not yet calculable
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The repository does not yet adopt a relationship between topside mass and platform material CAPEX. The model still requires evidence for the functional form, its cost scope, and any separate treatment of the support structure and foundation. No platform material CAPEX is reported until those choices are documented.</p>
+<p>This example is set up but reports no numbers. Every result depends on the hosted-equipment masses, which no component page provides yet, and on <span class="math inline">\(k_{\mathrm{str}}\)</span> and the unit costs, which are unresolved. The results will be generated by the model functions above once those inputs exist; they will not be entered by hand.</p>
 </div>
 </div>
+<p>Two platforms are compared on the same power basis:</p>
+<ul>
+<li><strong>HVDC converter platform (electricity export).</strong> A 2 GW AC-collection and HVDC-converter platform, matching the TenneT 2 GW reference system <span class="citation" data-cites="tennet2024TwoGWProgram">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>)</span>.</li>
+<li><strong>Electrolysis platform (centralised hydrogen).</strong> One integrated AC-collection and electrolysis platform receiving 2 GW from the collection system. The 2 GW rating is chosen for this example so that both platforms serve the same wind-farm power.</li>
+</ul>
+<p>For both cases, <span class="math inline">\(N_{\mathrm{plat}}=1\)</span> and <span class="math inline">\(P_{\mathrm{plat}}=2\times10^{6}\)</span> kW, the rated power received from the collection system.</p>
+<section id="hosted-equipment-inventory" class="level3">
+<h3 class="anchored" data-anchor-id="hosted-equipment-inventory">Hosted-Equipment Inventory</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Equipment item</th>
+<th style="text-align: right;">HVDC platform</th>
+<th style="text-align: right;">Electrolysis platform</th>
+<th>Mass owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>66 kV collection switchgear</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+<td>Owner unresolved (ISS-0012)</td>
+</tr>
+<tr class="even">
+<td>Converter transformers, valves, reactors, DC switchyard and converter cooling</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">Not present</td>
+<td><a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a> (ISS-0063)</td>
+</tr>
+<tr class="odd">
+<td>Step-down and rectifier transformers, rectifiers and their cooling</td>
+<td style="text-align: right;">Not present</td>
+<td style="text-align: right;">TODO</td>
+<td><a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a> (ISS-0052)</td>
+</tr>
+<tr class="even">
+<td>PEM stacks</td>
+<td style="text-align: right;">Not present</td>
+<td style="text-align: right;">TODO</td>
+<td><a href="../hydrogen_production/stack.html">PEM Electrolyser Stack</a> (ISS-0052)</td>
+</tr>
+<tr class="odd">
+<td>Balance of plant</td>
+<td style="text-align: right;">Not present</td>
+<td style="text-align: right;">TODO</td>
+<td><a href="../hydrogen_production/balance_of_plant.html">Balance of Plant</a> (ISS-0052)</td>
+</tr>
+<tr class="even">
+<td>Hydrogen compression trains</td>
+<td style="text-align: right;">Not present</td>
+<td style="text-align: right;">TODO</td>
+<td><a href="../hydrogen_infra/compressor.html">Compressor</a> (ISS-0083)</td>
+</tr>
+<tr class="odd">
+<td>Shared auxiliaries, accommodation and utilities</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+<td>Owner unresolved</td>
+</tr>
+<tr class="even">
+<td><strong>Hosted-equipment mass <span class="math inline">\(m_{\mathrm{eq}}\)</span></strong></td>
+<td style="text-align: right;"><strong>TODO</strong></td>
+<td style="text-align: right;"><strong>TODO</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th style="text-align: right;">Unit</th>
+<th style="text-align: right;">HVDC platform</th>
+<th style="text-align: right;">Electrolysis platform</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Topside structure and outfitting <span class="math inline">\(m_{\mathrm{str}}\)</span></td>
+<td style="text-align: right;">t</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="even">
+<td>Complete topside <span class="math inline">\(m_{\mathrm{top}}\)</span></td>
+<td style="text-align: right;">t</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="odd">
+<td>Topside modules <span class="math inline">\(N_{\mathrm{mod}}\)</span></td>
+<td style="text-align: right;">count</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="even">
+<td>Largest topside lift <span class="math inline">\(m_{S,\max}\)</span></td>
+<td style="text-align: right;">t</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="odd">
+<td>Jacket <span class="math inline">\(m_J\)</span></td>
+<td style="text-align: right;">t</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="even">
+<td>Piles <span class="math inline">\(m_P\)</span></td>
+<td style="text-align: right;">t</td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="odd">
+<td>Topside structure <span class="math inline">\(C_{\mathrm{str}}\)</span></td>
+<td style="text-align: right;">million EUR<sub>2025</sub></td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="even">
+<td>Yard integration <span class="math inline">\(C_{\mathrm{int}}\)</span></td>
+<td style="text-align: right;">million EUR<sub>2025</sub></td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="odd">
+<td>Jacket <span class="math inline">\(C_J\)</span></td>
+<td style="text-align: right;">million EUR<sub>2025</sub></td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="even">
+<td>Piles <span class="math inline">\(C_P\)</span></td>
+<td style="text-align: right;">million EUR<sub>2025</sub></td>
+<td style="text-align: right;">TODO</td>
+<td style="text-align: right;">TODO</td>
+</tr>
+<tr class="odd">
+<td><strong>Platform material CAPEX <span class="math inline">\(C_{\mathrm{plat}}\)</span></strong></td>
+<td style="text-align: right;">million EUR<sub>2025</sub></td>
+<td style="text-align: right;"><strong>TODO</strong></td>
+<td style="text-align: right;"><strong>TODO</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Averaged specific cost <span class="math inline">\(c_{\mathrm{plat}}\)</span></strong></td>
+<td style="text-align: right;">EUR<sub>2025</sub>/kW</td>
+<td style="text-align: right;"><strong>TODO</strong></td>
+<td style="text-align: right;"><strong>TODO</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Once the example can be calculated, it should show whether the electrolysis platform’s larger hosted mass produces a materially higher <span class="math inline">\(c_{\mathrm{plat}}\)</span> than the HVDC platform. It should also show whether either topside needs more than one lift module for the selected installation class. The HVDC <span class="math inline">\(c_{\mathrm{plat}}\)</span> can then be compared with the platform-inclusive offshore-station difference recorded as reference evidence on <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a>; that comparison is a plausibility check, not a calibration, because the reference also contains an offshore equipment premium.</p>
+</section>
 </section>
 <section id="interface-with-installation" class="level2">
 <h2 class="anchored" data-anchor-id="interface-with-installation">Interface with Installation</h2>
-<p>This page will provide the physical platform definition needed by the installation model, including the jacket, piles, topside lift modules and their masses. The installation page independently checks transport and lift feasibility and calculates vessel occupation and offshore installation CAPEX.</p>
+<p>This page provides the physical platform definition used by the installation model: <span class="math inline">\(N_{\mathrm{plat}}\)</span>, <span class="math inline">\(N_S\)</span>, <span class="math inline">\(m_J\)</span>, <span class="math inline">\(m_P\)</span> and <span class="math inline">\(m_{S,\max}\)</span>. The installation page independently checks transport and lift feasibility and calculates vessel occupation and offshore installation CAPEX.</p>
 <p>A material-CAPEX relationship cannot be used as an installation-cost proxy. Likewise, installation vessel selection or duration must not be embedded in the material cost calculated here.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Limitation</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(k_J\)</span>, <span class="math inline">\(a_P\)</span> and <span class="math inline">\(b_P\)</span> are undocumented curve fits for HVAC substations</td>
+<td>Jacket and pile mass for large HVDC and electrolysis topsides are extrapolations; their uncertainty is not quantified</td>
+</tr>
+<tr class="even">
+<td>Jacket mass does not depend on water depth, soil or environmental loads</td>
+<td>Depth-driven differences between sites are not captured</td>
+</tr>
+<tr class="odd">
+<td>Topside mass is proportional to equipment mass</td>
+<td>Differences in footprint, deck count and layout density between equipment types enter only through <span class="math inline">\(k_{\mathrm{str}}\)</span></td>
+</tr>
+<tr class="even">
+<td>Equal topside module split</td>
+<td><span class="math inline">\(m_{S,\max}\)</span> is underestimated when modules are unequal</td>
+</tr>
+<tr class="odd">
+<td>Linear yard-integration cost per tonne of equipment</td>
+<td>Integration of dense electrical equipment and of process equipment may differ materially per tonne</td>
+</tr>
+<tr class="even">
+<td>ORBIT’s topside-mass relationship, <span class="math inline">\(3.85\)</span> t/MVA of transformer rating plus 285 t <span class="citation" data-cites="orbitSource2026">(<a href="#ref-orbitSource2026" role="doc-biblioref">National Renewable Energy Laboratory 2026</a>)</span>, is not used</td>
+<td>It duplicates the equipment-mass ledger and applies only to HVAC transformer platforms</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="unresolved-evidence" class="level2">
 <h2 class="anchored" data-anchor-id="unresolved-evidence">Unresolved Evidence</h2>
@@ -635,32 +1229,58 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td>Architecture-specific hosted-equipment mass inventories</td>
-<td>Topside mass cannot be closed</td>
+<td>Architecture-specific hosted-equipment mass inventories (ISS-0052, ISS-0063, ISS-0083)</td>
+<td><span class="math inline">\(m_{\mathrm{eq}}\)</span> and every downstream mass and cost are not calculated</td>
 </tr>
 <tr class="even">
-<td>Definition of structural and outfitting mass added around the equipment</td>
-<td>The cost-driving mass boundary remains incomplete</td>
+<td>Topside dry-weight breakdowns separating equipment from structure and outfitting</td>
+<td><span class="math inline">\(k_{\mathrm{str}}\)</span> is unresolved</td>
 </tr>
 <tr class="odd">
-<td>Material or fabrication cost relationship and price basis</td>
-<td>Platform material CAPEX cannot be calculated</td>
+<td>Fabricated topside-structure unit cost excluding equipment</td>
+<td><span class="math inline">\(C_{\mathrm{str}}\)</span> is unresolved</td>
 </tr>
 <tr class="even">
-<td>Treatment of jacket and foundation cost</td>
-<td>The complete structural cost boundary remains open</td>
+<td>Yard-integration cost evidence</td>
+<td><span class="math inline">\(C_{\mathrm{int}}\)</span> is unresolved</td>
 </tr>
 <tr class="odd">
+<td>Jacket fabrication unit cost, and USD 2024-to-2025 escalation if the ORBIT rate is adopted</td>
+<td><span class="math inline">\(C_J\)</span> is unresolved</td>
+</tr>
+<tr class="even">
+<td>USD 2022-to-2025 escalation factor</td>
+<td><span class="math inline">\(C_P\)</span> is unresolved</td>
+</tr>
+<tr class="odd">
+<td>Platform capacity and multiplicity rule (DEC-0007)</td>
+<td><span class="math inline">\(N_{\mathrm{plat}}\)</span> remains a scenario input; a lift-limit rule is proposed above for adoption</td>
+</tr>
+<tr class="even">
 <td>Relationship between calculated mass and installation lift modules</td>
-<td>The installation handoff remains project-specific</td>
+<td><span class="math inline">\(N_{\mathrm{mod}}\)</span> remains a scenario input with an equal-split assumption</td>
 </tr>
 </tbody>
 </table>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-orbitSource2026" class="csl-entry" role="listitem">
+National Renewable Energy Laboratory. 2026. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. V. Git revision bf357ee9e7fc01ee73d7085139055c598ac02ff8. Released. <a href="https://github.com/WISDEM/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8">https://github.com/WISDEM/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8</a>.
+</div>
+<div id="ref-offshoreMag2023LanWin" class="csl-entry" role="listitem">
+Offshore staff. 2023. <span>“Dragados Fabricating Two <span>German</span> <span>North Sea</span> <span>LanWin</span> <span>HVDC</span> Platforms.”</span> Offshore Magazine, February. <a href="https://www.offshore-mag.com/renewable-energy/article/14289411/dragados-fabricating-two-german-north-sea-lanwin-hvdc-platforms">https://www.offshore-mag.com/renewable-energy/article/14289411/dragados-fabricating-two-german-north-sea-lanwin-hvdc-platforms</a>.
+</div>
+<div id="ref-allseasPlatformInstallation2026" class="csl-entry" role="listitem">
+<span>“Platform Transportation and Installation.”</span> 2026. <span>Allseas</span>. <a href="https://www.allseas.com/en/what-we-do/platform-transportation-and-installation">https://www.allseas.com/en/what-we-do/platform-transportation-and-installation</a>.
+</div>
+<div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
+TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->
 <script>
 (() => {
@@ -764,7 +1384,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
