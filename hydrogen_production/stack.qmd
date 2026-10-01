@@ -128,13 +128,12 @@ In practice, approximately {{< var stack-end-of-life-degradation >}} performance
 
 **Ex-post energy penalty**
 
-Degradation is applied after the operating calculation, as an energy penalty. Operation, module selection and equipment sizing remain at beginning of life. Let $r$ be the degradation rate per full-load hour, $F$ the stacks' annual full-load hours (annual stack energy divided by installed stack capacity), $d_\mathrm{EOL}$ the end-of-life loss and $N$ the project life in years. The loss grows by $g=rF$ per year and resets at each replacement, after $T=d_\mathrm{EOL}/g$ years. With $k=\lfloor N/T
-floor$ complete stack lives and remainder $R=N-kT$, the project-average loss and the lifetime production factor are:
+Degradation is applied after the operating calculation, as an energy penalty. Operation, module selection and equipment sizing remain at beginning of life. Let $r$ be the degradation rate per full-load hour, $F$ the stacks' annual full-load hours (annual stack energy divided by installed stack capacity), $d_\mathrm{EOL}$ the end-of-life loss and $N$ the project life in years. The loss grows by $g=rF$ per year and resets at each replacement, after $T=d_\mathrm{EOL}/g$ years. With $k=\lfloor N/T\rfloor$ complete stack lives and remainder $R=N-kT$, the project-average loss and the lifetime production factor are:
 
 $$
-ar d=rac{k\,d_\mathrm{EOL}T/2+gR^2/2}{N},
+\bar d=\frac{k\,d_\mathrm{EOL}T/2+gR^2/2}{N},
 \qquad
-f_\mathrm{life}=1-ar d.
+f_\mathrm{life}=1-\bar d.
 $$
 
 Delivered hydrogen is multiplied by $f_\mathrm{life}$ (implemented in `lifetime_production_factor` in `model/hydrogen_production/stack.py`). Degradation-driven increases in BOP load are not modelled. The replacement cost still uses the separate `stack-replacement-life` input, which should be set consistently with $T$.
