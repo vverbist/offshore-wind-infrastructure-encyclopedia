@@ -4,6 +4,7 @@ from math import ceil, log
 from CoolProp.CoolProp import PropsSI
 from model.inputs import Inputs
 from model.methodology.financial_and_price_basis import normalize_usd
+from model.hydrogen_production.stack import StackCurve, operate
 
 
 def stages(inlet_bar: float, outlet_bar: float, inputs: Inputs) -> int:
@@ -81,10 +82,18 @@ def supply_cost(packages: list[Compressor], inputs: Inputs) -> float:
     return sum(p.trains * cost * (p.motor_kw_per_train / reference) ** exponent for p in packages)
 
 
-def reference_cost_curve(inlet_bar: float, outlet_bar: float, inputs: Inputs) -> float:
-    """Legacy figure anchor only; its unresolved price basis excludes it from case CAPEX."""
-    reference = specific_energy(inputs.number("compressor-reference-inlet-pressure", "bar"),
-                                inputs.number("compressor-reference-outlet-pressure", "bar"), inputs)
-    # Deliberate reference-only display; never call this from the cost ledger.
-    anchor = inputs.reference_number("compressor-legacy-cost-anchor", "EUR/kW")
-    return anchor * (specific_energy(inlet_bar, outlet_bar, inputs) / reference) ** inputs.number("compressor-cost-exponent")
+def turbine_reference(turbine_kw: float, inlet_bar: float, outlet_bar: float,
+                      curve: StackCurve, inputs: Inputs) -> dict:
+    """Illustrative full-power duty: 1x stack capacity, no conversion losses.
+
+    Stack, BOP and compression share turbine power. Pressures are bar(a);
+    costs are purchase-only EUR2025. This does not set an article design case.
+    """
+    energy = specific_energy(inlet_bar, outlet_bar, inputs)
+    operation = operate(turbine_kw, turbine_kw, curve, energy, inputs)
+    packages = size([operation.compressor_kw], inputs)
+    purchase = supply_cost(packages, inputs)
+    return {"turbine_kw": turbine_kw, "stack_kw": operation.stack_kw,
+            "bop_kw": operation.bop_kw, "hydrogen_kg_h": operation.hydrogen_kg_h,
+            "compressor_kw": operation.compressor_kw, "trains": packages[0].trains,
+            "purchase_eur": purchase, "eur_per_turbine_kw": purchase / turbine_kw}

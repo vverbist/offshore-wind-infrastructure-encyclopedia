@@ -333,6 +333,18 @@ class StackDegradation(unittest.TestCase):
 
 
 class CompressorCost(unittest.TestCase):
+    def test_turbine_reference_closes_power_balance_and_uses_turbine_denominator(self):
+        from model.hydrogen_infra.compressor import turbine_reference
+        inputs = load_inputs({})
+        curve = StackCurve.read(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx")
+        duty = turbine_reference(15000, 30, 150, curve, inputs)
+        self.assertAlmostEqual(duty["stack_kw"] + duty["bop_kw"] + duty["compressor_kw"], 15000)
+        self.assertAlmostEqual(duty["compressor_kw"], duty["hydrogen_kg_h"] * specific_energy(30, 150, inputs))
+        self.assertAlmostEqual(duty["eur_per_turbine_kw"] * 15000, duty["purchase_eur"])
+        self.assertLess(duty["eur_per_turbine_kw"], duty["purchase_eur"] / duty["compressor_kw"])
+        zero = turbine_reference(15000, 30, 30, curve, inputs)
+        self.assertEqual((zero["compressor_kw"], zero["trains"], zero["purchase_eur"]), (0, 0, 0))
+
     def test_reference_power_cancels_and_normalisation_is_explicit(self):
         from model.hydrogen_infra.compressor import Compressor, supply_cost, cost_coefficient_eur2025
         base = load_inputs({})
