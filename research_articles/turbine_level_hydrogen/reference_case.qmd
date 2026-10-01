@@ -150,6 +150,13 @@ just outside the 3–25 m/s operating range, because PyWake would otherwise hold
 the first tabulated value for waked turbines below cut-in; idle-rotor thrust is
 neglected.
 
+The adopted [turbine electrical boundary](../../turbine_system/power_electronics.qmd)
+is now inverter AC output, before the transformer. The source-table description
+above records the existing data provenance, not a verified conversion to that
+boundary. **TODO (O2):** confirm which converter losses the table includes or
+document its conversion before recovering inverter losses for decentralised
+hydrogen. Existing operating states have not been relabelled or rescaled.
+
 **Operating states.** The fitted sector table is converted to one joint table of
 direction and speed states. Direction is spread uniformly within each 30° sector
 in {{< var ijv-direction-step-deg >}}° steps, and speed is binned in

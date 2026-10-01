@@ -1,0 +1,123 @@
+---
+title: "Turbine Power Electronics"
+readiness: blocked
+---
+
+## Role and Accounting Boundary
+
+This page defines the turbine electrical output used to compare electricity
+export, centralised hydrogen and decentralised hydrogen. The adopted model
+boundary is the **AC output of the grid-side inverter, before the step-up
+transformer**. The generator and generator-side rectifier remain common to all
+cases; their costs and losses are not removed when comparing architectures.
+
+The transformer is outside the turbine **cost and power-output boundary** used
+here. It is usually housed inside the turbine, in the tower or nacelle, but
+physical location does not determine cost ownership [@bvg2019OffshoreGuide].
+Its purchase cost and downstream losses belong to electrical infrastructure;
+its mass still belongs in the applicable supported-mass and lifting inventory.
+
+## Single-Line Diagram
+
+```{mermaid}
+flowchart TB
+  subgraph turbine["Turbine accounting scope"]
+    G["Generator"] --> R["Rectifier"]
+    R --> D["DC link"]
+    D --> I["Grid-side inverter"]
+  end
+  I --> B["Power-curve boundary: inverter AC output / transformer LV side"]
+  B --> T["Step-up transformer: electrical-infrastructure scope; usually housed in turbine"]
+  T --> A["Infield AC grid"]
+  D -. "Decentralised alternative: inverter and transformer omitted" .-> H["Electrolyser interface: direct DC or dedicated DC/DC"]
+```
+
+The DC branch replaces the AC path; it is not an additional simultaneous export
+path. “LV side” identifies the lower-voltage transformer winding relative to the
+infield grid; it does not prescribe a particular equipment voltage class.
+
+## Power Available to Each Architecture
+
+Required inputs are the turbine power curve at the declared boundary and the
+inverter and transformer efficiencies. Their specifications and evidence belong
+to [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd#sec-grid-side-inverter).
+No numerical efficiency is independently defined on this page.
+
+For electricity export and centralised hydrogen, the power delivered to the
+infield grid is:
+
+$$
+P_{\mathrm{array,in}}=P_{\mathrm{curve}}\eta_{\mathrm{tr}}.
+$$
+
+For decentralised hydrogen, removing the inverter recovers its conversion loss:
+
+$$
+P_{\mathrm{DC}}=\frac{P_{\mathrm{curve}}}{\eta_{\mathrm{inv}}},
+\qquad
+\Delta P_{\mathrm{inv}}=P_{\mathrm{curve}}
+\left(\frac{1}{\eta_{\mathrm{inv}}}-1\right).
+$$
+
+Here $P_{\mathrm{curve}}$ is inverter AC output, $P_{\mathrm{array,in}}$ is
+transformer output, $P_{\mathrm{DC}}$ is available DC-link power and
+$\Delta P_{\mathrm{inv}}$ is recovered inverter loss, all in kW.
+$\eta_{\mathrm{inv}}$ and $\eta_{\mathrm{tr}}$ are dimensionless output/input
+efficiencies at the applicable operating point. Division reverses the inverter
+loss; adding a loss percentage is not equivalent. These expressions assume
+the same upstream operating point and do not authorise operation beyond the
+generator, rectifier or DC interface ratings.
+
+The [DC Integration](../hydrogen_production/dc_integration.qmd#sec-dc-compared-cases)
+page defines the direct connection of the electrolyser to the DC link and its
+matching and protection conditions. The conservative alternative retains a
+dedicated stack-side DC/DC converter. In either case, retained interface losses
+are applied after recovering inverter losses. Neither architecture receives a
+generator or rectifier efficiency credit.
+
+## Cost Boundary
+
+For comparable per-turbine supply costs in EUR2025, let
+$C_{\mathrm{legacy}}$ denote a conventional turbine package that includes the
+transformer, $C_{\mathrm{tr}}$ its consistently allocated transformer cost, and
+$C_{\mathrm{inv}}$ the separable grid-side inverter cost. Then:
+
+$$
+C_{\mathrm{turbine,AC}}=C_{\mathrm{legacy}}-C_{\mathrm{tr}},
+\qquad
+C_{\mathrm{turbine,DC}}=C_{\mathrm{turbine,AC}}-C_{\mathrm{inv}}.
+$$
+
+The AC architectures book $C_{\mathrm{tr}}$ once under electrical infrastructure.
+The decentralised architecture does not purchase it. Added DC/DC equipment and
+changes to protection, cooling and cabling are separate retained costs, not part
+of the inverter credit. An unknown inverter price is not a zero price.
+
+The [turbine cost ledger](wind_turbine.qmd#sec-turbine-electrical-credit) currently
+includes the transformer in its calibrated conventional package. Reallocation
+must use that same calibrated term and preserve the combined AC supply cost;
+subtracting an unrelated supplier benchmark would change the calibration.
+
+## Reference-Curve and Implementation Status
+
+The inverter-output boundary above is the adopted model convention, not a claim
+that every published turbine curve uses the same measurement point. A curve
+must identify whether converter and transformer losses are already included.
+
+**TODO — reconcile the supplied reference curve.** The
+[article reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd)
+currently documents its table as generator electrical output. It does not
+establish an inverter-output basis. Confirm included converter losses or derive
+an explicitly documented boundary conversion before applying the inverter-loss
+reversal. Do not silently relabel the existing operating states.
+
+**TODO — numerical adoption and accounting migration.** Inverter-only efficiency
+and cost remain unresolved on Power Conversion Equipment. The executable model
+still uses the legacy turbine package and operating-power convention; the
+equations above define the required reconciliation, not completed numerical
+results. O2 remains open until the curve basis, losses and cost allocation agree.
+
+## References
+
+::: {#refs}
+:::

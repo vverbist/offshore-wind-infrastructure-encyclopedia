@@ -27,8 +27,12 @@ adopted on the owning page. Unsupported values stay as explicit TODOs.
 
 ## Electrical Chains Compared
 
-Three article cases are compared. All start at the same generator output, the
-boundary of the [common operating case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case).
+Three article cases are compared. The adopted power-curve boundary is the
+inverter AC output, before the turbine transformer, as defined on
+[Turbine Power Electronics](../turbine_system/power_electronics.qmd).
+The existing [common operating case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case)
+still documents generator output; reconciliation of that source curve remains
+required before numerical use of the new boundary.
 
 | Equipment role | Centralised hydrogen | Conservative turbine-level | Direct DC (`converter_reduced`) |
 |---|:---:|:---:|:---:|
@@ -53,8 +57,9 @@ Direct DC:     generator -> generator-side converter -> DC link -> stacks
 
 The generator-side converter is present in every case. It is therefore
 **excluded from the comparison cost table** and stays in the common turbine
-baseline. Its losses still apply to every case and must be accounted for
-consistently (see [Losses](#sec-pce-losses)). Auxiliary supplies, protection,
+baseline. At the adopted inverter-output boundary its losses are already upstream
+of the power curve; no extra generator-side loss or credit is applied when
+comparing architectures (see [Losses](#sec-pce-losses)). Auxiliary supplies, protection,
 switchgear and dedicated cooling are named separately in each role below, so
 that a package boundary cannot silently absorb or drop them.
 
@@ -89,10 +94,10 @@ unit size, and a selected size must stay within some documented limit.
 | Voltage | IEA 15 MW generator: 4.77 kV line voltage at rating [@gaertner2020IEA15]. The converter voltage level is not defined by the reference turbine; the turbine case's converter voltage remains TODO |
 | Documented ratings | Complete back-to-back medium-voltage converters to about 12 MW per line at 3.3 kV, and 20 MW and above with two lines [@abb2023PCS6000; @abbPCS6000Web2026] |
 | Cost | In the common turbine baseline; not in the comparison table |
-| Losses | Not separately published; the complete back-to-back converter is about 98% efficient at rated power [@abb2023PCS6000]. Not yet represented in the model (see [Losses](#sec-pce-losses)) |
-| Status | Common baseline; loss share unresolved |
+| Losses | Upstream of the adopted power-curve boundary; no separate architecture adjustment. The complete back-to-back converter is about 98% efficient at rated power [@abb2023PCS6000], which does not establish an inverter-only efficiency |
+| Status | Common baseline; supplied curve boundary still requires reconciliation |
 
-### Grid-side inverter
+### Grid-side inverter {#sec-grid-side-inverter}
 
 | Item | Record |
 |---|---|
@@ -104,6 +109,26 @@ unit size, and a selected size must stay within some documented limit.
 | Package boundary | Inside the turbine converter package and inside the calibrated turbine cost |
 | Status | **Evidence gap.** Neither cost nor losses are inferred by splitting a complete converter package; no removal credit is claimed until separable evidence exists |
 
+This page owns the grid-side inverter specifications. The turbine page uses
+these inputs through the [boundary and removal equations](../turbine_system/power_electronics.qmd).
+
+| Model specification | Definition and adoption status |
+|---|---|
+| Required AC duty | Turbine power-curve output, in kW; unit count must meet the selected turbine rating |
+| DC input and AC output voltage | V DC and V AC line-to-line respectively; TODO: select a compatible converter and generator design |
+| Inverter-only efficiency | `turbine-inverter-efficiency` (fraction): {{< var turbine-inverter-efficiency >}}. TODO: DC-link input to inverter AC terminals, with loading and cooling boundary specified |
+| Inverter-only purchase cost | `turbine-inverter-unit-cost` (EUR2025/kW of rated AC output): {{< var turbine-inverter-unit-cost >}}. TODO: separable grid-side stage, price basis and included controls/cooling; excludes retained rectifier, transformer and installation |
+
+NREL/WISDEM's cost-model example exposes a converter category, but does not
+establish a separately priced grid-side inverter or its efficiency
+[@wisdemCostExample2026]. A complete converter cost cannot be deducted when the
+rectifier remains. The DEA offshore-wind technology brief reports project-level
+investment categories, including turbines, array cables and substations; it
+does not provide the inverter-only specifications needed here
+[@dea2025OffshoreWindBrief]. These sources support checking package boundaries,
+not a numerical inverter credit. The blank central inputs above preserve that
+evidence gap rather than assigning an unsupported split of a package value.
+
 ### Turbine step-up transformer
 
 | Item | Record |
@@ -114,7 +139,7 @@ unit size, and a selected size must stay within some documented limit.
 | Documented ratings | Tower or nacelle units above 7 MVA in 36 and 72.5 kV classes, ester insulated [@hitachiWindSTAR2026]; dry cast-resin designs are also used [@bvg2019OffshoreGuide] |
 | Mass and cost evidence | WISDEM mass $1.915P+1910$ kg with $P$ in kW, and a 18.8 USD/kg reference rate, are already in the turbine ledger [@wisdemSource2026]; 3.59% of turbine cost in the 2007 EWEA breakdown [@irena2012WindCost] |
 | Losses | No adopted value. EU Ecodesign loss limits do not apply to transformers for offshore wind turbines [@eu2019Ecodesign1783] |
-| Package boundary | Transformer only; turbine switchgear and HV cabling are separate turbine electrical items |
+| Package boundary | Electrical infrastructure, outside turbine cost and power-output scope, even when physically housed inside the turbine; switchgear and HV cabling remain separate items |
 | Status | Removal credit follows the explicit WISDEM transformer term (see [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd)); losses TODO |
 
 ### Central step-down transformer
@@ -165,16 +190,18 @@ unit size, and a selected size must stay within some documented limit.
 
 ## Losses {#sec-pce-losses}
 
-The model's wind-power states are generator electrical output: the IEA 15 MW
-curve includes generator efficiency but no converter or transformer loss. The
-current implementation applies AC cable losses and then the central {{< var central-conversion-efficiency >}}
-package; turbine-level cases use a single interface efficiency that is still
-blank. The loss terms are therefore:
+For a curve reconciled to inverter AC output, generator and rectifier losses
+are already included. Centralised hydrogen and electricity export apply the
+turbine transformer efficiency downstream; decentralised hydrogen divides curve
+power by inverter efficiency to recover the removed inverter loss. The current
+implementation still uses the legacy generator-output record, AC cable losses
+and the central {{< var central-conversion-efficiency >}} package. It must not be
+treated as an implementation of the adopted boundary. The required terms are:
 
 | Loss term | Cases | Current model treatment | Status |
 |---|---|---|---|
-| Generator-side converter | All | Not represented | TODO: add consistently to every case |
-| Grid-side inverter | Centralised | Not represented | TODO: evidence gap; do not split a package efficiency |
+| Generator-side converter | All | Legacy source-curve boundary unresolved | Included upstream in a reconciled inverter-output curve; no additional architecture loss |
+| Grid-side inverter | Included in AC cases; removed in turbine-level cases | Recovery not implemented | TODO: inverter-only efficiency and curve reconciliation; recover by division in decentralised cases |
 | Turbine step-up transformer | Centralised | Not represented | TODO |
 | 66 kV AC collection | Centralised | Calculated from cable resistance | AC resistance and power factor still to be adopted |
 | Central transformers and rectifier | Centralised | {{< var central-conversion-efficiency >}} net package efficiency | Adopted |
@@ -183,20 +210,23 @@ blank. The loss terms are therefore:
 
 : Loss terms by case and their current treatment.
 
-Omitting the turbine converter and transformer losses from the centralised chain
-favours that case, while omitting the generator-side converter affects all cases
-equally. O2c must close these terms before energy comparisons are reported. A
-detailed loss calculation replaces a flat efficiency rather than being added to
-it.
+O2c must reconcile the curve boundary and close these terms before comparable
+energy results are reported. No separate generator or rectifier loss is added
+to the adopted curve. A detailed loss calculation replaces a flat efficiency
+rather than being added to it.
 
 ## Cost and Mass Reconciliation
 
 Each electrical function is counted once:
 
-- The common turbine calibration includes the complete conventional turbine
+- The legacy common turbine calibration includes the complete conventional turbine
   electrical scope, including converter and transformer. The turbine-level cases
   adjust it through `turbine-electrical-cost-adjustment` on
   [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd).
+- Under the adopted boundary, the calibrated transformer term moves out of
+  turbine cost and into electrical infrastructure for the AC architectures.
+  Combined AC purchase cost must remain unchanged. The executable ledger has
+  not yet made this reallocation; do not add a second transformer charge.
 - The transformer removal credit can follow the explicit WISDEM transformer term
   in that ledger. No grid-side inverter credit is claimed, because the calibrated
   cost has no separable converter term and no separable evidence exists.
@@ -214,7 +244,7 @@ Each electrical function is counted once:
 
 | Gap | Effect | Route to closure |
 |---|---|---|
-| Separate grid-side inverter cost and losses | No removal credit; centralised loss understated | Supplier data for a split package, or a documented converter cost model |
+| Separate grid-side inverter cost and losses | Decentralised cost credit and recovered DC-link power unresolved | Supplier data for a split package, or a documented inverter-only model |
 | Converter AC voltage and turbine DC-link voltage | Transformer secondary and DC/DC input undefined | Select a converter voltage level for the reference turbine |
 | Stack DC voltage and grouping | Rectifier, rectifier-transformer and DC/DC output undefined | Stack cell count and series/parallel grouping on [Stack](../hydrogen_production/stack.qmd) |
 | DC/DC cost and multi-megawatt unit rating | Conservative case cannot be costed | Supplier quotation or published product data |

@@ -17,7 +17,16 @@ wind-turbine generator -> active rectifier/up-chopper -> DC link -> PEM stack or
 
 The architecture has no AC export connection, turbine grid-side inverter, electrolyser rectifier, or separate electrolyser-side DC/DC converter. The generator-side active rectifier/up-chopper remains part of the turbine and controls generator current, electromagnetic torque, and the power extracted from the rotor.
 
-## Compared Electrical Cases
+## Compared Electrical Cases {#sec-dc-compared-cases}
+
+[Turbine Power Electronics](../turbine_system/power_electronics.qmd) defines
+the adopted inverter-output power-curve boundary. Both turbine-level cases
+omit the grid-side inverter: available DC-link power is obtained by dividing
+that curve output by inverter efficiency, and the separable inverter purchase
+cost is deducted from turbine cost. Specifications remain owned by
+[Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd#sec-grid-side-inverter).
+The supplied curve's boundary and numerical credit remain unresolved; this
+relationship must not be applied to an unreconciled generator-output curve.
 
 The article compares three agreed electrical cases. Equipment duty, ratings, costs, losses and evidence gaps for each role are owned by [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd).
 

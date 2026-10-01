@@ -12,6 +12,12 @@ The model boundary includes the rotor, nacelle, turbine electrical equipment, to
 
 ## Calculation Dependency
 
+The [Turbine Power Electronics](power_electronics.qmd) page defines the adopted
+electrical boundary at inverter AC output. The step-up transformer is allocated
+to electrical infrastructure even when housed in the turbine; the legacy turbine
+cost ledger still includes it and requires explicit reallocation. Its physical
+location remains relevant to supported mass and installation.
+
 ```{mermaid}
 %%| fig-height: 1.2
 flowchart LR

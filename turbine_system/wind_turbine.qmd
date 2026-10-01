@@ -410,7 +410,16 @@ $$
 
 WISDEM calculates transformer mass explicitly. Converter, switchgear, protection, and cabling masses require separate evidence. A lighter nacelle may also reduce tower and foundation mass, but that secondary effect cannot be calculated with the length-only WISDEM tower regression.
 
-### Electrical removal credit
+### Electrical removal credit {#sec-turbine-electrical-credit}
+
+The adopted [turbine electrical boundary](power_electronics.qmd) excludes the
+step-up transformer from turbine supply cost and places the power-curve boundary
+at the inverter AC output. The equations and executable calibration on this page
+still describe the legacy package including its transformer. Its calibrated
+transformer term must be reallocated to electrical infrastructure without changing
+the combined AC package cost. Physical transformer mass remains in the applicable
+support and lifting inventory. The following adjustment describes the current
+implementation pending that migration, not a second transformer purchase.
 
 The model keeps the conventional turbine as the common baseline for every architecture and applies turbine-level changes through the per-turbine input `turbine-electrical-cost-adjustment`. Its scope follows the shared inventory on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd):
 

@@ -38,6 +38,8 @@ bop-hydrogen-side-manufactured-unit-cost,4,USD/kW,sourced,2020,badgett2024PEMCos
 bop-piping-housing-manufactured-unit-cost,69,USD/kW,sourced,2020,badgett2024PEMCost
 bop-water-reference-purchase-cost,,EUR,assumption,,
 central-conversion-efficiency,0.975,fraction,assumption,,
+turbine-inverter-efficiency,,fraction,assumption,,
+turbine-inverter-unit-cost,,EUR/kW,assumption,2025,
 central-conversion-unit-cost,,EUR/kW,assumption,,
 conservative-conversion-efficiency,,fraction,assumption,,
 converter-reduced-conversion-efficiency,,fraction,assumption,,

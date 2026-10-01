@@ -37,6 +37,7 @@ point-of-use equations and scope; `reference` rows remain non-combinable evidenc
 
 | IDs | Owner and adoption basis |
 |---|---|
+| `turbine-inverter-efficiency`, `turbine-inverter-unit-cost` | `electrical_infra/power_conversion_equipment.qmd`; inverter-only DC-to-AC efficiency and purchase cost per rated AC kW; both remain unresolved, with boundary equations on `turbine_system/power_electronics.qmd` |
 | `annual-hours`, `hydrogen-hhv` | `methodology/energy_availability_and_annualisation.qmd`; non-leap screening year and adopted rounded HHV |
 | `stack-*` | `hydrogen_production/stack.qmd`; existing curve used as supplied, reference current density and module/minimum-load assumptions; HHV voltage and figure cutoff migrated from the existing figure builder |
 | `bop-*` | `hydrogen_production/balance_of_plant.qmd`; NREL source category costs sum in code, existing auxiliary allowance and agreed aggregate scaling; water purchase cost remains TODO |
