@@ -646,7 +646,7 @@ window.Quarto = {
 <td>Number of substations</td>
 <td style="text-align: right;"><span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
 <td style="text-align: right;">count</td>
-<td>Project design input</td>
+<td>Fixed at one for the central platform</td>
 </tr>
 <tr class="even">
 <td>Topside lift modules per substation</td>
@@ -680,6 +680,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+<p>The platform module supplies complete topside, jacket and pile masses without requiring a lift plan. The installation handoff requires <code>[installation.platform] topside_modules_per_platform</code>: a positive integer. The current crane screen uses <span class="math inline">\(m_{S,\max}=M/N_{\mathrm{module/OSS}}\)</span>, an explicit equal-module assumption. Unequal modules require a revised lift inventory; the model does not increase platform count to pass a failed screen.</p>
 <p>The screening lift masses should include lift-applicable attachments and rigging where that information is available. The capacity inputs should use the capacity at the intended configuration and radius when known; a published nominal maximum provides only an exclusion screen.</p>
 </section>
 <section id="duration" class="level3">
@@ -832,7 +833,7 @@ C_{\mathrm{inst}}
 =C_{\mathrm{normal}}
 +C_{\mathrm{exceptional}}.
 \]</span></p>
-<p>If exceptional work is relevant but not quantified, it is reported as <strong>not included</strong> rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the available campaign durations are still reported.</p>
+<p>If exceptional work is relevant but not quantified, it is reported as <strong>not included</strong> rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the upstream structural inventory remains available.</p>
 </section>
 <section id="model-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="model-outputs">Model Outputs</h2>
