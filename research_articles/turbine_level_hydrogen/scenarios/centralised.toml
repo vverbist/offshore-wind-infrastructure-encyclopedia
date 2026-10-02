@@ -24,7 +24,7 @@ stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
 
 [platform]
 # Exactly one platform. Complete topside includes all equipment and structure.
-# topside_mass_t: direct design mass in tonnes (O3).
+# Supply exactly one equipment_mass_t or topside_mass_t, in tonnes (O3).
 # Alternatively mass_method = "power_scaling" with rated_power_gw and adopted
 # platform-reference-topside-mass/platform-reference-power in inputs.csv.
 # Do not supply direct mass and power_scaling together.
@@ -35,9 +35,8 @@ stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
 # port_distance_km, splices, burial_pass_km, burial_other_offshore_days,
 # survey_pass_km. Loading plans remain explicit project inputs.
 
-[installation.platform]
-# topside_modules_per_platform: positive integer; equal-module crane screening.
-# One platform does not imply one topside lift.
+# Platform installation is included in EPCI; no separate lift/cost input.
+# Installation feasibility remains an independent engineering assessment.
 
 [overrides]
 # Named, adopted central input IDs only; values retain their CSV units.

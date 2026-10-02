@@ -17,6 +17,7 @@ from .hydrogen_infra.pipeline_pressure_and_capacity import check_sections
 from .platforms import platform_material_capex as platform
 from .offshore_installation import turbine_and_foundation_installation as turbine_install
 from .offshore_installation import cable_and_pipeline_installation as line_install
+from .offshore_installation import platform_and_substation_installation as platform_install
 from .methodology.energy_availability_and_annualisation import delivered_mass
 from .methodology.system_boundary_and_lcoe import summarize
 
@@ -279,22 +280,23 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
         def platform_mass():
             case = dict(scenario.get("platform", {}))
             if case.get("mass_method") == "power_scaling":
-                if "topside_mass_t" in case or "equipment_mass_t" in case:
-                    raise ValueError("Choose direct mass or power scaling, not both")
+                if "topside_mass_t" in case:
+                    raise ValueError("Choose direct topside mass or power scaling, not both")
                 case["topside_mass_t"] = platform.estimate_topside_mass(
                     float(required(case, "rated_power_gw")), inputs)
             elif case.get("mass_method", "direct") != "direct":
                 raise ValueError("Platform mass_method must be direct or power_scaling")
-            return platform.epci_inventory(case, inputs, depth)
+            return platform.inventory(case, dependent(depth, "water depth"), inputs)
         platform_inventory = step("platform inventory", platform_mass)
         if platform_inventory:
             result.physical["platform"] = platform_inventory
-        def platform_epci():
-            record = platform.epci_cost(dependent(platform_inventory, "platform inventory"), inputs)
+        def platform_supply():
+            record = platform.supply_cost(dependent(platform_inventory, "platform inventory"), inputs)
             result.physical["platform_costs"] = record
+            if record["missing_inputs"]:
+                raise MissingInput("; ".join(record["missing_inputs"]))
             return record["total_eur"]
-        result.physical["platform_total_eur"] = cost("platform", "epci", platform_epci)
-        cost("platform", "decommissioning", lambda: inputs.number("platform-decommissioning-cost", "EUR"))
+        platform_supply_eur = cost("platform", "supply", platform_supply)
 
     installation = scenario.get("installation", {})
     for kind in ("turbine", "foundation"):
@@ -335,9 +337,21 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
         result.physical["export_installation"] = campaign
         return campaign["installation_eur"]
     cost("hydrogen-export", "installation", export_installation)
+    if central:
+        def install_platform():
+            lifts = platform_install.lift_inventory(dependent(platform_inventory, "platform inventory"),
+                                                    installation.get("platform", {}))
+            result.physical["platform_lifts"] = lifts
+            record = platform_install.calculate(lifts, inputs)
+            result.physical["platform_installation"] = record
+            return record["installation_eur"]
+        platform_installation_eur = cost("platform", "installation", install_platform)
+        result.physical["platform_total_eur"] = (None if platform_supply_eur is None or platform_installation_eur is None
+                                                 else platform_supply_eur + platform_installation_eur)
+
     # Annual allowances belong to equipment; neither architecture receives a blanket premium.
     for line in list(result.costs):
-        if line.category not in {"supply", "epci"}:
+        if line.category != "supply":
             continue
         owner = line.component
         if owner == "turbine":

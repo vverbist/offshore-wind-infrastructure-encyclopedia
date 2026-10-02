@@ -32,16 +32,20 @@ ranking.
 ## Cost Boundary
 
 The model distinguishes initial installed CAPEX from the lifecycle capital
-basis used for annualization.
+basis used for annualization. Initial CAPEX sums supply, separate installation
+and EPCI entries. An EPCI entry cannot coexist with supply or installation for
+the same component. Hosted equipment remains separately owned. Annual OPEX,
+replacement and decommissioning enter lifetime costs on their own boundaries.
 
 | Cost category | Treatment and owner |
 |---|---|
 | Component supply CAPEX | Owned by the component page |
-| Offshore installation CAPEX | Owned by the applicable installation page |
+| Offshore installation CAPEX | Owned by the applicable installation page; excludes installation already in platform EPCI |
+| Platform EPCI CAPEX | One package owned by the platform page; replaces separate platform supply and installation |
 | Onshore equipment and connection CAPEX | Owned by the applicable component page |
 | Annual OPEX | Owned by the component page on a non-overlapping scope |
 | Material short-life replacement | Owned by the component page; counted only when replacement is required within {{< var financial-project-life >}} |
-| Decommissioning | Shared calculation on the financial page: {{< var financial-decommissioning-fraction >}} of total offshore installation CAPEX |
+| Decommissioning | {{< var financial-decommissioning-fraction >}} of separate offshore installation CAPEX plus explicit platform removal cost; unresolved removal cost blocks complete LCOH |
 | Commissioning | Owned once by the applicable installation/component interface |
 | Development and shared engineering | Outside the model scope (agreed) |
 | Insurance and owner contingency | Outside the model scope (agreed) |

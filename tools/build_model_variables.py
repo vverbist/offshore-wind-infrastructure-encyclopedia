@@ -16,6 +16,7 @@ from model.platforms.platform_material_capex import inventory as platform_invent
 from model.inputs import load_inputs
 from model.hydrogen_infra.compressor import cost_coefficient_eur2025, reference_purchase_cost, turbine_reference
 from model.hydrogen_production.stack import StackCurve
+from tools.build_platform_benchmarks import build as build_platform_benchmarks
 
 
 def main() -> None:
@@ -23,6 +24,7 @@ def main() -> None:
     variables = build_quarto_variables(parameters)
     variables.update(quarto_variables())
     inputs = load_inputs({})
+    variables.update(build_platform_benchmarks(inputs, PROJECT_ROOT))
     variables["platform-tennet-pair-billion"] = f"{inputs.reference_number('platform-tennet-framework') / inputs.reference_number('platform-tennet-systems') / 1e9:.2f}"
     for key in ("platform-tennet-framework", "platform-mhb-contract", "platform-petrofac-pair-lower-bound"):
         variables[key] = f"{inputs.reference_number(key) / 1e9:g} billion {parameters.get(key).unit}"

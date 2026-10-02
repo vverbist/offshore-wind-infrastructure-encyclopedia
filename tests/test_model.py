@@ -184,6 +184,44 @@ class Components(unittest.TestCase):
         nonlinear = Inputs(inputs.parameters, {"platform-mass-scaling-exponent": 0.5})
         self.assertEqual(platform.estimate_topside_mass(2, nonlinear), 20000)
 
+    def test_platform_epci_mass_interface_and_reference(self):
+        direct = platform.epci_inventory({"equipment_mass_t": 15000}, self.inputs)
+        inferred = platform.epci_inventory({"topside_mass_t": 30000}, self.inputs, 28)
+        self.assertEqual(direct["equipment_t"], inferred["equipment_t"])
+        self.assertEqual(direct["installation_feasibility"], "not_assessed")
+        expected = 60000 * 1.024 * 1.021 * 15000
+        self.assertAlmostEqual(platform.epci_cost(direct, self.inputs)["total_eur"], expected)
+        deep = platform.epci_inventory({"topside_mass_t": 30000}, self.inputs, 56)
+        self.assertEqual(platform.epci_cost(inferred, self.inputs), platform.epci_cost(deep, self.inputs))
+        for case in ({}, {"equipment_mass_t": 0}, {"topside_mass_t": float('nan')},
+                     {"equipment_mass_t": 1, "topside_mass_t": 2}, {"count": 2, "topside_mass_t": 10}):
+            with self.assertRaises(ValueError):
+                platform.epci_inventory(case, self.inputs)
+
+    def test_platform_epci_exponent_preserves_anchor(self):
+        nonlinear = Inputs(self.inputs.parameters, {"platform-epci-cost-scaling-exponent": 0.5})
+        anchor = platform.epci_inventory({"equipment_mass_t": 15000}, self.inputs)
+        larger = platform.epci_inventory({"equipment_mass_t": 60000}, self.inputs)
+        baseline = platform.epci_cost(anchor, self.inputs)["total_eur"]
+        self.assertEqual(platform.epci_cost(anchor, nonlinear)["total_eur"], baseline)
+        self.assertEqual(platform.epci_cost(larger, nonlinear)["total_eur"], 2 * baseline)
+        self.assertEqual(platform.epci_cost(larger, self.inputs)["total_eur"], 4 * baseline)
+
+    def test_epci_ledger_and_explicit_decommissioning(self):
+        inputs = synthetic_inputs({"financial-real-wacc": 0, "financial-project-life": 10,
+                                   "financial-decommissioning-fraction": 0.5})
+        ledger = [CostLine("platform", "epci", 100), CostLine("cable", "installation", 20),
+                  CostLine("platform", "decommissioning", 7)]
+        result = summarize(ledger, 100, inputs)
+        self.assertEqual(result["initial_capex_eur"], 120)
+        self.assertEqual(result["decommissioning_eur"], 17)
+        self.assertAlmostEqual(result["annual_cost_eur"], 13.7)
+        for category in ("supply", "installation"):
+            with self.assertRaises(ValueError):
+                summarize(ledger + [CostLine("platform", category, 0)], 100, inputs)
+        ledger[-1].amount_eur = None
+        self.assertIsNone(summarize(ledger, 100, inputs)["lcoh_eur_kg"])
+
     def test_partial_capacity_availability(self):
         mass = delivered_mass(np.array([[100, 200]]), np.array([10]), np.array([0, 1]), 1)
         self.assertEqual(mass, 2000)
@@ -269,9 +307,30 @@ class Integration(unittest.TestCase):
         result = run_case(self.scenario, load_inputs({}), self.base)
         self.assertIn("platform", result.physical)
         self.assertIn("platform_costs", result.physical)
-        self.assertIsNone(result.physical["platform_total_eur"])
+        self.assertGreater(result.physical["platform_total_eur"], 0)
+        platform_lines = [c for c in result.costs if c.component == "platform"]
+        self.assertEqual({c.category for c in platform_lines}, {"epci", "decommissioning", "annual_opex"})
+        self.assertEqual(sum(c.category == "epci" for c in platform_lines), 1)
+        self.assertTrue(any("platform-decommissioning-cost" in reason for reason in result.reasons))
+        self.assertIsNone(result.summary["lcoh_eur_kg"])
         self.assertFalse(any("feeder" in reason for reason in result.reasons))
         self.assertGreater(result.physical["ac_strings"], 0)
+
+    def test_epci_complete_case_still_requires_decommissioning(self):
+        values = {"array-ac-resistance": 0.05, "array-power-factor": 1,
+                  "install-turbine-usable-payload": 10000, "install-turbine-crane-capacity": 5000,
+                  "install-foundation-usable-payload": 10000, "install-foundation-crane-capacity": 5000,
+                  "stack-replacement-life": 30, "platform-decommissioning-cost": None,
+                  "platform-opex-rate": 0.01}
+        self.scenario["platform"] = {"equipment_mass_t": 0.4}
+        result = run_case(self.scenario, synthetic_inputs(values, fill_missing=True), self.base)
+        self.assertEqual(result.status, "not_parameterized", result.reasons)
+        self.assertIsNone(result.summary["lcoh_eur_kg"])
+        self.assertTrue(all("platform-decommissioning-cost" in r for r in result.reasons), result.reasons)
+        capex = result.physical["platform_total_eur"]
+        opex = next(c.amount_eur for c in result.costs if c.component == "platform" and c.category == "annual_opex")
+        self.assertEqual(opex, capex * 0.01)
+        self.assertNotIn("platform_installation", result.physical)
 
     def test_distributed_case_preserves_turbine_operation(self):
         self.scenario["case"]["architecture"] = "decentralised"
@@ -358,6 +417,39 @@ class Integration(unittest.TestCase):
             for path in (ROOT / "model").rglob("*.py"):
                 name = ".".join(path.relative_to(ROOT).with_suffix("").parts)
                 importlib.import_module(name)
+
+    def test_pressure_screen_survives_missing_upstream_inputs(self):
+        # Physical impossibility must not be hidden by missing layout/loss data.
+        for architecture in ("centralised", "decentralised"):
+            for pressure in (51.01325, 61.01325, 67.01325):
+                scenario = {"case": {"architecture": architecture},
+                            "hydrogen": {"injection_bar": pressure, "delivery_bar": 67.01325}}
+                result = run_case(scenario, load_inputs({}), self.base)
+                self.assertEqual(result.status, "infeasible")
+                self.assertTrue(any("discharge" in reason for reason in result.reasons))
+        with self.assertRaises(Infeasible):
+            capacity_kg_h(0.15, 60, 67, 100000, load_inputs({}))
+        with self.assertRaises(ValueError):
+            capacity_kg_h(-0.15, 150, 67, 100000, load_inputs({}))
+
+    def test_agreed_grid_units_and_missing_collection_pressure(self):
+        from research_articles.turbine_level_hydrogen.analysis.run_design_cases import read_design_cases, apply_design_values
+        scenarios = ROOT / "research_articles/turbine_level_hydrogen/scenarios"
+        cases = read_design_cases(scenarios / "pressure_diameter_grid.toml", load_inputs({}))
+        self.assertEqual(len(cases), 99)
+        self.assertEqual(cases.case.nunique(), 99)
+        self.assertEqual(cases["hydrogen.injection_bar"].nunique(), 11)
+        self.assertEqual(cases["hydrogen.export_diameter_m"].nunique(), 9)
+        self.assertAlmostEqual(cases.iloc[0]["hydrogen.injection_bar"], 51.01325)
+        self.assertAlmostEqual(cases.iloc[-1]["hydrogen.injection_bar"], 151.01325)
+        self.assertAlmostEqual(cases.iloc[0]["hydrogen.export_diameter_m"], 0.1016)
+        self.assertAlmostEqual(cases.iloc[-1]["hydrogen.export_diameter_m"], 0.2032)
+        self.assertEqual((cases["hydrogen.injection_bar"] <= 67.01325).sum(), 18)
+        values = cases.iloc[-1].to_dict()
+        values.pop("case")
+        filled = apply_design_values(read_scenario(scenarios / "decentralised.toml"), values)
+        self.assertNotIn("export_inlet_bar", filled["hydrogen"])
+        self.assertNotIn("sections_file", filled["collection"])
 
 
 class StackDegradation(unittest.TestCase):

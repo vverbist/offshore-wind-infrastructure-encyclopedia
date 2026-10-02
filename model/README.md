@@ -45,8 +45,8 @@ core test suite when PyWake is absent.
 | `electrical_infra/infield_ac_cables.py` | Radial-string inventory, supply cost and resistive losses |
 | `hydrogen_production/` | Stack polarisation, aggregate BOP and electrical interfaces |
 | `hydrogen_infra/` | Compression, physical collection network and existing pipeline hydraulics |
-| `platforms/` | One platform: complete topside mass and depth to provisional structural masses; separate fabrication and yard costs |
-| `offshore_installation/` | Turbine/foundation, platform and three-spread line installation |
+| `platforms/` | One platform: direct equipment or complete topside mass to one commercial EPCI package; legacy DNV helpers retained |
+| `offshore_installation/` | Turbine/foundation and three-spread line installation; legacy platform module inactive |
 | `methodology/` | Availability, financial annualisation and technical-scope LCOH |
 | `reporting.py` | Explicit local output writing |
 
@@ -178,7 +178,7 @@ shared owner engineering, insurance, owner contingency, construction finance,
 tax and downstream services. Platform and receipt equipment remain included.
 Missing included costs block complete LCOH; known subtotals remain available.
 
-Unresolved interfaces currently include platform fabrication/physical inputs,
+Unresolved interfaces currently include platform mass, OPEX and decommissioning inputs,
 price normalisation, electrical cost adjustments/losses, complete installation
 rates/plans, turbine-level equipment lifts, and O&M/availability inputs. The
 conventional turbine calibration can include unresolved converter scope; the
@@ -219,6 +219,13 @@ inputs, not central parameters. Run explicit design cases with
 row of its CSV names a case and supplies dotted scenario fields (for example
 `hydrogen.injection_bar`). It fills only fields the template leaves open and
 writes one result folder per case plus a comparison CSV; it selects nothing.
+The article's `scenarios/pressure_diameter_grid.toml` can replace the cases CSV.
+It expands the agreed gauge-pressure/internal-diameter arrays and writes
+`design_cases.csv` in model units alongside the results. The comparison includes
+reason text. Pressure boundaries are screened even when operating inputs are
+missing: insufficient discharge pressure is infeasible, while unparameterized
+collection pressures remain missing inputs. Distributed export inlet pressure
+must account for collection losses; the runner does not equate it to discharge.
 
 Run `python -m unittest discover -s tests -v`. Calculation tests use explicitly
 synthetic cases, never adopted article inputs; the reference-case tests only check
@@ -231,17 +238,40 @@ and real-case calibration are separate from software verification.
 
 ### Central-platform interface
 
-One platform is fixed. Supply `[platform] topside_mass_t` (complete dry mass,
-including equipment and structure); depth comes from `[site] water_depth_m`.
-Alternatively select `mass_method = "power_scaling"` and `rated_power_gw`, with
-an adopted complete reference mass and matching reference rating in `inputs.csv`.
-Direct mass and scaling cannot be supplied together. The linear baseline exponent
-is a named central input, available for recorded sensitivity overrides.
+One platform is fixed. Supply exactly one `[platform] equipment_mass_t` or
+`topside_mass_t`, in tonnes. Complete topside includes equipment and structure;
+the shared DNV structural fraction converts it to equipment mass. Depth is
+optional metadata for this cost calculation, not a cost multiplier. Other
+components can still require site depth.
 
-`[installation.platform] topside_modules_per_platform` belongs to the installation
-handoff, not structural sizing. The crane screen assumes equal modules and is
-not a lift-engineering assessment. Structure, yard integration and offshore
-installation retain separate boundaries. `physical.platform_costs` retains
-known supply components and missing-input reasons; `physical.platform_total_eur`
-is null until both supply and installation are complete. The cost ledger books
-one supply line and one installation line, so equipment and OPEX are not duplicated.
+Alternatively use `mass_method = "power_scaling"` and `rated_power_gw`, with
+adopted upstream reference mass and power in `inputs.csv`. No reference mass is
+silently supplied. Combining direct mass and power scaling is rejected.
+
+The active functions are `epci_inventory` and `epci_cost` in
+`platforms/platform_material_capex.py`. The adopted coefficient is
+`platform-epci-unit-cost-source` in EUR2023/t, converted to EUR2025 using the
+page's explicit HICP fallback. The reference equipment mass is derived from
+MHB Alpha's topside and the structural fraction. Cost is coefficient times
+reference mass times `(equipment_mass / reference_mass) ** beta`.
+`platform-epci-cost-scaling-exponent` defaults to linear scaling. Overrides are
+recorded in scenario results and preserve the reference cost when beta changes.
+
+`physical.platform_costs` retains the coefficient, reference, mass, exponent,
+price basis and scope; `physical.platform_total_eur` gives the package total.
+The ledger books one `platform / epci` entry, with no separate supply or
+installation entries. The summarizer rejects such double counting. The EPCI
+cost covers delivered offshore structure and integration, not hosted equipment
+purchase. Legacy `inventory`, `supply_cost` and installation helpers remain
+inactive comparison tools; the old methodology is also archived.
+
+Platform annual OPEX is the unresolved `platform-opex-rate` times EPCI cost.
+The separate `platform-decommissioning-cost` input is initially unresolved;
+it is added once to lifetime costs. The installation-fraction decommissioning
+proxy applies only to separate installation entries, never to EPCI. Missing
+OPEX or decommissioning blocks complete LCOH but does not erase platform CAPEX.
+
+No installation plan or feasibility approval follows from the aggregate cost.
+`installation_feasibility` is `not_assessed`; legacy `[installation.platform]`
+lift settings are not used by the active workflow. Engineering applicability
+must be checked independently before adopting an unusually large/deep case.

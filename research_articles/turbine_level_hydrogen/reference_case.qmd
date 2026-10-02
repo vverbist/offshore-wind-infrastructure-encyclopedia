@@ -261,6 +261,46 @@ design or an optimised result. Preserve the article's centralised, conservative
 turbine-level and converter-reduced comparison cases; electrical equipment and
 efficiency choices remain O2.
 
+## Pressure and export-diameter design grid
+
+The article design grid, agreed on 1 October 2026, evaluates compressor
+discharge pressures of **50–150 bar(g) in 10 bar steps** and export-pipe
+**internal diameters of 4–8 inches in 0.5 inch steps**. These are scenario
+choices, not supplier qualification limits or a selected baseline. The
+[grid record](scenarios/pressure_diameter_grid.toml) is authoritative: its
+11 pressures and 9 diameters give **99 combinations per architecture**.
+
+The [design-case runner](analysis/run_design_cases.py) expands that record.
+It adds the central standard atmospheric pressure to each gauge pressure and
+multiplies each diameter in inches by the exact conversion **0.0254 m/inch**.
+The resulting absolute pressures and internal diameters feed the existing
+compression and pipeline calculations; they are recorded in each run's
+`design_cases.csv` and case results.
+
+The 50 and 60 bar(g) cases cannot supply the agreed 66 bar(g) delivery boundary
+without intermediate recompression, which is outside this design. They remain
+in the comparison as **infeasible**. Higher pressures pass only this initial
+boundary check; they are not thereby proven feasible. Pipe capacity and integer
+parallel-pipe count must still be checked against calculated production.
+
+For central production, compressor discharge is the export inlet. For
+turbine-level production, collection losses intervene: section diameters and
+inlet/outlet pressures must support a separately declared export inlet pressure.
+The grid does not impose its export diameter on collection sections or assume
+zero collection pressure loss. These section choices remain O7. Cases lacking
+required inputs report **not_parameterized**, without selecting a baseline or
+claiming a complete cost comparison. O3 platform sizing still requires the
+complete topside mass, fabrication rates, yard integration and installation basis.
+
+For example, from the repository root:
+
+```powershell
+uv run python research_articles/turbine_level_hydrogen/analysis/run_design_cases.py research_articles/turbine_level_hydrogen/scenarios/centralised.toml research_articles/turbine_level_hydrogen/scenarios/pressure_diameter_grid.toml --output model_runs/central-pressure-diameter
+```
+
+Use the decentralised template and a separate output directory for the
+turbine-level case. Each output directory must be new; results remain local.
+
 ## Remaining preparation
 
 **O1 is partially resolved.** The site, count/rating, area, schematic geometry,
@@ -271,7 +311,7 @@ common-case results:
 - The common coordinates, turbine definition, operating and peak-duty states,
   and converted pressures are connected to both templates (above).
 - Complete the remaining design inputs needed by the selected branches:
-  injection pressure and export diameter (O7), complete topside mass and installation basis
+  collection section pressures/diameters and distributed export inlet (O7), complete topside mass and installation basis
   (O3), and electrical interface inputs (O2). Collection origins and network design are
   linked to O3/O7; onshore receipt details remain O9.
 

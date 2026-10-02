@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-10-01.
+Last reviewed: 2026-10-02.
 
 Remaining work for the turbine-level hydrogen article and its model. Completed
 tasks are removed; existing O/D identifiers are retained for cross-references.
@@ -11,11 +11,11 @@ methodology pages. Missing evidence stays explicit; no placeholder values.
 ## Next priorities
 
 1. Close the electrical operating inputs (O2) and central platform mass basis (O3).
-2. Populate pressure/diameter cases and collection sections (O7), then run the
+2. Complete collection sections for the agreed pressure/diameter grid (O7), then run the
    production and physical-feasibility comparison (O12).
-3. Close the remaining cost packages, availability and O&M (O3–O10), and make
+3. Close the remaining cost packages, availability and O&M (O4–O10), and make
    lifetime production and replacement costs consistent (D4), before reporting
-   complete LCOH. Platform evidence can be pursued alongside the operating case.
+   complete LCOH. Platform CAPEX and its bundled installation model are resolved.
 
 Research, implementation and documentation are assistant work; design choices
 and adoption of uncertain assumptions are joint decisions. Supplier/project
@@ -60,7 +60,7 @@ Owners: [Collection](../../hydrogen_infra/infield_infrastructure.qmd),
 [scenario formats](../../model/README.md) and the
 [design-case runner](analysis/run_design_cases.py).
 
-- [ ] Populate candidate injection/export inlet pressures and export diameters,
+- [ ] Declare the distributed export inlet pressure after collection losses,
   and join section diameters and absolute inlet/outlet pressures to the existing
   [collection geometry](scenarios/common/collection_sections_geometry.csv).
 - [ ] Run compression, section-flow, pressure, capacity and pipe-count checks
@@ -76,25 +76,27 @@ Pressure and diameter are explicit inputs of each scenario, not central CSV
 parameters. Keep the agreed delivery pressure, export route, ladder topology and
 central manifold location. No redundancy benefit is claimed.
 
+The agreed [design grid](scenarios/pressure_diameter_grid.toml) uses compressor
+discharge pressure 50–150 bar(g) in 10 bar steps and export internal diameter
+4–8 inches in 0.5 inch steps: 99 combinations per architecture. The runner
+converts to absolute bar and metres, retains 50/60 bar(g) as infeasible against
+66 bar(g) delivery, and leaves collection pressures/sizes unresolved. The grid
+does not establish supplier qualification or select a baseline.
+
 ## Complete cost comparison
 
-### O3 — Central platform mass and installed CAPEX
+### O3 — Central platform scenario mass
 
 Owners: [Platform CAPEX](../../platforms/platform_material_capex.qmd) and
 [Platform Installation](../../offshore_installation/platform_and_substation_installation.qmd).
 
-- [x] Fix one central platform; retain electrical equipment in its complete topside
-  mass without a feeder-bay input gate. AC strings and routes remain explicit.
-- [x] Separate optional aggregate power-to-mass scaling from mass/depth-to-cost;
-  use a linear mass baseline with a named exponent sensitivity.
-- [x] Implement the provisional DNV structural mass chain and separate structure,
-  yard integration and installation. Preserve incomplete totals and known subtotals.
-- [ ] Establish a complete hydrogen topside mass and matching reference power;
-  NSE/Iv concepts have unresolved equipment scope and are reference-only.
-- [ ] Establish normalized fabrication rates and bounded yard-integration evidence.
-  Converter-pair contracts cannot calibrate a platform-only mass rate.
-- [ ] Select lift modules/method and supported installation inputs. One platform
-  does not establish single-lift feasibility; check the provisional AC routing.
+- [ ] Establish the scenario equipment mass or complete hydrogen topside mass,
+  including retained electrical equipment. A matching reference power is needed
+  only when using optional power-to-mass scaling; concept masses require scope checks.
+
+The commercial-benchmark EPCI model is implemented and includes platform
+installation. Separate fabrication rates and installation costs are no longer
+required. Further benchmark calibration is a refinement, not an implementation blocker.
 
 ### O4 — Stack and water-treatment purchase costs
 
@@ -132,14 +134,18 @@ Owners: [Turbine/Foundation Installation](../../offshore_installation/turbine_an
 [Cable/Pipeline Installation](../../offshore_installation/cable_and_pipeline_installation.qmd)
 and [Platform Installation](../../offshore_installation/platform_and_substation_installation.qmd).
 
-- [ ] Populate coherent vessel/spread rates, loading plans, productivities,
-  weather treatment, connections and lifts, with explicit campaign inclusions.
+Central platform installation is already included in EPCI; do not cost it again.
+
+- [ ] Populate turbine/foundation and cable/pipeline vessel/spread rates,
+  loading plans, productivities, weather treatment, connections and lifts, with
+  explicit campaign inclusions.
 - [ ] Resolve `foundation-transition-piece-mass`, additional turbine electrical
   and hydrogen-equipment masses, and the turbine-level hydrogen lifting
   arrangement. Check payload/lift feasibility against the supplied inventories.
-- [ ] Reconcile central compressor installation with platform yard integration
-  and offshore hook-up. Define turbine-level compressor integration, connections
-  and commissioning beyond equipment transport and lifting. Cost each activity
+- [ ] Treat central compressor integration within the platform EPCI scope;
+  check any proposed extra charge for overlap. Define turbine-level compressor
+  integration, connections and commissioning beyond equipment transport and
+  lifting. Cost each activity
   once; unresolved installation is not zero. Consider the source installation
   factor only as an explicitly adopted aggregate for otherwise uncosted work,
   after checking overlap and offshore applicability.
@@ -162,7 +168,11 @@ and [Component Mapping](../../architectures/component_mapping.qmd).
   executable inputs.
 - [ ] Adopt O&M assumptions from the retained equipment inventory. Reflect
   removed equipment without assuming an unsupported maintenance share or a
-  blanket decentralised premium.
+  blanket decentralised premium. Platform O&M remains unresolved; its rate applies
+  to the bundled platform EPCI cost.
+- [ ] Establish the separate `platform-decommissioning-cost` input. It remains
+  unresolved and blocks complete LCOH; do not apply an installation-removal factor
+  to the whole EPCI package.
 
 ### D4 — Lifetime consistency required before complete LCOH
 
@@ -245,8 +255,17 @@ Wind provenance work remains deferred; do not treat it as missing scenario setup
   split to infer separate inverter costs or losses.
 - Retain aggregate BOP scaling and its block limit; stack overplanting does not
   resize BOP. Compressor trains remain bounded by electrical motor input.
-- Report compressor reference purchase cost in EUR2025 per turbine kW. Keep
-  installation separate and reconcile its scope under O8; no automatic source
+- Use one central platform and the implemented commercial-benchmark EPCI model,
+  scaled by equipment mass with a linear baseline and optional exponent sensitivity.
+  Complete topside mass can be converted using the documented DNV assumption.
+  Installation is bundled; hosted equipment purchase costs remain separate.
+  Platform O&M (`platform-opex-rate`) applies to the bundled EPCI cost, and
+  decommissioning is the separate `platform-decommissioning-cost` input, not a
+  factor on EPCI; both remain unresolved (O10). The former structural and
+  installation models are retained as archived comparisons.
+- Report compressor reference purchase cost in EUR2025 per turbine kW. Central
+  integration is covered by platform EPCI; reconcile turbine-level installation
+  under O8. No automatic source
   installation factor or indirect-cost uplift.
 - Retain the supplied stack curve and existing TCP method. The TCP fit uses
   operating gauge pressure without a design margin and the established EUR2025

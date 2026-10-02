@@ -1,4 +1,4 @@
-"""Legacy piled-jacket installation comparison; not called by the EPCI workflow."""
+"""Piled jacket, topside and hook-up spread calculation."""
 from model.records import Infeasible, required
 
 

@@ -67,6 +67,12 @@ rate is {{< var financial-eur-per-usd-2025 >}}
 [@ecb2025USDEUR]. A dated exchange rate is not mixed with annual-average price
 indices in an EUR~2025~ model input.
 
+The [platform benchmark comparison](../platforms/platform_material_capex.qmd)
+uses a documented screening exception: source-year average FX followed by
+euro-area HICP escalation. Its adopted central coefficient is a EUR~2023~
+modelling judgement escalated to EUR~2025~. This does not establish a
+sector-specific construction index or change other components' normalisation.
+
 ## Project Financial Assumptions
 
 | Parameter | Symbol | Value | Classification and basis |
@@ -130,17 +136,23 @@ Replacement timing is not discounted under the approved screening convention.
 
 ## Decommissioning
 
-The model does not use a separate decommissioning activity model:
+The model uses an installation-cost proxy for separately costed installation and an explicit removal-cost input for the combined platform EPCI package:
 
 $$
 C_{\mathrm{decommissioning}}
 =
 f_{\mathrm{decommissioning}}
-C_{\mathrm{offshore\ installation}}.
+C_{\mathrm{separate\ offshore\ installation}}
++ C_{\mathrm{platform\ decommissioning}}.
 $$
 
-The offshore-installation total must contain non-overlapping installation costs
-from the installation pages. The factor $f_{\mathrm{decommissioning}}$ is
+The separate offshore-installation total contains non-overlapping installation costs
+from the installation pages, excluding platform installation already bundled in EPCI.
+$C_{\mathrm{platform\ decommissioning}}$ is the `platform-decommissioning-cost`
+input in EUR~2025~. It is initially unresolved, not zero. Missing platform
+decommissioning blocks complete lifetime cost and LCOH but does not block platform
+CAPEX. The installation-cost fraction is never applied to the whole EPCI package.
+For architectures without a central platform, no platform removal term is added. The factor $f_{\mathrm{decommissioning}}$ is
 {{< var financial-decommissioning-fraction >}} and is an explicit modelling assumption,
 not a sourced contractor estimate. Decommissioning timing is not discounted.
 

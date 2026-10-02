@@ -2,12 +2,15 @@
 from math import log10, pi, sqrt, ceil
 from CoolProp.CoolProp import PropsSI
 from model.inputs import Inputs
+from model.records import Infeasible
 
 
 def capacity_kg_h(diameter_m: float, inlet_bar: float, outlet_bar: float,
                   length_m: float, inputs: Inputs) -> float:
-    if min(diameter_m, inlet_bar, outlet_bar, length_m) <= 0 or inlet_bar <= outlet_bar:
-        raise ValueError("Pipeline requires positive dimensions and absolute inlet > outlet pressure")
+    if min(diameter_m, inlet_bar, outlet_bar, length_m) <= 0:
+        raise ValueError("Pipeline requires positive dimensions and absolute pressures")
+    if inlet_bar <= outlet_bar:
+        raise Infeasible("Pipeline inlet pressure must exceed delivery pressure for positive flow")
     pin, pout = inlet_bar * 1e5, outlet_bar * 1e5
     temperature = inputs.positive("pipeline-temperature", "K")
     roughness = inputs.number("pipeline-roughness", "m")
