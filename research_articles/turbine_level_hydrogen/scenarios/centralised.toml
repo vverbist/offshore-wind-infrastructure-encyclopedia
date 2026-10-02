@@ -23,15 +23,21 @@ stack_curve_file = "../../../numerical_inputs/pem_polarisation_curve.xlsx"
 # export_diameter_m: true internal diameter (O7).
 
 [platform]
-# count, topside_modules_per_platform, feeder_bays
-# [platform.hosted_equipment_mass_t]: component name = hosted mass in t per platform
-# (interim scenario handoff until the component pages emit equipment mass).
+# Exactly one platform. Complete topside includes all equipment and structure.
+# topside_mass_t: direct design mass in tonnes (O3).
+# Alternatively mass_method = "power_scaling" with rated_power_gw and adopted
+# platform-reference-topside-mass/platform-reference-power in inputs.csv.
+# Do not supply direct mass and power_scaling together.
 
 [installation]
 # port_distance_km, intersite_distance_km
 # [installation.collection] and [installation.export]: loads_per_campaign,
 # port_distance_km, splices, burial_pass_km, burial_other_offshore_days,
 # survey_pass_km. Loading plans remain explicit project inputs.
+
+[installation.platform]
+# topside_modules_per_platform: positive integer; equal-module crane screening.
+# One platform does not imply one topside lift.
 
 [overrides]
 # Named, adopted central input IDs only; values retain their CSV units.

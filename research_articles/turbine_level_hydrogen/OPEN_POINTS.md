@@ -1,6 +1,6 @@
 # Open points and to-dos
 
-Last reviewed: 2026-09-28.
+Last reviewed: 2026-10-01.
 
 Remaining work for the turbine-level hydrogen article and its model. Completed
 tasks are removed; existing O/D identifiers are retained for cross-references.
@@ -10,7 +10,7 @@ methodology pages. Missing evidence stays explicit; no placeholder values.
 
 ## Next priorities
 
-1. Close the electrical operating inputs (O2) and central feeder interface (O3).
+1. Close the electrical operating inputs (O2) and central platform mass basis (O3).
 2. Populate pressure/diameter cases and collection sections (O7), then run the
    production and physical-feasibility comparison (O12).
 3. Close the remaining cost packages, availability and O&M (O3–O10), and make
@@ -78,19 +78,23 @@ central manifold location. No redundancy benefit is claimed.
 
 ## Complete cost comparison
 
-### O3 — Central platform and feeder interface
+### O3 — Central platform mass and installed CAPEX
 
 Owners: [Platform CAPEX](../../platforms/platform_material_capex.qmd) and
 [Platform Installation](../../offshore_installation/platform_and_substation_installation.qmd).
 
-- [ ] Declare feeder bays compatible with the AC strings; check the provisional
-  string routing to the already selected farm-centre platform location.
-- [ ] Obtain hosted-equipment masses, a defensible structural mass ratio, and
-  structure, yard-integration and jacket fabrication unit costs. Public evidence
-  remains insufficient; seek supplier or project data.
-- [ ] Adopt platform multiplicity and lift modules, and check lift feasibility.
-  The proposed lift-limit rule and illustrative single platform are not adopted
-  designs. Keep equipment purchase separate from platform fabrication/integration.
+- [x] Fix one central platform; retain electrical equipment in its complete topside
+  mass without a feeder-bay input gate. AC strings and routes remain explicit.
+- [x] Separate optional aggregate power-to-mass scaling from mass/depth-to-cost;
+  use a linear mass baseline with a named exponent sensitivity.
+- [x] Implement the provisional DNV structural mass chain and separate structure,
+  yard integration and installation. Preserve incomplete totals and known subtotals.
+- [ ] Establish a complete hydrogen topside mass and matching reference power;
+  NSE/Iv concepts have unresolved equipment scope and are reference-only.
+- [ ] Establish normalized fabrication rates and bounded yard-integration evidence.
+  Converter-pair contracts cannot calibrate a platform-only mass rate.
+- [ ] Select lift modules/method and supported installation inputs. One platform
+  does not establish single-lift feasibility; check the provisional AC routing.
 
 ### O4 — Stack and water-treatment purchase costs
 

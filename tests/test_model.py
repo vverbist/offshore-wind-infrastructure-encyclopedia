@@ -24,6 +24,7 @@ from model.hydrogen_infra.infield_infrastructure import section_inventory
 from model.turbine_system.wind_turbine import calculate as turbine
 from model.turbine_system.foundation import calculate as foundation
 from model.platforms import platform_material_capex as platform
+from model.offshore_installation import platform_and_substation_installation as platform_install
 from model.methodology.system_boundary_and_lcoe import summarize
 from model.methodology.financial_and_price_basis import annual_cost
 from model.methodology.energy_availability_and_annualisation import delivered_mass
@@ -135,24 +136,53 @@ class Components(unittest.TestCase):
         self.assertAlmostEqual(result["supply_usd2022"], 12000 * (1462 + 238))
 
     def test_platform_mass_chain_cost_and_module_step(self):
-        values = {"platform-structural-mass-ratio": 0.5, "platform-topside-structure-unit-cost": 10,
-                  "platform-yard-integration-unit-cost": 2, "platform-jacket-unit-cost": 5,
-                  "foundation-fabrication-unit-cost": 0, "financial-usd-escalation-2022-2025": 1}
+        values = {"platform-topside-structure-unit-cost": 10,
+                  "platform-yard-integration-cost": 2000, "platform-jacket-unit-cost": 5,
+                  "platform-pile-unit-cost": 2}
         inputs = synthetic_inputs(values)
-        case = {"count": 2, "topside_modules_per_platform": 1, "hosted_equipment_mass_t": {"a": 600, "b": 400}}
-        record = platform.inventory(case, inputs)
-        self.assertEqual(record["topside_t"], 1500)
-        self.assertAlmostEqual(record["jacket_t"], 600)
-        self.assertAlmostEqual(record["piles_t"], 8 * 600 ** 0.5574)
-        self.assertEqual((record["topside_lifts"], record["largest_topside_lift_t"]), (2, 1500))
+        record = platform.inventory({"topside_mass_t": 30000}, 28, inputs)
+        self.assertEqual(record["topside_structure_t"], 15000)
+        self.assertAlmostEqual(record["jacket_t"], 5221.93, places=2)
+        self.assertAlmostEqual(record["piles_t"], 0.0235 * (30000 + record["jacket_t"]) + 534)
+        self.assertNotIn("topside_lifts", record)
         cost = platform.supply_cost(record, inputs)
-        # Equipment mass is charged only the yard-integration rate, never a structural rate.
-        self.assertAlmostEqual(cost["total_eur"], 2 * (500 * 10 + 1000 * 2 + 600 * 5))
-        self.assertAlmostEqual(platform.specific_cost_eur_per_kw(cost["total_eur"], 2e6), 0.01)
-        split = platform.inventory(dict(case, topside_modules_per_platform=2), inputs)
-        self.assertEqual((split["topside_lifts"], split["largest_topside_lift_t"]), (4, 750))
+        self.assertAlmostEqual(cost["total_eur"], 15000 * 10 + record["jacket_t"] * 5 + record["piles_t"] * 2 + 2000)
+        deeper = platform.inventory({"topside_mass_t": 30000}, 56, inputs)
+        self.assertAlmostEqual(deeper["jacket_t"], 2 * record["jacket_t"])
+        self.assertGreater(deeper["piles_t"], record["piles_t"])
+        single = platform_install.lift_inventory(record, {"topside_modules_per_platform": 1})
+        split = platform_install.lift_inventory(record, {"topside_modules_per_platform": 2})
+        self.assertEqual((single["topside_lifts"], split["topside_lifts"]), (1, 2))
+        self.assertEqual(split["largest_topside_lift_t"], 15000)
+        crane = synthetic_inputs({"install-platform-jacket-crane": 10000,
+                                  "install-platform-topside-crane": 20000}, fill_missing=True)
+        with self.assertRaises(Infeasible):
+            platform_install.calculate(single, crane)
+        self.assertGreater(platform_install.calculate(split, crane)["installation_eur"], 0)
+        with self.assertRaises(ValueError):
+            platform.inventory({"count": 2, "topside_mass_t": 30000}, 28, inputs)
+
+    def test_platform_missing_costs_preserve_known_subtotals(self):
+        record = platform.inventory({"topside_mass_t": 30000}, 28, self.inputs)
+        inputs = synthetic_inputs({"platform-topside-structure-unit-cost": 10,
+                                   "platform-jacket-unit-cost": 5, "platform-pile-unit-cost": 2})
+        cost = platform.supply_cost(record, inputs)
+        self.assertIsNone(cost["yard_integration_eur"])
+        self.assertIsNone(cost["total_eur"])
+        self.assertEqual(cost["known_subtotal_eur"], cost["structure_eur"])
+        self.assertIn("platform-yard-integration-cost", cost["missing_inputs"][0])
         with self.assertRaises(MissingInput):
-            platform.inventory(case, self.inputs)
+            self.inputs.number("platform-dnv-topside-rate")
+        with self.assertRaises(MissingInput):
+            platform.estimate_topside_mass(2, self.inputs)
+
+    def test_platform_mass_scaling_reference_and_exponent(self):
+        inputs = synthetic_inputs({"platform-reference-topside-mass": 10000,
+                                   "platform-reference-power": 0.5})
+        self.assertEqual(platform.estimate_topside_mass(0.5, inputs), 10000)
+        self.assertEqual(platform.estimate_topside_mass(2, inputs), 40000)
+        nonlinear = Inputs(inputs.parameters, {"platform-mass-scaling-exponent": 0.5})
+        self.assertEqual(platform.estimate_topside_mass(2, nonlinear), 20000)
 
     def test_partial_capacity_availability(self):
         mass = delivered_mass(np.array([[100, 200]]), np.array([10]), np.array([0, 1]), 1)
@@ -194,9 +224,9 @@ class Integration(unittest.TestCase):
             "wind": {"power_states_file": "power.csv", "design_state_ids": ["design"]},
             "electrolysis": {"stack_curve_file": str(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx"), "overplant_factor": 1},
             "hydrogen": {"stack_outlet_bar": 30, "injection_bar": 150, "delivery_bar": 66, "export_length_km": 80, "export_diameter_m": 0.3},
-            "platform": {"count": 1, "topside_modules_per_platform": 1, "feeder_bays": 1,
-                         "hosted_equipment_mass_t": {"synthetic": 0.4}},
-            "installation": {"port_distance_km": 10, "intersite_distance_km": 1, "collection": plan, "export": plan}}
+            "platform": {"topside_mass_t": 0.8},
+            "installation": {"port_distance_km": 10, "intersite_distance_km": 1, "collection": plan, "export": plan,
+                             "platform": {"topside_modules_per_platform": 1}}}
 
     def test_unfilled_article_cases_are_explicit(self):
         for name in ("centralised", "decentralised"):
@@ -221,7 +251,7 @@ class Integration(unittest.TestCase):
         values = {"array-ac-resistance": 0.05, "array-power-factor": 1,
                   "install-turbine-usable-payload": 10000, "install-turbine-crane-capacity": 5000,
                   "install-foundation-usable-payload": 10000, "install-foundation-crane-capacity": 5000,
-                  "stack-replacement-life": 30}
+                  "stack-replacement-life": 30, "install-platform-jacket-crane": 10000}
         result = run_case(self.scenario, synthetic_inputs(values, fill_missing=True), self.base)
         self.assertEqual(result.status, "feasible", result.reasons)
         self.assertGreater(result.summary["lcoh_eur_kg"], 0)
@@ -233,6 +263,15 @@ class Integration(unittest.TestCase):
         self.assertEqual(result.physical["stack_installed_kw"], 30000)
         self.assertEqual(sum(p["trains"] for p in result.physical["compressors"]), 1)
         write_result(result, self.base / "complete")
+
+    def test_platform_inventory_survives_missing_lift_plan(self):
+        del self.scenario["installation"]["platform"]
+        result = run_case(self.scenario, load_inputs({}), self.base)
+        self.assertIn("platform", result.physical)
+        self.assertIn("platform_costs", result.physical)
+        self.assertIsNone(result.physical["platform_total_eur"])
+        self.assertFalse(any("feeder" in reason for reason in result.reasons))
+        self.assertGreater(result.physical["ac_strings"], 0)
 
     def test_distributed_case_preserves_turbine_operation(self):
         self.scenario["case"]["architecture"] = "decentralised"

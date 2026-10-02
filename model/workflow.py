@@ -62,6 +62,7 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
     wind_case = scenario.get("wind", {})
     h2 = scenario.get("hydrogen", {})
     elx = scenario.get("electrolysis", {})
+
     coordinates = step("layout", lambda: layout_model.layout(site, base))
     turbine_kw = float(machine.get("rated_power_kw", inputs.number("wind-turbine-rated-power", "MW") * 1000))
     if turbine_kw <= 0:
@@ -111,11 +112,8 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
             dependent(depth, "water depth"), inputs))
         if routes is not None:
             result.tables["collection_sections"] = routes
-        bays = step("AC interface", lambda: int(required(scenario.get("platform", {}), "feeder_bays")))
         strings = ceil(count / max(1, int(inputs.number("array-usable-string-rating", "MW") * 1000 // turbine_kw)))
         result.physical["ac_strings"] = strings
-        if bays is not None and bays < strings:
-            infeasible.append("AC string count exceeds the declared platform feeder bays")
 
     curve = step("stack curve", lambda: stack.StackCurve.read(base / required(elx, "stack_curve_file")))
     comp_energy = step("compression energy", lambda: compressor.specific_energy(
@@ -260,10 +258,26 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
     cost("hydrogen-receipt", "installation", lambda: inputs.number("hydrogen-receipt-installation-cost", "EUR"))
     platform_inventory = None
     if central:
-        platform_inventory = step("platform inventory", lambda: platform.inventory(scenario.get("platform", {}), inputs))
+        def platform_mass():
+            case = dict(scenario.get("platform", {}))
+            if case.get("mass_method") == "power_scaling":
+                if "topside_mass_t" in case:
+                    raise ValueError("Choose direct topside mass or power scaling, not both")
+                case["topside_mass_t"] = platform.estimate_topside_mass(
+                    float(required(case, "rated_power_gw")), inputs)
+            elif case.get("mass_method", "direct") != "direct":
+                raise ValueError("Platform mass_method must be direct or power_scaling")
+            return platform.inventory(case, dependent(depth, "water depth"), inputs)
+        platform_inventory = step("platform inventory", platform_mass)
         if platform_inventory:
             result.physical["platform"] = platform_inventory
-        cost("platform", "supply", lambda: platform.supply_cost(dependent(platform_inventory, "platform inventory"), inputs)["total_eur"])
+        def platform_supply():
+            record = platform.supply_cost(dependent(platform_inventory, "platform inventory"), inputs)
+            result.physical["platform_costs"] = record
+            if record["missing_inputs"]:
+                raise MissingInput("; ".join(record["missing_inputs"]))
+            return record["total_eur"]
+        platform_supply_eur = cost("platform", "supply", platform_supply)
 
     installation = scenario.get("installation", {})
     for kind in ("turbine", "foundation"):
@@ -305,7 +319,16 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
         return campaign["installation_eur"]
     cost("hydrogen-export", "installation", export_installation)
     if central:
-        cost("platform", "installation", lambda: platform_install.calculate(dependent(platform_inventory, "platform inventory"), inputs)["installation_eur"])
+        def install_platform():
+            lifts = platform_install.lift_inventory(dependent(platform_inventory, "platform inventory"),
+                                                    installation.get("platform", {}))
+            result.physical["platform_lifts"] = lifts
+            record = platform_install.calculate(lifts, inputs)
+            result.physical["platform_installation"] = record
+            return record["installation_eur"]
+        platform_installation_eur = cost("platform", "installation", install_platform)
+        result.physical["platform_total_eur"] = (None if platform_supply_eur is None or platform_installation_eur is None
+                                                 else platform_supply_eur + platform_installation_eur)
 
     # Annual allowances belong to equipment; neither architecture receives a blanket premium.
     for line in list(result.costs):

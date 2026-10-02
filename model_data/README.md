@@ -49,7 +49,7 @@ point-of-use equations and scope; `reference` rows remain non-combinable evidenc
 | `wind-turbulence-intensity` | `wind_resource_and_layout/wake_modelling_and_spacing.qmd`; existing provisional legacy assumption |
 | `turbine-*` | `turbine_system/wind_turbine.qmd`; pinned WISDEM coefficients and Mehta replacements, source calibration; electrical additions/adjustments remain TODO |
 | `foundation-*` | `turbine_system/foundation.qmd`; reference design, fabricated unit cost and transition-piece allowance; supported reference mass is summed in code |
-| `platform-*` | `platforms/platform_material_capex.qmd`; ORBIT jacket and pile mass fits adopted, ORBIT cost rates reference-only, structural ratio and EUR2025 unit costs remain TODO; piles reuse `foundation-fabrication-unit-cost`; site durations from platform installation page |
+| `platform-*` | `platforms/platform_material_capex.qmd`; provisional DNV mass chain; complete reference mass/power, EUR2025 fabrication rates and aggregate yard cost remain TODO. Commercial and DNV cost evidence are reference-only. Linear mass exponent is an explicit assumption; site durations belong to installation. |
 | `install-*` | The three `offshore_installation/` pages; coherent spread inputs remain TODO rather than combining incompatible reference vessels |
 | `*-availability`, `*-opex-rate` | Component owners and `methodology/energy_availability_and_annualisation.qmd`; deliberately unresolved pending non-overlapping scope adoption |
 | `financial-usd-escalation-*` | `methodology/financial_and_price_basis.qmd`; U.S. CPI-U annual-average fallback (2020 and 2022 to 2025); components with a better-matched index use their own factor |

@@ -38,12 +38,14 @@ Each activity is costed once. The campaign rates on this page are complete-sprea
 
 | Parameter | Symbol | Unit | Status |
 |---|---:|---:|---|
-| Number of substations | $N_{\mathrm{OSS}}$ | count | Project design input |
+| Number of substations | $N_{\mathrm{OSS}}$ | count | Fixed at one for the central platform |
 | Topside lift modules per substation | $N_{\mathrm{module/OSS}}$ | lift/OSS | Project execution input |
 | Jacket screening lift mass | $m_J$ | t | Upstream platform and lift input |
 | Largest topside-module screening lift mass | $m_{S,\max}$ | t | Upstream platform and lift input |
 | Selected jacket installation-class capacity | $Q_J$ | t | Named-vessel or installation-class input |
 | Selected topside installation-class capacity | $Q_S$ | t | Named-vessel or installation-class input |
+
+The platform module supplies complete topside, jacket and pile masses without requiring a lift plan. The installation handoff requires `[installation.platform] topside_modules_per_platform`: a positive integer. The current crane screen uses $m_{S,\max}=M/N_{\mathrm{module/OSS}}$, an explicit equal-module assumption. Unequal modules require a revised lift inventory; the model does not increase platform count to pass a failed screen.
 
 The screening lift masses should include lift-applicable attachments and rigging where that information is available. The capacity inputs should use the capacity at the intended configuration and radius when known; a published nominal maximum provides only an exclusion screen.
 
@@ -133,7 +135,7 @@ C_{\mathrm{inst}}
 +C_{\mathrm{exceptional}}.
 $$
 
-If exceptional work is relevant but not quantified, it is reported as **not included** rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the available campaign durations are still reported.
+If exceptional work is relevant but not quantified, it is reported as **not included** rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the upstream structural inventory remains available.
 
 ## Model Outputs
 

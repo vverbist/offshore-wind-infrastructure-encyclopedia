@@ -1,53 +1,68 @@
-"""Central-platform mass chain and material CAPEX; owner: platforms/platform_material_capex.qmd.
+"""One central platform: complete topside mass to structure and supply CAPEX.
 
-Units: masses in t, costs in EUR2025 unless the key names another basis, power in kW.
+Units: mass t, depth m, power GW and costs EUR2025. Equipment purchase is
+booked by component owners. Missing costs remain None, never zero.
 """
-from model.methodology.financial_and_price_basis import normalize_usd
-from model.records import required
+from math import isfinite
+
+from model.records import MissingInput, required
 
 
-def inventory(case: dict, inputs) -> dict:
-    """Per-platform masses (steps 1-3 on the page) and the installation handoff."""
-    count = int(required(case, "count"))
-    modules = int(required(case, "topside_modules_per_platform"))
-    if min(count, modules) < 1:
-        raise ValueError("A central platform requires positive platform and lift counts")
-    equipment = {name: float(mass) for name, mass in required(case, "hosted_equipment_mass_t").items()}
-    if not equipment or min(equipment.values()) <= 0:
-        raise ValueError("Hosted equipment masses must be listed and positive")
+def estimate_topside_mass(rated_power_gw: float, inputs) -> float:
+    """Optional upstream aggregate scaling; reference mass must cover all equipment."""
+    if not isfinite(rated_power_gw) or rated_power_gw <= 0:
+        raise ValueError("Platform rated power must be finite and positive")
+    return (inputs.positive("platform-reference-topside-mass", "t")
+            * (rated_power_gw / inputs.positive("platform-reference-power", "GW"))
+            ** inputs.positive("platform-mass-scaling-exponent", "exponent"))
 
-    equipment_t = sum(equipment.values())
-    structure_t = inputs.number("platform-structural-mass-ratio", "t/t") * equipment_t
-    topside_t = equipment_t + structure_t
-    jacket_t = inputs.positive("platform-jacket-topside-mass-ratio", "t/t") * topside_t
-    piles_t = (inputs.positive("platform-pile-mass-coefficient", "coefficient")
-               * jacket_t ** inputs.positive("platform-pile-mass-exponent", "coefficient"))
-    return {"platform_count": count, "topside_lifts": count * modules,
-            "hosted_equipment_t": equipment, "equipment_t": equipment_t,
-            "topside_structure_t": structure_t, "topside_t": topside_t,
-            "jacket_t": jacket_t, "piles_t": piles_t,
-            # Installation-page interface; equal module split is a stated assumption.
-            "jacket_lift_t": jacket_t, "largest_topside_lift_t": topside_t / modules}
+
+def inventory(case: dict, water_depth_m: float, inputs) -> dict:
+    """Complete topside mass is the boundary input; lift design is independent."""
+    if case.get("count", 1) != 1:
+        raise ValueError("The central-platform model requires exactly one platform")
+    topside_t = float(required(case, "topside_mass_t"))
+    if not all(isfinite(v) and v > 0 for v in (topside_t, water_depth_m)):
+        raise ValueError("Complete topside mass and water depth must be finite and positive")
+    structure_t = inputs.fraction("platform-topside-structural-fraction") * topside_t
+    jacket_t = (inputs.positive("platform-jacket-depth-coefficient", "t^(1-b)/m")
+                * water_depth_m * topside_t ** inputs.positive("platform-jacket-mass-exponent", "exponent"))
+    piles_t = (inputs.positive("platform-pile-load-coefficient", "t/t") * (topside_t + jacket_t)
+               + inputs.positive("platform-pile-mass-intercept", "t"))
+    return {"platform_count": 1, "topside_t": topside_t,
+            "water_depth_m": water_depth_m, "topside_structure_t": structure_t,
+            "equipment_t": topside_t - structure_t, "jacket_t": jacket_t, "piles_t": piles_t}
 
 
 def supply_cost(platform: dict, inputs) -> dict:
-    """Material and fabrication CAPEX (step 4). Equipment CAPEX is booked by its component owners."""
-    per_platform = {
-        "topside_structure_eur": platform["topside_structure_t"] * inputs.number("platform-topside-structure-unit-cost", "EUR/t"),
-        "yard_integration_eur": platform["equipment_t"] * inputs.number("platform-yard-integration-unit-cost", "EUR/t"),
-        "jacket_eur": platform["jacket_t"] * inputs.number("platform-jacket-unit-cost", "EUR/t"),
-        # Piles reuse the fabricated tubular-steel rate of the monopile page, without its transition-piece allowance.
-        "piles_eur": normalize_usd(platform["piles_t"] * inputs.number("foundation-fabrication-unit-cost", "USD/t"),
-                                   inputs.positive("financial-usd-escalation-2022-2025", "factor"), inputs),
-    }
-    count = platform["platform_count"]
-    result = {key: count * value for key, value in per_platform.items()}
-    result["total_eur"] = sum(result.values())
+    """Preserve known subtotals when a fabrication rate or integration quote is absent."""
+    result = {}
+    missing = []
+    for name, mass, parameter, unit in (
+        ("topside_structure_eur", platform["topside_structure_t"], "platform-topside-structure-unit-cost", "EUR/t"),
+        ("jacket_eur", platform["jacket_t"], "platform-jacket-unit-cost", "EUR/t"),
+        ("piles_eur", platform["piles_t"], "platform-pile-unit-cost", "EUR/t"),
+        ("yard_integration_eur", 1, "platform-yard-integration-cost", "EUR"),
+    ):
+        try:
+            rate = inputs.number(parameter, unit)
+            if rate < 0:
+                raise ValueError(f"{parameter} must be nonnegative")
+            result[name] = mass * rate
+        except MissingInput as exc:
+            result[name] = None
+            missing.append(str(exc))
+    structural = [result[name] for name in ("topside_structure_eur", "jacket_eur", "piles_eur")]
+    result["structure_eur"] = None if any(v is None for v in structural) else sum(structural)
+    components = [result[name] for name in ("topside_structure_eur", "jacket_eur", "piles_eur", "yard_integration_eur")]
+    result["known_subtotal_eur"] = sum(v for v in components if v is not None)
+    result["total_eur"] = None if missing else sum(components)
+    result["missing_inputs"] = missing
     return result
 
 
 def specific_cost_eur_per_kw(total_eur: float, rated_power_kw: float) -> float:
-    """Averaged platform cost per kW of the rated power it serves (reporting metric only)."""
+    """Reporting metric, not a capacity-based cost input."""
     if rated_power_kw <= 0:
         raise ValueError("Rated power must be positive")
     return total_eur / rated_power_kw

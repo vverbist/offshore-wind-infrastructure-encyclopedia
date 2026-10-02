@@ -11,7 +11,8 @@ from model_data.parameters import (
     load_parameters,
     write_quarto_variables,
 )
-from research_articles.turbine_level_hydrogen.analysis.reference_case import quarto_variables
+from research_articles.turbine_level_hydrogen.analysis.reference_case import quarto_variables, load_reference_case
+from model.platforms.platform_material_capex import inventory as platform_inventory
 from model.inputs import load_inputs
 from model.hydrogen_infra.compressor import cost_coefficient_eur2025, reference_purchase_cost, turbine_reference
 from model.hydrogen_production.stack import StackCurve
@@ -22,6 +23,19 @@ def main() -> None:
     variables = build_quarto_variables(parameters)
     variables.update(quarto_variables())
     inputs = load_inputs({})
+    variables["platform-tennet-pair-billion"] = f"{inputs.reference_number('platform-tennet-framework') / inputs.reference_number('platform-tennet-systems') / 1e9:.2f}"
+    for key in ("platform-tennet-framework", "platform-mhb-contract", "platform-petrofac-pair-lower-bound"):
+        variables[key] = f"{inputs.reference_number(key) / 1e9:g} billion {parameters.get(key).unit}"
+    variables["platform-rte-dunkerque-contract"] = f"{inputs.reference_number('platform-rte-dunkerque-contract') / 1e6:g} million EUR"
+    for key in ("platform-mass-scaling-exponent", "platform-jacket-mass-exponent", "platform-jacket-depth-coefficient"):
+        variables[key] = f"{inputs.number(key):g}"
+    variables["platform-tennet-systems"] = f"{inputs.reference_number('platform-tennet-systems'):.0f}"
+    depth = load_reference_case()["site"]["water_depth_m"]
+    variables["platform-example-depth"] = f"{depth:g} m"
+    for name in ("mhb", "dragados"):
+        masses = platform_inventory({"topside_mass_t": inputs.reference_number(f"platform-{name}-topside")}, depth, inputs)
+        for quantity in ("topside_structure_t", "jacket_t", "piles_t"):
+            variables[f"platform-example-{name}-{quantity.replace('_', '-')}"] = f"{masses[quantity]:,.0f} t"
     reference = reference_purchase_cost(inputs)
     variables["compressor-cost-coefficient-eur2025"] = f"{cost_coefficient_eur2025(inputs):,.0f} EUR"
     variables["compressor-reference-purchase-cost"] = f"{reference:,.0f} EUR"

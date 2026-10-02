@@ -1,258 +1,137 @@
 ---
 title: "Platform Material CAPEX"
-completion: 40
+completion: 65
 readiness: blocked
 ---
 
-## Role in the Model
+## Model Output and Boundary
 
-This page owns the material and fabrication CAPEX of a central offshore platform. The calculation is common to the electricity-export and centralised-hydrogen architectures: architecture-specific equipment determines the hosted mass, and this page converts that physical requirement into the platform structure, its support structure and their cost.
+This module converts **complete topside dry mass** $M$ (t) and water depth $h$ (m) into structural masses and platform supply CAPEX. The centralised architecture has **one platform**. Equipment purchase remains with the equipment modules; equipment mass remains inside $M$.
 
-The calculation is a mass chain. Hosted-equipment mass sets the topside mass; the topside mass sets the jacket and pile masses; each mass is multiplied by a unit cost for its own scope. The same masses are passed to [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) for lift screening.
-
-## Cost Boundary
-
-| Physical scope | Treatment | Cost owner |
-|---|---|---|
-| Topside structural steel and structural outfitting | Included | **This page** |
-| Onshore yard integration of hosted equipment into the topside | Included | **This page** |
-| Jacket or other support structure | Included | **This page** |
-| Foundation piles | Included | **This page** |
-| HVDC converter equipment | Excluded | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) |
-| Electrolyser transformers and rectifiers | Excluded | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) |
-| PEM stacks and non-electrical balance of plant | Excluded | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) and [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) |
-| Hydrogen compression equipment | Excluded | [Compressor](../hydrogen_infra/compressor.qmd) |
-| Transport, offshore installation, offshore hook-up and commissioning | Excluded | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
-| Engineering, development, insurance and owner contingency | Excluded | Not currently modelled |
-
-Equipment cost and equipment mass have different owners. The component pages book the equipment CAPEX and provide the equipment mass required for platform sizing. This page uses the equipment mass only to size the structure and to cost yard integration; it never applies a structural fabrication rate to equipment mass. Onshore yard integration covers placing, fixing, connecting and testing the hosted equipment in the topside before sail-away; offshore hook-up and commissioning remain with the installation page.
-
-## Architecture Inputs
-
-| Architecture | Platform requirement | Upstream mass basis |
-|---|---|---|
-| Electricity export | Central AC-collection and HVDC-converter platform | Offshore converter and collection equipment |
-| Centralised hydrogen | One integrated AC-collection and electrolysis platform | Power electronics, stacks, balance of plant, compression and shared platform equipment |
-| Decentralised hydrogen | No central offshore platform in the current architecture | Not applicable |
-
-The architecture pages determine whether a central platform is present. The relevant component pages determine the hosted-equipment inventory and mass. This page receives those results; it does not recreate architecture-specific equipment models.
-
-## Model Inputs
-
-### Scenario and Upstream Inputs
-
-| Parameter | Symbol | Unit | Status |
-|---|---:|---:|---|
-| Number of central platforms | $N_{\mathrm{plat}}$ | count | Scenario input; the capacity and multiplicity rule is unresolved (DEC-0007) |
-| Topside lift modules per platform | $N_{\mathrm{mod}}$ | lift/platform | Scenario execution input, shared with the installation page |
-| Hosted mass of equipment item $k$ per platform | $m_{\mathrm{eq},k}$ | t | Derived result of the owning component page; supplied as a scenario list until those pages emit mass |
-| Rated power received by the platform | $P_{\mathrm{plat}}$ | kW | Scenario input; used only for the specific-cost metric |
-
-The hosted-equipment list must name each item and its owning page so that shared auxiliaries, buildings and equipment are neither omitted nor counted twice. No component page currently provides equipment mass, so the list is unresolved for every architecture.
-
-### Mass Relationships
-
-| Parameter | Symbol | Value | Kind and source |
-|---|---:|---:|---|
-| Topside structural and outfitting mass per tonne of hosted equipment | $k_{\mathrm{str}}$ | {{< var platform-structural-mass-ratio >}} | Modelling assumption; evidence required |
-| Jacket mass per tonne of complete topside | $k_J$ | {{< var platform-jacket-topside-mass-ratio >}} | Sourced curve fit [@orbitSource2026] |
-| Pile-mass coefficient | $a_P$ | {{< var platform-pile-mass-coefficient >}} | Sourced curve fit [@orbitSource2026] |
-| Pile-mass exponent | $b_P$ | {{< var platform-pile-mass-exponent >}} | Sourced curve fit [@orbitSource2026] |
-
-$k_{\mathrm{str}}$ represents the deck steel, primary and secondary structure, modules, buildings, cladding and structural outfitting that surround the hosted equipment. It must be sourced from published topside dry-weight breakdowns that separate equipment from structure; no such breakdown is adopted yet.
-
-$k_J$, $a_P$ and $b_P$ are the substructure and pile relationships in ORBIT's offshore-substation design module, where the substructure mass is $0.4$ times the complete topside mass and the pile mass is $8\,m_J^{0.5574}$ with both masses in tonnes [@orbitSource2026]. ORBIT documents them as curve fits without identifying the underlying data set [@orbitSource2026]. They are adopted as top-down relationships because they are the only public mass chain found that links topside mass to jacket and pile mass. Their implicit basis is a crane-installed, piled-jacket HVAC substation; application to HVDC and electrolysis topsides is an extrapolation (see [Limitations](#limitations)).
-
-### Unit Costs
-
-| Parameter | Symbol | Value | Kind and scope |
-|---|---:|---:|---|
-| Topside structure fabrication unit cost | $c_{\mathrm{str}}$ | {{< var platform-topside-structure-unit-cost >}} | Assumption; applies to $m_{\mathrm{str}}$ only; evidence required |
-| Yard integration unit cost | $c_{\mathrm{int}}$ | {{< var platform-yard-integration-unit-cost >}} | Assumption; applies to $m_{\mathrm{eq}}$; evidence required |
-| Jacket fabrication unit cost | $c_J$ | {{< var platform-jacket-unit-cost >}} | Assumption; evidence required |
-| Pile fabrication unit cost | $c_P$ | {{< var foundation-fabrication-unit-cost >}} (USD~2022~) | Reused from [Monopile Foundation Mass and Cost](../turbine_system/foundation.qmd) |
-| USD escalation 2022 to 2025 | $e_{2022}$ | {{< var financial-usd-escalation-2022-2025 >}} | [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd) |
-| Exchange rate | $X$ | {{< var financial-usd-per-eur-2025 >}} | [Financial and Price-Basis Assumptions](../methodology/financial_and_price_basis.qmd) |
-
-Piles are open-ended fabricated tubular steel, which is the same product class as a monopile. The monopile fabrication unit cost is therefore reused for piles. The monopile page's transition-piece allowance is not applied, because a pile has no transition piece.
-
-Yard integration is costed per tonne of hosted equipment. This linear form is a modelling assumption: integration work is expected to grow with the quantity of equipment installed, but no public evidence has been found to support a specific relationship. The line is kept separate so that it can be recalibrated or replaced when a supplier breakdown is available.
-
-### Reference Evidence Not Adopted
-
-| Evidence | Value | Reason not adopted |
-|---|---:|---|
-| ORBIT topside fabrication rate [@orbitSource2026] | {{< var platform-orbit-topside-fabrication-rate >}} | Applied by ORBIT to the complete topside mass including equipment, so its scope overlaps equipment CAPEX booked elsewhere. ORBIT's procurement-year table lists 18,296 USD~2024~/t for the same attribute, so the default's price year is unresolved. |
-| ORBIT substructure rate [@orbitSource2026] | {{< var platform-orbit-jacket-rate >}} (USD~2024~) | Candidate for $c_J$. Adoption requires a USD 2024-to-2025 escalation factor and confirmation that the rate is for fabricated jacket steel excluding transport and installation. |
-
-ORBIT sets its substation pile rate to zero, so ORBIT provides no pile cost evidence [@orbitSource2026].
-
-### Validation and Feasibility Evidence (O3 review, 25 September 2026)
-
-| Evidence | Value | Use on this page |
-|---|---:|---|
-| 2 GW, 525 kV HVDC converter platforms (LanWin) [@offshoreMag2023LanWin] | Topside about 24,000 t; jacket about 10,000 t | Implied jacket-to-topside ratio of about 0.42, close to the adopted $k_J=${{< var platform-jacket-topside-mass-ratio >}}. This supports $k_J$ at 2 GW scale for an HVDC topside; it is a plausibility check, not a calibration, and says nothing about electrolysis topsides |
-| Single-lift installation class (Pioneering Spirit) [@allseasPlatformInstallation2026] | Topsides up to 60,000 t; jackets up to 20,000 t | Lift-screen limits for one installation class. With $m_J=k_J m_{\mathrm{top}}$, the jacket limit binds first: a single-lift jacket allows $m_{\mathrm{top}}$ up to about 50,000 t |
-
-No public source was found that gives hosted-equipment masses for MW-scale PEM stacks, electrolyser balance of plant, rectifier transformers or hydrogen compressors on an offshore platform, or a topside dry-weight breakdown separating equipment from structure. Design announcements for offshore electrolysis platforms (for example 100–800 MW concepts) report capacity and volume but not mass. The ABB converter catalogue's 6.2 t for a 10 MW wind converter is recorded on [Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd) as context only.
-
-**Proposed multiplicity rule (not adopted).** Choose the smallest $N_{\mathrm{plat}}$ and, for each platform, the smallest $N_{\mathrm{mod}}$ such that $m_{S,\max}$ and $m_J$ each stay within the selected installation class. This keeps $N_{\mathrm{plat}}$ and $N_{\mathrm{mod}}$ explicit scenario inputs checked against documented lift limits, rather than a capacity rule of thumb. It cannot be applied until $m_{\mathrm{eq}}$ and $k_{\mathrm{str}}$ exist; the page's single-platform example remains illustrative.
-
-## Calculation
-
-The calculation is performed per platform and multiplied by $N_{\mathrm{plat}}$ at the cost step.
-
-**Step 1: hosted-equipment mass.**
+The overall mapping is
 
 $$
-m_{\mathrm{eq}}=\sum_k m_{\mathrm{eq},k}
+C_{\mathrm{platform}}(M,h)
+=C_{\mathrm{structure}}(M,h)+C_{\mathrm{yard}}+C_{\mathrm{installation}}.
 $$
 
-**Step 2: topside mass.**
+All adopted costs must be in EUR~2025~. This is installed platform infrastructure CAPEX, excluding hosted process/electrical equipment purchase, cables/pipelines, and project-wide engineering, insurance, contingency and financing. It is not an all-in converter-station or electrolysis-plant price.
 
-$$
-m_{\mathrm{str}}=k_{\mathrm{str}}\,m_{\mathrm{eq}},
-\qquad
-m_{\mathrm{top}}=m_{\mathrm{eq}}+m_{\mathrm{str}}
-$$
-
-$m_{\mathrm{top}}$ is the complete topside dry mass in tonnes. It is the quantity that $k_J$ is referenced to.
-
-**Step 3: topside lift modules.**
-
-$$
-N_S=N_{\mathrm{plat}}N_{\mathrm{mod}},
-\qquad
-m_{S,\max}=\frac{m_{\mathrm{top}}}{N_{\mathrm{mod}}}
-$$
-
-The topside is assumed to be split into modules of equal mass. $N_{\mathrm{mod}}$ is a discrete input, so a split topside is represented as a step in lift count rather than a smooth mass correction.
-
-**Step 4: jacket and pile masses.**
-
-$$
-m_J=k_J\,m_{\mathrm{top}},
-\qquad
-m_P=a_P\,m_J^{\,b_P}
-$$
-
-with $m_J$ and $m_P$ in tonnes. $a_P$ carries the dimension $\mathrm{t}^{1-b_P}$ implied by the source fit.
-
-**Step 5: material and fabrication CAPEX.**
-
-$$
-C_{\mathrm{str}}=c_{\mathrm{str}}\,m_{\mathrm{str}},
-\qquad
-C_{\mathrm{int}}=c_{\mathrm{int}}\,m_{\mathrm{eq}},
-\qquad
-C_J=c_J\,m_J,
-\qquad
-C_P=\frac{c_P\,e_{2022}}{X}\,m_P
-$$
-
-$$
-C_{\mathrm{plat}}=N_{\mathrm{plat}}\left(C_{\mathrm{str}}+C_{\mathrm{int}}+C_J+C_P\right)
-$$
-
-All terms are in EUR~2025~. $C_P$ is escalated in USD before conversion, following the common price basis.
-
-**Step 6: averaged specific cost.**
-
-$$
-c_{\mathrm{plat}}=\frac{C_{\mathrm{plat}}}{P_{\mathrm{plat}}}
-$$
-
-$c_{\mathrm{plat}}$ in EUR~2025~/kW is a reporting and comparison metric only. The model uses $C_{\mathrm{plat}}$, which responds to mass, not to rated power.
-
-If any input is unresolved, the corresponding mass or cost is reported as not parameterised rather than zero.
-
-## Model Outputs
-
-| Output | Unit | Downstream use |
-|---|---:|---|
-| $m_{\mathrm{eq}}$, $m_{\mathrm{str}}$, $m_{\mathrm{top}}$ | t/platform | Mass-balance inspection |
-| $m_J$ | t/platform | Jacket lift screen on the installation page |
-| $m_P$ | t/platform | Pile handling input for the installation page |
-| $N_S$ and $m_{S,\max}$ | count and t | Topside lift count and lift screen on the installation page |
-| $C_{\mathrm{str}}$, $C_{\mathrm{int}}$, $C_J$, $C_P$ | EUR~2025~ | Cost breakdown |
-| $C_{\mathrm{plat}}$ | EUR~2025~ | Platform supply CAPEX in the project cost summary |
-| $c_{\mathrm{plat}}$ | EUR~2025~/kW | Comparison with published platform-inclusive station costs |
-
-The implementation is `model/platforms/platform_material_capex.py`.
-
-## Worked Example: 2 GW Platforms {#worked-example}
-
-::: {.callout-note}
-## Reserved: results not yet calculable
-
-This example is set up but reports no numbers. Every result depends on the hosted-equipment masses, which no component page provides yet, and on $k_{\mathrm{str}}$ and the unit costs, which are unresolved. The results will be generated by the model functions above once those inputs exist; they will not be entered by hand.
-:::
-
-Two platforms are compared on the same power basis:
-
-- **HVDC converter platform (electricity export).** A {{< var hvdc-link-rated-power >}} AC-collection and HVDC-converter platform, matching the TenneT 2 GW reference system [@tennet2024TwoGWProgram].
-- **Electrolysis platform (centralised hydrogen).** One integrated AC-collection and electrolysis platform receiving 2 GW from the collection system. The 2 GW rating is chosen for this example so that both platforms serve the same wind-farm power.
-
-For both cases, $N_{\mathrm{plat}}=1$ and $P_{\mathrm{plat}}=2\times10^{6}$ kW, the rated power received from the collection system.
-
-### Hosted-Equipment Inventory
-
-| Equipment item | HVDC platform | Electrolysis platform | Mass owner |
-|---|---:|---:|---|
-| 66 kV collection switchgear | TODO | TODO | Owner unresolved (ISS-0012) |
-| Converter transformers, valves, reactors, DC switchyard and converter cooling | TODO | Not present | [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd) (ISS-0063) |
-| Step-down and rectifier transformers, rectifiers and their cooling | Not present | TODO | [Electrolyser Power Electronics](../hydrogen_production/elx_power_electronics.qmd) (ISS-0052) |
-| PEM stacks | Not present | TODO | [PEM Electrolyser Stack](../hydrogen_production/stack.qmd) (ISS-0052) |
-| Balance of plant | Not present | TODO | [Balance of Plant](../hydrogen_production/balance_of_plant.qmd) (ISS-0052) |
-| Hydrogen compression trains | Not present | TODO | [Compressor](../hydrogen_infra/compressor.qmd) (ISS-0083) |
-| Shared auxiliaries, accommodation and utilities | TODO | TODO | Owner unresolved |
-| **Hosted-equipment mass $m_{\mathrm{eq}}$** | **TODO** | **TODO** | |
-
-### Results
-
-| Quantity | Unit | HVDC platform | Electrolysis platform |
-|---|---:|---:|---:|
-| Topside structure and outfitting $m_{\mathrm{str}}$ | t | TODO | TODO |
-| Complete topside $m_{\mathrm{top}}$ | t | TODO | TODO |
-| Topside modules $N_{\mathrm{mod}}$ | count | TODO | TODO |
-| Largest topside lift $m_{S,\max}$ | t | TODO | TODO |
-| Jacket $m_J$ | t | TODO | TODO |
-| Piles $m_P$ | t | TODO | TODO |
-| Topside structure $C_{\mathrm{str}}$ | million EUR~2025~ | TODO | TODO |
-| Yard integration $C_{\mathrm{int}}$ | million EUR~2025~ | TODO | TODO |
-| Jacket $C_J$ | million EUR~2025~ | TODO | TODO |
-| Piles $C_P$ | million EUR~2025~ | TODO | TODO |
-| **Platform material CAPEX $C_{\mathrm{plat}}$** | million EUR~2025~ | **TODO** | **TODO** |
-| **Averaged specific cost $c_{\mathrm{plat}}$** | EUR~2025~/kW | **TODO** | **TODO** |
-
-Once the example can be calculated, it should show whether the electrolysis platform's larger hosted mass produces a materially higher $c_{\mathrm{plat}}$ than the HVDC platform. It should also show whether either topside needs more than one lift module for the selected installation class. The HVDC $c_{\mathrm{plat}}$ can then be compared with the platform-inclusive offshore-station difference recorded as reference evidence on [HVDC Converter Stations](../electrical_infra/hvdc_converter_stations.qmd); that comparison is a plausibility check, not a calibration, because the reference also contains an offshore equipment premium.
-
-## Interface with Installation
-
-This page provides the physical platform definition used by the installation model: $N_{\mathrm{plat}}$, $N_S$, $m_J$, $m_P$ and $m_{S,\max}$. The installation page independently checks transport and lift feasibility and calculates vessel occupation and offshore installation CAPEX.
-
-A material-CAPEX relationship cannot be used as an installation-cost proxy. Likewise, installation vessel selection or duration must not be embedded in the material cost calculated here.
-
-## Limitations {#limitations}
-
-| Limitation | Consequence |
+| Cost | Owner and boundary |
 |---|---|
-| $k_J$, $a_P$ and $b_P$ are undocumented curve fits for HVAC substations | Jacket and pile mass for large HVDC and electrolysis topsides are extrapolations; their uncertainty is not quantified |
-| Jacket mass does not depend on water depth, soil or environmental loads | Depth-driven differences between sites are not captured |
-| Topside mass is proportional to equipment mass | Differences in footprint, deck count and layout density between equipment types enter only through $k_{\mathrm{str}}$ |
-| Equal topside module split | $m_{S,\max}$ is underestimated when modules are unequal |
-| Linear yard-integration cost per tonne of equipment | Integration of dense electrical equipment and of process equipment may differ materially per tonne |
-| ORBIT's topside-mass relationship, $3.85$ t/MVA of transformer rating plus 285 t [@orbitSource2026], is not used | It duplicates the equipment-mass ledger and applies only to HVAC transformer platforms |
+| Topside structural fabrication, jacket and piles | This page; structural steel, assembly and coatings |
+| Yard integration | This page; equipment placement, connections and yard testing, excluding equipment purchase and work already in fabrication |
+| Transport, offshore installation, hook-up and commissioning | [Platform Installation](../offshore_installation/platform_and_substation_installation.qmd); added once |
+| Stacks, electrical equipment, BOP, compressors and shared process equipment | Component owners; their mass is included in $M$, their purchase cost is excluded here |
 
-## Unresolved Evidence
+Missing costs remain **not parameterised**. A known structural subtotal is not labelled total platform cost. The executable workflow exposes the component costs, known supply subtotal, supply total and combined platform total separately.
 
-| Required evidence or decision | Consequence while unresolved |
+## Inputs and Topside Mass
+
+A supplied topside mass must include structure, electrical collection and conversion equipment, stacks, BOP, compressors and shared auxiliaries. Collection switchgear remains in the equipment scope. Counting feeder bays is not required; AC string counts and cable routes are still calculated independently. This simplification removes the bay-capacity check, so it does not establish a buildable switchgear layout.
+
+Where no complete design mass is available, the optional upstream estimator is
+
+$$
+M=M_{\mathrm{ref}}\left(\frac{P}{P_{\mathrm{ref}}}\right)^\alpha.
+$$
+
+$M_{\mathrm{ref}}$ is a complete reference topside mass (t); $P$ and $P_{\mathrm{ref}}$ are consistent package ratings (GW). The rating must cover the same equipment duty and installed stack capacity as the reference. $\alpha$ is dimensionless, with a linear baseline of {{< var platform-mass-scaling-exponent >}} (explicit modelling assumption). Sensitivities override that named exponent without changing the baseline. No separate scaling laws for stacks, electrical, BOP, compression and shared equipment are adopted: compatible reference masses are missing.
+
+**TODO:** establish a complete $M_{\mathrm{ref}}$ and matching $P_{\mathrm{ref}}$. Neither is filled with a proxy. Direct mass bypasses this estimator; the platform cost calculation itself does not depend on GW.
+
+The available concept evidence is useful but incomplete:
+
+- North Sea Energy reports {{< var platform-nse-topside >}} for a {{< var platform-nse-power >}} concept at {{< var platform-nse-depth >}}, including {{< var platform-nse-structure >}} of structure. Its equipment scope excludes dryers, deoxygenators and compressors in section 4.4.1.1; later compressor references make the boundary ambiguous. It is not a complete reference for this model [@nse2022EnergyHubs, Table 4.9].
+- Iv publishes {{< var platform-iv-topside >}} for its associated concept. The different totals must be reconciled by design revision and scope, rather than averaged [@iv500MWHydrogen].
+
+Both are reference evidence only. Scaling either to the article capacity would still require completing the equipment boundary.
+
+## Structural Mass Chain
+
+Use the DNV/DEA preliminary relations as a **screening method**, replacing the former depth-independent ORBIT jacket ratio [@dnv2023OffshoreHydrogen, sec. 3.4].
+
+$$
+m_S=f_S M,\qquad
+m_J=a_J h M^{b_J},\qquad
+m_P=a_P(M+m_J)+b_P.
+$$
+
+$m_S$, $m_J$ and $m_P$ are topside structural, jacket and pile masses in tonnes. $M$ already includes $m_S$: do not add it again. The residual $M-m_S$ is an aggregate equipment mass, not an equipment inventory.
+
+| Parameter | Value | Basis |
+|---|---:|---|
+| Structural fraction $f_S$ | {{< var platform-topside-structural-fraction >}} | Derived assumption: DNV takes structural and equipment mass as equal |
+| Jacket coefficient $a_J$ | {{< var platform-jacket-depth-coefficient >}} | Sourced; use tonnes and metres exactly as defined |
+| Jacket exponent $b_J$ | {{< var platform-jacket-mass-exponent >}} | Sourced |
+| Pile load coefficient $a_P$ | {{< var platform-pile-load-coefficient >}} | Sourced |
+| Pile intercept $b_P$ | {{< var platform-pile-mass-intercept >}} | Sourced |
+
+All values above are from [@dnv2023OffshoreHydrogen, sec. 3.4]. The dimensional unit of $a_J$ is $\mathrm{t}^{1-b_J}/\mathrm{m}$. These are preliminary correlations, not a jacket design. Applying them to very large topsides is an unvalidated extrapolation; soil, environmental loads, footprint and layout are not resolved.
+
+## Structural Cost and Overall Mapping
+
+Let $c_S$, $c_J$ and $c_P$ be fabrication rates in EUR~2025~/t for their respective structural scopes. Then
+
+$$
+C_{\mathrm{structure}}=c_Sm_S+c_Jm_J+c_Pm_P.
+$$
+
+Substitution gives the reproducible direct relationship:
+
+$$
+\boxed{C_{\mathrm{platform}}(M,h)=
+(f_Sc_S+a_Pc_P)M
++a_J(c_J+a_Pc_P)hM^{b_J}
++b_Pc_P+C_{\mathrm{yard}}+C_{\mathrm{installation}}.}
+$$
+
+This exposes the linear topside term, depth-dependent jacket term, pile intercept, yard integration and installation. It does not claim that mass alone determines integration or installation.
+
+| Input | Evidence and adoption status |
 |---|---|
-| Architecture-specific hosted-equipment mass inventories (ISS-0052, ISS-0063, ISS-0083) | $m_{\mathrm{eq}}$ and every downstream mass and cost are not calculated |
-| Topside dry-weight breakdowns separating equipment from structure and outfitting | $k_{\mathrm{str}}$ is unresolved |
-| Fabricated topside-structure unit cost excluding equipment | $C_{\mathrm{str}}$ is unresolved |
-| Yard-integration cost evidence | $C_{\mathrm{int}}$ is unresolved |
-| Jacket fabrication unit cost, and USD 2024-to-2025 escalation if the ORBIT rate is adopted | $C_J$ is unresolved |
-| USD 2022-to-2025 escalation factor | $C_P$ is unresolved |
-| Platform capacity and multiplicity rule (DEC-0007) | $N_{\mathrm{plat}}$ remains a scenario input; a lift-limit rule is proposed above for adoption |
-| Relationship between calculated mass and installation lift modules | $N_{\mathrm{mod}}$ remains a scenario input with an equal-split assumption |
+| $c_S$ | DNV reference {{< var platform-dnv-topside-rate >}}; normalized rate TODO |
+| $c_J$ | DNV reference {{< var platform-dnv-jacket-rate >}}; normalized rate TODO |
+| $c_P$ | DNV reference {{< var platform-dnv-pile-rate >}}; normalized rate TODO |
+| $C_{\mathrm{yard}}$ | Aggregate EUR~2025~ yard-integration allowance; bounded supplier evidence TODO |
+| $C_{\mathrm{installation}}$ | Separate installation calculation; lift method, modules and commercial inputs required |
+
+The DNV rates cover structural fabrication rather than equipment purchase; their price basis must be established before normalization [@dnv2023OffshoreHydrogen, sec. 3.4]. They are stored as reference-only inputs and cannot enter the adopted CAPEX calculation. Publication year is not automatically price year. Piles no longer inherit a turbine-foundation fabrication rate.
+
+An aggregate yard cost is retained because a defensible labour/activity breakdown is unavailable. It is an explicit top-down input, not a fabricated EUR/t rate or the residual of a converter contract minus estimated steel. Its equipment scope and project basis must be documented before adoption.
+
+## Commercial Cross-Checks
+
+The TenneT, Petrofac, MHB and Dragados HVDC records concern {{< var hvdc-link-rated-power >}} blocks; Dunkerque is an HVAC substation. These records have different boundaries. Award dates identify the announcements, not normalized price years. No currency conversion or regression is applied.
+
+| Evidence | Published amount / mass | What it can establish |
+|---|---|---|
+| TenneT framework, April 2023 [@tennet2023Framework] | Around {{< var platform-tennet-framework >}} for {{< var platform-tennet-systems >}} systems | Both offshore and onshore converters; division gives approximately **EUR {{< var platform-tennet-pair-billion >}} billion per system**, not per bare platform. Export cables are outside this converter package. |
+| Petrofac/Hitachi, March 2023 [@petrofac2023Framework] | More than {{< var platform-petrofac-pair-lower-bound >}} per paired connection | Roughly half for Hitachi HVDC technology and half for Petrofac offshore platform EPCI plus parts of the onshore station. The latter is not a platform-only price. |
+| MHB IJmuiden Ver Alpha award, November 2023 [@mhb2023AlphaAward] | {{< var platform-mhb-contract >}}; {{< var platform-mhb-topside >}} topside and {{< var platform-mhb-jacket >}} jacket | Fabrication-package comparator: construction engineering, fabrication, mechanical completion, load-out, seafastening and architectural work. Topside mass includes equipment; equipment purchase inclusion is unconfirmed. Offshore installation is not listed. Depth and price basis unresolved. |
+| RTE Dunkerque, December 2024 [@rte2024Dunkerque] | Approximately {{< var platform-rte-dunkerque-contract >}} | Offshore HVAC substation and foundation EPCI; cables separate. Equipment and structural costs are not split, so not a mass-rate anchor. |
+| Dragados HVDC fact sheet [@dragados2024TwoGW] | {{< var platform-dragados-topside >}} topside and {{< var platform-dragados-jacket >}} jacket per block | Physical comparator only; no isolated commercial amount or matched site depth established here. |
+
+The apparent discrepancy between structural estimates and billion-euro converter packages is therefore mainly a boundary problem. These sources do not justify assigning the difference to platform integration, or transferring an HVDC package price to electrolysis. A mass-cost calibration requires matched scope, site depth, equipment procurement, installation inclusions, currency and price year.
+
+## Common-Site Mass Check {#worked-example}
+
+For an inspectable comparison, apply the same structural calculation to the published HVDC topside masses at the article's **{{< var platform-example-depth >}}** reference depth: the published representative average for IJmuiden Ver Beta [@dnv2025Doordewind, Appendix B, Table 3]. The scenario value is stored in `research_articles/turbine_level_hydrogen/scenarios/reference_case.toml`. This is a hypothetical common-site screen, not a reconstruction of either contractor's project.
+
+| Quantity | Dragados mass case | MHB mass case |
+|---|---:|---:|
+| Input complete topside mass | {{< var platform-dragados-topside >}} | {{< var platform-mhb-topside >}} |
+| Calculated topside structure | {{< var platform-example-dragados-topside-structure-t >}} | {{< var platform-example-mhb-topside-structure-t >}} |
+| Calculated jacket | {{< var platform-example-dragados-jacket-t >}} | {{< var platform-example-mhb-jacket-t >}} |
+| Calculated piles | {{< var platform-example-dragados-piles-t >}} | {{< var platform-example-mhb-piles-t >}} |
+| Complete platform CAPEX | TODO | TODO |
+
+The jacket predictions differ from the published masses. Unknown matched depths and design conditions prevent treating that difference as a calibration factor. Hydrogen is not given a numerical comparison until its complete topside mass is established. All displayed derived masses call the model function; the website does not repeat the equations in separate calculation code.
+
+## Installation Handoff and Remaining Inputs
+
+The platform module returns $M$, $m_S$, $m_J$ and $m_P$ independently of lift design. One platform can require multiple lifts. The installation module uses an explicitly selected integer module count and an equal-module screening assumption; a failed crane-capacity screen blocks that method rather than creating more platforms. A float-over design requires another installation branch.
+
+**TODO before a complete total:** complete hydrogen topside reference or direct mass; matched reference duty; normalized fabrication rates; bounded yard integration; and supported installation method, spread rates, logistics and commissioning duration. Known intermediate masses and costs remain visible while any of these are missing.
+
+The implementation is `model/platforms/platform_material_capex.py`; the workflow combines its supply result with `model/offshore_installation/platform_and_substation_installation.py`. Fixed inputs and reference evidence are in `model_data/inputs.csv`. Sensitivities retain named baseline values and overrides in the scenario output.

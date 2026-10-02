@@ -271,7 +271,7 @@ common-case results:
 - The common coordinates, turbine definition, operating and peak-duty states,
   and converted pressures are connected to both templates (above).
 - Complete the remaining design inputs needed by the selected branches:
-  injection pressure and export diameter (O7), platform location and feeder bays
+  injection pressure and export diameter (O7), complete topside mass and installation basis
   (O3), and electrical interface inputs (O2). Collection origins and network design are
   linked to O3/O7; onshore receipt details remain O9.
 

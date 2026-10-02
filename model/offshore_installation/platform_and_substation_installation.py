@@ -1,5 +1,14 @@
 """Piled jacket, topside and hook-up spread calculation."""
-from model.records import Infeasible
+from model.records import Infeasible, required
+
+
+def lift_inventory(platform: dict, case: dict) -> dict:
+    """Screen an explicitly selected equal-module crane installation, one platform."""
+    modules = required(case, "topside_modules_per_platform")
+    if isinstance(modules, bool) or int(modules) != modules or modules < 1:
+        raise ValueError("Topside lift modules must be a positive integer")
+    return dict(platform, topside_lifts=int(modules), jacket_lift_t=platform["jacket_t"],
+                largest_topside_lift_t=platform["topside_t"] / modules)
 
 
 def calculate(platform: dict, inputs) -> dict:

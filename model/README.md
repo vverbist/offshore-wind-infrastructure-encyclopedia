@@ -45,7 +45,7 @@ core test suite when PyWake is absent.
 | `electrical_infra/infield_ac_cables.py` | Radial-string inventory, supply cost and resistive losses |
 | `hydrogen_production/` | Stack polarisation, aggregate BOP and electrical interfaces |
 | `hydrogen_infra/` | Compression, physical collection network and existing pipeline hydraulics |
-| `platforms/` | Declared platform records; structural cost method remains TODO |
+| `platforms/` | One platform: complete topside mass and depth to provisional structural masses; separate fabrication and yard costs |
 | `offshore_installation/` | Turbine/foundation, platform and three-spread line installation |
 | `methodology/` | Availability, financial annualisation and technical-scope LCOH |
 | `reporting.py` | Explicit local output writing |
@@ -125,7 +125,8 @@ independent reporting boundary, not a multiplier on lengths. Minimum separation
 is checked. Detailed site-polygon/exclusion validation remains TODO.
 
 For AC collection, coordinate row order defines string assignment. The count
-uses the central string rating; feeder bays are checked. Route allowance and
+uses the central string rating; feeder bays are not a required input. Electrical
+equipment remains in the complete topside package. Route allowance and
 two water-depth vertical legs per section give a screening physical length.
 Actual termination elevations, slack, charging and sheath losses are not
 resolved. The resistance input must be an adopted effective AC resistance.
@@ -227,3 +228,20 @@ partial availability, incomplete-result handling and complete synthetic cases
 for both architectures. With the optional wind dependency, they also exercise
 the wake adapter on a synthetic aligned-turbine case. Physical qualification
 and real-case calibration are separate from software verification.
+
+### Central-platform interface
+
+One platform is fixed. Supply `[platform] topside_mass_t` (complete dry mass,
+including equipment and structure); depth comes from `[site] water_depth_m`.
+Alternatively select `mass_method = "power_scaling"` and `rated_power_gw`, with
+an adopted complete reference mass and matching reference rating in `inputs.csv`.
+Direct mass and scaling cannot be supplied together. The linear baseline exponent
+is a named central input, available for recorded sensitivity overrides.
+
+`[installation.platform] topside_modules_per_platform` belongs to the installation
+handoff, not structural sizing. The crane screen assumes equal modules and is
+not a lift-engineering assessment. Structure, yard integration and offshore
+installation retain separate boundaries. `physical.platform_costs` retains
+known supply components and missing-input reasons; `physical.platform_total_eur`
+is null until both supply and installation are complete. The cost ledger books
+one supply line and one installation line, so equipment and OPEX are not duplicated.
