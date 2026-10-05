@@ -443,7 +443,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Material CAPEX</span></a>
+ <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -578,7 +578,7 @@ window.Quarto = {
 </section>
 <section id="cost-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
-<p>The model distinguishes initial installed CAPEX from the lifecycle capital basis used for annualization.</p>
+<p>The model distinguishes initial installed CAPEX from the lifecycle capital basis used for annualization. Initial CAPEX sums supply, separate installation and EPCI entries. An EPCI entry cannot coexist with supply or installation for the same component. Hosted equipment remains separately owned. Annual OPEX, replacement and decommissioning enter lifetime costs on their own boundaries.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -597,41 +597,45 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>Offshore installation CAPEX</td>
-<td>Owned by the applicable installation page</td>
+<td>Owned by the applicable installation page; excludes installation already in platform EPCI</td>
 </tr>
 <tr class="odd">
+<td>Platform EPCI CAPEX</td>
+<td>One package owned by the platform page; replaces separate platform supply and installation</td>
+</tr>
+<tr class="even">
 <td>Onshore equipment and connection CAPEX</td>
 <td>Owned by the applicable component page</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Annual OPEX</td>
 <td>Owned by the component page on a non-overlapping scope</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Material short-life replacement</td>
 <td>Owned by the component page; counted only when replacement is required within 25 years</td>
 </tr>
-<tr class="even">
-<td>Decommissioning</td>
-<td>Shared calculation on the financial page: 80% of total offshore installation CAPEX</td>
-</tr>
 <tr class="odd">
+<td>Decommissioning</td>
+<td>80% of separate offshore installation CAPEX plus explicit platform removal cost; unresolved removal cost blocks complete LCOH</td>
+</tr>
+<tr class="even">
 <td>Commissioning</td>
 <td>Owned once by the applicable installation/component interface</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Development and shared engineering</td>
 <td>Outside the model scope (agreed)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Insurance and owner contingency</td>
 <td>Outside the model scope (agreed)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Construction finance, taxes and financing fees</td>
 <td>Excluded by the approved simple-CRF convention</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Residual value</td>
 <td>Zero under the 25-year project convention</td>
 </tr>
@@ -794,7 +798,7 @@ LC_{\mathrm{H2,HHV}}
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

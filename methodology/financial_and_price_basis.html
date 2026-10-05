@@ -462,7 +462,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Material CAPEX</span></a>
+ <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -624,6 +624,7 @@ G_{\mathrm{market}}.
 <p>Escalation is performed in the source currency before currency conversion. A cost-specific index is preferred where its scope matches the equipment or activity. A consumer-price index may be used only as a transparent fallback, with the mismatch recorded as a limitation.</p>
 <p>US-dollar escalation to 2025 uses the U.S. CPI-U annual averages as the documented consumer-price fallback, because no single cost-specific index covers the mixed equipment scopes involved <span class="citation" data-cites="blsCpiU2026">(<a href="#ref-blsCpiU2026" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026</a>)</span>. The annual averages are 258.811 (2020), 292.655 (2022) and 321.943 (2025; eleven months, as BLS published no October 2025 value), giving <code>financial-usd-escalation-2020-2025</code> = 1.24393 and <code>financial-usd-escalation-2022-2025</code> = 1.10008. A component that has a better-matched index, such as the compressor producer price index, uses its own factor instead.</p>
 <p>For USD-to-EUR conversions, the common convention is the ECB 2025 annual average of 1 EUR = 1.1300 USD. The inverse rate is 0.8850 EUR/USD <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. A dated exchange rate is not mixed with annual-average price indices in an EUR<sub>2025</sub> model input.</p>
+<p>The <a href="../platforms/platform_material_capex.html">platform benchmark comparison</a> uses a documented screening exception: source-year average FX followed by euro-area HICP escalation. Its adopted central coefficient is a EUR<sub>2023</sub> modelling judgement escalated to EUR<sub>2025</sub>. This does not establish a sector-specific construction index or change other components’ normalisation.</p>
 </section>
 <section id="project-financial-assumptions" class="level2">
 <h2 class="anchored" data-anchor-id="project-financial-assumptions">Project Financial Assumptions</h2>
@@ -710,14 +711,15 @@ C_{\mathrm{replacement},j}.
 </section>
 <section id="decommissioning" class="level2">
 <h2 class="anchored" data-anchor-id="decommissioning">Decommissioning</h2>
-<p>The model does not use a separate decommissioning activity model:</p>
+<p>The model uses an installation-cost proxy for separately costed installation and an explicit removal-cost input for the combined platform EPCI package:</p>
 <p><span class="math display">\[
 C_{\mathrm{decommissioning}}
 =
 f_{\mathrm{decommissioning}}
-C_{\mathrm{offshore\ installation}}.
+C_{\mathrm{separate\ offshore\ installation}}
++ C_{\mathrm{platform\ decommissioning}}.
 \]</span></p>
-<p>The offshore-installation total must contain non-overlapping installation costs from the installation pages. The factor <span class="math inline">\(f_{\mathrm{decommissioning}}\)</span> is 80% and is an explicit modelling assumption, not a sourced contractor estimate. Decommissioning timing is not discounted.</p>
+<p>The separate offshore-installation total contains non-overlapping installation costs from the installation pages, excluding platform installation already bundled in EPCI. <span class="math inline">\(C_{\mathrm{platform\ decommissioning}}\)</span> is the <code>platform-decommissioning-cost</code> input in EUR<sub>2025</sub>. It is initially unresolved, not zero. Missing platform decommissioning blocks complete lifetime cost and LCOH but does not block platform CAPEX. The installation-cost fraction is never applied to the whole EPCI package. For architectures without a central platform, no platform removal term is added. The factor <span class="math inline">\(f_{\mathrm{decommissioning}}\)</span> is 80% and is an explicit modelling assumption, not a sourced contractor estimate. Decommissioning timing is not discounted.</p>
 </section>
 <section id="lifecycle-capital-basis-and-annual-cost" class="level2">
 <h2 class="anchored" data-anchor-id="lifecycle-capital-basis-and-annual-cost">Lifecycle Capital Basis and Annual Cost</h2>
@@ -882,7 +884,7 @@ U.S. Bureau of Labor Statistics. 2026. <span>“Consumer Price Index for All Urb
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

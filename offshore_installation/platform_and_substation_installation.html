@@ -462,7 +462,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Platform Material CAPEX</span></a>
+ <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
 </li>
       </ul>
@@ -524,18 +524,11 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
-  <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
-  <li><a href="#model-inputs" id="toc-model-inputs" class="nav-link" data-scroll-target="#model-inputs">Model Inputs</a>
-  <ul class="collapse">
-  <li><a href="#design-and-installation-class" id="toc-design-and-installation-class" class="nav-link" data-scroll-target="#design-and-installation-class">Design and Installation Class</a></li>
-  <li><a href="#duration" id="toc-duration" class="nav-link" data-scroll-target="#duration">Duration</a></li>
-  <li><a href="#commercial-inputs" id="toc-commercial-inputs" class="nav-link" data-scroll-target="#commercial-inputs">Commercial Inputs</a></li>
-  </ul></li>
-  <li><a href="#installation-class-screen" id="toc-installation-class-screen" class="nav-link" data-scroll-target="#installation-class-screen">Installation-Class Screen</a></li>
-  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation">Calculation</a></li>
-  <li><a href="#model-outputs" id="toc-model-outputs" class="nav-link" data-scroll-target="#model-outputs">Model Outputs</a></li>
-  <li><a href="#applicability-and-limitations" id="toc-applicability-and-limitations" class="nav-link" data-scroll-target="#applicability-and-limitations">Applicability and Limitations</a></li>
+  <li><a href="#included-in-platform-epci" id="toc-included-in-platform-epci" class="nav-link active" data-scroll-target="#included-in-platform-epci">Included in Platform EPCI</a></li>
+  <li><a href="#the-previous-parametric-approach" id="toc-the-previous-parametric-approach" class="nav-link" data-scroll-target="#the-previous-parametric-approach">The Previous Parametric Approach</a></li>
+  <li><a href="#why-it-is-not-costed-separately" id="toc-why-it-is-not-costed-separately" class="nav-link" data-scroll-target="#why-it-is-not-costed-separately">Why It Is Not Costed Separately</a></li>
+  <li><a href="#feasibility-remains-separate-from-pricing" id="toc-feasibility-remains-separate-from-pricing" class="nav-link" data-scroll-target="#feasibility-remains-separate-from-pricing">Feasibility Remains Separate from Pricing</a></li>
+  <li><a href="#preservation-and-implementation-status" id="toc-preservation-and-implementation-status" class="nav-link" data-scroll-target="#preservation-and-implementation-status">Preservation and Implementation Status</a></li>
   </ul>
 </nav>
     </div>
@@ -561,352 +554,39 @@ window.Quarto = {
 </header>
 
 
-<section id="role-in-the-model" class="level2">
-<h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This page calculates the offshore installation CAPEX of a crane-installed, piled-jacket offshore substation (OSS). Jacket, pile and topside supply are costed separately. The installation result is required to convert those supplied components into an installed and commissioned offshore asset.</p>
-<p>The model uses the minimum sufficient detail supported by the available evidence. It represents three installation campaigns:</p>
-<ol type="1">
-<li>piled-jacket installation;</li>
-<li>topside installation; and</li>
-<li>offshore hook-up and commissioning.</li>
-</ol>
-<p>Piling and jacket installation are combined because the available public evidence supports their aggregate site duration but not a reliable task-level decomposition. Transport and other campaign logistics are represented by aggregate chargeable days rather than separate carrier schedules.</p>
+<section id="included-in-platform-epci" class="level2">
+<h2 class="anchored" data-anchor-id="included-in-platform-epci">Included in Platform EPCI</h2>
+<p>The agreed methodology includes central-platform transport, offshore installation, hook-up and commissioning in the combined <a href="../platforms/platform_material_capex.html">Platform EPCI CAPEX</a> package. This page explains the cost boundary and the decision to stop calculating platform installation as a separate additive cost.</p>
+<p>The combined commercial relationship is intended to scale with hosted equipment mass, using a consistent conversion where reference data report complete topside mass. Approximately linear scaling is a hypothesis over a comparable design range; additional commercial references will be used to test it and, if justified, fit a scaling exponent. It is not a claim that every installation activity is proportional to mass.</p>
+<p>This decision concerns central-platform installation only. <a href="../offshore_installation/turbine_and_foundation_installation.html">Turbine and Foundation Installation</a> and <a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a> retain their separate scopes.</p>
 </section>
-<section id="cost-boundary" class="level2">
-<h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Scope</th>
-<th>Treatment</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Mobilisation and demobilisation of the three installation spreads</td>
-<td>Included</td>
-</tr>
-<tr class="even">
-<td>Chargeable load-out, transport, setup and critical waiting</td>
-<td>Included as aggregate logistics time</td>
-</tr>
-<tr class="odd">
-<td>Routine pile, jacket and topside installation</td>
-<td>Included</td>
-</tr>
-<tr class="even">
-<td>Defined offshore hook-up, testing and commissioning</td>
-<td>Included</td>
-</tr>
-<tr class="odd">
-<td>Jacket, pile and topside fabrication</td>
-<td>Excluded; owned by <a href="../platforms/platform_material_capex.html">Platform Material CAPEX</a></td>
-</tr>
-<tr class="even">
-<td>Converter equipment</td>
-<td>Excluded; owned by <a href="../electrical_infra/hvdc_converter_stations.html">HVDC Converter Stations</a></td>
-</tr>
-<tr class="odd">
-<td>Cable installation, pull-in and termination</td>
-<td>Excluded; owned by <a href="../offshore_installation/cable_and_pipeline_installation.html">Cable and Pipeline Installation</a></td>
-</tr>
-<tr class="even">
-<td>Seabed preparation, UXO work, relief drilling, exceptional noise mitigation and scour protection</td>
-<td>Excluded from normal campaign rates; added only as defined exceptional work</td>
-</tr>
-<tr class="odd">
-<td>Development, insurance, owner contingency, OPEX and decommissioning</td>
-<td>Excluded</td>
-</tr>
-</tbody>
-</table>
-<p>Each activity is costed once. The campaign rates on this page are complete-spread rates: their vessel, equipment, support and consumable inclusions must be documented before use.</p>
-</section>
-<section id="model-inputs" class="level2">
-<h2 class="anchored" data-anchor-id="model-inputs">Model Inputs</h2>
-<section id="design-and-installation-class" class="level3">
-<h3 class="anchored" data-anchor-id="design-and-installation-class">Design and Installation Class</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Symbol</th>
-<th style="text-align: right;">Unit</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Number of substations</td>
-<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
-<td style="text-align: right;">count</td>
-<td>Fixed at one for the central platform</td>
-</tr>
-<tr class="even">
-<td>Topside lift modules per substation</td>
-<td style="text-align: right;"><span class="math inline">\(N_{\mathrm{module/OSS}}\)</span></td>
-<td style="text-align: right;">lift/OSS</td>
-<td>Project execution input</td>
-</tr>
-<tr class="odd">
-<td>Jacket screening lift mass</td>
-<td style="text-align: right;"><span class="math inline">\(m_J\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Upstream platform and lift input</td>
-</tr>
-<tr class="even">
-<td>Largest topside-module screening lift mass</td>
-<td style="text-align: right;"><span class="math inline">\(m_{S,\max}\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Upstream platform and lift input</td>
-</tr>
-<tr class="odd">
-<td>Selected jacket installation-class capacity</td>
-<td style="text-align: right;"><span class="math inline">\(Q_J\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Named-vessel or installation-class input</td>
-</tr>
-<tr class="even">
-<td>Selected topside installation-class capacity</td>
-<td style="text-align: right;"><span class="math inline">\(Q_S\)</span></td>
-<td style="text-align: right;">t</td>
-<td>Named-vessel or installation-class input</td>
-</tr>
-</tbody>
-</table>
-<p>The platform module supplies complete topside, jacket and pile masses without requiring a lift plan. The installation handoff requires <code>[installation.platform] topside_modules_per_platform</code>: a positive integer. The current crane screen uses <span class="math inline">\(m_{S,\max}=M/N_{\mathrm{module/OSS}}\)</span>, an explicit equal-module assumption. Unequal modules require a revised lift inventory; the model does not increase platform count to pass a failed screen.</p>
-<p>The screening lift masses should include lift-applicable attachments and rigging where that information is available. The capacity inputs should use the capacity at the intended configuration and radius when known; a published nominal maximum provides only an exclusion screen.</p>
-</section>
-<section id="duration" class="level3">
-<h3 class="anchored" data-anchor-id="duration">Duration</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Symbol</th>
-<th style="text-align: right;">Unit</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Piled-jacket net site occupation</td>
-<td style="text-align: right;"><span class="math inline">\(t_{FJ}\)</span></td>
-<td style="text-align: right;">day/OSS</td>
-<td>5.0 day/OSS screening anchor <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
-</tr>
-<tr class="even">
-<td>Topside net placement</td>
-<td style="text-align: right;"><span class="math inline">\(t_S\)</span></td>
-<td style="text-align: right;">day/lift</td>
-<td>2.5 day/lift screening anchor <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span></td>
-</tr>
-<tr class="odd">
-<td>Chargeable piled-jacket logistics</td>
-<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{log},FJ}\)</span></td>
-<td style="text-align: right;">day/campaign</td>
-<td>Project or contractor input required</td>
-</tr>
-<tr class="even">
-<td>Chargeable topside logistics</td>
-<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{log},S}\)</span></td>
-<td style="text-align: right;">day/campaign</td>
-<td>Project or contractor input required</td>
-</tr>
-<tr class="odd">
-<td>Hook-up and commissioning duration</td>
-<td style="text-align: right;"><span class="math inline">\(t_H\)</span></td>
-<td style="text-align: right;">day/OSS</td>
-<td>Owner or EPCI input required</td>
-</tr>
-</tbody>
-</table>
-<p>The CVOW values are planning anchors for a piled jacket and crane-placed topside. They are not universal productivities and do not include a transferable offshore commissioning duration. Replace them when project-specific campaign evidence is available.</p>
-<p>The logistics terms combine chargeable load-out, transport, setup and critical waiting for the corresponding complete spread. They must not include time already embedded in the net site anchors or mobilisation cost.</p>
-</section>
-<section id="commercial-inputs" class="level3">
-<h3 class="anchored" data-anchor-id="commercial-inputs">Commercial Inputs</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Symbol</th>
-<th style="text-align: right;">Unit</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Complete piled-jacket spread rate</td>
-<td style="text-align: right;"><span class="math inline">\(r_{FJ}\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
-<td>Contractor input required</td>
-</tr>
-<tr class="even">
-<td>Complete topside spread rate</td>
-<td style="text-align: right;"><span class="math inline">\(r_S\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
-<td>Contractor input required</td>
-</tr>
-<tr class="odd">
-<td>Complete hook-up spread rate</td>
-<td style="text-align: right;"><span class="math inline">\(r_H\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub>/day</td>
-<td>Contractor input required</td>
-</tr>
-<tr class="even">
-<td>Total mobilisation and demobilisation</td>
-<td style="text-align: right;"><span class="math inline">\(C_{\mathrm{mob}}\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Project commercial input required</td>
-</tr>
-<tr class="odd">
-<td>Defined exceptional work</td>
-<td style="text-align: right;"><span class="math inline">\(C_{\mathrm{exceptional}}\)</span></td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Project-specific input when applicable</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(C_{\mathrm{mob}}\)</span> is the total mobilisation and demobilisation cost across the three campaigns after accounting for any shared mobilisation. It must not repeat mobilisation already included in a spread rate.</p>
-<p>All commercial inputs must follow the common treatment documented in <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>. The public evidence does not provide consistently bounded complete-spread rates, so no default rates are adopted here.</p>
-</section>
-</section>
-<section id="installation-class-screen" class="level2">
-<h2 class="anchored" data-anchor-id="installation-class-screen">Installation-Class Screen</h2>
-<p>The selected class is rejected when either screening lift mass exceeds its declared capacity:</p>
-<p><span class="math display">\[
-m_J\leq Q_J,
-\qquad
-m_{S,\max}\leq Q_S.
-\]</span></p>
-<p>This is a one-sided screening check. Failure requires a larger vessel class or another installation method. Passing does not demonstrate lift feasibility: radius, hook height, dynamic effects, lift points, structure clearance, stability, seafastening and weather limits remain part of project lift engineering.</p>
-<p>The capacity check preserves the material step between installation classes without introducing unsupported task-level corrections. If the selected class fails, the model reports <strong>class change required</strong> and does not calculate cost using that class.</p>
-</section>
-<section id="calculation" class="level2">
-<h2 class="anchored" data-anchor-id="calculation">Calculation</h2>
-<p>The number of topside lifts is</p>
-<p><span class="math display">\[
-N_S=N_{\mathrm{OSS}}N_{\mathrm{module/OSS}},
-\]</span></p>
-<p>where <span class="math inline">\(N_S\)</span> is a count of lifts. A split topside therefore creates a discrete increase in installation work rather than a smooth mass multiplier.</p>
-<p>Chargeable campaign durations are</p>
-<p><span class="math display">\[
-T_{FJ}=N_{\mathrm{OSS}}t_{FJ}+t_{\mathrm{log},FJ},
-\]</span></p>
-<p><span class="math display">\[
-T_S=N_St_S+t_{\mathrm{log},S},
-\]</span></p>
-<p><span class="math display">\[
-T_H=N_{\mathrm{OSS}}t_H.
-\]</span></p>
-<p><span class="math inline">\(T_{FJ}\)</span>, <span class="math inline">\(T_S\)</span> and <span class="math inline">\(T_H\)</span> are chargeable days for the complete piled-jacket, topside and hook-up spreads. Mobilisation is costed separately and is therefore not included in these durations.</p>
-<p>Normal-scope installation CAPEX is</p>
-<p><span class="math display">\[
-C_{\mathrm{normal}}
-=C_{\mathrm{mob}}
-+r_{FJ}T_{FJ}
-+r_ST_S
-+r_HT_H.
-\]</span></p>
-<p>When exceptional work has a defined scope and cost,</p>
+<section id="the-previous-parametric-approach" class="level2">
+<h2 class="anchored" data-anchor-id="the-previous-parametric-approach">The Previous Parametric Approach</h2>
+<p>The original method represented piled-jacket installation, topside placement and offshore hook-up as separate campaigns. Its cost structure was</p>
 <p><span class="math display">\[
 C_{\mathrm{inst}}
-=C_{\mathrm{normal}}
+=C_{\mathrm{mob}}
++r_{FJ}T_{FJ}+r_ST_S+r_HT_H
 +C_{\mathrm{exceptional}}.
 \]</span></p>
-<p>If exceptional work is relevant but not quantified, it is reported as <strong>not included</strong> rather than assigned a zero value. Likewise, missing spread rates, mobilisation or hook-up duration block the total cost result; the upstream structural inventory remains available.</p>
+<p><span class="math inline">\(C_{\mathrm{mob}}\)</span> was mobilisation and demobilisation cost; <span class="math inline">\(r_{FJ}\)</span>, <span class="math inline">\(r_S\)</span> and <span class="math inline">\(r_H\)</span> were complete-spread rates in EUR/day for foundation/jacket, topside and hook-up work; <span class="math inline">\(T_{FJ}\)</span>, <span class="math inline">\(T_S\)</span> and <span class="math inline">\(T_H\)</span> were chargeable campaign days. <span class="math inline">\(C_{\mathrm{exceptional}}\)</span> represented separately defined exceptional work. All monetary terms required a common price basis and non-overlapping inclusions.</p>
+<p>Durations combined net site work with transport and campaign logistics. An explicit topside-module count represented multiple lifts, and crane-capacity screening rejected an unsuitable installation class. Published planning durations provided some support for this structure <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span>, but not a complete transferable set of commercial assumptions.</p>
 </section>
-<section id="model-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="model-outputs">Model Outputs</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Output</th>
-<th style="text-align: right;">Unit</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Installation-class result</td>
-<td style="text-align: right;">pass or class change required</td>
-<td>Prevents use of a clearly undersized installation class</td>
-</tr>
-<tr class="even">
-<td>Number of piled jackets</td>
-<td style="text-align: right;">count</td>
-<td>Equals <span class="math inline">\(N_{\mathrm{OSS}}\)</span></td>
-</tr>
-<tr class="odd">
-<td>Number of topside lifts</td>
-<td style="text-align: right;">count</td>
-<td>Exposes the split-topside discontinuity</td>
-</tr>
-<tr class="even">
-<td>Campaign duration by spread</td>
-<td style="text-align: right;">day</td>
-<td>Shows the time basis of each cost</td>
-</tr>
-<tr class="odd">
-<td>Campaign cost</td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Separates piled-jacket, topside and hook-up expenditure</td>
-</tr>
-<tr class="even">
-<td>Mobilisation</td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Keeps fixed campaign cost visible</td>
-</tr>
-<tr class="odd">
-<td>Exceptional-work status and cost</td>
-<td style="text-align: right;">text and EUR<sub>2025</sub> when defined</td>
-<td>Prevents unsupported work from being silently treated as zero</td>
-</tr>
-<tr class="even">
-<td>Total installation CAPEX</td>
-<td style="text-align: right;">EUR<sub>2025</sub></td>
-<td>Used in the project CAPEX calculation</td>
-</tr>
-</tbody>
-</table>
-<p>A EUR/kW value may be reported only as a derived comparison after total installation CAPEX is calculated. It is not a model input.</p>
+<section id="why-it-is-not-costed-separately" class="level2">
+<h2 class="anchored" data-anchor-id="why-it-is-not-costed-separately">Why It Is Not Costed Separately</h2>
+<p>We lack a consistently bounded set of complete-spread rates, mobilisation costs, logistics durations and commissioning assumptions for the reference platforms. Public EPCI awards do not disclose enough of their installation component to calibrate those terms independently. Populating the decomposition would therefore add uncertain assumptions without demonstrating better accuracy.</p>
+<p>Commercial offshore EPCI already prices fabrication, integration and installation together <span class="citation" data-cites="petrofac2023Framework">(<a href="#ref-petrofac2023Framework" role="doc-biblioref">Petrofac 2023</a>)</span>. Under the adopted mass-driver hypothesis, the total package is the useful modelling boundary. Adding vessel campaigns to that price would double-count installation. The difference between a structural estimate and an EPCI award must not be labelled installation cost: it also contains other delivery scope and commercial differences.</p>
+<p>Benchmark exclusions still matter. Unusual seabed preparation, exceptional foundation work or a different installation method cannot silently be assumed covered by a generic package. Such cases require a matched reference or an explicitly documented scope adjustment.</p>
 </section>
-<section id="applicability-and-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="applicability-and-limitations">Applicability and Limitations</h2>
-<p>This model applies only to crane-installed topsides on piled jackets. The following cases require another model branch rather than an adjustment factor:</p>
-<ul>
-<li>float-over or self-installing topsides;</li>
-<li>gravity-base or non-piled foundations;</li>
-<li>a failed jacket or topside installation-class screen; and</li>
-<li>exceptional work that changes the installation method or campaign structure.</li>
-</ul>
-<p>The model deliberately does not calculate pile handling, penetration, crane movement, carrier concurrency, mating or connection time separately. Those details can replace the aggregate parameters later if project evidence shows that the additional fidelity materially improves the estimate.</p>
-<p>The current public evidence supports the 5.0 day/OSS piled-jacket and 2.5 day/lift topside anchors <span class="citation" data-cites="boem2021CVOWCOP">(<a href="#ref-boem2021CVOWCOP" role="doc-biblioref">Dominion Energy 2021</a>)</span>. It does not support generic complete-spread rates, logistics time or offshore commissioning duration. These remain explicit project inputs rather than inferred assumptions.</p>
-<p><strong>Evidence review date:</strong> 31 July 2026.</p>
+<section id="feasibility-remains-separate-from-pricing" class="level2">
+<h2 class="anchored" data-anchor-id="feasibility-remains-separate-from-pricing">Feasibility Remains Separate from Pricing</h2>
+<p>One central platform does not imply one topside lift. Module arrangement, maximum lifted mass, crane configuration and radius, transport, stability and weather conditions still determine whether a proposed design can be installed. Passing a simple mass-capacity screen does not establish a feasible lift plan.</p>
+<p>A switch between crane lifting, float-over or another installation method may introduce a cost discontinuity. It is an applicability limit for the smooth EPCI relationship, not evidence for increasing platform count or applying an arbitrary correction factor.</p>
+</section>
+<section id="preservation-and-implementation-status" class="level2">
+<h2 class="anchored" data-anchor-id="preservation-and-implementation-status">Preservation and Implementation Status</h2>
+<p>The full previous methodology, calculation module and scalar inputs have been copied to a dated repository archive excluded from website rendering and publication. They are retained for later use if adequate separate cost evidence becomes available.</p>
+<p><strong>The combined EPCI calculation is implemented.</strong> The live central-platform workflow books installation within the single platform EPCI entry and no longer calls the separate platform installation cost module. Legacy functions remain available for comparison only. No lift plan is inferred or certified by the EPCI calculation. Platform decommissioning has a separate unresolved input; it is not estimated as a fraction of the whole EPCI package.</p>
 
 
 
@@ -915,6 +595,9 @@ C_{\mathrm{inst}}
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-boem2021CVOWCOP" class="csl-entry" role="listitem">
 Dominion Energy. 2021. <em>Coastal Virginia Offshore Wind Commercial Project: Construction and Operations Plan, Volume i, Sections 1–3</em>. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/sites/default/files/documents/renewable-energy/state-activities/CVOW-Commercial-COP-Sections-1-3.pdf">https://www.boem.gov/sites/default/files/documents/renewable-energy/state-activities/CVOW-Commercial-COP-Sections-1-3.pdf</a>.
+</div>
+<div id="ref-petrofac2023Framework" class="csl-entry" role="listitem">
+Petrofac. 2023. <span>“Petrofac and Hitachi Energy Secure Landmark Offshore Wind Framework Worth Approximately 13 Billion Euros.”</span> <a href="https://www.petrofac.com/media/news/petrofac-and-hitachi-energy-secure-landmark-offshore-wind-framework-worth-approximately-13-billion-euros">https://www.petrofac.com/media/news/petrofac-and-hitachi-energy-secure-landmark-offshore-wind-framework-worth-approximately-13-billion-euros</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->
@@ -1020,7 +703,7 @@ Dominion Energy. 2021. <em>Coastal Virginia Offshore Wind Commercial Project: Co
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/vverbist\.github\.io\/offshore-wind-infrastructure-encyclopedia\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
