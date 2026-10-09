@@ -275,3 +275,16 @@ No installation plan or feasibility approval follows from the aggregate cost.
 `installation_feasibility` is `not_assessed`; legacy `[installation.platform]`
 lift settings are not used by the active workflow. Engineering applicability
 must be checked independently before adopting an unusually large/deep case.
+
+### First-article turbine installation
+
+`installation.turbine_method = "reference"` selects the BVG fixed normal-turbine
+benchmark. `install-turbine-reference-*` and `financial-gbp-*` inputs belong to
+`offshore_installation/turbine_and_foundation_installation.qmd`. GBP2024 cost,
+UK CPI and 2025 GBP/EUR derive the EUR2025 result in code. There is no mass
+discount. The default `campaign` method and all previous inputs remain intact;
+foundation installation still uses it. The article assumes hydrogen-equipment
+installation and commissioning replace comparable work for removed power
+electronics. Both turbines use the same installation benchmark, without a
+separate hydrogen-equipment charge. This is a modelling assumption, not a
+supplier-verified equivalence. Central-platform installation stays within EPCI.

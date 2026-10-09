@@ -301,6 +301,19 @@ uv run python research_articles/turbine_level_hydrogen/analysis/run_design_cases
 Use the decentralised template and a separate output directory for the
 turbine-level case. Each output directory must be new; results remain local.
 
+## First-article installation choice
+
+Both architectures select the [fixed normal-turbine installation reference](../../offshore_installation/turbine_and_foundation_installation.qmd#sec-article-installation-reference)
+through the shared scenario: **{{< var installation-reference-eur2025-per-turbine >}}
+EUR2025/turbine**, without a mass discount. This replaces only turbine installation;
+foundation installation retains the existing common campaign method and its
+unresolved inputs. The original turbine campaign model and data remain available.
+Hydrogen-equipment installation and commissioning are assumed comparable to the
+work for removed power electronics, so no separate installation charge is added.
+This is an article modelling assumption, not sourced proof of equal work.
+No new equipment mass or largest-lift input is adopted. Central-platform
+installation remains within EPCI.
+
 ## Remaining preparation
 
 **O1 is partially resolved.** The site, count/rating, area, schematic geometry,

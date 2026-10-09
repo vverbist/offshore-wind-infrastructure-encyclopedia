@@ -306,6 +306,9 @@ overplant_factor = {case["electrolysis"]["overplant_factor"]!r}
 stack_outlet_bar = {absolute_pressure_bar(case["electrolysis"]["stack_outlet_pressure_bar_g"], atmospheric_bar)!r}
 delivery_bar = {absolute_pressure_bar(case["hydrogen"]["delivery_pressure_bar_g"], atmospheric_bar)!r}
 export_length_km = {case["hydrogen"]["export_length_km"]!r}
+
+[installation]
+turbine_method = "{case['installation']['turbine_method']}"
 """
 
 

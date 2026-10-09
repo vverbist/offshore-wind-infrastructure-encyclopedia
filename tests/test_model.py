@@ -274,6 +274,23 @@ class Integration(unittest.TestCase):
             self.assertEqual(result.status, "not_parameterized")
             self.assertIsNone(result.summary["lcoh_eur_kg"])
 
+    def test_article_installation_reference_is_equal_without_hydrogen_surcharge(self):
+        records = []
+        for name in ("centralised", "decentralised"):
+            path = ROOT / "research_articles/turbine_level_hydrogen/scenarios" / f"{name}.toml"
+            case = read_scenario(path)
+            result = run_case(case, load_inputs(case), path.parent)
+            record = result.physical["turbine_installation"]
+            self.assertEqual(record["method"], "reference")
+            self.assertEqual(record["mass_adjustment"], "none")
+            self.assertAlmostEqual(record["eur2025_per_turbine"], 2388615.875, places=2)
+            self.assertIsNone(next(c.amount_eur for c in result.costs if c.component == "foundation" and c.category == "installation"))
+            records.append(record)
+            hydrogen = [c for c in result.costs if c.component == "turbine-hydrogen-equipment"]
+            self.assertFalse(hydrogen)
+            self.assertFalse(any("turbine-hydrogen-installation-cost" in reason for reason in result.reasons))
+        self.assertEqual(records[0], records[1])
+
     def test_partial_case_keeps_inventory_and_no_fake_lcoh(self):
         result = run_case(self.scenario, load_inputs({}), self.base)
         self.assertEqual(result.status, "not_parameterized")

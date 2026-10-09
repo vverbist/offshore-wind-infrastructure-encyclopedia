@@ -136,6 +136,18 @@ and [Platform Installation](../../offshore_installation/platform_and_substation_
 
 Central platform installation is already included in EPCI; do not cost it again.
 
+- [x] First-article turbine installation: fixed BVG normal-turbine benchmark,
+  converted from GBP2024 to EUR2025, equal in both architectures with no mass
+  discount. The shared scenario selects `reference`; the original `campaign`
+  model and its inputs remain available.
+- [x] First-article hydrogen installation and commissioning are assumed comparable
+  to the work for removed power electronics. Use the same turbine installation
+  benchmark with no additional hydrogen-equipment charge. Detailed integration
+  work below is deferred for this article, rather than an installation-cost blocker.
+  Foundation installation retains its common campaign method. The remaining turbine mass,
+  lift and vessel work below applies to the retained campaign method and no
+  longer blocks the first-article fixed turbine benchmark.
+
 - [ ] Populate turbine/foundation and cable/pipeline vessel/spread rates,
   loading plans, productivities, weather treatment, connections and lifts, with
   explicit campaign inclusions.

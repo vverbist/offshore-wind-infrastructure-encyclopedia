@@ -311,3 +311,8 @@ platform-benchmark-linear-high,70000,EUR/t,assumption,2023,
 platform-epci-unit-cost-source,60000,EUR/t,assumption,2023,
 platform-epci-cost-scaling-exponent,1,exponent,assumption,,
 platform-decommissioning-cost,,EUR,assumption,2025,
+install-turbine-reference-rating,15,MW,sourced,,bvg2025FixedGuide
+install-turbine-reference-unit-cost,132000,GBP/MW,sourced,2024,bvg2025InstallationCosts
+financial-gbp-cpi-2024,133.9,index,conversion,2024,ons2026CPIAnnual
+financial-gbp-cpi-2025,138.4,index,conversion,2025,ons2026CPIAnnual
+financial-gbp-per-eur-2025,0.85679,GBP/EUR,conversion,2025,ecb2025GBPEUR

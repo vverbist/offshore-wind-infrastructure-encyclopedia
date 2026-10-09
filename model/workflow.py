@@ -297,8 +297,15 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
         cost("platform", "decommissioning", lambda: inputs.number("platform-decommissioning-cost", "EUR"))
 
     installation = scenario.get("installation", {})
+    turbine_method = installation.get("turbine_method", "campaign")
+    if turbine_method not in {"campaign", "reference"}:
+        raise ValueError("installation.turbine_method must be campaign or reference")
     for kind in ("turbine", "foundation"):
         def campaign(kind=kind):
+            if kind == "turbine" and turbine_method == "reference":
+                record = turbine_install.reference_installation(count, turbine_kw / 1000, inputs)
+                result.physical["turbine_installation"] = record
+                return record["installation_eur"]
             mass = dependent(complete_mass, "complete turbine mass")
             if kind == "foundation":
                 lift = dependent(footing, "monopile mass")["monopile_t"]
@@ -314,6 +321,9 @@ def run_case(scenario: dict, inputs: Inputs, base: Path) -> CaseResult:
             result.physical[kind + "_installation"] = record
             return record["installation_eur"]
         cost(kind, "installation", campaign)
+
+    # Article assumption: hydrogen equipment installation and commissioning
+    # replace comparable work for removed power electronics; no extra charge.
 
     def collection_installation():
         table = dependent(routes, "collection routes")

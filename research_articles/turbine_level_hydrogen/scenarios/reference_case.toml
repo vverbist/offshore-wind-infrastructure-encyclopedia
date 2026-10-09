@@ -41,3 +41,6 @@ delivery_pressure_bar_g = 66 # Agreed gauge interpretation; model requires absol
 stack_outlet_pressure_bar_g = 30 # User-specified article assumption; gauge, as for delivery pressure.
 overplant_factor = 1.0 # Requested nominal stack capacity / served wind capacity.
 overplant_factor_sensitivity_max = 3.0 # Deferred sensitivity ceiling for both architectures.
+
+[installation]
+turbine_method = "reference" # Fixed normal-turbine benchmark; no mass discount.

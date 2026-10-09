@@ -19,11 +19,18 @@ from model.hydrogen_production.stack import StackCurve
 from tools.build_platform_benchmarks import build as build_platform_benchmarks
 
 
+from model.offshore_installation.turbine_and_foundation_installation import reference_installation
+
+
 def main() -> None:
     parameters = load_parameters()
     variables = build_quarto_variables(parameters)
     variables.update(quarto_variables())
     inputs = load_inputs({})
+    installation = reference_installation(1, load_reference_case()["turbine"]["rated_power_mw"], inputs)
+    for key in ("source_gbp2024_per_turbine", "eur2025_per_turbine", "inflation_factor"):
+        places = 6 if key == "inflation_factor" else 0
+        variables["installation-reference-" + key.replace("_", "-")] = f"{installation[key]:,.{places}f}"
     variables.update(build_platform_benchmarks(inputs, PROJECT_ROOT))
     variables["platform-tennet-pair-billion"] = f"{inputs.reference_number('platform-tennet-framework') / inputs.reference_number('platform-tennet-systems') / 1e9:.2f}"
     for key in ("platform-tennet-framework", "platform-mhb-contract", "platform-petrofac-pair-lower-bound"):

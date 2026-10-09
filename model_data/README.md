@@ -76,3 +76,16 @@ lifetime-average production factor in code (`hydrogen_production/stack.qmd`).
 adopted combined turbine/hydrogen installation plan. It and the additional
 hydrogen-equipment mass remain TODOs. Connections and manifolds have separate
 O&M rates, also unresolved, to retain their scope in the component ledger.
+
+### First-article turbine installation
+
+`installation.turbine_method = "reference"` selects the BVG fixed normal-turbine
+benchmark. `install-turbine-reference-*` and `financial-gbp-*` inputs belong to
+`offshore_installation/turbine_and_foundation_installation.qmd`. GBP2024 cost,
+UK CPI and 2025 GBP/EUR derive the EUR2025 result in code. There is no mass
+discount. The default `campaign` method and all previous inputs remain intact;
+foundation installation still uses it. The article assumes hydrogen-equipment
+installation and commissioning replace comparable work for removed power
+electronics. Both turbines use the same installation benchmark, without a
+separate hydrogen-equipment charge. This is a modelling assumption, not a
+supplier-verified equivalence. Central-platform installation stays within EPCI.

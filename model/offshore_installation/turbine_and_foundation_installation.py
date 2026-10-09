@@ -22,3 +22,21 @@ def campaign(kind: str, count: int, set_mass_t: float, lift_mass_t: float,
     return {"sets_per_load": sets, "loads": loads, "travel_days": travel,
             "port_days": port, "site_days": site, "chargeable_days": days,
             "installation_eur": days * p("spread-rate")}
+
+
+def reference_installation(count: int, turbine_mw: float, inputs) -> dict:
+    """Fixed BVG turbine benchmark; no mass or distance adjustment. Units: MW, EUR2025."""
+    reference_mw = inputs.positive("install-turbine-reference-rating", "MW")
+    if count < 1 or turbine_mw != reference_mw:
+        raise ValueError("Fixed installation benchmark requires the reference turbine rating and a positive count")
+    source_per_mw = inputs.positive("install-turbine-reference-unit-cost", "GBP/MW")
+    inflation = inputs.positive("financial-gbp-cpi-2025", "index") / inputs.positive("financial-gbp-cpi-2024", "index")
+    gbp_per_eur = inputs.positive("financial-gbp-per-eur-2025", "GBP/EUR")
+    source_per_turbine = source_per_mw * reference_mw
+    per_turbine = source_per_turbine * inflation / gbp_per_eur
+    return {"method": "reference", "reference_rating_mw": reference_mw,
+            "source_gbp2024_per_mw": source_per_mw,
+            "source_gbp2024_per_turbine": source_per_turbine,
+            "inflation_factor": inflation, "gbp_per_eur_2025": gbp_per_eur,
+            "eur2025_per_turbine": per_turbine, "installation_eur": count * per_turbine,
+            "mass_adjustment": "none", "installation_feasibility": "not_assessed"}

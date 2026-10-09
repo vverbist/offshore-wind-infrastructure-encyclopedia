@@ -6,12 +6,86 @@ readiness: blocked
 
 ## Role in the Model
 
-This page calculates the base offshore installation CAPEX of monopile-supported wind turbines. Installation is divided into two independently scheduled campaigns:
+This page provides a fixed first-article turbine reference and retains the campaign
+model below. The campaign model calculates the base offshore installation CAPEX of monopile-supported wind turbines. Installation is divided into two independently scheduled campaigns:
 
 1. foundation transport and installation; and
 2. turbine transport and erection.
 
 Each campaign is calculated from the number of locations, vessel loads, port distance, installation time and vessel rate. Component masses are used only to check vessel payload and lift feasibility. They are not converted directly into installation time or cost.
+
+## First-Article Installation Reference {#sec-article-installation-reference}
+
+The first article selects `installation.turbine_method = "reference"` for both
+architectures. This replaces only turbine installation with a fixed normal-turbine
+benchmark, with no mass discount. The foundation campaign and common structural
+baseline remain unchanged. The original turbine method is retained as `"campaign"`,
+which also remains the default when no method is specified.
+
+### Inputs, boundary and calculation
+
+BVG's indicative reference has 15 MW turbines in a 1 GW fixed-bottom farm,
+50 m water depth and 75 km port/shore distance [@bvg2025FixedGuide;
+@bvg2025InstallationCosts]. These describe the source case, not the article's
+site. Transferring the benchmark without a site adjustment is an explicit
+**top-down screening assumption**. Export-route distance is not installation-port
+distance. The benchmark does not establish vessel or lift feasibility.
+
+| Input | Value | Basis |
+|---|---|---|
+| Reference rating, $P_r$ | {{< var install-turbine-reference-rating >}} | BVG [@bvg2025FixedGuide] |
+| Installation unit cost, $u$ | {{< var install-turbine-reference-unit-cost >}} | GBP2024/MW [@bvg2025InstallationCosts] |
+| UK CPI, $I_{24}$ | {{< var financial-gbp-cpi-2024 >}} | Annual 2024 index [@ons2026CPIAnnual] |
+| UK CPI, $I_{25}$ | {{< var financial-gbp-cpi-2025 >}} | Annual 2025 index [@ons2026CPIAnnual] |
+| Exchange rate, $X$ | {{< var financial-gbp-per-eur-2025 >}} | Annual 2025 GBP/EUR [@ecb2025GBPEUR] |
+
+The source installation category includes vessel, technicians, marshalling and
+other costs for normal turbine transport from the construction port and erection.
+It excludes foundation installation, inbound transport to the construction port,
+separately listed project contingency/insurance and hydrogen-equipment installation.
+Supplier-side commissioning may also be covered by turbine supply: any additional
+commissioning allowance must be checked against both boundaries.
+
+For turbine count $N$ [-], per-turbine cost $c_T$ [EUR2025/turbine] and total
+cost $C_T$ [EUR2025]:
+
+$$
+c_T=uP_r\frac{I_{25}}{I_{24}}\frac{1}{X},\qquad C_T=Nc_T.
+$$
+
+Here $u$ is GBP2024/MW, $P_r$ is MW, CPI indices share the same base, and $X$
+is GBP/EUR. The source cost is
+**{{< var installation-reference-source-gbp2024-per-turbine >}} GBP2024/turbine**.
+The CPI ratio is {{< var installation-reference-inflation-factor >}}, giving
+**{{< var installation-reference-eur2025-per-turbine >}} EUR2025/turbine**.
+Consumer inflation is an adopted fallback, not a vessel-price index.
+
+The module's `reference_installation` function supplies both website values and
+scenario results. Other turbine ratings are rejected; no capacity-scaling law
+is inferred. The output records price conversion and unassessed feasibility.
+The rounded headline cost is not independently entered as a model input.
+
+### Architecture treatment
+
+The equipment comparison does not establish a net mass saving after adding
+stacks, BOP and compression. No proportional mass-to-installation-cost adjustment
+is adopted. Missing equipment masses and lift arrangements remain unresolved
+for the original campaign method, but do not block the fixed turbine benchmark.
+
+For the first article, hydrogen-equipment installation and commissioning are
+assumed comparable to the work for the removed power electronics. The same
+normal-turbine installation benchmark therefore covers both turbine architectures;
+no separate hydrogen-equipment installation charge is added. This is an explicit
+modelling assumption, not a supplier-verified equivalence or a claim that the
+BVG source includes hydrogen equipment. Detailed differences are deferred.
+Central-platform installation stays within EPCI. Aggregate BOP costing, separate
+electrical accounting and complete central-platform masses are unchanged.
+
+## Retained Campaign Method
+
+The following calculation and its existing inputs are preserved for foundations
+and the optional turbine campaign. The article benchmark replaces, rather than
+adds to, the turbine campaign cost.
 
 ## Cost Boundary
 

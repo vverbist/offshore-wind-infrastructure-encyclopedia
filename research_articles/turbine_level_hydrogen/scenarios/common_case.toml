@@ -28,3 +28,6 @@ overplant_factor = 1.0
 stack_outlet_bar = 31.01325
 delivery_bar = 67.01325
 export_length_km = 100
+
+[installation]
+turbine_method = "reference"
