@@ -461,6 +461,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../platforms/topside_mass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complete Topside Mass</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
@@ -525,6 +531,12 @@ window.Quarto = {
    
   <ul>
   <li><a href="#role-in-the-model" id="toc-role-in-the-model" class="nav-link active" data-scroll-target="#role-in-the-model">Role in the Model</a></li>
+  <li><a href="#sec-article-installation-reference" id="toc-sec-article-installation-reference" class="nav-link" data-scroll-target="#sec-article-installation-reference">First-Article Installation Reference</a>
+  <ul class="collapse">
+  <li><a href="#inputs-boundary-and-calculation" id="toc-inputs-boundary-and-calculation" class="nav-link" data-scroll-target="#inputs-boundary-and-calculation">Inputs, boundary and calculation</a></li>
+  <li><a href="#architecture-treatment" id="toc-architecture-treatment" class="nav-link" data-scroll-target="#architecture-treatment">Architecture treatment</a></li>
+  </ul></li>
+  <li><a href="#retained-campaign-method" id="toc-retained-campaign-method" class="nav-link" data-scroll-target="#retained-campaign-method">Retained Campaign Method</a></li>
   <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
   <li><a href="#project-inputs" id="toc-project-inputs" class="nav-link" data-scroll-target="#project-inputs">Project Inputs</a></li>
   <li><a href="#campaign-parameters" id="toc-campaign-parameters" class="nav-link" data-scroll-target="#campaign-parameters">Campaign Parameters</a></li>
@@ -575,12 +587,77 @@ window.Quarto = {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This page calculates the base offshore installation CAPEX of monopile-supported wind turbines. Installation is divided into two independently scheduled campaigns:</p>
+<p>This page provides a fixed first-article turbine reference and retains the campaign model below. The campaign model calculates the base offshore installation CAPEX of monopile-supported wind turbines. Installation is divided into two independently scheduled campaigns:</p>
 <ol type="1">
 <li>foundation transport and installation; and</li>
 <li>turbine transport and erection.</li>
 </ol>
 <p>Each campaign is calculated from the number of locations, vessel loads, port distance, installation time and vessel rate. Component masses are used only to check vessel payload and lift feasibility. They are not converted directly into installation time or cost.</p>
+</section>
+<section id="sec-article-installation-reference" class="level2">
+<h2 class="anchored" data-anchor-id="sec-article-installation-reference">First-Article Installation Reference</h2>
+<p>The first article selects <code>installation.turbine_method = "reference"</code> for both architectures. This replaces only turbine installation with a fixed normal-turbine benchmark, with no mass discount. The foundation campaign and common structural baseline remain unchanged. The original turbine method is retained as <code>"campaign"</code>, which also remains the default when no method is specified.</p>
+<section id="inputs-boundary-and-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="inputs-boundary-and-calculation">Inputs, boundary and calculation</h3>
+<p>BVG’s indicative reference has 15 MW turbines in a 1 GW fixed-bottom farm, 50 m water depth and 75 km port/shore distance <span class="citation" data-cites="bvg2025FixedGuide bvg2025InstallationCosts">(<a href="#ref-bvg2025FixedGuide" role="doc-biblioref">BVG Associates 2025a</a>, <a href="#ref-bvg2025InstallationCosts" role="doc-biblioref">2025b</a>)</span>. These describe the source case, not the article’s site. Transferring the benchmark without a site adjustment is an explicit <strong>top-down screening assumption</strong>. Export-route distance is not installation-port distance. The benchmark does not establish vessel or lift feasibility.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Input</th>
+<th>Value</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Reference rating, <span class="math inline">\(P_r\)</span></td>
+<td><p>15 MW</p></td>
+<td>BVG <span class="citation" data-cites="bvg2025FixedGuide">(<a href="#ref-bvg2025FixedGuide" role="doc-biblioref">BVG Associates 2025a</a>)</span></td>
+</tr>
+<tr class="even">
+<td>Installation unit cost, <span class="math inline">\(u\)</span></td>
+<td><p>132000 GBP/MW</p></td>
+<td>GBP2024/MW <span class="citation" data-cites="bvg2025InstallationCosts">(<a href="#ref-bvg2025InstallationCosts" role="doc-biblioref">BVG Associates 2025b</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>UK CPI, <span class="math inline">\(I_{24}\)</span></td>
+<td><p>133.9 index</p></td>
+<td>Annual 2024 index <span class="citation" data-cites="ons2026CPIAnnual">(<a href="#ref-ons2026CPIAnnual" role="doc-biblioref">Office for National Statistics 2026</a>)</span></td>
+</tr>
+<tr class="even">
+<td>UK CPI, <span class="math inline">\(I_{25}\)</span></td>
+<td><p>138.4 index</p></td>
+<td>Annual 2025 index <span class="citation" data-cites="ons2026CPIAnnual">(<a href="#ref-ons2026CPIAnnual" role="doc-biblioref">Office for National Statistics 2026</a>)</span></td>
+</tr>
+<tr class="odd">
+<td>Exchange rate, <span class="math inline">\(X\)</span></td>
+<td><p>0.85679 GBP/EUR</p></td>
+<td>Annual 2025 GBP/EUR <span class="citation" data-cites="ecb2025GBPEUR">(<a href="#ref-ecb2025GBPEUR" role="doc-biblioref">European Central Bank 2026a</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The source installation category includes vessel, technicians, marshalling and other costs for normal turbine transport from the construction port and erection. It excludes foundation installation, inbound transport to the construction port, separately listed project contingency/insurance and hydrogen-equipment installation. Supplier-side commissioning may also be covered by turbine supply: any additional commissioning allowance must be checked against both boundaries.</p>
+<p>For turbine count <span class="math inline">\(N\)</span> [-], per-turbine cost <span class="math inline">\(c_T\)</span> [EUR2025/turbine] and total cost <span class="math inline">\(C_T\)</span> [EUR2025]:</p>
+<p><span class="math display">\[
+c_T=uP_r\frac{I_{25}}{I_{24}}\frac{1}{X},\qquad C_T=Nc_T.
+\]</span></p>
+<p>Here <span class="math inline">\(u\)</span> is GBP2024/MW, <span class="math inline">\(P_r\)</span> is MW, CPI indices share the same base, and <span class="math inline">\(X\)</span> is GBP/EUR. The source cost is <strong>1,980,000 GBP2024/turbine</strong>. The CPI ratio is 1.033607, giving <strong>2,388,616 EUR2025/turbine</strong>. Consumer inflation is an adopted fallback, not a vessel-price index.</p>
+<p>The module’s <code>reference_installation</code> function supplies both website values and scenario results. Other turbine ratings are rejected; no capacity-scaling law is inferred. The output records price conversion and unassessed feasibility. The rounded headline cost is not independently entered as a model input.</p>
+</section>
+<section id="architecture-treatment" class="level3">
+<h3 class="anchored" data-anchor-id="architecture-treatment">Architecture treatment</h3>
+<p>The equipment comparison does not establish a net mass saving after adding stacks, BOP and compression. No proportional mass-to-installation-cost adjustment is adopted. Missing equipment masses and lift arrangements remain unresolved for the original campaign method, but do not block the fixed turbine benchmark.</p>
+<p>For the first article, hydrogen-equipment installation and commissioning are assumed comparable to the work for the removed power electronics. The same normal-turbine installation benchmark therefore covers both turbine architectures; no separate hydrogen-equipment installation charge is added. This is an explicit modelling assumption, not a supplier-verified equivalence or a claim that the BVG source includes hydrogen equipment. Detailed differences are deferred. Central-platform installation stays within EPCI. Aggregate BOP costing, separate electrical accounting and complete central-platform masses are unchanged.</p>
+</section>
+</section>
+<section id="retained-campaign-method" class="level2">
+<h2 class="anchored" data-anchor-id="retained-campaign-method">Retained Campaign Method</h2>
+<p>The following calculation and its existing inputs are preserved for foundations and the optional turbine campaign. The article benchmark replaces, rather than adds to, the turbine campaign cost.</p>
 </section>
 <section id="cost-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="cost-boundary">Cost Boundary</h2>
@@ -923,7 +1000,7 @@ t_{\mathrm{port},T}
 =
 0.521\ \mathrm{day/turbine}.
 \]</span></p>
-<p>The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR<sub>2025</sub> 363,297/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span>. This follows the <a href="../methodology/financial_and_price_basis.html">common financial basis</a>. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:</p>
+<p>The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR<sub>2025</sub> 363,297/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026b</a>)</span>. This follows the <a href="../methodology/financial_and_price_basis.html">common financial basis</a>. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:</p>
 <p><span class="math display">\[
 10\ \mathrm{kn}
 \times1.852\ \mathrm{km/nmi}
@@ -1130,14 +1207,26 @@ t_{\mathrm{site},F}
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-bvg2025FixedGuide" class="csl-entry" role="listitem">
+BVG Associates. 2025a. <span>“Guide to a Fixed Offshore Wind Farm.”</span> <a href="https://guidetoanoffshorewindfarm.com/wp-content/uploads/2025/06/BVGA-16464-Fixed-Guide-rF.pdf">https://guidetoanoffshorewindfarm.com/wp-content/uploads/2025/06/BVGA-16464-Fixed-Guide-rF.pdf</a>.
+</div>
+<div id="ref-bvg2025InstallationCosts" class="csl-entry" role="listitem">
+BVG Associates. 2025b. <span>“Guide to an Offshore Wind Farm: Wind Farm Costs.”</span> <a href="https://guidetoanoffshorewindfarm.com/wind-farm-costs/">https://guidetoanoffshorewindfarm.com/wind-farm-costs/</a>.
+</div>
+<div id="ref-ecb2025GBPEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026a. <span>“Pound Sterling Per Euro: Annual Average Reference Exchange Rate.”</span> <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.GBP.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.GBP.EUR.SP00.A</a>.
+</div>
 <div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
-European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+European Central Bank. 2026b. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
 </div>
 <div id="ref-orbit2026InstallationDefaults" class="csl-entry" role="listitem">
 National Laboratory of the Rockies. n.d. <span>“<span>ORBIT</span> Introduction.”</span> Accessed July 31, 2026. <a href="https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html">https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html</a>.
 </div>
 <div id="ref-nunemaker2020ORBIT" class="csl-entry" role="listitem">
 Nunemaker, Jacob, Matthew Shields, Rob Hammond, and Patrick Duffy. 2020. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. NREL/TP-5000-77081. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1660132">https://doi.org/10.2172/1660132</a>.
+</div>
+<div id="ref-ons2026CPIAnnual" class="csl-entry" role="listitem">
+Office for National Statistics. 2026. <span>“CPI INDEX 00: ALL ITEMS 2015=100, D7BT.”</span> <a href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7bt/mm23">https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7bt/mm23</a>.
 </div>
 <div id="ref-rwe2024SofiaFoundationStart" class="csl-entry" role="listitem">
 RWE Offshore Wind GmbH. 2024. <span>“<span>RWE</span> Installs First Turbine Foundation at Its Flagship Sofia Offshore Wind Farm.”</span> May 21. <a href="https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2024-05-21-rwe-installs-first-turbine-foundation-at-its-flagship-sofia-offshore-wind-farm/">https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2024-05-21-rwe-installs-first-turbine-foundation-at-its-flagship-sofia-offshore-wind-farm/</a>.

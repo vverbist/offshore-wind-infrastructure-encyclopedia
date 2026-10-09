@@ -461,6 +461,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../platforms/topside_mass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complete Topside Mass</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
@@ -709,30 +715,98 @@ f_\mathrm{life}=1-\bar d.
 <p>The stack is modelled as a modular component whose cost scales linearly with installed reference-rated stack capacity. Linear scaling is used because larger PEM electrolyser systems are represented as multiple identical stack modules rather than as a single geometrically scaled stack. As a result, increasing installed stack capacity increases the number of modules, cells and active area approximately proportionally. No equipment-level scaling exponent is therefore applied to the stack itself.</p>
 <p>Actual stack operation follows the module dispatch rule. At each time step, the model chooses the number of active modules and their operating current density. The corresponding electrical input, hydrogen production, efficiency and degradation are calculated from the polarisation curve. Reference-rated stack capacity is therefore a bookkeeping convention for cost only, while the physical and operational behaviour of the stack remains governed by current density.</p>
 <p><strong>Manufacturing-volume and purchase-cost calculation</strong></p>
-<p>NREL Table 10 isolates manufacturing-volume economies for the same reference design <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>. Raising annual output from 10 MW to 1 GW reduces manufactured stack cost from 316 to 164 USD/kW, a reduction of 152 USD/kW (48%). It does not include the additional technology changes in NREL’s Figure 27 waterfall, so the waterfall reductions are not added to the Table 10 result.</p>
-<p>For the assumed 2 GW/year output, continue the logarithmic cost trend between NREL’s 100 MW/year and 1 GW/year points for another <span class="math inline">\(\log_{10}(2)\)</span> decade. With <span class="math inline">\(M\)</span> denoting annual manufacturing output [MW/year] and <span class="math inline">\(c_{\mathrm{mfg},2}\)</span> the manufactured cost at NREL’s 2 A/cm² rating [USD/kW]:</p>
+<p>NREL Table 10 isolates manufacturing-volume economies for the same reference design <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>. Its reference anchors enter the shared input table; the technology changes in Figure 27 are not added as further cost reductions.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Symbol</th>
+<th>Input and units</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(M_L\)</span></td>
+<td><p>100 MW/year</p></td>
+<td>Lower manufacturing-output anchor <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>, Table 10)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(M_H\)</span></td>
+<td><p>1000 MW/year</p></td>
+<td>Higher manufacturing-output anchor <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>, Table 10)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c_L\)</span></td>
+<td><p>183 USD/kW</p></td>
+<td>Manufactured stack cost at <span class="math inline">\(M_L\)</span>, USD<sub>2020</sub>/kW <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(c_H\)</span></td>
+<td><p>164 USD/kW</p></td>
+<td>Manufactured stack cost at <span class="math inline">\(M_H\)</span>, USD<sub>2020</sub>/kW <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(M\)</span></td>
+<td>2000 MW/year</td>
+<td>Article supply-chain assumption; <code>scenarios/reference_case.toml</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(j_s\)</span>, <span class="math inline">\(V_s\)</span></td>
+<td>2 A/cm2, 1.9 V</td>
+<td>NREL source-rating current density and voltage <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(j_r\)</span></td>
+<td><p>3 A/cm2</p></td>
+<td>Model reference-rated capacity convention</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(V_r\)</span></td>
+<td>1.92 V</td>
+<td>Supplied curve evaluated at <span class="math inline">\(j_r\)</span> <span class="citation" data-cites="manufacturerGStackPolarisation">(<a href="#ref-manufacturerGStackPolarisation" role="doc-biblioref">Manufacturer G, n.d.</a>)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(m\)</span></td>
+<td><p>1.5</p></td>
+<td>Manufactured-to-purchase markup <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(F_{20\to25}\)</span></td>
+<td><p>1.24393</p></td>
+<td>U.S. CPI-U 2020–2025 factor <span class="citation" data-cites="blsCpiU2026">(<a href="#ref-blsCpiU2026" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026</a>)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span></td>
+<td><p>1.1300 USD/EUR</p></td>
+<td>2025 mean exchange rate <span class="citation" data-cites="ecb2025USDEUR">(<a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<p>For the article output, continue the logarithmic trend between the two manufacturing anchors:</p>
 <p><span class="math display">\[
-c_{\mathrm{mfg},2}(M)
-=164-(183-164)\log_{10}\!\left(\frac{M}{1000\ \mathrm{MW/year}}\right),
-\qquad M\geq1000\ \mathrm{MW/year}.
+c_{\mathrm{mfg},s}(M)
+=c_H-(c_L-c_H)\frac{\ln(M/M_H)}{\ln(M_H/M_L)},
+\qquad M\geq M_H.
 \]</span></p>
-<p>At <span class="math inline">\(M=2000\)</span> MW/year this gives approximately 158 USD/kW. This extension saves about 6 USD/kW beyond NREL’s 1 GW/year point. It is a local extrapolation, not a quoted NREL result or a forecast of further technology progress.</p>
-<p>NREL rates its reference stack at <span class="math inline">\(j_2=2\)</span> A/cm² and <span class="math inline">\(V_2=1.9\)</span> V <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024</a>)</span>. The model’s reference is <span class="math inline">\(j_3=3\)</span> A/cm²; the supplied polarisation curve gives <span class="math inline">\(V_3\approx1.92\)</span> V at that current density <span class="citation" data-cites="manufacturerGStackPolarisation">(<a href="#ref-manufacturerGStackPolarisation" role="doc-biblioref">Manufacturer G, n.d.</a>)</span>. Holding cell count and active area fixed, rated power scales with <span class="math inline">\(jV\)</span>. The same physical stack therefore costs, per 3 A/cm²-rated kW:</p>
+<p>The result is <strong>158 USD<sub>2020</sub>/kW</strong> at the source rating. Output above <span class="math inline">\(M_H\)</span> is a local extrapolation, not a quoted NREL result or a forecast of technology progress. Lower-volume sensitivities require their own documented interpolation; the executable function rejects them under this extrapolation rule.</p>
+<p>Holding cell count and active area fixed, rated power scales with <span class="math inline">\(jV\)</span>. Convert the same physical stack to the model reference rating:</p>
 <p><span class="math display">\[
-c_{\mathrm{mfg},3}
-=c_{\mathrm{mfg},2}(2000)
-\frac{j_2V_2}{j_3V_3}
-\approx158\frac{2(1.9)}{3(1.92)}
-\approx104\ \mathrm{USD}_{2020}/\mathrm{kW}.
+f_{\mathrm{rating}}=\frac{j_sV_s}{j_rV_r},
+\qquad
+c_{\mathrm{mfg},r}=c_{\mathrm{mfg},s}f_{\mathrm{rating}}.
 \]</span></p>
-<p>This is a rating-normalisation step, not a second manufacturing saving. Applying NREL’s 50% manufacturer markup, the <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">U.S. CPI-U annual averages</a> of 258.811 (2020) and 321.943 (2025), and the <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">ECB 2025 average</a> of 1.1300 USD/EUR gives:</p>
+<p>The dimensionless rating factor is <strong>0.6597</strong> and reference-rated manufactured cost is <strong>104 USD<sub>2020</sub>/kW</strong>. This is a rating conversion, not an additional manufacturing saving. Purchase cost is then:</p>
 <p><span class="math display">\[
-c_{\mathrm{stack,purchase},2025}
-=c_{\mathrm{mfg},3}\,(1.5)
-\frac{321.943}{258.811}\frac{1}{1.1300}
-\approx172\ \mathrm{EUR}_{2025}/\mathrm{kW}.
+c_{\mathrm{purchase},2025}
+=c_{\mathrm{mfg},r}\,m\,F_{20\to25}/X.
 \]</span></p>
-<p>The rounded article reference is <strong>175 EUR/kW of 3 A/cm² reference-rated stack capacity</strong>. It is an equipment-purchase estimate, not installed offshore cost. The fixed input <code>stack-purchase-unit-cost</code> remains unset in the executable model; this page records the adopted calculation basis pending implementation in the shared inputs and model.</p>
+<p>The executable article purchase basis is <strong>172 EUR<sub>2025</sub>/kW of reference-rated stack capacity</strong>. The previously rounded 175 EUR<sub>2025</sub>/kW reference is not a separate model input. Equipment purchase excludes offshore installation.</p>
+<p>The website and scenario workflow call <code>purchase_cost_basis</code> in <code>model/hydrogen_production/stack.py</code>. Fixed inputs come from <code>inputs.csv</code>; annual manufacturing output comes from the article scenario and the reference voltage from the supplied curve. <code>physical.stack_purchase_cost_basis</code> reports the intermediate results above. There is no independently entered derived purchase price in the input table. Total stack purchase cost is this unit cost times installed reference-rated capacity, including integer module rounding. Replacement expenditure uses the same initial stack purchase basis; replacement scheduling remains unresolved under D4.</p>
 <p><strong>Scope distinction</strong></p>
 <p>Only the stack cost is included in this component model. Balance-of-plant equipment, power electronics, installation, offshore structures and other system-level costs are represented elsewhere in the model. This distinction is important because the NREL report also provides full electrolyser system costs, but those include balance-of-plant components that are outside the scope of this stack page.</p>
 <p>Stack replacement costs are calculated using the same specific stack cost assumption as the initial stack.</p>
@@ -745,6 +819,7 @@ c_{\mathrm{stack,purchase},2025}
 <h2 class="anchored" data-anchor-id="installation-and-mass">Installation and Mass</h2>
 <p>Stack installation is included within the installation model of the complete electrolyser facility or turbine-integrated hydrogen production system.</p>
 <p>A dedicated stack mass model is not yet included. If future work identifies stack mass as a significant driver for tower sizing, platform design or installation costs, this section should be expanded accordingly.</p>
+<p>Complete central-platform mass is estimated separately on the <a href="../platforms/topside_mass.html">Complete Topside Mass</a> page. Its aggregate reference already includes hosted equipment; component masses are not added again.</p>
 
 
 
@@ -754,8 +829,14 @@ c_{\mathrm{stack,purchase},2025}
 <div id="ref-badgett2024PEMCost" class="csl-entry" role="listitem">
 Badgett, Alex, Joe Brauch, Amogh Thatte, et al. 2024. <em>Updated Manufactured Cost Analysis for Proton Exchange Membrane Water Electrolyzers</em>. NREL/TP-6A20-87625. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/2311140">https://doi.org/10.2172/2311140</a>.
 </div>
+<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
+European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
 <div id="ref-manufacturerGStackPolarisation" class="csl-entry" role="listitem">
 Manufacturer G. n.d. <em>Stack Polarisation Curve</em>. Confidential manufacturer data.
+</div>
+<div id="ref-blsCpiU2026" class="csl-entry" role="listitem">
+U.S. Bureau of Labor Statistics. 2026. <span>“Consumer Price Index for All Urban Consumers: All Items in <span>U.S.</span> City Average (<span>CPI-U</span>), Not Seasonally Adjusted.”</span> CUUR0000SA0 (FRED CPIAUCNS). <a href="https://fred.stlouisfed.org/series/CPIAUCNS">https://fred.stlouisfed.org/series/CPIAUCNS</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->

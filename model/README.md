@@ -146,7 +146,7 @@ provisional capacity screen, not a hydrogen-product qualification.
 
 ## Agreed simplifications
 
-- The entire BOP retains exponent 0.6. Central blocks serve at most 100 MW;
+- The entire BOP uses exponent 0.75 around a fixed 15 MW reference (0.6 is a named sensitivity override). Central blocks serve at most 100 MW;
   20/50 MW limits are explicit sensitivity overrides. These are chosen modelling
   bounds, not qualified equipment limits. Equal sharing sizes the blocks.
 - BOP capacity follows served wind power, independently of stack overplanting.
@@ -238,24 +238,26 @@ and real-case calibration are separate from software verification.
 
 ### Central-platform interface
 
-One platform is fixed. Supply exactly one `[platform] equipment_mass_t` or
-`topside_mass_t`, in tonnes. Complete topside includes equipment and structure;
-the shared DNV structural fraction converts it to equipment mass. Depth is
-optional metadata for this cost calculation, not a cost multiplier. Other
-components can still require site depth.
+One platform is fixed. Supply `[platform] topside_mass_t`, including equipment
+and structure, in tonnes. Equipment-only mass is rejected. No structural fraction
+enters active EPCI. Depth is optional applicability metadata, not a multiplier.
 
-Alternatively use `mass_method = "power_scaling"` and `rated_power_gw`, with
-adopted upstream reference mass and power in `inputs.csv`. No reference mass is
-silently supplied. Combining direct mass and power scaling is rejected.
+Alternatively use `mass_method = "power_scaling"` with `mass_reference =
+"electrolysis"`. The workflow derives DC rating from farm capacity times
+overplanting, rounded up to whole stack modules, using the same sizing as stack
+purchase and operation. It is available independently of operating efficiency
+and wind-state inputs. A separate `rated_power_gw` is rejected for this branch.
+The `"hvdc"` and `"custom"` references retain an explicit `rated_power_gw`; custom
+also requires reference mass/power inputs. Direct and scaled masses cannot be combined.
 
-The active functions are `epci_inventory` and `epci_cost` in
-`platforms/platform_material_capex.py`. The adopted coefficient is
-`platform-epci-unit-cost-source` in EUR2023/t, converted to EUR2025 using the
-page's explicit HICP fallback. The reference equipment mass is derived from
-MHB Alpha's topside and the structural fraction. Cost is coefficient times
-reference mass times `(equipment_mass / reference_mass) ** beta`.
-`platform-epci-cost-scaling-exponent` defaults to linear scaling. Overrides are
-recorded in scenario results and preserve the reference cost when beta changes.
+The active functions are `estimate_topside_mass`, `epci_inventory` and `epci_cost`
+in `platforms/platform_material_capex.py`. The renamed coefficient
+`platform-epci-topside-unit-cost-source` is EUR2023/complete topside tonne,
+converted to EUR2025 using the page's HICP proxy. It and the screening endpoints
+are rebased to half their former equipment-tonne values, preserving calibration.
+Alpha's complete topside is the mass anchor, not adoption of its fabrication price.
+Cost is coefficient times reference mass times `(topside_mass / reference_mass) ** beta`.
+Recorded exponent overrides preserve cost at the reference mass.
 
 `physical.platform_costs` retains the coefficient, reference, mass, exponent,
 price basis and scope; `physical.platform_total_eur` gives the package total.
@@ -275,3 +277,41 @@ No installation plan or feasibility approval follows from the aggregate cost.
 `installation_feasibility` is `not_assessed`; legacy `[installation.platform]`
 lift settings are not used by the active workflow. Engineering applicability
 must be checked independently before adopting an unusually large/deep case.
+
+## Electrical boundary and stack purchase basis
+
+Hydrogen operation requires `wind.power_boundary = "inverter_ac_output"` only
+once the supplied curve is reconciled to that measurement point. The article
+states retain `generator_output_unreconciled`; the workflow does not silently
+convert or relabel them. AC cases multiply by turbine-transformer efficiency,
+then subtract the fixed collection-loss fraction before central conversion.
+Distributed cases divide by inverter efficiency before their DC interface.
+Outputs distinguish inverter-output energy, transformer loss, collection loss
+and recovered inverter loss; `generator_energy_mwh` is retired.
+
+The calibrated turbine purchase is split into turbine supply excluding the
+transformer and an AC-only transformer supply entry, preserving the combined
+AC purchase. No inverter credit is claimed. Distributed transport payload omits
+the known transformer mass; tower/foundation sizing retains the common baseline.
+
+`electrolysis.manufacturing_output_mw_year` selects the stack supply-chain case.
+`physical.stack_purchase_cost_basis` reports the shared derivation from NREL's
+manufacturing anchors to the model's reference-rated EUR2025/kW purchase cost.
+The article uses 2,000 MW/year as documented on the stack page.
+`physical.bop_purchase_cost_basis` reports the aggregate 15 MW BOP purchase
+reference, including NREL internal water handling and the DEA thermal-treatment
+allowance. The assumed EUR2023 quote basis is converted with shared HICP inputs.
+Thermal integration, package interfaces and offshore intake remain limitations.
+
+### First-article turbine installation
+
+`installation.turbine_method = "reference"` selects the BVG fixed normal-turbine
+benchmark. `install-turbine-reference-*` and `financial-gbp-*` inputs belong to
+`offshore_installation/turbine_and_foundation_installation.qmd`. GBP2024 cost,
+UK CPI and 2025 GBP/EUR derive the EUR2025 result in code. There is no mass
+discount. The default `campaign` method and all previous inputs remain intact;
+foundation installation still uses it. The article assumes hydrogen-equipment
+installation and commissioning replace comparable work for removed power
+electronics. Both turbines use the same installation benchmark, without a
+separate hydrogen-equipment charge. This is a modelling assumption, not a
+supplier-verified equivalence. Central-platform installation stays within EPCI.

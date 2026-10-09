@@ -461,6 +461,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../platforms/topside_mass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complete Topside Mass</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
@@ -1029,7 +1035,7 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 </section>
 <section id="sec-pce-losses" class="level2">
 <h2 class="anchored" data-anchor-id="sec-pce-losses">Losses</h2>
-<p>For a curve reconciled to inverter AC output, generator and rectifier losses are already included. Centralised hydrogen and electricity export apply the turbine transformer efficiency downstream; decentralised hydrogen divides curve power by inverter efficiency to recover the removed inverter loss. The current implementation still uses the legacy generator-output record, AC cable losses and the central 97.5% package. It must not be treated as an implementation of the adopted boundary. The required terms are:</p>
+<p>For a curve reconciled to inverter AC output, generator and rectifier losses are already included. Centralised hydrogen and electricity export apply the turbine transformer efficiency downstream; decentralised hydrogen divides curve power by inverter efficiency to recover the removed inverter loss. These equations are implemented, but operation requires <code>wind.power_boundary = "inverter_ac_output"</code> after evidence-based reconciliation. The supplied generator-output record remains explicitly unreconciled; changing its label alone is not a boundary conversion. The required terms are:</p>
 <table class="caption-top table">
 <caption>Loss terms by case and their current treatment.</caption>
 <colgroup>
@@ -1056,20 +1062,20 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 <tr class="even">
 <td>Grid-side inverter</td>
 <td>Included in AC cases; removed in turbine-level cases</td>
-<td>Recovery not implemented</td>
-<td>TODO: inverter-only efficiency and curve reconciliation; recover by division in decentralised cases</td>
+<td>Recovery by division implemented</td>
+<td>TODO: inverter-only efficiency and curve reconciliation</td>
 </tr>
 <tr class="odd">
 <td>Turbine step-up transformer</td>
 <td>Centralised</td>
-<td>Not represented</td>
-<td>TODO</td>
+<td>Downstream multiplier implemented</td>
+<td><code>turbine-transformer-efficiency</code> remains TODO</td>
 </tr>
 <tr class="even">
 <td>66 kV AC collection</td>
 <td>Centralised</td>
-<td>Calculated from cable resistance</td>
-<td>AC resistance and power factor still to be adopted</td>
+<td>Fixed fraction of aggregate transformer output, before central conversion</td>
+<td><code>array-ac-loss-fraction</code> remains TODO; no resistance or power-factor input required</td>
 </tr>
 <tr class="odd">
 <td>Central transformers and rectifier</td>
@@ -1098,7 +1104,7 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 <p>Each electrical function is counted once:</p>
 <ul>
 <li>The legacy common turbine calibration includes the complete conventional turbine electrical scope, including converter and transformer. The turbine-level cases adjust it through <code>turbine-electrical-cost-adjustment</code> on <a href="../turbine_system/wind_turbine.html">Wind Turbine Mass and Cost</a>.</li>
-<li>Under the adopted boundary, the calibrated transformer term moves out of turbine cost and into electrical infrastructure for the AC architectures. Combined AC purchase cost must remain unchanged. The executable ledger has not yet made this reallocation; do not add a second transformer charge.</li>
+<li>Under the adopted boundary, the calibrated transformer term moves out of turbine cost and into electrical infrastructure for the AC architectures. The executable ledger makes this reallocation using the original RNA calibration factor: <code>turbine / supply</code> excludes the transformer and AC cases add one <code>turbine-transformer / supply</code> entry. Combined AC purchase cost is unchanged.</li>
 <li>The transformer removal credit can follow the explicit WISDEM transformer term in that ledger. No grid-side inverter credit is claimed, because the calibrated cost has no separable converter term and no separable evidence exists.</li>
 <li>The stack-side DC/DC converter is booked through the turbine-level conversion unit cost on <a href="../hydrogen_production/dc_integration.html">DC Integration</a>, not in the turbine adjustment.</li>
 <li>The central transformers and rectifier are booked in the central package; the platform page carries their mass but not their cost.</li>

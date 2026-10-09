@@ -296,16 +296,21 @@ rated_power_kw = {turbine["rated_power_mw"] * 1000!r}
 # Wake-affected power at the generator electrical output; built from
 # {WIND_FILE} and {CURVE_FILE}.
 power_states_file = "{POWER_FILE}"
+power_boundary = "generator_output_unreconciled" # O2: do not relabel without evidence.
 design_state_ids = ["{DESIGN_STATE}"]
 
 [electrolysis]
 overplant_factor = {case["electrolysis"]["overplant_factor"]!r}
+manufacturing_output_mw_year = {case["electrolysis"]["manufacturing_output_mw_year"]!r}
 
 [hydrogen]
 # Absolute pressures in bar(a), converted from the recorded gauge values.
 stack_outlet_bar = {absolute_pressure_bar(case["electrolysis"]["stack_outlet_pressure_bar_g"], atmospheric_bar)!r}
 delivery_bar = {absolute_pressure_bar(case["hydrogen"]["delivery_pressure_bar_g"], atmospheric_bar)!r}
 export_length_km = {case["hydrogen"]["export_length_km"]!r}
+
+[installation]
+turbine_method = "{case['installation']['turbine_method']}"
 """
 
 

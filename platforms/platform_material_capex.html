@@ -132,7 +132,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platform EPCI CAPEX</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/topside_mass.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platform EPCI CAPEX</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -461,6 +461,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../platforms/topside_mass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complete Topside Mass</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
@@ -526,7 +532,7 @@ window.Quarto = {
   <ul>
   <li><a href="#calculation-and-cost-boundary" id="toc-calculation-and-cost-boundary" class="nav-link active" data-scroll-target="#calculation-and-cost-boundary">Calculation and Cost Boundary</a></li>
   <li><a href="#why-use-the-combined-commercial-package" id="toc-why-use-the-combined-commercial-package" class="nav-link" data-scroll-target="#why-use-the-combined-commercial-package">Why Use the Combined Commercial Package?</a></li>
-  <li><a href="#mass-basis-and-proposed-relationship" id="toc-mass-basis-and-proposed-relationship" class="nav-link" data-scroll-target="#mass-basis-and-proposed-relationship">Mass Basis and Proposed Relationship</a></li>
+  <li><a href="#mass-basis-and-cost-relationship" id="toc-mass-basis-and-cost-relationship" class="nav-link" data-scroll-target="#mass-basis-and-cost-relationship">Mass Basis and Cost Relationship</a></li>
   <li><a href="#commercial-benchmarks-and-reproducible-comparison" id="toc-commercial-benchmarks-and-reproducible-comparison" class="nav-link" data-scroll-target="#commercial-benchmarks-and-reproducible-comparison">Commercial Benchmarks and Reproducible Comparison</a>
   <ul class="collapse">
   <li><a href="#published-costs-and-scope" id="toc-published-costs-and-scope" class="nav-link" data-scroll-target="#published-costs-and-scope">Published costs and scope</a></li>
@@ -543,7 +549,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platform EPCI CAPEX</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../platforms/topside_mass.html">Platforms</a></li><li class="breadcrumb-item"><a href="../platforms/platform_material_capex.html">Platform EPCI CAPEX</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Platform EPCI CAPEX</h1>
 </div>
@@ -564,7 +570,7 @@ window.Quarto = {
 
 <section id="calculation-and-cost-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="calculation-and-cost-boundary">Calculation and Cost Boundary</h2>
-<p>This page defines the implemented cost model for <strong>one central offshore platform</strong>: a commercial engineering, procurement, construction and installation (EPCI) package scaled by the equipment mass it accommodates. The output is total offshore platform EPCI CAPEX on the common EUR<sub>2025</sub> basis.</p>
+<p>This page defines the implemented cost model for <strong>one central offshore platform</strong>: a commercial engineering, procurement, construction and installation (EPCI) package scaled by its complete topside mass. The output is total offshore platform EPCI CAPEX on the common EUR<sub>2025</sub> basis.</p>
 <p>The package includes platform engineering, structural fabrication, yard integration, transport, offshore installation, hook-up and commissioning within the reference contract’s scope. These activities enter the project cost total <strong>once</strong>, through this package. A separate platform fabrication or installation estimate must not be added to it.</p>
 <p>Hosted process and conversion equipment purchase remains with the component owners. Its mass drives platform sizing, but its purchase cost must be excluded from the platform benchmark before comparison. Cables, pipelines and their installation remain separate. Contract-level engineering and delivery allowances already embedded in EPCI must not be added again as project-wide allowances. Other owner costs remain outside this package.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -577,7 +583,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The executable central-platform workflow now books one combined offshore EPCI cost. It accepts direct equipment mass or complete topside mass; it does not add DNV fabrication, yard-integration or platform-installation costs. The benchmark coefficient is an adopted screening judgement, not a fitted law. Previous models remain in the non-published archive and as inactive comparison helpers.</p>
+<p>The executable central-platform workflow now books one combined offshore EPCI cost. It accepts complete topside mass; it does not add DNV fabrication, yard-integration or platform-installation costs. The benchmark coefficient is an adopted screening judgement, not a fitted law. Previous models remain in the non-published archive and as inactive comparison helpers.</p>
 <p>Platform CAPEX can be calculated independently of unresolved OPEX and decommissioning. Complete LCOH remains unavailable until all included cost inputs are supplied. Installation feasibility is reported as not assessed by this mass-cost calculation.</p>
 </div>
 </div>
@@ -585,32 +591,19 @@ window.Quarto = {
 <section id="why-use-the-combined-commercial-package" class="level2">
 <h2 class="anchored" data-anchor-id="why-use-the-combined-commercial-package">Why Use the Combined Commercial Package?</h2>
 <p>Commercial awards provide observable prices for delivered packages, but generally do not disclose a consistent split between platform materials, fabrication, integration and offshore installation. A detailed calculation of those components would require independently supported rates, durations, equipment inclusions and commercial allowances. The available evidence does not constrain that decomposition sufficiently.</p>
-<p>For this model, fabrication and installation are procured as one delivered offshore EPCI scope. Their separation is unnecessary for the required total <strong>if their material cost drivers can be represented together</strong>. Our working hypothesis is that equipment mass drives topside size and the associated fabrication, integration and installation effort, making total EPCI approximately proportional to equipment mass over a comparable design range.</p>
+<p>For this model, fabrication and installation are procured as one delivered offshore EPCI scope. Their separation is unnecessary for the required total <strong>if their material cost drivers can be represented together</strong>. Our working hypothesis is that complete topside mass represents the associated fabrication, integration and installation effort, making total EPCI approximately proportional to complete topside mass over a comparable design range.</p>
 <p>This is a modelling hypothesis, not an established scaling law. Fixed mobilisation costs, site conditions and changes in installation method can break proportionality. Combining scopes does not prove that each component scales linearly; the total relationship must be tested against additional commercial references. Until then, an aggregate relationship is more transparent than a detailed breakdown built from poorly constrained assumptions.</p>
 </section>
-<section id="mass-basis-and-proposed-relationship" class="level2">
-<h2 class="anchored" data-anchor-id="mass-basis-and-proposed-relationship">Mass Basis and Proposed Relationship</h2>
-<p>Let <span class="math inline">\(M_{\mathrm{eqp}}\)</span> be the hosted equipment mass in tonnes. It includes collection and conversion equipment, stacks, BOP, compressors and shared auxiliaries appropriate to the architecture. Collection switchgear remains included even though the model does not require a feeder-bay count. Equipment duties and inclusions must match those of the reference.</p>
-<p>The implemented relationship is</p>
+<section id="mass-basis-and-cost-relationship" class="level2">
+<h2 class="anchored" data-anchor-id="mass-basis-and-cost-relationship">Mass Basis and Cost Relationship</h2>
+<p>The upstream <a href="../platforms/topside_mass.html">Complete Topside Mass</a> calculation supplies <span class="math inline">\(M_{\mathrm{top}}\)</span> in tonnes, including hosted equipment, auxiliaries and topside structure, but excluding jacket and piles. The cost driver is used directly; no structural-fraction conversion is required.</p>
 <p><span class="math display">\[
-\boxed{C_{\mathrm{EPCI}}(M_{\mathrm{eqp}})
-=C_{\mathrm{ref}}
-\left(\frac{M_{\mathrm{eqp}}}{M_{\mathrm{eqp,ref}}}\right)^\beta.}
+C_{\mathrm{EPCI}}=C_{\mathrm{ref}}
+\left(\frac{M_{\mathrm{top}}}{M_{\mathrm{top,ref}}}\right)^\beta,
+\qquad C_{\mathrm{ref}}=k_{2025}M_{\mathrm{top,ref}}.
 \]</span></p>
-<p><span class="math inline">\(C_{\mathrm{ref}}\)</span> is a scope-matched offshore EPCI reference cost in EUR<sub>2025</sub>; <span class="math inline">\(M_{\mathrm{eqp,ref}}\)</span> is its equipment mass in tonnes; <span class="math inline">\(\beta\)</span> is a dimensionless cost-scaling exponent. The default is linear scaling (<span class="math inline">\(\beta=1\)</span>); recorded scenario overrides may vary the exponent. No fitted coefficient or exponent is claimed. The reference cost is <span class="math inline">\(C_{\mathrm{ref}}=k_{2025}M_{\mathrm{eqp,ref}}\)</span>, so changing <span class="math inline">\(\beta\)</span> preserves the cost at the reference mass.</p>
-<p>Published platform weights commonly describe <strong>complete topsides</strong>, including structure, rather than equipment alone. If <span class="math inline">\(f_S\)</span> is the structural fraction of complete topside mass <span class="math inline">\(M_{\mathrm{top}}\)</span>, then</p>
-<p><span class="math display">\[
-M_{\mathrm{eqp}}=(1-f_S)M_{\mathrm{top}}.
-\]</span></p>
-<p>Consequently,</p>
-<p><span class="math display">\[
-C_{\mathrm{EPCI}}
-=C_{\mathrm{ref}}
-\left[\frac{(1-f_S)M_{\mathrm{top}}}
-{(1-f_{S,\mathrm{ref}})M_{\mathrm{top,ref}}}\right]^\beta.
-\]</span></p>
-<p>With an equal structural fraction in the case and reference, this reduces to scaling by the ratio of complete topside masses. This preserves the link to commercial mass disclosures without treating topside mass as measured equipment mass. DNV’s 50% structural fraction is a provisional conversion assumption, not a supplier weight breakdown <span class="citation" data-cites="dnv2023OffshoreHydrogen">(<a href="#ref-dnv2023OffshoreHydrogen" role="doc-biblioref">DNV 2023, sec. 3.4</a>)</span>. Differences between HVDC and electrolysis structural fractions remain a source of uncertainty.</p>
-<p>A separate upstream power-to-mass estimate may be needed where equipment mass is unavailable. Its exponent describes mass scaling with capacity and must not be confused with <span class="math inline">\(\beta\)</span>, which describes cost scaling with mass. No complete hydrogen equipment-mass reference or power-to-mass fit is adopted here.</p>
+<p><span class="math inline">\(C_{\mathrm{EPCI}}\)</span> and <span class="math inline">\(C_{\mathrm{ref}}\)</span> are offshore EPCI costs in EUR<sub>2025</sub>; <span class="math inline">\(k_{2025}\)</span> is EUR<sub>2025</sub>/complete topside tonne; <span class="math inline">\(\beta\)</span> is a dimensionless cost exponent. The default <span class="math inline">\(\beta=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220706C6174666F726D2D657063692D636F73742D7363616C696E672D6578706F6E656E742D76616C7565203E7D7D;\)</span> is a modelling assumption, not a fit. Changing it preserves cost at the reference mass. The mass-to-power exponent on the upstream page is a separate assumption.</p>
+<p>The normalisation mass is Alpha’s 30000 t complete topside <span class="citation" data-cites="mhb2023AlphaAward">(<a href="#ref-mhb2023AlphaAward" role="doc-biblioref">Malaysia Marine and Heavy Engineering Holdings Berhad 2023</a>)</span>. Its fabrication subcontract price is <strong>not</strong> the reference EPCI cost. Instead, the adopted coefficient below gives a derived reference cost of <strong>941.0 million EUR<sub>2025</sub></strong>. Jacket and foundation delivery are included in the cost boundary even though their masses are not added to the topside driver.</p>
 </section>
 <section id="commercial-benchmarks-and-reproducible-comparison" class="level2">
 <h2 class="anchored" data-anchor-id="commercial-benchmarks-and-reproducible-comparison">Commercial Benchmarks and Reproducible Comparison</h2>
@@ -620,14 +613,13 @@ C_{\mathrm{EPCI}}
 C_{2025}=\frac{C_y}{X_y}\prod_{j=y+1}^{2025}(1+\pi_j).
 \]</span></p>
 <p>For EUR-denominated evidence, <span class="math inline">\(X_y=1\)</span>. Where a price year is not stated, the award or publication year is an explicit assumption. This adjustment does not capture sector-specific escalation, contractual indexation, final settlement or changes in scope.</p>
-<p>For each reference, equipment mass and specific costs follow as</p>
+<p>For each reference, specific costs and mass intensity follow as</p>
 <p><span class="math display">\[
-M_{\mathrm{eqp}}=(1-f_S)M_{\mathrm{top}},\qquad
-k=\frac{C_{2025}}{M_{\mathrm{eqp}}},\qquad
+k=\frac{C_{2025}}{M_{\mathrm{top}}},\qquad
 c_P=\frac{C_{2025}}{10^6P_{\mathrm{GW}}},\qquad
-m_P=\frac{M_{\mathrm{eqp}}}{10^6P_{\mathrm{GW}}}.
+m_P=\frac{M_{\mathrm{top}}}{10^6P_{\mathrm{GW}}}.
 \]</span></p>
-<p>Here <span class="math inline">\(k\)</span> is EUR<sub>2025</sub>/equipment tonne, <span class="math inline">\(c_P\)</span> is EUR<sub>2025</sub>/kW and <span class="math inline">\(m_P\)</span> is equipment t/kW. The factor <span class="math inline">\(10^6\)</span> converts GW to kW. These are package-specific ratios, not additional additive cost factors.</p>
+<p>Here <span class="math inline">\(k\)</span> is EUR<sub>2025</sub>/topside tonne, <span class="math inline">\(c_P\)</span> is EUR<sub>2025</sub>/kW and <span class="math inline">\(m_P\)</span> is topside t/kW. The factor <span class="math inline">\(10^6\)</span> converts GW to kW. These are comparison ratios, not additional additive costs.</p>
 <!-- Generated by tools/build_platform_benchmarks.py; edit inputs or builder. -->
 <section id="published-costs-and-scope" class="level3">
 <h3 class="anchored" data-anchor-id="published-costs-and-scope">Published costs and scope</h3>
@@ -696,25 +688,23 @@ m_P=\frac{M_{\mathrm{eqp}}}{10^6P_{\mathrm{GW}}}.
 </section>
 <section id="reconstructed-comparison-on-the-common-price-basis" class="level3">
 <h3 class="anchored" data-anchor-id="reconstructed-comparison-on-the-common-price-basis">Reconstructed comparison on the common price basis</h3>
-<p>All costs below are EUR<sub>2025</sub>. Equipment masses are inferred, not measured. HKZ is a per-platform average of one combined award; the framework uses Alpha’s mass as a representative reference, not six matched project weights.</p>
+<p>All costs below are EUR<sub>2025</sub>. Masses are complete topsides, including equipment and structure. HKZ is a per-platform average of one combined award; the framework uses Alpha’s mass as a representative reference, not six matched project weights.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 11%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Reference</th>
 <th style="text-align: right;">Topside (t)</th>
-<th style="text-align: right;">Inferred equipment (t)</th>
 <th style="text-align: right;">Cost (million EUR<sub>2025</sub>)</th>
-<th style="text-align: right;">EUR<sub>2025</sub>/equipment t</th>
-<th style="text-align: right;">Equipment t/kW</th>
+<th style="text-align: right;">EUR<sub>2025</sub>/topside t</th>
+<th style="text-align: right;">Topside t/kW</th>
 <th style="text-align: right;">EUR<sub>2025</sub>/kW</th>
 </tr>
 </thead>
@@ -722,55 +712,49 @@ m_P=\frac{M_{\mathrm{eqp}}}{10^6P_{\mathrm{GW}}}.
 <tr class="odd">
 <td>HKZ Alpha + Beta (average)</td>
 <td style="text-align: right;">3,875</td>
-<td style="text-align: right;">1,938</td>
 <td style="text-align: right;">110</td>
-<td style="text-align: right;">56,673</td>
-<td style="text-align: right;">0.00277</td>
+<td style="text-align: right;">28,337</td>
+<td style="text-align: right;">0.00554</td>
 <td style="text-align: right;">157</td>
 </tr>
 <tr class="even">
 <td>Nederwiek 1 (offshore allocation)</td>
 <td style="text-align: right;">30,000</td>
-<td style="text-align: right;">15,000</td>
 <td style="text-align: right;">1,083</td>
-<td style="text-align: right;">72,195</td>
-<td style="text-align: right;">0.00750</td>
+<td style="text-align: right;">36,097</td>
+<td style="text-align: right;">0.01500</td>
 <td style="text-align: right;">541</td>
 </tr>
 <tr class="odd">
 <td>Petrofac framework (allocated average)</td>
 <td style="text-align: right;">30,000</td>
-<td style="text-align: right;">15,000</td>
 <td style="text-align: right;">906</td>
-<td style="text-align: right;">60,407</td>
-<td style="text-align: right;">0.00750</td>
+<td style="text-align: right;">30,203</td>
+<td style="text-align: right;">0.01500</td>
 <td style="text-align: right;">453</td>
 </tr>
 <tr class="even">
 <td>North Sea Energy / Iv concept</td>
 <td style="text-align: right;">9,500</td>
-<td style="text-align: right;">4,750</td>
 <td style="text-align: right;">177</td>
-<td style="text-align: right;">37,351</td>
-<td style="text-align: right;">0.00950</td>
+<td style="text-align: right;">18,675</td>
+<td style="text-align: right;">0.01900</td>
 <td style="text-align: right;">355</td>
 </tr>
 <tr class="odd">
 <td>OffsH2ore concept</td>
 <td style="text-align: right;">13,000</td>
-<td style="text-align: right;">6,500</td>
 <td style="text-align: right;">147</td>
-<td style="text-align: right;">22,663</td>
-<td style="text-align: right;">0.01300</td>
+<td style="text-align: right;">11,332</td>
+<td style="text-align: right;">0.02600</td>
 <td style="text-align: right;">295</td>
 </tr>
 <tr class="even">
 <td>MHB Alpha fabrication subcontract</td>
 <td style="text-align: right;">30,000</td>
-<td style="text-align: right;">15,000</td>
 <td style="text-align: right;">254</td>
-<td style="text-align: right;">16,959</td>
-<td style="text-align: right;">0.00750</td>
+<td style="text-align: right;">8,479</td>
+<td style="text-align: right;">0.01500</td>
 <td style="text-align: right;">127</td>
 </tr>
 </tbody>
@@ -782,33 +766,32 @@ m_P=\frac{M_{\mathrm{eqp}}}{10^6P_{\mathrm{GW}}}.
 <p>Annual-average exchange rates per EUR: USD 1.1195 (2019), USD 1.0813 and MYR 4.9320 (2023) <span class="citation" data-cites="bundesbank2026AnnualFX">(<a href="#ref-bundesbank2026AnnualFX" role="doc-biblioref">Deutsche Bundesbank 2026</a>)</span>. Euro-area annual HICP changes: 2020: 0.3%; 2021: 2.6%; 2022: 8.4%; 2023: 5.4%; 2024: 2.4%; 2025: 2.1% <span class="citation" data-cites="eurostat2026AnnualHICP">(<a href="#ref-eurostat2026AnnualHICP" role="doc-biblioref">Eurostat 2026</a>)</span>.</p>
 <p>The resulting inflation factors to 2025 are 1.22926 from 2019, 1.10196 from 2022, and 1.04550 from 2023. Source-year conversion precedes inflation adjustment. Consumer inflation is a transparent preliminary proxy, not an offshore fabrication or installation index.</p>
 <p>HKZ: divide the combined award and summed topside masses by 2, convert USD to EUR at the assumed aggregate price year, then escalate. Nederwiek: multiply Petrofac’s own award by the assumed offshore share of 80%, convert and escalate. Framework: divide the framework value by 6, multiply by the approximate Petrofac share of 50% and the same offshore share, then escalate. The latter share is user-selected modelling judgement, not a supplier disclosure.</p>
-<div id="fig-platform-benchmarks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Platform cost versus inferred equipment mass. HVAC offshore EPCI and allocated HVDC EPCI lie above hydrogen design estimates and the fabrication-only subcontract. Framework and project awards overlap and are not independent samples.">
+<div id="fig-platform-benchmarks" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Platform cost versus complete topside mass. HVAC offshore EPCI and allocated HVDC EPCI lie above hydrogen design estimates and the fabrication-only subcontract. Framework and project awards overlap and are not independent samples.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-platform-benchmarks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../figures/platform_epci_benchmarks.svg" class="img-fluid figure-img" alt="Platform cost versus inferred equipment mass. HVAC offshore EPCI and allocated HVDC EPCI lie above hydrogen design estimates and the fabrication-only subcontract. Framework and project awards overlap and are not independent samples.">
+<img src="../figures/platform_epci_benchmarks.svg" class="img-fluid figure-img" alt="Platform cost versus complete topside mass. HVAC offshore EPCI and allocated HVDC EPCI lie above hydrogen design estimates and the fabrication-only subcontract. Framework and project awards overlap and are not independent samples.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-platform-benchmarks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Commercial offshore packages, conceptual hydrogen estimates and fabrication-only evidence against inferred equipment mass. The dashed line is a comparison assumption, not a regression.
+Figure&nbsp;1: Commercial offshore packages, conceptual hydrogen estimates and fabrication-only evidence against complete topside mass. The dashed line is a comparison assumption, not a regression.
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="interpretation-and-tradeoffs" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation-and-tradeoffs">Interpretation and Tradeoffs</h3>
-<p><strong>The commercial observations support investigating linear scaling.</strong> HKZ gives 56,673 EUR<sub>2025</sub>/equipment t; the individual Nederwiek award, with the assumed offshore allocation, gives 72,195 EUR<sub>2025</sub>/equipment t. This is a useful cross-check across different masses, but there are only two distinct commercial mass levels. The framework average does not supply a third independent mass level, and its projects need not have equal prices.</p>
+<p><strong>The commercial observations support investigating linear scaling.</strong> HKZ gives 28,337 EUR<sub>2025</sub>/topside t; the individual Nederwiek award, with the assumed offshore allocation, gives 36,097 EUR<sub>2025</sub>/topside t. This is a useful cross-check across different masses, but there are only two distinct commercial mass levels. The framework average does not supply a third independent mass level, and its projects need not have equal prices.</p>
 <p>Nederwiek’s disclosed Petrofac award is preferable to assigning every project the framework average. Its remaining weakness is the offshore/onshore allocation. HKZ avoids that allocation but differs in technology, site and contract date. The owner-procurement description supports excluding major high-voltage equipment from HKZ’s platform package; detailed auxiliary-equipment boundaries still require reconciliation <span class="citation" data-cites="tennet2021OwnerEquipment">(<a href="#ref-tennet2021OwnerEquipment" role="doc-biblioref">TenneT 2021</a>)</span>.</p>
 <p><strong>The hydrogen estimates remain lower even though installation is included.</strong> The difference therefore cannot be explained solely by missing offshore installation. OffsH2ore also carries a separate 20% engineering allowance covering several activities, so its structure subtotal is not a complete commercial EPCI quote <span class="citation" data-cites="offsh2ore2023Report">(<a href="#ref-offsh2ore2023Report" role="doc-biblioref">Fraunhofer ISE and project partners 2023, sec. 6.2.8</a>)</span>. It would be misleading to apply that whole-plant allowance only to the structural subtotal and call the result scope-matched. Design maturity, equipment boundaries, site, market conditions and commercial risk may explain part of the gap; the evidence does not quantify each contribution. No matched commercial electrolyser-platform EPCI award was identified in this research.</p>
-<p><strong>Inferred equipment mass is a major limitation.</strong> DNV explicitly equates topside structure mass to process-equipment mass as a rule of thumb, giving <span class="math inline">\(M_{\mathrm{top}}\approx2M_{\mathrm{eqp}}\)</span> <span class="citation" data-cites="dnv2023OffshoreHydrogen">(<a href="#ref-dnv2023OffshoreHydrogen" role="doc-biblioref">DNV 2023, 16</a>)</span>. The NSE breakdown reports 5510 t structure within 9500 t total topside <span class="citation" data-cites="nse2022EnergyHubs">(<a href="#ref-nse2022EnergyHubs" role="doc-biblioref">North Sea Energy 2022</a>, table 4.9)</span>; the remaining mass includes architectural and other items and is not a clean process-equipment measurement. This illustrates why the DNV conversion must not be presented as a measured universal ratio.</p>
-<p>Applying the same structural fraction to every observation simply rescales the horizontal axis. It cannot demonstrate that equipment mass predicts cost better than complete topside mass. Actual weight breakdowns are needed to test that hypothesis. Uncertainty in this shared conversion is correlated across the points, not independent scatter that a regression can average away.</p>
+<p><strong>Complete topside mass removes an unsupported conversion.</strong> Published weights include structure and equipment; there is no need to infer an equipment-only mass. This does not remove differences in equipment density, design maturity or process scope between HVDC and electrolysis. The upstream mass page documents the reference boundaries.</p>
 <p>The combined package also hides fixed mobilisation costs and changes in lifting method, foundation type and water depth. Those remain applicability checks. An aggregate model is justified by the lack of defensible separate rates, not by proof that every underlying activity scales linearly.</p>
 </section>
 <section id="provisional-conclusion-and-further-evidence" class="level3">
 <h3 class="anchored" data-anchor-id="provisional-conclusion-and-further-evidence">Provisional Conclusion and Further Evidence</h3>
-<p>Retain <span class="math inline">\(\beta=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220706C6174666F726D2D657063692D636F73742D7363616C696E672D6578706F6E656E742D76616C7565203E7D7D;\)</span> as the initial hypothesis. A rounded commercial comparison range is <strong>57,503–73,185 EUR<sub>2025</sub>/equipment t</strong>. This is the earlier EUR<sub>2023</sub> screening range converted to the site’s price basis; it is not a confidence interval, an exhaustive market range or a validated electrolyser-platform range. The dashed line uses its lower endpoint only to make the mass comparison visible.</p>
-<p>The adopted central coefficient is <strong>62,730 EUR<sub>2025</sub>/equipment t</strong>, a modelling judgement within that range, not a fitted estimate. Its source-basis input is <code>platform-epci-unit-cost-source</code> = 60000 EUR/t on the EUR<sub>2023</sub> basis; the normalisation above derives the EUR<sub>2025</sub> value. Lower and upper screening assumptions remain sensitivity comparisons, not confidence limits. A change to the coefficient must retain its currency year and scope.</p>
-<p>The intended mapping remains one equipment-mass input to one offshore EPCI output, with equipment purchase charged elsewhere. A free fitted exponent is not justified yet: it would confound mass with technology, commercial scope and the assumed offshore allocation. Sensitivity to the reference coefficient, mass conversion and allocation is more informative at this stage.</p>
+<p>Retain <span class="math inline">\(\beta=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220706C6174666F726D2D657063692D636F73742D7363616C696E672D6578706F6E656E742D76616C7565203E7D7D;\)</span> as the initial hypothesis. A rounded commercial comparison range is <strong>28,751–36,593 EUR<sub>2025</sub>/topside t</strong>. This is the earlier EUR<sub>2023</sub> screening range converted to the site’s price basis; it is not a confidence interval, an exhaustive market range or a validated electrolyser-platform range. The dashed line uses its lower endpoint only to make the mass comparison visible.</p>
+<p>The adopted central coefficient is <strong>31,365 EUR<sub>2025</sub>/topside t</strong>, a modelling judgement within that range, not a fitted estimate. Its source-basis input is <code>platform-epci-topside-unit-cost-source</code> = 30000 EUR/t on the EUR<sub>2023</sub> basis; the normalisation above derives the EUR<sub>2025</sub> value. Lower and upper screening assumptions remain sensitivity comparisons, not confidence limits. A change to the coefficient must retain its currency year and scope.</p>
+<p>The intended mapping is one complete-topside-mass input to one offshore EPCI output, with equipment purchase charged elsewhere. A free fitted exponent is not justified yet: it would confound mass with technology, commercial scope and the assumed offshore allocation. Sensitivity to the reference coefficient, reference mass and allocation is more informative at this stage.</p>
 <p>Additional leads remain outside the fit: DolWin beta has a published EPC scope, but its installation boundary needs reconciliation <span class="citation" data-cites="aibelDolwinBeta">(<a href="#ref-aibelDolwinBeta" role="doc-biblioref">Aibel 2026</a>)</span>; RTE’s Normandy–Oleron package combines offshore platforms and onshore converter stations <span class="citation" data-cites="rte2024HVDCFacts">(<a href="#ref-rte2024HVDCFacts" role="doc-biblioref">RTE 2024b</a>)</span>; RTE Dunkerque needs a matched mass and equipment-purchase boundary <span class="citation" data-cites="rte2024Dunkerque">(<a href="#ref-rte2024Dunkerque" role="doc-biblioref">RTE 2024a</a>)</span>. Oil-and-gas topside EPC packages require similar equipment and foundation boundary checks before transfer. Do not turn partial evidence into an EPCI point by assuming away the missing scope.</p>
-<p>For future observations, retain capacity, measured and inferred masses, support structure, depth, installation method, award and price years, currency, equipment inclusions and cost allocation. Do not count parent awards and their subcontracts independently. Keep design studies as a separate comparison class. The highest-value additions are independently scoped offshore EPCI awards at intermediate masses and actual equipment-weight breakdowns.</p>
+<p>For future observations, retain capacity, measured and inferred masses, support structure, depth, installation method, award and price years, currency, equipment inclusions and cost allocation. Do not count parent awards and their subcontracts independently. Keep design studies as a separate comparison class. The highest-value additions are independently scoped offshore EPCI awards at intermediate masses and scope-matched complete topside weights.</p>
 </section>
 </section>
 <section id="worked-example" class="level2">
@@ -822,12 +805,12 @@ Figure&nbsp;1: Commercial offshore packages, conceptual hydrogen estimates and f
 <h2 class="anchored" data-anchor-id="executable-interface-output-and-applicability">Executable Interface, Output and Applicability</h2>
 <p>The model returns one offshore platform EPCI cost, together with its reference scope, mass basis, coefficient, reference mass and scaling exponent. Equipment purchase remains separately accounted for. <a href="../offshore_installation/platform_and_substation_installation.html">Platform Installation</a> explains why no separate platform installation cost is added.</p>
 <p>Mass scaling does not establish installation feasibility. Large changes in topside size, foundation type, water depth or installation method may require a different reference class rather than smooth extrapolation. Water depth is initially an applicability condition; no unsupported depth correction is embedded in the total EPCI relationship. Transferring an HVDC-derived relationship to electrolysis remains a hypothesis to test.</p>
-<p>Supply exactly one of <code>[platform] equipment_mass_t</code> or <code>topside_mass_t</code>, in tonnes. The latter invokes the DNV conversion above; direct equipment mass avoids that conversion for the evaluated case. Platform count is fixed at one. Alternatively, <code>mass_method = "power_scaling"</code> with <code>rated_power_gw</code> requires an adopted upstream reference mass and rating; missing references remain explicit errors. Supplying direct mass and power scaling together is rejected.</p>
-<p>The nonlinear reference mass is derived from the MHB Alpha topside reference and the shared structural fraction: <span class="math inline">\(M_{\mathrm{eqp,ref}}=(1-f_S)M_{\mathrm{top,Alpha}}\)</span>. This is a mass normalisation anchor, not adoption of MHB’s fabrication price as EPCI. The coefficient and <code>platform-epci-cost-scaling-exponent</code> can be overridden in recorded sensitivity cases; the central input table remains unchanged.</p>
+<p>Supply <code>[platform] topside_mass_t</code> in tonnes. Equipment-only mass is rejected. Alternatively, use <code>mass_method = "power_scaling"</code> and <code>mass_reference = "electrolysis"</code>; the workflow derives installed DC rating from wind-farm capacity, overplanting and whole stack modules. No separate rating is supplied. The <code>"hvdc"</code> and <code>"custom"</code> branches retain <code>rated_power_gw</code>; the upstream page defines those rating boundaries. A <code>"custom"</code> reference requires <code>platform-reference-topside-mass</code> and <code>platform-reference-power</code>. Supplying direct mass and power scaling together is rejected. Platform count remains one, including extrapolated cases.</p>
+<p>The renamed coefficient <code>platform-epci-topside-unit-cost-source</code> makes the changed denominator explicit. Its source value is half the earlier equipment-tonne coefficient, preserving the calibration under the former equal equipment/structure split. This is an algebraic rebasing, not new cost evidence; the structural fraction is no longer an active cost input. The screening endpoints were rebased in the same way. Recorded coefficient and exponent overrides retain their price basis and cost boundary.</p>
 <p><code>physical.platform_costs</code> reports the calculation and <code>physical.platform_total_eur</code> reports its total. The ledger contains one <code>platform / epci</code> entry. A separate platform supply or installation entry alongside EPCI is rejected. The calculation requires neither a crane selection nor jacket and pile mass estimates. Any supplied depth is retained as applicability metadata; the workflow does not certify a lift plan.</p>
 <p>Annual platform OPEX uses <code>platform-opex-rate</code> on the combined platform EPCI total. This rate remains unresolved and must be calibrated for that cost boundary. Hosted equipment retains its own purchase and OPEX entries.</p>
 <p><strong>Decommissioning is separate from EPCI.</strong> The old installation-based proxy cannot recover platform removal cost from the combined package. <code>platform-decommissioning-cost</code> is therefore a separate, initially unresolved EUR<sub>2025</sub> input. It enters lifetime costs once and does not reduce or block the calculated platform CAPEX. Missing decommissioning blocks complete LCOH. The existing installation-based proxy still applies to separately costed non-platform installation <a href="../methodology/financial_and_price_basis.html#decommissioning">see financial treatment</a>.</p>
-<p><strong>Remaining evidence work:</strong> expand the commercial sample, obtain measured equipment masses, reconcile auxiliary-equipment scope, and provide scenario mass, platform OPEX and decommissioning inputs. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.</p>
+<p><strong>Remaining evidence work:</strong> expand the commercial sample, obtain matched complete topside weights, reconcile auxiliary-equipment scope, and provide platform OPEX and decommissioning inputs. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.</p>
 
 
 

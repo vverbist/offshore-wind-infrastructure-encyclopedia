@@ -461,6 +461,12 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../platforms/topside_mass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complete Topside Mass</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../platforms/platform_material_capex.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Platform EPCI CAPEX</span></a>
   </div>
@@ -1140,39 +1146,9 @@ C_{\mathrm{turbine},a}
 <p>WISDEM calculates transformer mass explicitly. Converter, switchgear, protection, and cabling masses require separate evidence. A lighter nacelle may also reduce tower and foundation mass, but that secondary effect cannot be calculated with the length-only WISDEM tower regression.</p>
 <section id="sec-turbine-electrical-credit" class="level3">
 <h3 class="anchored" data-anchor-id="sec-turbine-electrical-credit">Electrical removal credit</h3>
-<p>The adopted <a href="../turbine_system/power_electronics.html">turbine electrical boundary</a> excludes the step-up transformer from turbine supply cost and places the power-curve boundary at the inverter AC output. The equations and executable calibration on this page still describe the legacy package including its transformer. Its calibrated transformer term must be reallocated to electrical infrastructure without changing the combined AC package cost. Physical transformer mass remains in the applicable support and lifting inventory. The following adjustment describes the current implementation pending that migration, not a second transformer purchase.</p>
-<p>The model keeps the conventional turbine as the common baseline for every architecture and applies turbine-level changes through the per-turbine input <code>turbine-electrical-cost-adjustment</code>. Its scope follows the shared inventory on <a href="../electrical_infra/power_conversion_equipment.html">Power Conversion Equipment</a>:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Item</th>
-<th>Treatment in the adjustment</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Step-up transformer</td>
-<td>Removed in both turbine-level cases. The credit can follow the explicit, calibrated WISDEM transformer term in this ledger; its scope is the transformer only</td>
-</tr>
-<tr class="even">
-<td>Grid-side inverter</td>
-<td>Removed in both turbine-level cases, but <strong>no credit is claimed</strong>: the calibrated cost has no separable converter term, and no public source prices the grid-side half of a converter package</td>
-</tr>
-<tr class="odd">
-<td>Generator-side converter and DC link</td>
-<td>Retained in every case; no adjustment</td>
-</tr>
-<tr class="even">
-<td>Stack-side DC/DC converter</td>
-<td>Not in this adjustment; booked through the turbine-level conversion unit cost on <a href="../hydrogen_production/dc_integration.html">DC Integration</a></td>
-</tr>
-<tr class="odd">
-<td>DC protection, switchgear and cabling changes</td>
-<td>Enter the adjustment only with explicit evidence</td>
-</tr>
-</tbody>
-</table>
-<p>The adjustment remains blank until these terms are evidenced and normalised to EUR<sub>2025</sub>. No blanket percentage of turbine cost is removed.</p>
+<p>The adopted <a href="../turbine_system/power_electronics.html">turbine electrical boundary</a> excludes the step-up transformer from turbine supply cost and places the power-curve boundary at the inverter AC output. The calibration first reconstructs the conventional package including the transformer. The executable ledger then subtracts its original RNA-calibrated transformer term from turbine supply and books that same term once under electrical infrastructure in AC cases. The sum is unchanged. Both turbine-level hydrogen cases omit the transformer purchase. No separable inverter credit is claimed without evidence.</p>
+<p><code>turbine-electrical-cost-adjustment</code> now covers only evidenced changes to retained DC protection, switchgear and cabling, in EUR2025 per turbine. It excludes the already removed transformer, any unsupported inverter credit, and the separately booked stack-side DC/DC converter. It remains unresolved; it is not assumed zero.</p>
+<p>The structural calculations retain the common conventional-turbine mass baseline in both architectures (D5). Distributed installation payload removes the known transformer mass and adds the declared hydrogen-equipment mass; its maximum lift still requires an explicit lifting arrangement. Other missing electrical masses remain explicit inputs. A separate <code>turbine-transformer-opex-rate</code> applies to the reallocated AC transformer purchase cost; its scope and value remain O10 work.</p>
 </section>
 </section>
 <section id="improvements-from-mehta" class="level2">
