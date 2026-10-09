@@ -77,6 +77,7 @@ website:
           - hydrogen_infra/pipeline_pressure_and_capacity.qmd
       - section: "Platforms"
         contents:
+          - platforms/topside_mass.qmd
           - platforms/platform_material_capex.qmd
       - section: "Offshore Installation"
         contents:

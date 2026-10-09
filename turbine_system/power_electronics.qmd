@@ -93,10 +93,10 @@ The decentralised architecture does not purchase it. Added DC/DC equipment and
 changes to protection, cooling and cabling are separate retained costs, not part
 of the inverter credit. An unknown inverter price is not a zero price.
 
-The [turbine cost ledger](wind_turbine.qmd#sec-turbine-electrical-credit) currently
-includes the transformer in its calibrated conventional package. Reallocation
-must use that same calibrated term and preserve the combined AC supply cost;
-subtracting an unrelated supplier benchmark would change the calibration.
+The [turbine cost ledger](wind_turbine.qmd#sec-turbine-electrical-credit) derives
+the conventional package including its transformer, then allocates that same
+calibrated transformer term to electrical infrastructure in AC cases. The
+combined AC supply cost is preserved. No inverter cost credit is claimed.
 
 ## Reference-Curve and Implementation Status
 
@@ -111,11 +111,13 @@ establish an inverter-output basis. Confirm included converter losses or derive
 an explicitly documented boundary conversion before applying the inverter-loss
 reversal. Do not silently relabel the existing operating states.
 
-**TODO — numerical adoption and accounting migration.** Inverter-only efficiency
-and cost remain unresolved on Power Conversion Equipment. The executable model
-still uses the legacy turbine package and operating-power convention; the
-equations above define the required reconciliation, not completed numerical
-results. O2 remains open until the curve basis, losses and cost allocation agree.
+**Implementation and remaining numerical adoption.** The executable model now
+implements inverter-loss recovery, downstream transformer loss and transformer
+cost reallocation. It requires an explicitly reconciled inverter-output curve.
+Inverter-only and transformer efficiencies remain unresolved on Power Conversion
+Equipment. The supplied curve stays unreconciled, so these equations do not yet
+produce article energy results. O2 remains open for those inputs and the
+electrical equipment design. No generator or rectifier losses are added again.
 
 ## References
 

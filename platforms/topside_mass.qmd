@@ -1,0 +1,66 @@
+---
+title: "Complete Topside Mass"
+completion: 75
+readiness: ready_with_declared_uncertainty
+---
+
+## Calculation and Boundary
+
+This page estimates the complete topside mass of **one central electrolysis or offshore HVDC platform**. The result drives [Platform EPCI CAPEX](platform_material_capex.qmd). Complete topside includes hosted equipment, auxiliaries and topside structure. Jacket and piles are excluded from this mass, while their delivery remains within the EPCI cost boundary.
+
+We use published aggregate masses because the available evidence does not support consistent component-level mass fits. Stack, BOP, compressor and electrical purchase costs retain their component owners; their masses are not added again to the complete topside estimate. No structural fraction is required.
+
+## Adopted Reference Inputs
+
+| Architecture | Reference rating | Complete topside mass | Evidence and interpretation |
+|---|---:|---:|---|
+| Central electrolysis | {{< var platform-offsh2ore-power >}} DC | {{< var platform-offsh2ore-topside >}} | OffsH2ore concept: rough estimate including equipment and all steel, based on equipment information and engineering experience [@offsh2ore2023Report, pp. 13–15 and 48]. |
+| Offshore HVDC | {{< var platform-mhb-power >}} transmission rating | {{< var platform-mhb-topside >}} | IJmuiden Ver Alpha project disclosure; jacket is separately reported as {{< var platform-mhb-jacket >}} [@mhb2023AlphaAward]. |
+
+These are concept/project estimates, not measured as-built weights. OffsH2ore includes process equipment, electrical conversion, purification, compression and utilities. Its high-pressure ship-export duty differs from the pipeline-export architecture evaluated here. Using its complete mass without a duty correction is an explicit simplification; the evidence does not support a reliable subtraction and replacement of individual equipment masses.
+
+The NSE/Iv concept is a scope check, not an additional fitted point: the NSE report gives {{< var platform-nse-topside >}} at {{< var platform-nse-power >}}, but its equipment boundary excludes dryers, deoxygenators and compressors [@nse2022EnergyHubs, sec. 4.4.1.1 and table 4.9]. Iv's project page reports {{< var platform-iv-topside >}} for the concept [@iv500MWHydrogen]. These versions must not be treated as independent, scope-matched complete-plant observations.
+
+## Capacity to Mass
+
+For the selected architecture,
+
+$$
+M_{\mathrm{top}}=M_{\mathrm{top,ref}}
+\left(\frac{P}{P_{\mathrm{ref}}}\right)^\alpha.
+$$
+
+$M_{\mathrm{top}}$ and $M_{\mathrm{top,ref}}$ are complete topside masses in tonnes; $P$ and $P_{\mathrm{ref}}$ are ratings in GW on the same boundary. For electrolysis, use installed electrolyser DC nameplate capacity, including installed overplanting, rather than average operating power or wind-farm nameplate. For HVDC, use station transmission rating. Neither denominator is a compressor motor rating.
+
+The dimensionless exponent $\alpha={{< var platform-mass-scaling-exponent >}}$ is an adopted **linear modelling assumption**, not a regression. A single reference per architecture cannot identify a fitted exponent. The implied intensities are {{< var platform-mass-intensity-electrolysis >}} t/MW DC for electrolysis and {{< var platform-mass-intensity-hvdc >}} t/MW for HVDC, derived by dividing each reference mass by its rating.
+
+The fixed inputs live in `model_data/inputs.csv`: `platform-offsh2ore-topside`, `platform-offsh2ore-power`, `platform-mhb-topside`, `platform-mhb-power` and `platform-mass-scaling-exponent`. The shared calculation is `estimate_topside_mass` in `model/platforms/platform_material_capex.py`; the EPCI function consumes its result directly.
+
+## Worked Comparison
+
+For a common comparison rating equal to the published HVDC reference, {{< var platform-mhb-power >}}, the same model functions produce:
+
+| Case | Mass calculation | Complete topside (t) | Platform EPCI (million EUR~2025~) |
+|---|---|---:|---:|
+| Central electrolysis | OffsH2ore reference mass × (comparison DC rating / OffsH2ore DC rating)$^\alpha$ | {{< var platform-mass-example-electrolysis >}} | {{< var platform-cost-example-electrolysis >}} |
+| Offshore HVDC | Alpha reference mass × (comparison transmission rating / Alpha rating)$^\alpha$ | {{< var platform-mass-example-hvdc >}} | {{< var platform-cost-example-hvdc >}} |
+
+These are worked reference cases, not the article's selected operating design. EPCI uses the adopted {{< var platform-benchmark-central-2025 >}} EUR~2025~/topside tonne and default cost exponent from the [cost page](platform_material_capex.qmd). Its price covers offshore platform delivery and installation, excluding hosted equipment purchase. The resulting costs are model estimates, not published contract prices for these example plants.
+
+## Scenario Interface and Limits
+
+Supply `topside_mass_t` directly, or select `mass_method = "power_scaling"` and `mass_reference = "electrolysis"`. In the central hydrogen workflow, installed DC nameplate follows the existing stack-sizing calculation:
+
+$$
+P_{\mathrm{ELX,DC}}=
+\left\lceil\frac{f_{\mathrm{overplant}}P_{\mathrm{wind}}}{P_{\mathrm{module}}}\right\rceil
+P_{\mathrm{module}}.
+$$
+
+All powers in this equation are in kW. $P_{\mathrm{wind}}$ is turbine count times turbine rating; $f_{\mathrm{overplant}}$ is the scenario's dimensionless requested stack-capacity ratio; $P_{\mathrm{module}}$ is `stack-module-rating` from the shared input table. The ceiling rounds up to whole modules. Divide the resulting kW by $10^6$ before using the GW-based mass equation. Stack purchase, operation and platform mass share this sizing rule. It does not require operating efficiency, wind states or a separately entered DC rating. A separate `rated_power_gw` is rejected for this branch to prevent inconsistent sizing.
+
+The `"hvdc"` and `"custom"` branches retain explicit `rated_power_gw`. A custom reference also requires reference mass and rating inputs. Direct and scaled masses cannot be supplied together.
+
+The agreed simplification keeps one platform even when extrapolating to GW-scale electrolysis. It does not establish a feasible deck layout, support structure, transport or lift plan. Changes in process duty, equipment density, foundation class or installation method can invalidate smooth scaling. Applying the HVDC-derived EPCI coefficient to electrolysis remains a separate transfer assumption.
+
+**Remaining evidence:** a matched commercial electrolysis-platform mass and EPCI scope, and independent masses at additional ratings. Until available, sensitivity to reference mass, the mass exponent and the EPCI coefficient should be recorded explicitly; component-level fits and a statistical confidence interval are not justified.

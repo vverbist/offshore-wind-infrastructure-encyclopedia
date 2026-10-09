@@ -275,6 +275,26 @@ No more detailed failure model is introduced until consistent array-specific fai
 
 For electricity export, the strings terminate on the integrated offshore AC/HVDC platform. For centralised hydrogen, the same array network terminates at the central electrolyser facility, but the downstream transformer and rectifier belong to the electrolyser power-electronics scope. Decentralised hydrogen removes the main 66 kV collection network from the energy path.
 
+## Collection Loss Calculation
+
+The screening model uses one aggregate loss fraction, $f_{AC}$ (dimensionless),
+applied after the turbine step-up transformers and before central conversion:
+
+$$
+P_{\mathrm{loss,AC}}=f_{AC}\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}},
+\qquad
+P_{\mathrm{central,in}}=(1-f_{AC})\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}}.
+$$
+
+All powers are in kW; $P_{\mathrm{curve},i}$ is turbine $i$'s reconciled inverter
+AC output and $\eta_{\mathrm{tr}}$ is transformer efficiency. The shared
+`array-ac-loss-fraction` input is an unresolved top-down assumption: its numerical
+value and operating basis still require adoption. It represents collection losses
+only, excluding transformer and central conversion losses. The implementation
+replaces the previous I²R calculation and does not require resistance or power
+factor. This aggregate model does not capture load-, length- or topology-dependent
+losses; those limitations must accompany any eventual adopted fraction.
+
 ## Model Limitations
 
 | Limitation | Implication |
@@ -284,7 +304,7 @@ For electricity export, the strings terminate on the integrated offshore AC/HVDC
 | Idealised coordinates and string assignment replace a routed design | Exclusions, crossings and detailed approach routes remain approximate |
 | Pull-in length is two water depths per connection | J-tube routing, hang-off height and slack are not resolved |
 | Public project cable quantities have inconsistent reporting scopes | Length per turbine is a validation range, not a calibration coefficient |
-| Electrical losses are unresolved | A fixed-percentage loss is to be adopted (TODO); the executable model still contains an I²R screening calculation with blank resistance and power-factor inputs |
+| Electrical losses are unresolved | The executable model applies `array-ac-loss-fraction` to aggregate turbine-transformer output before central conversion; the fraction remains TODO. This replaces the former I²R screening calculation. |
 | Flat 99% availability | String-level and common-mode outage states are hidden |
 | Supply benchmarks mix 2019 nominal EUR and 2024 USD inputs | The apparent precision of the blended EUR/m assumption exceeds source quality |
 | OPEX is a top-down percentage | Public evidence does not yet support an array-only event-frequency and cash-repair model |

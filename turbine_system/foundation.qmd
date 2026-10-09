@@ -4,6 +4,11 @@ completion: 80
 readiness: blocked
 ---
 
+For the article architecture comparison, the executable workflow currently passes
+the same conventional-turbine supported mass to this calculation. Added turbine-level
+hydrogen equipment and removal of the transformer affect installation inventories,
+but do not yet feed back into foundation or tower sizing (deferred D5).
+
 ## Role and Scope
 
 This page estimates the fabricated mass and supply cost of one monopile foundation. The calculation is intended for early-stage comparison of fixed-bottom offshore wind concepts, before site-specific geotechnical and structural design is available.

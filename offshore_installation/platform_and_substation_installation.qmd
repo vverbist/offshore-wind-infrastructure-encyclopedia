@@ -8,7 +8,7 @@ readiness: blocked
 
 The agreed methodology includes central-platform transport, offshore installation, hook-up and commissioning in the combined [Platform EPCI CAPEX](../platforms/platform_material_capex.qmd) package. This page explains the cost boundary and the decision to stop calculating platform installation as a separate additive cost.
 
-The combined commercial relationship is intended to scale with hosted equipment mass, using a consistent conversion where reference data report complete topside mass. Approximately linear scaling is a hypothesis over a comparable design range; additional commercial references will be used to test it and, if justified, fit a scaling exponent. It is not a claim that every installation activity is proportional to mass.
+The combined commercial relationship is intended to scale with complete topside mass directly, including equipment and topside structure. Approximately linear scaling is a hypothesis over a comparable design range; additional commercial references will be used to test it and, if justified, fit a scaling exponent. It is not a claim that every installation activity is proportional to mass.
 
 This decision concerns central-platform installation only. [Turbine and Foundation Installation](turbine_and_foundation_installation.qmd) and [Cable and Pipeline Installation](cable_and_pipeline_installation.qmd) retain their separate scopes.
 

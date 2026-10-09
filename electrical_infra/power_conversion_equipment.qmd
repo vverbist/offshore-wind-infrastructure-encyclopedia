@@ -193,17 +193,18 @@ evidence gap rather than assigning an unsupported split of a package value.
 For a curve reconciled to inverter AC output, generator and rectifier losses
 are already included. Centralised hydrogen and electricity export apply the
 turbine transformer efficiency downstream; decentralised hydrogen divides curve
-power by inverter efficiency to recover the removed inverter loss. The current
-implementation still uses the legacy generator-output record, AC cable losses
-and the central {{< var central-conversion-efficiency >}} package. It must not be
-treated as an implementation of the adopted boundary. The required terms are:
+power by inverter efficiency to recover the removed inverter loss. These equations
+are implemented, but operation requires `wind.power_boundary = "inverter_ac_output"`
+after evidence-based reconciliation. The supplied generator-output record remains
+explicitly unreconciled; changing its label alone is not a boundary conversion.
+The required terms are:
 
 | Loss term | Cases | Current model treatment | Status |
 |---|---|---|---|
 | Generator-side converter | All | Legacy source-curve boundary unresolved | Included upstream in a reconciled inverter-output curve; no additional architecture loss |
-| Grid-side inverter | Included in AC cases; removed in turbine-level cases | Recovery not implemented | TODO: inverter-only efficiency and curve reconciliation; recover by division in decentralised cases |
-| Turbine step-up transformer | Centralised | Not represented | TODO |
-| 66 kV AC collection | Centralised | Calculated from cable resistance | AC resistance and power factor still to be adopted |
+| Grid-side inverter | Included in AC cases; removed in turbine-level cases | Recovery by division implemented | TODO: inverter-only efficiency and curve reconciliation |
+| Turbine step-up transformer | Centralised | Downstream multiplier implemented | `turbine-transformer-efficiency` remains TODO |
+| 66 kV AC collection | Centralised | Fixed fraction of aggregate transformer output, before central conversion | `array-ac-loss-fraction` remains TODO; no resistance or power-factor input required |
 | Central transformers and rectifier | Centralised | {{< var central-conversion-efficiency >}} net package efficiency | Adopted |
 | Stack-side DC/DC converter | Conservative | Blank interface efficiency | Candidates above 97.5% |
 | Direct-DC interface | Direct DC | Blank interface efficiency | Should cover only DC-link, protection and cabling losses; no converter loss |
@@ -225,8 +226,9 @@ Each electrical function is counted once:
   [Wind Turbine Mass and Cost](../turbine_system/wind_turbine.qmd).
 - Under the adopted boundary, the calibrated transformer term moves out of
   turbine cost and into electrical infrastructure for the AC architectures.
-  Combined AC purchase cost must remain unchanged. The executable ledger has
-  not yet made this reallocation; do not add a second transformer charge.
+  The executable ledger makes this reallocation using the original RNA calibration
+  factor: `turbine / supply` excludes the transformer and AC cases add one
+  `turbine-transformer / supply` entry. Combined AC purchase cost is unchanged.
 - The transformer removal credit can follow the explicit WISDEM transformer term
   in that ledger. No grid-side inverter credit is claimed, because the calibrated
   cost has no separable converter term and no separable evidence exists.

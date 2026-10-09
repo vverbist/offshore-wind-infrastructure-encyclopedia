@@ -25,6 +25,11 @@ No generic geographic, offshore or market multiplier is applied. Such a factor
 may be introduced only where evidence defines its scope and prevents overlap
 with component, installation or commercial allowances.
 
+The [BOP reference](../hydrogen_production/balance_of_plant.qmd) uses an explicit
+screening exception: the undated DEA water-treatment indication is assumed to
+be EUR2023 and escalated using euro-area HICP. This assumption does not establish
+the supplier quote year or change the rule for other costs.
+
 ## Currency and Price-Year Normalization
 
 A source cost in currency $s$ and price year $y$ is normalized as:

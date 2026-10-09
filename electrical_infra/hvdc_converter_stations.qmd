@@ -152,3 +152,5 @@ Once these states are simulated, the corresponding flat availability factors mus
 | Linear EUR/kW scaling | Discrete equipment and platform thresholds are hidden |
 | Constant station efficiencies | Part-load, no-load and temperature effects are hidden |
 | Flat terminal availabilities | Pole redundancy and common-mode failures are simplified |
+
+Complete central-platform mass is estimated separately on the [Complete Topside Mass](../platforms/topside_mass.qmd) page. Its aggregate reference already includes hosted equipment; component masses are not added again.

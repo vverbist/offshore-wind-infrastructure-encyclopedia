@@ -37,14 +37,14 @@ def build(inputs, root: Path):
             "|---|---|---|---|---|"]
     text += ["| " + " | ".join(row) + " |" for row in sources]
     text += ["", "### Reconstructed comparison on the common price basis", "",
-             "All costs below are EUR~2025~. Equipment masses are inferred, not measured. HKZ is a per-platform average of one combined award; the framework uses Alpha's mass as a representative reference, not six matched project weights.", "",
-             "| Reference | Topside (t) | Inferred equipment (t) | Cost (million EUR~2025~) | EUR~2025~/equipment t | Equipment t/kW | EUR~2025~/kW |",
-             "|---|---:|---:|---:|---:|---:|---:|"]
+             "All costs below are EUR~2025~. Masses are complete topsides, including equipment and structure. HKZ is a per-platform average of one combined award; the framework uses Alpha's mass as a representative reference, not six matched project weights.", "",
+             "| Reference | Topside (t) | Cost (million EUR~2025~) | EUR~2025~/topside t | Topside t/kW | EUR~2025~/kW |",
+             "|---|---:|---:|---:|---:|---:|"]
     for r in rows:
-        text.append(f"| {r['name']} | {r['topside_t']:,.0f} | {r['equipment_t']:,.0f} | {r['cost_eur2025']/1e6:,.0f} | {r['eur_per_equipment_t']:,.0f} | {r['equipment_t_per_kw']:.5f} | {r['eur_per_kw']:,.0f} |")
+        text.append(f"| {r['name']} | {r['topside_t']:,.0f} | {r['cost_eur2025']/1e6:,.0f} | {r['eur_per_topside_t']:,.0f} | {r['topside_t_per_kw']:.5f} | {r['eur_per_kw']:,.0f} |")
     text += ["", "Mass evidence: HKZ Alpha [@petrofac2021HKZAlpha], HKZ Beta [@petrofac2022HKZBeta], Nederwiek [@misc2024Nederwiek, printed p. 77], Alpha [@mhb2023AlphaAward], NSE [@nse2022EnergyHubs, table 4.9], and OffsH2ore [@offsh2ore2023Report, p. 48]. Capacity denominators are the stated platform ratings; they are not necessarily identical electrical input boundaries across technologies.", ""]
 
-    low, high, central = [benchmark_cost_eur2025(inputs.number("platform-epci-unit-cost-source" if key == "central" else f"platform-benchmark-linear-{key}", "EUR/t"), 1, 2023, inputs)
+    low, high, central = [benchmark_cost_eur2025(inputs.number("platform-epci-topside-unit-cost-source" if key == "central" else f"platform-benchmark-topside-linear-{key}", "EUR/t"), 1, 2023, inputs)
                           for key in ("low", "high", "central")]
     inflation = benchmark_cost_eur2025(1, 1, 2023, inputs)
     hkz_factor = benchmark_cost_eur2025(1, 1, 2019, inputs)
@@ -58,7 +58,7 @@ def build(inputs, root: Path):
     (out / "benchmarks.md").write_text("\n".join(text), encoding="utf-8")
 
     fig, ax = plt.subplots(figsize=(10.8, 7.2), layout="constrained")
-    x = np.linspace(0, max(r['equipment_t'] for r in rows)*1.15, 150)
+    x = np.linspace(0, max(r['topside_t'] for r in rows)*1.15, 150)
     ax.plot(x/1000, x*low/1e6, "--", color="#64748b", label=f"Illustrative linear relation: EUR {low:,.0f}/t (not fitted)")
     styles = {"award": ("o", "#156f87", True), "allocated": ("D", "#156f87", True),
               "framework": ("s", "#156f87", False), "study": ("^", "#c77713", False),
@@ -72,18 +72,18 @@ def build(inputs, root: Path):
     for r in rows:
         marker, color, filled = styles[r['kind']]
         kwargs = {"color": color} if filled else {"facecolors": "none", "edgecolors": color}
-        ax.scatter(r['equipment_t']/1000, r['cost_eur2025']/1e6, marker=marker, s=75, zorder=4, **kwargs)
+        ax.scatter(r['topside_t']/1000, r['cost_eur2025']/1e6, marker=marker, s=75, zorder=4, **kwargs)
         label, offset = labels[r['key']]
-        ax.annotate(label, (r['equipment_t']/1000, r['cost_eur2025']/1e6), xytext=offset,
+        ax.annotate(label, (r['topside_t']/1000, r['cost_eur2025']/1e6), xytext=offset,
                     textcoords="offset points", fontsize=9,
                     arrowprops={"arrowstyle": "-", "color": "#a8b4c0"})
     ax.set(xlim=(0, x[-1]/1000), ylim=(0, max(r['cost_eur2025'] for r in rows)/1e6*1.2),
-           xlabel="Inferred equipment mass per platform (1,000 t)", ylabel="Cost (million EUR 2025)",
-           title="Platform cost versus inferred equipment mass\nDifferent scopes shown separately; all equipment masses inferred from topside")
+           xlabel="Complete topside mass per platform (1,000 t)", ylabel="Cost (million EUR 2025)",
+           title="Platform cost versus complete topside mass\nDifferent scopes shown separately; equipment and structure included in mass")
     ax.grid(alpha=.2); ax.set_axisbelow(True); ax.legend(loc="upper left", fontsize=9)
     fig.savefig(root / "figures" / "platform_epci_benchmarks.svg", metadata={"Date": None})
     plt.close(fig)
     return {"platform-benchmark-low-2025": f"{low:,.0f}", "platform-benchmark-high-2025": f"{high:,.0f}",
             "platform-benchmark-central-2025": f"{central:,.0f}",
-            "platform-benchmark-hkz-rate": f"{rows[0]['eur_per_equipment_t']:,.0f}",
-            "platform-benchmark-nederwiek-rate": f"{rows[1]['eur_per_equipment_t']:,.0f}"}
+            "platform-benchmark-hkz-rate": f"{rows[0]['eur_per_topside_t']:,.0f}",
+            "platform-benchmark-nederwiek-rate": f"{rows[1]['eur_per_topside_t']:,.0f}"}

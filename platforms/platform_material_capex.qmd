@@ -6,7 +6,7 @@ readiness: blocked
 
 ## Calculation and Cost Boundary
 
-This page defines the implemented cost model for **one central offshore platform**: a commercial engineering, procurement, construction and installation (EPCI) package scaled by the equipment mass it accommodates. The output is total offshore platform EPCI CAPEX on the common EUR~2025~ basis.
+This page defines the implemented cost model for **one central offshore platform**: a commercial engineering, procurement, construction and installation (EPCI) package scaled by its complete topside mass. The output is total offshore platform EPCI CAPEX on the common EUR~2025~ basis.
 
 The package includes platform engineering, structural fabrication, yard integration, transport, offshore installation, hook-up and commissioning within the reference contract's scope. These activities enter the project cost total **once**, through this package. A separate platform fabrication or installation estimate must not be added to it.
 
@@ -15,7 +15,7 @@ Hosted process and conversion equipment purchase remains with the component owne
 ::: {.callout-note}
 ## Implemented commercial screening model
 
-The executable central-platform workflow now books one combined offshore EPCI cost. It accepts direct equipment mass or complete topside mass; it does not add DNV fabrication, yard-integration or platform-installation costs. The benchmark coefficient is an adopted screening judgement, not a fitted law. Previous models remain in the non-published archive and as inactive comparison helpers.
+The executable central-platform workflow now books one combined offshore EPCI cost. It accepts complete topside mass; it does not add DNV fabrication, yard-integration or platform-installation costs. The benchmark coefficient is an adopted screening judgement, not a fitted law. Previous models remain in the non-published archive and as inactive comparison helpers.
 
 Platform CAPEX can be calculated independently of unresolved OPEX and decommissioning. Complete LCOH remains unavailable until all included cost inputs are supplied. Installation feasibility is reported as not assessed by this mass-cost calculation.
 :::
@@ -24,42 +24,23 @@ Platform CAPEX can be calculated independently of unresolved OPEX and decommissi
 
 Commercial awards provide observable prices for delivered packages, but generally do not disclose a consistent split between platform materials, fabrication, integration and offshore installation. A detailed calculation of those components would require independently supported rates, durations, equipment inclusions and commercial allowances. The available evidence does not constrain that decomposition sufficiently.
 
-For this model, fabrication and installation are procured as one delivered offshore EPCI scope. Their separation is unnecessary for the required total **if their material cost drivers can be represented together**. Our working hypothesis is that equipment mass drives topside size and the associated fabrication, integration and installation effort, making total EPCI approximately proportional to equipment mass over a comparable design range.
+For this model, fabrication and installation are procured as one delivered offshore EPCI scope. Their separation is unnecessary for the required total **if their material cost drivers can be represented together**. Our working hypothesis is that complete topside mass represents the associated fabrication, integration and installation effort, making total EPCI approximately proportional to complete topside mass over a comparable design range.
 
 This is a modelling hypothesis, not an established scaling law. Fixed mobilisation costs, site conditions and changes in installation method can break proportionality. Combining scopes does not prove that each component scales linearly; the total relationship must be tested against additional commercial references. Until then, an aggregate relationship is more transparent than a detailed breakdown built from poorly constrained assumptions.
 
-## Mass Basis and Proposed Relationship
+## Mass Basis and Cost Relationship
 
-Let $M_{\mathrm{eqp}}$ be the hosted equipment mass in tonnes. It includes collection and conversion equipment, stacks, BOP, compressors and shared auxiliaries appropriate to the architecture. Collection switchgear remains included even though the model does not require a feeder-bay count. Equipment duties and inclusions must match those of the reference.
-
-The implemented relationship is
+The upstream [Complete Topside Mass](topside_mass.qmd) calculation supplies $M_{\mathrm{top}}$ in tonnes, including hosted equipment, auxiliaries and topside structure, but excluding jacket and piles. The cost driver is used directly; no structural-fraction conversion is required.
 
 $$
-\boxed{C_{\mathrm{EPCI}}(M_{\mathrm{eqp}})
-=C_{\mathrm{ref}}
-\left(\frac{M_{\mathrm{eqp}}}{M_{\mathrm{eqp,ref}}}\right)^\beta.}
+C_{\mathrm{EPCI}}=C_{\mathrm{ref}}
+\left(\frac{M_{\mathrm{top}}}{M_{\mathrm{top,ref}}}\right)^\beta,
+\qquad C_{\mathrm{ref}}=k_{2025}M_{\mathrm{top,ref}}.
 $$
 
-$C_{\mathrm{ref}}$ is a scope-matched offshore EPCI reference cost in EUR~2025~; $M_{\mathrm{eqp,ref}}$ is its equipment mass in tonnes; $\beta$ is a dimensionless cost-scaling exponent. The default is linear scaling ($\beta=1$); recorded scenario overrides may vary the exponent. No fitted coefficient or exponent is claimed. The reference cost is $C_{\mathrm{ref}}=k_{2025}M_{\mathrm{eqp,ref}}$, so changing $\beta$ preserves the cost at the reference mass.
+$C_{\mathrm{EPCI}}$ and $C_{\mathrm{ref}}$ are offshore EPCI costs in EUR~2025~; $k_{2025}$ is EUR~2025~/complete topside tonne; $\beta$ is a dimensionless cost exponent. The default $\beta={{< var platform-epci-cost-scaling-exponent-value >}}$ is a modelling assumption, not a fit. Changing it preserves cost at the reference mass. The mass-to-power exponent on the upstream page is a separate assumption.
 
-Published platform weights commonly describe **complete topsides**, including structure, rather than equipment alone. If $f_S$ is the structural fraction of complete topside mass $M_{\mathrm{top}}$, then
-
-$$
-M_{\mathrm{eqp}}=(1-f_S)M_{\mathrm{top}}.
-$$
-
-Consequently,
-
-$$
-C_{\mathrm{EPCI}}
-=C_{\mathrm{ref}}
-\left[\frac{(1-f_S)M_{\mathrm{top}}}
-{(1-f_{S,\mathrm{ref}})M_{\mathrm{top,ref}}}\right]^\beta.
-$$
-
-With an equal structural fraction in the case and reference, this reduces to scaling by the ratio of complete topside masses. This preserves the link to commercial mass disclosures without treating topside mass as measured equipment mass. DNV's {{< var platform-topside-structural-fraction >}} structural fraction is a provisional conversion assumption, not a supplier weight breakdown [@dnv2023OffshoreHydrogen, sec. 3.4]. Differences between HVDC and electrolysis structural fractions remain a source of uncertainty.
-
-A separate upstream power-to-mass estimate may be needed where equipment mass is unavailable. Its exponent describes mass scaling with capacity and must not be confused with $\beta$, which describes cost scaling with mass. No complete hydrogen equipment-mass reference or power-to-mass fit is adopted here.
+The normalisation mass is Alpha's {{< var platform-mhb-topside >}} complete topside [@mhb2023AlphaAward]. Its fabrication subcontract price is **not** the reference EPCI cost. Instead, the adopted coefficient below gives a derived reference cost of **{{< var platform-epci-reference-million >}} million EUR~2025~**. Jacket and foundation delivery are included in the cost boundary even though their masses are not added to the topside driver.
 
 ## Commercial Benchmarks and Reproducible Comparison
 
@@ -73,46 +54,43 @@ $$
 
 For EUR-denominated evidence, $X_y=1$. Where a price year is not stated, the award or publication year is an explicit assumption. This adjustment does not capture sector-specific escalation, contractual indexation, final settlement or changes in scope.
 
-For each reference, equipment mass and specific costs follow as
+For each reference, specific costs and mass intensity follow as
 
 $$
-M_{\mathrm{eqp}}=(1-f_S)M_{\mathrm{top}},\qquad
-k=\frac{C_{2025}}{M_{\mathrm{eqp}}},\qquad
+k=\frac{C_{2025}}{M_{\mathrm{top}}},\qquad
 c_P=\frac{C_{2025}}{10^6P_{\mathrm{GW}}},\qquad
-m_P=\frac{M_{\mathrm{eqp}}}{10^6P_{\mathrm{GW}}}.
+m_P=\frac{M_{\mathrm{top}}}{10^6P_{\mathrm{GW}}}.
 $$
 
-Here $k$ is EUR~2025~/equipment tonne, $c_P$ is EUR~2025~/kW and $m_P$ is equipment t/kW. The factor $10^6$ converts GW to kW. These are package-specific ratios, not additional additive cost factors.
+Here $k$ is EUR~2025~/topside tonne, $c_P$ is EUR~2025~/kW and $m_P$ is topside t/kW. The factor $10^6$ converts GW to kW. These are comparison ratios, not additional additive costs.
 
 {{< include _generated/benchmarks.md >}}
 
-![Commercial offshore packages, conceptual hydrogen estimates and fabrication-only evidence against inferred equipment mass. The dashed line is a comparison assumption, not a regression.](../figures/platform_epci_benchmarks.svg){#fig-platform-benchmarks fig-alt="Platform cost versus inferred equipment mass. HVAC offshore EPCI and allocated HVDC EPCI lie above hydrogen design estimates and the fabrication-only subcontract. Framework and project awards overlap and are not independent samples."}
+![Commercial offshore packages, conceptual hydrogen estimates and fabrication-only evidence against complete topside mass. The dashed line is a comparison assumption, not a regression.](../figures/platform_epci_benchmarks.svg){#fig-platform-benchmarks fig-alt="Platform cost versus complete topside mass. HVAC offshore EPCI and allocated HVDC EPCI lie above hydrogen design estimates and the fabrication-only subcontract. Framework and project awards overlap and are not independent samples."}
 
 ### Interpretation and Tradeoffs
 
-**The commercial observations support investigating linear scaling.** HKZ gives {{< var platform-benchmark-hkz-rate >}} EUR~2025~/equipment t; the individual Nederwiek award, with the assumed offshore allocation, gives {{< var platform-benchmark-nederwiek-rate >}} EUR~2025~/equipment t. This is a useful cross-check across different masses, but there are only two distinct commercial mass levels. The framework average does not supply a third independent mass level, and its projects need not have equal prices.
+**The commercial observations support investigating linear scaling.** HKZ gives {{< var platform-benchmark-hkz-rate >}} EUR~2025~/topside t; the individual Nederwiek award, with the assumed offshore allocation, gives {{< var platform-benchmark-nederwiek-rate >}} EUR~2025~/topside t. This is a useful cross-check across different masses, but there are only two distinct commercial mass levels. The framework average does not supply a third independent mass level, and its projects need not have equal prices.
 
 Nederwiek's disclosed Petrofac award is preferable to assigning every project the framework average. Its remaining weakness is the offshore/onshore allocation. HKZ avoids that allocation but differs in technology, site and contract date. The owner-procurement description supports excluding major high-voltage equipment from HKZ's platform package; detailed auxiliary-equipment boundaries still require reconciliation [@tennet2021OwnerEquipment].
 
 **The hydrogen estimates remain lower even though installation is included.** The difference therefore cannot be explained solely by missing offshore installation. OffsH2ore also carries a separate {{< var platform-offsh2ore-engineering-share >}} engineering allowance covering several activities, so its structure subtotal is not a complete commercial EPCI quote [@offsh2ore2023Report, sec. 6.2.8]. It would be misleading to apply that whole-plant allowance only to the structural subtotal and call the result scope-matched. Design maturity, equipment boundaries, site, market conditions and commercial risk may explain part of the gap; the evidence does not quantify each contribution. No matched commercial electrolyser-platform EPCI award was identified in this research.
 
-**Inferred equipment mass is a major limitation.** DNV explicitly equates topside structure mass to process-equipment mass as a rule of thumb, giving $M_{\mathrm{top}}\approx2M_{\mathrm{eqp}}$ [@dnv2023OffshoreHydrogen, p. 16]. The NSE breakdown reports {{< var platform-nse-structure >}} structure within {{< var platform-nse-topside >}} total topside [@nse2022EnergyHubs, table 4.9]; the remaining mass includes architectural and other items and is not a clean process-equipment measurement. This illustrates why the DNV conversion must not be presented as a measured universal ratio.
-
-Applying the same structural fraction to every observation simply rescales the horizontal axis. It cannot demonstrate that equipment mass predicts cost better than complete topside mass. Actual weight breakdowns are needed to test that hypothesis. Uncertainty in this shared conversion is correlated across the points, not independent scatter that a regression can average away.
+**Complete topside mass removes an unsupported conversion.** Published weights include structure and equipment; there is no need to infer an equipment-only mass. This does not remove differences in equipment density, design maturity or process scope between HVDC and electrolysis. The upstream mass page documents the reference boundaries.
 
 The combined package also hides fixed mobilisation costs and changes in lifting method, foundation type and water depth. Those remain applicability checks. An aggregate model is justified by the lack of defensible separate rates, not by proof that every underlying activity scales linearly.
 
 ### Provisional Conclusion and Further Evidence
 
-Retain $\beta={{< var platform-epci-cost-scaling-exponent-value >}}$ as the initial hypothesis. A rounded commercial comparison range is **{{< var platform-benchmark-low-2025 >}}–{{< var platform-benchmark-high-2025 >}} EUR~2025~/equipment t**. This is the earlier EUR~2023~ screening range converted to the site's price basis; it is not a confidence interval, an exhaustive market range or a validated electrolyser-platform range. The dashed line uses its lower endpoint only to make the mass comparison visible.
+Retain $\beta={{< var platform-epci-cost-scaling-exponent-value >}}$ as the initial hypothesis. A rounded commercial comparison range is **{{< var platform-benchmark-low-2025 >}}–{{< var platform-benchmark-high-2025 >}} EUR~2025~/topside t**. This is the earlier EUR~2023~ screening range converted to the site's price basis; it is not a confidence interval, an exhaustive market range or a validated electrolyser-platform range. The dashed line uses its lower endpoint only to make the mass comparison visible.
 
-The adopted central coefficient is **{{< var platform-benchmark-central-2025 >}} EUR~2025~/equipment t**, a modelling judgement within that range, not a fitted estimate. Its source-basis input is `platform-epci-unit-cost-source` = {{< var platform-epci-unit-cost-source >}} on the EUR~2023~ basis; the normalisation above derives the EUR~2025~ value. Lower and upper screening assumptions remain sensitivity comparisons, not confidence limits. A change to the coefficient must retain its currency year and scope.
+The adopted central coefficient is **{{< var platform-benchmark-central-2025 >}} EUR~2025~/topside t**, a modelling judgement within that range, not a fitted estimate. Its source-basis input is `platform-epci-topside-unit-cost-source` = {{< var platform-epci-topside-unit-cost-source >}} on the EUR~2023~ basis; the normalisation above derives the EUR~2025~ value. Lower and upper screening assumptions remain sensitivity comparisons, not confidence limits. A change to the coefficient must retain its currency year and scope.
 
-The intended mapping remains one equipment-mass input to one offshore EPCI output, with equipment purchase charged elsewhere. A free fitted exponent is not justified yet: it would confound mass with technology, commercial scope and the assumed offshore allocation. Sensitivity to the reference coefficient, mass conversion and allocation is more informative at this stage.
+The intended mapping is one complete-topside-mass input to one offshore EPCI output, with equipment purchase charged elsewhere. A free fitted exponent is not justified yet: it would confound mass with technology, commercial scope and the assumed offshore allocation. Sensitivity to the reference coefficient, reference mass and allocation is more informative at this stage.
 
 Additional leads remain outside the fit: DolWin beta has a published EPC scope, but its installation boundary needs reconciliation [@aibelDolwinBeta]; RTE's Normandy–Oleron package combines offshore platforms and onshore converter stations [@rte2024HVDCFacts]; RTE Dunkerque needs a matched mass and equipment-purchase boundary [@rte2024Dunkerque]. Oil-and-gas topside EPC packages require similar equipment and foundation boundary checks before transfer. Do not turn partial evidence into an EPCI point by assuming away the missing scope.
 
-For future observations, retain capacity, measured and inferred masses, support structure, depth, installation method, award and price years, currency, equipment inclusions and cost allocation. Do not count parent awards and their subcontracts independently. Keep design studies as a separate comparison class. The highest-value additions are independently scoped offshore EPCI awards at intermediate masses and actual equipment-weight breakdowns.
+For future observations, retain capacity, measured and inferred masses, support structure, depth, installation method, award and price years, currency, equipment inclusions and cost allocation. Do not count parent awards and their subcontracts independently. Keep design studies as a separate comparison class. The highest-value additions are independently scoped offshore EPCI awards at intermediate masses and scope-matched complete topside weights.
 
 ## Why the DNV Structural Model Is Not the Total-Cost Model {#worked-example}
 
@@ -130,9 +108,9 @@ The model returns one offshore platform EPCI cost, together with its reference s
 
 Mass scaling does not establish installation feasibility. Large changes in topside size, foundation type, water depth or installation method may require a different reference class rather than smooth extrapolation. Water depth is initially an applicability condition; no unsupported depth correction is embedded in the total EPCI relationship. Transferring an HVDC-derived relationship to electrolysis remains a hypothesis to test.
 
-Supply exactly one of `[platform] equipment_mass_t` or `topside_mass_t`, in tonnes. The latter invokes the DNV conversion above; direct equipment mass avoids that conversion for the evaluated case. Platform count is fixed at one. Alternatively, `mass_method = "power_scaling"` with `rated_power_gw` requires an adopted upstream reference mass and rating; missing references remain explicit errors. Supplying direct mass and power scaling together is rejected.
+Supply `[platform] topside_mass_t` in tonnes. Equipment-only mass is rejected. Alternatively, use `mass_method = "power_scaling"` and `mass_reference = "electrolysis"`; the workflow derives installed DC rating from wind-farm capacity, overplanting and whole stack modules. No separate rating is supplied. The `"hvdc"` and `"custom"` branches retain `rated_power_gw`; the upstream page defines those rating boundaries. A `"custom"` reference requires `platform-reference-topside-mass` and `platform-reference-power`. Supplying direct mass and power scaling together is rejected. Platform count remains one, including extrapolated cases.
 
-The nonlinear reference mass is derived from the MHB Alpha topside reference and the shared structural fraction: $M_{\mathrm{eqp,ref}}=(1-f_S)M_{\mathrm{top,Alpha}}$. This is a mass normalisation anchor, not adoption of MHB's fabrication price as EPCI. The coefficient and `platform-epci-cost-scaling-exponent` can be overridden in recorded sensitivity cases; the central input table remains unchanged.
+The renamed coefficient `platform-epci-topside-unit-cost-source` makes the changed denominator explicit. Its source value is half the earlier equipment-tonne coefficient, preserving the calibration under the former equal equipment/structure split. This is an algebraic rebasing, not new cost evidence; the structural fraction is no longer an active cost input. The screening endpoints were rebased in the same way. Recorded coefficient and exponent overrides retain their price basis and cost boundary.
 
 `physical.platform_costs` reports the calculation and `physical.platform_total_eur` reports its total. The ledger contains one `platform / epci` entry. A separate platform supply or installation entry alongside EPCI is rejected. The calculation requires neither a crane selection nor jacket and pile mass estimates. Any supplied depth is retained as applicability metadata; the workflow does not certify a lift plan.
 
@@ -140,4 +118,4 @@ Annual platform OPEX uses `platform-opex-rate` on the combined platform EPCI tot
 
 **Decommissioning is separate from EPCI.** The old installation-based proxy cannot recover platform removal cost from the combined package. `platform-decommissioning-cost` is therefore a separate, initially unresolved EUR~2025~ input. It enters lifetime costs once and does not reduce or block the calculated platform CAPEX. Missing decommissioning blocks complete LCOH. The existing installation-based proxy still applies to separately costed non-platform installation [see financial treatment](../methodology/financial_and_price_basis.qmd#decommissioning).
 
-**Remaining evidence work:** expand the commercial sample, obtain measured equipment masses, reconcile auxiliary-equipment scope, and provide scenario mass, platform OPEX and decommissioning inputs. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.
+**Remaining evidence work:** expand the commercial sample, obtain matched complete topside weights, reconcile auxiliary-equipment scope, and provide platform OPEX and decommissioning inputs. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.

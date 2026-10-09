@@ -16,6 +16,7 @@ from model.inputs import Inputs, load_inputs, read_scenario
 from model.records import MissingInput, Infeasible, CostLine
 from model_data.parameters import ParameterSet, load_parameters
 from model.hydrogen_production import stack
+from model.hydrogen_production import balance_of_plant as bop
 from model.hydrogen_production.stack import StackCurve, operate
 from model.hydrogen_production.balance_of_plant import size as bop_size
 from model.hydrogen_infra.compressor import specific_energy, stages, size as compressor_size
@@ -38,7 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def synthetic_inputs(values=None, fill_missing=False):
     """Test-only numbers deliberately live outside the adopted parameter table."""
-    values = values or {}
+    values = {"array-ac-loss-fraction": 0.01, **(values or {})}
     parameters = []
     for parameter in load_parameters():
         value = values.get(parameter.id, 1 if fill_missing and parameter.value is None else parameter.value)
@@ -55,9 +56,46 @@ class Components(unittest.TestCase):
 
     def test_unknown_and_reference_costs_are_not_adopted(self):
         with self.assertRaises(MissingInput):
-            self.inputs.number("stack-purchase-unit-cost")
+            self.inputs.number("bop-opex-rate")
         with self.assertRaises(MissingInput):
             self.inputs.number("compressor-legacy-cost-anchor")
+
+    def test_electrical_boundary_and_loss_balance(self):
+        from model.electrical_infra.power_conversion_equipment import architecture_power
+        from model.electrical_infra.infield_ac_cables import loss_kw
+        inputs = synthetic_inputs({"turbine-inverter-efficiency": 0.96,
+                                   "turbine-transformer-efficiency": 0.98,
+                                   "array-ac-loss-fraction": 0.02})
+        source = np.array([[100.0, 50.0], [0.0, 0.0]])
+        ac_input = architecture_power(source, True, "inverter_ac_output", inputs)
+        np.testing.assert_allclose(ac_input.sum(axis=1) - loss_kw(ac_input, inputs), [144.06, 0])
+        dc = architecture_power(source, False, "inverter_ac_output", inputs)
+        np.testing.assert_allclose(dc * 0.96, source)
+        with self.assertRaises(MissingInput):
+            architecture_power(source, False, "generator_output_unreconciled", inputs)
+
+    def test_transformer_reallocation_preserves_calibrated_ac_cost(self):
+        from model.turbine_system.wind_turbine import supply_eur, transformer_supply_eur
+        from model.methodology.financial_and_price_basis import normalize_usd
+        inputs = synthetic_inputs({"turbine-cost-crane": 10000})
+        result = turbine(15000, 236, 133, inputs)
+        legacy = 2 * normalize_usd(result["supply_usd2022"],
+                                  inputs.number("financial-usd-escalation-2022-2025"), inputs)
+        transformer = transformer_supply_eur(result, 2, inputs)
+        self.assertGreater(transformer, 0)
+        self.assertAlmostEqual(supply_eur(result, 2, inputs) + transformer, legacy)
+
+    def test_stack_purchase_rating_and_manufacturing_basis(self):
+        reference = stack.purchase_cost_basis(1000, self.curve, self.inputs)
+        article = stack.purchase_cost_basis(2000, self.curve, self.inputs)
+        self.assertEqual(reference["manufactured_usd2020_per_source_kw"], 164)
+        self.assertAlmostEqual(article["manufactured_usd2020_per_source_kw"], 158.280430082, places=8)
+        # Same physical stack: source- and reference-rated costs times jV agree.
+        self.assertAlmostEqual(article["manufactured_usd2020_per_reference_kw"] * 3 * self.curve.voltage_at(3),
+                               article["manufactured_usd2020_per_source_kw"] * 2 * 1.9)
+        self.assertLess(article["purchase_eur2025_per_reference_kw"], reference["purchase_eur2025_per_reference_kw"])
+        with self.assertRaises(ValueError):
+            stack.purchase_cost_basis(100, self.curve, self.inputs)
 
     def test_override_preserves_baseline(self):
         modified = load_inputs({"overrides": {"bop-block-limit": 20000}})
@@ -66,7 +104,26 @@ class Components(unittest.TestCase):
         self.assertEqual(record["baseline_value"], "100000")
         self.assertTrue(record["overridden"])
         with self.assertRaises(ValueError):
-            load_inputs({"overrides": {"stack-purchase-unit-cost": 1}})
+            load_inputs({"overrides": {"bop-opex-rate": 1}})
+
+    def test_bop_reference_scope_and_scaling_sensitivity(self):
+        basis = bop.reference_cost_basis(self.inputs)
+        self.assertEqual(basis["source_manufactured_usd2020_per_kw"], 264)
+        self.assertEqual(basis["water_reference_eur2023"], 195000)
+        self.assertAlmostEqual(basis["water_reference_eur2025"], 203873.28)
+        reference = bop.size(15000, 1, self.inputs)
+        self.assertAlmostEqual(bop.supply_cost(reference, self.inputs), basis["aggregate_reference_eur2025"])
+        changed = load_inputs({"overrides": {"bop-scaling-exponent": 0.6}})
+        self.assertEqual(bop.reference_cost_basis(changed), basis)
+        self.assertAlmostEqual(bop.supply_cost(bop.size(15000, 1, changed), changed),
+                               bop.supply_cost(reference, self.inputs))
+        self.assertGreater(bop.supply_cost(bop.size(100000, 1, self.inputs), self.inputs),
+                           bop.supply_cost(bop.size(100000, 1, changed), changed))
+        self.assertAlmostEqual(bop.supply_cost(bop.size(30000, 2, self.inputs), self.inputs),
+                               2 * basis["aggregate_reference_eur2025"])
+        record = next(r for r in changed.records() if r["id"] == "bop-scaling-exponent")
+        self.assertEqual(record["baseline_value"], "0.75")
+        self.assertEqual(record["value"], 0.6)
 
     def test_reference_weight_override_is_used_without_adopting_a_price(self):
         changed = load_inputs({"overrides": {"turbine-cost-blade": 29.2}})
@@ -185,9 +242,9 @@ class Components(unittest.TestCase):
         self.assertEqual(platform.estimate_topside_mass(2, nonlinear), 20000)
 
     def test_platform_epci_mass_interface_and_reference(self):
-        direct = platform.epci_inventory({"equipment_mass_t": 15000}, self.inputs)
+        direct = platform.epci_inventory({"topside_mass_t": 30000}, self.inputs)
         inferred = platform.epci_inventory({"topside_mass_t": 30000}, self.inputs, 28)
-        self.assertEqual(direct["equipment_t"], inferred["equipment_t"])
+        self.assertEqual(direct["topside_t"], inferred["topside_t"])
         self.assertEqual(direct["installation_feasibility"], "not_assessed")
         expected = 60000 * 1.024 * 1.021 * 15000
         self.assertAlmostEqual(platform.epci_cost(direct, self.inputs)["total_eur"], expected)
@@ -198,10 +255,20 @@ class Components(unittest.TestCase):
             with self.assertRaises(ValueError):
                 platform.epci_inventory(case, self.inputs)
 
+    def test_complete_topside_references_and_fraction_independence(self):
+        self.assertEqual(platform.estimate_topside_mass(2, self.inputs, "electrolysis"), 52000)
+        self.assertEqual(platform.estimate_topside_mass(2, self.inputs, "hvdc"), 30000)
+        alternate = Inputs(self.inputs.parameters, {"platform-topside-structural-fraction": 0.9})
+        case = {"topside_mass_t": 30000}
+        self.assertEqual(platform.epci_cost(platform.epci_inventory(case, self.inputs), self.inputs),
+                         platform.epci_cost(platform.epci_inventory(case, alternate), alternate))
+        self.assertEqual(platform.commercial_benchmarks(self.inputs),
+                         platform.commercial_benchmarks(alternate))
+
     def test_platform_epci_exponent_preserves_anchor(self):
         nonlinear = Inputs(self.inputs.parameters, {"platform-epci-cost-scaling-exponent": 0.5})
-        anchor = platform.epci_inventory({"equipment_mass_t": 15000}, self.inputs)
-        larger = platform.epci_inventory({"equipment_mass_t": 60000}, self.inputs)
+        anchor = platform.epci_inventory({"topside_mass_t": 30000}, self.inputs)
+        larger = platform.epci_inventory({"topside_mass_t": 120000}, self.inputs)
         baseline = platform.epci_cost(anchor, self.inputs)["total_eur"]
         self.assertEqual(platform.epci_cost(anchor, nonlinear)["total_eur"], baseline)
         self.assertEqual(platform.epci_cost(larger, nonlinear)["total_eur"], 2 * baseline)
@@ -259,8 +326,8 @@ class Integration(unittest.TestCase):
             "site": {"coordinates_file": "coordinates.csv", "minimum_spacing_m": 500, "farm_area_km2": 10,
                      "water_depth_m": 30, "collection_x_m": -1000, "collection_y_m": 0},
             "turbine": {"rotor_diameter_m": 236, "hub_height_m": 133},
-            "wind": {"power_states_file": "power.csv", "design_state_ids": ["design"]},
-            "electrolysis": {"stack_curve_file": str(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx"), "overplant_factor": 1},
+            "wind": {"power_states_file": "power.csv", "design_state_ids": ["design"], "power_boundary": "inverter_ac_output"},
+            "electrolysis": {"stack_curve_file": str(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx"), "overplant_factor": 1, "manufacturing_output_mw_year": 2000},
             "hydrogen": {"stack_outlet_bar": 30, "injection_bar": 150, "delivery_bar": 66, "export_length_km": 80, "export_diameter_m": 0.3},
             "platform": {"topside_mass_t": 0.8},
             "installation": {"port_distance_km": 10, "intersite_distance_km": 1, "collection": plan, "export": plan,
@@ -302,8 +369,16 @@ class Integration(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             write_result(result, self.base / "report")
 
+    def test_unreconciled_curve_blocks_operation_but_keeps_stack_purchase(self):
+        self.scenario["wind"]["power_boundary"] = "generator_output_unreconciled"
+        result = run_case(self.scenario, synthetic_inputs(fill_missing=True), self.base)
+        self.assertNotIn("operation", result.tables)
+        self.assertTrue(any("Reconcile wind.power_boundary" in reason for reason in result.reasons))
+        self.assertGreater(result.physical["stack_purchase_cost_basis"]["purchase_eur2025_per_reference_kw"], 0)
+        self.assertIsNone(result.summary["lcoh_eur_kg"])
+
     def test_complete_synthetic_central_case_energy_and_cost(self):
-        values = {"array-ac-resistance": 0.05, "array-power-factor": 1,
+        values = {"array-ac-loss-fraction": 0.01, "turbine-transformer-efficiency": 0.98,
                   "install-turbine-usable-payload": 10000, "install-turbine-crane-capacity": 5000,
                   "install-foundation-usable-payload": 10000, "install-foundation-crane-capacity": 5000,
                   "stack-replacement-life": 30, "install-platform-jacket-crane": 10000}
@@ -311,8 +386,8 @@ class Integration(unittest.TestCase):
         self.assertEqual(result.status, "feasible", result.reasons)
         self.assertGreater(result.summary["lcoh_eur_kg"], 0)
         summary = result.summary
-        accounted = sum(summary[key] for key in ["collection_loss_mwh", "stack_mwh", "bop_mwh", "compressor_mwh", "curtailed_mwh", "conversion_loss_mwh"])
-        self.assertAlmostEqual(accounted, summary["generator_energy_mwh"], places=6)
+        accounted = sum(summary[key] for key in ["turbine_transformer_loss_mwh", "collection_loss_mwh", "stack_mwh", "bop_mwh", "compressor_mwh", "curtailed_mwh", "conversion_loss_mwh"])
+        self.assertAlmostEqual(accounted, summary["inverter_output_energy_mwh"], places=6)
         table = result.tables["operation"]
         self.assertEqual(len(table), 2)
         self.assertEqual(result.physical["stack_installed_kw"], 30000)
@@ -333,13 +408,33 @@ class Integration(unittest.TestCase):
         self.assertFalse(any("feeder" in reason for reason in result.reasons))
         self.assertGreater(result.physical["ac_strings"], 0)
 
+    def test_workflow_scales_complete_electrolysis_topside(self):
+        self.scenario["platform"] = {"mass_method": "power_scaling", "mass_reference": "electrolysis"}
+        # Nameplate sizing must remain available when electrical operation is blocked.
+        self.scenario["wind"]["power_boundary"] = "generator_output_unreconciled"
+        inputs = load_inputs({})
+        module_kw = inputs.positive("stack-module-rating", "kW")
+        farm_kw = 2 * inputs.number("wind-turbine-rated-power", "MW") * 1000
+        for requested_modules in (3, 3.01):
+            self.scenario["electrolysis"]["overplant_factor"] = requested_modules * module_kw / farm_kw
+            result = run_case(self.scenario, inputs, self.base)
+            installed = (3 if requested_modules == 3 else 4) * module_kw
+            self.assertEqual(result.physical["stack_installed_kw"], installed)
+            self.assertEqual(result.physical["platform"]["rated_power_gw"], installed / 1e6)
+            mass = 13000 * (installed / 1e6) / 0.5
+            self.assertAlmostEqual(result.physical["platform"]["topside_t"], mass)
+            self.assertAlmostEqual(result.physical["platform_total_eur"], mass * 30000 * 1.024 * 1.021)
+        self.scenario["platform"]["rated_power_gw"] = 2
+        with self.assertRaisesRegex(ValueError, "rating is derived"):
+            run_case(self.scenario, inputs, self.base)
+
     def test_epci_complete_case_still_requires_decommissioning(self):
-        values = {"array-ac-resistance": 0.05, "array-power-factor": 1,
+        values = {"array-ac-loss-fraction": 0.01, "turbine-transformer-efficiency": 0.98,
                   "install-turbine-usable-payload": 10000, "install-turbine-crane-capacity": 5000,
                   "install-foundation-usable-payload": 10000, "install-foundation-crane-capacity": 5000,
                   "stack-replacement-life": 30, "platform-decommissioning-cost": None,
                   "platform-opex-rate": 0.01}
-        self.scenario["platform"] = {"equipment_mass_t": 0.4}
+        self.scenario["platform"] = {"topside_mass_t": 0.8}
         result = run_case(self.scenario, synthetic_inputs(values, fill_missing=True), self.base)
         self.assertEqual(result.status, "not_parameterized", result.reasons)
         self.assertIsNone(result.summary["lcoh_eur_kg"])
@@ -352,7 +447,7 @@ class Integration(unittest.TestCase):
     def test_distributed_case_preserves_turbine_operation(self):
         self.scenario["case"]["architecture"] = "decentralised"
         self.scenario["electrolysis"]["interface"] = "converter_reduced"
-        result = run_case(self.scenario, synthetic_inputs({"converter-reduced-conversion-efficiency": 0.99}), self.base)
+        result = run_case(self.scenario, synthetic_inputs({"converter-reduced-conversion-efficiency": 0.99, "turbine-inverter-efficiency": 0.98}), self.base)
         self.assertEqual(result.status, "not_parameterized")
         table = result.tables["operation"]
         self.assertEqual(table.location.nunique(), 2)

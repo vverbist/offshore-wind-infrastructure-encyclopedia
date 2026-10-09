@@ -13,16 +13,16 @@
 
 ### Reconstructed comparison on the common price basis
 
-All costs below are EUR~2025~. Equipment masses are inferred, not measured. HKZ is a per-platform average of one combined award; the framework uses Alpha's mass as a representative reference, not six matched project weights.
+All costs below are EUR~2025~. Masses are complete topsides, including equipment and structure. HKZ is a per-platform average of one combined award; the framework uses Alpha's mass as a representative reference, not six matched project weights.
 
-| Reference | Topside (t) | Inferred equipment (t) | Cost (million EUR~2025~) | EUR~2025~/equipment t | Equipment t/kW | EUR~2025~/kW |
-|---|---:|---:|---:|---:|---:|---:|
-| HKZ Alpha + Beta (average) | 3,875 | 1,938 | 110 | 56,673 | 0.00277 | 157 |
-| Nederwiek 1 (offshore allocation) | 30,000 | 15,000 | 1,083 | 72,195 | 0.00750 | 541 |
-| Petrofac framework (allocated average) | 30,000 | 15,000 | 906 | 60,407 | 0.00750 | 453 |
-| North Sea Energy / Iv concept | 9,500 | 4,750 | 177 | 37,351 | 0.00950 | 355 |
-| OffsH2ore concept | 13,000 | 6,500 | 147 | 22,663 | 0.01300 | 295 |
-| MHB Alpha fabrication subcontract | 30,000 | 15,000 | 254 | 16,959 | 0.00750 | 127 |
+| Reference | Topside (t) | Cost (million EUR~2025~) | EUR~2025~/topside t | Topside t/kW | EUR~2025~/kW |
+|---|---:|---:|---:|---:|---:|
+| HKZ Alpha + Beta (average) | 3,875 | 110 | 28,337 | 0.00554 | 157 |
+| Nederwiek 1 (offshore allocation) | 30,000 | 1,083 | 36,097 | 0.01500 | 541 |
+| Petrofac framework (allocated average) | 30,000 | 906 | 30,203 | 0.01500 | 453 |
+| North Sea Energy / Iv concept | 9,500 | 177 | 18,675 | 0.01900 | 355 |
+| OffsH2ore concept | 13,000 | 147 | 11,332 | 0.02600 | 295 |
+| MHB Alpha fabrication subcontract | 30,000 | 254 | 8,479 | 0.01500 | 127 |
 
 Mass evidence: HKZ Alpha [@petrofac2021HKZAlpha], HKZ Beta [@petrofac2022HKZBeta], Nederwiek [@misc2024Nederwiek, printed p. 77], Alpha [@mhb2023AlphaAward], NSE [@nse2022EnergyHubs, table 4.9], and OffsH2ore [@offsh2ore2023Report, p. 48]. Capacity denominators are the stated platform ratings; they are not necessarily identical electrical input boundaries across technologies.
 
