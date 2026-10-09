@@ -37,3 +37,7 @@ background/*.docx
 # Quarto PDF/LaTeX render byproducts
 *.tex
 *.log
+
+# Local model and research articles
+/model/
+/research_articles/
