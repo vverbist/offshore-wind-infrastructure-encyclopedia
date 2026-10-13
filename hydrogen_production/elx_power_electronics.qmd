@@ -89,16 +89,30 @@ P_{\mathrm{in,66kV}}
 \left(1-L_{\mathrm{conversion}}\right).
 $$
 
-| Parameter | Central assumption | Sensitivity range |
-|---|---:|---:|
-| Net 66 kV AC-to-stack-DC efficiency | {{< var central-conversion-efficiency >}} | 96.0--98.5% |
-| Net conversion loss | 2.5% | 1.5--4.0% |
+| Component | Provisional efficiency |
+|---|---:|
+| Plant step-down transformer | {{< var central-plant-transformer-efficiency >}} |
+| Rectifier transformer | {{< var central-rectifier-transformer-efficiency >}} |
+| Rectifier | {{< var central-rectifier-efficiency >}} |
+| Derived complete package | {{< var central-conversion-efficiency >}} |
+| Derived complete package loss | {{< var central-conversion-loss >}} |
 
-: Net power-conversion assumption for centralised electrolysis.
+Each component value is a **provisional user-approved assumption (9 October 2026)**,
+not a sourced equipment specification. The model derives the package efficiency as
+$\eta_{\mathrm{plant\ transformer}}\eta_{\mathrm{rectifier\ transformer}}\eta_{\mathrm{rectifier}}$.
+Each symbol is a dimensionless input efficiency in the table. The product is
+calculated by `model/hydrogen_production/elx_power_electronics.py`; it is not a
+second scalar input. These component allowances replace the former net package
+assumption and are not added on top of it. Normal dedicated conversion cooling
+is included in the screening allowances; it is not charged a further loss.
 
-The 2.5% loss includes the plant step-down transformer, rectifier transformers, rectifier semiconductor losses, and dedicated conversion-system cooling. It does not include infield cable losses, general platform auxiliaries, or stack electrochemical losses.
-
-The value represents a modern, high-efficiency thyristor package rather than a generic historical fleet average. ABB reports rectifier-only efficiency of up to 99.6% for its current water-cooled thyristor product [@abb2025UNIRECH2]. An industrial comparison reports thyristor rectifier efficiency above approximately 98.5% and complete transformer-plus-rectifier efficiency above 97.5% [@gao2025AdvancedRectifiers]. Fraunhofer assumes rectifier efficiencies of 96% for its 2020 design and 98% for its 2030 design, with a separate high-voltage transformer efficiency of 99% [@holst2021ElectrolysisCost]. The selected 97.5% net value is therefore representative of an efficient contemporary package while retaining losses for the full 66 kV-to-DC chain.
+**TODO — replace or substantiate these provisional efficiencies with references**
+for each stage and its operating-load/cooling boundary. ABB's rectifier-only data
+[@abb2025UNIRECH2], the industrial comparison [@gao2025AdvancedRectifiers] and
+Fraunhofer's design assumptions [@holst2021ElectrolysisCost] provide comparison
+material; they do not independently justify the adopted uniform allowances.
+Infield cable losses, general platform auxiliaries and stack electrochemical
+losses remain outside this package.
 
 A constant net loss is used at all plant loads. In practice, efficiency depends on loading, transformer no-load losses, firing angle, cooling demand, and current ripple. Multi-pulse conversion and modular dispatch reduce, but do not eliminate, these effects. The loss sensitivity should be used where the annual operating profile contains substantial low-load operation.
 
@@ -126,7 +140,7 @@ This model is intended for early-stage techno-economic assessment. Several previ
 | Source costs use different years, markets, and commercial boundaries; the marked-up NREL and Fraunhofer figures are compared at face value across currencies without a documented USD-to-EUR conversion factor | The central value is less precise than a like-for-like competitive tender and should be tested over the stated 100--300 EUR/kW range |
 | Linear scaling represents numbering up of modular power blocks | Shared plant engineering and high-voltage infrastructure may produce some installed-cost economies that are not captured |
 | A 24-pulse thyristor rectifier is used as the reference topology | Projects selecting an IGBT active-front-end or diode-plus-chopper topology may have different CAPEX, efficiency, controllability, and power-quality performance |
-| A fixed 2.5% net loss is used for every operating point | Load-dependent transformer, rectifier, cooling, and ripple losses are not resolved; the 1.5--4.0% sensitivity should be used for uncertain operating profiles |
+| Fixed provisional component efficiencies give {{< var central-conversion-loss >}} net loss at every operating point | Load-dependent transformer, rectifier, cooling and ripple losses are not resolved; TODO: replace or substantiate each component assumption with references |
 | Offshore adaptation and redundancy are included only through the cost range | Marinisation, corrosion protection, enclosed cooling, fire protection, and N+1 requirements are not separately designed or costed |
 | Availability is bundled into the overall electrolyser factor | Component-level outages, partial block availability, and offshore repair time are not represented explicitly |
 | The main 66 kV transformer is assigned to this subsystem | Model integration must ensure that the same transformer is not also included in platform or infield electrical CAPEX |

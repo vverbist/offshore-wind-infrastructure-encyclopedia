@@ -288,12 +288,15 @@ $$
 
 All powers are in kW; $P_{\mathrm{curve},i}$ is turbine $i$'s reconciled inverter
 AC output and $\eta_{\mathrm{tr}}$ is transformer efficiency. The shared
-`array-ac-loss-fraction` input is an unresolved top-down assumption: its numerical
-value and operating basis still require adoption. It represents collection losses
+`array-ac-loss-fraction` input is {{< var array-ac-loss-fraction >}}, adopted by
+the user on 9 October 2026 as a **provisional top-down assumption** at all loads.
+It is applied once to the complete collection system, not once per cable section.
+**TODO:** replace or substantiate this value with references or an evidenced
+network-loss calculation, including its operating-load basis. It represents collection losses
 only, excluding transformer and central conversion losses. The implementation
 replaces the previous I²R calculation and does not require resistance or power
 factor. This aggregate model does not capture load-, length- or topology-dependent
-losses; those limitations must accompany any eventual adopted fraction.
+losses; those limitations apply to the provisional fraction.
 
 ## Model Limitations
 
@@ -304,7 +307,7 @@ losses; those limitations must accompany any eventual adopted fraction.
 | Idealised coordinates and string assignment replace a routed design | Exclusions, crossings and detailed approach routes remain approximate |
 | Pull-in length is two water depths per connection | J-tube routing, hang-off height and slack are not resolved |
 | Public project cable quantities have inconsistent reporting scopes | Length per turbine is a validation range, not a calibration coefficient |
-| Electrical losses are unresolved | The executable model applies `array-ac-loss-fraction` to aggregate turbine-transformer output before central conversion; the fraction remains TODO. This replaces the former I²R screening calculation. |
+| Electrical losses are provisional | The executable model applies `array-ac-loss-fraction` to aggregate turbine-transformer output before central conversion; supporting evidence remains TODO. This replaces the former I²R screening calculation. |
 | Flat 99% availability | String-level and common-mode outage states are hidden |
 | Supply benchmarks mix 2019 nominal EUR and 2024 USD inputs | The apparent precision of the blended EUR/m assumption exceeds source quality |
 | OPEX is a top-down percentage | Public evidence does not yet support an array-only event-frequency and cash-repair model |

@@ -325,20 +325,27 @@ EUR/turbine and EUR/MW are reported outputs. They are not primary model inputs.
 
 ## Initial Evidence Basis
 
+The adopted source rates and task durations are stored in `model_data/inputs.csv`.
+The shared installation module calculates port days, km/day and EUR2025/day;
+this page displays those same derived values. Vessel capacities, loading limits,
+transition-piece mass and route distances remain required before a foundation
+campaign cost can be reported. The article uses the fixed turbine benchmark,
+not the unresolved turbine campaign.
+
 The first version uses three evidence packages.
 
 ### NREL ORBIT
 
 NREL's ORBIT methodology provides the campaign structure and port-task assumptions [@nunemaker2020ORBIT]. Its maintained example configuration provides provisional vessel rate, mobilisation and transit-speed inputs [@orbit2026InstallationDefaults].
 
-For a monopile with a separate transition piece, ORBIT assumes 12 h of monopile fastening and 8 h of transition-piece fastening:
+For a monopile with a separate transition piece, ORBIT assumes {{< var raw-install-fasten-monopile-hours >}} h of monopile fastening and {{< var raw-install-fasten-transition-piece-hours >}} h of transition-piece fastening:
 
 $$
 t_{\mathrm{port},F}
 =
-\frac{12+8}{24}
+\frac{{{< var raw-install-fasten-monopile-hours >}}+{{< var raw-install-fasten-transition-piece-hours >}}}{24}
 =
-0.833\ \mathrm{day/foundation}.
+{{< var install-foundation-port-time-derived >}}\ \mathrm{day/foundation}.
 $$
 
 For one tower set, one nacelle and three blades:
@@ -346,19 +353,19 @@ For one tower set, one nacelle and three blades:
 $$
 t_{\mathrm{port},T}
 =
-\frac{4+4+3(1.5)}{24}
+\frac{{{< var raw-install-fasten-tower-hours >}}+{{< var raw-install-fasten-nacelle-hours >}}+3({{< var raw-install-fasten-blade-hours >}})}{24}
 =
-0.521\ \mathrm{day/turbine}.
+{{< var install-turbine-port-time-derived >}}\ \mathrm{day/turbine}.
 $$
 
-The current generic vessel proxy is USD\textsubscript{2024} 400,000/day, equivalent to approximately EUR~2025~ 363,297/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]. This follows the [common financial basis](../methodology/financial_and_price_basis.qmd). ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:
+The current generic vessel proxy is USD\textsubscript{2024} {{< var raw-install-foundation-spread-rate-source >}}/day, equivalent to approximately EUR~2025~ {{< var install-foundation-spread-rate-derived >}}/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]. This follows the [common financial basis](../methodology/financial_and_price_basis.qmd). ORBIT also provides a {{< var raw-install-foundation-mobilisation-time >}}-day mobilisation input and a {{< var raw-install-foundation-speed-knots >}}-knot vessel speed:
 
 $$
-10\ \mathrm{kn}
+{{< var raw-install-foundation-speed-knots >}}\ \mathrm{kn}
 \times1.852\ \mathrm{km/nmi}
 \times24\ \mathrm{h/day}
 =
-444\ \mathrm{km/day}.
+{{< var install-foundation-speed-derived >}}\ \mathrm{km/day}.
 $$
 
 These are planning-model proxies, not contractor quotations.
@@ -372,7 +379,7 @@ The initial foundation parameter is therefore:
 $$
 t_{\mathrm{site},F}
 =
-3.0\ \mathrm{days/foundation},
+{{< var raw-install-foundation-site-time >}}\ \mathrm{days/foundation},
 $$
 
 with 2 and 4 days/foundation used as sensitivity cases.
@@ -394,14 +401,14 @@ The Sofia values are used as logistics anchors and later validation evidence, no
 
 | Parameter | Foundation campaign | Turbine campaign | Status |
 |---|---:|---:|---|
-| $r_c$ | 363,297 EUR~2025~/day | 363,297 EUR~2025~/day | Shared provisional ORBIT proxy; retain separate parameters |
-| $t_{\mathrm{mob},c}$ | 7 days | 7 days | ORBIT planning input |
-| $t_{\mathrm{port},c}$ | 0.833 day/set | 0.521 day/set | Derived from ORBIT tasks |
-| $t_{\mathrm{site},c}$ | 3.0 days/location | TODO | South Fork foundation input; turbine evidence required |
+| $r_c$ | {{< var install-foundation-spread-rate-derived >}} EUR~2025~/day | {{< var install-turbine-spread-rate-derived >}} EUR~2025~/day | Shared provisional ORBIT proxy; retain separate parameters |
+| $t_{\mathrm{mob},c}$ | {{< var raw-install-foundation-mobilisation-time >}} days | {{< var raw-install-turbine-mobilisation-time >}} days | ORBIT planning input |
+| $t_{\mathrm{port},c}$ | {{< var install-foundation-port-time-derived >}} day/set | {{< var install-turbine-port-time-derived >}} day/set | Derived from ORBIT tasks |
+| $t_{\mathrm{site},c}$ | {{< var raw-install-foundation-site-time >}} days/location | TODO | South Fork foundation input; turbine evidence required |
 | $k_{\mathrm{ref},c}$ | Project input | Six as a Sofia logistics anchor | Vessel and project specific |
 | $M_{\mathrm{use},c}$ | Named-vessel input | Named-vessel input | Required for mass check |
 | $SWL_c$ | Named-vessel input | Named-vessel input | Required for coarse lift check |
-| $v_c$ | 444 km/day | 444 km/day | Generic ORBIT vessel proxy |
+| $v_c$ | {{< var install-foundation-speed-derived >}} km/day | {{< var install-turbine-speed-derived >}} km/day | Generic ORBIT vessel proxy |
 
 The turbine campaign cannot produce a final numerical cost until $t_{\mathrm{site},T}$ and a coherent vessel configuration are selected.
 

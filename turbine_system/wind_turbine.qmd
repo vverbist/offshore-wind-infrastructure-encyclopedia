@@ -324,7 +324,7 @@ where $u_i$ is a component mass-cost coefficient. Electrical connections and con
 | Yaw system | $8.3m_\mathrm{yaw}$ | USD/kg |
 | HVAC | $124m_\mathrm{HVAC}$ | USD/kg |
 | Nacelle cover | $5.7m_\mathrm{cover}$ | USD/kg |
-| Platforms | $17.1m_\mathrm{platforms}$, plus crane | USD/kg |
+| Platforms | $17.1(m_\mathrm{platforms}-m_\mathrm{crane})$; separate crane purchase cost excluded | USD/kg |
 | Transformer | $18.8m_\mathrm{transformer}$ | USD/kg |
 | Electrical connections | $41.85P$ | USD/kW |
 | Controls | $21.15P$ | USD/kW |
@@ -427,9 +427,11 @@ already removed transformer, any unsupported inverter credit, and the separately
 booked stack-side DC/DC converter. It remains unresolved; it is not assumed zero.
 
 The structural calculations retain the common conventional-turbine mass baseline
-in both architectures (D5). Distributed installation payload removes the known
-transformer mass and adds the declared hydrogen-equipment mass; its maximum lift
-still requires an explicit lifting arrangement. Other missing electrical masses
+in both current article architectures (D5), as confirmed by the user on
+9 October 2026. Turbine installation uses the same fixed benchmark for both;
+there is no mass-based installation discount. The separate, deferred campaign
+method retains explicit payload/lift inputs. Equal mass and installation cost
+do not impose equal turbine purchase prices. Other missing electrical masses
 remain explicit inputs. A separate `turbine-transformer-opex-rate` applies to the
 reallocated AC transformer purchase cost; its scope and value remain O10 work.
 
@@ -567,6 +569,21 @@ $$
 
 Converter, switchgear, DC-link, protection, and internal-cabling masses are not included because no traceable mass inputs have yet been selected. The nacelle, RNA, and complete-turbine results are therefore known-component subtotals. They must be updated before use as final transport or lifting masses.
 
+### Onboard service-crane cost omission
+
+The user approved excluding the onboard service crane's **separate purchase-cost
+contribution** on 9 October 2026. Its physical mass remains in the platform and
+nacelle mass inventory. Service-platform cost uses platform mass **excluding crane
+mass**, so no crane charge is hidden in the platform mass rate. The omitted crane
+cost is not assigned a sourced zero price; its historical reference input stays
+blank and is not consumed by the calculation.
+
+The same omission applies to target and reference raw cost weights. Calibration
+still reproduces the published total NREL reference price; this is a component
+allocation/scaling simplification, not a subtraction of a known crane price from
+that published total. It does not affect installation vessel cranes, turbine
+installation or foundation installation.
+
 ### Cost calibration
 
 The raw WISDEM component costs are calibrated to NREL's 12 MW offshore reference. The NREL reference uses $P_\mathrm{ref}=$ {{< var turbine-calibration-power >}}, $D_\mathrm{ref}=$ {{< var turbine-calibration-diameter >}}, $H_{h,\mathrm{ref}}=$ {{< var turbine-calibration-hub-height >}}, RNA cost of {{< var turbine-calibration-rna-cost >}}, and tower cost of {{< var turbine-calibration-tower-cost >}} [@stehly2023CostWind].
@@ -581,7 +598,7 @@ $$
 
 This anchor is used in Mehta's mixed mass/non-mass blade-cost relationship for both the NREL calibration turbine and the 236 m example. The subsequent RNA calibration, rather than the raw blade anchor, sets the absolute turbine cost level.
 
-At the NREL reference geometry, the model gives raw RNA and tower costs of USD 10.232 million and USD 0.980 million. The published calibration totals are:
+At the NREL reference geometry, the model gives raw RNA and tower costs of USD {{< var turbine-example-raw-rna-million >}} million and USD {{< var turbine-example-raw-tower-million >}} million. The published calibration totals are:
 
 $$
 C_\mathrm{RNA,ref}^{\mathrm{NREL}}
@@ -598,9 +615,9 @@ $$
 The resulting factors are:
 
 $$
-k_\mathrm{RNA}=1.7146,
+k_\mathrm{RNA}={{< var turbine-example-rna-calibration-factor >}},
 \qquad
-k_\mathrm{tower}=2.9142.
+k_\mathrm{tower}={{< var turbine-example-tower-calibration-factor >}}.
 $$
 
 The RNA factor is applied to every raw rotor and nacelle cost. The tower factor is applied only to the raw tower cost. This preserves the component-level WISDEM scaling while reproducing the separate NREL RNA and tower reference costs.
@@ -609,13 +626,16 @@ The RNA factor is applied to every raw rotor and nacelle cost. The tower factor 
 
 | Cost category | Included components | Cost | Specific cost |
 |---|---|---:|---:|
-| Blades | Three blades, including Mehta mass/non-mass scaling | USD 4.736 million | USD 315.7/kW |
-| Hub system | Hub, pitch system and spinner | USD 2.313 million | USD 154.2/kW |
-| Drivetrain and generator | Low-speed shaft, bearings, brake and direct-drive generator | USD 10.149 million | USD 676.6/kW |
-| Nacelle structure and auxiliaries | Bedplate, yaw, HVAC, cover, platforms and crane | USD 3.307 million | USD 220.5/kW |
-| Turbine electrical equipment | Transformer, electrical connections and controls | USD 2.608 million | USD 173.9/kW |
-| **RNA subtotal** | Rotor and complete nacelle cost categories above | **USD 23.114 million** | **USD 1,540.9/kW** |
-| Tower | Calibrated WISDEM tower cost | USD 2.669 million | USD 178.0/kW |
-| **Complete turbine** | RNA and tower; foundation and installation excluded | **USD 25.783 million** | **USD 1,718.9/kW** |
+| Blades | Three blades, including Mehta mass/non-mass scaling | USD {{< var turbine-example-blades-million >}} million | USD {{< var turbine-example-blades-per-kw >}}/kW |
+| Hub system | Hub, pitch system and spinner | USD {{< var turbine-example-hub-million >}} million | USD {{< var turbine-example-hub-per-kw >}}/kW |
+| Drivetrain and generator | Low-speed shaft, bearings, brake and direct-drive generator | USD {{< var turbine-example-drivetrain-million >}} million | USD {{< var turbine-example-drivetrain-per-kw >}}/kW |
+| Nacelle structure and auxiliaries | Bedplate, yaw, HVAC, cover and platforms; separate crane purchase excluded | USD {{< var turbine-example-nacelle-million >}} million | USD {{< var turbine-example-nacelle-per-kw >}}/kW |
+| Turbine electrical equipment | Transformer, electrical connections and controls | USD {{< var turbine-example-electrical-million >}} million | USD {{< var turbine-example-electrical-per-kw >}}/kW |
+| **RNA subtotal** | Rotor and complete nacelle cost categories above | **USD {{< var turbine-example-rna-million >}} million** | **USD {{< var turbine-example-rna-per-kw >}}/kW** |
+| Tower | Calibrated WISDEM tower cost | USD {{< var turbine-example-tower-million >}} million | USD {{< var turbine-example-tower-per-kw >}}/kW |
+| **Complete turbine** | RNA and tower; foundation and installation excluded | **USD {{< var turbine-example-total-million >}} million** | **USD {{< var turbine-example-total-per-kw >}}/kW** |
+
+The worked-example choices are stored in `wind_turbine_example.toml`; all table
+values are generated from the shared turbine model.
 
 The cost is reported in the NREL reference currency basis before project-year escalation or conversion to EUR. The turbine electrical category includes WISDEM's transformer, electrical-connections, and controls relationships, but it does not provide a separately resolved converter cost. The RNA calibration may therefore absorb part of the unresolved electrical and commercial supply scope. The result is a transparent screening estimate rather than a supplier quotation.

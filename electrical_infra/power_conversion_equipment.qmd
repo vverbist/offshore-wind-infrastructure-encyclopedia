@@ -27,12 +27,13 @@ adopted on the owning page. Unsupported values stay as explicit TODOs.
 
 ## Electrical Chains Compared
 
-Three article cases are compared. The adopted power-curve boundary is the
+The current article compares centralised hydrogen and direct-DC turbine-level
+hydrogen. The conservative DC/DC case is deferred to a later sensitivity. The adopted power-curve boundary is the
 inverter AC output, before the turbine transformer, as defined on
 [Turbine Power Electronics](../turbine_system/power_electronics.qmd).
 The existing [common operating case](../research_articles/turbine_level_hydrogen/reference_case.qmd#sec-common-operating-case)
-still documents generator output; reconciliation of that source curve remains
-required before numerical use of the new boundary.
+uses this boundary following user confirmation on 9 October 2026. Numerical
+curve and power-state values are unchanged; efficiencies below remain separate inputs.
 
 | Equipment role | Centralised hydrogen | Conservative turbine-level | Direct DC (`converter_reduced`) |
 |---|:---:|:---:|:---:|
@@ -95,7 +96,7 @@ unit size, and a selected size must stay within some documented limit.
 | Documented ratings | Complete back-to-back medium-voltage converters to about 12 MW per line at 3.3 kV, and 20 MW and above with two lines [@abb2023PCS6000; @abbPCS6000Web2026] |
 | Cost | In the common turbine baseline; not in the comparison table |
 | Losses | Upstream of the adopted power-curve boundary; no separate architecture adjustment. The complete back-to-back converter is about 98% efficient at rated power [@abb2023PCS6000], which does not establish an inverter-only efficiency |
-| Status | Common baseline; supplied curve boundary still requires reconciliation |
+| Status | Common baseline; article boundary confirmed by the user on 9 October 2026 |
 
 ### Grid-side inverter {#sec-grid-side-inverter}
 
@@ -188,6 +189,34 @@ evidence gap rather than assigning an unsupported split of a package value.
 | Losses | Vendor efficiency above 97.5% over the load range [@sungrowDCDC2026]; above 98% for comparable IGBT supplies [@abbHyQ2026] |
 | Status | **Evidence gap for cost and rating**; efficiency candidates only. `conservative-conversion-efficiency` and `conservative-conversion-unit-cost` stay blank |
 
+::: {.callout-warning}
+## Provisional electrical losses — evidence TODO
+
+The user approved a uniform loss allowance on 9 October 2026. The values below
+are **modelling assumptions, not measured or literature-validated efficiencies**.
+They apply at every operating load in this screening model. Central conversion
+uses two distinct transformer stages and one rectifier stage; their efficiencies
+are multiplied in code. The power curve is already after the turbine inverter,
+so generator-side losses are not applied again.
+
+| Modelled stage | Current input | Scope |
+|---|---:|---|
+| Turbine inverter | {{< var turbine-inverter-efficiency >}} | Used only to recover DC-link power from the supplied inverter-output curve |
+| Turbine step-up transformer | {{< var turbine-transformer-efficiency >}} | Centralised case, downstream of the curve |
+| Plant step-down transformer | {{< var central-plant-transformer-efficiency >}} | First central transformer stage |
+| Rectifier transformer | {{< var central-rectifier-transformer-efficiency >}} | Second central transformer stage |
+| Rectifier | {{< var central-rectifier-efficiency >}} | Central AC/DC conversion |
+| Direct-DC interface | {{< var converter-reduced-conversion-efficiency >}} | One aggregate allowance for DC-link, protection and cabling; no separate converter |
+| AC collection loss | {{< var array-ac-loss-fraction >}} of transformer output | One aggregate network allowance, not repeated per cable section |
+
+**TODO:** replace or substantiate each allowance with primary references or
+supplier data specifying equipment scope, loading and cooling/auxiliary losses.
+The references elsewhere on this page are contextual evidence; none is claimed
+to establish these provisional values. Compressor, motor and PEM conversion
+assumptions are unchanged. The dedicated DC/DC converter is excluded from the
+current comparison and retained only as a future sensitivity.
+:::
+
 ## Losses {#sec-pce-losses}
 
 For a curve reconciled to inverter AC output, generator and rectifier losses
@@ -195,24 +224,24 @@ are already included. Centralised hydrogen and electricity export apply the
 turbine transformer efficiency downstream; decentralised hydrogen divides curve
 power by inverter efficiency to recover the removed inverter loss. These equations
 are implemented, but operation requires `wind.power_boundary = "inverter_ac_output"`
-after evidence-based reconciliation. The supplied generator-output record remains
-explicitly unreconciled; changing its label alone is not a boundary conversion.
+which the article now records following the user confirmation of its measurement
+point. No numerical conversion of the supplied values is made.
 The required terms are:
 
 | Loss term | Cases | Current model treatment | Status |
 |---|---|---|---|
-| Generator-side converter | All | Legacy source-curve boundary unresolved | Included upstream in a reconciled inverter-output curve; no additional architecture loss |
-| Grid-side inverter | Included in AC cases; removed in turbine-level cases | Recovery by division implemented | TODO: inverter-only efficiency and curve reconciliation |
-| Turbine step-up transformer | Centralised | Downstream multiplier implemented | `turbine-transformer-efficiency` remains TODO |
-| 66 kV AC collection | Centralised | Fixed fraction of aggregate transformer output, before central conversion | `array-ac-loss-fraction` remains TODO; no resistance or power-factor input required |
-| Central transformers and rectifier | Centralised | {{< var central-conversion-efficiency >}} net package efficiency | Adopted |
+| Generator-side converter | All | Included in confirmed inverter-output curve | Included upstream in a reconciled inverter-output curve; no additional architecture loss |
+| Grid-side inverter | Included in AC cases; removed in turbine-level cases | Recovery by division implemented | Provisional user assumption; evidence TODO |
+| Turbine step-up transformer | Centralised | Downstream multiplier implemented | Provisional user assumption; evidence TODO |
+| 66 kV AC collection | Centralised | Fixed fraction of aggregate transformer output, before central conversion | Provisional aggregate allowance; evidence TODO; no resistance or power-factor input required |
+| Central transformers and rectifier | Centralised | {{< var central-conversion-efficiency >}} net package efficiency | Provisional component assumptions |
 | Stack-side DC/DC converter | Conservative | Blank interface efficiency | Candidates above 97.5% |
-| Direct-DC interface | Direct DC | Blank interface efficiency | Should cover only DC-link, protection and cabling losses; no converter loss |
+| Direct-DC interface | Direct DC | {{< var converter-reduced-conversion-efficiency >}} efficiency | Provisional aggregate DC-link, protection and cabling allowance; no DC/DC converter |
 
 : Loss terms by case and their current treatment.
 
-O2c must reconcile the curve boundary and close these terms before comparable
-energy results are reported. No separate generator or rectifier loss is added
+The provisional inputs permit screening production results; O2c must replace or
+substantiate them before evidence-backed efficiency claims are made. No separate generator or rectifier loss is added
 to the adopted curve. A detailed loss calculation replaces a flat efficiency
 rather than being added to it.
 

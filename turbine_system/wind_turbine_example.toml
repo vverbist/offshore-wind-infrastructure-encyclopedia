@@ -1,0 +1,4 @@
+# Existing worked-example geometry from wind_turbine.qmd; not methodology defaults.
+power_kw = 15000
+diameter_m = 236
+hub_height_m = 133

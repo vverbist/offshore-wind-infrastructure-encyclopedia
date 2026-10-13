@@ -104,20 +104,19 @@ The inverter-output boundary above is the adopted model convention, not a claim
 that every published turbine curve uses the same measurement point. A curve
 must identify whether converter and transformer losses are already included.
 
-**TODO — reconcile the supplied reference curve.** The
-[article reference case](../research_articles/turbine_level_hydrogen/reference_case.qmd)
-currently documents its table as generator electrical output. It does not
-establish an inverter-output basis. Confirm included converter losses or derive
-an explicitly documented boundary conversion before applying the inverter-loss
-reversal. Do not silently relabel the existing operating states.
+**Article source boundary confirmed.** On 9 October 2026 the user confirmed that
+the supplied [article curve](../research_articles/turbine_level_hydrogen/reference_case.qmd)
+is measured after the inverter and before the transformer. Numerical curve and
+operating-state values are unchanged. The earlier generator-output description
+has been corrected; this confirmation is distinct from independent source validation.
 
-**Implementation and remaining numerical adoption.** The executable model now
-implements inverter-loss recovery, downstream transformer loss and transformer
-cost reallocation. It requires an explicitly reconciled inverter-output curve.
-Inverter-only and transformer efficiencies remain unresolved on Power Conversion
-Equipment. The supplied curve stays unreconciled, so these equations do not yet
-produce article energy results. O2 remains open for those inputs and the
-electrical equipment design. No generator or rectifier losses are added again.
+**Implementation and remaining numerical adoption.** The model implements
+inverter-loss recovery, downstream transformer loss and transformer cost
+reallocation. Inverter-only and transformer efficiencies are provisional
+user-approved assumptions, with reference/validation TODOs on
+[Power Conversion Equipment](../electrical_infra/power_conversion_equipment.qmd).
+These assumptions permit screening runs but are not measured specifications.
+No generator or rectifier losses are added again.
 
 ## References
 
