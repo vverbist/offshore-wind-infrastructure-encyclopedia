@@ -293,10 +293,10 @@ hub_height_m = {turbine["hub_height_m"]!r}
 rated_power_kw = {turbine["rated_power_mw"] * 1000!r}
 
 [wind]
-# Wake-affected power at the generator electrical output; built from
+# Wake-affected power after the inverter, before the transformer; built from
 # {WIND_FILE} and {CURVE_FILE}.
 power_states_file = "{POWER_FILE}"
-power_boundary = "generator_output_unreconciled" # O2: do not relabel without evidence.
+power_boundary = "{case["wind"]["power_boundary"]}" # User confirmation, 2026-10-09.
 design_state_ids = ["{DESIGN_STATE}"]
 
 [electrolysis]
@@ -308,6 +308,13 @@ manufacturing_output_mw_year = {case["electrolysis"]["manufacturing_output_mw_ye
 stack_outlet_bar = {absolute_pressure_bar(case["electrolysis"]["stack_outlet_pressure_bar_g"], atmospheric_bar)!r}
 delivery_bar = {absolute_pressure_bar(case["hydrogen"]["delivery_pressure_bar_g"], atmospheric_bar)!r}
 export_length_km = {case["hydrogen"]["export_length_km"]!r}
+
+[data]
+pipeline_cost_module = "{case['data']['pipeline_cost_module']}"
+
+[reporting]
+excluded_components = {json.dumps(case['reporting']['excluded_components'])}
+scope = "{case['reporting']['scope']}"
 
 [installation]
 turbine_method = "{case['installation']['turbine_method']}"

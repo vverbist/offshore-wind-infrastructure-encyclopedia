@@ -580,7 +580,7 @@ window.Quarto = {
 </section>
 <section id="electrical-chains-compared" class="level2">
 <h2 class="anchored" data-anchor-id="electrical-chains-compared">Electrical Chains Compared</h2>
-<p>Three article cases are compared. The adopted power-curve boundary is the inverter AC output, before the turbine transformer, as defined on <a href="../turbine_system/power_electronics.html">Turbine Power Electronics</a>. The existing common operating case still documents generator output; reconciliation of that source curve remains required before numerical use of the new boundary.</p>
+<p>The current article compares centralised hydrogen and direct-DC turbine-level hydrogen. The conservative DC/DC case is deferred to a later sensitivity. The adopted power-curve boundary is the inverter AC output, before the turbine transformer, as defined on <a href="../turbine_system/power_electronics.html">Turbine Power Electronics</a>. The existing common operating case uses this boundary following user confirmation on 9 October 2026. Numerical curve and power-state values are unchanged; efficiencies below remain separate inputs.</p>
 <table class="caption-top table">
 <caption>Equipment roles in the three compared electrical chains.</caption>
 <thead>
@@ -741,7 +741,7 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 </tr>
 <tr class="even">
 <td>Status</td>
-<td>Common baseline; supplied curve boundary still requires reconciliation</td>
+<td>Common baseline; article boundary confirmed by the user on 9 October 2026</td>
 </tr>
 </tbody>
 </table>
@@ -813,7 +813,7 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 </tr>
 <tr class="odd">
 <td>Inverter-only efficiency</td>
-<td><code>turbine-inverter-efficiency</code> (fraction): TODO (fraction). TODO: DC-link input to inverter AC terminals, with loading and cooling boundary specified</td>
+<td><code>turbine-inverter-efficiency</code> (fraction): 99%. TODO: DC-link input to inverter AC terminals, with loading and cooling boundary specified</td>
 </tr>
 <tr class="even">
 <td>Inverter-only purchase cost</td>
@@ -986,7 +986,7 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 </tr>
 <tr class="even">
 <td>Status</td>
-<td>The central package’s net efficiency (97.5%) is adopted on <a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a>. Its 185 EUR/kW is a reference value only; <code>central-conversion-unit-cost</code> is unset</td>
+<td>The central package’s net efficiency (97.0299%) is adopted on <a href="../hydrogen_production/elx_power_electronics.html">Electrolyser Power Electronics</a>. Its 185 EUR/kW is a reference value only; <code>central-conversion-unit-cost</code> is unset</td>
 </tr>
 </tbody>
 </table>
@@ -1031,11 +1031,76 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Provisional electrical losses — evidence TODO
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The user approved a uniform loss allowance on 9 October 2026. The values below are <strong>modelling assumptions, not measured or literature-validated efficiencies</strong>. They apply at every operating load in this screening model. Central conversion uses two distinct transformer stages and one rectifier stage; their efficiencies are multiplied in code. The power curve is already after the turbine inverter, so generator-side losses are not applied again.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelled stage</th>
+<th style="text-align: right;">Current input</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turbine inverter</td>
+<td style="text-align: right;"><p>99%</p></td>
+<td>Used only to recover DC-link power from the supplied inverter-output curve</td>
+</tr>
+<tr class="even">
+<td>Turbine step-up transformer</td>
+<td style="text-align: right;"><p>99%</p></td>
+<td>Centralised case, downstream of the curve</td>
+</tr>
+<tr class="odd">
+<td>Plant step-down transformer</td>
+<td style="text-align: right;"><p>99%</p></td>
+<td>First central transformer stage</td>
+</tr>
+<tr class="even">
+<td>Rectifier transformer</td>
+<td style="text-align: right;"><p>99%</p></td>
+<td>Second central transformer stage</td>
+</tr>
+<tr class="odd">
+<td>Rectifier</td>
+<td style="text-align: right;"><p>99%</p></td>
+<td>Central AC/DC conversion</td>
+</tr>
+<tr class="even">
+<td>Direct-DC interface</td>
+<td style="text-align: right;"><p>99%</p></td>
+<td>One aggregate allowance for DC-link, protection and cabling; no separate converter</td>
+</tr>
+<tr class="odd">
+<td>AC collection loss</td>
+<td style="text-align: right;">1% of transformer output</td>
+<td>One aggregate network allowance, not repeated per cable section</td>
+</tr>
+</tbody>
+</table>
+<p><strong>TODO:</strong> replace or substantiate each allowance with primary references or supplier data specifying equipment scope, loading and cooling/auxiliary losses. The references elsewhere on this page are contextual evidence; none is claimed to establish these provisional values. Compressor, motor and PEM conversion assumptions are unchanged. The dedicated DC/DC converter is excluded from the current comparison and retained only as a future sensitivity.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="sec-pce-losses" class="level2">
 <h2 class="anchored" data-anchor-id="sec-pce-losses">Losses</h2>
-<p>For a curve reconciled to inverter AC output, generator and rectifier losses are already included. Centralised hydrogen and electricity export apply the turbine transformer efficiency downstream; decentralised hydrogen divides curve power by inverter efficiency to recover the removed inverter loss. These equations are implemented, but operation requires <code>wind.power_boundary = "inverter_ac_output"</code> after evidence-based reconciliation. The supplied generator-output record remains explicitly unreconciled; changing its label alone is not a boundary conversion. The required terms are:</p>
+<p>For a curve reconciled to inverter AC output, generator and rectifier losses are already included. Centralised hydrogen and electricity export apply the turbine transformer efficiency downstream; decentralised hydrogen divides curve power by inverter efficiency to recover the removed inverter loss. These equations are implemented, but operation requires <code>wind.power_boundary = "inverter_ac_output"</code> which the article now records following the user confirmation of its measurement point. No numerical conversion of the supplied values is made. The required terms are:</p>
 <table class="caption-top table">
 <caption>Loss terms by case and their current treatment.</caption>
 <colgroup>
@@ -1056,32 +1121,32 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 <tr class="odd">
 <td>Generator-side converter</td>
 <td>All</td>
-<td>Legacy source-curve boundary unresolved</td>
+<td>Included in confirmed inverter-output curve</td>
 <td>Included upstream in a reconciled inverter-output curve; no additional architecture loss</td>
 </tr>
 <tr class="even">
 <td>Grid-side inverter</td>
 <td>Included in AC cases; removed in turbine-level cases</td>
 <td>Recovery by division implemented</td>
-<td>TODO: inverter-only efficiency and curve reconciliation</td>
+<td>Provisional user assumption; evidence TODO</td>
 </tr>
 <tr class="odd">
 <td>Turbine step-up transformer</td>
 <td>Centralised</td>
 <td>Downstream multiplier implemented</td>
-<td><code>turbine-transformer-efficiency</code> remains TODO</td>
+<td>Provisional user assumption; evidence TODO</td>
 </tr>
 <tr class="even">
 <td>66 kV AC collection</td>
 <td>Centralised</td>
 <td>Fixed fraction of aggregate transformer output, before central conversion</td>
-<td><code>array-ac-loss-fraction</code> remains TODO; no resistance or power-factor input required</td>
+<td>Provisional aggregate allowance; evidence TODO; no resistance or power-factor input required</td>
 </tr>
 <tr class="odd">
 <td>Central transformers and rectifier</td>
 <td>Centralised</td>
-<td>97.5% net package efficiency</td>
-<td>Adopted</td>
+<td>97.0299% net package efficiency</td>
+<td>Provisional component assumptions</td>
 </tr>
 <tr class="even">
 <td>Stack-side DC/DC converter</td>
@@ -1092,12 +1157,12 @@ Direct DC:     generator -&gt; generator-side converter -&gt; DC link -&gt; stac
 <tr class="odd">
 <td>Direct-DC interface</td>
 <td>Direct DC</td>
-<td>Blank interface efficiency</td>
-<td>Should cover only DC-link, protection and cabling losses; no converter loss</td>
+<td>99% efficiency</td>
+<td>Provisional aggregate DC-link, protection and cabling allowance; no DC/DC converter</td>
 </tr>
 </tbody>
 </table>
-<p>O2c must reconcile the curve boundary and close these terms before comparable energy results are reported. No separate generator or rectifier loss is added to the adopted curve. A detailed loss calculation replaces a flat efficiency rather than being added to it.</p>
+<p>The provisional inputs permit screening production results; O2c must replace or substantiate them before evidence-backed efficiency claims are made. No separate generator or rectifier loss is added to the adopted curve. A detailed loss calculation replaces a flat efficiency rather than being added to it.</p>
 </section>
 <section id="cost-and-mass-reconciliation" class="level2">
 <h2 class="anchored" data-anchor-id="cost-and-mass-reconciliation">Cost and Mass Reconciliation</h2>

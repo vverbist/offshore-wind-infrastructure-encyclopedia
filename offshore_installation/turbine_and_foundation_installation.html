@@ -147,7 +147,9 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Offshore Wind Infrastructure Model Assumptions</a> 
+      <a href="../">
+      Offshore Wind Infrastructure Model Assumptions
+      </a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -552,14 +554,7 @@ window.Quarto = {
   <li><a href="#initial-evidence-basis" id="toc-initial-evidence-basis" class="nav-link" data-scroll-target="#initial-evidence-basis">Initial Evidence Basis</a>
   <ul class="collapse">
   <li><a href="#nrel-orbit" id="toc-nrel-orbit" class="nav-link" data-scroll-target="#nrel-orbit">NREL ORBIT</a></li>
-  <li><a href="#south-fork-foundation-installation" id="toc-south-fork-foundation-installation" class="nav-link" data-scroll-target="#south-fork-foundation-installation">South Fork foundation installation</a></li>
-  <li><a href="#sofia-installation-logistics" id="toc-sofia-installation-logistics" class="nav-link" data-scroll-target="#sofia-installation-logistics">Sofia installation logistics</a></li>
   </ul></li>
-  <li><a href="#initial-parameter-status" id="toc-initial-parameter-status" class="nav-link" data-scroll-target="#initial-parameter-status">Initial Parameter Status</a></li>
-  <li><a href="#treatment-of-mass-uncertainty" id="toc-treatment-of-mass-uncertainty" class="nav-link" data-scroll-target="#treatment-of-mass-uncertainty">Treatment of Mass Uncertainty</a></li>
-  <li><a href="#why-the-model-stops-here" id="toc-why-the-model-stops-here" class="nav-link" data-scroll-target="#why-the-model-stops-here">Why the Model Stops Here</a></li>
-  <li><a href="#required-outputs" id="toc-required-outputs" class="nav-link" data-scroll-target="#required-outputs">Required Outputs</a></li>
-  <li><a href="#calibration-priorities" id="toc-calibration-priorities" class="nav-link" data-scroll-target="#calibration-priorities">Calibration Priorities</a></li>
   </ul>
 </nav>
     </div>
@@ -637,7 +632,7 @@ window.Quarto = {
 <tr class="odd">
 <td>Exchange rate, <span class="math inline">\(X\)</span></td>
 <td><p>0.85679 GBP/EUR</p></td>
-<td>Annual 2025 GBP/EUR <span class="citation" data-cites="ecb2025GBPEUR">(<a href="#ref-ecb2025GBPEUR" role="doc-biblioref">European Central Bank 2026a</a>)</span></td>
+<td>Annual 2025 GBP/EUR <span class="citation" data-cites="ecb2025GBPEUR">(<a href="#ref-ecb2025GBPEUR" role="doc-biblioref">European Central Bank 2026</a>)</span></td>
 </tr>
 </tbody>
 </table>
@@ -980,6 +975,7 @@ c_{\mathrm{MW}}
 </section>
 <section id="initial-evidence-basis" class="level2">
 <h2 class="anchored" data-anchor-id="initial-evidence-basis">Initial Evidence Basis</h2>
+<p>The adopted source rates and task durations are stored in <code>model_data/inputs.csv</code>. The shared installation module calculates port days, km/day and EUR2025/day; this page displays those same derived values. Vessel capacities, loading limits, transition-piece mass and route distances remain required before a foundation campaign cost can be reported. The article uses the fixed turbine benchmark, not the unresolved turbine campaign.</p>
 <p>The first version uses three evidence packages.</p>
 <section id="nrel-orbit" class="level3">
 <h3 class="anchored" data-anchor-id="nrel-orbit">NREL ORBIT</h3>
@@ -988,222 +984,14 @@ c_{\mathrm{MW}}
 <p><span class="math display">\[
 t_{\mathrm{port},F}
 =
-\frac{12+8}{24}
+\fracb58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C20766172207261772D696E7374616C6C2D66617374656E2D6D6F6E6F70696C652D686F757273203E7D7D2B7B7B3C20766172207261772D696E7374616C6C2D66617374656E2D7472616E736974696F6E2D70696563652D686F757273203E7D7D7D;{24}
 =
-0.833\ \mathrm{day/foundation}.
+b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220696E7374616C6C2D666F756E646174696F6E2D706F72742D74696D652D64657269766564203E7D7D;\ \mathrm{day/foundation}.
 \]</span></p>
 <p>For one tower set, one nacelle and three blades:</p>
-<p><span class="math display">\[
-t_{\mathrm{port},T}
-=
-\frac{4+4+3(1.5)}{24}
-=
-0.521\ \mathrm{day/turbine}.
-\]</span></p>
-<p>The current generic vessel proxy is USD 400,000/day, equivalent to approximately EUR<sub>2025</sub> 363,297/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate <span class="citation" data-cites="bls2024CPI bls2025CPI ecb2025USDEUR">(<a href="#ref-bls2024CPI" role="doc-biblioref">U.S. Bureau of Labor Statistics 2026b</a>, <a href="#ref-bls2025CPI" role="doc-biblioref">2026a</a>; <a href="#ref-ecb2025USDEUR" role="doc-biblioref">European Central Bank 2026b</a>)</span>. This follows the <a href="../methodology/financial_and_price_basis.html">common financial basis</a>. ORBIT also provides a 7-day mobilisation input and a 10-knot vessel speed:</p>
-<p><span class="math display">\[
-10\ \mathrm{kn}
-\times1.852\ \mathrm{km/nmi}
-\times24\ \mathrm{h/day}
-=
-444\ \mathrm{km/day}.
-\]</span></p>
-<p>These are planning-model proxies, not contractor quotations.</p>
-</section>
-<section id="south-fork-foundation-installation" class="level3">
-<h3 class="anchored" data-anchor-id="south-fork-foundation-installation">South Fork foundation installation</h3>
-<p>The South Fork Construction and Operations Plan gives approximately 2–4 days per monopile foundation under 24-hour working without weather or sea delay <span class="citation" data-cites="boem2021SouthForkCOP">(<a href="#ref-boem2021SouthForkCOP" role="doc-biblioref">South Fork Wind, LLC 2021</a>)</span>.</p>
-<p>The initial foundation parameter is therefore:</p>
-<p><span class="math display">\[
-t_{\mathrm{site},F}
-=
-3.0\ \mathrm{days/foundation},
-\]</span></p>
-<p>with 2 and 4 days/foundation used as sensitivity cases.</p>
-<p>This produces a normal, no-delay foundation estimate. It is not an expected weather-inclusive commercial schedule.</p>
-</section>
-<section id="sofia-installation-logistics" class="level3">
-<h3 class="anchored" data-anchor-id="sofia-installation-logistics">Sofia installation logistics</h3>
-<p>Sofia provides reference logistics for large modern turbines:</p>
-<ul>
-<li>three foundations per vessel cycle <span class="citation" data-cites="rwe2024SofiaFoundationStart">(<a href="#ref-rwe2024SofiaFoundationStart" role="doc-biblioref">RWE Offshore Wind GmbH 2024</a>)</span>; and</li>
-<li>six complete 14 MW turbine sets per load <span class="citation" data-cites="rwe2026SofiaTurbines">(<a href="#ref-rwe2026SofiaTurbines" role="doc-biblioref">Sofia Offshore Wind Farm 2026</a>)</span>.</li>
-</ul>
-<p>These are project-specific reference values. They cannot be combined automatically with the generic ORBIT vessel rate because the physical vessel class and commercial rate boundary may differ.</p>
-<p>The Sofia values are used as logistics anchors and later validation evidence, not universal defaults.</p>
-</section>
-</section>
-<section id="initial-parameter-status" class="level2">
-<h2 class="anchored" data-anchor-id="initial-parameter-status">Initial Parameter Status</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 28%">
-<col style="width: 21%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th style="text-align: right;">Foundation campaign</th>
-<th style="text-align: right;">Turbine campaign</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(r_c\)</span></td>
-<td style="text-align: right;">363,297 EUR<sub>2025</sub>/day</td>
-<td style="text-align: right;">363,297 EUR<sub>2025</sub>/day</td>
-<td>Shared provisional ORBIT proxy; retain separate parameters</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(t_{\mathrm{mob},c}\)</span></td>
-<td style="text-align: right;">7 days</td>
-<td style="text-align: right;">7 days</td>
-<td>ORBIT planning input</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(t_{\mathrm{port},c}\)</span></td>
-<td style="text-align: right;">0.833 day/set</td>
-<td style="text-align: right;">0.521 day/set</td>
-<td>Derived from ORBIT tasks</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(t_{\mathrm{site},c}\)</span></td>
-<td style="text-align: right;">3.0 days/location</td>
-<td style="text-align: right;">TODO</td>
-<td>South Fork foundation input; turbine evidence required</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(k_{\mathrm{ref},c}\)</span></td>
-<td style="text-align: right;">Project input</td>
-<td style="text-align: right;">Six as a Sofia logistics anchor</td>
-<td>Vessel and project specific</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(M_{\mathrm{use},c}\)</span></td>
-<td style="text-align: right;">Named-vessel input</td>
-<td style="text-align: right;">Named-vessel input</td>
-<td>Required for mass check</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(SWL_c\)</span></td>
-<td style="text-align: right;">Named-vessel input</td>
-<td style="text-align: right;">Named-vessel input</td>
-<td>Required for coarse lift check</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(v_c\)</span></td>
-<td style="text-align: right;">444 km/day</td>
-<td style="text-align: right;">444 km/day</td>
-<td>Generic ORBIT vessel proxy</td>
-</tr>
-</tbody>
-</table>
-<p>The turbine campaign cannot produce a final numerical cost until <span class="math inline">\(t_{\mathrm{site},T}\)</span> and a coherent vessel configuration are selected.</p>
-<p>ORBIT’s fixed positioning, component-release, attachment and re-equipping tasks total 34.5 h per turbine before lift and jack-up time. This is a lower-bound task subtotal, not a complete turbine site-occupation value. No additional lift or jack-up allowance is introduced without evidence.</p>
-</section>
-<section id="treatment-of-mass-uncertainty" class="level2">
-<h2 class="anchored" data-anchor-id="treatment-of-mass-uncertainty">Treatment of Mass Uncertainty</h2>
-<p>The turbine and foundation masses are screening estimates rather than supplier-certified transport masses.</p>
-<p>Material uncertainties include:</p>
-<ul>
-<li>unresolved turbine electrical-component masses;</li>
-<li>a length-based rather than load-based tower estimate;</li>
-<li>missing tower-section masses;</li>
-<li>missing transition-piece mass; and</li>
-<li>simplified monopile scaling without site-specific structural or geotechnical design.</li>
-</ul>
-<p>These uncertainties matter because sets per load is an integer. A small mass change near a payload threshold can change the number of vessel trips.</p>
-<p>The model therefore uses upstream mass sensitivity results where available:</p>
-<ol type="1">
-<li>calculate the payload limit at the lower mass;</li>
-<li>calculate it again at the upper mass;</li>
-<li>adopt the result when both limits give the same sets per load; and</li>
-<li>report both logistics cases when the result crosses an integer boundary.</li>
-</ol>
-<p>No separate arbitrary mass safety factor is added.</p>
-</section>
-<section id="why-the-model-stops-here" class="level2">
-<h2 class="anchored" data-anchor-id="why-the-model-stops-here">Why the Model Stops Here</h2>
-<p>The model does not calculate deck packing, blade-rack arrangement, tower-section lifts, crane radius or detailed stability.</p>
-<p>Those calculations would require additional assumptions for:</p>
-<ul>
-<li>component dimensions;</li>
-<li>tower segmentation;</li>
-<li>rack geometry;</li>
-<li>grillage and access space;</li>
-<li>crane outreach;</li>
-<li>rigging mass;</li>
-<li>stability limits; and</li>
-<li>project-specific lift arrangements.</li>
-</ul>
-<p>The turbine-system model does not currently provide enough information to constrain those assumptions. Adding them would increase model complexity and apparent precision without a corresponding increase in accuracy.</p>
-<p>Mass is therefore used as a constraint on a sourced logistics parameter, not as a replacement for a vessel loading plan. It captures differences between turbine designs without requiring the installation model to know why their masses differ.</p>
-<p>Mass also does not change site occupation, vessel speed or day rate continuously. There is no adopted hours-per-tonne or EUR-per-tonne installation relationship.</p>
-</section>
-<section id="required-outputs" class="level2">
-<h2 class="anchored" data-anchor-id="required-outputs">Required Outputs</h2>
-<p>The calculation reports:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Result group</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Mass checks</td>
-<td>Turbine payload limit, nacelle lift check and monopile lift check</td>
-</tr>
-<tr class="even">
-<td>Logistics</td>
-<td>Sets per load and number of vessel loads by campaign</td>
-</tr>
-<tr class="odd">
-<td>Duration</td>
-<td>Mobilisation, port, installation, travel and total days</td>
-</tr>
-<tr class="even">
-<td>Cost</td>
-<td>Foundation campaign, turbine campaign and combined base CAPEX</td>
-</tr>
-<tr class="odd">
-<td>Normalised cost</td>
-<td>EUR/turbine and EUR/MW</td>
-</tr>
-<tr class="even">
-<td>Evidence status</td>
-<td>Source and unresolved status for every parameter</td>
-</tr>
-<tr class="odd">
-<td>Validity</td>
-<td>Feasible, infeasible or unresolved vessel configuration</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="calibration-priorities" class="level2">
-<h2 class="anchored" data-anchor-id="calibration-priorities">Calibration Priorities</h2>
-<p>Additional evidence should be collected in this order:</p>
-<ol type="1">
-<li>effective turbine site occupation in days/turbine;</li>
-<li>coherent vessel rate, payload, crane and sets-per-load data for the same named vessel or spread;</li>
-<li>weather-inclusive foundation and turbine campaign productivity;</li>
-<li>transition-piece mass or directly evidenced foundation sets per load;</li>
-<li>contractor-defined mobilisation and complete-spread boundaries; and</li>
-<li>independent project schedules for validation.</li>
-</ol>
-<p>The present model is intended for transparent screening comparisons. It is not a marine-operations simulation or contractor quotation.</p>
+<p>$$ t_{,T} = </p>
 
-
-
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
@@ -1214,10 +1002,7 @@ BVG Associates. 2025a. <span>“Guide to a Fixed Offshore Wind Farm.”</span> <
 BVG Associates. 2025b. <span>“Guide to an Offshore Wind Farm: Wind Farm Costs.”</span> <a href="https://guidetoanoffshorewindfarm.com/wind-farm-costs/">https://guidetoanoffshorewindfarm.com/wind-farm-costs/</a>.
 </div>
 <div id="ref-ecb2025GBPEUR" class="csl-entry" role="listitem">
-European Central Bank. 2026a. <span>“Pound Sterling Per Euro: Annual Average Reference Exchange Rate.”</span> <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.GBP.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.GBP.EUR.SP00.A</a>.
-</div>
-<div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
-European Central Bank. 2026b. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+European Central Bank. 2026. <span>“Pound Sterling Per Euro: Annual Average Reference Exchange Rate.”</span> <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.GBP.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.GBP.EUR.SP00.A</a>.
 </div>
 <div id="ref-orbit2026InstallationDefaults" class="csl-entry" role="listitem">
 National Laboratory of the Rockies. n.d. <span>“<span>ORBIT</span> Introduction.”</span> Accessed July 31, 2026. <a href="https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html">https://nlrwindsystems.github.io/ORBIT/tutorials/introduction.html</a>.
@@ -1227,21 +1012,6 @@ Nunemaker, Jacob, Matthew Shields, Rob Hammond, and Patrick Duffy. 2020. <em><sp
 </div>
 <div id="ref-ons2026CPIAnnual" class="csl-entry" role="listitem">
 Office for National Statistics. 2026. <span>“CPI INDEX 00: ALL ITEMS 2015=100, D7BT.”</span> <a href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7bt/mm23">https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7bt/mm23</a>.
-</div>
-<div id="ref-rwe2024SofiaFoundationStart" class="csl-entry" role="listitem">
-RWE Offshore Wind GmbH. 2024. <span>“<span>RWE</span> Installs First Turbine Foundation at Its Flagship Sofia Offshore Wind Farm.”</span> May 21. <a href="https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2024-05-21-rwe-installs-first-turbine-foundation-at-its-flagship-sofia-offshore-wind-farm/">https://www.rwe.com/en/press/rwe-offshore-wind-gmbh/2024-05-21-rwe-installs-first-turbine-foundation-at-its-flagship-sofia-offshore-wind-farm/</a>.
-</div>
-<div id="ref-rwe2026SofiaTurbines" class="csl-entry" role="listitem">
-Sofia Offshore Wind Farm. 2026. <span>“<span>RWE</span> Completes Installation of All Turbines at Sofia Offshore Wind Farm.”</span> June 11. <a href="https://sofiawindfarm.com/latest/announcements/rwe-completes-installation-of-all-turbines-at-sofia-offshore-wind-farm/">https://sofiawindfarm.com/latest/announcements/rwe-completes-installation-of-all-turbines-at-sofia-offshore-wind-farm/</a>.
-</div>
-<div id="ref-boem2021SouthForkCOP" class="csl-entry" role="listitem">
-South Fork Wind, LLC. 2021. <em>South Fork Wind Farm and South Fork Export Cable Project: Construction and Operations Plan, Volume i</em>. Bureau of Ocean Energy Management. <a href="https://www.boem.gov/Volume-I-Construction-and-Operations-Plan/">https://www.boem.gov/Volume-I-Construction-and-Operations-Plan/</a>.
-</div>
-<div id="ref-bls2025CPI" class="csl-entry" role="listitem">
-U.S. Bureau of Labor Statistics. 2026a. <span>“Consumer Price Indexes for All Urban Consumers: U.s. City Average, Annual Average.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
-</div>
-<div id="ref-bls2024CPI" class="csl-entry" role="listitem">
-U.S. Bureau of Labor Statistics. 2026b. <span>“Summary of Annual and Semi-Annual Consumer Price Indexes.”</span> <a href="https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm">https://www.bls.gov/regions/mid-atlantic/data/ConsumerPriceIndexAnnualandSemiAnnual_Table.htm</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->

@@ -58,8 +58,8 @@ Rendering the website does not run article scenarios.
 ## Workflow
 
 1. Resolve the central parameter table and explicit scenario overrides.
-2. Establish turbine coordinates and power at the common generator electrical
-   output boundary, before architecture-specific conversion/collection losses.
+2. Establish turbine coordinates and power after the inverter, before the turbine
+   transformer and architecture-specific downstream losses.
 3. Build AC strings or read every physical hydrogen-collection section.
 4. Calculate each operating state: collection losses, electrical conversion,
    module selection, stack power, hydrogen flow, BOP and compression auxiliaries.
@@ -136,7 +136,7 @@ have `section,from,to,vertical_m,route_allowance,flow_share,diameter_m,inlet_bar
 outlet_bar`. Turbine/node IDs must be distinct. Every physical ladder edge is
 included, even if its selected healthy-state flow share is zero. Active paths
 must be directed and acyclic; outgoing shares sum to unity. Flow is conserved
-at the export sink. Diameter is true ID; pressures are absolute. Capacity and
+at the export sink. Diameter is true ID; pressures are absolute. In the default hydraulic mode, capacity and
 junction pressure are checked, but flow allocation is supplied, not solved as
 a hydraulic loop network. No redundancy benefit is assumed.
 
@@ -175,7 +175,14 @@ sections. State-level energy accounting includes curtailed power explicitly.
 The scope includes technical supply, installation, component O&M, required
 replacement and the adopted decommissioning convention. It excludes development,
 shared owner engineering, insurance, owner contingency, construction finance,
-tax and downstream services. Platform and receipt equipment remain included.
+tax and downstream services. Platform and receipt equipment remain included by default.
+For the current article's `production_capex` scope, `reporting.excluded_components`
+explicitly omits `pipeline-connections`, `pipeline-manifold` and `hydrogen-receipt`
+from cost rows and lists them under `excluded_costs`; this never inserts zero costs.
+With neglected collection pressure drop, `collection.diameter_inches` supplies a
+uniform internal diameter, rejects conflicting section sizes and leaves hydraulic
+feasibility unassessed. The article selects 6 inches and connects its confidential
+local pipeline callable through the shared scenario's data section.
 Missing included costs block complete LCOH; known subtotals remain available.
 
 Unresolved interfaces currently include platform mass, OPEX and decommissioning inputs,
@@ -224,8 +231,9 @@ It expands the agreed gauge-pressure/internal-diameter arrays and writes
 `design_cases.csv` in model units alongside the results. The comparison includes
 reason text. Pressure boundaries are screened even when operating inputs are
 missing: insufficient discharge pressure is infeasible, while unparameterized
-collection pressures remain missing inputs. Distributed export inlet pressure
-must account for collection losses; the runner does not equate it to discharge.
+collection pressures remain missing inputs. In hydraulic mode, distributed export inlet pressure
+must account for collection losses. The article explicitly neglects that drop,
+so its workflow derives export inlet from discharge.
 
 Run `python -m unittest discover -s tests -v`. Calculation tests use explicitly
 synthetic cases, never adopted article inputs; the reference-case tests only check
@@ -280,10 +288,9 @@ must be checked independently before adopting an unusually large/deep case.
 
 ## Electrical boundary and stack purchase basis
 
-Hydrogen operation requires `wind.power_boundary = "inverter_ac_output"` only
-once the supplied curve is reconciled to that measurement point. The article
-states retain `generator_output_unreconciled`; the workflow does not silently
-convert or relabel them. AC cases multiply by turbine-transformer efficiency,
+Hydrogen operation requires `wind.power_boundary = "inverter_ac_output"`. The user
+confirmed that measurement point for the article source on 9 October 2026. The
+common-case generator records it without altering curve or power-state numbers. AC cases multiply by turbine-transformer efficiency,
 then subtract the fixed collection-loss fraction before central conversion.
 Distributed cases divide by inverter efficiency before their DC interface.
 Outputs distinguish inverter-output energy, transformer loss, collection loss
@@ -315,3 +322,50 @@ installation and commissioning replace comparable work for removed power
 electronics. Both turbines use the same installation benchmark, without a
 separate hydrogen-equipment charge. This is a modelling assumption, not a
 supplier-verified equivalence. Central-platform installation stays within EPCI.
+
+## Current article reference: production and CAPEX
+
+The shared article scenario selects `[reporting] scope = "production_capex"`.
+Other scenarios default to `lifecycle`. Production and CAPEX readiness are
+reported separately as `summary.production_status` and `summary.capex_status`.
+`initial_capex_eur` is available only when all included capital rows are populated;
+`known_capex_subtotal_eur` and `missing_capex` explain partial results. Lifecycle
+categories are explicitly deferred, not booked as zero. No LCOH, lifetime-average
+yield or availability-adjusted delivery is calculated in production/CAPEX mode.
+
+Run the user-selected reference with the existing grid, for example:
+
+```powershell
+uv run python research_articles/turbine_level_hydrogen/analysis/run_design_cases.py research_articles/turbine_level_hydrogen/scenarios/centralised.toml research_articles/turbine_level_hydrogen/scenarios/pressure_diameter_grid.toml --case p140barg-d8in --output model_runs/reference-centralised
+```
+
+Use `decentralised.toml` and `--interface converter_reduced` with a separate
+output directory for the direct-DC case. `--interface conservative` is retained
+for a later DC/DC sensitivity, not the current comparison. Selection and interface are recorded with the outputs; no grid values or
+central parameters are overridden silently.
+
+The article declares `[collection] pressure_drop = "neglected"`: export inlet is
+derived from compressor discharge, and conflicting explicit pressures are rejected.
+Collection geometry and mass balance remain active, but collection hydraulic
+feasibility is not assessed. Geometry-only section files are allowed in this mode;
+missing diameters block collection supply cost, not independent production.
+The default `hydraulic` mode still requires all hydraulic columns and capacity
+checks. Export hydraulics remain active in both modes. The 8-inch reference is
+export internal diameter only. Missing efficiencies and other capital inputs
+remain explicit; this reference does not make an incomplete case fully parameterized.
+
+### Provisional loss and crane assumptions (2026-10-09)
+
+Current electrical-stage efficiencies and the collection-loss fraction are
+explicit user assumptions in `model_data/inputs.csv`, pending references. Central
+conversion multiplies separate plant-transformer, rectifier-transformer and
+rectifier efficiencies; no independent aggregate input remains. Direct DC has
+one residual interface allowance and no DC/DC converter. Non-electrical efficiency
+inputs are unchanged. The article currently runs centralised and direct DC only.
+
+The service-crane purchase weight is omitted from both sides of turbine cost
+calibration; its mass remains. The historical crane-cost input is not consumed.
+The NREL absolute-price anchor is unchanged. Article turbine masses and fixed
+installation costs remain equal; purchase prices are not forced equal. The
+existing transformer reallocation and unresolved retained-equipment cost
+adjustment remain in place.

@@ -1019,7 +1019,7 @@ P_{\mathrm{loss,AC}}=f_{AC}\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}},
 \qquad
 P_{\mathrm{central,in}}=(1-f_{AC})\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}}.
 \]</span></p>
-<p>All powers are in kW; <span class="math inline">\(P_{\mathrm{curve},i}\)</span> is turbine <span class="math inline">\(i\)</span>’s reconciled inverter AC output and <span class="math inline">\(\eta_{\mathrm{tr}}\)</span> is transformer efficiency. The shared <code>array-ac-loss-fraction</code> input is an unresolved top-down assumption: its numerical value and operating basis still require adoption. It represents collection losses only, excluding transformer and central conversion losses. The implementation replaces the previous I²R calculation and does not require resistance or power factor. This aggregate model does not capture load-, length- or topology-dependent losses; those limitations must accompany any eventual adopted fraction.</p>
+<p>All powers are in kW; <span class="math inline">\(P_{\mathrm{curve},i}\)</span> is turbine <span class="math inline">\(i\)</span>’s reconciled inverter AC output and <span class="math inline">\(\eta_{\mathrm{tr}}\)</span> is transformer efficiency. The shared <code>array-ac-loss-fraction</code> input is 1%, adopted by the user on 9 October 2026 as a <strong>provisional top-down assumption</strong> at all loads. It is applied once to the complete collection system, not once per cable section. <strong>TODO:</strong> replace or substantiate this value with references or an evidenced network-loss calculation, including its operating-load basis. It represents collection losses only, excluding transformer and central conversion losses. The implementation replaces the previous I²R calculation and does not require resistance or power factor. This aggregate model does not capture load-, length- or topology-dependent losses; those limitations apply to the provisional fraction.</p>
 </section>
 <section id="model-limitations" class="level2">
 <h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
@@ -1056,8 +1056,8 @@ P_{\mathrm{central,in}}=(1-f_{AC})\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}}.
 <td>Length per turbine is a validation range, not a calibration coefficient</td>
 </tr>
 <tr class="even">
-<td>Electrical losses are unresolved</td>
-<td>The executable model applies <code>array-ac-loss-fraction</code> to aggregate turbine-transformer output before central conversion; the fraction remains TODO. This replaces the former I²R screening calculation.</td>
+<td>Electrical losses are provisional</td>
+<td>The executable model applies <code>array-ac-loss-fraction</code> to aggregate turbine-transformer output before central conversion; supporting evidence remains TODO. This replaces the former I²R screening calculation.</td>
 </tr>
 <tr class="odd">
 <td>Flat 99% availability</td>

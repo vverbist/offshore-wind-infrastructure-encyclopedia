@@ -577,7 +577,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This page does not currently produce a complete cable- or TCP-installation CAPEX result. Cable lay tasks can be parameterized from ORBIT screening inputs, but burial-spread rates, survey productivity and rates, demobilisation, weather delay and exceptional scope remain unresolved. TCP additionally lacks a qualified product, vessel configuration, task times and matching spread rates.</p>
+<p>This page does not currently produce a complete cable- or TCP-installation CAPEX result. The adopted AC lay rate, loading, transit, mobilisation, laying and aggregate interface/splice tasks are implemented from shared ORBIT screening inputs, but burial-spread rates, survey productivity and rates, demobilisation, weather delay and exceptional scope remain unresolved. TCP additionally lacks a qualified product, vessel configuration, task times and matching spread rates.</p>
 <p>A user-provided Van Oord cable-installation benchmark is materially higher than the earlier proxy calculation, but its contract boundary and price basis have not been independently evidenced in this repository. It remains a reconciliation item rather than a model input. Missing terms below return <strong>not parameterized</strong>, not zero.</p>
 </div>
 </div>
@@ -837,7 +837,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>Cable-vessel day rate</td>
-<td style="text-align: right;">241,171 USD/day</td>
+<td style="text-align: right;">241171 USD/day</td>
 <td style="text-align: right;">219,041 EUR<sub>2025</sub>/day for cable laying only</td>
 <td>Provisional screening lay-spread-rate assumption</td>
 </tr>
@@ -1271,7 +1271,7 @@ T_{\mathrm{event}}
 </tr>
 </tbody>
 </table>
-<p>The aggregate durations are derived from the executable ORBIT defaults listed in Section 2 <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. They apply only while the lay spread remains occupied. Retaining the underlying task values in the source-input table preserves traceability, while the calculation uses the event totals that materially determine campaign duration.</p>
+<p>The adopted aggregate durations are based on the executable ORBIT defaults listed in Section 2 <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. They apply only while the lay spread remains occupied. The current implementation stores the adopted array and splice event totals as explicit aggregate assumptions in the shared input table, then converts hours to days. TODO: verify the incidence of preparation/positioning tasks against the pinned source before replacing the array aggregate with a task-by-task sum; the prose list alone does not specify all event counts. The export-cable event is not applied to the AC array. Retaining the underlying task values in the source-input table preserves traceability, while the calculation uses the event totals that materially determine campaign duration.</p>
 <p>For array cables, a reload normally supplies additional discrete cable sections and does not automatically create an offshore splice. For a continuous export route, exceeding the available continuous product length can require both a reload and an inline splice.</p>
 <p><strong>Lay-time aggregation</strong></p>
 <p>Non-weather-uplifted lay time is:</p>
@@ -1679,11 +1679,11 @@ G_{\mathrm{market}}.
 <p><span class="math display">\[
 F
 =
-\frac{321.943}{313.689}\frac{1}{1.1300}
+\fracb58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C20766172207261772D66696E616E6369616C2D7573642D6370692D32303235203E7D7D7D;b58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C20766172207261772D66696E616E6369616C2D7573642D6370692D32303234203E7D7D7D;\frac{1}b58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C20766172207261772D66696E616E6369616C2D7573642D7065722D6575722D32303235203E7D7D7D;
 =
-0.9082413\ \mathrm{EUR}_{2025}/\mathrm{USD}_{2024}.
+b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220696E7374616C6C2D757364323032342D657572323032352D666163746F72203E7D7D;\ \mathrm{EUR}_{2025}/\mathrm{USD}_{2024}.
 \]</span></p>
-<p>The factor gives 219,041 EUR<sub>2025</sub>/day for ORBIT’s 241,171 USD/day cable vessel and 111,440 EUR<sub>2025</sub>/day for its 122,699 USD/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.</p>
+<p>The factor gives 219,041 EUR<sub>2025</sub>/day for ORBIT’s 241171 USD/day cable vessel and 111,440 EUR<sub>2025</sub>/day for its 122,699 USD/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.</p>
 <section id="worked-example-evidence-gated-2-gw-cable-inventory" class="level3">
 <h3 class="anchored" data-anchor-id="worked-example-evidence-gated-2-gw-cable-inventory">Worked example: evidence-gated 2 GW cable inventory</h3>
 <p>This example shows how far the calculation can proceed for a 2 GW wind farm with 134 turbines, approximately 400 physical km of inter-array cable and a 100 km export corridor. It reports the physical inventory and the parameterized parts of lay time. It does not fill unresolved inputs in order to force a total installation CAPEX.</p>
