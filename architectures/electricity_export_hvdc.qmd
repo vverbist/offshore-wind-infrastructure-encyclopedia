@@ -75,8 +75,8 @@ point. This is a Tier 1 carrier product, not an end-use service price.
 
 The architecture cost includes the common offshore wind project and all
 electricity-specific assets and lifecycle activities represented by the shared
-cost schema. Development, shared engineering, insurance and owner contingency
-remain unresolved shared fields. Construction finance, taxes and financing
+cost schema. Development, shared owner engineering, insurance and owner contingency
+are outside the model scope. Construction finance, taxes and financing
 fees are excluded by the simple-CRF convention.
 
 Wider onshore grid reinforcement is outside the base architecture boundary

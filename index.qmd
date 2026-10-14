@@ -15,7 +15,15 @@ The site is organised as an assumptions manual. Each component page bundles the 
 
 The emphasis is deliberately methodological. Results, scenario outcomes, and interpretation of model output are out of scope for this encyclopedia.
 
-For why this comparison is being made and what question it is designed to answer, see [Positioning](positioning.qmd).
+## Review Guide
+
+This website documents the assumptions and calculations of an offshore wind infrastructure techno-economic model. It is a methodology draft for review.
+
+Start with [System Boundary and Carrier-Cost Metrics](methodology/system_boundary_and_lcoe.qmd), followed by [Architecture Component Mapping](architectures/component_mapping.qmd), then a component calculation of interest.
+
+Page readiness labels distinguish calculations that can be implemented from those with unresolved inputs or modelling decisions. A **blocked** page identifies a material gap preventing completion of its calculation; it may still contain usable calculation steps. Missing evidence is retained explicitly as a TODO.
+
+Feedback is particularly welcome on system boundaries, calculation traceability, the suitability of modelling assumptions, and whether the level of detail is justified by the available evidence.
 
 ## Main Sections
 

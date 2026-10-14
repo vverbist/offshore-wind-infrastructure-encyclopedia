@@ -41,7 +41,8 @@ The installation boundary begins when the contracted spreads mobilise and ends a
 | Independent ROV and survey campaigns or support | Included through ROV/survey-spread time |
 | Crew, fuel, routine workboats and tugs, and contractor overhead | Included in the applicable spread day rate |
 | Crossings, landfall, protection materials and exceptional civil work | Added separately when outside the spread scope |
-| Converter stations, substations, hydrogen compression, development, finance, contingency, OPEX and decommissioning | Excluded; owned elsewhere in the model |
+| Converter stations, substations, hydrogen compression, OPEX and decommissioning | Excluded from this installation calculation; owned elsewhere in the model |
+| Development, shared owner engineering, insurance, owner contingency, construction finance, taxes and financing fees | Outside the model scope |
 
 Every vessel, activity and material is charged once. If an ROV is onboard the lay vessel and included in the lay rate, it is not also assigned a separate ROV spread. If burial is performed by an integrated lay-and-bury spread, the separate burial term is zero and an integrated rate replaces the reference split.
 

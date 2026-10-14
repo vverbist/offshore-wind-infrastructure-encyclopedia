@@ -50,8 +50,8 @@ economic boundary for every included asset. The
 installation methods and assumptions for turbines, foundations, cables,
 pipelines, and platforms.
 
-The shared cost schema retains required project categories. Development,
-shared engineering, insurance and owner contingency are currently unresolved.
+Development, shared owner engineering, insurance and owner contingency are
+outside the model scope.
 Construction finance, taxes and financing fees are excluded by the approved
 simple-CRF convention rather than embedded in component costs.
 

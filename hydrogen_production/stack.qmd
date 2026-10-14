@@ -171,8 +171,6 @@ The stack cost is based on the NREL bottom-up manufactured cost analysis for PEM
 
 These values exclude manufacturer markup, installation costs, soft costs and inflation. They are therefore used here as stack manufacturing cost inputs rather than complete installed electrolyser system costs.
 
-The article reference case adopts **2 GW/year of stack manufacturing output** as its supply-chain scenario, matching the approximate capacity of the reference wind farm. The farm's one-time capacity does not itself imply this annual factory output; it is an explicit scenario assumption. NREL's highest tabulated production rate is 1 GW/year, so the 2 GW/year stack cost below is an extrapolation. The 10 MW/year and 100 MW/year cases remain useful lower-volume sensitivities.
-
 **Reference-rated stack capacity**
 
 A complication is that the rated power of a PEM stack is not a purely physical property. For a given number of cells and active cell area, stack power depends on the current density at which the stack is rated. A higher rated current density gives more electrical power from the same physical stack and therefore reduces the apparent cost expressed in $/kW or €/MW, even if the stack itself has not become cheaper.
@@ -195,50 +193,15 @@ The corresponding electrical input, hydrogen production, efficiency and degradat
 
 **Manufacturing-volume and purchase-cost calculation**
 
-NREL Table 10 isolates manufacturing-volume economies for the same reference design [@badgett2024PEMCost]. Its reference anchors enter the shared input table; the technology changes in Figure 27 are not added as further cost reductions.
+The model adopts NREL's manufactured stack cost of **{{< var stack-manufactured-reference-cost >}} in 2020 dollars** at **{{< var stack-manufacturing-reference-output >}}** of manufacturing output [@badgett2024PEMCost, Table 10]. This is a reasonable manufacturing-scale assumption for the 2 GW reference wind farm, although project capacity does not directly determine annual factory output.
 
-| Symbol | Input and units | Basis |
-|---|---|---|
-| $M_L$ | {{< var stack-manufacturing-lower-output >}} | Lower manufacturing-output anchor [@badgett2024PEMCost, Table 10] |
-| $M_H$ | {{< var stack-manufacturing-reference-output >}} | Higher manufacturing-output anchor [@badgett2024PEMCost, Table 10] |
-| $c_L$ | {{< var stack-manufactured-lower-output-cost >}} | Manufactured stack cost at $M_L$, USD~2020~/kW [@badgett2024PEMCost] |
-| $c_H$ | {{< var stack-manufactured-reference-cost >}} | Manufactured stack cost at $M_H$, USD~2020~/kW [@badgett2024PEMCost] |
-| $M$ | {{< var stack-article-manufacturing-output >}} MW/year | Article supply-chain assumption; `scenarios/reference_case.toml` |
-| $j_s$, $V_s$ | {{< var stack-source-current-density >}}, {{< var stack-source-cell-voltage >}} | NREL source-rating current density and voltage [@badgett2024PEMCost] |
-| $j_r$ | {{< var stack-reference-current-density >}} | Model reference-rated capacity convention |
-| $V_r$ | {{< var stack-cost-reference-cell-voltage-v >}} V | Supplied curve evaluated at $j_r$ [@manufacturerGStackPolarisation] |
-| $m$ | {{< var hydrogen-manufactured-cost-markup >}} | Manufactured-to-purchase markup [@badgett2024PEMCost] |
-| $F_{20\to25}$ | {{< var financial-usd-escalation-2020-2025-value >}} | U.S. CPI-U 2020–2025 factor [@blsCpiU2026] |
-| $X$ | {{< var financial-usd-per-eur-2025 >}} | 2025 mean exchange rate [@ecb2025USDEUR] |
+NREL's stack rating uses **{{< var stack-source-current-density >}}**, while the model uses **{{< var stack-reference-current-density >}}**. We approximate the rating conversion with their ratio, neglecting the difference in cell voltage between the two ratings.
 
-For the article output, continue the logarithmic trend between the two manufacturing anchors:
+Applying the assumed **{{< var hydrogen-manufactured-cost-markup >}}** manufactured-to-purchase multiplier, the **{{< var financial-usd-escalation-2020-2025-value >}}** inflation factor from 2020 to 2025 [@blsCpiU2026], and the 2025 exchange rate of **{{< var financial-usd-per-eur-2025 >}}** [@ecb2025USDEUR] gives the specific stack purchase cost:
 
-$$
-c_{\mathrm{mfg},s}(M)
-=c_H-(c_L-c_H)\frac{\ln(M/M_H)}{\ln(M_H/M_L)},
-\qquad M\geq M_H.
-$$
+**{{< var stack-manufactured-reference-cost-value >}} × ({{< var stack-source-current-density-value >}} / {{< var stack-reference-current-density-value >}}) × {{< var hydrogen-manufactured-cost-markup-value >}} × {{< var financial-usd-escalation-2020-2025-value >}} / {{< var financial-usd-per-eur-2025-value >}} ≈ {{< var stack-cost-purchase-eur2025-per-reference-kw >}} EUR~2025~/kW.**
 
-The result is **{{< var stack-cost-manufactured-usd2020-per-source-kw >}} USD~2020~/kW** at the source rating. Output above $M_H$ is a local extrapolation, not a quoted NREL result or a forecast of technology progress. Lower-volume sensitivities require their own documented interpolation; the executable function rejects them under this extrapolation rule.
-
-Holding cell count and active area fixed, rated power scales with $jV$. Convert the same physical stack to the model reference rating:
-
-$$
-f_{\mathrm{rating}}=\frac{j_sV_s}{j_rV_r},
-\qquad
-c_{\mathrm{mfg},r}=c_{\mathrm{mfg},s}f_{\mathrm{rating}}.
-$$
-
-The dimensionless rating factor is **{{< var stack-cost-rating-conversion-factor >}}** and reference-rated manufactured cost is **{{< var stack-cost-manufactured-usd2020-per-reference-kw >}} USD~2020~/kW**. This is a rating conversion, not an additional manufacturing saving. Purchase cost is then:
-
-$$
-c_{\mathrm{purchase},2025}
-=c_{\mathrm{mfg},r}\,m\,F_{20\to25}/X.
-$$
-
-The executable article purchase basis is **{{< var stack-cost-purchase-eur2025-per-reference-kw >}} EUR~2025~/kW of reference-rated stack capacity**. The previously rounded 175 EUR~2025~/kW reference is not a separate model input. Equipment purchase excludes offshore installation.
-
-The website and scenario workflow call `purchase_cost_basis` in `model/hydrogen_production/stack.py`. Fixed inputs come from `inputs.csv`; annual manufacturing output comes from the article scenario and the reference voltage from the supplied curve. `physical.stack_purchase_cost_basis` reports the intermediate results above. There is no independently entered derived purchase price in the input table. Total stack purchase cost is this unit cost times installed reference-rated capacity, including integer module rounding. Replacement expenditure uses the same initial stack purchase basis; replacement scheduling remains unresolved under D4.
+This cost applies per kW of installed reference-rated stack capacity. Total purchase cost includes whole-module rounding. Replacement scheduling remains unresolved under D4.
 
 **Scope distinction**
 

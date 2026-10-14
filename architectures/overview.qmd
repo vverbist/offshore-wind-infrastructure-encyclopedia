@@ -90,11 +90,11 @@ for every asset within the physical boundary:
 - component replacement where represented by the model
 - decommissioning where represented by the model
 
-The shared cost schema retains required common project categories. Development,
-shared engineering, insurance and owner contingency are currently unresolved;
+Development, shared owner engineering, insurance and owner contingency are
+outside the model scope;
 construction finance, taxes and financing fees are excluded by the approved
-simple-CRF convention. A complete result remains not parameterized while a
-required shared field is unresolved.
+simple-CRF convention. Results represent technical-scope costs, not total
+project or total system costs.
 
 Wider network reinforcement beyond the defined connection point is excluded.
 

@@ -106,8 +106,8 @@ physical structures. Component costs remain separately owned even where the
 equipment shares that platform.
 
 The hydrogen backbone and any downstream reinforcement or conditioning are
-outside the Tier 1 boundary. Development, shared engineering, insurance and
-owner contingency remain unresolved shared fields; construction finance, taxes
+outside the Tier 1 boundary. Development, shared owner engineering, insurance and
+owner contingency are outside the model scope; construction finance, taxes
 and financing fees are excluded by the simple-CRF convention. The reporting
 contract is defined on
 [System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd).

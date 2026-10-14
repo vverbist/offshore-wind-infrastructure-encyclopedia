@@ -4,6 +4,7 @@ project:
     - "*.qmd"
     - "**/*.qmd"
     - "!_archive/**"
+    - "!positioning.qmd"
   pre-render:
     - uv run python tools/build_model_variables.py
     - uv run python tools/build_electrical_figures.py
@@ -25,8 +26,6 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - href: positioning.qmd
-        text: Positioning
       - section: "Methodology"
         contents:
           - methodology/overview.qmd
@@ -77,6 +76,7 @@ website:
           - hydrogen_infra/pipeline_pressure_and_capacity.qmd
       - section: "Platforms"
         contents:
+          - platforms/overview.qmd
           - platforms/topside_mass.qmd
           - platforms/platform_material_capex.qmd
       - section: "Offshore Installation"

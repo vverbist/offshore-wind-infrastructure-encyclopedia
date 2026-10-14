@@ -1,0 +1,13 @@
+---
+title: "Platforms"
+readiness: context_only
+---
+
+This chapter estimates the complete topside mass and delivered platform cost for centralised hydrogen production and offshore HVDC conversion. The calculation is split into:
+
+* [Complete Topside Mass](topside_mass.qmd) — converts the architecture-specific capacity into complete topside mass, including hosted equipment, auxiliaries and topside structure.
+* [Platform EPCI CAPEX](platform_material_capex.qmd) — uses that mass to scale a commercial engineering, procurement, construction and installation (EPCI) package, including jacket and foundation delivery.
+
+Separating mass from cost makes the physical sizing assumption and the commercial cost assumption independently traceable. Fabrication, integration and installation remain combined because the available evidence does not support a reliable separate cost breakdown. The mass-based cost relationship is a screening assumption; it does not establish installation feasibility.
+
+Hosted equipment contributes to topside mass, while its purchase cost remains on the component pages and is excluded from the platform cost benchmark. [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) explains the installation boundary: no separate platform installation cost is added to EPCI. Platform OPEX and decommissioning remain separate, unresolved inputs to lifetime cost.
