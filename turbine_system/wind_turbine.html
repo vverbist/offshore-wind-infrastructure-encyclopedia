@@ -573,6 +573,7 @@ window.Quarto = {
   <li><a href="#cost-calibration-1" id="toc-cost-calibration-1" class="nav-link" data-scroll-target="#cost-calibration-1">Cost calibration</a></li>
   <li><a href="#calibrated-cost-breakdown" id="toc-calibrated-cost-breakdown" class="nav-link" data-scroll-target="#calibrated-cost-breakdown">Calibrated cost breakdown</a></li>
   </ul></li>
+  <li><a href="#complete-mass-evidence-status" id="toc-complete-mass-evidence-status" class="nav-link" data-scroll-target="#complete-mass-evidence-status">Complete-mass evidence status</a></li>
   </ul>
 </nav>
     </div>
@@ -667,15 +668,15 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>When hub height is not specified independently, the default relationship provides 15 m lower-tip clearance above mean sea level:</p>
+<p>For display only, the following clearance relationship would provide 15 m lower-tip clearance above mean sea level. It is not an executable default: the scenario must supply hub height.</p>
 <p><span class="math display">\[
-H_h=\frac{D}{2}+15.
+H_h=\frac{D}{2}+b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7469702D636C656172616E63652D76616C7565203E7D7D;.
 \]</span></p>
 <p>The structural tower interface is assumed to be 15 m above mean sea level. Tower length is therefore derived rather than entered independently:</p>
 <p><span class="math display">\[
-L_t=H_h-15.
+L_t=H_h-b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D696E746572666163652D6865696768742D76616C7565203E7D7D;.
 \]</span></p>
-<p>Under the default hub-height relationship, <span class="math inline">\(L_t=D/2\)</span>. A project-specific hub height can override the default while retaining the same 15 m interface elevation.</p>
+<p>Under the default hub-height relationship, <span class="math inline">\(L_t=D/2\)</span>. A project-specific hub height can override the default while retaining the same canonical interface elevation.</p>
 </section>
 <section id="fixed-model-assumptions" class="level2">
 <h2 class="anchored" data-anchor-id="fixed-model-assumptions">Fixed Model Assumptions</h2>
@@ -694,15 +695,15 @@ L_t=H_h-15.
 <tbody>
 <tr class="odd">
 <td>Number of blades</td>
-<td><span class="math inline">\(n_b=3\)</span></td>
+<td><span class="math inline">\(n_b=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D626C6164652D636F756E742D76616C7565203E7D7D;\)</span></td>
 </tr>
 <tr class="even">
 <td>Maximum blade-tip speed</td>
-<td><span class="math inline">\(V_\mathrm{tip}=95\)</span> m/s</td>
+<td><span class="math inline">\(V_\mathrm{tip}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7469702D73706565642D76616C7565203E7D7D;\)</span> m/s</td>
 </tr>
 <tr class="odd">
 <td>Rated drivetrain efficiency</td>
-<td><span class="math inline">\(\eta=0.95\)</span></td>
+<td><span class="math inline">\(\eta=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D6472697665747261696E2D656666696369656E63792D76616C7565203E7D7D;\)</span></td>
 </tr>
 <tr class="even">
 <td>Blade regression</td>
@@ -710,7 +711,7 @@ L_t=H_h-15.
 </tr>
 <tr class="odd">
 <td>Main bearings</td>
-<td><span class="math inline">\(n_\mathrm{brg}=2\)</span></td>
+<td><span class="math inline">\(n_\mathrm{brg}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D62656172696E672D636F756E742D76616C7565203E7D7D;\)</span></td>
 </tr>
 <tr class="even">
 <td>Nacelle crane</td>
@@ -879,7 +880,7 @@ m_\mathrm{platforms}
 =0.125m_\mathrm{bedplate}+3000I_\mathrm{crane},
 \]</span></p>
 <p><span class="math display">\[
-m_\mathrm{transformer}=1.915P+1910.
+m_\mathrm{transformer}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7472616E73666F726D65722D706F7765722D76616C7565203E7D7D;P+b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7472616E73666F726D65722D6F66667365742D76616C7565203E7D7D;.
 \]</span></p>
 <p>Transformer mass is included only when a turbine transformer is present in the selected architecture.</p>
 </section>
@@ -917,7 +918,7 @@ m_\mathrm{nacelle}={}&amp;m_\mathrm{LSS}+m_\mathrm{bearings}
 <h2 class="anchored" data-anchor-id="tower-mass">Tower Mass</h2>
 <p>The simple WISDEM tower relationship is:</p>
 <p><span class="math display">\[
-m_\mathrm{tower}=19.828L_t^{2.0282}.
+m_\mathrm{tower}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D746F7765722D7363616C652D76616C7565203E7D7D;L_t^b58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C207661722074757262696E652D746F7765722D6578706F6E656E742D76616C7565203E7D7D7D;.
 \]</span></p>
 <p>This regression depends only on tower length. It does not respond to rotor thrust, RNA mass, tower natural-frequency constraints, foundation stiffness, fatigue, or site conditions. It is therefore an initial screening estimate, not the preferred offshore-tower calculation.</p>
 <p>TowerSE or an equivalent load-based calculation is required before tower-section masses are used for detailed installation planning. The tower remains inside the turbine-cost boundary; the foundation remains outside it.</p>
@@ -1154,7 +1155,7 @@ C_{\mathrm{turbine},a}
 <h3 class="anchored" data-anchor-id="sec-turbine-electrical-credit">Electrical removal credit</h3>
 <p>The adopted <a href="../turbine_system/power_electronics.html">turbine electrical boundary</a> excludes the step-up transformer from turbine supply cost and places the power-curve boundary at the inverter AC output. The calibration first reconstructs the conventional package including the transformer. The executable ledger then subtracts its original RNA-calibrated transformer term from turbine supply and books that same term once under electrical infrastructure in AC cases. The sum is unchanged. Both turbine-level hydrogen cases omit the transformer purchase. No separable inverter credit is claimed without evidence.</p>
 <p><code>turbine-electrical-cost-adjustment</code> now covers only evidenced changes to retained DC protection, switchgear and cabling, in EUR2025 per turbine. It excludes the already removed transformer, any unsupported inverter credit, and the separately booked stack-side DC/DC converter. It remains unresolved; it is not assumed zero.</p>
-<p>The structural calculations retain the common conventional-turbine mass baseline in both current article architectures (D5), as confirmed by the user on 9 October 2026. Turbine installation uses the same fixed benchmark for both; there is no mass-based installation discount. The separate, deferred campaign method retains explicit payload/lift inputs. Equal mass and installation cost do not impose equal turbine purchase prices. Other missing electrical masses remain explicit inputs. A separate <code>turbine-transformer-opex-rate</code> applies to the reallocated AC transformer purchase cost; its scope and value remain O10 work.</p>
+<p>The structural calculations retain the common conventional-turbine mass baseline in both current article architectures (D5), as confirmed by the user on 9 October 2026. Turbine installation uses the same fixed benchmark for both; there is no mass-based installation discount. The separate, deferred campaign method retains explicit payload/lift inputs. Equal mass and installation cost do not impose equal turbine purchase prices. Other missing electrical masses remain explicit inputs. The reallocated AC transformer receives the common provisional O&amp;M rate on its initial capital cost; historical component-specific O&amp;M rates are inactive.</p>
 </section>
 </section>
 <section id="improvements-from-mehta" class="level2">
@@ -1205,7 +1206,7 @@ m_\mathrm{generator}
 </section>
 <section id="tower-feedback" class="level3">
 <h3 class="anchored" data-anchor-id="tower-feedback">4. Tower feedback</h3>
-<p>Mehta scales hub height linearly from the IEA 15 MW reference. That relationship is not adopted here because the model instead uses the directly interpretable lower-tip-clearance relationship <span class="math inline">\(H_h=D/2+15\)</span>. A project-specific hub height can override this default.</p>
+<p>Mehta scales hub height linearly from the IEA 15 MW reference. That relationship is not adopted here because the scenario supplies hub height explicitly. The displayed lower-tip-clearance relationship is an illustrative geometry choice, not an executable default.</p>
 <p>Mehta’s support-structure method nevertheless demonstrates that tower mass must respond to RNA mass, rotor thrust, hub height, and site conditions. The full coupled monopile calculation is outside the turbine boundary, so the intended improvement is TowerSE rather than importing Mehta’s complete support-structure module.</p>
 </section>
 </section>
@@ -1476,10 +1477,14 @@ k_\mathrm{tower}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C20766172207475726269
 </table>
 <p>The worked-example choices are stored in <code>wind_turbine_example.toml</code>; all table values are generated from the shared turbine model.</p>
 <p>The cost is reported in the NREL reference currency basis before project-year escalation or conversion to EUR. The turbine electrical category includes WISDEM’s transformer, electrical-connections, and controls relationships, but it does not provide a separately resolved converter cost. The RNA calibration may therefore absorb part of the unresolved electrical and commercial supply scope. The result is a transparent screening estimate rather than a supplier quotation.</p>
-
-
-
 </section>
+</section>
+<section id="complete-mass-evidence-status" class="level2">
+<h2 class="anchored" data-anchor-id="complete-mass-evidence-status">Complete-mass evidence status</h2>
+<p>The present parametric ledger includes the transformer and explicit mechanical components. The NREL reference reports an aggregate turbine mass and a miscellaneous-equipment category <span class="citation" data-cites="gaertner2020IEA15">(<a href="#ref-gaertner2020IEA15" role="doc-biblioref">Gaertner et al. 2020</a>, Tables ES-1 and 5-1)</span>, but does not isolate the missing converter, controls, switchgear and internal cable mass on this ledger’s boundary. Adding its whole miscellaneous category would risk double counting already modelled auxiliaries. That missing electrical mass therefore remains an explicit TODO, rather than zero. Current hydrogen and conventional turbines use the same total-mass screening assumption; no net mass saving or reinforcement estimate is inferred from their different components.</p>
+
+
+
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">

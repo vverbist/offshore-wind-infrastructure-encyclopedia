@@ -516,6 +516,7 @@ window.Quarto = {
   <li><a href="#cost-boundary" id="toc-cost-boundary" class="nav-link" data-scroll-target="#cost-boundary">Cost Boundary</a></li>
   <li><a href="#capital-intensity-outputs" id="toc-capital-intensity-outputs" class="nav-link" data-scroll-target="#capital-intensity-outputs">Capital-Intensity Outputs</a></li>
   <li><a href="#annual-carrier-cost-outputs" id="toc-annual-carrier-cost-outputs" class="nav-link" data-scroll-target="#annual-carrier-cost-outputs">Annual Carrier-Cost Outputs</a></li>
+  <li><a href="#executable-scope" id="toc-executable-scope" class="nav-link" data-scroll-target="#executable-scope">Executable scope</a></li>
   </ul>
 </nav>
     </div>
@@ -660,14 +661,7 @@ c_{\mathrm{initial}}
 {P_{\mathrm{wind,rated}}},
 \]</span></p>
 <p>where <span class="math inline">\(c_{\mathrm{initial}}\)</span> has units EUR<sub>2025</sub>/kW-wind.</p>
-<p>The lifecycle capital basis may also be reported separately:</p>
-<p><span class="math display">\[
-c_{\mathrm{lifecycle}}
-=
-\frac{C_{\mathrm{lifecycle\ capital}}}
-{P_{\mathrm{wind,rated}}}.
-\]</span></p>
-<p>The label must state whether replacement and decommissioning are included. Neither metric may be normalized by electrolyser, converter, pipeline or export capacity when it is presented as the cross-architecture wind-capacity result.</p>
+<p>Only initial CAPEX is reported per installed wind kW. Replacement and decommissioning remain in the lifecycle annual-cost calculation, without a lifecycle-capital-per-kW indicator. Missing included capital costs leave initial CAPEX and its intensity incomplete; a known subtotal is reported separately.</p>
 </section>
 <section id="annual-carrier-cost-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="annual-carrier-cost-outputs">Annual Carrier-Cost Outputs</h2>
@@ -696,6 +690,10 @@ LC_{\mathrm{H2,HHV}}
 \]</span></p>
 <p>where <span class="math inline">\(HHV_{\mathrm{H2}}\)</span> is in kWh/kg. At 39.4 kWh/kg, the conversion factor is 0.0394 MWh/kg.</p>
 <p>The financial numerator is calculated on <a href="../methodology/financial_and_price_basis.html">Financial and Price-Basis Assumptions</a>. Delivered-energy accounting is defined on <a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a>.</p>
+</section>
+<section id="executable-scope" class="level2">
+<h2 class="anchored" data-anchor-id="executable-scope">Executable scope</h2>
+<p>The current scenario runner evaluates centralised and decentralised hydrogen. Electricity export is a documented calculation contract; a complete electricity scenario branch and its delivered-electricity cost output are not implemented. Component equations and reference figures do not establish an executable cross-carrier comparison.</p>
 
 
 </section>

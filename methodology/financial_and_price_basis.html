@@ -540,6 +540,7 @@ window.Quarto = {
   <li><a href="#lifecycle-capital-basis-and-annual-cost" id="toc-lifecycle-capital-basis-and-annual-cost" class="nav-link" data-scroll-target="#lifecycle-capital-basis-and-annual-cost">Lifecycle Capital Basis and Annual Cost</a></li>
   <li><a href="#manufactured-cost-markup" id="toc-manufactured-cost-markup" class="nav-link" data-scroll-target="#manufactured-cost-markup">Manufactured-Cost Markup</a></li>
   <li><a href="#required-checks-before-aggregation" id="toc-required-checks-before-aggregation" class="nav-link" data-scroll-target="#required-checks-before-aggregation">Required Checks Before Aggregation</a></li>
+  <li><a href="#implemented-conversion-routes-and-provisional-om" id="toc-implemented-conversion-routes-and-provisional-om" class="nav-link" data-scroll-target="#implemented-conversion-routes-and-provisional-om">Implemented conversion routes and provisional O&amp;M</a></li>
   </ul>
 </nav>
     </div>
@@ -574,7 +575,7 @@ window.Quarto = {
 <p>All costs entering a common model result are expressed in <strong>constant 2025 euros (EUR<sub>2025</sub>)</strong>. Each imported cost retains its source currency, source price year and cost boundary.</p>
 <p>A value with an unresolved price year cannot be adopted as an EUR<sub>2025</sub> model input. It may be shown only as a non-combinable reference until the evidence gap is resolved.</p>
 <p>No generic geographic, offshore or market multiplier is applied. Such a factor may be introduced only where evidence defines its scope and prevents overlap with component, installation or commercial allowances.</p>
-<p>The <a href="../hydrogen_production/balance_of_plant.html">BOP reference</a> uses an explicit screening exception: the undated DEA water-treatment indication is assumed to be EUR2023 and escalated using euro-area HICP. This assumption does not establish the supplier quote year or change the rule for other costs.</p>
+<p>The <a href="../hydrogen_production/balance_of_plant.html">BOP reference</a> uses an explicit screening exception: the undated DNV water-treatment indication is assumed to be EUR2023 and escalated using euro-area HICP. This assumption does not establish the supplier quote year or change the rule for other costs.</p>
 </section>
 <section id="currency-and-price-year-normalization" class="level2">
 <h2 class="anchored" data-anchor-id="currency-and-price-year-normalization">Currency and Price-Year Normalization</h2>
@@ -772,6 +773,59 @@ k_{\mathrm{markup}}C_{\mathrm{manufactured}}.
 <li>decommissioning is applied once to total offshore installation CAPEX; and</li>
 <li>annual OPEX is not embedded in CAPEX or another component term.</li>
 </ol>
+</section>
+<section id="implemented-conversion-routes-and-provisional-om" class="level2">
+<h2 class="anchored" data-anchor-id="implemented-conversion-routes-and-provisional-om">Implemented conversion routes and provisional O&amp;M</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cost owner</th>
+<th>Implemented conversion to EUR<sub>2025</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Turbine, transformer and foundation</td>
+<td>USD2022 CPI-U ratio to 2025, then 2025 USD/EUR</td>
+</tr>
+<tr class="even">
+<td>PEM stack and NREL BOP reference</td>
+<td>USD2020 CPI-U ratio to 2025, then 2025 USD/EUR</td>
+</tr>
+<tr class="odd">
+<td>ORBIT installation rates</td>
+<td>USD2024 CPI-U ratio to 2025, then 2025 USD/EUR</td>
+</tr>
+<tr class="even">
+<td>BVG turbine installation</td>
+<td>GBP2024 UK CPI ratio to 2025, then 2025 GBP/EUR</td>
+</tr>
+<tr class="odd">
+<td>Compressor</td>
+<td>CAD source converted using the documented source FX, compressor-specific US PPI escalation, then 2025 USD/EUR; see <a href="../hydrogen_infra/compressor.html">Compressor</a></td>
+</tr>
+<tr class="even">
+<td>DNV thermal water-treatment allowance</td>
+<td>Explicit EUR2023 assumption followed by HICP</td>
+</tr>
+<tr class="odd">
+<td>Platform benchmark observations</td>
+<td>Source-year FX followed by HICP; central EPCI coefficient starts in EUR2023</td>
+</tr>
+<tr class="even">
+<td>Confidential pipeline fit</td>
+<td>Owner-confirmed EUR2025/m; conversion factor is unity</td>
+</tr>
+</tbody>
+</table>
+<p>The CPI-U factors are derived from canonical index inputs in code, rounded to five decimal places to preserve the established cost results. They are no longer independently entered scalar factors. Component-specific exceptions retain their own evidence; no generic index replaces them.</p>
+<p>For lifecycle calculations, the user-selected provisional allowance is:</p>
+<p><span class="math display">\[
+C_{\mathrm{O\&amp;M},i}=f_{\mathrm{O\&amp;M}}\left(C_{\mathrm{supply},i}
++C_{\mathrm{installation},i}+C_{\mathrm{EPCI},i}\right).
+\]</span></p>
+<p>Here <span class="math inline">\(C_{\mathrm{O\&amp;M},i}\)</span> is annual O&amp;M in EUR<sub>2025</sub>/year and <span class="math inline">\(f_{\mathrm{O\&amp;M}}\)</span> is 2%/year, an explicit user assumption selected on 15 October 2026. Capital entries are mutually exclusive where EPCI already includes supply and installation. This is a percentage of initial, non-annualised CAPEX; it replaces the earlier component rates. A missing included capital cost blocks that component’s complete O&amp;M. Detailed activity-based O&amp;M is deferred. The article’s production/CAPEX reporting scope continues to defer O&amp;M and other lifecycle results.</p>
+<p>Residual value is fixed at zero, including at the project endpoint. Nonzero scenario overrides are rejected. The decommissioning proxy includes offshore installation entries only; onshore hydrogen-receipt installation is excluded. The explicit platform removal cost remains a separate term, since platform installation is already bundled into EPCI. The article excludes onshore receipt costs as a boundary assumption; delivery pressure does not establish zero physical connection cost.</p>
 
 
 

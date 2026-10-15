@@ -615,7 +615,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><span class="cost-owned">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
+<p><span class="cost-reference">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
 <p>A <strong>route-kilometre</strong> measures one kilometre of corridor. A <strong>cable-kilometre</strong> measures one kilometre of one manufactured cable. Complete-system route benchmarks must not be multiplied again by the number of pole and return cables.</p>
 </section>
 <section id="reference-cable-system" class="level2">
@@ -662,8 +662,8 @@ window.Quarto = {
 <td style="text-align: right;">About 160 mm</td>
 </tr>
 <tr class="even">
-<td>Indicative mass</td>
-<td style="text-align: right;">About 65 kg/m per cable</td>
+<td>Selected screening pole-cable mass</td>
+<td style="text-align: right;">70 t/km; user assumption</td>
 </tr>
 </tbody>
 </table>
@@ -736,7 +736,7 @@ E_\mathrm{cable,loss}
 =
 \sum_t2I(t)^2R'(T_t)L\,\Delta t.
 \]</span></p>
-<p>The current fixed 99.5% efficiency is only a legacy near-shore approximation. With the illustrative resistance, conductor loss alone reaches 0.5% at about 191 km at 20 degrees C. Distance studies should therefore use the load-dependent calculation and remove the fixed deduction.</p>
+<p>No fixed cable efficiency is adopted. The conductor calculation replaces any flat cable deduction. With the illustrative resistance, conductor loss alone reaches 0.5% at about 191 km at 20 degrees C. Distance studies should therefore use the load-dependent calculation and remove the fixed deduction.</p>
 </section>
 <section id="cable-supply-cost" class="level2">
 <h2 class="anchored" data-anchor-id="cable-supply-cost">Cable-Supply Cost</h2>
@@ -755,9 +755,9 @@ E_\mathrm{cable,loss}
 <tbody>
 <tr class="odd">
 <td>525 kV, 2 GW bipole material reference</td>
-<td style="text-align: right;"><span class="cost-owned">1.26 EUR/kW/km</span></td>
-<td>NREL material cost converted with the 2025 ECB average exchange rate</td>
-<td><strong>This page</strong></td>
+<td style="text-align: right;"><span class="cost-reference">1.26 EUR/kW/km</span></td>
+<td>Reference only; source price year unresolved</td>
+<td>Reference on this page</td>
 </tr>
 <tr class="even">
 <td>Marine/terrestrial installation</td>
@@ -820,7 +820,7 @@ E_\mathrm{cable,loss}
 </section>
 <section id="reliability-and-repair" class="level2">
 <h2 class="anchored" data-anchor-id="reliability-and-repair">Reliability and Repair</h2>
-<p>The legacy model assigns 99% cable availability. Actual energy unavailability depends on route exposure, fault frequency, repair duration and whether a fault removes one pole or the complete corridor.</p>
+<p>Cable availability remains unresolved; no historical flat value is adopted. Actual energy unavailability depends on route exposure, fault frequency, repair duration and whether a fault removes one pole or the complete corridor.</p>
 <p>ENTSO-E and Europacable report an indicative historical cable-system failure rate of about 0.07 faults per 100 km-year and average submarine repair duration of about 60 days <span class="citation" data-cites="entsoeEuropacable2019Reliability">(<a href="#ref-entsoeEuropacable2019Reliability" role="doc-biblioref">ENTSO-E and Europacable 2019</a>)</span>. These historical values are not guarantees for a new 525 kV system.</p>
 <table class="caption-top table">
 <colgroup>
@@ -905,7 +905,7 @@ E_\mathrm{cable,loss}
 </tr>
 <tr class="even">
 <td>Flat cable availability</td>
-<td style="text-align: right;"><p>99%</p></td>
+<td style="text-align: right;">Unresolved; no flat input adopted</td>
 <td style="text-align: right;">Replace with capacity states</td>
 <td>Internal convention</td>
 </tr>
@@ -958,6 +958,7 @@ E_\mathrm{cable,loss}
 </tr>
 </tbody>
 </table>
+<p>The adopted 70 t/km applies to each HVDC pole cable only. Prysmian’s indicated cable mass is 65 t/km <span class="citation" data-cites="prysmian525KVSubmarine">(<a href="#ref-prysmian525KVSubmarine" role="doc-biblioref">Prysmian Group, n.d.</a>)</span>; ORBIT’s library example is 74 t/km <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span>. The selected value is the user’s screening assumption, not a measured common design or a precision-weighted source estimate. Array cables, metallic return, fibre and TCP retain separate product definitions. The electricity branch is not executable.</p>
 
 
 
@@ -972,6 +973,9 @@ ENTSO-E, and Europacable. 2019. <em>Recommendations to Improve <span>HVDC</span>
 </div>
 <div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
 European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
+</div>
+<div id="ref-orbit2026V13CableDefaults" class="csl-entry" role="listitem">
+National Laboratory of the Rockies. n.d. <span>“<span>ORBIT</span> Version 1.3 Cable-Installation Defaults and Vessel Library.”</span> Version 1.3. Accessed August 5, 2026. <a href="https://github.com/NLRWindSystems/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8">https://github.com/NLRWindSystems/ORBIT/tree/bf357ee9e7fc01ee73d7085139055c598ac02ff8</a>.
 </div>
 <div id="ref-prysmian2023AdriaticLink" class="csl-entry" role="listitem">
 Prysmian Group. 2023. <span>“Prysmian Secures the EUR 630m Adriatic Link Submarine Cable Project from Terna.”</span> September 7. <a href="https://www.prysmian.com/en/media/press-releases/prysmian-secures-the-euro-630m-adriatic-link-submarine-able-project-from-terna">https://www.prysmian.com/en/media/press-releases/prysmian-secures-the-euro-630m-adriatic-link-submarine-able-project-from-terna</a>.

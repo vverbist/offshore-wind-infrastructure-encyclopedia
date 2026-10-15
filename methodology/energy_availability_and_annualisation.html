@@ -535,7 +535,8 @@ window.Quarto = {
   <li><a href="#efficiency-and-auxiliary-demand" id="toc-efficiency-and-auxiliary-demand" class="nav-link" data-scroll-target="#efficiency-and-auxiliary-demand">Efficiency and Auxiliary Demand</a></li>
   <li><a href="#availability-combination" id="toc-availability-combination" class="nav-link" data-scroll-target="#availability-combination">Availability Combination</a></li>
   <li><a href="#side-by-side-architecture-ledger" id="toc-side-by-side-architecture-ledger" class="nav-link" data-scroll-target="#side-by-side-architecture-ledger">Side-by-Side Architecture Ledger</a></li>
-  <li><a href="#legacy-availability-values" id="toc-legacy-availability-values" class="nav-link" data-scroll-target="#legacy-availability-values">Legacy Availability Values</a></li>
+  <li><a href="#provisional-availability-status" id="toc-provisional-availability-status" class="nav-link" data-scroll-target="#provisional-availability-status">Provisional availability status</a></li>
+  <li><a href="#lifetime-yield-and-illustrative-degradation" id="toc-lifetime-yield-and-illustrative-degradation" class="nav-link" data-scroll-target="#lifetime-yield-and-illustrative-degradation">Lifetime yield and illustrative degradation</a></li>
   </ul>
 </nav>
     </div>
@@ -598,7 +599,7 @@ window.Quarto = {
 E_{\mathrm{H2,HHV}}
 =
 m_{\mathrm{H2}}
-\frac{39.4\ \mathrm{kWh/kg}}{1000\ \mathrm{kWh/MWh}}.
+\frac{HHV_{\mathrm{H2}}}{1000\ \mathrm{kWh/MWh}}.
 \]</span></p>
 <p>The HHV basis enables EUR/MWh-H2-HHV and EUR/kg-H2 reporting. It does not make hydrogen and electricity equivalent end-use services.</p>
 </section>
@@ -659,7 +660,7 @@ E_{\mathrm{preavailability},a}
 <td>Wind-turbine generation system</td>
 <td><span class="math inline">\(A_{\mathrm{turb,e}}\)</span>: unresolved</td>
 <td><span class="math inline">\(A_{\mathrm{turb,c}}\)</span>: unresolved</td>
-<td>Included in integrated turbine-production boundary below</td>
+<td>Included in integrated turbine-production factor below</td>
 <td>TURB-002</td>
 </tr>
 <tr class="even">
@@ -736,10 +737,52 @@ E_{\mathrm{preavailability},a}
 </table>
 <p>Platform availability is not multiplied as a generic extra factor when the same platform-supported equipment is already included in a subsystem boundary. If a future platform factor covers structural or common-utility outages not included elsewhere, its owner must state that non-overlapping scope before it is added.</p>
 </section>
-<section id="legacy-availability-values" class="level2">
-<h2 class="anchored" data-anchor-id="legacy-availability-values">Legacy Availability Values</h2>
-<p>Earlier documentation listed flat values between 98% and 100%, including conflicting 98.5% and 99.5% electrolyser-related values. Their subsystem boundaries and evidence are not sufficient to select one as the adopted factor.</p>
-<p>Those values are therefore not active architecture-ledger inputs. Component owners may retain them as clearly labelled legacy assumptions or sensitivities until they are evidenced and scoped. In particular, 100% pipeline availability is only a zero-outage scenario, not a reliability conclusion.</p>
+<section id="provisional-availability-status" class="level2">
+<h2 class="anchored" data-anchor-id="provisional-availability-status">Provisional availability status</h2>
+<p>Centralised generation uses <code>turbine-generation-availability</code> separately from central production availability. The distributed production factor retains its integrated turbine-generation scope. Required factors remain unresolved; no historical flat values are adopted. Wind-state records represent available equipment, so a factor must not repeat outages already embedded in those records.</p>
+</section>
+<section id="lifetime-yield-and-illustrative-degradation" class="level2">
+<h2 class="anchored" data-anchor-id="lifetime-yield-and-illustrative-degradation">Lifetime yield and illustrative degradation</h2>
+<p>For undegraded annual production <span class="math inline">\(Q_0\)</span> [kg/year], annual availability factors <span class="math inline">\(A_s\)</span> [fraction] and the stack lifetime factor <span class="math inline">\(f_{\rm life}\)</span> [fraction]:</p>
+<p><span class="math display">\[
+Q_{\rm BOL,delivered}=Q_0\prod_s A_s,\qquad
+\overline Q_{\rm life}=Q_{\rm BOL,delivered}f_{\rm life}.
+\]</span></p>
+<p>Thus cumulative lifetime yield loss relative to the same available, undegraded case is <span class="math inline">\(1-f_{\rm life}\)</span>. It differs from the degradation at the end of the project: loss accumulates within each stack life and resets on replacement. The <a href="../hydrogen_production/stack.html">stack calculation</a> owns the rate, full-load-hour dependence, reset interval and project-average integration.</p>
+<p>For illustration, the selected article’s saved pressure/diameter case <code>p140barg-d8in</code> provides the operating states. Full-load hours below are calculated from stack electricity divided by installed stack capacity, using those saved operation tables and the shared degradation function. This is not an adopted lifecycle cost result or a new availability assumption.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Diagnostic</th>
+<th style="text-align: right;">Centralised</th>
+<th style="text-align: right;">Direct DC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Stack full-load hours/year</td>
+<td style="text-align: right;"><p>4398.3</p></td>
+<td style="text-align: right;"><p>4625.9</p></td>
+</tr>
+<tr class="even">
+<td>Terminal degradation before any project-end replacement</td>
+<td style="text-align: right;"><p>9.79%</p></td>
+<td style="text-align: right;"><p>0.82%</p></td>
+</tr>
+<tr class="odd">
+<td>Cumulative yield loss over 25 years</td>
+<td style="text-align: right;"><p>4.95%</p></td>
+<td style="text-align: right;"><p>4.82%</p></td>
+</tr>
+</tbody>
+</table>
+<p>Small differences in full-load hours can put cases on opposite sides of a replacement reset near project end. Terminal losses can therefore differ substantially while cumulative yield losses remain similar. This does not establish an economic replacement policy.</p>
+<p>An availability comparison is deferred because the required factor values are unresolved. The fixed calendar replacement-cost schedule is also not yet tied to the degradation reset schedule. The article continues to report production before outages at beginning of life and defers lifecycle economics.</p>
 
 
 

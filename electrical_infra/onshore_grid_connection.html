@@ -800,44 +800,11 @@ C_\mathrm{landfall}
 </section>
 <section id="conversion-and-transformer-losses" class="level2">
 <h2 class="anchored" data-anchor-id="conversion-and-transformer-losses">Conversion and Transformer Losses</h2>
-<p>The current model fills the previously blank onshore efficiency with a provisional aggregate <strong>98.5%</strong>. This covers the onshore converter, converter transformers and station auxiliaries once. Hitachi Energy reports conversion losses below 1% per station for the 900 MW DolWin2 VSC system <span class="citation" data-cites="hitachiDolWin2">(<a href="#ref-hitachiDolWin2" role="doc-biblioref">Hitachi Energy, n.d.</a>)</span>, supporting the order of magnitude but not establishing a 2 GW guarantee.</p>
-<p>Large-transformer efficiency regulation provides another useful check. For liquid-immersed large transformers, the European Tier 2 minimum peak-efficiency index is 99.770% at 100 MVA, rises with rating and reaches 99.797% at 200 MVA and above <span class="citation" data-cites="europeanCommission2014Transformers">(<a href="#ref-europeanCommission2014Transformers" role="doc-biblioref">European Commission 2014</a>)</span>. Applicability and exclusions must be checked for the selected equipment. PEI is measured at the loading point of maximum efficiency, so it must not be interpreted as constant full-load or annual efficiency.</p>
-<p>The project does not yet have the OEM loss curves and auxiliary-load specifications needed for a load-dependent calculation. Until those data are available:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Boundary</th>
-<th style="text-align: right;">Working value</th>
-<th>Do not also apply</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Onshore VSC, transformation and auxiliaries</td>
-<td style="text-align: right;">98.5%</td>
-<td>A second generic onshore-converter factor</td>
-</tr>
-<tr class="even">
-<td>HVDC cable</td>
-<td style="text-align: right;">Calculated separately</td>
-<td>Cable loss inside the 98.5% station value</td>
-</tr>
-<tr class="odd">
-<td>Offshore conversion</td>
-<td style="text-align: right;">Calculated separately</td>
-<td>Offshore loss again at the onshore interface</td>
-</tr>
-</tbody>
-</table>
+<p>Onshore conversion, transformation and auxiliaries require one non-overlapping loss boundary. No flat efficiency is adopted for the executable model. Required supplier curves, loading conditions and auxiliary specifications remain TODO. The cable and offshore losses belong to their own component owners; they must not be included twice in an eventual station factor.</p>
 </section>
 <section id="availability-curtailment-and-resilience" class="level2">
 <h2 class="anchored" data-anchor-id="availability-curtailment-and-resilience">Availability, Curtailment and Resilience</h2>
-<p>The internal model assigns <strong>98.0% availability</strong> to the onshore station. This is the same onshore-terminal factor documented on the converter-station page and shown in the section overview; it is applied once, not multiplied by a second 98% grid-interface factor. As with the offshore station, a single scalar hides equipment redundancy and degraded states. The standard bipole can retain about 1 GW after a pole-path outage, while a common auxiliary, control, busbar or grid event may remove the complete 2 GW.</p>
+<p>Station availability is unresolved. Future capacity-state modelling should represent partial pole outages and common-mode events explicitly. No historical flat station factor is adopted or applied by the current hydrogen runner.</p>
 <p>Energy-equivalent availability is:</p>
 <p><span class="math display">\[
 A_E
@@ -939,9 +906,9 @@ A_E
 </tr>
 <tr class="even">
 <td>Onshore converter CAPEX</td>
-<td style="text-align: right;">Included in 785 EUR<sub>2025</sub>/kW converter pair</td>
-<td style="text-align: right;">613–1,030 EUR<sub>2025</sub>/kW pair range</td>
-<td>DEA coefficient; platform excluded</td>
+<td style="text-align: right;">Unresolved</td>
+<td style="text-align: right;">Equipment-only basis required</td>
+<td>Reference values not adopted</td>
 </tr>
 <tr class="odd">
 <td>Underground DC cable material</td>
@@ -963,15 +930,15 @@ A_E
 </tr>
 <tr class="even">
 <td>Onshore aggregate efficiency</td>
-<td style="text-align: right;">98.5%</td>
-<td style="text-align: right;">98.5–99.2%</td>
-<td>Provisional aggregate</td>
+<td style="text-align: right;">Unresolved</td>
+<td style="text-align: right;">Scoped supplier loss data required</td>
+<td>No adopted flat value</td>
 </tr>
 <tr class="odd">
-<td>Flat station availability</td>
-<td style="text-align: right;">98.0%</td>
-<td style="text-align: right;">Replace with 100/50/0% states</td>
-<td>Internal convention</td>
+<td>Station availability</td>
+<td style="text-align: right;">Unresolved</td>
+<td style="text-align: right;">Future capacity-state model deferred</td>
+<td>No flat value adopted</td>
 </tr>
 <tr class="even">
 <td>Onshore footprint</td>
@@ -1008,18 +975,18 @@ A_E
 </tr>
 <tr class="even">
 <td>The 80 km base case ends at shore</td>
-<td>Underground route cost remains zero unless <span class="math inline">\(L_u\)</span> is entered explicitly</td>
+<td>Underground route cost is unresolved and blocks a complete electricity result</td>
 </tr>
 <tr class="odd">
 <td>No grid-node model</td>
 <td>Connection capacity, congestion and reinforcement are unknown</td>
 </tr>
 <tr class="even">
-<td>Constant 98.5% efficiency</td>
+<td>Unresolved station efficiency</td>
 <td>No-load, part-load and ambient-temperature effects are hidden</td>
 </tr>
 <tr class="odd">
-<td>Constant 98% availability</td>
+<td>Unresolved station availability</td>
 <td>Pole redundancy, spare transformers and common-mode events are hidden</td>
 </tr>
 <tr class="even">
@@ -1048,17 +1015,11 @@ A_E
 <div id="ref-ecb2025USDEUR" class="csl-entry" role="listitem">
 European Central Bank. 2026. <span>“US Dollar/Euro ECB Reference Exchange Rate, Annual Average.”</span> EXR.A.USD.EUR.SP00.A. <a href="https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A">https://data.ecb.europa.eu/data/datasets/EXR/EXR.A.USD.EUR.SP00.A</a>.
 </div>
-<div id="ref-europeanCommission2014Transformers" class="csl-entry" role="listitem">
-European Commission. 2014. <em>Commission Regulation (<span>EU</span>) No 548/2014 on Implementing Directive 2009/125/EC with Regard to Small, Medium and Large Power Transformers</em>. European Union regulation. <a href="https://eur-lex.europa.eu/eli/reg/2014/548/2019-11-14/eng">https://eur-lex.europa.eu/eli/reg/2014/548/2019-11-14/eng</a>.
-</div>
 <div id="ref-europeanCommission2016HVDC" class="csl-entry" role="listitem">
 European Commission. 2016. <em>Commission Regulation (<span>EU</span>) 2016/1447 Establishing a Network Code on Requirements for Grid Connection of High Voltage Direct Current Systems and Direct Current-Connected Power Park Modules</em>. European Union regulation. <a href="https://eur-lex.europa.eu/eli/reg/2016/1447/oj">https://eur-lex.europa.eu/eli/reg/2016/1447/oj</a>.
 </div>
 <div id="ref-dutchSystemCode2026" class="csl-entry" role="listitem">
 Government of the Netherlands. 2026. <em>Systeemcode elektriciteit</em>. Dutch electricity system code. <a href="https://wetten.overheid.nl/BWBR0052336/">https://wetten.overheid.nl/BWBR0052336/</a>.
-</div>
-<div id="ref-hitachiDolWin2" class="csl-entry" role="listitem">
-Hitachi Energy. n.d. <span>“DolWin2.”</span> Accessed July 14, 2026. <a href="https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2">https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2</a>.
 </div>
 <div id="ref-tennet2024TwoGWProgram" class="csl-entry" role="listitem">
 TenneT. 2024. <em>TenneT 2GW Program</em>. Technical presentation. TenneT. <a href="https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf">https://www.hvdccentre.com/wp-content/uploads/2024/07/3.2_TenneT-2GW-Program-Kabul.pdf</a>.

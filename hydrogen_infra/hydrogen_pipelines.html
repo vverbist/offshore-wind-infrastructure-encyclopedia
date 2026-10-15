@@ -579,7 +579,7 @@ window.Quarto = {
 <li>material CAPEX for composite flexible hydrogen pipelines</li>
 <li>transport capacity as a function of diameter, pressure, and route length</li>
 <li>the number of parallel export pipelines required for a wind-farm hydrogen flow</li>
-<li>the coupling between pipeline pressure, compressor duty, and total LCOE</li>
+<li>the coupling between pipeline pressure, compressor duty, and levelised hydrogen cost</li>
 </ul>
 </section>
 <section id="composite-flexible-pipelines" class="level2">
@@ -740,7 +740,7 @@ P_{\mathrm{H_2},\mathrm{HHV}}
 1000
 }
 \]</span></p>
-<p>where <span class="math inline">\(\mathrm{HHV}_\mathrm{H_2}=39.4 \ \mathrm{kWh/kg}\)</span> and <span class="math inline">\(P_{\mathrm{H_2},\mathrm{HHV}}\)</span> is in MW when <span class="math inline">\(\dot{m}_\mathrm{max}\)</span> is in kg/h.</p>
+<p>where <span class="math inline">\(\mathrm{HHV}_\mathrm{H_2}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220687964726F67656E2D6868762D76616C7565203E7D7D; \ \mathrm{kWh/kg}\)</span> and <span class="math inline">\(P_{\mathrm{H_2},\mathrm{HHV}}\)</span> is in MW when <span class="math inline">\(\dot{m}_\mathrm{max}\)</span> is in kg/h.</p>
 <p><a href="#fig-pipeline-capacity" class="quarto-xref">Figure&nbsp;1</a> shows the resulting capacity curves over an illustrative diameter and inlet-pressure range, for the reference-case route of 100 km and outlet pressure of 67.01 bar(a).</p>
 <div id="fig-pipeline-capacity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -890,11 +890,11 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 </tr>
 <tr class="even">
 <td>Infield pipeline capacity</td>
-<td style="text-align: right;">about 500 MW equivalent (outlet pressure assumption not yet documented; see Model Limitations)</td>
+<td style="text-align: right;">Requires section length, inlet/outlet pressure and internal diameter; no fixed MW rating adopted</td>
 </tr>
 <tr class="odd">
-<td>Pipeline OPEX</td>
-<td style="text-align: right;">0.5% of material CAPEX per year</td>
+<td>Provisional O&amp;M</td>
+<td style="text-align: right;">2%/year of complete initial component CAPEX/year; detailed treatment deferred</td>
 </tr>
 </tbody>
 </table>
@@ -907,6 +907,10 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 <section id="availability" class="level2">
 <h2 class="anchored" data-anchor-id="availability">Availability</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Component</th>
@@ -916,15 +920,15 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 <tbody>
 <tr class="odd">
 <td>Infield pipelines</td>
-<td style="text-align: right;">100%</td>
+<td style="text-align: right;">Unresolved lifecycle availability; no flat value adopted</td>
 </tr>
 <tr class="even">
 <td>Export pipelines</td>
-<td style="text-align: right;">100%</td>
+<td style="text-align: right;">Unresolved lifecycle availability; no flat value adopted</td>
 </tr>
 </tbody>
 </table>
-<p>This is a modelling convention and should be tested in sensitivity work if pipeline outages become material.</p>
+<p>Required factors remain unresolved; the production/CAPEX article defers availability. A zero-outage case requires an explicit scenario assumption.</p>
 </section>
 <section id="model-limitations" class="level2">
 <h2 class="anchored" data-anchor-id="model-limitations">Model Limitations</h2>
@@ -959,12 +963,12 @@ Figure&nbsp;3: Hydrogen export-pipeline material cost per unit of transport capa
 <td>Detailed thermal behaviour, elevation effects, transient operation, and linepack are excluded.</td>
 </tr>
 <tr class="odd">
-<td>Availability is fixed at 100%</td>
+<td>Availability is unresolved</td>
 <td>Repair strategy, redundancy, and partial-flow operation are not modelled.</td>
 </tr>
 <tr class="even">
 <td>The outlet-pressure assumption behind the infield capacity figure is not documented</td>
-<td>The 500 MW-equivalent figure should be re-derived once the infield collection-point pressure is defined, rather than assumed equal to the 66 bar export outlet pressure.</td>
+<td>Capacity must be derived for the supplied section pressure budget; no fixed infield MW-equivalent rating is adopted.</td>
 </tr>
 </tbody>
 </table>

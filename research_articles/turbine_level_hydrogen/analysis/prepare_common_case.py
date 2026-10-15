@@ -28,6 +28,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
+from model.wind_resource_and_layout.wind_resource_and_weibull import discretize_weibull, annual_energy_metrics
 from model.inputs import load_inputs
 from model.wind_resource_and_layout.wake_modelling_and_spacing import calculate_wakes
 from research_articles.turbine_level_hydrogen.analysis.reference_case import (
@@ -156,39 +157,9 @@ def collection_network(case: dict, derived: dict, coords: pd.DataFrame):
 
 
 def wind_states(case: dict, curve: pd.DataFrame, annual_hours: float,
-                direction_step_deg: float, speed_bin_m_s: float) -> pd.DataFrame:
-    """Joint direction-speed states from the fitted sector Weibull table.
-
-    Direction is spread uniformly within each 30-degree sector, whose stored label
-    is its lower edge. Each speed bin is represented by its midpoint. All speeds
-    outside the tabulated operating range form one zero-power state.
-    """
+                direction_step_deg: float, speed_bin_m_s: float):
     sectors = pd.read_csv(SCENARIOS / case["wind"]["sector_file"])
-    width = float(sectors.sector_deg.iloc[1] - sectors.sector_deg.iloc[0])
-    per_sector = round(width / direction_step_deg)
-    if not np.isclose(per_sector * direction_step_deg, width):
-        raise ValueError("Direction step must divide the sector width")
-    operating = curve[curve.power_kw > 0].speed_m_s
-    cut_in, cut_out = operating.min(), operating.max()
-    edges = np.arange(cut_in, cut_out + speed_bin_m_s / 2, speed_bin_m_s)
-    if not np.isclose(edges[-1], cut_out):
-        raise ValueError("Speed bins must end at cut-out")
-    records, operating_probability = [], 0.0
-    for sector in sectors.itertuples():
-        cdf = 1 - np.exp(-(edges / sector.c) ** sector.k)
-        probability = sector.freq * np.diff(cdf) / per_sector
-        for step in range(per_sector):
-            direction = (sector.sector_deg + (step + 0.5) * direction_step_deg) % 360
-            for low, p in zip(edges[:-1], probability):
-                records.append({"state": f"d{direction:05.1f}-v{low + speed_bin_m_s / 2:05.2f}",
-                                "speed_m_s": round(low + speed_bin_m_s / 2, 4),
-                                "direction_deg": direction, "hours": p * annual_hours})
-        operating_probability += probability.sum() * per_sector
-    states = pd.DataFrame(records)
-    remainder = annual_hours - states.hours.sum()
-    if not np.isclose(1 - operating_probability, remainder / annual_hours):
-        raise ValueError("State probabilities do not close")
-    return states, remainder
+    return discretize_weibull(sectors, curve, annual_hours, direction_step_deg, speed_bin_m_s)
 
 
 def power_states(coords, states, remainder_hours, case, inputs):
@@ -244,9 +215,8 @@ def main():
 
     ids = coords.turbine.tolist()
     annual = table[table.state != DESIGN_STATE]
-    wake_mwh = float((annual[ids].sum(axis=1) * annual.hours).sum() / 1000)
-    single = np.interp(states.speed_m_s, curve.speed_m_s, curve.power_kw)
-    no_wake_mwh = float((single * states.hours).sum() * len(ids) / 1000)
+    metrics = annual_energy_metrics(annual, states, curve, ids, case["turbine"]["rated_power_mw"] * 1000, annual_hours)
+    wake_mwh, no_wake_mwh = metrics["wake_mwh"], metrics["no_wake_mwh"]
     empirical_mwh, hourly_count = empirical_no_wake_check(case, curve, annual_hours)
     # Discretisation check: repeat the wake calculation with 1-degree directions.
     fine, fine_remainder = wind_states(case, curve, annual_hours, 1, wind["speed_bin_m_s"])
@@ -259,8 +229,8 @@ def main():
         "pywake_version": version, "state_count": len(annual), "design_state": DESIGN_STATE,
         "no_power_hours": float(remainder),
         "no_wake_aep_gwh": no_wake_mwh / 1000, "wake_aep_gwh": wake_mwh / 1000,
-        "wake_loss": 1 - wake_mwh / no_wake_mwh,
-        "gross_capacity_factor": wake_mwh * 1000 / (installed_kw * annual_hours),
+        "wake_loss": metrics["wake_loss"],
+        "gross_capacity_factor": metrics["gross_capacity_factor"],
         "max_annual_farm_fraction": float(annual[ids].sum(axis=1).max() / installed_kw),
         "single_turbine_weibull_aep_mwh": no_wake_mwh / len(ids),
         "single_turbine_hourly_aep_mwh": empirical_mwh, "hourly_record_count": hourly_count,

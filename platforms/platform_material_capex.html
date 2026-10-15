@@ -543,6 +543,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example">Why the DNV Structural Model Is Not the Total-Cost Model</a></li>
   <li><a href="#executable-interface-output-and-applicability" id="toc-executable-interface-output-and-applicability" class="nav-link" data-scroll-target="#executable-interface-output-and-applicability">Executable Interface, Output and Applicability</a></li>
+  <li><a href="#feeder-and-termination-qualification" id="toc-feeder-and-termination-qualification" class="nav-link" data-scroll-target="#feeder-and-termination-qualification">Feeder and termination qualification</a></li>
   </ul>
 </nav>
     </div>
@@ -808,9 +809,14 @@ Figure&nbsp;1: Commercial offshore packages, conceptual hydrogen estimates and f
 <p>Supply <code>[platform] topside_mass_t</code> in tonnes. Equipment-only mass is rejected. Alternatively, use <code>mass_method = "power_scaling"</code> and <code>mass_reference = "electrolysis"</code>; the workflow derives installed DC rating from wind-farm capacity, overplanting and whole stack modules. No separate rating is supplied. The <code>"hvdc"</code> and <code>"custom"</code> branches retain <code>rated_power_gw</code>; the upstream page defines those rating boundaries. A <code>"custom"</code> reference requires <code>platform-reference-topside-mass</code> and <code>platform-reference-power</code>. Supplying direct mass and power scaling together is rejected. Platform count remains one, including extrapolated cases.</p>
 <p>The renamed coefficient <code>platform-epci-topside-unit-cost-source</code> makes the changed denominator explicit. Its source value is half the earlier equipment-tonne coefficient, preserving the calibration under the former equal equipment/structure split. This is an algebraic rebasing, not new cost evidence; the structural fraction is no longer an active cost input. The screening endpoints were rebased in the same way. Recorded coefficient and exponent overrides retain their price basis and cost boundary.</p>
 <p><code>physical.platform_costs</code> reports the calculation and <code>physical.platform_total_eur</code> reports its total. The ledger contains one <code>platform / epci</code> entry. A separate platform supply or installation entry alongside EPCI is rejected. The calculation requires neither a crane selection nor jacket and pile mass estimates. Any supplied depth is retained as applicability metadata; the workflow does not certify a lift plan.</p>
-<p>Annual platform OPEX uses <code>platform-opex-rate</code> on the combined platform EPCI total. This rate remains unresolved and must be calibrated for that cost boundary. Hosted equipment retains its own purchase and OPEX entries.</p>
+<p>Annual platform O&amp;M uses the common <code>financial-provisional-opex-rate</code> on EPCI, an explicit user assumption. Hosted equipment retains its own capital cost and corresponding O&amp;M; its purchase is not part of platform EPCI. Detailed activity-based O&amp;M is deferred.</p>
 <p><strong>Decommissioning is separate from EPCI.</strong> The old installation-based proxy cannot recover platform removal cost from the combined package. <code>platform-decommissioning-cost</code> is therefore a separate, initially unresolved EUR<sub>2025</sub> input. It enters lifetime costs once and does not reduce or block the calculated platform CAPEX. Missing decommissioning blocks complete LCOH. The existing installation-based proxy still applies to separately costed non-platform installation <a href="../methodology/financial_and_price_basis.html#decommissioning">see financial treatment</a>.</p>
-<p><strong>Remaining evidence work:</strong> expand the commercial sample, obtain matched complete topside weights, reconcile auxiliary-equipment scope, and provide platform OPEX and decommissioning inputs. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.</p>
+<p><strong>Remaining evidence work:</strong> expand the commercial sample, obtain matched complete topside weights, reconcile auxiliary-equipment scope, and provide activity-based O&amp;M and decommissioning evidence. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.</p>
+</section>
+<section id="feeder-and-termination-qualification" class="level2">
+<h2 class="anchored" data-anchor-id="feeder-and-termination-qualification">Feeder and termination qualification</h2>
+<p>TenneT’s 2 GW platform design distinguishes cable pulling and termination areas <span class="citation" data-cites="tennet2022TwoGWPlatformDesign">(<a href="#ref-tennet2022TwoGWPlatformDesign" role="doc-biblioref">TenneT 2022</a>)</span>. This physical arrangement does not establish that the reference EPCI price includes the article’s feeder count or all cable pull-in, termination, testing and commissioning. The aggregate platform and cable packages therefore retain an explicit interface qualification. No cost is added or deducted, and no feeder-count limit is imposed from a different platform class. Matched commercial scope evidence remains TODO.</p>
+<p>Readiness was reassessed on 15 October 2026: aggregate EPCI is executable with declared uncertainty; detailed installation qualification and cable-package interface evidence remain unresolved. Historical separate-campaign cost blockers are superseded for the active method, rather than treated as engineering checks that have passed.</p>
 
 
 
@@ -867,6 +873,9 @@ RTE. 2024b. <span>“Plateformes En Mer Et Stations de Conversion a Terre: Norma
 </div>
 <div id="ref-tennet2021OwnerEquipment" class="csl-entry" role="listitem">
 TenneT. 2021. <span>“TenneT Transformers Go Topside on Hollandse Kust Noord Platform.”</span> <a href="https://ayop.com/en/news/tennet-transformers-go-topside-on-hollandse-kust-noord-platform/">https://ayop.com/en/news/tennet-transformers-go-topside-on-hollandse-kust-noord-platform/</a>.
+</div>
+<div id="ref-tennet2022TwoGWPlatformDesign" class="csl-entry" role="listitem">
+TenneT. 2022. <em>Offshore 2GW Projects: Platform Design Report, DES.04.001-2GW, Revision 3.0</em>. <a href="https://www.rvo.nl/sites/default/files/2022-06/A03-Aanvulling-aanvraag-watervergunning-offshore-Net-op-zee-IJmuiden-Ver-Alpha-fase-1.pdf">https://www.rvo.nl/sites/default/files/2022-06/A03-Aanvulling-aanvraag-watervergunning-offshore-Net-op-zee-IJmuiden-Ver-Alpha-fase-1.pdf</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <!-- Generated by tools/build-readiness-sidebar.js. -->

@@ -540,6 +540,7 @@ window.Quarto = {
   <li><a href="#availability" id="toc-availability" class="nav-link" data-scroll-target="#availability">Availability</a></li>
   <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
   <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
+  <li><a href="#executed-cost-and-auxiliary-boundary" id="toc-executed-cost-and-auxiliary-boundary" class="nav-link" data-scroll-target="#executed-cost-and-auxiliary-boundary">Executed cost and auxiliary boundary</a></li>
   </ul>
 </nav>
     </div>
@@ -670,8 +671,8 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td>Complete 66 kV-to-DC power-electronics CAPEX</td>
-<td style="text-align: right;">185 EUR/kW</td>
-<td style="text-align: right;">100–300 EUR/kW</td>
+<td style="text-align: right;"><p>TODO (EUR/kW)</p></td>
+<td style="text-align: right;">Reference comparisons do not adopt a price</td>
 </tr>
 <tr class="even">
 <td>Capacity-scaling exponent</td>
@@ -809,6 +810,10 @@ P_{\mathrm{in,66kV}}
 </tr>
 </tbody>
 </table>
+</section>
+<section id="executed-cost-and-auxiliary-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="executed-cost-and-auxiliary-boundary">Executed cost and auxiliary boundary</h2>
+<p>The package purchase coefficient is applied to installed wind capacity served [kW-wind], not stack DC nameplate capacity. Stack overplanting therefore changes stack purchase but does not independently multiply this interface package. Required package prices remain explicit inputs; literature comparisons are reference evidence rather than adopted prices. The operating solver closes stack plus BOP plus compression demand on the common post-conversion bus, using the existing coupled calculation rather than an approximate auxiliary lookup. A dedicated DC/DC converter is retained only for the deferred conservative sensitivity; direct DC uses its separate aggregate interface allowance.</p>
 
 
 

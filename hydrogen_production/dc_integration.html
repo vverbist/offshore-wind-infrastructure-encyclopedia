@@ -555,6 +555,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#validation-priorities" id="toc-validation-priorities" class="nav-link" data-scroll-target="#validation-priorities">Validation Priorities</a></li>
   <li><a href="#model-implication" id="toc-model-implication" class="nav-link" data-scroll-target="#model-implication">Model Implication</a></li>
+  <li><a href="#executed-cost-and-auxiliary-boundary" id="toc-executed-cost-and-auxiliary-boundary" class="nav-link" data-scroll-target="#executed-cost-and-auxiliary-boundary">Executed cost and auxiliary boundary</a></li>
   </ul>
 </nav>
     </div>
@@ -844,6 +845,10 @@ I_{\mathrm{stack}}
 <p>Direct DC coupling of a wind-turbine generator and PEM electrolyser without a dedicated electrolyser-side DC/DC converter is technically credible. The turbine controls generator power, while the PEM polarisation characteristic establishes the corresponding DC voltage and current. The remaining gap is full-scale engineering validation, not proof of the underlying electrical principle.</p>
 </div>
 </div>
+</section>
+<section id="executed-cost-and-auxiliary-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="executed-cost-and-auxiliary-boundary">Executed cost and auxiliary boundary</h2>
+<p>The package purchase coefficient is applied to installed wind capacity served [kW-wind], not stack DC nameplate capacity. Stack overplanting therefore changes stack purchase but does not independently multiply this interface package. Required package prices remain explicit inputs; literature comparisons are reference evidence rather than adopted prices. The operating solver closes stack plus BOP plus compression demand on the common post-conversion bus, using the existing coupled calculation rather than an approximate auxiliary lookup. A dedicated DC/DC converter is retained only for the deferred conservative sensitivity; direct DC uses its separate aggregate interface allowance.</p>
 
 
 

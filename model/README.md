@@ -129,7 +129,7 @@ uses the central string rating; feeder bays are not a required input. Electrical
 equipment remains in the complete topside package. Route allowance and
 two water-depth vertical legs per section give a screening physical length.
 Actual termination elevations, slack, charging and sheath losses are not
-resolved. The resistance input must be an adopted effective AC resistance.
+resolved. Active AC operation uses a fixed loss fraction, not a resistance input.
 
 For hydrogen collection, non-turbine coordinates have `node,x_m,y_m`. Sections
 have `section,from,to,vertical_m,route_allowance,flow_share,diameter_m,inlet_bar,
@@ -155,11 +155,11 @@ provisional capacity screen, not a hydrogen-product qualification.
 - Existing stack and TCP evidence remain provisional as agreed. The cost
   surface is loaded only when an explicit local path is supplied.
 - Redundancy and architecture-dependent structural feedback are deferred.
-- O&M follows the retained component inventory; no general distributed premium
-  or claim that electrical equipment dominates total maintenance is inserted.
+- Provisional annual O&M is 2% of each component's initial supply + installation
+  + EPCI capital, counted once. Detailed activity-based O&M is deferred.
 - Replacement development is deferred. The existing fixed-life event-count
-  interface is available, but life, intervention cost and lifetime production
-  remain missing until adopted. Beginning-of-life yield is not passed off as
+  interface is available, but life and intervention cost remain missing until
+  adopted. Lifetime production is calculated from operating full-load hours. Beginning-of-life yield is not passed off as
   lifetime-average production. Degradation is applied afterwards as an energy
   penalty: the lifetime production factor follows from the degradation rate,
   the end-of-life threshold and the calculated stack full-load hours.
@@ -185,22 +185,25 @@ feasibility unassessed. The article selects 6 inches and connects its confidenti
 local pipeline callable through the shared scenario's data section.
 Missing included costs block complete LCOH; known subtotals remain available.
 
-Unresolved interfaces currently include platform mass, OPEX and decommissioning inputs,
+Unresolved interfaces currently include qualified platform applicability and decommissioning inputs,
 price normalisation, electrical cost adjustments/losses, complete installation
-rates/plans, turbine-level equipment lifts, and O&M/availability inputs. The
+rates/plans, turbine-level equipment lifts, and activity-based O&M/availability evidence. The
 conventional turbine calibration can include unresolved converter scope; the
 turbine-level electrical adjustment must reconcile removed scope with the
 separately costed interface before adoption.
 
-For decentralised installation, `turbine-hydrogen-equipment-mass` adds the
-equipment carried per turbine and `turbine-distributed-maximum-lift` records the
-largest lift in the adopted combined installation arrangement. The selected
-installation spread and site time must cover that same arrangement. Neither
-input is inferred from electrical savings. Connections and manifolds have
-their own unresolved O&M allowances; they are not silently omitted.
+For decentralised campaign installation, the selected screening assumption is
+equal complete turbine mass across architectures, also for payload. A separate
+`turbine-distributed-maximum-lift` remains necessary for the combined lifting
+arrangement. No transformer mass saving or unsubstantiated hydrogen-equipment
+mass addition is used. The fixed article turbine benchmark already treats both
+architectures equally. Foundation payload is independently monopile plus TP.
+Campaign demobilisation and offshore weather allowances are explicit unresolved
+inputs; the reference turbine benchmark remains a separate bundled method.
 
-Production availability must include turbine-generation outages and the
-production equipment within its stated scope, excluding the separately applied
+Centralised generation availability uses `turbine-generation-availability`,
+separate from central production outages. Distributed production availability
+retains its integrated generation/production boundary, excluding separately applied
 compression and transport outages. Supplied wind states represent available
 equipment; do not apply these factors to records that already include outages.
 
@@ -275,7 +278,7 @@ cost covers delivered offshore structure and integration, not hosted equipment
 purchase. Legacy `inventory`, `supply_cost` and installation helpers remain
 inactive comparison tools; the old methodology is also archived.
 
-Platform annual OPEX is the unresolved `platform-opex-rate` times EPCI cost.
+Platform annual O&M uses the common provisional rate times EPCI cost.
 The separate `platform-decommissioning-cost` input is initially unresolved;
 it is added once to lifetime costs. The installation-fraction decommissioning
 proxy applies only to separate installation entries, never to EPCI. Missing
@@ -304,7 +307,8 @@ the known transformer mass; tower/foundation sizing retains the common baseline.
 `electrolysis.manufacturing_output_mw_year` selects the stack supply-chain case.
 `physical.stack_purchase_cost_basis` reports the shared derivation from NREL's
 manufacturing anchors to the model's reference-rated EUR2025/kW purchase cost.
-The article uses 2,000 MW/year as documented on the stack page.
+The article records the canonical `stack-manufacturing-reference-output`;
+other manufacturing volumes are rejected until separately evidenced.
 `physical.bop_purchase_cost_basis` reports the aggregate 15 MW BOP purchase
 reference, including NREL internal water handling and the DEA thermal-treatment
 allowance. The assumed EUR2023 quote basis is converted with shared HICP inputs.
@@ -369,3 +373,20 @@ The NREL absolute-price anchor is unchanged. Article turbine masses and fixed
 installation costs remain equal; purchase prices are not forced equal. The
 existing transformer reallocation and unresolved retained-equipment cost
 adjustment remain in place.
+
+
+## Current audit corrections (15 October 2026)
+
+The [canonical scenario contract](../methodology/optimisation_variables.qmd)
+provides field names, units, architecture applicability and missing-input behaviour.
+Only hydrogen branches are executable. Complete initial CAPEX reports
+`initial_capex_eur_per_wind_kw`; no lifecycle-capital intensity is returned.
+`physical.ac_routing` records physical cable km/turbine, without a topology change.
+Residual value is always zero and nonzero overrides are rejected. Offshore
+removal excludes onshore receipt installation and adds explicit platform removal.
+CPI escalation factors are derived from the canonical indices with existing
+five-decimal rounding. Historical component `*-opex-rate` inputs are inactive;
+`financial-provisional-opex-rate` owns the common 2% assumption. No generation or
+production availability value has been invented. The current bus solver already
+closes stack + BOP + compression + curtailment jointly. Local-only source and
+scenario storage remains selected; a Git commit alone cannot reproduce the model.

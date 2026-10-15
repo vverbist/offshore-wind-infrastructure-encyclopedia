@@ -721,7 +721,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>Water supply is retained in full. It includes feedwater treatment, the feed tank, polishing, filtration and recirculation equipment <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024, sec. 2.2.1</a> and Table 3)</span>. The DEA increment is interpreted as thermal seawater desalination upstream of this existing water-handling scope. No extra internal water-handling charge or cooling credit is applied. This is a screening boundary: the supplier breakdown is insufficient to verify all heat-exchanger and purification interfaces, so overlap must be checked when package evidence improves.</p>
+<p>Water supply is retained in full. It includes feedwater treatment, the feed tank, polishing, filtration and recirculation equipment <span class="citation" data-cites="badgett2024PEMCost">(<a href="#ref-badgett2024PEMCost" role="doc-biblioref">Badgett et al. 2024, sec. 2.2.1</a> and Table 3)</span>. The DNV increment is interpreted as thermal seawater desalination upstream of this existing water-handling scope. No extra internal water-handling charge or cooling credit is applied. This is a screening boundary: the supplier breakdown is insufficient to verify all heat-exchanger and purification interfaces, so overlap must be checked when package evidence improves.</p>
 <p>For source rating <span class="math inline">\(P_0\)</span> [kW], summed manufactured unit cost <span class="math inline">\(c_0\)</span> [USD2020/kW], markup multiplier <span class="math inline">\(M\)</span> [-], USD escalation <span class="math inline">\(I_\mathrm{US}\)</span> [-] and exchange rate <span class="math inline">\(X\)</span> [USD/EUR], the source purchase cost is</p>
 <p><span class="math display">\[
 C_{0,2025}=c_0P_0M I_\mathrm{US}/X.
@@ -737,7 +737,7 @@ C_{\mathrm{process},r}=C_{0,2025}(P_r/P_0)^{\alpha_r}.
 C_{w,r,2023}=u_w(P_r/1000),\qquad
 C_{w,r,2025}=C_{w,r,2023}(1+h_{2024})(1+h_{2025}).
 \]</span></p>
-<p>The division by 1000 converts kW to MW. The source-basis allowance is <strong>195,000 EUR2023</strong>. DNV does not establish the quote’s price year. Treating it as the report-year EUR2023 is an adopted screening exception, not sourced price-year evidence. The euro-area annual HICP rates <span class="math inline">\(h_{2024}\)</span> = 2.4% and <span class="math inline">\(h_{2025}\)</span> = 2.1% are reused from the shared input table <span class="citation" data-cites="eurostat2026AnnualHICP">(<a href="#ref-eurostat2026AnnualHICP" role="doc-biblioref">Eurostat 2026</a>)</span>. Consumer inflation is a fallback rather than an equipment-specific index. The derived escalation factor is 1.045504, giving <strong>203,873 EUR2025</strong>. No manufacturer markup is added to the DEA supplier allowance, and its separately listed installation percentage is not added to purchase cost.</p>
+<p>The division by 1000 converts kW to MW. The source-basis allowance is <strong>195,000 EUR2023</strong>. DNV does not establish the quote’s price year. Treating it as the report-year EUR2023 is an adopted screening exception, not sourced price-year evidence. The euro-area annual HICP rates <span class="math inline">\(h_{2024}\)</span> = 2.4% and <span class="math inline">\(h_{2025}\)</span> = 2.1% are reused from the shared input table <span class="citation" data-cites="eurostat2026AnnualHICP">(<a href="#ref-eurostat2026AnnualHICP" role="doc-biblioref">Eurostat 2026</a>)</span>. Consumer inflation is a fallback rather than an equipment-specific index. The derived escalation factor is 1.045504, giving <strong>203,873 EUR2025</strong>. No manufacturer markup is added to the DNV supplier allowance, and its separately listed installation percentage is not added to purchase cost.</p>
 <p>Finally,</p>
 <p><span class="math display">\[
 C_{\mathrm{BOP},r}=C_{\mathrm{process},r}+C_{w,r,2025}.
@@ -754,7 +754,7 @@ P_i=P/n_b,\qquad
 C_{\mathrm{BOP,location}}=n_b C_{\mathrm{BOP},r}(P_i/P_r)^\alpha.
 \]</span></p>
 <p>Sum these costs across production locations. Centralised production shares farm capacity across blocks; distributed production sizes blocks at each turbine. Stack overplanting does not resize BOP. No spare block is included.</p>
-<p>The baseline exponent <span class="math inline">\(\alpha\)</span> is 0.75. DNV proposes this exponent for BOP, while listing thermal treatment separately <span class="citation" data-cites="dnv2023OffshoreHydrogen">(<a href="#ref-dnv2023OffshoreHydrogen" role="doc-biblioref">DNV 2023, sec. 3.2.1</a> and 3.3)</span>. Applying it to the entire aggregate, including water treatment, is the adopted modelling assumption. The DEA linear allowance is used only to establish the reference, not reapplied at each block rating.</p>
+<p>The baseline exponent <span class="math inline">\(\alpha\)</span> is 0.75. DNV proposes this exponent for BOP, while listing thermal treatment separately <span class="citation" data-cites="dnv2023OffshoreHydrogen">(<a href="#ref-dnv2023OffshoreHydrogen" role="doc-biblioref">DNV 2023, sec. 3.2.1</a> and 3.3)</span>. Applying it to the entire aggregate, including water treatment, is the adopted modelling assumption. The DNV linear allowance is used only to establish the reference, not reapplied at each block rating.</p>
 <p>Retain 0.6 as an explicit sensitivity override of <code>bop-scaling-exponent</code>. The reference-building exponent remains unchanged, preserving the same reference cost in both cases. Scenario result input records retain the baseline and applied override. This tests economies of scale without changing the turbine-scale anchor.</p>
 </section>
 <section id="bop-power-consumption" class="level2">
@@ -815,7 +815,7 @@ e_\mathrm{BOP} = 1.0 \ \mathrm{kWh/kg_{H_2}}
 <p>This value includes mechanical BOP loads and hydrogen drying losses. It is selected as a conservative average. It is higher than the minimum-loss values reported by Ruth and Ahluwalia to allow for offshore cooling, water handling, drying, control systems, part-load operation and uncertainty in auxiliary loads.</p>
 <section id="water-treatment-integration" class="level3">
 <h3 class="anchored" data-anchor-id="water-treatment-integration">Water-treatment integration</h3>
-<p>The adopted DEA cost evidence assumes thermal desalination using electrolyser waste heat <span class="citation" data-cites="dnv2023OffshoreHydrogen">(<a href="#ref-dnv2023OffshoreHydrogen" role="doc-biblioref">DNV 2023, sec. 3.3</a>)</span>. The existing aggregate BOP electricity allowance is retained; no separate desalination electrical load is added. This is not a verified thermal balance. <strong>TODO:</strong> establish usable heat at the operating temperatures and part-load states of the oversized stack, treatment duty and buffering, and check the aggregate auxiliary allowance. Failure to provide sufficient heat would require a different treatment design and cost basis, rather than assuming free supplementary heat.</p>
+<p>The adopted DNV cost evidence assumes thermal desalination using electrolyser waste heat <span class="citation" data-cites="dnv2023OffshoreHydrogen">(<a href="#ref-dnv2023OffshoreHydrogen" role="doc-biblioref">DNV 2023, sec. 3.3</a>)</span>. The existing aggregate BOP electricity allowance is retained; no separate desalination electrical load is added. This is not a verified thermal balance. <strong>TODO:</strong> establish usable heat at the operating temperatures and part-load states of the oversized stack, treatment duty and buffering, and check the aggregate auxiliary allowance. Failure to provide sufficient heat would require a different treatment design and cost basis, rather than assuming free supplementary heat.</p>
 <p>The total BOP electricity consumption is calculated as:</p>
 <p><span class="math display">\[
 E_\mathrm{BOP} = e_\mathrm{BOP} \cdot m_\mathrm{H_2}
@@ -828,9 +828,9 @@ E_\mathrm{BOP} = e_\mathrm{BOP} \cdot m_\mathrm{H_2}
 <h2 class="anchored" data-anchor-id="model-limitations">Model limitations</h2>
 <ul>
 <li>The NREL source describes an onshore modular system. Scaling it to the adopted reference and then to shared blocks is a screening approximation.</li>
-<li>Internal water handling remains within BOP. The DEA increment assumes upstream thermal desalination; supplier evidence must resolve purification and cooling interfaces before claiming a fully reconciled equipment inventory.</li>
+<li>Internal water handling remains within BOP. The DNV increment assumes upstream thermal desalination; supplier evidence must resolve purification and cooling interfaces before claiming a fully reconciled equipment inventory.</li>
 <li>Thermal integration and auxiliary consumption require validation at the actual stack operating conditions. The cost allowance does not demonstrate feasibility.</li>
-<li>The DEA quote year is assumed, and HICP is a broad price-index proxy.</li>
+<li>The DNV quote year is assumed, and HICP is a broad price-index proxy.</li>
 <li>Aggregate scaling omits treatment-package thresholds and redundancy. The retained block limit bounds centralisation benefits but is not engineering qualification.</li>
 <li>Offshore intake scope, integration and installation remain unresolved; no zero costs are inferred. Offshore installation belongs to its owning campaign model.</li>
 </ul>

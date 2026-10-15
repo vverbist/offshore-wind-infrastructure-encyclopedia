@@ -769,36 +769,41 @@ c_T=uP_r\frac{I_{25}}{I_{24}}\frac{1}{X},\qquad C_T=Nc_T.
 <td style="text-align: right;">EUR/day</td>
 </tr>
 <tr class="even">
-<td>Fixed mobilisation and demobilisation time</td>
+<td>Fixed mobilisation time</td>
 <td><span class="math inline">\(t_{\mathrm{mob},c}\)</span></td>
 <td style="text-align: right;">day/campaign</td>
 </tr>
 <tr class="odd">
+<td>Separate demobilisation</td>
+<td><span class="math inline">\(t_{\mathrm{demob},c}\)</span></td>
+<td style="text-align: right;">day/campaign; unresolved</td>
+</tr>
+<tr class="even">
 <td>Port work per transported set</td>
 <td><span class="math inline">\(t_{\mathrm{port},c}\)</span></td>
 <td style="text-align: right;">day/set</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Effective offshore occupation</td>
 <td><span class="math inline">\(t_{\mathrm{site},c}\)</span></td>
 <td style="text-align: right;">day/location</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Reference complete sets per load</td>
 <td><span class="math inline">\(k_{\mathrm{ref},c}\)</span></td>
 <td style="text-align: right;">sets/load</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Project-usable vessel payload</td>
 <td><span class="math inline">\(M_{\mathrm{use},c}\)</span></td>
 <td style="text-align: right;">t</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Governing crane capacity</td>
 <td><span class="math inline">\(SWL_c\)</span></td>
 <td style="text-align: right;">t</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Vessel travel speed</td>
 <td><span class="math inline">\(v_c\)</span></td>
 <td style="text-align: right;">km/day</td>
@@ -895,57 +900,16 @@ N_{\mathrm{load},c}
 </section>
 <section id="campaign-duration" class="level2">
 <h2 class="anchored" data-anchor-id="campaign-duration">Campaign Duration</h2>
-<p>The chargeable campaign duration is:</p>
+<p>The executed campaign separates fixed, port and offshore-exposed time:</p>
 <p><span class="math display">\[
-T_c
-=
-t_{\mathrm{mob},c}
-+
-N\left(
-t_{\mathrm{port},c}
-+
-t_{\mathrm{site},c}
-\right)
-+
-\frac{
-2N_{\mathrm{load},c}D_p
-+
-(N-1)D_i
-}{
-v_c
-}.
+T_c=t_{\mathrm{mob},c}+t_{\mathrm{demob},c}+Nt_{\mathrm{port},c}
++\left(Nt_{\mathrm{site,base},c}+T_{\mathrm{travel,base},c}\right)(1+w_c),
 \]</span></p>
-<p>The four duration components are:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Component</th>
-<th style="text-align: right;">Calculation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Mobilisation and demobilisation</td>
-<td style="text-align: right;"><span class="math inline">\(t_{\mathrm{mob},c}\)</span></td>
-</tr>
-<tr class="even">
-<td>Port work</td>
-<td style="text-align: right;"><span class="math inline">\(Nt_{\mathrm{port},c}\)</span></td>
-</tr>
-<tr class="odd">
-<td>Offshore installation</td>
-<td style="text-align: right;"><span class="math inline">\(Nt_{\mathrm{site},c}\)</span></td>
-</tr>
-<tr class="even">
-<td>Port and field travel</td>
-<td style="text-align: right;"><span class="math inline">\(\left[2N_{\mathrm{load},c}D_p+(N-1)D_i\right]/v_c\)</span></td>
-</tr>
-</tbody>
-</table>
+<p><span class="math display">\[
+T_{\mathrm{travel,base},c}=
+\frac{2N_{\mathrm{load},c}D_p+(N-1)D_i}{v_c}.
+\]</span></p>
+<p>All times are days; <span class="math inline">\(w_c\)</span> is the dimensionless aggregate offshore weather uplift. Port and mobilisation/demobilisation days are not weather-uplifted. <code>install-{turbine,foundation}-demobilisation-time</code> and <code>-weather-offshore</code> remain explicit missing inputs. The retained site-occupation basis excludes weather; a weather-inclusive source must replace/reconcile this basis before an additional uplift is applied. This is an aggregate screen, not an ORBIT weather simulation. Missing weather or demobilisation prevents a complete campaign cost.</p>
 <p>This calculation assumes a self-shuttling installation vessel. It does not represent feeder vessels operating concurrently with an installation vessel.</p>
 </section>
 <section id="campaign-and-total-cost" class="level2">

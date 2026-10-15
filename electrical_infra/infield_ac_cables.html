@@ -546,6 +546,7 @@ window.Quarto = {
   <li><a href="#architecture-applicability" id="toc-architecture-applicability" class="nav-link" data-scroll-target="#architecture-applicability">Architecture Applicability</a></li>
   <li><a href="#collection-loss-calculation" id="toc-collection-loss-calculation" class="nav-link" data-scroll-target="#collection-loss-calculation">Collection Loss Calculation</a></li>
   <li><a href="#model-limitations" id="toc-model-limitations" class="nav-link" data-scroll-target="#model-limitations">Model Limitations</a></li>
+  <li><a href="#executed-routing-diagnostic" id="toc-executed-routing-diagnostic" class="nav-link" data-scroll-target="#executed-routing-diagnostic">Executed routing diagnostic</a></li>
   </ul>
 </nav>
     </div>
@@ -918,19 +919,11 @@ C_\mathrm{supply}
 </section>
 <section id="opex-allowance" class="level2">
 <h2 class="anchored" data-anchor-id="opex-allowance">OPEX Allowance</h2>
-<p>Public evidence describes large but infrequent cable failures more clearly than it reports expected annual cable-only expenditure. ORE Catapult’s SPARTA portfolio found cable outages in 7.46% of wind-farm months and in 61% of reporting wind farms, with outage days split approximately equally between array and export cables <span class="citation" data-cites="oreCatapult2022SPARTA">(<a href="#ref-oreCatapult2022SPARTA" role="doc-biblioref">ORE Catapult 2022</a>)</span>. Its ELECTRODE programme reports an average repair duration of about two months and consequences often above GBP 10 million, but that amount combines repair expenditure and lost generation <span class="citation" data-cites="oreCatapult2023ELECTRODE">(<a href="#ref-oreCatapult2023ELECTRODE" role="doc-biblioref">ORE Catapult 2023</a>)</span>.</p>
-<p>These data do not provide an array-only annual failure frequency or a clean split between physical repair cost and lost revenue. An event-based OPEX model is therefore not used. The current relationship is retained as a top-down risk allowance:</p>
-<p><span class="math display">\[
-C_\mathrm{OPEX}
-=
-f_\mathrm{OPEX}C_\mathrm{supply},
-\]</span></p>
-<p>with <span class="math inline">\(f_\mathrm{OPEX}=2\%\)</span>/year and a 1–3% sensitivity. At the base cable price, each 100 km of supplied cable has EUR<sub>2025</sub> 40 million supply CAPEX and therefore a EUR<sub>2025</sub> 0.8 million annual allowance. The allowance represents inspection and physical repair provision only. Lost generation remains in the availability calculation and must not also be included in OPEX.</p>
+<p>Lifecycle O&amp;M follows the common 2%/year allowance on complete initial component CAPEX, including installation, selected by the user on 15 October 2026. It is a provisional modelling assumption rather than an array-cable failure/repair estimate. Lost production is treated through availability, not added as a second cash cost. Detailed O&amp;M is deferred; see <a href="../methodology/financial_and_price_basis.html">Financial Assumptions</a>.</p>
 </section>
 <section id="reliability-and-availability" class="level2">
 <h2 class="anchored" data-anchor-id="reliability-and-availability">Reliability and Availability</h2>
-<p>The current model applies <strong>99.0% array-network availability</strong> as a flat annual yield multiplier. A radial string fault normally disconnects the turbines downstream of the fault rather than the complete wind farm, so the flat multiplier does not represent topology explicitly.</p>
-<p>No more detailed failure model is introduced until consistent array-specific failure frequency, repair duration and affected-capacity data are available. When those inputs exist, the radial connections <span class="math inline">\(\mathcal{E}\)</span> defined by the cable-length model can also define the turbines isolated by each fault. Until then, 99.0% remains a transparent aggregate assumption rather than a calculated reliability result.</p>
+<p>AC collection availability is an unresolved lifecycle input. Faults can isolate only downstream turbines; the future capacity-state treatment is deferred. No historical flat network factor is adopted. A scoped annual factor may be supplied explicitly without pretending it resolves topology-dependent outages.</p>
 </section>
 <section id="current-assumptions-and-sensitivities" class="level2">
 <h2 class="anchored" data-anchor-id="current-assumptions-and-sensitivities">Current Assumptions and Sensitivities</h2>
@@ -993,16 +986,16 @@ f_\mathrm{OPEX}C_\mathrm{supply},
 <td>Apply only before a routed design exists</td>
 </tr>
 <tr class="even">
-<td>Flat availability</td>
-<td style="text-align: right;">99.0%</td>
-<td style="text-align: right;">Replace with string outage states</td>
-<td>A fault normally removes partial capacity</td>
+<td>Availability</td>
+<td style="text-align: right;">Unresolved</td>
+<td style="text-align: right;">Future capacity-state work deferred</td>
+<td>A scoped annual factor is still required</td>
 </tr>
 <tr class="odd">
-<td>OPEX risk allowance</td>
-<td style="text-align: right;">2% of supply CAPEX/year</td>
-<td style="text-align: right;">1–3%</td>
-<td>Physical inspection and repair provision; excludes lost generation</td>
+<td>Provisional O&amp;M</td>
+<td style="text-align: right;">2%/year of initial component CAPEX/year</td>
+<td style="text-align: right;">Detailed treatment deferred</td>
+<td>Common user assumption; installation included</td>
 </tr>
 </tbody>
 </table>
@@ -1060,7 +1053,7 @@ P_{\mathrm{central,in}}=(1-f_{AC})\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}}.
 <td>The executable model applies <code>array-ac-loss-fraction</code> to aggregate turbine-transformer output before central conversion; supporting evidence remains TODO. This replaces the former I²R screening calculation.</td>
 </tr>
 <tr class="odd">
-<td>Flat 99% availability</td>
+<td>Unresolved availability</td>
 <td>String-level and common-mode outage states are hidden</td>
 </tr>
 <tr class="even">
@@ -1081,6 +1074,10 @@ P_{\mathrm{central,in}}=(1-f_{AC})\sum_i P_{\mathrm{curve},i}\eta_{\mathrm{tr}}.
 </tr>
 </tbody>
 </table>
+</section>
+<section id="executed-routing-diagnostic" class="level2">
+<h2 class="anchored" data-anchor-id="executed-routing-diagnostic">Executed routing diagnostic</h2>
+<p><code>physical.ac_routing.physical_km_per_turbine</code> is total physical cable km divided by turbine count. It includes the model’s route allowance and vertical legs; it is distinct from horizontal lay-pass km. The selected coordinate-order routing is unchanged. Public project benchmarks on this page have different site/route scopes; no qualified universal bounds or cost correction are adopted. A benchmark flag remains unresolved rather than assigning an arbitrary limit. Future outage/capacity-state modelling is deferred; current lifecycle delivery uses the declared annual availability factors.</p>
 
 
 
@@ -1128,12 +1125,6 @@ Nexans. 2018. <span>“Nexans Is Awarded a Multimillion-Euro Contract for Orsted
 </div>
 <div id="ref-nunemaker2020ORBIT" class="csl-entry" role="listitem">
 Nunemaker, Jacob, Matthew Shields, Rob Hammond, and Patrick Duffy. 2020. <em><span>ORBIT</span>: Offshore Renewables Balance-of-System and Installation Tool</em>. NREL/TP-5000-77081. National Renewable Energy Laboratory. <a href="https://doi.org/10.2172/1660132">https://doi.org/10.2172/1660132</a>.
-</div>
-<div id="ref-oreCatapult2022SPARTA" class="csl-entry" role="listitem">
-ORE Catapult. 2022. <em>System Performance, Availability and Reliability Trend Analysis: <span>SPARTA</span> 2020/21 Portfolio Review</em>. ORE Catapult. <a href="https://cms.ore.catapult.org.uk/wp-content/uploads/2022/06/SPARTA-Review-2021-Final.pdf">https://cms.ore.catapult.org.uk/wp-content/uploads/2022/06/SPARTA-Review-2021-Final.pdf</a>.
-</div>
-<div id="ref-oreCatapult2023ELECTRODE" class="csl-entry" role="listitem">
-ORE Catapult. 2023. <span>“<span>ELECTRODE</span>: Electrical Cable Failure Trending and Reliability Analysis for Operational Developments.”</span> May 4. <a href="https://ore.catapult.org.uk/resource-hub/projects/electrode/">https://ore.catapult.org.uk/resource-hub/projects/electrode/</a>.
 </div>
 <div id="ref-orsted2021Hornsea2" class="csl-entry" role="listitem">
 Orsted. 2021. <span>“The World’s Biggest Offshore Wind Farm, Hornsea 2, Generates First Power.”</span> December 20. <a href="https://orsted.com/en/media/news/2021/12/20211220460511">https://orsted.com/en/media/news/2021/12/20211220460511</a>.

@@ -649,7 +649,7 @@ window.Quarto = {
 <p><span class="math display">\[
 m_\mathrm{top}=m_\mathrm{turbine}+m_\mathrm{additional},
 \]</span></p>
-<p>where <span class="math inline">\(m_\mathrm{turbine}\)</span> is the complete turbine mass, including the tower, passed from the turbine calculation. The optional <span class="math inline">\(m_\mathrm{additional}\)</span> term includes equipment supported by the foundation but not already present in the turbine mass ledger. It is zero unless such equipment is modelled explicitly.</p>
+<p>where <span class="math inline">\(m_\mathrm{turbine}\)</span> is the complete turbine mass, including the tower, passed from the turbine calculation. The optional <span class="math inline">\(m_\mathrm{additional}\)</span> term includes equipment supported by the foundation but not already present in the turbine mass ledger. It is a required explicit input when the turbine ledger omits supported equipment; an unresolved value is not zero.</p>
 </section>
 <section id="monopile-mass" class="level2">
 <h2 class="anchored" data-anchor-id="monopile-mass">Monopile Mass</h2>
@@ -742,8 +742,8 @@ m_\mathrm{MP}=k_m m_\mathrm{top}d_w,
 <p>with</p>
 <p><span class="math display">\[
 k_m
-=\frac{1{,}318}{1{,}877\times30}
-=0.02341\ \mathrm{m^{-1}}.
+=\fracb58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C2076617220666F756E646174696F6E2D7265666572656E63652D6D6F6E6F70696C652D6D6173732D76616C7565203E7D7D7D;b58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C2076617220666F756E646174696F6E2D7265666572656E63652D737570706F727465642D6D6173732D76616C7565203E7D7D5C74696D65737B7B3C2076617220666F756E646174696F6E2D7265666572656E63652D64657074682D76616C7565203E7D7D7D;
+= b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220666F756E646174696F6E2D6D6173732D64657074682D636F656666696369656E74203E7D7D;\ \mathrm{m^{-1}}.
 \]</span></p>
 <p>The direct proportionality to supported mass and water depth is a modelling assumption, not a structural-design equation. It is deliberately simple, passes through a traceable reference design, and avoids reintroducing turbine power as a proxy after turbine and tower masses have already been calculated.</p>
 <section id="check-against-published-designs" class="level3">
@@ -814,7 +814,7 @@ c_\mathrm{MP,high}
 \]</span></p>
 <p>The midpoint is used as the baseline:</p>
 <p><span class="math display">\[
-c_\mathrm{MP,base}=2{,}430\ \mathrm{USD_{2022}/t}.
+c_\mathrm{MP,base}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220666F756E646174696F6E2D6661627269636174696F6E2D756E69742D636F73742D76616C7565203E7D7D;\ \mathrm{USD_{2022}/t}.
 \]</span></p>
 <p>Monopile and transition-piece supply costs are then:</p>
 <p><span class="math display">\[
@@ -939,7 +939,7 @@ m_\mathrm{MP}
 </tbody>
 </table>
 <p>The model is suitable for screening comparisons close to the cited 15–22 MW, 30–60 m reference range. It does not resolve soil profile, pile penetration, diameter, wall thickness, natural frequency, fatigue, corrosion allowance, secondary steel, grouted or bolted connections, or fabrication constraints. It must therefore be replaced by a site-specific integrated turbine, tower, and foundation design before detailed engineering or procurement.</p>
-<p>No separate foundation OPEX percentage is applied. Foundation inspection and repair should enter the project OPEX model as explicit activities when suitable evidence is available.</p>
+<p>The provisional annual O&amp;M allowance is 2%/year of initial foundation CAPEX, including installation. This user-selected assumption replaces component-specific rates. Activity-based inspection and repair are deferred; see <a href="../methodology/financial_and_price_basis.html">Financial Assumptions</a>.</p>
 
 
 

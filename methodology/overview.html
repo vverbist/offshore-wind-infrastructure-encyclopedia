@@ -484,6 +484,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#calculation-logic" id="toc-calculation-logic" class="nav-link active" data-scroll-target="#calculation-logic">Calculation Logic</a></li>
   <li><a href="#methodology-pages" id="toc-methodology-pages" class="nav-link" data-scroll-target="#methodology-pages">Methodology Pages</a></li>
+  <li><a href="#executable-scope" id="toc-executable-scope" class="nav-link" data-scroll-target="#executable-scope">Executable scope</a></li>
   </ul>
 </nav>
     </div>
@@ -516,7 +517,7 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li>validates the user inputs and fixed parameters;</li>
 <li>constructs the wind-farm layout and gross production;</li>
-<li>selects the electricity, centralised-hydrogen or decentralised-hydrogen component chain;</li>
+<li>selects the centralised- or decentralised-hydrogen executable chain; electricity remains a documented future branch;</li>
 <li>calculates physical inventories, component sizing, losses and auxiliary demand;</li>
 <li>returns an explicit infeasible or not-parameterized status when a required constraint or input is unresolved;</li>
 <li>applies annual subsystem availability once at architecture level;</li>
@@ -536,6 +537,10 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../methodology/energy_availability_and_annualisation.html">Energy and Availability</a> defines the energy basis and architecture availability ledger.</li>
 </ol>
 <p>Component pages own their physical equations, component-specific assumptions, evidence and non-overlapping CAPEX and OPEX.</p>
+</section>
+<section id="executable-scope" class="level2">
+<h2 class="anchored" data-anchor-id="executable-scope">Executable scope</h2>
+<p>The current scenario runner evaluates centralised and decentralised hydrogen. Electricity export is a documented calculation contract; a complete electricity scenario branch and its delivered-electricity cost output are not implemented. Component equations and reference figures do not establish an executable cross-carrier comparison.</p>
 
 
 </section>

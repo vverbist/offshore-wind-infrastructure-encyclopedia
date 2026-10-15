@@ -615,7 +615,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p><span class="cost-owned">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
+<p><span class="cost-reference">Green = booked on this page</span> <span class="cost-reference">Grey = reference only; not booked on this page</span></p>
 </section>
 <section id="reference-configuration" class="level2">
 <h2 class="anchored" data-anchor-id="reference-configuration">Reference Configuration</h2>
@@ -690,43 +690,7 @@ F_{2020\rightarrow2025}
 1.22621.
 \]</span></p>
 <p>The transformation uses euro-area annual-average HICP through 2025 and the European Commission’s 3.0% euro-area inflation forecast for 2026 <span class="citation" data-cites="eurostat2026HICP europeanCommission2026Forecast">(<a href="#ref-eurostat2026HICP" role="doc-biblioref">Eurostat 2026</a>; <a href="#ref-europeanCommission2026Forecast" role="doc-biblioref">European Commission 2026</a>)</span>.</p>
-<p>Because the DEA offshore-station value explicitly includes its platform, it is not used as converter equipment CAPEX here. The model provisionally applies the onshore-station coefficient to both electrical terminals:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 22%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Converter electrical equipment</th>
-<th style="text-align: right;">Low</th>
-<th style="text-align: right;">Central</th>
-<th style="text-align: right;">High</th>
-<th>Cost owner</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>One converter station</td>
-<td style="text-align: right;"><span class="cost-owned">307 EUR<sub>2025</sub>/kW</span></td>
-<td style="text-align: right;"><span class="cost-owned">392 EUR<sub>2025</sub>/kW</span></td>
-<td style="text-align: right;"><span class="cost-owned">515 EUR<sub>2025</sub>/kW</span></td>
-<td><strong>This page</strong></td>
-</tr>
-<tr class="even">
-<td>Offshore + onshore converter pair</td>
-<td style="text-align: right;"><span class="cost-owned">613 EUR<sub>2025</sub>/kW</span></td>
-<td style="text-align: right;"><span class="cost-owned">785 EUR<sub>2025</sub>/kW</span></td>
-<td style="text-align: right;"><span class="cost-owned">1,030 EUR<sub>2025</sub>/kW</span></td>
-<td><strong>This page</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The adopted central coefficient is 785 EUR<sub>2025</sub>/kW for the two-terminal converter pair. No residual project factor is added. Owner development, financing, wider grid works and decommissioning remain outside this coefficient.</p>
-<p>The offshore terminal may require more costly marinised electrical equipment than the onshore terminal. A public offshore-equipment premium separated from platform and installation cost is not currently available, so this is a stated modelling limitation.</p>
+<p>The DEA offshore-station value includes its platform, so it cannot be booked as converter equipment alongside a separate platform cost. No executable converter pair price is adopted here. Earlier paired coefficients are retained in the audit baseline rather than presented as active inputs. Equipment-only scope, price normalisation and an executable electricity branch remain unresolved.</p>
 </section>
 </section>
 <section id="complete-station-cost-perspective" class="level2">
@@ -744,8 +708,8 @@ F_{2020\rightarrow2025}
 <tbody>
 <tr class="odd">
 <td>Offshore + onshore converter equipment</td>
-<td style="text-align: right;"><span class="cost-owned">785 EUR<sub>2025</sub>/kW</span></td>
-<td>Model central value</td>
+<td style="text-align: right;">Unresolved</td>
+<td>No adopted executable input</td>
 <td><strong>This page</strong></td>
 </tr>
 <tr class="even">
@@ -778,46 +742,18 @@ F_{2020\rightarrow2025}
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. Only the green converter coefficient is booked here.</p>
+<p>The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. No converter price on this page is currently booked by an electricity scenario.</p>
 </div>
 </div>
-<p>Public TenneT programme announcements correspond to roughly EUR 1,000–1,170/kW when divided by announced system count and rating <span class="citation" data-cites="tennet2gwProgrammeData hitachiPetrofac2023TenneT geVernova2023TenneT siemensEnergy2023TenneT">(<a href="#ref-tennet2gwProgrammeData" role="doc-biblioref">TenneT 2023</a>; <a href="#ref-hitachiPetrofac2023TenneT" role="doc-biblioref">Hitachi Energy and Petrofac 2023</a>; <a href="#ref-geVernova2023TenneT" role="doc-biblioref">GE Vernova 2023</a>; <a href="#ref-siemensEnergy2023TenneT" role="doc-biblioref">Siemens Energy 2023</a>)</span>. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with the 785 EUR<sub>2025</sub>/kW converter-only coefficient.</p>
+<p>Public TenneT programme announcements correspond to roughly EUR 1,000–1,170/kW when divided by announced system count and rating <span class="citation" data-cites="tennet2gwProgrammeData hitachiPetrofac2023TenneT geVernova2023TenneT siemensEnergy2023TenneT">(<a href="#ref-tennet2gwProgrammeData" role="doc-biblioref">TenneT 2023</a>; <a href="#ref-hitachiPetrofac2023TenneT" role="doc-biblioref">Hitachi Energy and Petrofac 2023</a>; <a href="#ref-geVernova2023TenneT" role="doc-biblioref">GE Vernova 2023</a>; <a href="#ref-siemensEnergy2023TenneT" role="doc-biblioref">Siemens Energy 2023</a>)</span>. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with a converter-equipment-only scope.</p>
 </section>
 <section id="conversion-losses" class="level2">
 <h2 class="anchored" data-anchor-id="conversion-losses">Conversion Losses</h2>
-<p>Converter-station losses include semiconductor conduction and switching, transformer copper and core loss, reactors, cooling and station auxiliaries. Supplier loss curves are not yet available, so the model uses aggregate working efficiencies:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Boundary</th>
-<th style="text-align: right;">Working efficiency</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Offshore conversion, transformation and auxiliaries</td>
-<td style="text-align: right;">98.5%</td>
-<td>Applied once offshore</td>
-</tr>
-<tr class="even">
-<td>Onshore conversion, transformation and auxiliaries</td>
-<td style="text-align: right;">98.5%</td>
-<td>Applied once onshore</td>
-</tr>
-</tbody>
-</table>
-<p>Hitachi Energy reports electrical losses below 1% per converter station for DolWin2 <span class="citation" data-cites="hitachiDolWin2">(<a href="#ref-hitachiDolWin2" role="doc-biblioref">Hitachi Energy, n.d.</a>)</span>. This is an OEM statement for a 900 MW, +/-320 kV symmetrical-monopole system commissioned in 2016; it supports the order of magnitude but is not a guarantee for a 2 GW, +/-525 kV station.</p>
-<p>Together, the two 98.5% terminal values give a working station-pair efficiency of 97.0%. The values include transformers and auxiliaries; no separate substation or transformer factor is applied to the same equipment.</p>
+<p>Converter-station losses cover power electronics, transformers, reactors, cooling and auxiliaries. No flat station efficiency is adopted for the current model. Supplier curves and an explicitly scoped input are required before an executable electricity result can be produced. Equipment examples and earlier working assumptions are retained in the audit baseline; they do not set losses for the hydrogen branches.</p>
 </section>
 <section id="availability-and-degraded-operation" class="level2">
 <h2 class="anchored" data-anchor-id="availability-and-degraded-operation">Availability and Degraded Operation</h2>
-<p>The legacy model applies 98% availability to each terminal. These are internal energy-equivalent factors, not supplier guarantees. A more physical model distinguishes:</p>
+<p>No flat terminal availability is adopted. A future capacity-state model would distinguish:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -891,9 +827,9 @@ A_E
 </tr>
 <tr class="odd">
 <td>Converter pair CAPEX, platform excluded</td>
-<td style="text-align: right;">785 EUR<sub>2025</sub>/kW</td>
-<td style="text-align: right;">613–1,030 EUR<sub>2025</sub>/kW</td>
-<td>DEA onshore-station range applied twice</td>
+<td style="text-align: right;">Unresolved</td>
+<td style="text-align: right;">Equipment-only scope and adopted price basis required</td>
+<td>Reference evidence is not an active cost</td>
 </tr>
 <tr class="even">
 <td>Scaling</td>
@@ -903,21 +839,21 @@ A_E
 </tr>
 <tr class="odd">
 <td>Offshore aggregate efficiency</td>
-<td style="text-align: right;">98.5%</td>
+<td style="text-align: right;">Unresolved</td>
 <td style="text-align: right;">Replace with supplier loss curve</td>
 <td>Conservative working value</td>
 </tr>
 <tr class="even">
 <td>Onshore aggregate efficiency</td>
-<td style="text-align: right;">98.5%</td>
+<td style="text-align: right;">Unresolved</td>
 <td style="text-align: right;">Replace with supplier loss curve</td>
 <td>Conservative working value</td>
 </tr>
 <tr class="odd">
-<td>Flat station availability</td>
-<td style="text-align: right;">98% per terminal</td>
-<td style="text-align: right;">Replace with capacity states</td>
-<td>Internal convention</td>
+<td>Station availability</td>
+<td style="text-align: right;">Unresolved</td>
+<td style="text-align: right;">Future capacity-state work deferred</td>
+<td>No flat value adopted</td>
 </tr>
 <tr class="even">
 <td>Converter OPEX</td>
@@ -986,9 +922,6 @@ Eurostat. 2026. <span>“<span>HICP</span> – All Items – Annual Average Indi
 </div>
 <div id="ref-geVernova2023TenneT" class="csl-entry" role="listitem">
 GE Vernova. 2023. <span>“Two GE Vernova-Led Consortiums in Agreement with TenneT for Contracts Totalling Approximately 10 Billion Euros.”</span> March 30. <a href="https://www.gevernova.com/grid-solutions/news-press/two-ge-vernova-led-consortiums-agreement-tennet-award-contracts-totaling-approx-10-bln">https://www.gevernova.com/grid-solutions/news-press/two-ge-vernova-led-consortiums-agreement-tennet-award-contracts-totaling-approx-10-bln</a>.
-</div>
-<div id="ref-hitachiDolWin2" class="csl-entry" role="listitem">
-Hitachi Energy. n.d. <span>“DolWin2.”</span> Accessed July 14, 2026. <a href="https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2">https://www.hitachienergy.com/uk-ie/en/news-and-events/customer-stories/dolwin2</a>.
 </div>
 <div id="ref-hitachiPetrofac2023TenneT" class="csl-entry" role="listitem">
 Hitachi Energy, and Petrofac. 2023. <span>“Hitachi Energy and Petrofac Secure Landmark Offshore Wind Agreement Worth Approximately 13 Billion Euros.”</span> March 30. <a href="https://www.hitachienergy.com/us/en/news-and-events/press-releases/2023/03/hitachi-energy-and-petrofac-secure-landmark-offshore-wind-agreement-worth-approximately-13-billion-euros">https://www.hitachienergy.com/us/en/news-and-events/press-releases/2023/03/hitachi-energy-and-petrofac-secure-landmark-offshore-wind-agreement-worth-approximately-13-billion-euros</a>.

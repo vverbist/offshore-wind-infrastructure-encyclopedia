@@ -535,6 +535,7 @@ window.Quarto = {
   <li><a href="#capacity-to-mass" id="toc-capacity-to-mass" class="nav-link" data-scroll-target="#capacity-to-mass">Capacity to Mass</a></li>
   <li><a href="#worked-comparison" id="toc-worked-comparison" class="nav-link" data-scroll-target="#worked-comparison">Worked Comparison</a></li>
   <li><a href="#scenario-interface-and-limits" id="toc-scenario-interface-and-limits" class="nav-link" data-scroll-target="#scenario-interface-and-limits">Scenario Interface and Limits</a></li>
+  <li><a href="#selected-screening-applicability" id="toc-selected-screening-applicability" class="nav-link" data-scroll-target="#selected-screening-applicability">Selected screening applicability</a></li>
   </ul>
 </nav>
     </div>
@@ -658,6 +659,10 @@ P_{\mathrm{module}}.
 <p>The <code>"hvdc"</code> and <code>"custom"</code> branches retain explicit <code>rated_power_gw</code>. A custom reference also requires reference mass and rating inputs. Direct and scaled masses cannot be supplied together.</p>
 <p>The agreed simplification keeps one platform even when extrapolating to GW-scale electrolysis. It does not establish a feasible deck layout, support structure, transport or lift plan. Changes in process duty, equipment density, foundation class or installation method can invalidate smooth scaling. Applying the HVDC-derived EPCI coefficient to electrolysis remains a separate transfer assumption.</p>
 <p><strong>Remaining evidence:</strong> a matched commercial electrolysis-platform mass and EPCI scope, and independent masses at additional ratings. Until available, sensitivity to reference mass, the mass exponent and the EPCI coefficient should be recorded explicitly; component-level fits and a statistical confidence interval are not justified.</p>
+</section>
+<section id="selected-screening-applicability" class="level2">
+<h2 class="anchored" data-anchor-id="selected-screening-applicability">Selected screening applicability</h2>
+<p>The current central case assumes one platform and imposes no topside-mass limit, as selected by the user on 15 October 2026. This is a modelling assumption, not an engineering finding that any mass can be installed on one platform. The complete-topside EPCI method replaces the earlier equipment-only denominator; legacy structural-fraction and installation helpers are inactive comparison material. A platform class/count sensitivity remains deferred.</p>
 
 
 

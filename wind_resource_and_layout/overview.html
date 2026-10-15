@@ -517,7 +517,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The calculation is performed in dependency order:</p>
 <ol type="1">
 <li>fit a directional wind-speed distribution;</li>
-<li>place the selected number of turbines inside the modelled farm area;</li>
+<li>read turbine coordinates or generate the declared grid and check minimum spacing;</li>
 <li>assign turbine power and thrust-coefficient curves;</li>
 <li>calculate wake-affected power for each wind-speed and direction state;</li>
 <li>probability-weight the states to obtain annual energy production; and</li>
@@ -637,6 +637,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>The current implementation is suitable as a transparent screening calculation, but its wind-data provenance, directional bin alignment, turbine performance curve and layout feasibility treatment require improvement before the results are treated as a validated energy assessment. The specific improvements are stated on the two calculation pages.</p>
+<p>Polygon containment and setbacks remain deferred. Farm area is a reporting denominator, not proof that coordinates lie within a qualified boundary.</p>
 
 
 </section>

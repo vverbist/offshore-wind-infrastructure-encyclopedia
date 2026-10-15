@@ -542,6 +542,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#installation-subclass-differences" id="toc-installation-subclass-differences" class="nav-link" data-scroll-target="#installation-subclass-differences">8. Installation-Subclass Differences</a></li>
   <li><a href="#evidence-outputs-and-model-limitations" id="toc-evidence-outputs-and-model-limitations" class="nav-link" data-scroll-target="#evidence-outputs-and-model-limitations">9. Evidence, Outputs and Model Limitations</a></li>
+  <li><a href="#remaining-campaign-evidence" id="toc-remaining-campaign-evidence" class="nav-link" data-scroll-target="#remaining-campaign-evidence">Remaining campaign evidence</a></li>
   </ul>
 </nav>
     </div>
@@ -1193,7 +1194,7 @@ T_{\mathrm{lay,nonweather}}
 0\le L_{m,g}\le L_{\mathrm{load},m,v}.
 \]</span></p>
 <p>Every physical section must remain complete unless the product and installation plan permit a field connection. Reel partitions, storage compatibility and installation order must therefore be checked in addition to total mass. This is a discrete packing problem; dividing total campaign mass by vessel payload gives only a lower bound when the detailed loading plan is unavailable.</p>
-<p>The ORBIT reference carousel has a 13,000 t maximum mass. It defines one cable-vessel candidate rather than a universal installation capacity. For example, an indicative 65 t/km HVDC pole cable would be mass-limited to 200 physical km/load before reel, manufacturing and handling limits are applied. That result is not transferred to the metallic-return or fibre-optic cables.</p>
+<p>The ORBIT reference carousel has a 13,000 t maximum mass. It defines one cable-vessel candidate rather than a universal installation capacity. For example, the selected 70 t/km HVDC pole cable would be mass-limited to 185.7 physical km/load before reel, manufacturing and handling limits are applied. That result is not transferred to the metallic-return or fibre-optic cables.</p>
 <p>Loads and reloads are counted by separately mobilised lay campaign <span class="math inline">\(c\)</span>:</p>
 <p><span class="math display">\[
 N_{\mathrm{load}}=\sum_c N_{\mathrm{load},c},
@@ -1263,7 +1264,7 @@ T_{\mathrm{event}}
 </tr>
 <tr class="even">
 <td>Export power-cable interface sequence</td>
-<td style="text-align: right;">26 h/cable</td>
+<td style="text-align: right;">26 h/cable (reference only)</td>
 <td>Landfall and offshore-end positioning, preparation, pull-in, termination/test and lowering</td>
 <td>Once per qualifying export power cable; metallic-return and fibre tasks require matching inputs</td>
 </tr>
@@ -1687,7 +1688,7 @@ F
 =
 b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220696E7374616C6C2D757364323032342D657572323032352D666163746F72203E7D7D;\ \mathrm{EUR}_{2025}/\mathrm{USD}_{2024}.
 \]</span></p>
-<p>The factor gives 219,041 EUR<sub>2025</sub>/day for ORBIT’s 241171 USD/day cable vessel and 111,440 EUR<sub>2025</sub>/day for its 122,699 USD/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.</p>
+<p>The factor gives 219,041 EUR<sub>2025</sub>/day for ORBIT’s 241171 USD/day cable vessel and 111,440 EUR<sub>2025</sub>/day for its 122699 USD/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.</p>
 <section id="worked-example-evidence-gated-2-gw-cable-inventory" class="level3">
 <h3 class="anchored" data-anchor-id="worked-example-evidence-gated-2-gw-cable-inventory">Worked example: evidence-gated 2 GW cable inventory</h3>
 <p>This example shows how far the calculation can proceed for a 2 GW wind farm with 134 turbines, approximately 400 physical km of inter-array cable and a 100 km export corridor. It reports the physical inventory and the parameterized parts of lay time. It does not fill unresolved inputs in order to force a total installation CAPEX.</p>
@@ -1735,7 +1736,7 @@ b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C2076617220696E7374616C6C2D75736432303
 <tr class="odd">
 <td>Linear cable mass</td>
 <td style="text-align: right;">42.5 t/km for the infield screening cable</td>
-<td style="text-align: right;">74 t/km for each HVDC pole cable; metallic-return and fibre masses unresolved</td>
+<td style="text-align: right;">70 t/km for each HVDC pole cable (user assumption); metallic-return and fibre masses unresolved</td>
 <td>ORBIT 630 mm² 66 kV and 2,500 mm² 525 kV cable-library inputs <span class="citation" data-cites="orbit2026V13CableDefaults">(<a href="#ref-orbit2026V13CableDefaults" role="doc-biblioref">National Laboratory of the Rockies, n.d.</a>)</span></td>
 </tr>
 <tr class="even">
@@ -1940,7 +1941,7 @@ N_{\mathrm{load,infield}}
 </tbody>
 </table>
 <p>Public 66 kV examples span approximately 20–50 t/km, so loading must use the selected cable rather than voltage alone <span class="citation" data-cites="eibThorCableData">(<a href="#ref-eibThorCableData" role="doc-biblioref"><em>Thor Offshore Wind Farm Environmental Material</em>, n.d.</a>)</span>.</p>
-<p>An indicative 2,500 mm² copper 525 kV submarine cable has a linear mass of approximately 65 t/km, but this is not a universal HVDC mass assumption and applies neither to TenneT’s metallic return nor to its fibre-optic cable <span class="citation" data-cites="prysmian525KVSubmarine tennet2026TwoGWProgramWeb">(<a href="#ref-prysmian525KVSubmarine" role="doc-biblioref">Prysmian Group, n.d.</a>; <a href="#ref-tennet2026TwoGWProgramWeb" role="doc-biblioref">TenneT, n.d.</a>)</span>.</p>
+<p>Prysmian indicates 65 t/km for its cable example, while ORBIT gives 74 t/km for its library example; the selected pole-cable assumption is 70 t/km, but this is not a universal HVDC mass assumption and applies neither to TenneT’s metallic return nor to its fibre-optic cable <span class="citation" data-cites="prysmian525KVSubmarine tennet2026TwoGWProgramWeb">(<a href="#ref-prysmian525KVSubmarine" role="doc-biblioref">Prysmian Group, n.d.</a>; <a href="#ref-tennet2026TwoGWProgramWeb" role="doc-biblioref">TenneT, n.d.</a>)</span>.</p>
 <p>Manufacturer information supports horizontal TCP lay from a small multipurpose vessel and continuous lengths of approximately 3–6 km, depending on diameter and pressure <span class="citation" data-cites="strohmTCPFlowlines">(<a href="#ref-strohmTCPFlowlines" role="doc-biblioref">Strohm, n.d.-b</a>)</span>. This is the physical basis for admitting a smaller candidate spread to the vessel-selection calculation. The installation-cost benefit does not come from product mass directly: it arises when the lighter product and its handling envelope make that smaller spread feasible and the matching all-in rate is lower than the rate for the qualifying cable-lay spread. These are generic product-family capabilities, not a qualified hydrogen design point. DNV-ST-F119 supplies the offshore TCP standard basis, while DNV’s hydrogen work identifies hydrogen-specific qualification gaps <span class="citation" data-cites="dnvSTF119 dnvHydrogenCompositeJIP">(<a href="#ref-dnvSTF119" role="doc-biblioref"><span>DNV-ST-F119</span> 2019</a>; <a href="#ref-dnvHydrogenCompositeJIP" role="doc-biblioref">DNV, n.d.</a>)</span>.</p>
 <p>Until product and contractor qualification is available, the model reports two vessel-class outcomes rather than forcing one selection:</p>
 <table class="caption-top table">
@@ -2242,6 +2243,10 @@ N_{\mathrm{load,infield}}
 </table>
 <p>The model stops at the highest defensible level for each subclass. It preserves cost-driving physical inventories and discrete logistics while leaving unsupported engineering checks as qualification gates and unresolved cost terms as <strong>not parameterized</strong>.</p>
 <p><strong>Evidence review date:</strong> 5 August 2026.</p>
+</section>
+<section id="remaining-campaign-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="remaining-campaign-evidence">Remaining campaign evidence</h2>
+<p>The chosen pole-cable mass does not reconstruct the adopted interface-event time. The abbreviated task list remains incomplete; the aggregate event duration is retained pending a complete task/occurrence breakdown. Do not silently replace it with the sum of an incomplete list. The illustrative cable-length case is separate from the article’s physical inventory.</p>
 
 
 

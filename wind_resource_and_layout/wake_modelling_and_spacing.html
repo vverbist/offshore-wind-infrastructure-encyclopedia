@@ -565,7 +565,7 @@ window.Quarto = {
 
 <section id="role-in-the-model" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-the-model">Role in the Model</h2>
-<p>This calculation turns turbine coordinates, a tabulated turbine curve and a set of wind states into the wake-affected electrical power of every turbine in every state. That table is the common input to all architectures: it gives power at the generator electrical output, before any architecture-specific conversion or collection loss. The implementation is <code>calculate_wakes</code> in <code>model/wind_resource_and_layout/wake_modelling_and_spacing.py</code>.</p>
+<p>This calculation turns turbine coordinates, a tabulated turbine curve and a set of wind states into the wake-affected electrical power of every turbine in every state. That table is the common input to all architectures: it gives power at the inverter AC output before the turbine transformer, before any architecture-specific conversion or collection loss. The implementation is <code>calculate_wakes</code> in <code>model/wind_resource_and_layout/wake_modelling_and_spacing.py</code>.</p>
 <p>The layout is deliberately schematic. It exposes the relationship between installed capacity, occupied area, turbine separation and wake loss without claiming to reproduce a consented or commercially optimised wind-farm layout.</p>
 </section>
 <section id="inputs" class="level2">

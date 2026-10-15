@@ -489,6 +489,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#architecture-distinctions" id="toc-architecture-distinctions" class="nav-link" data-scroll-target="#architecture-distinctions">Architecture Distinctions</a></li>
   <li><a href="#physical-and-economic-scope" id="toc-physical-and-economic-scope" class="nav-link" data-scroll-target="#physical-and-economic-scope">Physical and Economic Scope</a></li>
   <li><a href="#scope-of-this-section" id="toc-scope-of-this-section" class="nav-link" data-scroll-target="#scope-of-this-section">Scope of This Section</a></li>
+  <li><a href="#executable-scope" id="toc-executable-scope" class="nav-link" data-scroll-target="#executable-scope">Executable scope</a></li>
   </ul>
 </nav>
     </div>
@@ -547,7 +548,8 @@ ul.task-list li input[type="checkbox"] {
   C4 --&gt; C5["Onshore hydrogen-backbone connection"]
 
   D1["Wind turbines"] --&gt; D2["Turbine-integrated electrolysis"]
-  D2 --&gt; D3["Hydrogen infield collection"]
+  D2 --&gt; DC["Turbine compression"]
+  DC --&gt; D3["Hydrogen infield collection"]
   D3 --&gt; D4["Pipeline export"]
   D4 --&gt; D5["Onshore hydrogen-backbone connection"]
 </pre>
@@ -641,6 +643,10 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../architectures/component_mapping.html">Component Mapping</a></li>
 </ul>
 <p>The <a href="../methodology/system_boundary_and_lcoe.html">System Boundary and Carrier-Cost Metrics</a> page defines the endpoint, cost schema and reporting units. The component mapping identifies the canonical owner of each physical function so that costs and performance effects are booked once.</p>
+</section>
+<section id="executable-scope" class="level2">
+<h2 class="anchored" data-anchor-id="executable-scope">Executable scope</h2>
+<p>The current scenario runner evaluates centralised and decentralised hydrogen. Electricity export is a documented calculation contract; a complete electricity scenario branch and its delivered-electricity cost output are not implemented. Component equations and reference figures do not establish an executable cross-carrier comparison.</p>
 
 
 </section>

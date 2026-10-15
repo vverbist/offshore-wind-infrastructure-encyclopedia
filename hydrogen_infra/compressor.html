@@ -647,8 +647,8 @@ window.Quarto = {
 <td style="text-align: right;">TODO: adopt non-overlapping architecture-specific scope</td>
 </tr>
 <tr class="even">
-<td>Compressor OPEX</td>
-<td style="text-align: right;">TODO: adopt component allowance</td>
+<td>Provisional O&amp;M</td>
+<td style="text-align: right;">2%/year of initial compressor CAPEX/year; user assumption</td>
 </tr>
 <tr class="odd">
 <td>Compressor cost scaling exponent</td>
@@ -940,7 +940,7 @@ C_{\mathrm{comp,total}}=\sum_j n_j C_{\mathrm{comp,ref}}
 </section>
 <section id="operating-cost-and-availability" class="level3">
 <h3 class="anchored" data-anchor-id="operating-cost-and-availability">Operating Cost and Availability</h3>
-<p>Annual O&amp;M is total installed train supply cost times the adopted <code>compressor-opex-rate</code> [fraction/year]. Availability uses the architecture-specific <code>compressor-*-availability</code> [fraction], applied to the production capacity at that location. Both remain unresolved inputs; no distributed maintenance premium is assumed. The component ledger prevents the same outage from being counted again in production availability. Redundancy, failure-state redispatch and spare-train sizing are deferred.</p>
+<p>Annual O&amp;M is total installed train supply cost times the adopted the common <code>financial-provisional-opex-rate</code> [fraction/year], applied to its initial capital cost. Availability uses the architecture-specific <code>compressor-*-availability</code> [fraction], applied to the production capacity at that location. Availability remains unresolved; no distributed maintenance premium is assumed. The component ledger prevents the same outage from being counted again in production availability. Redundancy, failure-state redispatch and spare-train sizing are deferred.</p>
 </section>
 </section>
 <section id="pressure-optimisation" class="level2">

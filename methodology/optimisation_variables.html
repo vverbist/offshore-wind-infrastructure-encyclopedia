@@ -601,101 +601,131 @@ window.Quarto = {
 </section>
 <section id="master-user-input-contract" class="level2">
 <h2 class="anchored" data-anchor-id="master-user-input-contract">Master User-Input Contract</h2>
+<p>This is the canonical contract for the current deterministic runner. TOML data paths are relative to the scenario directory. <code>[case] include</code> merges one shared file from that directory; duplicate keys and nested includes are rejected.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Field</th>
-<th>Unit/type</th>
-<th>Applicability</th>
-<th>Owner</th>
-<th>Required check</th>
-<th>Current status</th>
+<th>TOML section and fields</th>
+<th>Units and applicability</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Architecture, <span class="math inline">\(a\)</span></td>
-<td>category</td>
-<td>All</td>
-<td>Architectures</td>
-<td>Electricity, centralised hydrogen or decentralised hydrogen</td>
-<td>Defined</td>
+<td><code>case.architecture</code></td>
+<td><code>centralised</code> or <code>decentralised</code>; electricity is not an executable branch</td>
 </tr>
 <tr class="even">
-<td>Wind-resource record</td>
-<td>dataset/version</td>
-<td>All</td>
-<td>WIND-002</td>
-<td>Source, period, location and direction convention supplied</td>
-<td>Source record unresolved</td>
+<td><code>site.coordinates_file</code></td>
+<td>CSV <code>turbine,x_m,y_m</code>; metres, unique IDs</td>
 </tr>
 <tr class="odd">
-<td>Site/layout definition</td>
-<td>coordinates or declared layout inputs</td>
-<td>All</td>
-<td>WIND-003</td>
-<td>One unambiguous layout route; no conflicting turbine-count and spacing definitions</td>
-<td>Method unresolved</td>
+<td>Alternative generated layout: <code>site.turbine_count</code>, <code>columns</code>, <code>spacing_x_m</code>, <code>spacing_y_m</code>, <code>orientation_deg</code></td>
+<td>Positive counts and metre spacings; degrees of rotation. Use this route instead of a coordinates file</td>
 </tr>
 <tr class="even">
-<td>Turbine record</td>
-<td>model/class</td>
-<td>All</td>
-<td>TURB-002</td>
-<td>Rated power, rotor, hub height and equipment boundary supplied</td>
-<td>Partially defined</td>
+<td><code>site.minimum_spacing_m</code>, <code>farm_area_km2</code>, <code>water_depth_m</code></td>
+<td>Metres, km², metres; spacing checked, polygon containment/setbacks deferred</td>
 </tr>
 <tr class="odd">
-<td>Water depth</td>
-<td>m</td>
-<td>All</td>
-<td>TURB-003 and platform owners</td>
-<td>Within adopted foundation/platform method range</td>
-<td>Scenario input; range unresolved</td>
+<td><code>site.collection_x_m</code>, <code>collection_y_m</code></td>
+<td>Central AC collection sink coordinates in metres</td>
 </tr>
 <tr class="even">
-<td>Onshore endpoint and route records</td>
-<td>route data</td>
-<td>All</td>
-<td>ELEC-004/005 or H2I-004</td>
-<td>Route segments and endpoint match selected carrier</td>
-<td>Partially defined</td>
+<td><code>turbine.rated_power_kw</code>, <code>rotor_diameter_m</code>, <code>hub_height_m</code></td>
+<td>kW, metres, metres; rating may use the central CSV reference if omitted</td>
 </tr>
 <tr class="odd">
-<td>Hydrogen stack overplant factor</td>
-<td>dimensionless</td>
-<td>Hydrogen</td>
-<td>H2P-003</td>
-<td>Positive and consistent with module count</td>
-<td>User input; range unresolved</td>
+<td><code>wind.power_boundary</code></td>
+<td><code>inverter_ac_output</code>: after turbine inverter, before transformer</td>
 </tr>
 <tr class="even">
-<td>Hydrogen operating pressure</td>
-<td>bar</td>
-<td>Hydrogen</td>
-<td>H2I-003/004</td>
-<td>Inlet/outlet basis and product class supplied</td>
-<td>User input; range unresolved</td>
+<td><code>wind.power_states_file</code></td>
+<td>CSV <code>state,hours,&lt;turbine IDs&gt;</code>; kW per turbine, complete annual-hour weights</td>
 </tr>
 <tr class="odd">
-<td>Hydrogen pipeline product class</td>
-<td>discrete record</td>
-<td>Hydrogen</td>
-<td>H2I-004</td>
-<td>Qualified diameter, pressure and length envelope</td>
-<td>User input; product set unresolved</td>
+<td>Alternative wake inputs: <code>wind.wind_states_file</code>, <code>turbine_curve_file</code></td>
+<td>CSV <code>state,speed_m_s,direction_deg,hours</code> and <code>speed_m_s,power_kw,ct</code>; optional installed PyWake required</td>
+</tr>
+<tr class="even">
+<td><code>wind.design_state_ids</code></td>
+<td>IDs present in the power table, including declared peak-duty states; zero-hour design states are permitted</td>
+</tr>
+<tr class="odd">
+<td><code>electrolysis.overplant_factor</code>, <code>stack_curve_file</code>, <code>manufacturing_output_mw_year</code></td>
+<td>Dimensionless capacity factor, current-density/voltage dataset, MW/year manufacturing reference</td>
+</tr>
+<tr class="even">
+<td><code>electrolysis.interface</code></td>
+<td>Distributed only: <code>converter_reduced</code> (direct DC) or <code>conservative</code> (deferred DC/DC sensitivity)</td>
+</tr>
+<tr class="odd">
+<td><code>hydrogen.stack_outlet_bar</code>, <code>injection_bar</code>, <code>delivery_bar</code></td>
+<td>Positive absolute bar; compressor discharge must exceed delivery pressure</td>
+</tr>
+<tr class="even">
+<td><code>hydrogen.export_length_km</code>, <code>export_diameter_m</code></td>
+<td>Route km and true internal diameter in metres</td>
+</tr>
+<tr class="odd">
+<td><code>hydrogen.export_inlet_bar</code></td>
+<td>Distributed hydraulic case: absolute bar after collection loss; derived from discharge when loss is neglected</td>
+</tr>
+<tr class="even">
+<td><code>collection.nodes_file</code>, <code>sections_file</code>, <code>sink</code></td>
+<td>Distributed ladder network; node CSV <code>node,x_m,y_m</code>, section CSV described below</td>
+</tr>
+<tr class="odd">
+<td><code>collection.pressure_drop</code></td>
+<td><code>hydraulic</code> by default; article selects <code>neglected</code></td>
+</tr>
+<tr class="even">
+<td><code>collection.diameter_inches</code></td>
+<td>Uniform internal diameter for neglected-drop collection; conflicting section sizes rejected</td>
+</tr>
+<tr class="odd">
+<td><code>platform.topside_mass_t</code></td>
+<td>Central only: complete equipment-plus-structure mass in tonnes, direct method</td>
+</tr>
+<tr class="even">
+<td>Alternative <code>platform.mass_method</code>, <code>mass_reference</code></td>
+<td><code>power_scaling</code>; <code>electrolysis</code> derives rating from installed stack modules; <code>hvdc</code> or <code>custom</code> requires <code>rated_power_gw</code>; custom uses canonical <code>platform-reference-topside-mass</code> and <code>platform-reference-power</code> inputs</td>
+</tr>
+<tr class="odd">
+<td><code>installation.turbine_method</code></td>
+<td><code>reference</code> fixed benchmark or default <code>campaign</code></td>
+</tr>
+<tr class="even">
+<td><code>installation.port_distance_km</code>, <code>intersite_distance_km</code></td>
+<td>Required for turbine/foundation campaign logistics</td>
+</tr>
+<tr class="odd">
+<td><code>installation.collection</code>, <code>installation.export</code></td>
+<td>Each spread plan supplies <code>loads_per_campaign</code> (positive integer list), <code>port_distance_km</code>, <code>splices</code>, <code>burial_pass_km</code>, <code>burial_other_offshore_days</code>, <code>survey_pass_km</code></td>
+</tr>
+<tr class="even">
+<td><code>data.pipeline_cost_module</code></td>
+<td>Optional trusted local callable <code>pipeline_cost_curve(pressure_bar, diameter_inches)</code>; operating bar(g), EUR2025/m</td>
+</tr>
+<tr class="odd">
+<td><code>reporting.scope</code></td>
+<td>Default <code>lifecycle</code>; article <code>production_capex</code> defers availability, O&amp;M, replacement and decommissioning</td>
+</tr>
+<tr class="even">
+<td><code>reporting.excluded_components</code></td>
+<td>Only <code>pipeline-connections</code>, <code>pipeline-manifold</code>, <code>hydrogen-receipt</code>, in production/CAPEX scope; never silent zero entries</td>
+</tr>
+<tr class="odd">
+<td><code>overrides</code></td>
+<td>Named adopted scalar input IDs, values in canonical CSV units; baseline and effective value retained</td>
 </tr>
 </tbody>
 </table>
-<p>Missing ranges remain explicit because the component evidence does not yet support a canonical allowed set. COR-01B does not invent defaults.</p>
+<p>Hydraulic collection sections have <code>section,from,to,vertical_m,route_allowance, flow_share,diameter_m,inlet_bar,outlet_bar</code>. Geometry uses metres; allowance and flow shares are fractions; diameters are true internal metres and pressures are absolute bar. Neglected-drop mode accepts geometry-only sections and derives pressure from compressor discharge. It conserves mass but does not qualify collection hydraulics. AC routes use coordinate-file order and capacity-limited strings; no route optimisation is performed.</p>
+<p>Missing required physical inputs produce an explicit incomplete result for their dependent calculations. Missing included capital blocks complete CAPEX; missing lifecycle inputs block complete lifecycle cost. Invalid units, conflicting inputs or unsupported modes produce errors. Detailed applicability ranges remain evidence gaps rather than invented default bounds.</p>
 </section>
 <section id="shared-fixed-parameters" class="level2">
 <h2 class="anchored" data-anchor-id="shared-fixed-parameters">Shared Fixed Parameters</h2>
@@ -735,7 +765,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>HVDC reference-link rating</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;"><p>2</p></td>
 <td>GW/link</td>
 <td>ELEC-003/004; sourced fixed parameter <span class="citation" data-cites="tennet2024TwoGWProgram tennet2025TwoGWStandard">(<a href="#ref-tennet2024TwoGWProgram" role="doc-biblioref">TenneT 2024</a>, <a href="#ref-tennet2025TwoGWStandard" role="doc-biblioref">2025</a>)</span></td>
 </tr>
@@ -806,7 +836,7 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>Lifecycle capital basis</td>
-<td>EUR<sub>2025</sub> and EUR<sub>2025</sub>/kW-wind</td>
+<td>EUR<sub>2025</sub> only, when complete</td>
 </tr>
 <tr class="even">
 <td>Annual OPEX</td>
