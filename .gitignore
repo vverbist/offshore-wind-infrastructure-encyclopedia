@@ -18,6 +18,9 @@ __pycache__/
 /.claude/settings.local.json
 /review_exports/
 
+# Local consistency-audit briefs, reports and evidence
+/review/consistency-audit/
+
 # Reproducible legacy-model caches and editor/profiling artifacts
 /background/legacy model/model_A02/cache/
 .ipynb_checkpoints/
