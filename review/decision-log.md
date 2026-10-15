@@ -578,3 +578,24 @@ recording the first decision.
   confidential evidence
 - **Correction batch:** COR-01A
 - **Approved by:** User
+
+### DEC-0023 — Implement reviewed consistency-audit decisions
+
+- **Status:** decided
+- **Raised/decided on:** 2026-10-15
+- **Decision:** Implement the individually selected A01–A25 corrections with the
+  user's comments overriding the initial proposals, plus the selected B scope in
+  `consistency-audit/review-and-decisions.md`. Initial CAPEX intensity only; no
+  lifecycle-capital-per-kW indicator. Annual provisional O&M is 2% of each
+  component's complete initial CAPEX. Retain the existing coupled auxiliary bus.
+  Use separate central generation/production availability without invented
+  values. Keep the selected equal turbine mass, single-platform screening,
+  spacing-only layout, local-only source storage and article lifecycle deferrals.
+- **Scope qualifications:** Source investigation does not authorize unsupported
+  costs or a design change. Blank B06–B10 remain pending; CA-10 remains separate.
+  Historical technical issues are not closed merely because current scope defers
+  their subject. Complete-topside EPCI supersedes old equipment-only wording.
+- **Evidence:** Edited decision sheet, user authorization “run the prepared
+  batches”, and the two scope clarifications in this chat. Implementation and
+  validation are recorded in `consistency-audit/implementation-progress.md`.
+- **Approved by:** User

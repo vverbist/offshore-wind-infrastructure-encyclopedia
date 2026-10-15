@@ -54,6 +54,23 @@ class Components(unittest.TestCase):
         cls.inputs = load_inputs({})
         cls.curve = StackCurve.read(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx")
 
+    def test_adopted_installation_unit_and_price_conversions(self):
+        from model.offshore_installation.turbine_and_foundation_installation import campaign_inputs
+        from model.offshore_installation.cable_and_pipeline_installation import ac_lay_inputs
+        foundation = campaign_inputs("foundation", self.inputs)
+        turbine = campaign_inputs("turbine", self.inputs)
+        self.assertAlmostEqual(foundation["speed"], 444.48)
+        self.assertAlmostEqual(foundation["port-time"], 20 / 24)
+        self.assertAlmostEqual(turbine["port-time"], 12.5 / 24)
+        self.assertAlmostEqual(foundation["spread-rate"], 400000 * 321.943 / 313.689 / 1.13)
+        cable = ac_lay_inputs(self.inputs)
+        self.assertAlmostEqual(cable["lay-productivity"], 9.6)
+        self.assertAlmostEqual(cable["mobilisation-time"], 1.5)
+        self.assertAlmostEqual(cable["transit-speed"], 276)
+        self.assertAlmostEqual(cable["splice-time"], 51.5 / 24)
+        with self.assertRaises(MissingInput):
+            self.inputs.number("install-ac-burial-rate")
+
     def test_unknown_and_reference_costs_are_not_adopted(self):
         with self.assertRaises(MissingInput):
             self.inputs.number("bop-opex-rate")
@@ -86,16 +103,15 @@ class Components(unittest.TestCase):
         self.assertAlmostEqual(supply_eur(result, 2, inputs) + transformer, legacy)
 
     def test_stack_purchase_rating_and_manufacturing_basis(self):
-        reference = stack.purchase_cost_basis(1000, self.curve, self.inputs)
-        article = stack.purchase_cost_basis(2000, self.curve, self.inputs)
+        reference = stack.purchase_cost_basis(1000, self.inputs)
         self.assertEqual(reference["manufactured_usd2020_per_source_kw"], 164)
-        self.assertAlmostEqual(article["manufactured_usd2020_per_source_kw"], 158.280430082, places=8)
-        # Same physical stack: source- and reference-rated costs times jV agree.
-        self.assertAlmostEqual(article["manufactured_usd2020_per_reference_kw"] * 3 * self.curve.voltage_at(3),
-                               article["manufactured_usd2020_per_source_kw"] * 2 * 1.9)
-        self.assertLess(article["purchase_eur2025_per_reference_kw"], reference["purchase_eur2025_per_reference_kw"])
-        with self.assertRaises(ValueError):
-            stack.purchase_cost_basis(100, self.curve, self.inputs)
+        self.assertAlmostEqual(reference["rating_conversion_factor"], 2 / 3)
+        self.assertAlmostEqual(reference["purchase_eur2025_per_reference_kw"],
+                               164 * (2 / 3) * 1.5 * 1.24393 / 1.13)
+        # Neither lower nor higher factory output silently receives a fitted cost.
+        for output in (100, 2000):
+            with self.assertRaises(ValueError):
+                stack.purchase_cost_basis(output, self.inputs)
 
     def test_override_preserves_baseline(self):
         modified = load_inputs({"overrides": {"bop-block-limit": 20000}})
@@ -130,7 +146,25 @@ class Components(unittest.TestCase):
         base = turbine(15000, 236, 133, self.inputs)
         result = turbine(15000, 236, 133, changed)
         self.assertEqual(result["raw_cost_weights"]["blade"], 2 * base["raw_cost_weights"]["blade"])
-        self.assertIsNone(result["supply_usd2022"])
+        self.assertGreater(result["supply_usd2022"], 0)
+
+    def test_provisional_central_stages_and_crane_omission(self):
+        from model.hydrogen_production.elx_power_electronics import efficiency
+        inputs = load_inputs({})
+        self.assertAlmostEqual(efficiency(inputs), 0.99 ** 3)
+        changed = synthetic_inputs({"central-rectifier-efficiency": 0.95})
+        self.assertAlmostEqual(efficiency(changed), 0.99 * 0.99 * 0.95)
+        baseline = turbine(15000, 236, 133, inputs)
+        # The unused historical crane-price record cannot silently reintroduce its cost.
+        priced = turbine(15000, 236, 133, synthetic_inputs({"turbine-cost-crane": 1e6}))
+        self.assertEqual(baseline["masses_kg"], priced["masses_kg"])
+        self.assertEqual(baseline["supply_usd2022"], priced["supply_usd2022"])
+        self.assertEqual(baseline["crane_purchase_cost_treatment"], "excluded_by_modelling_assumption")
+        platform_mass = baseline["masses_kg"]["platforms"]
+        crane_mass = inputs.number("turbine-crane-mass")
+        self.assertGreater(crane_mass, 0)
+        self.assertAlmostEqual(baseline["raw_cost_weights"]["platforms"],
+            (platform_mass - crane_mass) * inputs.reference_number("turbine-cost-platforms"))
 
     def test_stack_zero_low_and_rated_energy_balance(self):
         work = specific_energy(30, 150, self.inputs)
@@ -183,7 +217,7 @@ class Components(unittest.TestCase):
         result = turbine(15000, 236, 133, self.inputs)
         self.assertAlmostEqual(result["known_turbine_t"], 1552.8, delta=0.1)
         self.assertAlmostEqual(result["known_nacelle_t"], 864.1, delta=0.1)
-        self.assertIsNone(result["supply_usd2022"])
+        self.assertGreater(result["supply_usd2022"], 0)
         pile = foundation(1877, 30, self.inputs)
         self.assertEqual(pile["monopile_t"], 1318)
 
@@ -305,7 +339,7 @@ class Components(unittest.TestCase):
 
     def test_installation_payload_step(self):
         values = {"install-turbine-sets-per-load": 3, "install-turbine-usable-payload": 6000,
-                  "install-turbine-crane-capacity": 3000, "install-turbine-speed": 400}
+                  "install-turbine-crane-capacity": 3000, "install-turbine-speed-knots": 10}
         inputs = synthetic_inputs(values, fill_missing=True)
         light = campaign("turbine", 6, 2000, 500, 50, 1, inputs)
         heavy = campaign("turbine", 6, 2001, 500, 50, 1, inputs)
@@ -327,7 +361,7 @@ class Integration(unittest.TestCase):
                      "water_depth_m": 30, "collection_x_m": -1000, "collection_y_m": 0},
             "turbine": {"rotor_diameter_m": 236, "hub_height_m": 133},
             "wind": {"power_states_file": "power.csv", "design_state_ids": ["design"], "power_boundary": "inverter_ac_output"},
-            "electrolysis": {"stack_curve_file": str(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx"), "overplant_factor": 1, "manufacturing_output_mw_year": 2000},
+            "electrolysis": {"stack_curve_file": str(ROOT / "numerical_inputs/pem_polarisation_curve.xlsx"), "overplant_factor": 1, "manufacturing_output_mw_year": 1000},
             "hydrogen": {"stack_outlet_bar": 30, "injection_bar": 150, "delivery_bar": 66, "export_length_km": 80, "export_diameter_m": 0.3},
             "platform": {"topside_mass_t": 0.8},
             "installation": {"port_distance_km": 10, "intersite_distance_km": 1, "collection": plan, "export": plan,
@@ -343,6 +377,7 @@ class Integration(unittest.TestCase):
 
     def test_article_installation_reference_is_equal_without_hydrogen_surcharge(self):
         records = []
+        turbine_masses = []
         for name in ("centralised", "decentralised"):
             path = ROOT / "research_articles/turbine_level_hydrogen/scenarios" / f"{name}.toml"
             case = read_scenario(path)
@@ -353,10 +388,12 @@ class Integration(unittest.TestCase):
             self.assertAlmostEqual(record["eur2025_per_turbine"], 2388615.875, places=2)
             self.assertIsNone(next(c.amount_eur for c in result.costs if c.component == "foundation" and c.category == "installation"))
             records.append(record)
+            turbine_masses.append(result.physical["turbine_screening"]["known_turbine_t"])
             hydrogen = [c for c in result.costs if c.component == "turbine-hydrogen-equipment"]
             self.assertFalse(hydrogen)
             self.assertFalse(any("turbine-hydrogen-installation-cost" in reason for reason in result.reasons))
         self.assertEqual(records[0], records[1])
+        self.assertEqual(turbine_masses[0], turbine_masses[1])
 
     def test_partial_case_keeps_inventory_and_no_fake_lcoh(self):
         result = run_case(self.scenario, load_inputs({}), self.base)
@@ -441,7 +478,7 @@ class Integration(unittest.TestCase):
         self.assertTrue(all("platform-decommissioning-cost" in r for r in result.reasons), result.reasons)
         capex = result.physical["platform_total_eur"]
         opex = next(c.amount_eur for c in result.costs if c.component == "platform" and c.category == "annual_opex")
-        self.assertEqual(opex, capex * 0.01)
+        self.assertEqual(opex, capex * 0.02)
         self.assertNotIn("platform_installation", result.physical)
 
     def test_distributed_case_preserves_turbine_operation(self):
@@ -480,6 +517,89 @@ class Integration(unittest.TestCase):
         rejected = run_case(self.scenario, inputs, self.base)
         self.assertEqual(rejected.status, "infeasible")
         self.assertIsNone(rejected.summary["lcoh_eur_kg"])
+
+    def test_production_capex_defers_lifecycle_without_zero_costs(self):
+        self.scenario["reporting"] = {"scope": "production_capex"}
+        self.scenario["installation"]["turbine_method"] = "reference"
+        values = {"turbine-transformer-efficiency": 0.98,
+                  "install-foundation-usable-payload": 10000,
+                  "install-foundation-crane-capacity": 5000,
+                  "platform-decommissioning-cost": None, "stack-replacement-life": None,
+                  "central-production-availability": None, "stack-opex-rate": None}
+        result = run_case(self.scenario, synthetic_inputs(values, fill_missing=True), self.base)
+        self.assertEqual(result.status, "feasible", result.reasons)
+        self.assertEqual(result.summary["production_status"], "complete")
+        self.assertEqual(result.summary["capex_status"], "complete")
+        self.assertEqual(result.summary["lifecycle_status"], "deferred")
+        self.assertGreater(result.summary["preavailability_hydrogen_kg_year_bol"], 0)
+        self.assertIsNone(result.summary["lcoh_eur_kg"])
+        self.assertNotIn("delivered_hydrogen_kg_year_bol", result.summary)
+        self.assertNotIn("known_annual_opex_subtotal_eur", result.summary)
+        self.assertEqual({c.category for c in result.costs}, {"supply", "installation", "epci"})
+        self.assertAlmostEqual(result.summary["initial_capex_eur"], sum(c.amount_eur for c in result.costs))
+        write_result(result, self.base / "scoped")
+        saved = json.loads((self.base / "scoped/result.json").read_text())
+        self.assertEqual(saved["summary"]["lifecycle_status"], "deferred")
+        # Missing capital evidence leaves production available and the capital total absent.
+        values["central-conversion-unit-cost"] = None
+        partial = run_case(self.scenario, synthetic_inputs(values, fill_missing=True), self.base)
+        self.assertEqual(partial.summary["production_status"], "complete")
+        self.assertIsNone(partial.summary["initial_capex_eur"])
+        self.assertIn("conversion / supply", partial.summary["missing_capex"])
+
+    def test_no_drop_collection_keeps_flows_and_export_checks(self):
+        self.scenario["case"]["architecture"] = "decentralised"
+        self.scenario["electrolysis"]["interface"] = "converter_reduced"
+        self.scenario["reporting"] = {"scope": "production_capex"}
+        self.scenario["collection"] = {"nodes_file": "nodes.csv", "sections_file": "geometry.csv",
+                                       "sink": "sink", "pressure_drop": "neglected"}
+        pd.DataFrame({"node": ["sink"], "x_m": [2000], "y_m": [0]}).to_csv(self.base / "nodes.csv", index=False)
+        geometry = pd.DataFrame({"section": ["one", "two"], "from": ["a", "b"], "to": ["b", "sink"],
+            "vertical_m": [0, 0], "route_allowance": [0, 0], "flow_share": [1.0, 1.0]})
+        geometry.to_csv(self.base / "geometry.csv", index=False)
+        inputs = synthetic_inputs({"converter-reduced-conversion-efficiency": 0.99,
+                                   "turbine-inverter-efficiency": 0.98})
+        with patch("model.workflow.check_sections", side_effect=AssertionError("No-drop mode ran hydraulics")):
+            result = run_case(self.scenario, inputs, self.base)
+        self.assertEqual(result.summary["production_status"], "complete")
+        self.assertEqual(result.physical["collection_hydraulics"]["feasibility"], "not_assessed")
+        self.assertEqual(result.physical["collection_hydraulics"]["export_inlet_bar"], 150)
+        routes = result.tables["collection_sections"]
+        self.assertAlmostEqual(routes.physical_km.sum(), 2)
+        self.assertAlmostEqual(routes.peak_kg_h.iloc[-1], result.physical["export"]["peak_kg_h"])
+        self.assertTrue(any("diameters required for supply cost" in r for r in result.reasons))
+        export = result.physical["export"]
+        expected = capacity_kg_h(0.3, 150, 66, 80000, inputs)
+        self.assertAlmostEqual(export["capacity_per_pipe_kg_h"], expected)
+        self.assertEqual(export["pipeline_count"], export_count(export["peak_kg_h"], expected))
+        # Explicit article specification and cost exclusions preserve the physical inventory.
+        self.scenario["collection"]["diameter_inches"] = 6
+        excluded = ["pipeline-connections", "pipeline-manifold", "hydrogen-receipt"]
+        self.scenario["reporting"]["excluded_components"] = excluded
+        (self.base / "quote.py").write_text("def pipeline_cost_curve(pressure_bar_g, diameter_inches):\n    return pressure_bar_g * diameter_inches\n")
+        self.scenario["data"] = {"pipeline_cost_module": "quote.py"}
+        priced = run_case(self.scenario, inputs, self.base)
+        sections = priced.tables["collection_sections"]
+        self.assertTrue(np.allclose(sections.diameter_m, 0.1524))
+        self.assertTrue(np.allclose(sections.inlet_bar, 150))
+        self.assertTrue(np.allclose(sections.outlet_bar, 150))
+        self.assertEqual(priced.summary["preavailability_hydrogen_kg_year_bol"], result.summary["preavailability_hydrogen_kg_year_bol"])
+        self.assertFalse(set(excluded) & {c.component for c in priced.costs})
+        self.assertTrue(set(excluded).issubset(priced.summary["excluded_costs"]))
+        supply = next(c.amount_eur for c in priced.costs if c.component == "hydrogen-collection" and c.category == "supply")
+        self.assertAlmostEqual(supply, 2000 * (150 - inputs.number("standard-atmospheric-pressure")) * 6)
+        self.assertIsNone(priced.summary["initial_capex_eur"])
+        geometry.loc[0, "flow_share"] = 0.5
+        geometry.to_csv(self.base / "geometry.csv", index=False)
+        rejected = run_case(self.scenario, inputs, self.base)
+        self.assertEqual(rejected.status, "infeasible")
+        self.scenario["hydrogen"]["export_inlet_bar"] = 130
+        with self.assertRaisesRegex(ValueError, "export inlet equal"):
+            run_case(self.scenario, inputs, self.base)
+        del self.scenario["hydrogen"]["export_inlet_bar"]
+        self.scenario["hydrogen"]["injection_bar"] = 60
+        rejected = run_case(self.scenario, inputs, self.base)
+        self.assertEqual(rejected.status, "infeasible")
 
     @unittest.skipUnless(importlib.util.find_spec("py_wake"), "optional wind dependency not installed")
     def test_pywake_adapter_preserves_state_shape_and_wake_loss(self):
@@ -544,7 +664,7 @@ class Integration(unittest.TestCase):
         with self.assertRaises(ValueError):
             capacity_kg_h(-0.15, 150, 67, 100000, load_inputs({}))
 
-    def test_agreed_grid_units_and_missing_collection_pressure(self):
+    def test_agreed_grid_units_and_no_drop_reference(self):
         from research_articles.turbine_level_hydrogen.analysis.run_design_cases import read_design_cases, apply_design_values
         scenarios = ROOT / "research_articles/turbine_level_hydrogen/scenarios"
         cases = read_design_cases(scenarios / "pressure_diameter_grid.toml", load_inputs({}))
@@ -561,7 +681,13 @@ class Integration(unittest.TestCase):
         values.pop("case")
         filled = apply_design_values(read_scenario(scenarios / "decentralised.toml"), values)
         self.assertNotIn("export_inlet_bar", filled["hydrogen"])
-        self.assertNotIn("sections_file", filled["collection"])
+        self.assertEqual(filled["collection"]["pressure_drop"], "neglected")
+        self.assertEqual(filled["collection"]["sections_file"], "common/collection_sections_geometry.csv")
+        reference = cases.loc[cases["case"] == "p140barg-d8in"].iloc[0]
+        self.assertAlmostEqual(reference["hydrogen.injection_bar"], 141.01325)
+        self.assertAlmostEqual(reference["hydrogen.export_diameter_m"], 0.2032)
+        self.assertEqual(filled["wind"]["power_boundary"], "inverter_ac_output")
+        self.assertEqual(filled["reporting"]["scope"], "production_capex")
 
 
 class StackDegradation(unittest.TestCase):

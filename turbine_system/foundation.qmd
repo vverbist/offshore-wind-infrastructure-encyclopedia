@@ -39,7 +39,7 @@ $$
 m_\mathrm{top}=m_\mathrm{turbine}+m_\mathrm{additional},
 $$
 
-where $m_\mathrm{turbine}$ is the complete turbine mass, including the tower, passed from the turbine calculation. The optional $m_\mathrm{additional}$ term includes equipment supported by the foundation but not already present in the turbine mass ledger. It is zero unless such equipment is modelled explicitly.
+where $m_\mathrm{turbine}$ is the complete turbine mass, including the tower, passed from the turbine calculation. The optional $m_\mathrm{additional}$ term includes equipment supported by the foundation but not already present in the turbine mass ledger. It is a required explicit input when the turbine ledger omits supported equipment; an unresolved value is not zero.
 
 ## Monopile Mass
 
@@ -69,7 +69,7 @@ The reference is the IEA 15 MW offshore wind turbine [@gaertner2020IEA15]:
 |---|---:|---|
 | RNA mass | {{< var foundation-reference-rna-mass >}} | Published reference-turbine mass |
 | Tower mass | {{< var foundation-reference-tower-mass >}} | Published reference-turbine mass |
-| $m_\mathrm{top,ref}$ | 1,877 t | RNA plus tower |
+| $m_\mathrm{top,ref}$ | {{< var foundation-reference-supported-mass-value >}} t | RNA plus tower |
 | $d_\mathrm{ref}$ | {{< var foundation-reference-depth >}} | Reference site water depth |
 | $m_\mathrm{MP,ref}$ | {{< var foundation-reference-monopile-mass >}} | Published reference monopile mass |
 
@@ -83,8 +83,8 @@ with
 
 $$
 k_m
-=\frac{1{,}318}{1{,}877\times30}
-=0.02341\ \mathrm{m^{-1}}.
+=\frac{{{< var foundation-reference-monopile-mass-value >}}}{{{< var foundation-reference-supported-mass-value >}}\times{{< var foundation-reference-depth-value >}}}
+= {{< var foundation-mass-depth-coefficient >}}\ \mathrm{m^{-1}}.
 $$
 
 The direct proportionality to supported mass and water depth is a modelling assumption, not a structural-design equation. It is deliberately simple, passes through a traceable reference design, and avoids reintroducing turbine power as a proxy after turbine and tower masses have already been calculated.
@@ -122,7 +122,7 @@ $$
 The midpoint is used as the baseline:
 
 $$
-c_\mathrm{MP,base}=2{,}430\ \mathrm{USD_{2022}/t}.
+c_\mathrm{MP,base}={{< var foundation-fabrication-unit-cost-value >}}\ \mathrm{USD_{2022}/t}.
 $$
 
 Monopile and transition-piece supply costs are then:
@@ -186,4 +186,4 @@ The page passes two outputs to the wider model:
 
 The model is suitable for screening comparisons close to the cited 15--22 MW, 30--60 m reference range. It does not resolve soil profile, pile penetration, diameter, wall thickness, natural frequency, fatigue, corrosion allowance, secondary steel, grouted or bolted connections, or fabrication constraints. It must therefore be replaced by a site-specific integrated turbine, tower, and foundation design before detailed engineering or procurement.
 
-No separate foundation OPEX percentage is applied. Foundation inspection and repair should enter the project OPEX model as explicit activities when suitable evidence is available.
+The provisional annual O&M allowance is {{< var financial-provisional-opex-rate >}} of initial foundation CAPEX, including installation. This user-selected assumption replaces component-specific rates. Activity-based inspection and repair are deferred; see [Financial Assumptions](../methodology/financial_and_price_basis.qmd).

@@ -8,14 +8,13 @@ readiness: partially_implementable
 
 The turbine-system model calculates the mass and supply cost of one offshore wind turbine and its monopile foundation. It retains component masses because they connect turbine design to foundation sizing, transport, lifting, and installation-vessel requirements.
 
-The model boundary includes the rotor, nacelle, turbine electrical equipment, tower, monopile, and a transition-piece supply allowance. It excludes offshore transport and installation, scour protection, array infrastructure, export infrastructure, and hydrogen-production equipment. Where architecture-specific equipment is supported by the turbine foundation, its mass is passed into the foundation calculation without moving its cost into the turbine-system boundary.
+The model boundary includes the rotor, nacelle, turbine electrical equipment, tower, monopile, and a transition-piece supply allowance. It excludes offshore transport and installation, scour protection, array infrastructure, export infrastructure, and hydrogen-production equipment. Where architecture-specific equipment is supported by the turbine foundation, its mass would enter an architecture-feedback sensitivity; current cases retain the common conventional supported mass rather than recalculating reinforcement without moving its cost into the turbine-system boundary.
 
 ## Calculation Dependency
 
 The [Turbine Power Electronics](power_electronics.qmd) page defines the adopted
 electrical boundary at inverter AC output. The step-up transformer is allocated
-to electrical infrastructure even when housed in the turbine; the legacy turbine
-cost ledger still includes it and requires explicit reallocation. Its physical
+to electrical infrastructure even when housed in the turbine; the executable ledger reallocates its calibrated supply term once to AC electrical infrastructure. Its physical
 location remains relevant to supported mass and installation.
 
 ```{mermaid}

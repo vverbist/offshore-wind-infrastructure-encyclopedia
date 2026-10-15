@@ -5,7 +5,7 @@ Run manually when the compressor assumptions change:
     python tools/build_compressor_figures.py
 
 The multistage compression-work relation and its constants (gamma, T, eta_comp,
-eta_motor, r_max) are taken directly from hydrogen_infra/compressor.qmd. The
+eta_motor, r_max) are loaded from model_data/inputs.csv through the shared calculation modules. The
 average hydrogen compressibility factor Z_avg is not pinned to a fixed value
 on that page; it is computed here from real-gas hydrogen properties via
 CoolProp, evaluated at the arithmetic mean of inlet and outlet pressure.
@@ -23,6 +23,7 @@ import sys
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["svg.hashsalt"] = "offshore-wind-infrastructure-model"
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -58,7 +59,7 @@ def plot_energy_curves(output_path: Path, inputs) -> None:
     ax.grid(True, color="#d1d5db", linewidth=0.8)
     ax.legend(title="Inlet pressure [bar(a)]")
     fig.tight_layout()
-    fig.savefig(output_path)
+    fig.savefig(output_path, metadata={"Date": None})
     plt.close(fig)
 
 
@@ -79,7 +80,7 @@ def plot_cost_curves(output_path: Path, inputs, curve: StackCurve) -> None:
     ax.grid(True, color="#d1d5db", linewidth=0.8)
     ax.legend(title="Inlet pressure [bar(a)]", loc="upper left", bbox_to_anchor=(1.01, 1))
     fig.tight_layout()
-    fig.savefig(output_path)
+    fig.savefig(output_path, metadata={"Date": None})
     plt.close(fig)
 
 

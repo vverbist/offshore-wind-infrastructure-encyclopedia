@@ -15,7 +15,7 @@ The pipeline model covers:
 - material CAPEX for composite flexible hydrogen pipelines
 - transport capacity as a function of diameter, pressure, and route length
 - the number of parallel export pipelines required for a wind-farm hydrogen flow
-- the coupling between pipeline pressure, compressor duty, and total LCOE
+- the coupling between pipeline pressure, compressor duty, and levelised hydrogen cost
 
 ## Composite Flexible Pipelines
 
@@ -164,7 +164,7 @@ P_{\mathrm{H_2},\mathrm{HHV}}
 }
 $$
 
-where $\mathrm{HHV}_\mathrm{H_2}=39.4 \ \mathrm{kWh/kg}$ and $P_{\mathrm{H_2},\mathrm{HHV}}$ is in MW when $\dot{m}_\mathrm{max}$ is in kg/h.
+where $\mathrm{HHV}_\mathrm{H_2}={{< var hydrogen-hhv-value >}} \ \mathrm{kWh/kg}$ and $P_{\mathrm{H_2},\mathrm{HHV}}$ is in MW when $\dot{m}_\mathrm{max}$ is in kg/h.
 
 @fig-pipeline-capacity shows the resulting capacity curves over an illustrative diameter and inlet-pressure range, for the reference-case route of {{< var ijv-export-length-km >}} km and outlet pressure of {{< var ijv-delivery-pressure-bar-a >}} bar(a).
 
@@ -276,8 +276,8 @@ Because capacity scales much more strongly with diameter than material cost does
 | Maximum composite pipeline diameter | 8 inch |
 | Infield pipeline diameter | 6 inch (legacy screening value; section diameters are design inputs) |
 | Infield pipeline pressure | 150 bar (legacy screening value; section pressures are design inputs) |
-| Infield pipeline capacity | about 500 MW equivalent (outlet pressure assumption not yet documented; see Model Limitations) |
-| Pipeline OPEX | 0.5% of material CAPEX per year |
+| Infield pipeline capacity | Requires section length, inlet/outlet pressure and internal diameter; no fixed MW rating adopted |
+| Provisional O&M | {{< var financial-provisional-opex-rate >}} of complete initial component CAPEX/year; detailed treatment deferred |
 
 The infield capacity assumption means that a 6 inch composite pipeline at 150 bar can serve a full row of turbines in the decentralised architecture without the string-capacity constraint that applies to 66 kV AC cables [@internalModelDescription2026].
 
@@ -289,10 +289,10 @@ The current model assumes no additional hydrogen losses in the pipelines after c
 
 | Component | Availability |
 |---|---:|
-| Infield pipelines | 100% |
-| Export pipelines | 100% |
+| Infield pipelines | Unresolved lifecycle availability; no flat value adopted |
+| Export pipelines | Unresolved lifecycle availability; no flat value adopted |
 
-This is a modelling convention and should be tested in sensitivity work if pipeline outages become material.
+Required factors remain unresolved; the production/CAPEX article defers availability. A zero-outage case requires an explicit scenario assumption.
 
 ## Model Limitations
 
@@ -304,7 +304,7 @@ The pipeline model is intended for early-stage techno-economic comparison, not d
 | Material and installation are separated | This page should not be used as a total installed pipeline cost model. |
 | Diameter classes are simplified | Detailed product availability and qualification limits are not represented. |
 | Gas properties are simplified | Detailed thermal behaviour, elevation effects, transient operation, and linepack are excluded. |
-| Availability is fixed at 100% | Repair strategy, redundancy, and partial-flow operation are not modelled. |
-| The outlet-pressure assumption behind the infield capacity figure is not documented | The 500 MW-equivalent figure should be re-derived once the infield collection-point pressure is defined, rather than assumed equal to the 66 bar export outlet pressure. |
+| Availability is unresolved | Repair strategy, redundancy, and partial-flow operation are not modelled. |
+| The outlet-pressure assumption behind the infield capacity figure is not documented | Capacity must be derived for the supplied section pressure budget; no fixed infield MW-equivalent rating is adopted. |
 
 : Main limitations of the hydrogen pipeline model.

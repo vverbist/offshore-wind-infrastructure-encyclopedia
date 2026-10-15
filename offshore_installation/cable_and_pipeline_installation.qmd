@@ -274,7 +274,7 @@ $$
 
 Every physical section must remain complete unless the product and installation plan permit a field connection. Reel partitions, storage compatibility and installation order must therefore be checked in addition to total mass. This is a discrete packing problem; dividing total campaign mass by vessel payload gives only a lower bound when the detailed loading plan is unavailable.
 
-The ORBIT reference carousel has a 13,000 t maximum mass. It defines one cable-vessel candidate rather than a universal installation capacity. For example, an indicative 65 t/km HVDC pole cable would be mass-limited to 200 physical km/load before reel, manufacturing and handling limits are applied. That result is not transferred to the metallic-return or fibre-optic cables.
+The ORBIT reference carousel has a 13,000 t maximum mass. It defines one cable-vessel candidate rather than a universal installation capacity. For example, the selected {{< var install-hvdc-pole-linear-mass >}} HVDC pole cable would be mass-limited to {{< var hvdc-pole-reference-km-per-load >}} physical km/load before reel, manufacturing and handling limits are applied. That result is not transferred to the metallic-return or fibre-optic cables.
 
 Loads and reloads are counted by separately mobilised lay campaign $c$:
 
@@ -342,7 +342,7 @@ $$
 | Event type $e$ | Aggregate duration $t_e$ | Included ORBIT tasks | Counting rule |
 |---|---:|---|---|
 | Array-cable section | {{< var raw-install-ac-array-interface-hours >}} h/section | Positioning, preparation, two pull-ins, two termination/test tasks and lowering | Once per physical array-cable section |
-| Export power-cable interface sequence | 26 h/cable | Landfall and offshore-end positioning, preparation, pull-in, termination/test and lowering | Once per qualifying export power cable; metallic-return and fibre tasks require matching inputs |
+| Export power-cable interface sequence | {{< var install-export-reference-interface-hours-value >}} h/cable (reference only) | Landfall and offshore-end positioning, preparation, pull-in, termination/test and lowering | Once per qualifying export power cable; metallic-return and fibre tasks require matching inputs |
 | Offshore splice | {{< var raw-install-ac-splice-event-hours >}} h/splice | Positioning, cable recovery, splicing and lowering | Once per required continuous-route load break |
 
 The adopted aggregate durations are based on the executable ORBIT defaults listed in Section 2 [@orbit2026V13CableDefaults]. They apply only while the lay spread remains occupied. The current implementation
@@ -623,7 +623,7 @@ F
 {{< var install-usd2024-eur2025-factor >}}\ \mathrm{EUR}_{2025}/\mathrm{USD}_{2024}.
 $$
 
-The factor gives {{< var install-ac-lay-rate-derived >}} EUR~2025~/day for ORBIT's {{< var raw-install-ac-lay-rate-source >}} USD\textsubscript{2024}/day cable vessel and 111,440 EUR~2025~/day for its 122,699 USD\textsubscript{2024}/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.
+The factor gives {{< var install-ac-lay-rate-derived >}} EUR~2025~/day for ORBIT's {{< var raw-install-ac-lay-rate-source >}} USD\textsubscript{2024}/day cable vessel and {{< var install-support-reference-rate-eur2025 >}} EUR~2025~/day for its {{< var install-support-reference-rate-value >}} USD\textsubscript{2024}/day generic support vessel. The first value is adopted only as a provisional complete cable-lay-spread rate under the explicit inclusion boundary in Section 2. The burial and ROV/survey rates remain unresolved because ORBIT does not demonstrate that either vessel proxy represents those complete scopes.
 
 ### Worked example: evidence-gated 2 GW cable inventory
 
@@ -637,7 +637,7 @@ This example shows how far the calculation can proceed for a 2 GW wind farm with
 | Turbines | 134 | -- | User-specified design input |
 | Cable length | 400 physical km | 100 route-km; four cables and therefore 400 physical km | User-specified design input and TenneT four-cable system definition [@tennet2026TwoGWProgramWeb] |
 | Cable sections or lay units | 134 radial sections | Four physical export cables | Infield radial-layout assumption; sourced TenneT system definition for export |
-| Linear cable mass | 42.5 t/km for the infield screening cable | 74 t/km for each HVDC pole cable; metallic-return and fibre masses unresolved | ORBIT 630 mm² 66 kV and 2,500 mm² 525 kV cable-library inputs [@orbit2026V13CableDefaults] |
+| Linear cable mass | 42.5 t/km for the infield screening cable | {{< var install-hvdc-pole-linear-mass >}} for each HVDC pole cable (user assumption); metallic-return and fibre masses unresolved | ORBIT 630 mm² 66 kV and 2,500 mm² 525 kV cable-library inputs [@orbit2026V13CableDefaults] |
 | Candidate usable carousel mass | 5,000 t | 5,000 t | User-specified screening vessel candidate |
 | Port-to-worksite distance | Unresolved | Unresolved | Project loading-port decision required |
 | Lay production | {{< var install-ac-lay-productivity-derived >}} km/day/pass | {{< var install-ac-lay-productivity-derived >}} km/day/pass | ORBIT version 1.3 executable default [@orbit2026V13CableDefaults] |
@@ -674,7 +674,7 @@ The parameterized production and event components are:
 | Lay-time component | Infield | Export |
 |---|---:|---:|
 | Route laying, $400/9.6$ | 41.7 days | 41.7 days |
-| Array or export interface events | 150.8 days | 2.2 days for the pole cables; complete-system interface time unresolved |
+| Array or export interface events | 150.8 days | {{< var install-export-pole-example-interface-days >}} days for the pole cables; complete-system interface time unresolved |
 | Pole-cable splice events | 0 days | At least 4.3 days |
 | Loading, port returns and site transit | Not parameterized | Not parameterized |
 | Demobilisation and weather delay | Not parameterized | Not parameterized |
@@ -697,7 +697,7 @@ The ORBIT task structure is directly applicable only to cable installation. The 
 
 Public 66 kV examples span approximately 20--50 t/km, so loading must use the selected cable rather than voltage alone [@eibThorCableData].
 
-An indicative 2,500 mm² copper 525 kV submarine cable has a linear mass of approximately 65 t/km, but this is not a universal HVDC mass assumption and applies neither to TenneT's metallic return nor to its fibre-optic cable [@prysmian525KVSubmarine; @tennet2026TwoGWProgramWeb].
+Prysmian indicates {{< var install-hvdc-pole-prysmian-mass >}} for its cable example, while ORBIT gives {{< var install-hvdc-pole-orbit-mass >}} for its library example; the selected pole-cable assumption is {{< var install-hvdc-pole-linear-mass >}}, but this is not a universal HVDC mass assumption and applies neither to TenneT's metallic return nor to its fibre-optic cable [@prysmian525KVSubmarine; @tennet2026TwoGWProgramWeb].
 
 Manufacturer information supports horizontal TCP lay from a small multipurpose vessel and continuous lengths of approximately 3--6 km, depending on diameter and pressure [@strohmTCPFlowlines]. This is the physical basis for admitting a smaller candidate spread to the vessel-selection calculation. The installation-cost benefit does not come from product mass directly: it arises when the lighter product and its handling envelope make that smaller spread feasible and the matching all-in rate is lower than the rate for the qualifying cable-lay spread. These are generic product-family capabilities, not a qualified hydrogen design point. DNV-ST-F119 supplies the offshore TCP standard basis, while DNV's hydrogen work identifies hydrogen-specific qualification gaps [@dnvSTF119; @dnvHydrogenCompositeJIP].
 
@@ -807,3 +807,12 @@ The model can calculate the physical inventory and parameterized portions of cab
 The model stops at the highest defensible level for each subclass. It preserves cost-driving physical inventories and discrete logistics while leaving unsupported engineering checks as qualification gates and unresolved cost terms as **not parameterized**.
 
 **Evidence review date:** 5 August 2026.
+
+
+## Remaining campaign evidence
+
+The chosen pole-cable mass does not reconstruct the adopted interface-event
+time. The abbreviated task list remains incomplete; the aggregate event duration
+is retained pending a complete task/occurrence breakdown. Do not silently
+replace it with the sum of an incomplete list. The illustrative cable-length
+case is separate from the article's physical inventory.

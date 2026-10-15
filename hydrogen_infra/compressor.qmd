@@ -37,7 +37,7 @@ Inlet and outlet pressures are scenario inputs. All pressures on this page are *
 | Compressor efficiency, $\eta_\mathrm{comp}$ | {{< var compressor-efficiency >}} |
 | Motor efficiency, $\eta_\mathrm{motor}$ | {{< var compressor-motor-efficiency >}} |
 | Compressor availability | TODO: adopt non-overlapping architecture-specific scope |
-| Compressor OPEX | TODO: adopt component allowance |
+| Provisional O&M | {{< var financial-provisional-opex-rate >}} of initial compressor CAPEX/year; user assumption |
 | Compressor cost scaling exponent | {{< var compressor-cost-exponent >}} |
 | Cost-curve reference motor input | {{< var compressor-reference-motor-power >}} (normalisation choice; not a compressor design rating) |
 | Maximum motor input per train | {{< var compressor-train-limit >}} |
@@ -201,7 +201,7 @@ $$
 |---|---|---:|
 | $a_{\mathrm{CAD},2019}$ | Source coefficient of the uninstalled power law, motor input in kW [@transitionAcceleratorCompressorCost] | {{< var compressor-source-cost-coefficient >}} |
 | $x_{\mathrm{USD/CAD},2019}$ | The brief's own 2019 exchange rate [@transitionAcceleratorCompressorCost] | {{< var compressor-source-usd-per-cad-2019 >}} |
-| $I_{\mathrm{PPI}}(2025)/I_{\mathrm{PPI}}(2019)$ | Ratio of annual averages of the monthly index, 371.164 / 241.933 [@blsPpiAirGasCompressors2026] | {{< var compressor-usd-escalation-2019-2025 >}} |
+| $I_{\mathrm{PPI}}(2025)/I_{\mathrm{PPI}}(2019)$ | Ratio of annual averages of the monthly index, {{< var compressor-ppi-2025-value >}} / {{< var compressor-ppi-2019-value >}} [@blsPpiAirGasCompressors2026] | {{< var compressor-usd-escalation-2019-2025 >}} |
 | $FX_{\mathrm{USD/EUR},2025}$ | Common 2025 annual-average rate [@ecb2025USDEUR] | {{< var financial-usd-per-eur-2025-value >}} USD/EUR |
 | $A$ | Coefficient in EUR~2025~ | {{< var compressor-cost-coefficient-eur2025 >}} |
 | $C_\mathrm{comp,ref}$ | Reference purchase cost, $A\,15^\alpha$, derived in code without rounding | {{< var compressor-reference-purchase-cost >}} ({{< var compressor-reference-specific-cost >}} of motor input) |
@@ -324,9 +324,9 @@ functions as the architecture calculations.
 ### Operating Cost and Availability
 
 Annual O&M is total installed train supply cost times the adopted
-`compressor-opex-rate` [fraction/year]. Availability uses the architecture-specific
+the common `financial-provisional-opex-rate` [fraction/year], applied to its initial capital cost. Availability uses the architecture-specific
 `compressor-*-availability` [fraction], applied to the production capacity at
-that location. Both remain unresolved inputs; no distributed maintenance
+that location. Availability remains unresolved; no distributed maintenance
 premium is assumed. The component ledger prevents the same outage from being
 counted again in production availability. Redundancy, failure-state redispatch
 and spare-train sizing are deferred.

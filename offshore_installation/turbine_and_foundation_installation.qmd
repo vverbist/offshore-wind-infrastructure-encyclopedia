@@ -140,7 +140,8 @@ For each campaign $c\in\{F,T\}$:
 | Parameter | Symbol | Unit |
 |---|---|---:|
 | Vessel or complete-spread rate | $r_c$ | EUR/day |
-| Fixed mobilisation and demobilisation time | $t_{\mathrm{mob},c}$ | day/campaign |
+| Fixed mobilisation time | $t_{\mathrm{mob},c}$ | day/campaign |
+| Separate demobilisation | $t_{\mathrm{demob},c}$ | day/campaign; unresolved |
 | Port work per transported set | $t_{\mathrm{port},c}$ | day/set |
 | Effective offshore occupation | $t_{\mathrm{site},c}$ | day/location |
 | Reference complete sets per load | $k_{\mathrm{ref},c}$ | sets/load |
@@ -258,36 +259,25 @@ The initial vessel load is included. Every load creates one port-to-site and sit
 
 ## Campaign Duration
 
-The chargeable campaign duration is:
+The executed campaign separates fixed, port and offshore-exposed time:
 
 $$
-T_c
-=
-t_{\mathrm{mob},c}
-+
-N\left(
-t_{\mathrm{port},c}
-+
-t_{\mathrm{site},c}
-\right)
-+
-\frac{
-2N_{\mathrm{load},c}D_p
-+
-(N-1)D_i
-}{
-v_c
-}.
+T_c=t_{\mathrm{mob},c}+t_{\mathrm{demob},c}+Nt_{\mathrm{port},c}
++\left(Nt_{\mathrm{site,base},c}+T_{\mathrm{travel,base},c}\right)(1+w_c),
 $$
 
-The four duration components are:
+$$
+T_{\mathrm{travel,base},c}=
+\frac{2N_{\mathrm{load},c}D_p+(N-1)D_i}{v_c}.
+$$
 
-| Component | Calculation |
-|---|---:|
-| Mobilisation and demobilisation | $t_{\mathrm{mob},c}$ |
-| Port work | $Nt_{\mathrm{port},c}$ |
-| Offshore installation | $Nt_{\mathrm{site},c}$ |
-| Port and field travel | $\left[2N_{\mathrm{load},c}D_p+(N-1)D_i\right]/v_c$ |
+All times are days; $w_c$ is the dimensionless aggregate offshore weather
+uplift. Port and mobilisation/demobilisation days are not weather-uplifted.
+`install-{turbine,foundation}-demobilisation-time` and `-weather-offshore`
+remain explicit missing inputs. The retained site-occupation basis excludes
+weather; a weather-inclusive source must replace/reconcile this basis before an
+additional uplift is applied. This is an aggregate screen, not an ORBIT weather
+simulation. Missing weather or demobilisation prevents a complete campaign cost.
 
 This calculation assumes a self-shuttling installation vessel. It does not represent feeder vessels operating concurrently with an installation vessel.
 
@@ -358,7 +348,7 @@ t_{\mathrm{port},T}
 {{< var install-turbine-port-time-derived >}}\ \mathrm{day/turbine}.
 $$
 
-The current generic vessel proxy is USD\textsubscript{2024} {{< var raw-install-foundation-spread-rate-source >}}/day, equivalent to approximately EUR~2025~ {{< var install-foundation-spread-rate-derived >}}/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]. This follows the [common financial basis](../methodology/financial_and_price_basis.qmd). ORBIT also provides a {{< var raw-install-foundation-mobilisation-time >}}-day mobilisation input and a {{< var raw-install-foundation-speed-knots >}}-knot vessel speed:
+The current generic vessel proxy is USD\textsubscript{2024} {{< var raw-install-foundation-spread-rate-source >}}/day, equivalent to approximately EUR~2025~ {{< var install-foundation-spread-rate-derived >}}/day after U.S. CPI-U escalation and conversion with the ECB 2025 annual-average exchange rate [@bls2024CPI; @bls2025CPI; @ecb2025USDEUR]. This follows the [common financial basis](../methodology/financial_and_price_basis.qmd). ORBIT provides a mobilisation-only input, not a demonstrated bundled demobilisation allowance. It provides a {{< var raw-install-foundation-mobilisation-time >}}-day mobilisation input and a {{< var raw-install-foundation-speed-knots >}}-knot vessel speed:
 
 $$
 {{< var raw-install-foundation-speed-knots >}}\ \mathrm{kn}
@@ -484,3 +474,20 @@ Additional evidence should be collected in this order:
 6. independent project schedules for validation.
 
 The present model is intended for transparent screening comparisons. It is not a marine-operations simulation or contractor quotation.
+
+
+## Architecture inventory and retained limitations
+
+The current article uses the fixed reference turbine-installation benchmark for
+both architectures. The separate campaign method uses a common conventional
+turbine total mass for transport and structure, including an equal-total-mass
+assumption for the hydrogen turbine; different components are not a claim of
+zero hydrogen-equipment mass. Its largest distributed lift still requires an
+explicit combined installation arrangement. Foundation payload uses monopile
+plus transition-piece mass, independently of the turbine payload lookup.
+
+The retained foundation campaign includes a separate transition piece. An
+extended-monopile alternative and two-sided threshold uncertainty envelope are
+not implemented. Noise mitigation is excluded. Scour, site-wide seabed/UXO work,
+port fees and exceptional activities have unresolved scope/cost evidence;
+ordinary port-task time and site ROV work do not establish their inclusion.

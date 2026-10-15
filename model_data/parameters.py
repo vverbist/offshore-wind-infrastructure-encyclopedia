@@ -133,7 +133,7 @@ def load_parameters(path: Path = DEFAULT_INPUT_PATH) -> ParameterSet:
                 )
             price_year = int(raw_price_year)
 
-        if value is not None and kind != "reference" and re.search(r"\b(?:EUR|USD|GBP)\b", unit):
+        if value is not None and kind != "reference" and re.search(r"\b(?:EUR|USD|GBP|CAD|MYR)\b", unit):
             if price_year is None:
                 raise ParameterError(
                     f"Line {line_number}: monetary input {parameter_id} needs a price year"
@@ -202,44 +202,6 @@ def capital_recovery_factor(rate: Decimal, years: int) -> Decimal:
     return rate * growth / (growth - Decimal(1))
 
 
-def hvdc_pole_current_ka(parameters: ParameterSet) -> Decimal:
-    power_gw = parameters.number("hvdc-link-rated-power", "GW")
-    pole_voltage_kv = parameters.number("hvdc-pole-voltage", "kV")
-    return power_gw * Decimal(1_000) / (2 * pole_voltage_kv)
-
-
-def hvdc_conductor_loss(
-    parameters: ParameterSet,
-    distance_km: Decimal,
-    load_fraction: Decimal = Decimal(1),
-) -> tuple[Decimal, Decimal]:
-    """Return balanced-bipole conductor loss as MW and transferred-power fraction."""
-
-    rating_mw = parameters.number("hvdc-link-rated-power", "GW") * 1000
-    voltage_v = parameters.number("hvdc-pole-voltage", "kV") * 1000
-    resistance = parameters.number("hvdc-cable-resistance-at-20c", "ohm/km")
-    transferred_power_w = load_fraction * rating_mw * Decimal(1_000_000)
-    pole_current_a = transferred_power_w / (2 * voltage_v)
-    loss_w = 2 * pole_current_a**2 * resistance * distance_km
-    return loss_w / Decimal(1_000_000), loss_w / transferred_power_w
-
-
-def _hvdc_loss_distance(parameters: ParameterSet, target_fraction: Decimal) -> Decimal:
-    _, loss_at_one_km = hvdc_conductor_loss(parameters, Decimal(1))
-    return target_fraction / loss_at_one_km
-
-
-def _hvdc_material_costs(parameters: ParameterSet) -> tuple[Decimal, Decimal]:
-    source = parameters.number(
-        "hvdc-cable-material-source-cost", "million USD/mile"
-    )
-    usd_per_eur = parameters.number("financial-usd-per-eur-2025", "USD/EUR")
-    million_eur_per_km = source / usd_per_eur / KM_PER_MILE
-    rating_gw = parameters.number("hvdc-link-rated-power", "GW")
-    eur_per_kw_km = million_eur_per_km / rating_gw
-    return million_eur_per_km, eur_per_kw_km
-
-
 def build_quarto_variables(parameters: ParameterSet) -> dict[str, str]:
     """Create display strings while retaining numeric inputs in the canonical CSV."""
 
@@ -265,15 +227,15 @@ def build_quarto_variables(parameters: ParameterSet) -> dict[str, str]:
         eur_per_usd, 8
     )
 
+    from model.electrical_infra.infield_ac_cables import string_counts
     turbine_power_mw = parameters.number("wind-turbine-rated-power", "MW")
     string_power_mw = parameters.number("array-usable-string-rating", "MW")
     target_power_mw = parameters.number("array-reference-target-power", "GW") * 1000
-    turbines_per_string = int(string_power_mw // turbine_power_mw)
     turbine_count = int(
         (target_power_mw / turbine_power_mw).to_integral_value(rounding="ROUND_CEILING")
     )
     installed_power_gw = Decimal(turbine_count) * turbine_power_mw / 1000
-    string_count = (turbine_count + turbines_per_string - 1) // turbines_per_string
+    turbines_per_string, string_count = string_counts(turbine_count, float(turbine_power_mw * 1000), float(string_power_mw))
     variables["array-turbines-per-string"] = str(turbines_per_string)
     variables["array-reference-turbine-count"] = str(turbine_count)
     variables["array-reference-installed-power"] = (
@@ -340,3 +302,6 @@ def write_quarto_variables(
     for key in sorted(variables):
         lines.append(f"{key}: {json.dumps(variables[key], ensure_ascii=False)}")
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+# Compatibility exports; calculations live with the owning methodology page.
+from model.electrical_infra.hvdc_export_cables import (hvdc_pole_current_ka, hvdc_conductor_loss, _hvdc_loss_distance, _hvdc_material_costs)

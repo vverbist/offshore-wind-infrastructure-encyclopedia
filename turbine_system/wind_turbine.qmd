@@ -30,19 +30,19 @@ The cost boundary is turbine supply at the stated commercial basis. Offshore tra
 | $D$ | Rotor diameter | m |
 | $H_h$ | Hub height above mean sea level | m |
 
-When hub height is not specified independently, the default relationship provides 15 m lower-tip clearance above mean sea level:
+For display only, the following clearance relationship would provide {{< var turbine-tip-clearance >}} lower-tip clearance above mean sea level. It is not an executable default: the scenario must supply hub height.
 
 $$
-H_h=\frac{D}{2}+15.
+H_h=\frac{D}{2}+{{< var turbine-tip-clearance-value >}}.
 $$
 
-The structural tower interface is assumed to be 15 m above mean sea level. Tower length is therefore derived rather than entered independently:
+The structural tower interface is assumed to be {{< var turbine-interface-height >}} above mean sea level. Tower length is therefore derived rather than entered independently:
 
 $$
-L_t=H_h-15.
+L_t=H_h-{{< var turbine-interface-height-value >}}.
 $$
 
-Under the default hub-height relationship, $L_t=D/2$. A project-specific hub height can override the default while retaining the same 15 m interface elevation.
+Under the default hub-height relationship, $L_t=D/2$. A project-specific hub height can override the default while retaining the same canonical interface elevation.
 
 ## Fixed Model Assumptions
 
@@ -50,11 +50,11 @@ The following quantities are model constants or scenario definitions, not parame
 
 | Quantity | Baseline treatment |
 |---|---|
-| Number of blades | $n_b=3$ |
-| Maximum blade-tip speed | $V_\mathrm{tip}=95$ m/s |
-| Rated drivetrain efficiency | $\eta=0.95$ |
+| Number of blades | $n_b={{< var turbine-blade-count-value >}}$ |
+| Maximum blade-tip speed | $V_\mathrm{tip}={{< var turbine-tip-speed-value >}}$ m/s |
+| Rated drivetrain efficiency | $\eta={{< var turbine-drivetrain-efficiency-value >}}$ |
 | Blade regression | IEC Class I with carbon reinforcement |
-| Main bearings | $n_\mathrm{brg}=2$ |
+| Main bearings | $n_\mathrm{brg}={{< var turbine-bearing-count-value >}}$ |
 | Nacelle crane | Included |
 | Reference drivetrain | Permanent-magnet direct drive |
 | Electrical architecture | Selected scenario: electricity export or decentralised hydrogen |
@@ -224,7 +224,7 @@ m_\mathrm{platforms}
 $$
 
 $$
-m_\mathrm{transformer}=1.915P+1910.
+m_\mathrm{transformer}={{< var turbine-transformer-power-value >}}P+{{< var turbine-transformer-offset-value >}}.
 $$
 
 Transformer mass is included only when a turbine transformer is present in the selected architecture.
@@ -266,7 +266,7 @@ $$
 The simple WISDEM tower relationship is:
 
 $$
-m_\mathrm{tower}=19.828L_t^{2.0282}.
+m_\mathrm{tower}={{< var turbine-tower-scale-value >}}L_t^{{{< var turbine-tower-exponent-value >}}}.
 $$
 
 This regression depends only on tower length. It does not respond to rotor thrust, RNA mass, tower natural-frequency constraints, foundation stiffness, fatigue, or site conditions. It is therefore an initial screening estimate, not the preferred offshore-tower calculation.
@@ -432,8 +432,8 @@ in both current article architectures (D5), as confirmed by the user on
 there is no mass-based installation discount. The separate, deferred campaign
 method retains explicit payload/lift inputs. Equal mass and installation cost
 do not impose equal turbine purchase prices. Other missing electrical masses
-remain explicit inputs. A separate `turbine-transformer-opex-rate` applies to the
-reallocated AC transformer purchase cost; its scope and value remain O10 work.
+remain explicit inputs. The reallocated AC transformer receives the common provisional O&M rate
+on its initial capital cost; historical component-specific O&M rates are inactive.
 
 ## Improvements from Mehta
 
@@ -492,7 +492,7 @@ The archived Mehta implementation uses $m_\mathrm{generator,ref}=372{,}000$ kg a
 
 ### 4. Tower feedback
 
-Mehta scales hub height linearly from the IEA 15 MW reference. That relationship is not adopted here because the model instead uses the directly interpretable lower-tip-clearance relationship $H_h=D/2+15$. A project-specific hub height can override this default.
+Mehta scales hub height linearly from the IEA 15 MW reference. That relationship is not adopted here because the scenario supplies hub height explicitly. The displayed lower-tip-clearance relationship is an illustrative geometry choice, not an executable default.
 
 Mehta's support-structure method nevertheless demonstrates that tower mass must respond to RNA mass, rotor thrust, hub height, and site conditions. The full coupled monopile calculation is outside the turbine boundary, so the intended improvement is TowerSE rather than importing Mehta's complete support-structure module.
 
@@ -639,3 +639,15 @@ The worked-example choices are stored in `wind_turbine_example.toml`; all table
 values are generated from the shared turbine model.
 
 The cost is reported in the NREL reference currency basis before project-year escalation or conversion to EUR. The turbine electrical category includes WISDEM's transformer, electrical-connections, and controls relationships, but it does not provide a separately resolved converter cost. The RNA calibration may therefore absorb part of the unresolved electrical and commercial supply scope. The result is a transparent screening estimate rather than a supplier quotation.
+
+## Complete-mass evidence status
+
+The present parametric ledger includes the transformer and explicit mechanical
+components. The NREL reference reports an aggregate turbine mass and a
+miscellaneous-equipment category [@gaertner2020IEA15, Tables ES-1 and 5-1], but
+does not isolate the missing converter, controls, switchgear and internal cable
+mass on this ledger's boundary. Adding its whole miscellaneous category would
+risk double counting already modelled auxiliaries. That missing electrical mass
+therefore remains an explicit TODO, rather than zero. Current hydrogen and
+conventional turbines use the same total-mass screening assumption; no net mass
+saving or reinforcement estimate is inferred from their different components.

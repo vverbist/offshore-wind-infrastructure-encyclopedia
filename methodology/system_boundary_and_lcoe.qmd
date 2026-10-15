@@ -71,18 +71,10 @@ $$
 
 where $c_{\mathrm{initial}}$ has units EUR~2025~/kW-wind.
 
-The lifecycle capital basis may also be reported separately:
-
-$$
-c_{\mathrm{lifecycle}}
-=
-\frac{C_{\mathrm{lifecycle\ capital}}}
-{P_{\mathrm{wind,rated}}}.
-$$
-
-The label must state whether replacement and decommissioning are included.
-Neither metric may be normalized by electrolyser, converter, pipeline or export
-capacity when it is presented as the cross-architecture wind-capacity result.
+Only initial CAPEX is reported per installed wind kW. Replacement and
+decommissioning remain in the lifecycle annual-cost calculation, without a
+lifecycle-capital-per-kW indicator. Missing included capital costs leave initial
+CAPEX and its intensity incomplete; a known subtotal is reported separately.
 
 ## Annual Carrier-Cost Outputs
 
@@ -119,9 +111,17 @@ LC_{\mathrm{H2,HHV}}
 $$
 
 where $HHV_{\mathrm{H2}}$ is in kWh/kg. At {{< var hydrogen-hhv >}}, the conversion
-factor is 0.0394 MWh/kg.
+factor is {{< var hydrogen-hhv-mwh-per-kg >}} MWh/kg.
 
 The financial numerator is calculated on
 [Financial and Price-Basis Assumptions](financial_and_price_basis.qmd).
 Delivered-energy accounting is defined on
 [Energy and Availability](energy_availability_and_annualisation.qmd).
+
+## Executable scope
+
+The current scenario runner evaluates centralised and decentralised hydrogen.
+Electricity export is a documented calculation contract; a complete electricity
+scenario branch and its delivered-electricity cost output are not implemented.
+Component equations and reference figures do not establish an executable
+cross-carrier comparison.

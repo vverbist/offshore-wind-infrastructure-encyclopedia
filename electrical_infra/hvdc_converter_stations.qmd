@@ -18,7 +18,7 @@ An offshore HVDC converter station changes the wind farm's collected AC power to
 | HVDC cable supply and installation | Excluded | [HVDC Export Cables](hvdc_export_cables.qmd) and [Cable and Pipeline Installation](../offshore_installation/cable_and_pipeline_installation.qmd) |
 | Wider onshore grid reinforcement | Excluded | [Onshore Grid Connection](onshore_grid_connection.qmd) |
 
-<span class="cost-owned">Green = booked on this page</span>
+<span class="cost-reference">Green = booked on this page</span>
 <span class="cost-reference">Grey = reference only; not booked on this page</span>
 
 ## Reference Configuration
@@ -64,16 +64,11 @@ $$
 
 The transformation uses euro-area annual-average HICP through 2025 and the European Commission's 3.0% euro-area inflation forecast for 2026 [@eurostat2026HICP; @europeanCommission2026Forecast].
 
-Because the DEA offshore-station value explicitly includes its platform, it is not used as converter equipment CAPEX here. The model provisionally applies the onshore-station coefficient to both electrical terminals:
-
-| Converter electrical equipment | Low | Central | High | Cost owner |
-|---|---:|---:|---:|---|
-| One converter station | <span class="cost-owned">307 EUR~2025~/kW</span> | <span class="cost-owned">392 EUR~2025~/kW</span> | <span class="cost-owned">515 EUR~2025~/kW</span> | **This page** |
-| Offshore + onshore converter pair | <span class="cost-owned">613 EUR~2025~/kW</span> | <span class="cost-owned">785 EUR~2025~/kW</span> | <span class="cost-owned">1,030 EUR~2025~/kW</span> | **This page** |
-
-The adopted central coefficient is 785 EUR~2025~/kW for the two-terminal converter pair. No residual project factor is added. Owner development, financing, wider grid works and decommissioning remain outside this coefficient.
-
-The offshore terminal may require more costly marinised electrical equipment than the onshore terminal. A public offshore-equipment premium separated from platform and installation cost is not currently available, so this is a stated modelling limitation.
+The DEA offshore-station value includes its platform, so it cannot be booked as
+converter equipment alongside a separate platform cost. No executable converter
+pair price is adopted here. Earlier paired coefficients are retained in the audit
+baseline rather than presented as active inputs. Equipment-only scope, price
+normalisation and an executable electricity branch remain unresolved.
 
 ## Complete Station-Cost Perspective
 
@@ -81,7 +76,7 @@ The physical offshore station also needs a platform, foundation, transport and i
 
 | Cost-stack element | Reference value | Status | Cost owner |
 |---|---:|---|---|
-| Offshore + onshore converter equipment | <span class="cost-owned">785 EUR~2025~/kW</span> | Model central value | **This page** |
+| Offshore + onshore converter equipment | Unresolved | No adopted executable input | **This page** |
 | Offshore platform and offshore premium proxy | <span class="cost-reference">527 EUR~2025~/kW</span> | DEA offshore-minus-onshore difference; not an adopted standalone platform cost | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
 | Platform offshore installation | <span class="cost-reference">TBD</span> | Must be separated from fabrication and equipment | [Platform and Substation Installation](../offshore_installation/platform_and_substation_installation.qmd) |
 | DEA offshore + onshore station pair, platform included | <span class="cost-reference">1,312 EUR~2025~/kW</span> | Scope comparator, not added to the rows above | [Platform Material CAPEX](../platforms/platform_material_capex.qmd) |
@@ -89,27 +84,23 @@ The physical offshore station also needs a platform, foundation, transport and i
 ::: {.callout-note}
 ## Reference costs are not additional costs
 
-The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. Only the green converter coefficient is booked here.
+The grey values show the complete physical context. Their derivation, uncertainty and booking rules are maintained on the linked pages. No converter price on this page is currently booked by an electricity scenario.
 :::
 
-Public TenneT programme announcements correspond to roughly EUR 1,000--1,170/kW when divided by announced system count and rating [@tennet2gwProgrammeData; @hitachiPetrofac2023TenneT; @geVernova2023TenneT; @siemensEnergy2023TenneT]. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with the 785 EUR~2025~/kW converter-only coefficient.
+Public TenneT programme announcements correspond to roughly EUR 1,000--1,170/kW when divided by announced system count and rating [@tennet2gwProgrammeData; @hitachiPetrofac2023TenneT; @geVernova2023TenneT; @siemensEnergy2023TenneT]. These are broad infrastructure-package comparisons, not converter-only prices. Their scopes are more comparable with the DEA offshore-plus-onshore station range, which includes the platform, than with a converter-equipment-only scope.
 
 ## Conversion Losses
 
-Converter-station losses include semiconductor conduction and switching, transformer copper and core loss, reactors, cooling and station auxiliaries. Supplier loss curves are not yet available, so the model uses aggregate working efficiencies:
-
-| Boundary | Working efficiency | Interpretation |
-|---|---:|---|
-| Offshore conversion, transformation and auxiliaries | 98.5% | Applied once offshore |
-| Onshore conversion, transformation and auxiliaries | 98.5% | Applied once onshore |
-
-Hitachi Energy reports electrical losses below 1% per converter station for DolWin2 [@hitachiDolWin2]. This is an OEM statement for a 900 MW, +/-320 kV symmetrical-monopole system commissioned in 2016; it supports the order of magnitude but is not a guarantee for a 2 GW, +/-525 kV station.
-
-Together, the two 98.5% terminal values give a working station-pair efficiency of 97.0%. The values include transformers and auxiliaries; no separate substation or transformer factor is applied to the same equipment.
+Converter-station losses cover power electronics, transformers, reactors,
+cooling and auxiliaries. No flat station efficiency is adopted for the current
+model. Supplier curves and an explicitly scoped input are required before an
+executable electricity result can be produced. Equipment examples and earlier
+working assumptions are retained in the audit baseline; they do not set losses
+for the hydrogen branches.
 
 ## Availability and Degraded Operation
 
-The legacy model applies 98% availability to each terminal. These are internal energy-equivalent factors, not supplier guarantees. A more physical model distinguishes:
+No flat terminal availability is adopted. A future capacity-state model would distinguish:
 
 | State | Available export capacity | Example cause |
 |---|---:|---|
@@ -135,11 +126,11 @@ Once these states are simulated, the corresponding flat availability factors mus
 |---|---:|---:|---|
 | Link rating | 2 GW reference | Test discrete link count | Public TenneT standard |
 | Pole voltage | +/-525 kV | Fixed for reference design | Public TenneT standard |
-| Converter pair CAPEX, platform excluded | 785 EUR~2025~/kW | 613--1,030 EUR~2025~/kW | DEA onshore-station range applied twice |
+| Converter pair CAPEX, platform excluded | Unresolved | Equipment-only scope and adopted price basis required | Reference evidence is not an active cost |
 | Scaling | Linear up to 2 GW | Use complete links above 2 GW | Screening assumption |
-| Offshore aggregate efficiency | 98.5% | Replace with supplier loss curve | Conservative working value |
-| Onshore aggregate efficiency | 98.5% | Replace with supplier loss curve | Conservative working value |
-| Flat station availability | 98% per terminal | Replace with capacity states | Internal convention |
+| Offshore aggregate efficiency | Unresolved | Replace with supplier loss curve | Conservative working value |
+| Onshore aggregate efficiency | Unresolved | Replace with supplier loss curve | Conservative working value |
+| Station availability | Unresolved | Future capacity-state work deferred | No flat value adopted |
 | Converter OPEX | TBD | Obtain equipment-specific basis | Not supplied by CAPEX source |
 
 ## Model Limitations

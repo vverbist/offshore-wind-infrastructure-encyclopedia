@@ -14,8 +14,8 @@ For each case, the model:
 
 1. validates the user inputs and fixed parameters;
 2. constructs the wind-farm layout and gross production;
-3. selects the electricity, centralised-hydrogen or
-   decentralised-hydrogen component chain;
+3. selects the centralised- or decentralised-hydrogen executable chain;
+   electricity remains a documented future branch;
 4. calculates physical inventories, component sizing, losses and auxiliary
    demand;
 5. returns an explicit infeasible or not-parameterized status when a required
@@ -45,3 +45,11 @@ Read the shared method in dependency order:
 
 Component pages own their physical equations, component-specific assumptions,
 evidence and non-overlapping CAPEX and OPEX.
+
+## Executable scope
+
+The current scenario runner evaluates centralised and decentralised hydrogen.
+Electricity export is a documented calculation contract; a complete electricity
+scenario branch and its delivered-electricity cost output are not implemented.
+Component equations and reference figures do not establish an executable
+cross-carrier comparison.

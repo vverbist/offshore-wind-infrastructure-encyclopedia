@@ -7,3 +7,18 @@ readiness: partially_implementable
 Offshore installation covers installation costs and installation drivers for turbines, foundations, cables, pipelines, platforms, and substations.
 
 Installation costs are documented separately from component material CAPEX where the source material provides separate values. [Cable and Pipeline Installation](cable_and_pipeline_installation.qmd) uses one campaign-based cost structure for linear assets and represents material-specific installation differences through explicit subclasses. Component pages link here when installation method or vessel assumptions affect the total installed cost.
+
+## Selected boundaries and unresolved inclusions
+
+Noise mitigation is explicitly excluded. Scour protection, site-wide seabed/UXO
+work, port/marshalling fees, weather standby and other exceptional work require
+matched scope and cost evidence. Ordinary port handling and local ROV/site
+preparation tasks do not establish that those complete activities are paid for
+[@orbitInstallationMethods2026]. Their absence from a detailed cost entry is
+not evidence of zero cost or inclusion in a vessel rate.
+
+Both turbine/foundation and cable/pipeline campaign categories require
+mobilisation, demobilisation and weather treatment, with separate rates and
+operability where needed. Existing weather-inclusive time must not receive a
+second uplift. The fixed article turbine benchmark is a separate bundled
+method; its detailed inclusions are not reconstructed from ORBIT task times.

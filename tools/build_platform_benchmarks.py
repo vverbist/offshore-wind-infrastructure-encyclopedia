@@ -7,6 +7,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["svg.hashsalt"] = "offshore-wind-infrastructure-model"
 import numpy as np
 
 from model.platforms.platform_material_capex import commercial_benchmarks, benchmark_cost_eur2025
@@ -82,6 +83,8 @@ def build(inputs, root: Path):
            title="Platform cost versus complete topside mass\nDifferent scopes shown separately; equipment and structure included in mass")
     ax.grid(alpha=.2); ax.set_axisbelow(True); ax.legend(loc="upper left", fontsize=9)
     fig.savefig(root / "figures" / "platform_epci_benchmarks.svg", metadata={"Date": None})
+    svg_path = root / "figures" / "platform_epci_benchmarks.svg"
+    svg_path.write_text("\n".join(line.rstrip() for line in svg_path.read_text(encoding="utf-8").splitlines()) + "\n", encoding="utf-8")
     plt.close(fig)
     return {"platform-benchmark-low-2025": f"{low:,.0f}", "platform-benchmark-high-2025": f"{high:,.0f}",
             "platform-benchmark-central-2025": f"{central:,.0f}",

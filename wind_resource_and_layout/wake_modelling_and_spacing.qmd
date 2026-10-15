@@ -9,7 +9,7 @@ readiness: partially_implementable
 This calculation turns turbine coordinates, a tabulated turbine curve and a set
 of wind states into the wake-affected electrical power of every turbine in every
 state. That table is the common input to all architectures: it gives power at the
-generator electrical output, before any architecture-specific conversion or
+inverter AC output before the turbine transformer, before any architecture-specific conversion or
 collection loss. The implementation is `calculate_wakes` in
 `model/wind_resource_and_layout/wake_modelling_and_spacing.py`.
 

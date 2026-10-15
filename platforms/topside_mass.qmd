@@ -64,3 +64,12 @@ The `"hvdc"` and `"custom"` branches retain explicit `rated_power_gw`. A custom 
 The agreed simplification keeps one platform even when extrapolating to GW-scale electrolysis. It does not establish a feasible deck layout, support structure, transport or lift plan. Changes in process duty, equipment density, foundation class or installation method can invalidate smooth scaling. Applying the HVDC-derived EPCI coefficient to electrolysis remains a separate transfer assumption.
 
 **Remaining evidence:** a matched commercial electrolysis-platform mass and EPCI scope, and independent masses at additional ratings. Until available, sensitivity to reference mass, the mass exponent and the EPCI coefficient should be recorded explicitly; component-level fits and a statistical confidence interval are not justified.
+
+## Selected screening applicability
+
+The current central case assumes one platform and imposes no topside-mass limit,
+as selected by the user on 15 October 2026. This is a modelling assumption, not
+an engineering finding that any mass can be installed on one platform. The
+complete-topside EPCI method replaces the earlier equipment-only denominator;
+legacy structural-fraction and installation helpers are inactive comparison
+material. A platform class/count sensitivity remains deferred.

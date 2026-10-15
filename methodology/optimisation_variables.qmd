@@ -29,20 +29,53 @@ quantity must not also be supplied as an independent input.
 
 ## Master User-Input Contract
 
-| Field | Unit/type | Applicability | Owner | Required check | Current status |
-|---|---|---|---|---|---|
-| Architecture, $a$ | category | All | Architectures | Electricity, centralised hydrogen or decentralised hydrogen | Defined |
-| Wind-resource record | dataset/version | All | WIND-002 | Source, period, location and direction convention supplied | Source record unresolved |
-| Site/layout definition | coordinates or declared layout inputs | All | WIND-003 | One unambiguous layout route; no conflicting turbine-count and spacing definitions | Method unresolved |
-| Turbine record | model/class | All | TURB-002 | Rated power, rotor, hub height and equipment boundary supplied | Partially defined |
-| Water depth | m | All | TURB-003 and platform owners | Within adopted foundation/platform method range | Scenario input; range unresolved |
-| Onshore endpoint and route records | route data | All | ELEC-004/005 or H2I-004 | Route segments and endpoint match selected carrier | Partially defined |
-| Hydrogen stack overplant factor | dimensionless | Hydrogen | H2P-003 | Positive and consistent with module count | User input; range unresolved |
-| Hydrogen operating pressure | bar | Hydrogen | H2I-003/004 | Inlet/outlet basis and product class supplied | User input; range unresolved |
-| Hydrogen pipeline product class | discrete record | Hydrogen | H2I-004 | Qualified diameter, pressure and length envelope | User input; product set unresolved |
+This is the canonical contract for the current deterministic runner. TOML data
+paths are relative to the scenario directory. `[case] include` merges one shared
+file from that directory; duplicate keys and nested includes are rejected.
 
-Missing ranges remain explicit because the component evidence does not yet
-support a canonical allowed set. COR-01B does not invent defaults.
+| TOML section and fields | Units and applicability |
+|---|---|
+| `case.architecture` | `centralised` or `decentralised`; electricity is not an executable branch |
+| `site.coordinates_file` | CSV `turbine,x_m,y_m`; metres, unique IDs |
+| Alternative generated layout: `site.turbine_count`, `columns`, `spacing_x_m`, `spacing_y_m`, `orientation_deg` | Positive counts and metre spacings; degrees of rotation. Use this route instead of a coordinates file |
+| `site.minimum_spacing_m`, `farm_area_km2`, `water_depth_m` | Metres, km², metres; spacing checked, polygon containment/setbacks deferred |
+| `site.collection_x_m`, `collection_y_m` | Central AC collection sink coordinates in metres |
+| `turbine.rated_power_kw`, `rotor_diameter_m`, `hub_height_m` | kW, metres, metres; rating may use the central CSV reference if omitted |
+| `wind.power_boundary` | `inverter_ac_output`: after turbine inverter, before transformer |
+| `wind.power_states_file` | CSV `state,hours,<turbine IDs>`; kW per turbine, complete annual-hour weights |
+| Alternative wake inputs: `wind.wind_states_file`, `turbine_curve_file` | CSV `state,speed_m_s,direction_deg,hours` and `speed_m_s,power_kw,ct`; optional installed PyWake required |
+| `wind.design_state_ids` | IDs present in the power table, including declared peak-duty states; zero-hour design states are permitted |
+| `electrolysis.overplant_factor`, `stack_curve_file`, `manufacturing_output_mw_year` | Dimensionless capacity factor, current-density/voltage dataset, MW/year manufacturing reference |
+| `electrolysis.interface` | Distributed only: `converter_reduced` (direct DC) or `conservative` (deferred DC/DC sensitivity) |
+| `hydrogen.stack_outlet_bar`, `injection_bar`, `delivery_bar` | Positive absolute bar; compressor discharge must exceed delivery pressure |
+| `hydrogen.export_length_km`, `export_diameter_m` | Route km and true internal diameter in metres |
+| `hydrogen.export_inlet_bar` | Distributed hydraulic case: absolute bar after collection loss; derived from discharge when loss is neglected |
+| `collection.nodes_file`, `sections_file`, `sink` | Distributed ladder network; node CSV `node,x_m,y_m`, section CSV described below |
+| `collection.pressure_drop` | `hydraulic` by default; article selects `neglected` |
+| `collection.diameter_inches` | Uniform internal diameter for neglected-drop collection; conflicting section sizes rejected |
+| `platform.topside_mass_t` | Central only: complete equipment-plus-structure mass in tonnes, direct method |
+| Alternative `platform.mass_method`, `mass_reference` | `power_scaling`; `electrolysis` derives rating from installed stack modules; `hvdc` or `custom` requires `rated_power_gw`; custom uses canonical `platform-reference-topside-mass` and `platform-reference-power` inputs |
+| `installation.turbine_method` | `reference` fixed benchmark or default `campaign` |
+| `installation.port_distance_km`, `intersite_distance_km` | Required for turbine/foundation campaign logistics |
+| `installation.collection`, `installation.export` | Each spread plan supplies `loads_per_campaign` (positive integer list), `port_distance_km`, `splices`, `burial_pass_km`, `burial_other_offshore_days`, `survey_pass_km` |
+| `data.pipeline_cost_module` | Optional trusted local callable `pipeline_cost_curve(pressure_bar, diameter_inches)`; operating bar(g), EUR2025/m |
+| `reporting.scope` | Default `lifecycle`; article `production_capex` defers availability, O&M, replacement and decommissioning |
+| `reporting.excluded_components` | Only `pipeline-connections`, `pipeline-manifold`, `hydrogen-receipt`, in production/CAPEX scope; never silent zero entries |
+| `overrides` | Named adopted scalar input IDs, values in canonical CSV units; baseline and effective value retained |
+
+Hydraulic collection sections have `section,from,to,vertical_m,route_allowance,
+flow_share,diameter_m,inlet_bar,outlet_bar`. Geometry uses metres; allowance and
+flow shares are fractions; diameters are true internal metres and pressures are
+absolute bar. Neglected-drop mode accepts geometry-only sections and derives
+pressure from compressor discharge. It conserves mass but does not qualify
+collection hydraulics. AC routes use coordinate-file order and capacity-limited
+strings; no route optimisation is performed.
+
+Missing required physical inputs produce an explicit incomplete result for their
+dependent calculations. Missing included capital blocks complete CAPEX;
+missing lifecycle inputs block complete lifecycle cost. Invalid units,
+conflicting inputs or unsupported modes produce errors. Detailed applicability
+ranges remain evidence gaps rather than invented default bounds.
 
 ## Shared Fixed Parameters
 
@@ -51,7 +84,7 @@ support a canonical allowed set. COR-01B does not invent defaults.
 | Real WACC, $r$ | {{< var financial-real-wacc >}} | 1/year | METH-003; provisional unsupported assumption |
 | Project life, $n$ | {{< var financial-project-life-value >}} | year | METH-003; modelling assumption |
 | Hydrogen HHV | {{< var hydrogen-hhv-value >}} | kWh/kg | METH-006; sourced and rounded |
-| HVDC reference-link rating | 2 | GW/link | ELEC-003/004; sourced fixed parameter [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard] |
+| HVDC reference-link rating | {{< var hvdc-link-rated-power-value >}} | GW/link | ELEC-003/004; sourced fixed parameter [@tennet2024TwoGWProgram; @tennet2025TwoGWStandard] |
 | Decommissioning factor | {{< var financial-decommissioning-fraction-value >}} | fraction of offshore installation CAPEX | METH-003; modelling assumption |
 
 The 2 GW HVDC rating is not an optimization variable. The electrical component
@@ -91,7 +124,7 @@ Every case returns:
 | Delivered electricity | MWh-electricity/year, when applicable |
 | Landed hydrogen | kg-H2/year and MWh-H2-HHV/year, when applicable |
 | Initial installed CAPEX | EUR~2025~ and EUR~2025~/kW-wind |
-| Lifecycle capital basis | EUR~2025~ and EUR~2025~/kW-wind |
+| Lifecycle capital basis | EUR~2025~ only, when complete |
 | Annual OPEX | EUR~2025~/year |
 | Annualized modelled cost | EUR~2025~/year |
 | Electricity carrier cost | EUR~2025~/MWh-electricity |

@@ -16,6 +16,7 @@ import matplotlib
 matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
+plt.rcParams["svg.hashsalt"] = "offshore-wind-infrastructure-model"
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -58,7 +59,8 @@ def build_pem_polarisation_figure(
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fig.tight_layout()
-    fig.savefig(output_path, format=output_path.suffix.lstrip(".") or "svg")
+    fig.savefig(output_path, format=output_path.suffix.lstrip(".") or "svg",
+                metadata={"Date": None} if output_path.suffix == ".svg" else None)
     plt.close(fig)
 
 

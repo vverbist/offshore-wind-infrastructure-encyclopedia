@@ -239,23 +239,19 @@ The base case remains **{{< var array-supply-unit-cost-value >}} EUR~2025~/m**, 
 
 ## OPEX Allowance
 
-Public evidence describes large but infrequent cable failures more clearly than it reports expected annual cable-only expenditure. ORE Catapult's SPARTA portfolio found cable outages in 7.46% of wind-farm months and in 61% of reporting wind farms, with outage days split approximately equally between array and export cables [@oreCatapult2022SPARTA]. Its ELECTRODE programme reports an average repair duration of about two months and consequences often above GBP 10 million, but that amount combines repair expenditure and lost generation [@oreCatapult2023ELECTRODE].
-
-These data do not provide an array-only annual failure frequency or a clean split between physical repair cost and lost revenue. An event-based OPEX model is therefore not used. The current relationship is retained as a top-down risk allowance:
-
-$$
-C_\mathrm{OPEX}
-=
-f_\mathrm{OPEX}C_\mathrm{supply},
-$$
-
-with $f_\mathrm{OPEX}=2\%$/year and a 1–3% sensitivity. At the base cable price, each 100 km of supplied cable has EUR~2025~ 40 million supply CAPEX and therefore a EUR~2025~ 0.8 million annual allowance. The allowance represents inspection and physical repair provision only. Lost generation remains in the availability calculation and must not also be included in OPEX.
+Lifecycle O&M follows the common {{< var financial-provisional-opex-rate >}}
+allowance on complete initial component CAPEX, including installation, selected
+by the user on 15 October 2026. It is a provisional modelling assumption rather
+than an array-cable failure/repair estimate. Lost production is treated through
+availability, not added as a second cash cost. Detailed O&M is deferred; see
+[Financial Assumptions](../methodology/financial_and_price_basis.qmd).
 
 ## Reliability and Availability
 
-The current model applies **99.0% array-network availability** as a flat annual yield multiplier. A radial string fault normally disconnects the turbines downstream of the fault rather than the complete wind farm, so the flat multiplier does not represent topology explicitly.
-
-No more detailed failure model is introduced until consistent array-specific failure frequency, repair duration and affected-capacity data are available. When those inputs exist, the radial connections $\mathcal{E}$ defined by the cable-length model can also define the turbines isolated by each fault. Until then, 99.0% remains a transparent aggregate assumption rather than a calculated reliability result.
+AC collection availability is an unresolved lifecycle input. Faults can isolate
+only downstream turbines; the future capacity-state treatment is deferred.
+No historical flat network factor is adopted. A scoped annual factor may be
+supplied explicitly without pretending it resolves topology-dependent outages.
 
 ## Current Assumptions and Sensitivities
 
@@ -268,8 +264,8 @@ No more detailed failure model is introduced until consistent array-specific fai
 | Farm area and aspect ratio | Wind-layout inputs | Site scenarios | Constrain the feasible coordinate layout |
 | Cable material cost | {{< var array-supply-unit-cost-value >}} EUR~2025~/m | 200–600 EUR~2025~/m | Blended engineering range, not a statistical confidence interval |
 | Route addition | {{< var array-route-allowance >}} | 5–20% | Apply only before a routed design exists |
-| Flat availability | 99.0% | Replace with string outage states | A fault normally removes partial capacity |
-| OPEX risk allowance | 2% of supply CAPEX/year | 1–3% | Physical inspection and repair provision; excludes lost generation |
+| Availability | Unresolved | Future capacity-state work deferred | A scoped annual factor is still required |
+| Provisional O&M | {{< var financial-provisional-opex-rate >}} of initial component CAPEX/year | Detailed treatment deferred | Common user assumption; installation included |
 
 ## Architecture Applicability
 
@@ -308,8 +304,19 @@ losses; those limitations apply to the provisional fraction.
 | Pull-in length is two water depths per connection | J-tube routing, hang-off height and slack are not resolved |
 | Public project cable quantities have inconsistent reporting scopes | Length per turbine is a validation range, not a calibration coefficient |
 | Electrical losses are provisional | The executable model applies `array-ac-loss-fraction` to aggregate turbine-transformer output before central conversion; supporting evidence remains TODO. This replaces the former I²R screening calculation. |
-| Flat 99% availability | String-level and common-mode outage states are hidden |
+| Unresolved availability | String-level and common-mode outage states are hidden |
 | Supply benchmarks mix 2019 nominal EUR and 2024 USD inputs | The apparent precision of the blended EUR/m assumption exceeds source quality |
 | OPEX is a top-down percentage | Public evidence does not yet support an array-only event-frequency and cash-repair model |
 | Fixed-bottom static cable is assumed | Floating-wind dynamic sections and fatigue design are outside scope |
 | 66 kV is fixed in the base model | The potential value of 132 kV for 20 MW-class turbines is not optimised |
+
+## Executed routing diagnostic
+
+`physical.ac_routing.physical_km_per_turbine` is total physical cable km divided
+by turbine count. It includes the model's route allowance and vertical legs;
+it is distinct from horizontal lay-pass km. The selected coordinate-order
+routing is unchanged. Public project benchmarks on this page have different
+site/route scopes; no qualified universal bounds or cost correction are adopted.
+A benchmark flag remains unresolved rather than assigning an arbitrary limit.
+Future outage/capacity-state modelling is deferred; current lifecycle delivery
+uses the declared annual availability factors.

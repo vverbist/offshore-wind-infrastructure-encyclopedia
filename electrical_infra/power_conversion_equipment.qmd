@@ -235,7 +235,7 @@ The required terms are:
 | Turbine step-up transformer | Centralised | Downstream multiplier implemented | Provisional user assumption; evidence TODO |
 | 66 kV AC collection | Centralised | Fixed fraction of aggregate transformer output, before central conversion | Provisional aggregate allowance; evidence TODO; no resistance or power-factor input required |
 | Central transformers and rectifier | Centralised | {{< var central-conversion-efficiency >}} net package efficiency | Provisional component assumptions |
-| Stack-side DC/DC converter | Conservative | Blank interface efficiency | Candidates above 97.5% |
+| Stack-side DC/DC converter | Conservative | Unresolved deferred-sensitivity interface efficiency | Reference candidates; not an adopted loss value |
 | Direct-DC interface | Direct DC | {{< var converter-reduced-conversion-efficiency >}} efficiency | Provisional aggregate DC-link, protection and cabling allowance; no DC/DC converter |
 
 : Loss terms by case and their current treatment.
@@ -275,12 +275,12 @@ Each electrical function is counted once:
 
 | Gap | Effect | Route to closure |
 |---|---|---|
-| Separate grid-side inverter cost and losses | Decentralised cost credit and recovered DC-link power unresolved | Supplier data for a split package, or a documented inverter-only model |
+| Separate grid-side inverter cost and losses | Separate cost credit unresolved; loss recovery uses a provisional input | Supplier data for a split package, or a documented inverter-only model |
 | Converter AC voltage and turbine DC-link voltage | Transformer secondary and DC/DC input undefined | Select a converter voltage level for the reference turbine |
 | Stack DC voltage and grouping | Rectifier, rectifier-transformer and DC/DC output undefined | Stack cell count and series/parallel grouping on [Stack](../hydrogen_production/stack.qmd) |
 | DC/DC cost and multi-megawatt unit rating | Conservative case cannot be costed | Supplier quotation or published product data |
-| Turbine transformer losses | Centralised losses incomplete | Supplier loss data at the selected rating |
-| Central unit sizes | Central counts undefined | Platform layout (O3) within documented limits |
+| Turbine transformer losses | Provisional losses implemented; evidence remains unresolved | Supplier loss data at the selected rating |
+| Central unit sizes | Counts use adopted unit limits; layout qualification remains unresolved | Platform layout (O3) within documented limits |
 
 ## References
 

@@ -1,7 +1,7 @@
 ---
 title: "Platform and Substation Installation"
 completion: 65
-readiness: blocked
+readiness: partially_implementable
 ---
 
 ## Included in Platform EPCI
@@ -46,3 +46,9 @@ A switch between crane lifting, float-over or another installation method may in
 The full previous methodology, calculation module and scalar inputs have been copied to a dated repository archive excluded from website rendering and publication. They are retained for later use if adequate separate cost evidence becomes available.
 
 **The combined EPCI calculation is implemented.** The live central-platform workflow books installation within the single platform EPCI entry and no longer calls the separate platform installation cost module. Legacy functions remain available for comparison only. No lift plan is inferred or certified by the EPCI calculation. Platform decommissioning has a separate unresolved input; it is not estimated as a fraction of the whole EPCI package.
+
+Readiness was reassessed on 15 October 2026: aggregate EPCI is executable with
+declared uncertainty; detailed installation qualification and cable-package
+interface evidence remain unresolved. Historical separate-campaign cost blockers
+are superseded for the active method, rather than treated as engineering checks
+that have passed.

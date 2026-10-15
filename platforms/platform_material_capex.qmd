@@ -1,7 +1,7 @@
 ---
 title: "Platform EPCI CAPEX"
 completion: 65
-readiness: blocked
+readiness: partially_implementable
 ---
 
 ## Calculation and Cost Boundary
@@ -114,8 +114,24 @@ The renamed coefficient `platform-epci-topside-unit-cost-source` makes the chang
 
 `physical.platform_costs` reports the calculation and `physical.platform_total_eur` reports its total. The ledger contains one `platform / epci` entry. A separate platform supply or installation entry alongside EPCI is rejected. The calculation requires neither a crane selection nor jacket and pile mass estimates. Any supplied depth is retained as applicability metadata; the workflow does not certify a lift plan.
 
-Annual platform OPEX uses `platform-opex-rate` on the combined platform EPCI total. This rate remains unresolved and must be calibrated for that cost boundary. Hosted equipment retains its own purchase and OPEX entries.
+Annual platform O&M uses the common `financial-provisional-opex-rate` on EPCI, an explicit user assumption. Hosted equipment retains its own capital cost and corresponding O&M; its purchase is not part of platform EPCI. Detailed activity-based O&M is deferred.
 
 **Decommissioning is separate from EPCI.** The old installation-based proxy cannot recover platform removal cost from the combined package. `platform-decommissioning-cost` is therefore a separate, initially unresolved EUR~2025~ input. It enters lifetime costs once and does not reduce or block the calculated platform CAPEX. Missing decommissioning blocks complete LCOH. The existing installation-based proxy still applies to separately costed non-platform installation [see financial treatment](../methodology/financial_and_price_basis.qmd#decommissioning).
 
-**Remaining evidence work:** expand the commercial sample, obtain matched complete topside weights, reconcile auxiliary-equipment scope, and provide platform OPEX and decommissioning inputs. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.
+**Remaining evidence work:** expand the commercial sample, obtain matched complete topside weights, reconcile auxiliary-equipment scope, and provide activity-based O&M and decommissioning evidence. These gaps do not justify inventing a mass or reporting an incomplete lifetime cost as complete.
+
+## Feeder and termination qualification
+
+TenneT's 2 GW platform design distinguishes cable pulling and termination areas
+[@tennet2022TwoGWPlatformDesign]. This physical arrangement does not establish
+that the reference EPCI price includes the article's feeder count or all cable
+pull-in, termination, testing and commissioning. The aggregate platform and
+cable packages therefore retain an explicit interface qualification. No cost is
+added or deducted, and no feeder-count limit is imposed from a different
+platform class. Matched commercial scope evidence remains TODO.
+
+Readiness was reassessed on 15 October 2026: aggregate EPCI is executable with
+declared uncertainty; detailed installation qualification and cable-package
+interface evidence remain unresolved. Historical separate-campaign cost blockers
+are superseded for the active method, rather than treated as engineering checks
+that have passed.

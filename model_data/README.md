@@ -44,7 +44,7 @@ point-of-use equations and scope; `reference` rows remain non-combinable evidenc
 | `*-conversion-*` | `hydrogen_production/elx_power_electronics.qmd` and `dc_integration.qmd`; only the central efficiency is adopted; unnormalised cost and turbine-level interfaces remain TODO |
 | `compressor-*`, `hydrogen-heat-capacity-ratio`, `universal-gas-constant`, `hydrogen-molar-mass` | `hydrogen_infra/compressor.qmd` and its existing figure builder; migrated thermodynamic assumptions and legacy rounded constants, existing sourced exponent, agreed motor-power cap; sourced 2019 CAD coefficient, the brief's own USD/CAD rate and the compressor PPI escalation, from which code derives the EUR2025 reference cost at the agreed 15 kW reference |
 | `standard-atmospheric-pressure` | `research_articles/turbine_level_hydrogen/reference_case.qmd` (gauge-to-absolute conversion of article pressures) and the pressure convention on `hydrogen_infra/compressor.qmd`; exact standard atmosphere adopted as the atmospheric basis |
-| `pipeline-*` | `hydrogen_infra/hydrogen_pipelines.qmd`; existing gas-property and friction method; the confidential quote fit returns material price in EUR2025/m (basis confirmed by the project owner on 2026-09-25), so `pipeline-quote-to-eur2025` is 1; the operating-to-rated pressure mapping, product unit prices without the private module and connection/manifold costs remain TODO |
+| `pipeline-*` | `hydrogen_infra/hydrogen_pipelines.qmd`; existing gas-property and friction method; the confidential quote fit returns material price in EUR2025/m (basis confirmed by the project owner on 2026-09-25), so `pipeline-quote-to-eur2025` is 1; the non-confidential qualified pressure/diameter range, product unit prices without the private module and connection/manifold costs remain TODO |
 | `array-*` | `electrical_infra/infield_ac_cables.qmd`; existing voltage, routing and blended supply assumptions; AC resistance and power factor require adoption |
 | `wind-turbulence-intensity` | `wind_resource_and_layout/wake_modelling_and_spacing.qmd`; existing provisional legacy assumption |
 | `turbine-*` | `turbine_system/wind_turbine.qmd`; pinned WISDEM coefficients and Mehta replacements, source calibration; electrical additions/adjustments remain TODO |
@@ -65,8 +65,10 @@ modelling assumptions, not claims about supplier qualification.
 WISDEM coefficients with unit `coefficient` retain the dimensions implied by
 their specific kg/m/kW/Nm regression on the turbine page; they are not
 dimensionless physical constants. Raw USD rates have unknown common price age
-and are used only as relative calibration weights. The separate crane price
-is unresolved; a documented mass subtotal does not establish a complete price.
+and are used only as relative calibration weights. The separate service-crane purchase-cost weight is excluded by user decision
+(2026-10-09), with crane mass retained. The unused `turbine-cost-crane` reference
+row stays blank as historical evidence status, not an adopted zero price. Both
+reference and target calibration omit the same weight; the NREL anchor is unchanged.
 
 Stack degradation is an ex-post energy penalty: `stack-degradation-rate`
 (fraction per 1000 full-load hours) and `stack-end-of-life-degradation` give the
@@ -77,7 +79,7 @@ adopted combined turbine/hydrogen installation plan. It and the additional
 hydrogen-equipment mass remain TODOs. Connections and manifolds have separate
 O&M rates, also unresolved, to retain their scope in the component ledger.
 
-Electrical operation uses unresolved `turbine-inverter-efficiency`,
+Electrical operation uses provisional user-approved (2026-10-09) `turbine-inverter-efficiency`,
 `turbine-transformer-efficiency` and `array-ac-loss-fraction`; the former AC
 resistance and power-factor inputs are retired. The loss fraction applies to
 aggregate transformer output. `turbine-electrical-cost-adjustment` excludes the
@@ -100,3 +102,45 @@ installation and commissioning replace comparable work for removed power
 electronics. Both turbines use the same installation benchmark, without a
 separate hydrogen-equipment charge. This is a modelling assumption, not a
 supplier-verified equivalence. Central-platform installation stays within EPCI.
+
+### Provisional component efficiencies (2026-10-09)
+
+The inverter, turbine transformer, central plant transformer, central rectifier
+transformer, central rectifier and aggregate direct-DC interface each use 0.99
+(fraction). AC collection uses 0.01 (fraction) loss once across the network.
+These are explicit user assumptions, with blank citation fields and evidence
+TODOs on the owning electrical pages; no source is claimed for them. Compressor
+and motor efficiencies and stack characteristics are unaffected. The former
+`central-conversion-efficiency` scalar is replaced by the three central-stage
+inputs; its product is calculated in the model and exposed as a derived website
+variable. The conservative DC/DC case remains deferred with its inputs unset.
+
+
+### Adopted installation inputs (2026-10-12)
+
+Foundation/turbine campaign USD2024 rates, mobilisation, fastening hours, transit
+speed and foundation site time now use the already documented ORBIT/South Fork
+basis. CPI indices and the existing FX input derive EUR2025 rates; task hours
+and knots derive days and km/day. The former blank derived rate, port-time and
+speed rows are removed. The fixed article turbine-installation benchmark remains
+unchanged. Foundation vessel capacity, transition-piece mass and route inputs
+remain unresolved.
+
+AC lay source rate, productivity, loading, mobilisation and transit are adopted
+from the documented ORBIT basis. Array-interface and splice durations are retained
+as explicit aggregate event assumptions, not independently reconstructed task
+sums. Verify array task incidence before replacing that aggregate. Burial, survey,
+TCP installation, weather and demobilisation remain unresolved. Shared modules
+own conversions and the installation pages display those derived outputs.
+
+## Audit decisions, 15 October 2026
+
+`financial-provisional-opex-rate` is the user-selected 0.02/year on each component's
+complete initial capital (supply plus installation, or EPCI), replacing the old
+component OPEX inputs. Those historical inputs remain inactive and are not
+adopted as numerical evidence. `turbine-generation-availability` separates centralised generation from central
+production outages; distributed production retains its integrated generation
+boundary. Required values remain unresolved for lifecycle results.
+USD2020/2022 CPI-U escalation retains five-decimal rounding; compressor PPI
+escalation is derived from its canonical source indices with four-decimal rounding; do not reintroduce independent factors.
+Residual value is fixed at zero. No new supplier price or source estimate is implied.

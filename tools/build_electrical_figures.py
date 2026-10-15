@@ -19,7 +19,9 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from model_data import hvdc_conductor_loss, load_parameters
+from model_data import load_parameters
+from model.electrical_infra.hvdc_export_cables import hvdc_conductor_loss
+from model.electrical_infra.infield_ac_cables import string_counts
 
 matplotlib.use("Agg")
 matplotlib.rcParams["svg.hashsalt"] = "offshore-wind-infrastructure-model"
@@ -35,7 +37,7 @@ TURBINE_RATING_MW = float(
 USABLE_STRING_RATING_MW = float(
     PARAMETERS.number("array-usable-string-rating", "MW")
 )
-TURBINES_PER_STRING = int(USABLE_STRING_RATING_MW // TURBINE_RATING_MW)
+TURBINES_PER_STRING, _ = string_counts(1, TURBINE_RATING_MW * 1000, USABLE_STRING_RATING_MW)
 
 HVDC_RATING_GW = float(PARAMETERS.number("hvdc-link-rated-power", "GW"))
 HVDC_RATING_MW = HVDC_RATING_GW * 1_000
@@ -62,13 +64,13 @@ def save_svg(fig: plt.Figure, output_path: Path) -> None:
 def plot_array_string_count(output_path: Path) -> None:
     turbine_count = np.arange(1, 201)
     plant_capacity_mw = turbine_count * TURBINE_RATING_MW
-    string_count = np.ceil(turbine_count / TURBINES_PER_STRING)
+    string_count = np.array([string_counts(int(n), TURBINE_RATING_MW * 1000, USABLE_STRING_RATING_MW)[1] for n in turbine_count])
 
     reference_turbines = int(
         np.ceil(ARRAY_REFERENCE_TARGET_GW * 1_000 / TURBINE_RATING_MW)
     )
     reference_capacity = reference_turbines * TURBINE_RATING_MW
-    reference_strings = int(np.ceil(reference_turbines / TURBINES_PER_STRING))
+    _, reference_strings = string_counts(reference_turbines, TURBINE_RATING_MW * 1000, USABLE_STRING_RATING_MW)
 
     fig, ax = plt.subplots(figsize=(7.2, 4.4))
     ax.step(

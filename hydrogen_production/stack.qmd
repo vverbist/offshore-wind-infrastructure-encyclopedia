@@ -34,7 +34,7 @@ The stack model consists of four interacting components:
 - degradation
 - cost
 
-Together these determine the optimal installed stack capacity and operating strategy.
+The scenario supplies installed-capacity intent through its overplant factor. The model rounds to whole modules and selects the operating dispatch; it does not optimise installed stack capacity.
 
 ## Polarisation Curve
 
@@ -47,7 +47,7 @@ Consequently, stack efficiency decreases at higher current densities.
 **Model implementation**
 
 Stack efficiency is calculated from a manufacturer polarisation curve [@manufacturerGStackPolarisation] relating cell voltage to current density.
-The operating point is defined as a percentage of the maximum current density (equivalently the maximum stack power).
+The operating point is defined by current density and the interpolated cell voltage. Current fraction and power fraction differ because voltage changes with current.
 
 
 ![Manufacturer polarisation curve (left) and resulting stack efficiency (right) used in the model.](../figures/pem-polarisation.svg){#fig-polarisation}
@@ -143,21 +143,11 @@ Delivered hydrogen is multiplied by $f_\mathrm{life}$ (implemented in `lifetime_
 Operating more installed stack capacity reduces the average current density of each module, slowing degradation and extending stack lifetime.
 This creates an additional economic incentive for stack overplanting, alongside the efficiency improvements described previously.
 
-::: {.callout-note}
-## Example: Stack overplanting and degradation
-Assume a stack is replaced after reaching 10% degradation.
-With a fractional loss of {{< var stack-degradation-rate-value >}} per 1000 full-load hours, replacement occurs after approximately 55,600 full-load hours.
-Assuming an offshore wind capacity factor of 40%, this corresponds to roughly 15.9 calendar years.
-A 25-year project therefore requires at least one stack replacement.
-If this replacement is already unavoidable, installing additional stack capacity from the outset becomes an attractive alternative.
-The total stack material requirement over the project lifetime remains similar, while the system additionally benefits from:
-
-1. Lower maintenance costs by avoiding mid-life replacement.
-2. Higher efficiency through operation at lower current density.
-3. Reduced degradation throughout the project lifetime.
-
-This conclusion depends strongly on the assumption that degradation scales linearly with accumulated full-load hours.
-:::
+The [lifetime-yield illustration](../methodology/energy_availability_and_annualisation.qmd#lifetime-yield-and-illustrative-degradation)
+uses the selected article operation tables to show terminal and cumulative loss.
+Overplanting changes operating full-load hours, but the current model does not
+claim that it avoids a paid replacement: the cost interval remains a separate,
+unresolved policy input.
 
 ## Cost Model
 
@@ -209,12 +199,16 @@ Only the stack cost is included in this component model.
 Balance-of-plant equipment, power electronics, installation, offshore structures and other system-level costs are represented elsewhere in the model. 
 This distinction is important because the NREL report also provides full electrolyser system costs, but those include balance-of-plant components that are outside the scope of this stack page.
 
-Stack replacement costs are calculated using the same specific stack cost assumption as the initial stack.
+Replacement expenditure uses an explicit fraction of initial stack supply cost plus an intervention cost per event; see the replacement expenditure boundary below.
 
 ## Availability
 
-The modular architecture provides inherent redundancy because individual stack modules can be isolated without shutting down the complete electrolyser.
-A stack availability of **99.5%** is assumed throughout this study.
+Stack-only availability is not adopted as a separate flat number. Lifecycle
+production uses the explicitly scoped factors on [Energy and Availability](../methodology/energy_availability_and_annualisation.qmd).
+Centralised generation and production outages are separate; distributed
+production retains its integrated generation scope. Required values remain
+provisional/unresolved. The article reports beginning-of-life production before
+outages, with lifecycle availability deferred.
 
 ## Installation and Mass
 
@@ -224,3 +218,50 @@ A dedicated stack mass model is not yet included.
 If future work identifies stack mass as a significant driver for tower sizing, platform design or installation costs, this section should be expanded accordingly.
 
 Complete central-platform mass is estimated separately on the [Complete Topside Mass](../platforms/topside_mass.qmd) page. Its aggregate reference already includes hosted equipment; component masses are not added again.
+
+## Executed operating calculation
+
+Let $P_r$ [kW] be requested stack capacity, $P_m$ [kW/module] the canonical module
+rating and $n_{\rm inst}=\lceil P_r/P_m\rceil$ the installed module count. For
+$n$ active modules and current density $j$ [A/cm²], interpolate $V(j)$ [V] from
+the supplied curve. With reference $j_r$ [A/cm²] and $V_r=V(j_r)$ [V]:
+
+$$
+P_{\rm stack}=nP_m\frac{jV(j)}{j_rV_r},\qquad
+\dot m_{\rm H2}=\frac{nP_m}{j_rV_r}\frac{jV_{\rm HHV}}{HHV_{\rm H2}}.
+$$
+
+Here $V_{\rm HHV}$ [V] is the HHV-equivalent cell voltage from the central CSV,
+$HHV_{\rm H2}$ [kWh/kg] is hydrogen HHV and $\dot m_{\rm H2}$ is kg/h. The
+auxiliary duties are $P_{\rm BOP}=\dot m_{\rm H2}e_{\rm BOP}$ and
+$P_{\rm comp}=\dot m_{\rm H2}e_{\rm comp}$, with specific demands $e$ in kWh/kg.
+All powers are kW. The common post-conversion bus satisfies:
+
+$$
+P_{\rm available}=P_{\rm stack}+P_{\rm BOP}+P_{\rm comp}+P_{\rm curtailed}.
+$$
+
+The solver considers integer active counts from zero to $n_{\rm inst}$. For each
+nonzero count it finds the highest feasible current within the minimum module
+power and reference-current bounds, then selects greatest hydrogen output.
+Minimum load is a fraction of module power, not a fraction of current. No
+approximation $P_{\rm stack}\approx P_{\rm available}$ is needed; auxiliary
+consumption is solved jointly. BOP and compression share this bus as a screening
+assumption, without a separately modelled auxiliary supply converter.
+
+## Replacement expenditure boundary
+
+For project life $N$ [year] and the separately supplied replacement life
+$T_c$ [year], the current cost method uses $n_c=\max(0,\lceil N/T_c\rceil-1)$
+events; no event is charged exactly at the project endpoint. Expenditure is:
+
+$$
+C_{\rm repl}=n_c\left(f_c C_{\rm stack,initial}+C_{\rm intervention}\right).
+$$
+
+The initial stack supply cost and intervention cost are EUR2025; $f_c$ is a
+fraction. Life and intervention evidence remain unresolved. The cost interval
+$T_c$ is not automatically coupled to the degradation threshold. Reconciling
+those schedules is deferred; no economic replacement optimiser is implied.
+Only the documented reference manufacturing volume is costed. Other volumes
+are not extrapolated from the displayed reference points.

@@ -71,7 +71,7 @@ Fraunhofer's bottom-up results support this approximation: specific power-electr
 
 | Item | Reference value (not a model input) | Range of evidence |
 |---|---:|---:|
-| Complete 66 kV-to-DC power-electronics CAPEX | 185 EUR/kW | 100--300 EUR/kW |
+| Complete 66 kV-to-DC power-electronics CAPEX | {{< var central-conversion-unit-cost >}} | Reference comparisons do not adopt a price |
 | Capacity-scaling exponent | 1.00 | — |
 
 : Cost assumptions for the centralised-electrolysis conversion system.
@@ -146,3 +146,15 @@ This model is intended for early-stage techno-economic assessment. Several previ
 | The main 66 kV transformer is assigned to this subsystem | Model integration must ensure that the same transformer is not also included in platform or infield electrical CAPEX |
 
 : Remaining limitations of the power-electronics model.
+
+## Executed cost and auxiliary boundary
+
+The package purchase coefficient is applied to installed wind capacity served
+[kW-wind], not stack DC nameplate capacity. Stack overplanting therefore changes
+stack purchase but does not independently multiply this interface package.
+Required package prices remain explicit inputs; literature comparisons are
+reference evidence rather than adopted prices. The operating solver closes
+stack plus BOP plus compression demand on the common post-conversion bus, using
+the existing coupled calculation rather than an approximate auxiliary lookup.
+A dedicated DC/DC converter is retained only for the deferred conservative
+sensitivity; direct DC uses its separate aggregate interface allowance.

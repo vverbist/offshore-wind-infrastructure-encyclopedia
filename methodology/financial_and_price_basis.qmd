@@ -26,7 +26,7 @@ may be introduced only where evidence defines its scope and prevents overlap
 with component, installation or commercial allowances.
 
 The [BOP reference](../hydrogen_production/balance_of_plant.qmd) uses an explicit
-screening exception: the undated DEA water-treatment indication is assumed to
+screening exception: the undated DNV water-treatment indication is assumed to
 be EUR2023 and escalated using euro-area HICP. This assumption does not establish
 the supplier quote year or change the rule for other costs.
 
@@ -59,7 +59,7 @@ with the mismatch recorded as a limitation.
 US-dollar escalation to 2025 uses the U.S. CPI-U annual averages as the
 documented consumer-price fallback, because no single cost-specific index
 covers the mixed equipment scopes involved [@blsCpiU2026]. The annual averages
-are 258.811 (2020), 292.655 (2022) and 321.943 (2025; eleven months, as BLS
+are {{< var financial-usd-cpi-2020-value >}} (2020), {{< var financial-usd-cpi-2022-value >}} (2022) and {{< var financial-usd-cpi-2025-value >}} (2025; eleven months, as BLS
 published no October 2025 value), giving
 `financial-usd-escalation-2020-2025` = {{< var financial-usd-escalation-2020-2025 >}}
 and `financial-usd-escalation-2022-2025` = {{< var financial-usd-escalation-2022-2025 >}}.
@@ -219,3 +219,45 @@ Before costs are added:
 5. replacement is counted only under the documented rule;
 6. decommissioning is applied once to total offshore installation CAPEX; and
 7. annual OPEX is not embedded in CAPEX or another component term.
+
+## Implemented conversion routes and provisional O&M
+
+| Cost owner | Implemented conversion to EUR~2025~ |
+|---|---|
+| Turbine, transformer and foundation | USD2022 CPI-U ratio to 2025, then 2025 USD/EUR |
+| PEM stack and NREL BOP reference | USD2020 CPI-U ratio to 2025, then 2025 USD/EUR |
+| ORBIT installation rates | USD2024 CPI-U ratio to 2025, then 2025 USD/EUR |
+| BVG turbine installation | GBP2024 UK CPI ratio to 2025, then 2025 GBP/EUR |
+| Compressor | CAD source converted using the documented source FX, compressor-specific US PPI escalation, then 2025 USD/EUR; see [Compressor](../hydrogen_infra/compressor.qmd) |
+| DNV thermal water-treatment allowance | Explicit EUR2023 assumption followed by HICP |
+| Platform benchmark observations | Source-year FX followed by HICP; central EPCI coefficient starts in EUR2023 |
+| Confidential pipeline fit | Owner-confirmed EUR2025/m; conversion factor is unity |
+
+The CPI-U factors are derived from canonical index inputs in code, rounded to
+five decimal places to preserve the established cost results. They are no longer
+independently entered scalar factors. Component-specific exceptions retain their
+own evidence; no generic index replaces them.
+
+For lifecycle calculations, the user-selected provisional allowance is:
+
+$$
+C_{\mathrm{O\&M},i}=f_{\mathrm{O\&M}}\left(C_{\mathrm{supply},i}
++C_{\mathrm{installation},i}+C_{\mathrm{EPCI},i}\right).
+$$
+
+Here $C_{\mathrm{O\&M},i}$ is annual O&M in EUR~2025~/year and
+$f_{\mathrm{O\&M}}$ is {{< var financial-provisional-opex-rate >}}, an explicit
+user assumption selected on 15 October 2026. Capital entries are mutually
+exclusive where EPCI already includes supply and installation. This is a
+percentage of initial, non-annualised CAPEX; it replaces the earlier component
+rates. A missing included capital cost blocks that component's complete O&M.
+Detailed activity-based O&M is deferred. The article's production/CAPEX reporting
+scope continues to defer O&M and other lifecycle results.
+
+Residual value is fixed at zero, including at the project endpoint. Nonzero
+scenario overrides are rejected. The decommissioning proxy includes offshore
+installation entries only; onshore hydrogen-receipt installation is excluded.
+The explicit platform removal cost remains a separate term, since platform
+installation is already bundled into EPCI. The article excludes onshore receipt
+costs as a boundary assumption; delivery pressure does not establish zero
+physical connection cost.

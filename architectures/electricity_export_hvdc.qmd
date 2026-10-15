@@ -84,3 +84,11 @@ unless it is explicitly assigned to the project by the scenario. Costs,
 losses, availability, sizing, and unresolved evidence remain owned by the
 linked component and methodology pages. The reporting contract is defined on
 [System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_and_lcoe.qmd).
+
+## Executable scope
+
+The current scenario runner evaluates centralised and decentralised hydrogen.
+Electricity export is a documented calculation contract; a complete electricity
+scenario branch and its delivered-electricity cost output are not implemented.
+Component equations and reference figures do not establish an executable
+cross-carrier comparison.

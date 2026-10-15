@@ -7,6 +7,7 @@ import sys
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams["svg.hashsalt"] = "offshore-wind-infrastructure-model"
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -68,7 +69,7 @@ def plot_capacity_curves(df: pd.DataFrame, output_path: Path) -> None:
     ax.grid(True, color="#d1d5db", linewidth=0.8)
     ax.legend(title="Diameter")
     fig.tight_layout()
-    fig.savefig(output_path)
+    fig.savefig(output_path, metadata={"Date": None})
     plt.close(fig)
 
 
@@ -93,7 +94,7 @@ def plot_cost_curves(df: pd.DataFrame, output_path: Path) -> None:
     ax.grid(True, color="#d1d5db", linewidth=0.8)
     ax.legend(title="Diameter")
     fig.tight_layout()
-    fig.savefig(output_path)
+    fig.savefig(output_path, metadata={"Date": None})
     plt.close(fig)
 
 
@@ -118,7 +119,7 @@ def plot_cost_per_capacity_curves(df: pd.DataFrame, output_path: Path) -> None:
     ax.grid(True, color="#d1d5db", linewidth=0.8)
     ax.legend(title="Diameter")
     fig.tight_layout()
-    fig.savefig(output_path)
+    fig.savefig(output_path, metadata={"Date": None})
     plt.close(fig)
 
 

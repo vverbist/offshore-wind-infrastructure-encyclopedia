@@ -1,5 +1,10 @@
 # Review framework
 
+For independently assigned website/model consistency checks, use the
+[consistency-audit batch briefs](consistency-audit/README.md). That campaign
+uses separate per-run reports and coordinator-only reconciliation into these
+registers; its CA identifiers do not replace the historical review batches.
+
 This directory stores review evidence and findings separately from the published
 Quarto pages. A review finding is recorded here before any correction is made to
 the source page.

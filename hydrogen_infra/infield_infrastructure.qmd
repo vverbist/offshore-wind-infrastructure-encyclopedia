@@ -18,7 +18,7 @@ The proposed network is a ladder. Two longitudinal header pipelines run along op
 
 The layout is used for four reasons:
 
-- A 6 inch composite pipeline at 150 bar is assumed to carry about 500 MW of hydrogen on an HHV-equivalent basis. One rung can therefore collect a complete turbine row without the 60--70 MW string limit of a 66 kV AC cable [@internalModelDescription2026].
+- The article selects a uniform collection diameter while neglecting pressure loss. This is a screening simplification, not a fixed MW-HHV capacity or a hydraulic qualification of complete rows.
 - Each turbine can send hydrogen to either header. Isolation of one local rung or header segment does not automatically isolate every turbine behind that segment.
 - The regular grid follows the turbine rows and avoids a separate radial route from every turbine to a central platform.
 - Flexible composite pipe can be supplied in long reeled lengths. This suits repeated infield runs and reduces the number of offshore field joints relative to rigid steel pipe [@internalModelDescription2026].
@@ -138,19 +138,24 @@ Do not apply this factor to a GIS-derived route that already includes deviations
 
 ## Flow and Pressure Checks Versus Redundancy
 
-**Current checks (healthy state).** For the supplied sections and flow shares,
-the model conserves flow at every node, checks that each section's capacity
-covers its peak flow at the supplied inlet and outlet pressures, and rejects a
-pressure rise at a junction without a compressor. The legacy claim that one
-6 inch rung at 150 bar carries about 500 MW supports a single row
-({{< var ijv-ladder-rung-end-duty-mw >}} MW per row end) and the most loaded
-header section ({{< var ijv-ladder-header-max-duty-mw >}} MW). It does not cover the
-tie-ins at {{< var ijv-ladder-tie-in-duty-mw >}} MW each, which need a larger
-diameter, parallel pipe or a higher pressure; that choice belongs to the
-pressure–diameter study.
+**Selected article case.** Uniform {{< var article-collection-diameter-inches >}} inch
+collection with neglected pressure drop is a screening assumption. Geometry and
+healthy-state mass conservation remain active. Collection hydraulic feasibility
+is not assessed, and the export-inlet pressure is taken equal to compressor
+discharge. Export hydraulics are checked separately.
 
-**Deferred (D3).** Fault states, isolation valves, rerouting through the second
-header and spare capacity are not analysed. The flow allocation above is not
-solved as a hydraulic loop network, and the model claims no redundancy benefit.
-The 100% infield-pipeline availability is a modelling convention, not a
-reliability result.
+**Hydraulic mode.** When pressure loss is explicitly represented, each section
+must carry its peak flow within its supplied inlet/outlet pressure budget, length
+and internal diameter. Junction pressure cannot rise without compression. Flow
+shares are supplied rather than solved as a hydraulic loop network.
+
+The earlier fixed MW-equivalent rating is not an adopted collection capacity.
+The displayed row/header/tie-in duties are upstream **electrical MW served**;
+actual hydrogen duties are mass flow in kg/h or MW-HHV after stack conversion
+and auxiliaries. They cannot be compared directly with electrical capacity or a
+pipeline rating lacking a stated length and pressure budget. A tie-in design
+change is not inferred from that unlike-unit comparison.
+
+**Deferred (D3).** Fault states, isolation, rerouting, spare capacity and a
+qualified collection pressure profile remain unresolved. No redundancy or
+flat pipeline-availability benefit is claimed.

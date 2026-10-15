@@ -11,7 +11,7 @@ This section converts a directional offshore wind resource and a turbine layout 
 The calculation is performed in dependency order:
 
 1. fit a directional wind-speed distribution;
-2. place the selected number of turbines inside the modelled farm area;
+2. read turbine coordinates or generate the declared grid and check minimum spacing;
 3. assign turbine power and thrust-coefficient curves;
 4. calculate wake-affected power for each wind-speed and direction state;
 5. probability-weight the states to obtain annual energy production; and
@@ -49,3 +49,5 @@ Infield cable and pipeline design is intentionally excluded from this section. T
 | Wake-adjusted gross capacity factor | fraction | Farm performance and utilisation |
 
 The current implementation is suitable as a transparent screening calculation, but its wind-data provenance, directional bin alignment, turbine performance curve and layout feasibility treatment require improvement before the results are treated as a validated energy assessment. The specific improvements are stated on the two calculation pages.
+
+Polygon containment and setbacks remain deferred. Farm area is a reporting denominator, not proof that coordinates lie within a qualified boundary.

@@ -47,7 +47,8 @@ flowchart LR
   C4 --> C5["Onshore hydrogen-backbone connection"]
 
   D1["Wind turbines"] --> D2["Turbine-integrated electrolysis"]
-  D2 --> D3["Hydrogen infield collection"]
+  D2 --> DC["Turbine compression"]
+  DC --> D3["Hydrogen infield collection"]
   D3 --> D4["Pipeline export"]
   D4 --> D5["Onshore hydrogen-backbone connection"]
 ```
@@ -111,3 +112,11 @@ The [System Boundary and Carrier-Cost Metrics](../methodology/system_boundary_an
 page defines the endpoint, cost schema and reporting units. The component mapping identifies
 the canonical owner of each physical function so that costs and performance
 effects are booked once.
+
+## Executable scope
+
+The current scenario runner evaluates centralised and decentralised hydrogen.
+Electricity export is a documented calculation contract; a complete electricity
+scenario branch and its delivered-electricity cost output are not implemented.
+Component equations and reference figures do not establish an executable
+cross-carrier comparison.

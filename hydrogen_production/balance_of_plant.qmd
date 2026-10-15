@@ -68,7 +68,7 @@ includes the following categories [@badgett2024PEMCost, Table 10]:
 
 Water supply is retained in full. It includes feedwater treatment, the feed tank,
 polishing, filtration and recirculation equipment [@badgett2024PEMCost, section
-2.2.1 and Table 3]. The DEA increment is interpreted as thermal seawater
+2.2.1 and Table 3]. The DNV increment is interpreted as thermal seawater
 desalination upstream of this existing water-handling scope. No extra internal
 water-handling charge or cooling credit is applied. This is a screening boundary:
 the supplier breakdown is insufficient to verify all heat-exchanger and
@@ -115,7 +115,7 @@ The euro-area annual HICP rates $h_{2024}$ =
 equipment-specific index. The derived escalation factor is
 {{< var bop-cost-water-escalation-factor >}}, giving
 **{{< var bop-cost-water-reference-eur2025 >}} EUR2025**. No manufacturer markup
-is added to the DEA supplier allowance, and its separately listed installation
+is added to the DNV supplier allowance, and its separately listed installation
 percentage is not added to purchase cost.
 
 Finally,
@@ -147,7 +147,7 @@ The baseline exponent $\alpha$ is {{< var bop-scaling-exponent >}}.
 DNV proposes this exponent for BOP, while listing thermal treatment separately
 [@dnv2023OffshoreHydrogen, sections 3.2.1 and 3.3]. Applying it to the entire
 aggregate, including water treatment, is the adopted modelling assumption.
-The DEA linear allowance is used only to establish the reference, not reapplied
+The DNV linear allowance is used only to establish the reference, not reapplied
 at each block rating.
 
 Retain 0.6 as an explicit sensitivity override of `bop-scaling-exponent`.
@@ -188,7 +188,7 @@ This value includes mechanical BOP loads and hydrogen drying losses. It is selec
 
 ### Water-treatment integration
 
-The adopted DEA cost evidence assumes thermal desalination using electrolyser
+The adopted DNV cost evidence assumes thermal desalination using electrolyser
 waste heat [@dnv2023OffshoreHydrogen, section 3.3]. The existing aggregate BOP
 electricity allowance is retained; no separate desalination electrical load is
 added. This is not a verified thermal balance. **TODO:** establish usable heat
@@ -211,12 +211,12 @@ The assumed value of $e_\mathrm{BOP}$ should be interpreted as an average value 
 
 - The NREL source describes an onshore modular system. Scaling it to the adopted
   reference and then to shared blocks is a screening approximation.
-- Internal water handling remains within BOP. The DEA increment assumes upstream
+- Internal water handling remains within BOP. The DNV increment assumes upstream
   thermal desalination; supplier evidence must resolve purification and cooling
   interfaces before claiming a fully reconciled equipment inventory.
 - Thermal integration and auxiliary consumption require validation at the actual
   stack operating conditions. The cost allowance does not demonstrate feasibility.
-- The DEA quote year is assumed, and HICP is a broad price-index proxy.
+- The DNV quote year is assumed, and HICP is a broad price-index proxy.
 - Aggregate scaling omits treatment-package thresholds and redundancy. The retained
   block limit bounds centralisation benefits but is not engineering qualification.
 - Offshore intake scope, integration and installation remain unresolved; no zero

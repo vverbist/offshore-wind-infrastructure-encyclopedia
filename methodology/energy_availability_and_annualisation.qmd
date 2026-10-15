@@ -29,7 +29,7 @@ $$
 E_{\mathrm{H2,HHV}}
 =
 m_{\mathrm{H2}}
-\frac{39.4\ \mathrm{kWh/kg}}{1000\ \mathrm{kWh/MWh}}.
+\frac{HHV_{\mathrm{H2}}}{1000\ \mathrm{kWh/MWh}}.
 $$
 
 The HHV basis enables EUR/MWh-H2-HHV and EUR/kg-H2 reporting. It does not make
@@ -83,7 +83,7 @@ approved assumption for the stated subsystem.
 
 | Subsystem boundary | Electricity export | Centralised hydrogen | Decentralised hydrogen | Owner |
 |---|---|---|---|---|
-| Wind-turbine generation system | $A_{\mathrm{turb,e}}$: unresolved | $A_{\mathrm{turb,c}}$: unresolved | Included in integrated turbine-production boundary below | TURB-002 |
+| Wind-turbine generation system | $A_{\mathrm{turb,e}}$: unresolved | $A_{\mathrm{turb,c}}$: unresolved | Included in integrated turbine-production factor below | TURB-002 |
 | AC infield collection | $A_{\mathrm{array,e}}$: unresolved | $A_{\mathrm{array,c}}$: unresolved | Not applicable | ELEC-002 |
 | Offshore electrical conversion/platform | $A_{\mathrm{HVDC,off}}$: unresolved | Not applicable | Not applicable | ELEC-003 |
 | Onshore electrical conversion | $A_{\mathrm{HVDC,on}}$: unresolved | Not applicable | Not applicable | ELEC-005 |
@@ -100,13 +100,48 @@ platform-supported equipment is already included in a subsystem boundary. If a
 future platform factor covers structural or common-utility outages not included
 elsewhere, its owner must state that non-overlapping scope before it is added.
 
-## Legacy Availability Values
+## Provisional availability status
 
-Earlier documentation listed flat values between 98% and 100%, including
-conflicting 98.5% and 99.5% electrolyser-related values. Their subsystem
-boundaries and evidence are not sufficient to select one as the adopted factor.
+Centralised generation uses `turbine-generation-availability` separately from
+central production availability. The distributed production factor retains its
+integrated turbine-generation scope. Required factors remain unresolved; no
+historical flat values are adopted. Wind-state records represent available
+equipment, so a factor must not repeat outages already embedded in those records.
 
-Those values are therefore not active architecture-ledger inputs. Component
-owners may retain them as clearly labelled legacy assumptions or sensitivities
-until they are evidenced and scoped. In particular, 100% pipeline availability
-is only a zero-outage scenario, not a reliability conclusion.
+## Lifetime yield and illustrative degradation
+
+For undegraded annual production $Q_0$ [kg/year], annual availability factors
+$A_s$ [fraction] and the stack lifetime factor $f_{\rm life}$ [fraction]:
+
+$$
+Q_{\rm BOL,delivered}=Q_0\prod_s A_s,\qquad
+\overline Q_{\rm life}=Q_{\rm BOL,delivered}f_{\rm life}.
+$$
+
+Thus cumulative lifetime yield loss relative to the same available, undegraded
+case is $1-f_{\rm life}$. It differs from the degradation at the end of the
+project: loss accumulates within each stack life and resets on replacement.
+The [stack calculation](../hydrogen_production/stack.qmd) owns the rate,
+full-load-hour dependence, reset interval and project-average integration.
+
+For illustration, the selected article's saved pressure/diameter case
+`p140barg-d8in` provides the operating states. Full-load hours below are calculated
+from stack electricity divided by installed stack capacity, using those saved
+operation tables and the shared degradation function. This is not an adopted
+lifecycle cost result or a new availability assumption.
+
+| Diagnostic | Centralised | Direct DC |
+|---|---:|---:|
+| Stack full-load hours/year | {{< var degradation-example-centralised-full-load-hours-per-year >}} | {{< var degradation-example-decentralised-full-load-hours-per-year >}} |
+| Terminal degradation before any project-end replacement | {{< var degradation-example-centralised-terminal-loss-fraction >}} | {{< var degradation-example-decentralised-terminal-loss-fraction >}} |
+| Cumulative yield loss over {{< var financial-project-life >}} | {{< var degradation-example-centralised-cumulative-yield-loss-fraction >}} | {{< var degradation-example-decentralised-cumulative-yield-loss-fraction >}} |
+
+Small differences in full-load hours can put cases on opposite sides of a
+replacement reset near project end. Terminal losses can therefore differ
+substantially while cumulative yield losses remain similar. This does not
+establish an economic replacement policy.
+
+An availability comparison is deferred because the required factor values are
+unresolved. The fixed calendar replacement-cost schedule is also not yet tied
+to the degradation reset schedule. The article continues to report production
+before outages at beginning of life and defers lifecycle economics.

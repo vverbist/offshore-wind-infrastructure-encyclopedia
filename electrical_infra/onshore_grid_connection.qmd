@@ -155,21 +155,17 @@ with every term tagged to its canonical page. The converter term is already owne
 
 ## Conversion and Transformer Losses
 
-The current model fills the previously blank onshore efficiency with a provisional aggregate **98.5%**. This covers the onshore converter, converter transformers and station auxiliaries once. Hitachi Energy reports conversion losses below 1% per station for the 900 MW DolWin2 VSC system [@hitachiDolWin2], supporting the order of magnitude but not establishing a 2 GW guarantee.
-
-Large-transformer efficiency regulation provides another useful check. For liquid-immersed large transformers, the European Tier 2 minimum peak-efficiency index is 99.770% at 100 MVA, rises with rating and reaches 99.797% at 200 MVA and above [@europeanCommission2014Transformers]. Applicability and exclusions must be checked for the selected equipment. PEI is measured at the loading point of maximum efficiency, so it must not be interpreted as constant full-load or annual efficiency.
-
-The project does not yet have the OEM loss curves and auxiliary-load specifications needed for a load-dependent calculation. Until those data are available:
-
-| Boundary | Working value | Do not also apply |
-|---|---:|---|
-| Onshore VSC, transformation and auxiliaries | 98.5% | A second generic onshore-converter factor |
-| HVDC cable | Calculated separately | Cable loss inside the 98.5% station value |
-| Offshore conversion | Calculated separately | Offshore loss again at the onshore interface |
+Onshore conversion, transformation and auxiliaries require one non-overlapping
+loss boundary. No flat efficiency is adopted for the executable model. Required
+supplier curves, loading conditions and auxiliary specifications remain TODO.
+The cable and offshore losses belong to their own component owners; they must
+not be included twice in an eventual station factor.
 
 ## Availability, Curtailment and Resilience
 
-The internal model assigns **98.0% availability** to the onshore station. This is the same onshore-terminal factor documented on the converter-station page and shown in the section overview; it is applied once, not multiplied by a second 98% grid-interface factor. As with the offshore station, a single scalar hides equipment redundancy and degraded states. The standard bipole can retain about 1 GW after a pole-path outage, while a common auxiliary, control, busbar or grid event may remove the complete 2 GW.
+Station availability is unresolved. Future capacity-state modelling should
+represent partial pole outages and common-mode events explicitly. No historical
+flat station factor is adopted or applied by the current hydrogen runner.
 
 Energy-equivalent availability is:
 
@@ -215,12 +211,12 @@ Long underground routes can dominate civil works even when the converter site is
 | Link rating | 2 GW | Discrete 2 GW blocks | TenneT standard |
 | DC voltage | +/-525 kV | Fixed for standard case | TenneT standard |
 | Grid voltage | 380 kV | Project-specific transmission voltage | Dutch reference |
-| Onshore converter CAPEX | Included in 785 EUR~2025~/kW converter pair | 613--1,030 EUR~2025~/kW pair range | DEA coefficient; platform excluded |
+| Onshore converter CAPEX | Unresolved | Equipment-only basis required | Reference values not adopted |
 | Underground DC cable material | TBD | Obtain material-only benchmark | Separate cable owner |
 | Underground cable installation | TBD | Route-specific model | Separate installation owner |
 | Residual grid-interface CAPEX | TBC, not zero by evidence | Site-specific study | Source gap |
-| Onshore aggregate efficiency | 98.5% | 98.5--99.2% | Provisional aggregate |
-| Flat station availability | 98.0% | Replace with 100/50/0% states | Internal convention |
+| Onshore aggregate efficiency | Unresolved | Scoped supplier loss data required | No adopted flat value |
+| Station availability | Unresolved | Future capacity-state model deferred | No flat value adopted |
 | Onshore footprint | About 5.5 ha | Site and layout specific | Doordewind reference |
 | Wider grid reinforcement | Excluded/TBC | Scenario by connection point | Requires power-system study |
 
@@ -229,10 +225,10 @@ Long underground routes can dominate civil works even when the converter site is
 | Limitation | Implication |
 |---|---|
 | No package cost ledger | Onshore equipment and ordinary civil cost cannot yet be isolated reliably |
-| The 80 km base case ends at shore | Underground route cost remains zero unless $L_u$ is entered explicitly |
+| The 80 km base case ends at shore | Underground route cost is unresolved and blocks a complete electricity result |
 | No grid-node model | Connection capacity, congestion and reinforcement are unknown |
-| Constant 98.5% efficiency | No-load, part-load and ambient-temperature effects are hidden |
-| Constant 98% availability | Pole redundancy, spare transformers and common-mode events are hidden |
+| Unresolved station efficiency | No-load, part-load and ambient-temperature effects are hidden |
+| Unresolved station availability | Pole redundancy, spare transformers and common-mode events are hidden |
 | 380 kV is treated as universal | Other countries and connection points use different grid voltages |
 | Reactive duty is not co-optimised | Converter MVA and compensation equipment may be understated |
 | Planning and land costs are TBC | A feasible electrical design may still lack a consentable site |
