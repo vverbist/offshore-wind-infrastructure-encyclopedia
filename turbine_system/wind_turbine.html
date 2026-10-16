@@ -670,11 +670,11 @@ window.Quarto = {
 </table>
 <p>For display only, the following clearance relationship would provide 15 m lower-tip clearance above mean sea level. It is not an executable default: the scenario must supply hub height.</p>
 <p><span class="math display">\[
-H_h=\frac{D}{2}+b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7469702D636C656172616E63652D76616C7565203E7D7D;.
+H_h=\frac{D}{2}+15.
 \]</span></p>
 <p>The structural tower interface is assumed to be 15 m above mean sea level. Tower length is therefore derived rather than entered independently:</p>
 <p><span class="math display">\[
-L_t=H_h-b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D696E746572666163652D6865696768742D76616C7565203E7D7D;.
+L_t=H_h-15.
 \]</span></p>
 <p>Under the default hub-height relationship, <span class="math inline">\(L_t=D/2\)</span>. A project-specific hub height can override the default while retaining the same canonical interface elevation.</p>
 </section>
@@ -695,15 +695,15 @@ L_t=H_h-b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D696
 <tbody>
 <tr class="odd">
 <td>Number of blades</td>
-<td><span class="math inline">\(n_b=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D626C6164652D636F756E742D76616C7565203E7D7D;\)</span></td>
+<td><span class="math inline">\(n_b=3\)</span></td>
 </tr>
 <tr class="even">
 <td>Maximum blade-tip speed</td>
-<td><span class="math inline">\(V_\mathrm{tip}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7469702D73706565642D76616C7565203E7D7D;\)</span> m/s</td>
+<td><span class="math inline">\(V_\mathrm{tip}=95\)</span> m/s</td>
 </tr>
 <tr class="odd">
 <td>Rated drivetrain efficiency</td>
-<td><span class="math inline">\(\eta=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D6472697665747261696E2D656666696369656E63792D76616C7565203E7D7D;\)</span></td>
+<td><span class="math inline">\(\eta=0.95\)</span></td>
 </tr>
 <tr class="even">
 <td>Blade regression</td>
@@ -711,7 +711,7 @@ L_t=H_h-b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D696
 </tr>
 <tr class="odd">
 <td>Main bearings</td>
-<td><span class="math inline">\(n_\mathrm{brg}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D62656172696E672D636F756E742D76616C7565203E7D7D;\)</span></td>
+<td><span class="math inline">\(n_\mathrm{brg}=2\)</span></td>
 </tr>
 <tr class="even">
 <td>Nacelle crane</td>
@@ -880,7 +880,7 @@ m_\mathrm{platforms}
 =0.125m_\mathrm{bedplate}+3000I_\mathrm{crane},
 \]</span></p>
 <p><span class="math display">\[
-m_\mathrm{transformer}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7472616E73666F726D65722D706F7765722D76616C7565203E7D7D;P+b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D7472616E73666F726D65722D6F66667365742D76616C7565203E7D7D;.
+m_\mathrm{transformer}=1.915P+1910.
 \]</span></p>
 <p>Transformer mass is included only when a turbine transformer is present in the selected architecture.</p>
 </section>
@@ -918,7 +918,7 @@ m_\mathrm{nacelle}={}&amp;m_\mathrm{LSS}+m_\mathrm{bearings}
 <h2 class="anchored" data-anchor-id="tower-mass">Tower Mass</h2>
 <p>The simple WISDEM tower relationship is:</p>
 <p><span class="math display">\[
-m_\mathrm{tower}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D746F7765722D7363616C652D76616C7565203E7D7D;L_t^b58fc729-690b-4000-b19f-365a4093b2ff;7B7B7B3C207661722074757262696E652D746F7765722D6578706F6E656E742D76616C7565203E7D7D7D;.
+m_\mathrm{tower}=19.828L_t^{2.0282}.
 \]</span></p>
 <p>This regression depends only on tower length. It does not respond to rotor thrust, RNA mass, tower natural-frequency constraints, foundation stiffness, fatigue, or site conditions. It is therefore an initial screening estimate, not the preferred offshore-tower calculation.</p>
 <p>TowerSE or an equivalent load-based calculation is required before tower-section masses are used for detailed installation planning. The tower remains inside the turbine-cost boundary; the foundation remains outside it.</p>
@@ -1401,9 +1401,9 @@ C_\mathrm{tower,ref}^{\mathrm{NREL}}
 \]</span></p>
 <p>The resulting factors are:</p>
 <p><span class="math display">\[
-k_\mathrm{RNA}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D6578616D706C652D726E612D63616C6962726174696F6E2D666163746F72203E7D7D;,
+k_\mathrm{RNA}=1.7166,
 \qquad
-k_\mathrm{tower}=b58fc729-690b-4000-b19f-365a4093b2ff;7B7B3C207661722074757262696E652D6578616D706C652D746F7765722D63616C6962726174696F6E2D666163746F72203E7D7D;.
+k_\mathrm{tower}=2.9142.
 \]</span></p>
 <p>The RNA factor is applied to every raw rotor and nacelle cost. The tower factor is applied only to the raw tower cost. This preserves the component-level WISDEM scaling while reproducing the separate NREL RNA and tower reference costs.</p>
 </section>
