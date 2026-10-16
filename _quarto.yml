@@ -18,6 +18,9 @@ project:
 
 bibliography: references.bib
 
+filters:
+  - tools/math-variables.lua
+
 website:
   title: "Offshore Wind Infrastructure Model Assumptions"
   sidebar:
